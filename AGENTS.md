@@ -1,3 +1,11 @@
+## SPEC / Sunbi setup (quick)
+
+- Environment sample: `.env.example` (copy to `.env`, or run `bash scripts/bootstrap-sunbi-env.sh` for a generated `ACCESS_KEY`).
+- Runbook and checklist: `docs/routes/SPEC_ROUTE_RUNBOOK.md`, `docs/routes/SPEC_REMAINING_CHECKLIST.md`.
+- Self-hosted stack: `docker compose -f docker-compose.sunbi-rsshub.yml up -d --build` (requires `ACCESS_KEY` in `.env`).
+- Route namespace: public paths are under **`/spec/`** (see `docs/impl/README.md` and `docs/SPEC-sunbi-rsshub.md`).
+- Production launch reference: [`docs/LAUNCH_RUNBOOK.md`](docs/LAUNCH_RUNBOOK.md) (VM Docker Compose phases 0–6).
+
 ## Review guidelines
 
 ### Route Configuration
@@ -38,7 +46,7 @@
 
 17. **No Explicit Null**: No need to explicitly set a property to `null` if it does not exist - just omit it.
 
-18. **Valid Item Properties**: Only use properties defined on `DataItem` in **this repo’s** [`lib/types.ts`](lib/types.ts). Upstream RSSHub ignores arbitrary keys on items; this fork’s type is authoritative here. Use **`_extra`** for structured Sunbi payloads (discriminated by `type`); do not add ad-hoc top-level fields. Note: `author.avatar` etc. are part of the typed `author` shape — random keys such as `avatar` or `bio` at the item root are still invalid.
+18. **Valid Item Properties**: Only use properties defined on `DataItem` in **this repo’s** [`lib/types.ts`](lib/types.ts). Upstream RSSHub ignores arbitrary keys on items; this fork’s type is authoritative here. Use **`_extra`** for structured SPEC / Sunbi ingestion payloads (discriminated by `type`); do not add ad-hoc top-level fields. Note: `author.avatar` etc. are part of the typed `author` shape — random keys such as `avatar` or `bio` at the item root are still invalid.
 
 19. **String Methods**: Use `startsWith()` instead of `includes()` when checking if a string begins with a specific prefix.
 

@@ -2,7 +2,7 @@ version: '3.8'
 services:
     rsshub:
         build:
-            context: ./sunbi-rsshub # path to your fork
+            context: . # repo root when this compose file lives in the fork
             dockerfile: Dockerfile
         image: sunbi/rsshub:local
         restart: unless-stopped

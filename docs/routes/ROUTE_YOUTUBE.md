@@ -1,20 +1,21 @@
-# Route: YouTube Channel (Full)
+# Route: YouTube Channel (SPEC)
 
 ← [INDEX](INDEX.md) | Setup: [RSSHUB_SETUP.md](RSSHUB_SETUP.md)
 
 ## File Location
 
-`lib/v2/sunbi-youtube/channel-full.ts`
+`lib/routes/spec/youtube.ts`
 
 ## Why a New Namespace
 
 Upstream RSSHub has `/youtube/channel/:id` but it does not fetch transcripts
-or enrich with the `_extra` payload Sunbi needs. Using `sunbi-youtube` avoids
-conflict with upstream and makes our additions explicit.
+or enrich with the `SpecExtra` / `_extra` payload the Sunbi extension needs. The
+**SPEC** namespace under `/spec/...` avoids conflict with upstream and keeps
+custom work explicit.
 
 ## Route Path
 
-`/sunbi-youtube/channel/:channelId`
+`/spec/youtube/:channelId`
 
 ## Parameters
 
@@ -26,8 +27,8 @@ conflict with upstream and makes our additions explicit.
 
 ```typescript
 radar: [
-    { source: ['youtube.com/channel/:channelId'], target: '/sunbi-youtube/channel/:channelId' },
-    { source: ['youtube.com/channel/:channelId/videos'], target: '/sunbi-youtube/channel/:channelId' },
+    { source: ['youtube.com/channel/:channelId'], target: '/spec/youtube/:channelId' },
+    { source: ['youtube.com/channel/:channelId/videos'], target: '/spec/youtube/:channelId' },
     { source: ['youtube.com/@:handle'], target: null },
     // @handle needs an extra API call to resolve channelId — omit from radar,
     // handle in Sunbi's "Add Source" flow instead

@@ -142,3 +142,15 @@ To test a running instance manually:
 ```bash
 curl "http://localhost:1200/<namespace>/<route>?format=json"
 ```
+
+## Active SPEC Routes
+
+Custom Sunbi media routes live under `lib/routes/spec/`:
+
+- `lib/routes/spec/youtube.ts` — `/spec/youtube/:channelId` (YouTube RSS, 30 min TTL)
+- `lib/routes/spec/netflix.ts` — `/spec/netflix/:titleId` (TMDB bridge, 60 min TTL)
+- `lib/routes/spec/viki.ts` — `/spec/viki/:titleId` (public REST, 60 min TTL)
+- `lib/routes/spec/weverse.ts` — `/spec/weverse/:artistId` (HMAC/Bearer, 3 min TTL)
+- `lib/routes/spec/bubble.ts` — `/spec/bubble/:artistId` (session cookie, 2 min TTL)
+
+`SpecExtra` typed contract: [`lib/types/spec-extra.ts`](lib/types/spec-extra.ts). Production launch: [`docs/LAUNCH_RUNBOOK.md`](docs/LAUNCH_RUNBOOK.md).

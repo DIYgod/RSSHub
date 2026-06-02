@@ -1,8 +1,8 @@
-# Sunbi RSSHub Route Runbook
+# SPEC RSSHub route runbook
 
-Purpose: execute remaining route work and ship a running forked RSSHub instance for Sunbi.
+Purpose: execute remaining route work and ship a running **`sunbi-rsshub`** instance for Sunbi (routes live under **`/spec/`**).
 
-Use this with `SUNBI_REMAINING_CHECKLIST.md`.
+Use this with `SPEC_REMAINING_CHECKLIST.md`.
 
 ## Phase 0: Preconditions
 
@@ -42,11 +42,11 @@ Exit criteria:
 Current observed custom coverage:
 
 - Implemented: `naver/webtoon-series`
-- Remaining: `sunbi-youtube`, `viki`, `weverse`, `bubble`, and Sunbi contract validation for `netflix`
+- Remaining: `spec/youtube`, `spec/viki`, `spec/weverse`, `spec/bubble`, and Sunbi ingestion validation for `spec/netflix`
 
 For each remaining route:
 
-1. Add/verify namespace under `lib/routes/<namespace>/namespace.ts`
+1. Add/verify `lib/routes/spec/namespace.ts` and route modules beside it
 2. Add route file with correct `Route` metadata.
 3. Build item payloads with typed fields and `_extra` object.
 4. Add caching for detail fetches (`cache.tryGet` in loops).
@@ -59,7 +59,7 @@ Exit criteria:
 
 - All planned namespaces have working endpoint(s).
 
-## Phase 3: Contract Validation for Sunbi
+## Phase 3: Contract validation for Sunbi ingestion
 
 For each route endpoint:
 
@@ -78,7 +78,7 @@ Failure handling:
 
 Exit criteria:
 
-- Contract checks pass for every Sunbi route.
+- Contract checks pass for every SPEC route you ship.
 
 ## Phase 4: Quality Gates
 
@@ -142,7 +142,7 @@ Also maintain:
 
 Exit criteria:
 
-- Fork remains current and Sunbi routes remain healthy.
+- Fork remains current and SPEC routes remain healthy.
 
 ## Fast Triage Table
 

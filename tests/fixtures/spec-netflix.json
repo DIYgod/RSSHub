@@ -1,0 +1,20 @@
+{
+    "_extras": [
+        {
+            "type": "netflix/episode",
+            "platform": "netflix",
+            "sourceUrl": "https://www.netflix.com/title/81249997",
+            "externalId": "81249997-S3E6",
+            "seriesExternalId": "81249997",
+            "episodeLabel": "S03E06",
+            "publishedAt": "2025-06-27T00:00:00.000Z",
+            "netflixTitleId": "81249997",
+            "tmdbSeriesId": "93405",
+            "tmdbEpisodeId": 3803953,
+            "imdbId": "tt10919420",
+            "thumbnailUrl": "https://image.tmdb.org/t/p/w500/test-still.jpg",
+            "subtitleStatus": "none",
+            "captionLanguages": []
+        }
+    ]
+}

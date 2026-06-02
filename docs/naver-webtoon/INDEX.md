@@ -7,13 +7,13 @@
 
 ## Repo Locations
 
-| Document                                     | Repo          | Path                                           |
-| -------------------------------------------- | ------------- | ---------------------------------------------- |
-| This index                                   | `spec-rsshub` | `docs/naver-webtoon/INDEX.md`                  |
-| [RSSHUB_ROUTE.md](RSSHUB_ROUTE.md)           | `spec-rsshub` | `docs/naver-webtoon/RSSHUB_ROUTE.md`           |
-| [OCR_PIPELINE.md](OCR_PIPELINE.md)           | `sunbi`       | `docs/feed/naver-webtoon/OCR_PIPELINE.md`      |
-| [EXTENSION_OVERLAY.md](EXTENSION_OVERLAY.md) | `sunbi`       | `docs/feed/naver-webtoon/EXTENSION_OVERLAY.md` |
-| [INGESTION_UPDATES.md](INGESTION_UPDATES.md) | `sunbi`       | `docs/feed/naver-webtoon/INGESTION_UPDATES.md` |
+| Document                                     | Repo           | Path                                           |
+| -------------------------------------------- | -------------- | ---------------------------------------------- |
+| This index                                   | `sunbi-rsshub` | `docs/naver-webtoon/INDEX.md`                  |
+| [RSSHUB_ROUTE.md](RSSHUB_ROUTE.md)           | `sunbi-rsshub` | `docs/naver-webtoon/RSSHUB_ROUTE.md`           |
+| [OCR_PIPELINE.md](OCR_PIPELINE.md)           | `sunbi`        | `docs/feed/naver-webtoon/OCR_PIPELINE.md`      |
+| [EXTENSION_OVERLAY.md](EXTENSION_OVERLAY.md) | `sunbi`        | `docs/feed/naver-webtoon/EXTENSION_OVERLAY.md` |
+| [INGESTION_UPDATES.md](INGESTION_UPDATES.md) | `sunbi`        | `docs/feed/naver-webtoon/INGESTION_UPDATES.md` |
 
 ## Task-Specific Reading Order
 

@@ -4,22 +4,22 @@
 
 ## Repo
 
-`spec-rsshub` — your fork of `DIYgod/RSSHub`
-Custom routes live in `lib/v2/` subdirectories.
+`sunbi-rsshub` — your fork of `DIYgod/RSSHub`
+Custom SPEC routes live in `lib/routes/spec/` (plus other namespaces under `lib/routes/`).
 
 ## Why a Fork (not vanilla Docker)
 
 RSSHub's Docker image bakes routes at build time — volume-mounting custom
-routes does not work. A fork lets you add routes to `lib/v2/` and build
+routes does not work. A fork lets you add routes under `lib/routes/` and build
 your own image. Upstream updates are pulled via `git merge upstream/main`.
 
 ## Initial Setup
 
 ```bash
-# 1. Fork on GitHub: DIYgod/RSSHub → your-org/spec-rsshub
+# 1. Fork on GitHub: DIYgod/RSSHub → your-org/sunbi-rsshub
 # 2. Clone locally
-git clone https://github.com/your-org/spec-rsshub.git
-cd spec-rsshub
+git clone https://github.com/your-org/sunbi-rsshub.git
+cd sunbi-rsshub
 
 # 3. Add upstream remote for future updates
 git remote add upstream https://github.com/DIYgod/RSSHub.git
@@ -36,26 +36,23 @@ pnpm dev
 ## Directory Structure for Custom Routes
 
 ```
-lib/v2/
+lib/routes/
 ├── naver/
-│   ├── namespace.ts            ← already exists upstream; extend it
-│   ├── webtoon-series.ts       ← NEW: see ROUTE_NAVER_WEBTOON.md
+│   ├── namespace.ts            ← extend upstream Naver routes
+│   ├── webtoon-series.ts       ← see ROUTE_NAVER_WEBTOON.md
 │   └── ...
-├── sunbi-youtube/              ← NEW namespace (avoids upstream conflict)
+├── spec/                       ← SPEC namespace (Sunbi media contract)
 │   ├── namespace.ts
-│   └── channel-full.ts         ← see ROUTE_YOUTUBE.md
-├── viki/                       ← NEW
-│   ├── namespace.ts
-│   └── drama-series.ts         ← see ROUTE_VIKI.md
-├── netflix/                    ← NEW
-│   ├── namespace.ts
-│   └── drama-series.ts         ← see ROUTE_NETFLIX.md
-├── weverse/                    ← NEW
-│   ├── namespace.ts
-│   └── artist-feed.ts          ← see ROUTE_WEVERSE.md
-└── bubble/                     ← NEW
-    ├── namespace.ts
-    └── artist-notify.ts        ← see ROUTE_BUBBLE.md
+│   ├── utils.ts
+│   ├── youtube.ts              ← see ROUTE_YOUTUBE.md / IMPL-01
+│   ├── viki.ts                 ← see ROUTE_VIKI.md / IMPL-02
+│   ├── weverse.ts              ← see ROUTE_WEVERSE.md / IMPL-03
+│   ├── bubble.ts               ← see ROUTE_BUBBLE.md / IMPL-04
+│   └── netflix.ts              ← see ROUTE_NETFLIX.md / IMPL-05
+├── viki/                       ← upstream (reference / wrap as needed)
+├── netflix/
+├── weverse/
+└── bubble/
 ```
 
 ## Environment Variables
@@ -68,7 +65,7 @@ NODE_ENV=production
 CACHE_TYPE=redis
 REDIS_URL=redis://redis:6379/
 
-# Access control — all Sunbi requests must include ?key=VALUE
+# Access control — all SPEC route requests must include ?key=VALUE
 ACCESS_KEY=<generate with: openssl rand -hex 32>
 
 # Optional: platform auth
@@ -165,7 +162,7 @@ pnpm dev                        # hot reload at localhost:1200
 
 # Test a specific route
 curl "http://localhost:1200/naver/webtoon/series/758037?format=json"
-curl "http://localhost:1200/sunbi-youtube/channel/UCVSjwV8LXSoqxDKRcNGPrQg?format=json"
+curl "http://localhost:1200/spec/youtube/UCVSjwV8LXSoqxDKRcNGPrQg?format=json"
 
 # Production build + run
 docker compose build
@@ -175,7 +172,7 @@ docker compose logs -f rsshub
 # Update from upstream (monthly)
 git fetch upstream
 git merge upstream/main
-# resolve conflicts in lib/v2/ (your custom namespaces won't conflict)
+# resolve conflicts in lib/routes/ (isolated namespaces reduce collisions)
 docker compose build
 docker compose up -d
 ```
@@ -253,7 +250,7 @@ loops in `docker compose logs -f rsshub`.
 | --------------------------------------- | --------------------- | ------------------------- |
 | `naver/webtoon/series/*`                | 15 min (series list)  | New episodes weekly       |
 | `naver/webtoon/series/*` individual eps | 24 h                  | Immutable once live       |
-| `sunbi-youtube/channel/*`               | 15 min                | Videos can drop any time  |
+| `spec/youtube/*`                        | 15 min                | Videos can drop any time  |
 | `viki/series/*`                         | 30 min (episode list) | Dramas air 1-2x/week      |
 | `netflix/drama/*`                       | 60 min                | Episodes drop weekly      |
 | `weverse/artist/*`                      | 5 min                 | Posts/lives are real-time |
@@ -264,7 +261,6 @@ loops in `docker compose logs -f rsshub`.
 JSON Feed output (`?format=json`) uses the key **`_extra`** on each item (see `lib/views/json.ts`). Confirm it is present:
 
 ```bash
-curl "http://localhost:1200/naver/webtoon/series/758037?format=json" | \
 curl "http://localhost:1200/naver/webtoon/series/758037?format=json&key=$ACCESS_KEY" | \
   jq '.items[0]._extra'
 ```

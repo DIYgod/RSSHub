@@ -1,10 +1,10 @@
 # RSSHub Route: Naver Webtoon Series
 
-Repo: \`spec-rsshub\` ← [INDEX](INDEX.md) | Live test: [readiness.csv](code_file:115)
+Repo: `sunbi-rsshub` ← [INDEX](INDEX.md)
 
 ## File Location
 
-\`lib/v2/naver/webtoon-series.ts\`
+`lib/routes/naver/webtoon-series.ts`
 
 ## Route Path
 

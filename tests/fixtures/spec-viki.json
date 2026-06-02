@@ -1,0 +1,30 @@
+{
+    "_extras": [
+        {
+            "type": "viki/episode",
+            "platform": "viki",
+            "sourceUrl": "https://www.viki.com/videos/ep001",
+            "externalId": "ep001",
+            "seriesExternalId": "t-title1",
+            "episodeLabel": "EP 1",
+            "publishedAt": "2026-03-01T00:00:00.000Z",
+            "titleId": "t-title1",
+            "seasonNumber": 1,
+            "episodeNumber": 1,
+            "regionLocked": false
+        },
+        {
+            "type": "viki/episode",
+            "platform": "viki",
+            "sourceUrl": "https://www.viki.com/videos/ep002",
+            "externalId": "ep002",
+            "seriesExternalId": "t-title1",
+            "episodeLabel": "EP 2",
+            "publishedAt": "2026-03-08T00:00:00.000Z",
+            "titleId": "t-title1",
+            "seasonNumber": 1,
+            "episodeNumber": 2,
+            "regionLocked": true
+        }
+    ]
+}
