@@ -1,4 +1,3 @@
-import queryString from 'query-string';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import { bbcodeToHtml } from '../utils';
