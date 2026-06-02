@@ -22,7 +22,7 @@ const categories: Record<string, string> = {
 
 export const route: Route = {
     path: '/:category?',
-    name: 'Noticias',
+    name: 'Category',
     maintainers: ['mlkgrnt'],
     example: '/efe/mundo',
     parameters: { category: 'Categoría, por defecto mundo' },
@@ -85,7 +85,8 @@ async function handler(ctx) {
                     link,
                     pubDate,
                     description,
-                    image,
+                    enclosure_url: image,
+                    enclosure_type: 'image/jpeg',
                 };
             })
         )
