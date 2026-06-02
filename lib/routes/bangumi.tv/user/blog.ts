@@ -89,7 +89,7 @@ async function handler(ctx) {
         title: item.title,
         link: `https://bgm.tv/blog/${item.id}`,
         description: bbcodeToHtml(item.content) || '',
-        pubDate: item.created_at,
+        pubDate: item.createdAt,
         author: nickname,
         category: (item.tags ?? []).map((tag) => tag.name),
     }));
