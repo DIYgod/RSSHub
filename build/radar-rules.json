@@ -41244,6 +41244,19 @@
       }
     ]
   },
+  "shanximuseum.com.cn": {
+    "_name": "Shanxi Museum",
+    "www": [
+      {
+        "title": "Temporary Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/sx/exhibition/temporary.html"
+        ],
+        "target": "/shanximuseum/exhibition/temporary"
+      }
+    ]
+  },
   "shcstheatre.com": {
     "_name": "上海文化广场",
     "www": [
