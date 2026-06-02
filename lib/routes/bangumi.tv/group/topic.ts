@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '小组话题',
-    maintainers: ['SettingDust'],
+    maintainers: ['SettingDust', 'muzuiyo'],
     handler,
 };
 
