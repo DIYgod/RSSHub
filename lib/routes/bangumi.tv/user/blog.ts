@@ -1,6 +1,8 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import { bbcodeToHtml } from '../utils';
 
@@ -73,7 +75,7 @@ async function handler(ctx) {
     }
 
     // 并行获取日志详情
-    const detailPromises = blogListData.map((blog) => fetchBlogDetail(blog.id));
+    const detailPromises = blogListData.map((blog) => cache.tryGet(`bangumi:user:blog:${blog.id}`, () => fetchBlogDetail(blog.id)) as Promise<Awaited<ReturnType<typeof fetchBlogDetail>>>);
     const blogs = await Promise.all(detailPromises);
 
     // 获取用户昵称
@@ -84,7 +86,7 @@ async function handler(ctx) {
         link: `${baseUrl}/blog/${item.id}`,
         description: bbcodeToHtml(item.content),
         // API 内的 createdAt 是秒级 Unix 时间戳，乘 1000 转为毫秒
-        pubDate: new Date(item.createdAt * 1000),
+        pubDate: parseDate(item.createdAt * 1000),
         author: nickname,
         category: (item.tags ?? []).map((tag) => tag.name),
     }));

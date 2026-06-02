@@ -1,5 +1,6 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -71,7 +72,7 @@ async function handler(ctx) {
     }
 
     // 并行获取话题详情
-    const detailPromises = topicListData.map((topic) => fetchGroupTopicDetail(topic.id));
+    const detailPromises = topicListData.map((topic) => cache.tryGet(`bangumi:group:topic:${topic.id}`, () => fetchGroupTopicDetail(topic.id)) as Promise<Awaited<ReturnType<typeof fetchGroupTopicDetail>>>);
     const topics = await Promise.all(detailPromises);
 
     // 获取小组名称
