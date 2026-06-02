@@ -1,10 +1,10 @@
-import { load } from 'cheerio';
-
+import { config } from '@/config';
+import queryString from 'query-string';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import got from '@/utils/got';
+import { bbcodeToHtml } from '../utils';
+
+const BANGUMI_API_BASE = "https://next.bgm.tv/p1";
 
 export const route: Route = {
     path: '/user/blog/:id',
@@ -28,42 +28,75 @@ export const route: Route = {
         },
     ],
     name: '用户日志',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'muzuiyo'],
     handler,
 };
 
+async function fetchBlogList(user: string, limit = 20, offset = 0) {
+  const url = `${BANGUMI_API_BASE}/users/${user}/blogs`;
+  const response = await got({
+    method: 'get',
+    url,
+    searchParams: queryString.stringify({
+        limit,
+        offset
+    }),
+    headers: {
+        Accept: 'application/json',
+        'User-Agent': config.trueUA,
+    },
+  });
+  return response.data;
+}
+
+async function fetchBlogDetail(blogId: number) {
+  const url = `${BANGUMI_API_BASE}/blogs/${blogId}`;
+  const response = await got({
+    method: 'get',
+    url,
+    headers: {
+        Accept: 'application/json',
+        'User-Agent': config.trueUA,
+    },
+  });
+  return response.data;
+}
+
+
 async function handler(ctx) {
-    const currentUrl = `https://bgm.tv/user/${ctx.req.param('id')}/blog`;
-    const response = await ofetch(currentUrl);
-    const $ = load(response);
-    const list = $('#entry_list div.item')
-        .find('h2.title')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            return {
-                title: a.text(),
-                link: new URL(a.attr('href'), 'https://bgm.tv').href,
-                pubDate: timezone(parseDate(item.parent().find('small.time').text()), 0),
-            };
-        });
+    const user = ctx.req.param('id');
+    const limit = ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit'), 10) || 20, 20) : 20;
+    const offset = 0;
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const res = await ofetch(item.link);
-                const content = load(res);
+    // 获取日志列表
+    const blogListData = await fetchBlogList(user, limit, offset);
+    if (!blogListData.data || blogListData.data.length === 0) {
+        return {
+            title: `${user} 的日志`,
+            link: `https://bgm.tv/user/${user}/blogs`,
+            item: [],
+        };
+    }
 
-                item.description = content('#entry_content').html();
-                return item;
-            })
-        )
-    );
+    // 并行获取日志详情
+    const detailPromises = blogListData.data.map((blog) => fetchBlogDetail(blog.id));
+    const blogs = await Promise.all(detailPromises);
+
+    // 获取用户昵称
+    const nickname = blogs[0].user.nickname || user;
+
+    const items = blogs.map((item) => ({
+        title: item.title,
+        link: `https://bgm.tv/blog/${item.id}`,
+        description: bbcodeToHtml(item.content) || '',
+        pubDate: item.created_at,
+        author: nickname,
+        category: (item.tags ?? []).map((tag) => tag.name),
+    }));
 
     return {
-        title: $('title').text(),
-        link: currentUrl,
+        title: `${nickname} 的日志`,
+        link: `https://bgm.tv/user/${user}/blogs`,
         item: items,
     };
 }
