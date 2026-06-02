@@ -69,8 +69,9 @@ async function handler(ctx) {
                 const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
                 const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
 
+                const image = $detail('meta[property="og:image"]').attr('content');
                 const content = $detail('article .entry-content, article .elementor-widget-theme-post-content').first();
-                const description = content.html() || '';
+                const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
 
                 return {
                     title,
