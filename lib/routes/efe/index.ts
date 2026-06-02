@@ -16,6 +16,7 @@ const categories: Record<string, string> = {
     salud: 'Salud',
     'medio-ambiente': 'Medio Ambiente',
     educacion: 'Educación',
+    'euro-efe': 'EuroEFE',
 };
 
 export const route: Route = {
