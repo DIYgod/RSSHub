@@ -33,13 +33,10 @@ export const route: Route = {
     example: '/hex2077/daily',
     maintainers: ['fc525260'],
     parameters: {
-        index: '栏目序号，可选 1~5，默认全部',
+        index: '日期序号，1=最新一天，2=前一天，以此类推',
     },
     handler: async (ctx) => {
-        const idx = ctx.params.index ? parseInt(ctx.params.index, 10) : null;
-        const targetSections = idx != null && idx >= 1 && idx <= 5
-            ? [SECTION_NAMES[idx - 1]]
-            : SECTION_NAMES;
+        const dayIdx = ctx.params.index ? parseInt(ctx.params.index, 10) : 1;
         // Step 1: fetch listing page
         const listingHtml = await ofetch<string>(BASE + '/docs/');
         const $ = load(listingHtml);
@@ -49,7 +46,7 @@ export const route: Route = {
             .map((el) => $(el as any).attr('href') || '')
             .filter((href) => /^\/docs\/\d{4}-\d{2}\/\d{4}-\d{2}-\d{2}\/$/.test(href))
             .toSorted((a, b) => b.localeCompare(a));
-        const latestPath = paths[0];
+        const latestPath = paths[dayIdx - 1];
         if (!latestPath) {
             throw new Error('未找到日报文章');
         }
@@ -62,7 +59,7 @@ export const route: Route = {
         const $d = load(detailHtml);
 
         // Step 3: build RSS items — one per section, description merges all <li>s
-        const allItems: DataItem[] = targetSections.flatMap((sectionDisplay) => {
+        const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay) => {
             const sectionItems = extractSection($d, sectionDisplay);
             if (sectionItems.length === 0) {
                 return [];
