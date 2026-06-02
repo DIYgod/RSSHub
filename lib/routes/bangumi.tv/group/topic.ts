@@ -75,6 +75,8 @@ async function handler(ctx) {
 
     // 获取小组名称
     const groupName = topics[0]?.group?.title || groupID;
+    // 获取用户昵称
+    const nickname = topics[0]?.replies[0]?.creator.nickname || '';
 
     const items = topics.map((item) => ({
         title: item.title,
@@ -82,7 +84,7 @@ async function handler(ctx) {
         description: bbcodeToHtml(item.replies[0].content),
         // API 内的 createdAt 是秒级 Unix 时间戳，乘 1000 转为毫秒
         pubDate: parseDate(item.createdAt * 1000),
-        author: item.author?.username || '',
+        author: nickname,
         categories: (item.tags ?? []).map((tag) => tag.name),
     }));
 
