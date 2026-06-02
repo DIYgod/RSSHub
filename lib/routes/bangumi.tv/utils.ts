@@ -37,7 +37,7 @@ export function bbcodeToHtml(content: string): string {
 
     // 列表
     html = html.replaceAll(/\[list\]([\s\S]*?)\[\/list\]/gi, (match, content) => {
-        const items = content.replaceAll(/\[\*\]([^\[]*)/g, '<li>$1</li>');
+        const items = content.replaceAll(/\[\*\]([^[]*)/g, '<li>$1</li>');
         return `<ul>${items}</ul>`;
     });
 

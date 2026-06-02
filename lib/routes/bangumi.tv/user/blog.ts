@@ -1,7 +1,8 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
-import { bbcodeToHtml } from '../utils';
 import ofetch from '@/utils/ofetch';
+
+import { bbcodeToHtml } from '../utils';
 
 const baseUrl = 'https://bgm.tv';
 const apiUrl = 'https://next.bgm.tv/p1';

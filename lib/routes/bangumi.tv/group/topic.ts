@@ -1,7 +1,8 @@
+import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
+
 import { bbcodeToHtml } from '../utils';
 
 const baseUrl = 'https://bgm.tv';
@@ -68,7 +69,7 @@ async function handler(ctx) {
             item: [],
         };
     }
-    
+
     // 并行获取话题详情
     const detailPromises = topicListData.map((topic) => fetchGroupTopicDetail(topic.id));
     const topics = await Promise.all(detailPromises);
