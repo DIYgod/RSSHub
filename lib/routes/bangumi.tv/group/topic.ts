@@ -74,7 +74,7 @@ async function handler(ctx) {
     const topics = await Promise.all(detailPromises);
 
     // 获取小组名称
-    const groupName = topics[0]?.group?.name || groupID;
+    const groupName = topics[0]?.group?.title || groupID;
 
     const items = topics.map((item) => ({
         title: item.title,
