@@ -54,16 +54,19 @@ export const route: Route = {
         const detailHtml = await ofetch<string>(articleUrl);
         const $d = load(detailHtml);
 
-        // Step 3: build RSS items from all sections
+        // Step 3: build RSS items — one per section, description merges all <li>s
         const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay) => {
             const sectionItems = extractSection($d, sectionDisplay);
-            return sectionItems.map((text, i) => ({
-                title: `[${sectionDisplay}] ${text}`,
-                description: text,
+            if (sectionItems.length === 0) {
+                return [];
+            }
+            return {
+                title: `[${sectionDisplay}] ${dateLabel}`,
+                description: sectionItems.join('\n\n'),
                 link: articleUrl,
-                guid: `${latestPath}${sectionDisplay}-${i}`,
+                guid: `${latestPath}${sectionDisplay}`,
                 pubDate: parseDate(dateLabel),
-            }));
+            };
         });
 
         return {
