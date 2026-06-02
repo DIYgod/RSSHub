@@ -85,7 +85,7 @@ async function handler(ctx) {
         // API 内的 createdAt 是秒级 Unix 时间戳，乘 1000 转为毫秒
         pubDate: parseDate(item.createdAt * 1000),
         author: item.replies[0]?.creator.nickname || '',
-        categories: (item.tags ?? []).map((tag) => tag.name),
+        category: (item.tags ?? []).map((tag) => tag.name),
     }));
 
     return {
