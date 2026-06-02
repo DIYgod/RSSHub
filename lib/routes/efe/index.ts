@@ -71,6 +71,13 @@ async function handler(ctx) {
 
                 const image = $detail('meta[property="og:image"]').attr('content');
                 const content = $detail('article .entry-content, article .elementor-widget-theme-post-content').first();
+                content.find('.auto-banner, .srr-main').remove();
+                content.find('img').each((_, el) => {
+                    const src = $detail(el).attr('src') || '';
+                    if (/logo-efe|logo-EFE-Comunica|GIF-CUENTA-ATRAS/i.test(src)) {
+                        $detail(el).remove();
+                    }
+                });
                 const description = content.html() || '';
 
                 return {
