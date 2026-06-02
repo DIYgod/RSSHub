@@ -41,7 +41,7 @@ async function fetchBlogList(user: string, limit = 20, offset = 0) {
             'User-Agent': config.trueUA,
         },
     });
-    return response.data;
+    return response.json();
 }
 
 async function fetchBlogDetail(blogId: number) {
@@ -53,7 +53,7 @@ async function fetchBlogDetail(blogId: number) {
             'User-Agent': config.trueUA,
         },
     });
-    return response.data;
+    return response.json();
 }
 
 async function handler(ctx) {

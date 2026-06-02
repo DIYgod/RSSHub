@@ -39,7 +39,7 @@ async function fetchGroupTopicList(groupId: string, limit = 20, offset = 0) {
             'User-Agent': config.trueUA,
         },
     });
-    return response.data;
+    return response.json();
 }
 
 async function fetchGroupTopicDetail(topicId: string) {
@@ -51,7 +51,7 @@ async function fetchGroupTopicDetail(topicId: string) {
             'User-Agent': config.trueUA,
         },
     });
-    return response.data;
+    return response.json();
 }
 
 async function handler(ctx) {
