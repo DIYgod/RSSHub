@@ -72,7 +72,7 @@ async function handler(ctx) {
     }
 
     // 并行获取日志详情
-    const detailPromises = blogListData.data.map((blog) => fetchBlogDetail(blog.id));
+    const detailPromises = blogListData.map((blog) => fetchBlogDetail(blog.id));
     const blogs = await Promise.all(detailPromises);
 
     // 获取用户昵称

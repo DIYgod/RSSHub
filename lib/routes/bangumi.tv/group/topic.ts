@@ -70,7 +70,7 @@ async function handler(ctx) {
     }
     
     // 并行获取话题详情
-    const detailPromises = topicListData.data.map((topic) => fetchGroupTopicDetail(topic.id));
+    const detailPromises = topicListData.map((topic) => fetchGroupTopicDetail(topic.id));
     const topics = await Promise.all(detailPromises);
 
     // 获取小组名称
