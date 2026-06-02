@@ -93,7 +93,7 @@ async function handler(ctx) {
     }
 
     const items = jsonGet(response.data, routeParams.get('item')).map((item) => {
-        let link = jsonGet(item, routeParams.get('itemLink')).trim();
+        let link = String(jsonGet(item, routeParams.get('itemLink')) ?? '').trim();
         const linkPrefix = routeParams.get('itemLinkPrefix');
 
         if (link && linkPrefix) {
