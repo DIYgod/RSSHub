@@ -32,7 +32,14 @@ export const route: Route = {
     path: '/daily',
     example: '/hex2077/daily',
     maintainers: ['fc525260'],
-    handler: async () => {
+    parameters: {
+        index: '栏目序号，可选 1~5，默认全部',
+    },
+    handler: async (ctx) => {
+        const idx = ctx.params.index ? parseInt(ctx.params.index, 10) : null;
+        const targetSections = idx != null && idx >= 1 && idx <= 5
+            ? [SECTION_NAMES[idx - 1]]
+            : SECTION_NAMES;
         // Step 1: fetch listing page
         const listingHtml = await ofetch<string>(BASE + '/docs/');
         const $ = load(listingHtml);
@@ -55,7 +62,7 @@ export const route: Route = {
         const $d = load(detailHtml);
 
         // Step 3: build RSS items — one per section, description merges all <li>s
-        const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay) => {
+        const allItems: DataItem[] = targetSections.flatMap((sectionDisplay) => {
             const sectionItems = extractSection($d, sectionDisplay);
             if (sectionItems.length === 0) {
                 return [];
