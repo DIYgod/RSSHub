@@ -1,11 +1,12 @@
-import { load } from 'cheerio';
-
+import queryString from 'query-string';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
+import { bbcodeToHtml } from '../utils';
 
 const baseUrl = 'https://bgm.tv';
+const apiUrl = 'https://next.bgm.tv/p1';
 
 export const route: Route = {
     path: '/group/:id',
@@ -30,37 +31,65 @@ export const route: Route = {
     handler,
 };
 
+async function fetchGroupTopicList(groupId: string, limit = 20, offset = 0) {
+    const url = `${apiUrl}/groups/${groupId}/topics?limit=${limit}&offset=${offset}`;
+    const response = await ofetch(url, {
+        method: 'get',
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': config.trueUA,
+        },
+    });
+    return response.data;
+}
+
+async function fetchGroupTopicDetail(topicId: string) {
+    const url = `${apiUrl}/topics/${topicId}`;
+    const response = await ofetch(url, {
+        method: 'get',
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': config.trueUA,
+        },
+    });
+    return response.data;
+}
+
 async function handler(ctx) {
     const groupID = ctx.req.param('id');
-    const link = `${baseUrl}/group/${groupID}/forum`;
-    const html = await ofetch(link);
-    const $ = load(html);
-    const title = 'Bangumi - ' + $('.SecondaryNavTitle').text();
+    const limit = ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit'), 10) || 20, 20) : 20;
+    const offset = 0;
 
-    const items = await Promise.all(
-        $('.topic_list .topic')
-            .toArray()
-            .map((elem) => {
-                const link = new URL($('.subject a', elem).attr('href'), baseUrl).href;
-                return cache.tryGet(link, async () => {
-                    const html = await ofetch(link);
-                    const $ = load(html);
-                    const fullText = $('.postTopic .topic_content').html();
-                    const summary = 'Reply: ' + $('.posts', elem).text();
-                    return {
-                        link,
-                        title: $('.subject a', elem).attr('title'),
-                        pubDate: parseDate($('.lastpost .time', elem).text()),
-                        description: fullText ? summary + '<br><br>' + fullText : summary,
-                        author: $('.author a', elem).text(),
-                    };
-                });
-            })
-    );
+    // 获取小组话题列表
+    const topicListData = await fetchGroupTopicList(groupID, limit, offset);
+    if (!topicListData.data || topicListData.data.length === 0) {
+        return {
+            title: `小组 ${groupID} 的话题`,
+            link: `${baseUrl}/group/${groupID}`,
+            item: [],
+        };
+    }
+    
+    // 并行获取话题详情
+    const detailPromises = topicListData.data.map((topic) => fetchGroupTopicDetail(topic.id));
+    const topics = await Promise.all(detailPromises);
+
+    // 获取小组名称
+    const groupName = topics[0]?.group?.name || groupID;
+
+    const items = topics.map((item) => ({
+        title: item.title,
+        link: `${baseUrl}/group/topic/${item.id}`,
+        description: bbcodeToHtml(item.replies[0].content),
+        // API 内的 createdAt 是秒级 Unix 时间戳，乘 1000 转为毫秒
+        pubDate: parseDate(item.createdAt * 1000),
+        author: item.author?.username || '',
+        categories: (item.tags ?? []).map((tag) => tag.name),
+    }));
 
     return {
-        title,
-        link,
+        title: `${groupName} 的话题`,
+        link: `${baseUrl}/group/${groupID}`,
         item: items,
     };
 }
