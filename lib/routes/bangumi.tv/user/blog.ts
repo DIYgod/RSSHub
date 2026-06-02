@@ -1,10 +1,8 @@
 import queryString from 'query-string';
-
 import { config } from '@/config';
 import type { Route } from '@/types';
-import got from '@/utils/got';
-
 import { bbcodeToHtml } from '../utils';
+import ofetch from '@/utils/ofetch';
 
 const BANGUMI_API_BASE = 'https://next.bgm.tv/p1';
 
@@ -36,7 +34,7 @@ export const route: Route = {
 
 async function fetchBlogList(user: string, limit = 20, offset = 0) {
     const url = `${BANGUMI_API_BASE}/users/${user}/blogs`;
-    const response = await got({
+    const response = await ofetch({
         method: 'get',
         url,
         searchParams: queryString.stringify({
@@ -53,7 +51,7 @@ async function fetchBlogList(user: string, limit = 20, offset = 0) {
 
 async function fetchBlogDetail(blogId: number) {
     const url = `${BANGUMI_API_BASE}/blogs/${blogId}`;
-    const response = await got({
+    const response = await ofetch({
         method: 'get',
         url,
         headers: {
