@@ -33,7 +33,7 @@ export function bbcodeToHtml(content: string): string {
     html = html.replace(/\[img\]([\s\S]*?)\[\/img\]/gi, '<img src="$1" style="max-width:100%" />');
 
     // 视频（简化处理，转为链接），Bangumi 目前暂时没有此标签
-    html = html.replace(/\[video\]([\s\S]*?)\[\/video\]/gi, '<a href="$1" target="_blank">[视频]</a>');
+    // html = html.replace(/\[video\]([\s\S]*?)\[\/video\]/gi, '<a href="$1" target="_blank">[视频]</a>');
 
     // 列表
     html = html.replace(/\[list\]([\s\S]*?)\[\/list\]/gi, (match, content) => {
@@ -45,11 +45,14 @@ export function bbcodeToHtml(content: string): string {
     html = html.replace(/\[hr\]/gi, '<hr>');
 
     // 剧透遮罩
-    html = html.replace(/\[mask\]([\s\S]*?)\[\/mask\]/gi, '<details><summary>剧透</summary>$1</details>');
+    html = html.replace(/\[mask\]([\s\S]*?)\[\/mask\]/gi, '<details><summary>Mask 内容</summary>$1</details>');
 
     // Bangumi 特有标签 - 关联条目
     html = html.replace(/\[subject=(\d+)\]([\s\S]*?)\[\/subject\]/gi, '<a href="https://bgm.tv/subject/$1" target="_blank">$2</a>');
     html = html.replace(/\[group=(\d+)\]([\s\S]*?)\[\/group\]/gi, '<a href="https://bgm.tv/group/$1" target="_blank">$2</a>');
+
+    // Bangumi 特有标签 - 用户
+    html = html.replace(/\[user=(\d+)\]([\s\S]*?)\[\/user\]/gi, '<a href="https://bgm.tv/user/$1" class="l">@$2</a>');
 
     // Bangumi 特有标签 - 用户照片
     html = html.replace(/\[photo=\d+\]([\s\S]*?)\[\/photo\]/gi, '<img src="//lain.bgm.tv/pic/photo/l/$1" alt="" loading="lazy" />');
