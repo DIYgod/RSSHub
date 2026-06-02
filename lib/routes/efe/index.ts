@@ -71,13 +71,14 @@ async function handler(ctx) {
 
                 const image = $detail('meta[property="og:image"]').attr('content');
                 const content = $detail('article .entry-content, article .elementor-widget-theme-post-content').first();
-                const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
+                const description = content.html() || '';
 
                 return {
                     title,
                     link,
                     pubDate,
                     description,
+                    image,
                 };
             })
         )
