@@ -34,9 +34,8 @@ export const route: Route = {
 
 async function fetchBlogList(user: string, limit = 20, offset = 0) {
     const url = `${BANGUMI_API_BASE}/users/${user}/blogs`;
-    const response = await ofetch({
+    const response = await ofetch(url, {
         method: 'get',
-        url,
         searchParams: queryString.stringify({
             limit,
             offset,
@@ -51,9 +50,8 @@ async function fetchBlogList(user: string, limit = 20, offset = 0) {
 
 async function fetchBlogDetail(blogId: number) {
     const url = `${BANGUMI_API_BASE}/blogs/${blogId}`;
-    const response = await ofetch({
+    const response = await ofetch(url, {
         method: 'get',
-        url,
         headers: {
             Accept: 'application/json',
             'User-Agent': config.trueUA,
