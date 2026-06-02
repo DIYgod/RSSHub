@@ -43,7 +43,7 @@ async function fetchGroupTopicList(groupId: string, limit = 20, offset = 0) {
 }
 
 async function fetchGroupTopicDetail(topicId: string) {
-    const url = `${apiUrl}/topics/${topicId}`;
+    const url = `${apiUrl}/-/topics/${topicId}`;
     const response = await ofetch(url, {
         method: 'get',
         headers: {

@@ -76,7 +76,7 @@ async function handler(ctx) {
     const blogs = await Promise.all(detailPromises);
 
     // 获取用户昵称
-    const nickname = blogs[0].user.nickname || user;
+    const nickname = blogs[0]?.user.nickname || user;
 
     const items = blogs.map((item) => ({
         title: item.title,
