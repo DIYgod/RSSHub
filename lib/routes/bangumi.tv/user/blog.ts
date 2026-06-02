@@ -1,10 +1,12 @@
-import { config } from '@/config';
 import queryString from 'query-string';
+
+import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import { bbcodeToHtml } from '../utils';
 
-const BANGUMI_API_BASE = "https://next.bgm.tv/p1";
+const BANGUMI_API_BASE = 'https://next.bgm.tv/p1';
 
 export const route: Route = {
     path: '/user/blog/:id',
@@ -33,35 +35,34 @@ export const route: Route = {
 };
 
 async function fetchBlogList(user: string, limit = 20, offset = 0) {
-  const url = `${BANGUMI_API_BASE}/users/${user}/blogs`;
-  const response = await got({
-    method: 'get',
-    url,
-    searchParams: queryString.stringify({
-        limit,
-        offset
-    }),
-    headers: {
-        Accept: 'application/json',
-        'User-Agent': config.trueUA,
-    },
-  });
-  return response.data;
+    const url = `${BANGUMI_API_BASE}/users/${user}/blogs`;
+    const response = await got({
+        method: 'get',
+        url,
+        searchParams: queryString.stringify({
+            limit,
+            offset,
+        }),
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': config.trueUA,
+        },
+    });
+    return response.data;
 }
 
 async function fetchBlogDetail(blogId: number) {
-  const url = `${BANGUMI_API_BASE}/blogs/${blogId}`;
-  const response = await got({
-    method: 'get',
-    url,
-    headers: {
-        Accept: 'application/json',
-        'User-Agent': config.trueUA,
-    },
-  });
-  return response.data;
+    const url = `${BANGUMI_API_BASE}/blogs/${blogId}`;
+    const response = await got({
+        method: 'get',
+        url,
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': config.trueUA,
+        },
+    });
+    return response.data;
 }
-
 
 async function handler(ctx) {
     const user = ctx.req.param('id');
@@ -89,7 +90,8 @@ async function handler(ctx) {
         title: item.title,
         link: `https://bgm.tv/blog/${item.id}`,
         description: bbcodeToHtml(item.content) || '',
-        pubDate: item.createdAt,
+        // API 内的 createdAt 是秒级 Unix 时间戳，乘 1000 转为毫秒
+        pubDate: new Date(item.createdAt * 1000),
         author: nickname,
         category: (item.tags ?? []).map((tag) => tag.name),
     }));
