@@ -20,7 +20,7 @@ function jsonGet(obj, attr) {
 export const route: Route = {
     path: '/transform/json/:url/:routeParams',
     categories: ['other'],
-    example: '/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body',
+    example: '/rsshub/transform/json/https%3A%2F%2Fapi.cross-7.de%2Fpublic%2Fnews%2F321%2Farticles/title=Aktuelle%20Bekanntmachungen&item=items&itemTitle=name&itemLink=link.slug&itemLinkPrefix=https%3A%2F%2Fwww.gemeinde-altheim.de%2Fgemeinde-altheim%2Faktuelles%2Fnews%3Fc7-item%3D&itemDesc=teaserText&itemPubDate=created',
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
         requireConfig: [
@@ -58,17 +58,20 @@ Parameters parsing in the above example:
 
 | Parameter     | Value                                                                    |
 | ------------- | ------------------------------------------------------------------------ |
-| \`url\`         | \`https://api.github.com/repos/ginuerzh/gost/releases\`                    |
-| \`routeParams\` | \`title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body\` |
+| \`url\`         | \`https://api.cross-7.de/public/news/321/articles\`                                                                                                                                                                      |
+| \`routeParams\` | \`title=Aktuelle Bekanntmachungen&item=items&itemTitle=name&itemLink=link.slug&itemLinkPrefix=https%3A%2F%2Fwww.gemeinde-altheim.de%2Fgemeinde-altheim%2Faktuelles%2Fnews%3Fc7-item%3D&itemDesc=teaserText&itemPubDate=created\` |
 
 Parsing of \`routeParams\` parameter:
 
 | Parameter   | Value           |
 | ----------- | --------------- |
-| \`title\`     | \`Gost releases\` |
-| \`itemTitle\` | \`tag_name\`      |
-| \`itemLink\`  | \`html_url\`      |
-| \`itemDesc\`  | \`body\`          |`,
+| \`title\`          | \`Aktuelle Bekanntmachungen\`                                                                       |
+| \`item\`           | \`items\`                                                                                           |
+| \`itemTitle\`      | \`name\`                                                                                            |
+| \`itemLink\`       | \`link.slug\`                                                                                       |
+| \`itemLinkPrefix\` | \`https://www.gemeinde-altheim.de/gemeinde-altheim/aktuelles/news?c7-item=\` |
+| \`itemDesc\`       | \`teaserText\`                                                                                      |
+| \`itemPubDate\`    | \`created\`                                                                                         |`,
 };
 
 async function handler(ctx) {
