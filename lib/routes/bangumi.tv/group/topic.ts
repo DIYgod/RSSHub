@@ -61,7 +61,7 @@ async function handler(ctx) {
 
     // 获取小组话题列表
     const topicListData = await fetchGroupTopicList(groupID, limit, offset);
-    if (!topicListData.data || topicListData.data.length === 0) {
+    if (!topicListData || topicListData.length === 0) {
         return {
             title: `小组 ${groupID} 的话题`,
             link: `${baseUrl}/group/${groupID}`,

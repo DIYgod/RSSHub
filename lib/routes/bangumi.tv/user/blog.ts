@@ -63,7 +63,7 @@ async function handler(ctx) {
 
     // 获取日志列表
     const blogListData = await fetchBlogList(user, limit, offset);
-    if (!blogListData.data || blogListData.data.length === 0) {
+    if (!blogListData || blogListData.length === 0) {
         return {
             title: `${user} 的日志`,
             link: `${baseUrl}/user/${user}/blogs`,
