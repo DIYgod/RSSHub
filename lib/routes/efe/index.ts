@@ -1,0 +1,104 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+const rootUrl = 'https://efe.com';
+
+const categories: Record<string, string> = {
+    mundo: 'Mundo',
+    espana: 'España',
+    economia: 'Economía',
+    cultura: 'Cultura',
+    'ciencia-y-tecnologia': 'Ciencia y Tecnología',
+    deportes: 'Deportes',
+    salud: 'Salud',
+    'medio-ambiente': 'Medio Ambiente',
+    educacion: 'Educación',
+    'euro-efe': 'EuroEFE',
+};
+
+export const route: Route = {
+    path: '/:category?',
+    name: 'Category',
+    maintainers: ['mlkgrnt'],
+    example: '/efe/mundo',
+    parameters: { category: 'Categoría, por defecto mundo', limit: 'Número de noticias, por defecto 20' },
+    handler,
+    categories: ['new-media'],
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['efe.com/:category'],
+            target: '/:category',
+        },
+    ],
+};
+
+async function handler(ctx) {
+    const category = ctx.req.param('category') || 'mundo';
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const pageUrl = `${rootUrl}/${category}/`;
+
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
+
+    const links = new Set<string>();
+    $(`a[href^="${rootUrl}/${category}/"]`).each((_, el) => {
+        const href = $(el).attr('href');
+        if (href && href.match(/\/\d{4}-\d{2}-\d{2}\//)) {
+            links.add(href);
+        }
+    });
+
+    const items = await Promise.all(
+        [...links].slice(0, limit).map((link) =>
+            cache.tryGet(link, async () => {
+                const detail = await ofetch(link);
+                const $detail = load(detail);
+
+                const title = $detail('title').first().text();
+                const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
+                const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
+
+                const image = $detail('meta[property="og:image"]').attr('content');
+                const content = $detail('.elementor-widget-theme-post-content').first();
+                content.find('.auto-banner, .srr-main').remove();
+                content.find('img').each((_, el) => {
+                    const img = $detail(el);
+                    const src = img.attr('src') || '';
+                    if (/logo-efe|logo-EFE-Comunica|GIF-CUENTA-ATRAS/i.test(src)) {
+                        img.remove();
+                    } else {
+                        for (const attr of ['srcset', 'data-recalc-dims', 'fetchpriority', 'decoding', 'loading', 'class', 'style', 'width', 'height']) {
+                            img.removeAttr(attr);
+                        }
+                    }
+                });
+                const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
+
+                return {
+                    title,
+                    link,
+                    pubDate,
+                    description,
+                };
+            })
+        )
+    );
+
+    return {
+        title: `EFE Noticias - ${categories[category] || category}`,
+        link: pageUrl,
+        item: items,
+    };
+}
