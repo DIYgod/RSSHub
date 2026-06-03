@@ -551,6 +551,7 @@ export type RoutePath =
   | `/chinawriter/:id{.+}?`
   | `/chiphell/portal/:catId?`
   | `/chlinlearn/daily-blog`
+  | `/chnmus/information/exhibition/:type?`
   | `/chnmuseum/zl/:type?/:subType?`
   | `/chnmuseum/zx/xingnew`
   | `/chnmuseum/zx/xwzt`

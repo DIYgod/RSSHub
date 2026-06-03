@@ -1668,6 +1668,9 @@
   "/chlinlearn/daily-blog": [
     "huyyi"
   ],
+  "/chnmus/information/exhibition/:type?": [
+    "magazian"
+  ],
   "/chnmuseum/zx/xingnew": [
     "ShabbyWhineYear"
   ],

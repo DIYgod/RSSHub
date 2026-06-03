@@ -11338,6 +11338,19 @@
       }
     ]
   },
+  "chnmus.net": {
+    "_name": "Henan Museum",
+    "www": [
+      {
+        "title": "Special Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/ch/information/exhibition/index.html"
+        ],
+        "target": "/chnmus/information/exhibition"
+      }
+    ]
+  },
   "chnmuseum.cn": {
     "_name": "National Museum Of China",
     ".": [
