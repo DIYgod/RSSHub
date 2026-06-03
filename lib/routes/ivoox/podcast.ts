@@ -47,7 +47,6 @@ async function handler(ctx): Promise<Data> {
         throw new InvalidParameterError(`Invalid iVoox podcast ID: ${rawId}`);
     }
     const id = idMatch[1];
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
     const feedUrl = `${rootUrl}/feed_fg_f${id}_filtro_1.xml`;
     const response = await ofetch(feedUrl, {
         parseResponse: (txt) => txt,
@@ -64,7 +63,6 @@ async function handler(ctx): Promise<Data> {
             channel
                 .children('item')
                 .toArray()
-                .slice(0, Number.isNaN(limit) ? 10 : limit)
                 .map(async (element): Promise<DataItem | undefined> => {
                     const itemElement = $(element);
                     const enclosure = itemElement.children('enclosure');
