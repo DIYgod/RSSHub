@@ -9,11 +9,6 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.ivoox.com';
-const itunesAuthorSelector = String.raw`itunes\:author`;
-const itunesCategorySelector = String.raw`itunes\:category`;
-const itunesDurationSelector = String.raw`itunes\:duration`;
-const itunesExplicitSelector = String.raw`itunes\:explicit`;
-const itunesImageSelector = String.raw`itunes\:image`;
 
 export const route: Route = {
     path: '/podcast/:id',
@@ -46,7 +41,12 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const id = normalizePodcastId(ctx.req.param('id'));
+    const rawId: string = ctx.req.param('id');
+    const idMatch = /^f?(\d+)$/i.exec(rawId);
+    if (!idMatch) {
+        throw new InvalidParameterError(`Invalid iVoox podcast ID: ${rawId}`);
+    }
+    const id = idMatch[1];
     const limit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
     const feedUrl = `${rootUrl}/feed_fg_f${id}_filtro_1.xml`;
     const response = await ofetch(feedUrl, {
@@ -54,7 +54,7 @@ async function handler(ctx): Promise<Data> {
     });
 
     const $ = load(response, { xmlMode: true });
-    const channel = $('channel').first();
+    const channel = $('channel');
     if (!channel.length) {
         throw new Error(`Invalid iVoox podcast feed for ID ${id}`);
     }
@@ -67,7 +67,7 @@ async function handler(ctx): Promise<Data> {
                 .slice(0, Number.isNaN(limit) ? 10 : limit)
                 .map(async (element): Promise<DataItem | undefined> => {
                     const itemElement = $(element);
-                    const enclosure = itemElement.children('enclosure').first();
+                    const enclosure = itemElement.children('enclosure');
                     const enclosureUrl = enclosure.attr('url');
                     const itemId = normalizeEpisodeId(childText(itemElement, 'guid') || childText(itemElement, 'link'));
 
@@ -76,7 +76,7 @@ async function handler(ctx): Promise<Data> {
                     }
 
                     const title = childText(itemElement, 'title');
-                    const image = childAttr(itemElement, itunesImageSelector, 'href');
+                    const image = childAttr(itemElement, String.raw`itunes\:image`, 'href');
                     const length = parseOptionalInteger(enclosure.attr('length'));
                     const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl, childText(itemElement, 'link')) : enclosureUrl;
 
@@ -90,7 +90,7 @@ async function handler(ctx): Promise<Data> {
                         enclosure_type: enclosure.attr('type') || mediaTypeFromUrl(resolvedEnclosureUrl),
                         enclosure_title: title,
                         ...(length === undefined ? {} : { enclosure_length: length }),
-                        itunes_duration: childText(itemElement, itunesDurationSelector) || undefined,
+                        itunes_duration: childText(itemElement, String.raw`itunes\:duration`) || undefined,
                         itunes_item_image: image,
                     };
                 })
@@ -102,23 +102,14 @@ async function handler(ctx): Promise<Data> {
         description: childText(channel, 'description') || undefined,
         link: childText(channel, 'link') || rootUrl,
         item: items,
-        image: childText(channel.children('image').first(), 'url') || childAttr(channel, itunesImageSelector, 'href'),
-        itunes_image: childAttr(channel, itunesImageSelector, 'href') || childText(channel.children('image').first(), 'url') || undefined,
+        image: childText(channel.children('image').first(), 'url') || childAttr(channel, String.raw`itunes\:image`, 'href'),
+        itunes_image: childAttr(channel, String.raw`itunes\:image`, 'href') || childText(channel.children('image').first(), 'url') || undefined,
         language: normalizeLanguage(childText(channel, 'language')),
         feedLink: feedUrl,
-        itunes_author: childText(channel, itunesAuthorSelector) || undefined,
-        itunes_category: childAttr(channel, itunesCategorySelector, 'text'),
-        itunes_explicit: childText(channel, itunesExplicitSelector) || undefined,
+        itunes_author: childText(channel, String.raw`itunes\:author`) || undefined,
+        itunes_category: childAttr(channel, String.raw`itunes\:category`, 'text'),
+        itunes_explicit: childText(channel, String.raw`itunes\:explicit`) || undefined,
     };
-}
-
-function normalizePodcastId(id: string): string {
-    const match = /^f?(\d+)$/i.exec(id);
-    if (!match) {
-        throw new InvalidParameterError(`Invalid iVoox podcast ID: ${id}`);
-    }
-
-    return match[1];
 }
 
 function normalizeEpisodeId(value: string): string | undefined {
