@@ -27,8 +27,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # playwright install hangs in node v26.1.0, https://github.com/microsoft/playwright/issues/40724
-                node-version: [26.0.0, lts/*, lts/-1]
+                node-version: [latest, lts/*, lts/-1]
         name: Vitest on Node ${{ matrix.node-version }}
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -63,7 +62,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                node-version: [26.0.0, lts/*, lts/-1]
+                node-version: [latest, lts/*, lts/-1]
                 chromium:
                     - name: bundled Chromium
                       dependency: ''
