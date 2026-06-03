@@ -304,7 +304,7 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
     // 对后缀两次sm3之的结果
     const cus = sm3.sum(sm3.sum(suffix));
     // 对ua处理之后的结果
-    const ua = sm3.sum(result_encrypt(rc4_encrypt(user_agent, Reflect.apply(String.fromCodePoint, null, [0.003_906_25, 1, 14])), 's3'));
+    const ua = sm3.sum(result_encrypt(rc4_encrypt(user_agent, Reflect.apply(String.fromCodePoint, null, [Math.floor(0.003_906_25), 1, 14])), 's3'));
     //
     const end_time = Date.now();
     // b
