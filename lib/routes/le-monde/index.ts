@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -127,14 +126,6 @@ async function handler(ctx) {
         link: feedLink,
         description: feedTitle || 'Le Monde',
         language: 'fr',
-        item: items.map((item) =>
-            cache.tryGet(item.link, () => ({
-                title: item.title,
-                link: item.link,
-                pubDate: item.pubDate,
-                description: item.description,
-                guid: item.guid,
-            }))
-        ),
+        item: items,
     };
 }
