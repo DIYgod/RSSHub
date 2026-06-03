@@ -87,18 +87,26 @@ jobs:
                       {
                         "bash": {
                           "*": "deny",
-                          "gh auth*": "allow",
-                          "gh pr*": "allow",
-                          "gh api*": "allow",
-                          "gh search*": "allow",
-                          "grep*": "allow",
-                          "git*": "allow",
-                          "ls*": "allow",
-                          "sed*": "allow",
+                          "base64*": "allow",
                           "cat*": "allow",
                           "echo*": "allow",
+                          "gh api*": "allow",
+                          "gh auth*": "allow",
+                          "gh pr comment*": "allow",
+                          "gh pr diff*": "allow",
+                          "gh pr view*": "allow",
+                          "gh repo view*": "allow",
+                          "gh search*": "allow",
+                          "git diff*": "allow",
+                          "git log*": "allow",
+                          "git show*": "allow",
+                          "git status*": "allow",
+                          "grep*": "allow",
                           "head*": "allow",
-                          "base64*": "allow"
+                          "ls*": "allow",
+                          "sed*": "allow",
+                          "tail*": "allow",
+                          "wc*": "allow"
                         },
                         "webfetch": "deny"
                       }
