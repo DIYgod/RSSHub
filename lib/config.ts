@@ -191,6 +191,8 @@ type ConfigEnvKeys =
     | 'SIS001_BASE_URL'
     | 'SKEB_BEARER_TOKEN'
     | 'SORRYCC_COOKIES'
+    | 'SOUTHPLUS_COOKIE'
+    | 'SOUTHPLUS_UA'
     | 'SPOTIFY_CLIENT_ID'
     | 'SPOTIFY_CLIENT_SECRET'
     | 'SPOTIFY_REFRESHTOKEN'
@@ -400,6 +402,10 @@ export type Config = {
     };
     douban: {
         cookie?: string;
+    };
+    southplus: {
+        cookie?: string;
+        ua?: string;
     };
     ehentai: {
         ipb_member_id?: string;
@@ -902,6 +908,10 @@ const calculateValue = () => {
         },
         douban: {
             cookie: envs.DOUBAN_COOKIE,
+        },
+        southplus: {
+            cookie: envs.SOUTHPLUS_COOKIE,
+            ua: envs.SOUTHPLUS_UA,
         },
         ehentai: {
             ipb_member_id: envs.EH_IPB_MEMBER_ID,
