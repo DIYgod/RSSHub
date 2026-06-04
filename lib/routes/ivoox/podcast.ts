@@ -47,7 +47,7 @@ async function handler(ctx): Promise<Data> {
         throw new InvalidParameterError(`Invalid iVoox podcast ID: ${rawId}`);
     }
     const id = idMatch[1];
-    const feedUrl = `${rootUrl}/feed_fg_f${id}_filtro_1.xml`;
+    const feedUrl = `https://feeds.ivoox.com/feed_fg_f${id}_filtro_1.xml`;
     const response = await ofetch(feedUrl);
 
     const $ = load(response, { xmlMode: true });
