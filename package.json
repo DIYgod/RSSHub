@@ -133,7 +133,7 @@
         "tsx": "4.22.4",
         "twitter-api-v2": "1.29.0",
         "ufo": "1.6.4",
-        "undici": "7.25.0",
+        "undici": "8.3.0",
         "uuid": "14.0.0",
         "winston": "3.19.0",
         "xxhash-wasm": "1.1.0",
