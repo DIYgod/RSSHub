@@ -129,21 +129,13 @@ export const route: Route = {
                     }
 
                     // Special path to return detail exhibition information
-                    // 1. 优先获取正文纯文本，如果正文没有，再用 meta description 兜底
-                    let rawText = content('.content.f16').text() || content('meta[name="description"]').attr('content') || '';
+                    let rawText = content('.content.f16').text() || ''; // get descption text from detail page
 
-                    // 2. 清除富文本里所有的空格、回车、换行（防止它们打断文案）
-                    // 此时 rawText 变成了类似："展览时间：2025年...展览地点：河北博物院..." 的紧凑字符串
                     rawText = rawText.replaceAll(/\s+/g, '');
 
-                    // 3. 利用 split 切割成数组（完美适配你的 .find 逻辑）
-                    // 注意：我在正则里为你加上了刚刚发现的“展出地点：”
                     const texts = rawText.split(/(?=展览名称：|展览时间：|时间：|展览地点：|展出地点：|地点：)/);
 
-                    // =================================================================
-                    // 下面的逻辑几乎还是你原来的配方，只在 location 判断里加了“展出地点”
-                    // =================================================================
-
+                    // use fullDration to extract startDate and endDate, if fullDuration is not exist, return empty data
                     const fullDuration = texts
                         .find((text) => text.includes('展览时间：') || text.includes('时间：'))
                         ?.replaceAll(/展览时间：|时间：/g, '')
@@ -153,35 +145,28 @@ export const route: Route = {
                         return {} as Record<string, any>;
                     }
 
-                    let location = texts
-                        // 新增：兼容“展出地点：”
-                        .find((text) => text.includes('展览地点：') || text.includes('展出地点：') || text.includes('地点：'))
-                        ?.replaceAll(/展览地点：|展出地点：|地点：/g, '')
-                        ?.trim();
+                    let location =
+                        texts
+                            .find((text) => text.includes('展览地点：') || text.includes('展出地点：') || text.includes('地点：'))
+                            ?.replaceAll(/展览地点：|展出地点：|地点：/g, '')
+                            ?.trim() || '';
 
-                    const locMatch = location.match(/^.*?(?:展厅)/);
+                    const locMatch = location.match(/^.*?(?:展厅)/) || [''];
 
                     location = locMatch[0];
 
-                    let title = texts
-                        .find((text) => text.includes('展览名称：'))
-                        ?.replaceAll('展览名称：', '')
-                        ?.trim();
+                    let title = texts.find((text) => text.includes('展览名称：'))?.replaceAll('展览名称：', '');
 
-                    // 1.2 有展览时间的话，判断有没有 title。没有 title 且外部有 item.title 时，尝试提取
-                    if (!title && item.title) {
-                        // 优先尝试提取中文 “” 或英文 "" 内的内容
+                    // Some exhibition titles are not in the format of "展览名称: xxx", try to extract title from the original list title if the above method failed
+                    if (!title) {
+                        // try get the title between “” or 《》, if not exist, get the text after '|' in the original list title
                         const quoteMatch = item.title.match(/[“《](.*?)[”》]/);
 
                         if (quoteMatch) {
-                            title = quoteMatch[1].trim();
+                            title = quoteMatch[1];
                         } else if (item.title.includes('|')) {
-                            // 如果没有引号，但包含 '|'，提取 '|' 后面的内容
                             const pipeParts = item.title.split('|');
-                            title = pipeParts.at(-1)?.trim();
-                        } else {
-                            // 兜底逻辑：如果既没有引号也没有 '|'，直接使用原标题以防数据丢失
-                            title = item.title.trim();
+                            title = pipeParts.at(-1);
                         }
                     }
 
@@ -231,7 +216,7 @@ export const route: Route = {
         );
 
         return {
-            title: `${museumName} - 展览资讯${isSpecial ? ' - 特展详情' : ''}`,
+            title: `${museumName} - 临时展览${isSpecial ? ' - 特展详情' : ''}`,
             link: apiUrl,
             language: 'zh-CN',
             item: items.filter((item) => item.title) as DataItem[],
