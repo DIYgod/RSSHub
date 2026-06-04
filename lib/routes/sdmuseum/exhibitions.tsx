@@ -93,12 +93,9 @@ export const route: Route = {
                     const imgUrlRaw = $item('.img img').attr('src') || '';
                     const imgUrl = new URL(imgUrlRaw, baseUrl).href;
 
-                    const location = $item('.item.add')
-                        .text()
-                        .replace(/地点\s*:\s*/, '')
-                        .trim();
+                    const location = $item('.item.add').text().trim();
                     const fullDuration = $item('.item.time').text().trim();
-                    const fullDurationDate = fullDuration.replace(/开展时间\s*[:：]\s*/, '').trim();
+                    const fullDurationDate = fullDuration.replace(/开展时间\s*[:：]\s*/, '').trim(); // use regex to remove "开展时间" prefix if it exists, so replace is used here.
 
                     const { startDate, endDate } = extractDates(fullDurationDate);
 
