@@ -10,7 +10,7 @@ import { fetchArticle } from './utils';
 export const route: Route = {
     path: '/mobile/:path{.+}?',
     categories: ['traditional-media'],
-    example: '/apnews/mobile/',
+    example: '/apnews/mobile',
     view: ViewType.Articles,
     parameters: {
         path: {
