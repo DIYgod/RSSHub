@@ -25,7 +25,7 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['mlkgrnt'],
     example: '/efe/mundo',
-    parameters: { category: 'Categoría, por defecto mundo', limit: 'Número de noticias, por defecto 20' },
+    parameters: { category: 'Categoría, por defecto mundo' },
     handler,
     categories: ['new-media'],
     features: {
@@ -53,9 +53,9 @@ async function handler(ctx) {
     const $ = load(response);
 
     const links = new Set<string>();
-    $(`a[href^="${rootUrl}/${category}/"]`).each((_, el) => {
+    $('.elementor-loop-container a[href]').each((_, el) => {
         const href = $(el).attr('href');
-        if (href && href.match(/\/\d{4}-\d{2}-\d{2}\//)) {
+        if (href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
             links.add(href);
         }
     });
@@ -71,15 +71,15 @@ async function handler(ctx) {
                 const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
 
                 const image = $detail('meta[property="og:image"]').attr('content');
-                const content = $detail('.elementor-widget-theme-post-content').first();
-                content.find('.auto-banner, .srr-main').remove();
+                const content = $detail('.elementor-widget-theme-post-content');
+                content.find('.auto-banner').remove();
                 content.find('img').each((_, el) => {
                     const img = $detail(el);
                     const src = img.attr('src') || '';
                     if (/logo-efe|logo-EFE-Comunica|GIF-CUENTA-ATRAS/i.test(src)) {
                         img.remove();
                     } else {
-                        for (const attr of ['srcset', 'data-recalc-dims', 'fetchpriority', 'decoding', 'loading', 'class', 'style', 'width', 'height']) {
+                        for (const attr of ['srcset', 'data-recalc-dims', 'fetchpriority', 'class', 'style', 'width', 'height']) {
                             img.removeAttr(attr);
                         }
                     }
