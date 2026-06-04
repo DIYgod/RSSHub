@@ -6,7 +6,6 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import proxy from '@/utils/proxy';
 
 const BASE_URL = 'https://south-plus.net';
 
@@ -27,7 +26,7 @@ async function handler(ctx) {
         headers.Cookie = cookie;
     }
 
-    const response = await fetch(forumUrl, { headers, dispatcher: proxy.dispatcher });
+    const response = await fetch(forumUrl, { headers });
     const html = await response.text();
     const $ = load(html);
 
@@ -93,7 +92,7 @@ async function handler(ctx) {
         (item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const detailResponse = await fetch(item.link, { headers, dispatcher: proxy.dispatcher });
+                    const detailResponse = await fetch(item.link, { headers });
                     const detailHtml = await detailResponse.text();
                     const $detail = load(detailHtml);
 
