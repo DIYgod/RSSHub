@@ -15,7 +15,7 @@ jobs:
             pull-requests: write
         steps:
             - name: Checkout the latest code
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
               with:
                   fetch-depth: 0
             - name: Automatic Rebase
@@ -49,7 +49,7 @@ jobs:
             group: vouch-manage
             cancel-in-progress: false
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
             - id: vouch
               uses: mitchellh/vouch/action/manage-by-issue@c6d80ead49839655b61b422700b7a3bc9d0804a9 # v1.4.2
@@ -102,11 +102,11 @@ jobs:
 
             - name: Checkout
               if: ${{ !github.event.issue.pull_request }}
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
             - name: Checkout PR
               if: github.event.issue.pull_request
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
               with:
                   ref: ${{ fromJson(steps.pr-data.outputs.data).head.ref }}
 

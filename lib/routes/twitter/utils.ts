@@ -66,6 +66,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.get('sizeOfAuthorAvatar')), 48),
         sizeOfQuotedAuthorAvatar: fallback(params.sizeOfQuotedAuthorAvatar, queryToInteger(routeParams.get('sizeOfQuotedAuthorAvatar')), 24),
         mediaNumber: fallback(params.mediaNumber, queryToInteger(routeParams.get('mediaNumber')), false),
+        showEmojiForSubscriberOnly: fallback(params.showEmojiForSubscriberOnly, queryToBoolean(routeParams.get('showEmojiForSubscriberOnly')), false),
+        showSymbolForSubscriberOnly: fallback(params.showSymbolForSubscriberOnly, queryToBoolean(routeParams.get('showSymbolForSubscriberOnly')), true),
+        showFullPrefixForSubscriberOnly: fallback(params.showFullPrefixForSubscriberOnly, queryToBoolean(routeParams.get('showFullPrefixForSubscriberOnly')), false),
     };
 
     params = mergedParams;
@@ -85,6 +88,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         showTimestampInDescription,
         showQuotedInTitle,
         mediaNumber,
+        showEmojiForSubscriberOnly,
+        showSymbolForSubscriberOnly,
+        showFullPrefixForSubscriberOnly,
         widthOfPics,
         heightOfPics,
         sizeOfAuthorAvatar,
@@ -198,6 +204,12 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
     };
 
     return data.map((item) => {
+        // Handle subscriber-only prefix based on user preference
+        if (item.full_text?.startsWith('[Subscribers Only]')) {
+            const text = item.full_text.replace('[Subscribers Only] ', '');
+            const prefix = showFullPrefixForSubscriberOnly ? '🔒 [Subscribers Only] ' : showEmojiForSubscriberOnly ? '🔒 ' : showSymbolForSubscriberOnly ? '[Subscribers Only] ' : '';
+            item.full_text = `${prefix}${text}`;
+        }
         const originalItem = item;
         item = item.retweeted_status || item;
         item.full_text = item.full_text || item.text;

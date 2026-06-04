@@ -27,11 +27,10 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # playwright install hangs in node v26.1.0, https://github.com/microsoft/playwright/issues/40724
-                node-version: [26.0.0, lts/*, lts/-1]
+                node-version: [latest, lts/*, lts/-1]
         name: Vitest on Node ${{ matrix.node-version }}
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
             - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
             - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
@@ -63,7 +62,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                node-version: [26.0.0, lts/*, lts/-1]
+                node-version: [latest, lts/*, lts/-1]
                 chromium:
                     - name: bundled Chromium
                       dependency: ''
@@ -76,7 +75,7 @@ jobs:
                       environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
         name: Vitest Playwright on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
             - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
             - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
@@ -125,7 +124,7 @@ jobs:
                 node-version: [26, 24, 22]
         name: Build radar and maintainer on Node ${{ matrix.node-version }}
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
             - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
             - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
@@ -15,8 +15,8 @@ export const handler = async (ctx) => {
     const currentUrl = new URL(`subject/${id}`, rootUrl).href;
     const apiUrl = new URL(`api/subject/${id}/article`, rootUrl).href;
 
-    const { data: response } = await got(apiUrl, {
-        searchParams: getSearchParams({
+    const response = await ofetch(apiUrl, {
+        query: getSearchParams({
             Subject_Id: id,
         }),
     });
@@ -50,11 +50,11 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
+                const detailResponse = await ofetch(item.link);
 
                 const $$ = load(detailResponse);
 
-                const data = JSON.parse($$('script#__NEXT_DATA__').text())?.props?.initialState?.detail?.articleDetail ?? undefined;
+                const data = JSON.parse($$('script#__NEXT_DATA__').text())?.props?.pageProps?.articleDetail ?? undefined;
 
                 if (!data) {
                     return item;
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
 
                 const title = data.title;
                 const description = renderDescription({
-                    images: data.images.map((i) => ({
+                    images: data.images?.map((i) => ({
                         src: i,
                         alt: title,
                     })),
@@ -94,11 +94,11 @@ export const handler = async (ctx) => {
         )
     );
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch(currentUrl);
 
     const $ = load(currentResponse);
 
-    const data = JSON.parse($('script#__NEXT_DATA__').text())?.props?.initialProps?.pageProps?.subjectDetail ?? undefined;
+    const data = JSON.parse($('script#__NEXT_DATA__').text())?.props?.pageProps?.data ?? undefined;
 
     const author = '财联社';
     const image = data?.img ?? undefined;
