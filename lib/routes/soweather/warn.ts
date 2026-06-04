@@ -9,7 +9,6 @@ import timezone from '@/utils/timezone';
 const rootUrl = 'https://wx.soweather.com';
 const pageUrl = `${rootUrl}/wxapp/warn.jsp`;
 const dataUrl = `${rootUrl}/wxapp/jsondata/warn.js`;
-const cacheMaxAge = 5 * 60;
 const specialIssuers = new Set(['上海市民防办', '中国铁路上海局集团有限公司上海站', '上海申通地铁集团有限公司', '市交通委指挥中心']);
 const warningGroups = [
     ['市级预警', 'warns'],
@@ -35,7 +34,7 @@ interface RawWarning {
 }
 
 async function handler(): Promise<Data | null> {
-    const response = await cache.tryGet(`soweather:warn:${dataUrl}`, () => ofetch<string>(dataUrl, { parseResponse: (txt) => txt }), cacheMaxAge);
+    const response = await cache.tryGet(`soweather:warn:${dataUrl}`, () => ofetch<string>(dataUrl, { parseResponse: (txt) => txt }));
     const warnings = warningGroups.flatMap(([groupName, variableName]) =>
         parseWarnings(response, variableName)
             .filter((warning) => isRealWarning(warning))
