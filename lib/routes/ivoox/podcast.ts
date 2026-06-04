@@ -1,3 +1,4 @@
+import type { AnyNode, Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import { decodeHTML } from 'entities';
 
@@ -65,7 +66,7 @@ async function handler(ctx): Promise<Data> {
                     const itemElement = $(element);
                     const enclosure = itemElement.children('enclosure');
                     const enclosureUrl = enclosure.attr('url');
-                    const itemId = normalizeEpisodeId(childText(itemElement, 'guid') || childText(itemElement, 'link'));
+                    const itemId = normalizeEpisodeId(childText(itemElement, 'guid'));
 
                     if (!enclosureUrl) {
                         return;
@@ -148,11 +149,11 @@ function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string, referer: s
     });
 }
 
-function childText(element, selector: string): string {
+function childText(element: Cheerio<AnyNode>, selector: string): string {
     return decodeHTML(element.children(selector).text());
 }
 
-function childAttr(element, selector: string, attribute: string): string | undefined {
+function childAttr(element: Cheerio<AnyNode>, selector: string, attribute: string): string | undefined {
     return element.children(selector).attr(attribute);
 }
 
