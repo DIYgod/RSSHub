@@ -6,15 +6,14 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import proxy from '@/utils/proxy';
 
 const BASE_URL = 'https://south-plus.net';
-
-const DEFAULT_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0';
 
 async function handler(ctx) {
     const fid = ctx.req.param('fid') ?? '8';
     const cookie = config.southplus.cookie;
-    const ua = config.southplus.ua || DEFAULT_UA;
+    const ua = config.southplus.ua || config.trueUA;
 
     const forumUrl = `${BASE_URL}/thread.php?fid-${fid}.html`;
 
@@ -28,7 +27,7 @@ async function handler(ctx) {
         headers.Cookie = cookie;
     }
 
-    const response = await fetch(forumUrl, { headers });
+    const response = await fetch(forumUrl, { headers, dispatcher: proxy.dispatcher });
     const html = await response.text();
     const $ = load(html);
 
@@ -94,7 +93,7 @@ async function handler(ctx) {
         (item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const detailResponse = await fetch(item.link, { headers });
+                    const detailResponse = await fetch(item.link, { headers, dispatcher: proxy.dispatcher });
                     const detailHtml = await detailResponse.text();
                     const $detail = load(detailHtml);
 
@@ -169,6 +168,15 @@ eb9e6_winduser=XXXX...XXXX%3D%3D; eb9e6_cknum=YYYY...YYYY%3D; eb9e6_ck_info=%2F%
 \`\`\`
 
 \`eb9e6_winduser\` 和 \`eb9e6_cknum\` 是必需的认证 cookie，其余可选。
+:::
+
+::: tip UA 说明
+South Plus 服务器会校验 Cookie 与浏览器 User-Agent 的绑定关系。Cookie 仅在登录时使用的浏览器版本下有效，不同版本或不同平台的 UA 均会被拒绝。
+
+如需更换 Cookie，请同时更新 \`SOUTHPLUS_UA\` 为对应浏览器的 UA 字符串。
+
+如果 Cookie 是通过代理获取的，需设置 RSSHub 全局环境变量 \`PROXY_URI\`（如 \`http://host:port\`），否则服务器会拒绝认证。
+:::
 :::`,
     features: {
         requireConfig: [
@@ -180,7 +188,7 @@ eb9e6_winduser=XXXX...XXXX%3D%3D; eb9e6_cknum=YYYY...YYYY%3D; eb9e6_ck_info=%2F%
             {
                 name: 'SOUTHPLUS_UA',
                 optional: true,
-                description: '浏览器 User-Agent，需与获取 Cookie 时使用的浏览器版本一致。默认为 Firefox 151。',
+                description: '浏览器 User-Agent，需与获取 Cookie 时使用的浏览器版本完全一致。可从浏览器 F12 → Network → 请求头中复制。未设置时使用 RSSHub 内置 UA。',
             },
         ],
         requirePuppeteer: false,
