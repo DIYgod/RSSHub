@@ -1,4 +1,0 @@
-<p>{{ briefIntroduction }}</p>
-{{ if mainImage }}
-    <img src="{{ mainImage }}"/>
-{{ /if }}

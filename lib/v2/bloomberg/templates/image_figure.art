@@ -1,9 +1,0 @@
-<figure>
-    <img src="{{ src }}" alt="{{ alt }}" loading="lazy" style="display:block; margin-left:auto; margin-right:auto;" width:100%;>
-    {{if caption}}
-    <figcaption>
-        <div class="caption">{{@ caption }}</div>
-        <div class="credit">{{@ credit }}</div>
-    </figcaption>
-    {{/if}}
-</figure>

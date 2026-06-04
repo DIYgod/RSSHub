@@ -1,8 +1,8 @@
 #!/bin/bash
 
-MAX_RETRIES=60
+MAX_RETRIES=12
 # Try running the docker and get the output
-# then try getting homepage in 3 mins
+# then try getting homepage in 1 minute
 
 docker run -d -p 1200:1200 rsshub:latest
 
@@ -21,7 +21,7 @@ while [[ $? -ne 0 ]] && [[ $RETRY -lt $MAX_RETRIES ]]; do
     curl -m 10 localhost:1200
 done
 
-if [[ $RETRY -gt $MAX_RETRIES ]]
+if [[ $RETRY -ge $MAX_RETRIES ]]
 then
     echo "Unable to run, aborted"
     exit 1

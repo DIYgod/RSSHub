@@ -1,0 +1,15 @@
+app = "rsshub"
+
+[http_service]
+internal_port = 1200
+force_https = true
+auto_stop_machines = "suspend"
+auto_start_machines = true
+min_machines_running = 1
+
+[[http_service.checks]]
+grace_period = "10s"
+interval = "30s"
+method = "GET"
+timeout = "5s"
+path = "/healthz"

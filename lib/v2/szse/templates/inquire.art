@@ -1,6 +1,0 @@
-<p>公司代码：{{ item.gsdm }}</p>
-<p>公司简称：{{ item.gsjc }}</p>
-<p>发函日期：{{ item.fhrq }}</p>
-<p>函件类别：{{ item.hjlb }}</p>
-<p>函件内容：<a href="{{ item.ck }}">详细内容</a></p>
-<p>公司回复：{{@ item.hfck }}</p>

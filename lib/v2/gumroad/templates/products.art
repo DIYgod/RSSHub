@@ -1,7 +1,0 @@
-<img src="{{img}}"/>
-<h1>{{productsName}}</h1>
-<p style="color: red;">{{price}}</p>
-{{@ desc}}
-<hr>
-{{@ stack}}
-

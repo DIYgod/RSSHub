@@ -1,5 +1,0 @@
-<h1>{{ title }}</h1>
-<p>{{ description }}</p>
-<b>Latest: <a href="{{ url }}">{{ linkTitle }}</a>{{ if source }}&nbsp({{ source }}){{ /if }}</b>
-<p>{{@ content }}</p>
-<small>{{ pubDate }}</small>

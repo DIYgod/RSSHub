@@ -1,0 +1,206 @@
+name: PR - route test
+
+on:
+    workflow_run:
+        workflows: [PR - Docker build test] # open, reopen, synchronized, edited included
+        types: [completed]
+
+jobs:
+    testRoute:
+        name: Route test
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+        if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
+        steps:
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
+            - name: Search the PR that triggered this workflow
+              id: source-run-info
+              env:
+                  # Token required for GH CLI:
+                  GH_TOKEN: ${{ github.token }}
+                  # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
+              # Query the PR number by repo + branch, then assign to step output:
+              run: |
+                  gh api "repos/${PR_TARGET_REPO}/pulls" \
+                    --method GET -f head="${PR_BRANCH}" -f state=all \
+                    --jq '.[0] | "number=\(.number)"' \
+                    >> "${GITHUB_OUTPUT}"
+
+            - name: Fetch PR data via GitHub API
+              uses: octokit/request-action@b91aabaa861c777dcdb14e2387e30eddf04619ae # v3.0.0
+              id: pr-data
+              with:
+                  route: GET /repos/{repo}/pulls/{number}
+                  repo: ${{ github.repository }}
+                  number: ${{ steps.source-run-info.outputs.number }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: Install dependencies (pnpm) # require js-beautify
+              run: pnpm i
+
+            - name: Fetch affected routes
+              id: fetch-route
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              env:
+                  PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
+              with:
+                  # by default, JSON format returned
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const PR = JSON.parse(process.env.PULL_REQUEST)
+                      const body = PR.body
+                      const number = PR.number
+                      const sender = PR.user.login
+                      const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+                      return identify({ github, context, core }, body, number, sender)
+
+            - name: Fetch Docker image
+              if: (env.TEST_CONTINUE)
+              uses: dawidd6/action-download-artifact@b6e2e70617bc3265edd6dab6c906732b2f1ae151 # v21
+              with:
+                  workflow: ${{ github.event.workflow_run.workflow_id }}
+                  run_id: ${{ github.event.workflow_run.id }}
+                  name: docker-image
+                  path: ../artifacts-${{ github.run_id }}
+
+            - name: Import Docker image and set up Docker container
+              if: (env.TEST_CONTINUE)
+              working-directory: ../artifacts-${{ github.run_id }}
+              run: |
+                  set -ex
+                  zstd -d --stdout rsshub.tar.zst | docker load
+                  docker run -d \
+                    --name rsshub \
+                    -e NODE_ENV=dev \
+                    -e NODE_OPTIONS='--max-http-header-size=32768' \
+                    -e LOGGER_LEVEL=debug \
+                    -e ALLOW_USER_HOTLINK_TEMPLATE=true \
+                    -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
+                    -p 1200:1200 \
+                    rsshub:latest
+
+            - name: Wait for RSSHub startup
+              if: (env.TEST_CONTINUE)
+              env:
+                  TEST_BASEURL: http://localhost:1200
+              run: |
+                  set -euo pipefail
+                  healthcheck_url="$TEST_BASEURL/healthz"
+
+                  for _ in $(seq 1 30); do
+                      if curl --silent --show-error --fail "$healthcheck_url" >/dev/null; then
+                          exit 0
+                      fi
+
+                      if [ "$(docker inspect -f '{{.State.Status}}' rsshub 2>/dev/null)" != 'running' ]; then
+                          docker logs rsshub || true
+                          echo "rsshub container exited before becoming ready"
+                          exit 1
+                      fi
+
+                      sleep 1
+                  done
+
+                  docker logs rsshub || true
+                  echo "Timed out waiting for RSSHub health check: $healthcheck_url"
+                  exit 1
+
+            - name: Generate feedback
+              if: (env.TEST_CONTINUE)
+              id: generate-feedback
+              timeout-minutes: 10
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              env:
+                  TEST_BASEURL: http://localhost:1200
+                  TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
+                  PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const PR = JSON.parse(process.env.PULL_REQUEST)
+                      const link = process.env.TEST_BASEURL
+                      const routes = JSON.parse(process.env.TEST_ROUTES)
+                      const number = PR.number
+                      core.info(`${link}, ${routes}, ${number}`)
+                      const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+                      await test({ github, context, core }, link, routes, number)
+
+            - name: Pull Request Labeler
+              if: ${{ failure() }}
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ steps.source-run-info.outputs.number }},
+                          labels: ['auto: DO NOT merge'],
+                      })
+
+            - name: Print Docker container logs
+              if: ${{ always() }}
+              run: docker logs rsshub || true # logs/combined.log? Not so readable...
+
+    fail-build:
+        name: Fail build
+        runs-on: ubuntu-slim
+        permissions:
+            pull-requests: write
+        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        steps:
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
+            - name: Search the PR that triggered this workflow
+              id: source-run-info
+              env:
+                  # Token required for GH CLI:
+                  GH_TOKEN: ${{ github.token }}
+                  # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
+              # Query the PR number by repo + branch, then assign to step output:
+              run: |
+                  gh api "repos/${PR_TARGET_REPO}/pulls" \
+                    --method GET -f head="${PR_BRANCH}" -f state=all \
+                    --jq '.[0] | "number=\(.number)\nauthor_association=\(.author_association)"' \
+                    >> "${GITHUB_OUTPUT}"
+
+            - name: Pull Request Labeler
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ steps.source-run-info.outputs.number }},
+                          labels: ['auto: DO NOT merge'],
+                      })
+
+            - name: Close broken PR
+              if: ${{ steps.source-run-info.outputs.author_association != 'OWNER' && steps.source-run-info.outputs.author_association != 'COLLABORATOR' && steps.source-run-info.outputs.author_association != 'MEMBER' }}
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.update({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ steps.source-run-info.outputs.number }},
+                          state: 'closed',
+                      })

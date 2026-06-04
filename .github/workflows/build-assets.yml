@@ -1,31 +1,74 @@
-name: build assets
+name: Build assets
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'lib/**'
-      - 'scripts/workflow/*.js'
+    workflow_dispatch:
+    push:
+        branches:
+            - master
+        paths:
+            - 'lib/**/*.ts'
+            - 'lib/**/*.tsx'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Build assets
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Use Node.js v18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - name: Build file
-        run: yarn && npm run build:all
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./assets
-          user_name: 'github-actions[bot]'
-          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+    build:
+        runs-on: ubuntu-slim
+        name: Build assets
+        timeout-minutes: 10
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+            - name: Install pnpm
+              uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+            - name: Use Node.js Active LTS
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - name: Install dependencies (yarn)
+              run: pnpm i
+
+            # assets
+            - name: Build assets
+              run: pnpm build
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./assets
+                  user_name: 'github-actions[bot]'
+                  user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+                  # prevent deleting build/test-full-routes.json which will break build:docs
+                  keep_files: true
+
+            # docs
+            - name: Build docs
+              run: pnpm build:docs
+            - id: check-docs-env
+              env:
+                  DOCS_API_TOKEN: ${{ secrets.DOCS_API_TOKEN }}
+              if: ${{ env.DOCS_API_TOKEN != '' }}
+              run: echo "defined=true" >> $GITHUB_OUTPUT
+            - name: Checkout docs
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              if: steps.check-docs-env.outputs.defined == 'true'
+              with:
+                  repository: 'RSSNext/rsshub-docs'
+                  token: ${{ secrets.DOCS_API_TOKEN }}
+                  path: rsshub-docs
+            - name: Update docs
+              if: steps.check-docs-env.outputs.defined == 'true'
+              run: |
+                  cp ./assets/build/docs/routes.json ./rsshub-docs/src/public/routes.json
+                  cp ./assets/build/docs/categories.json ./rsshub-docs/src/public/categories.json
+                  cp ./lib/types.ts ./rsshub-docs/.vitepress/theme/types.ts
+                  cp ./scripts/workflow/data.ts ./rsshub-docs/.vitepress/config/data.ts
+            - name: Commit docs
+              if: steps.check-docs-env.outputs.defined == 'true'
+              run: |
+                  cd rsshub-docs
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git status
+                  git diff-index --quiet HEAD || (git commit -m "chore: auto build https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.DOCS_API_TOKEN }}@github.com/RSSNext/rsshub-docs.git" HEAD:main)

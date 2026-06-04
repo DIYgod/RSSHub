@@ -1,6 +1,0 @@
-<div>
-{{if img}}
-<img style="max-width: 100%" src="{{ img }}">
-{{/if}}
-{{@ content }}
-</div>

@@ -1,1 +1,0 @@
-<span>{{ if type !== "" }}[{{ type }}]{{ /if }}{{ title }} - {{ author }}</span>

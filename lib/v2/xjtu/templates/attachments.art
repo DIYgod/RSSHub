@@ -1,3 +1,0 @@
-{{ each items }}
-<a href="{{ $value.fileUrl }}" rel="noreferrer">{{ $value.name }}</a><br>
-{{ /each }}

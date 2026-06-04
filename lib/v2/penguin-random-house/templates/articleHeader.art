@@ -1,5 +1,0 @@
-<p>
-<img src="{{ imageSrc }}" alt="{{ imageAlt }}"/>
-<br>
-{{ description }}
-</p>

@@ -1,8 +1,0 @@
-{{ if post }}
-{{@ post }}
-{{ /if }}
-{{ if images }}
-{{ each images image }}
-<img src="{{ image.url }}">
-{{ /each }}
-{{ /if }}

@@ -1,2 +1,0 @@
-<p>{{ desc }}</p>
-<audio id="audio" src="{{mp3url}}" preload="metadata"></audio>

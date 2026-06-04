@@ -1,108 +1,179 @@
 name: Issue Command
 
 on:
-  issue_comment:
-    types: [created]
-
-permissions:
-  contents: read
+    issue_comment:
+        types: [created]
 
 jobs:
-  rebase:
-    name: Automatic Rebase
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the latest code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Automatic Rebase
-        uses: cirrus-actions/rebase@1.7
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_SUPER }}
+    rebase:
+        name: Automatic Rebase
+        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        permissions:
+            contents: write
+            pull-requests: write
+        steps:
+            - name: Checkout the latest code
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                  fetch-depth: 0
+            - name: Automatic Rebase
+              uses: cirrus-actions/rebase@b87d48154a87a85666003575337e27b8cd65f691 # v1.8
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  self-assign:
-    name: Self Assign
-    if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    steps:
-      - uses: bhermann/issue-volunteer@v0.1.20
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          assign_phrase: '/wip'
-          label_phase1: RSS proposal
-          label_phase2: RSS bug
+    self-assign:
+        name: Self Assign
+        if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        permissions:
+            issues: write
+        steps:
+            - uses: bdougie/take-action@1439165ac45a7461c2d89a59952cd7d941964b87 # v1.6.1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  trigger: '/wip'
 
-  test-on-demand:
-    name: Test route on demand
-    if: startsWith(github.event.comment.body, '/test')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    vouch-manage:
+        name: Vouch Manage
+        if: ${{ startsWith(github.event.comment.body, 'vouch') || startsWith(github.event.comment.body, 'unvouch') || startsWith(github.event.comment.body, 'denounce') }}
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+        concurrency:
+            group: vouch-manage
+            cancel-in-progress: false
+        steps:
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
-      - name: Use Node.js v18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
+            - id: vouch
+              uses: mitchellh/vouch/action/manage-by-issue@c6d80ead49839655b61b422700b7a3bc9d0804a9 # v1.4.2
+              with:
+                  issue-id: ${{ github.event.issue.number }}
+                  comment-id: ${{ github.event.comment.id }}
+                  roles: admin,maintain,write
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies (yarn)
-        run: yarn
+            - name: Close PR if denounced
+              if: ${{ github.event.issue.pull_request && steps.vouch.outputs.status == 'denounced' }}
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              with:
+                  script: |
+                      const prNumber = context.payload.issue.number;
+                      await github.rest.issues.createComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: prNumber,
+                          body: 'This pull request has been automatically closed.',
+                      });
+                      await github.rest.pulls.update({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          pull_number: prNumber,
+                          state: 'closed',
+                      });
 
-      - name: Fetch affected routes
-        id: fetchRoute
-        uses: actions/github-script@v6
-        env:
-          EVENT: ${{ toJson(github.event) }}
-        with:
-          script: |
-            const event = JSON.parse(process.env.EVENT)
-            const body = event.comment.body
-            const number = event.issue.number
-            const sender = event.comment.user.login
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return await script({ github, context, core }, body, number, sender)
+    test-on-demand:
+        name: Test route on demand
+        if: startsWith(github.event.comment.body, '/test')
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            attestations: write
+            issues: write
+            pull-requests: write
+        steps:
+            - name: Fetch PR data (for PR)
+              if: github.event.issue.pull_request
+              uses: octokit/request-action@b91aabaa861c777dcdb14e2387e30eddf04619ae # v3.0.0
+              id: pr-data
+              with:
+                  route: GET /repos/{repo}/pulls/{number}
+                  repo: ${{ github.repository }}
+                  number: ${{ github.event.issue.number }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Start RSSHub
-        if: env.TEST_CONTINUE
-        run: yarn start &
-        env:
-          NODE_ENV: dev
-          LOGGER_LEVEL: debug
+            - name: Checkout
+              if: ${{ !github.event.issue.pull_request }}
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
-      - name: Generate feedback
-        if: env.TEST_CONTINUE
-        uses: actions/github-script@v6
-        env:
-          TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
-          EVENT: ${{ toJson(github.event) }}
-        with:
-          script: |
-            const event = JSON.parse(process.env.EVENT)
-            const link = process.env.TEST_BASEURL
-            const routes = JSON.parse(process.env.TEST_ROUTES)
-            const number = event.issue.number
-            core.info(`${link}, ${routes}, ${number}`)
-            const got = require("got")
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return await script({ github, context, core, got }, link, routes, number)
+            - name: Checkout PR
+              if: github.event.issue.pull_request
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                  ref: ${{ fromJson(steps.pr-data.outputs.data).head.ref }}
 
-      - name: Print logs
-        if: (env.TEST_CONTINUE)
-        run: cat ${{ github.workspace }}/logs/combined.log
+            - name: Install pnpm
+              uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: logs
-          path: logs
-          retention-days: 1
+            - name: Use Node.js Active LTS
+              uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: Install dependencies (pnpm)
+              run: pnpm i && pnpm rb && pnpm exec playwright install chromium
+
+            - name: Fetch affected routes
+              id: fetch-route
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              env:
+                  EVENT: ${{ toJson(github.event) }}
+              with:
+                  script: |
+                      const event = JSON.parse(process.env.EVENT)
+                      const body = event.comment.body
+                      const number = event.issue.number
+                      const sender = event.comment.user.login
+                      const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+                      return identify({ github, context, core }, body, number, sender)
+
+            - name: Build RSSHub
+              if: env.TEST_CONTINUE
+              run: pnpm build
+
+            - name: Start RSSHub
+              if: env.TEST_CONTINUE
+              run: pnpm start &
+              env:
+                  ALLOW_USER_HOTLINK_TEMPLATE: true
+                  ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
+                  NODE_ENV: dev
+                  NODE_OPTIONS: '--max-http-header-size=32768'
+                  LOGGER_LEVEL: debug
+
+            - name: Generate feedback
+              if: env.TEST_CONTINUE
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              env:
+                  TEST_BASEURL: http://localhost:1200
+                  TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
+                  EVENT: ${{ toJson(github.event) }}
+              with:
+                  script: |
+                      const event = JSON.parse(process.env.EVENT)
+                      const link = process.env.TEST_BASEURL
+                      const routes = JSON.parse(process.env.TEST_ROUTES)
+                      const number = event.issue.number
+                      core.info(`${link}, ${routes}, ${number}`)
+                      const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+                      await test({ github, context, core }, link, routes, number)
+
+            - name: Print logs
+              if: env.TEST_CONTINUE
+              run: cat ${{ github.workspace }}/logs/combined.log
+
+            - name: Upload Artifact
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+              with:
+                  name: logs
+                  path: logs
+                  retention-days: 1

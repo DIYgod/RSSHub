@@ -1,4 +1,0 @@
-<iframe width="640" height="360" src="https://player.vimeo.com/video{{ videoUrl }}" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-{{ if vdescription }}
-   <p>{{@ vdescription }}</p>
-{{ /if }}

@@ -1,7 +1,0 @@
-{{ if embed }}
-<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/{{ videoId }}" frameborder="0" allowfullscreen></iframe>
-{{ else }}
-<img src="{{ img.url }}">
-{{ /if }}
-<br>
-{{@ description }}
