@@ -48,9 +48,7 @@ async function handler(ctx): Promise<Data> {
     }
     const id = idMatch[1];
     const feedUrl = `${rootUrl}/feed_fg_f${id}_filtro_1.xml`;
-    const response = await ofetch(feedUrl, {
-        parseResponse: (txt) => txt,
-    });
+    const response = await ofetch(feedUrl);
 
     const $ = load(response, { xmlMode: true });
     const channel = $('channel');
@@ -106,7 +104,7 @@ async function handler(ctx): Promise<Data> {
         feedLink: feedUrl,
         itunes_author: childText(channel, String.raw`itunes\:author`) || undefined,
         itunes_category: childAttr(channel, String.raw`itunes\:category`, 'text'),
-        itunes_explicit: childText(channel, String.raw`itunes\:explicit`) || undefined,
+        itunes_explicit: decodeHTML(channel.children(String.raw`itunes\:explicit`).first().text()) || undefined,
     };
 }
 
@@ -151,11 +149,11 @@ function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string, referer: s
 }
 
 function childText(element, selector: string): string {
-    return decodeHTML(element.children(selector).first().text());
+    return decodeHTML(element.children(selector).text());
 }
 
 function childAttr(element, selector: string, attribute: string): string | undefined {
-    return element.children(selector).first().attr(attribute);
+    return element.children(selector).attr(attribute);
 }
 
 function parseOptionalDate(value: string): Date | undefined {
