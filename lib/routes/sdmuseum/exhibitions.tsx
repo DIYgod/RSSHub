@@ -95,10 +95,10 @@ export const route: Route = {
 
                     const location = $item('.item.add')
                         .text()
-                        .replaceAll(/地点\s*:\s*/, '')
+                        .replace(/地点\s*:\s*/, '')
                         .trim();
                     const fullDuration = $item('.item.time').text().trim();
-                    const fullDurationDate = fullDuration.replaceAll(/开展时间\s*[:：]\s*/, '').trim();
+                    const fullDurationDate = fullDuration.replace(/开展时间\s*[:：]\s*/, '').trim();
 
                     const { startDate, endDate } = extractDates(fullDurationDate);
 
