@@ -16,7 +16,7 @@ const handler = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    const pattern = /item=(\[{.*?}]);/;
+    const pattern = /item=(\[\{.*?\}\]);/;
     const newsList = JSON.parse($('script[language="javascript"]').text().match(pattern)?.[1].replaceAll("'", '"') || '[]');
 
     const topNewsList = newsList.slice(0, limit).map((item) => ({

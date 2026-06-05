@@ -158,7 +158,7 @@ async function handler(ctx) {
                         .toArray()
                         .map((e) => content(e).text().trim());
                     item.description = renderDesc(articleImg, content('div#article-content').html());
-                    item.pubDate = timezone(/(今|昨)/.test(pubDate) ? parseRelativeDate(pubDate) : parseDate(pubDate, 'YYYY M D'), +8);
+                    item.pubDate = timezone(/今|昨/.test(pubDate) ? parseRelativeDate(pubDate) : parseDate(pubDate, 'YYYY M D'), +8);
 
                     return item;
                 })

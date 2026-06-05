@@ -47,7 +47,7 @@ async function handler() {
         }
     }
 
-    const partRegex = /^([0-9a-zA-Z]+):([0-9a-zA-Z]+)?(\[.*)$/;
+    const partRegex = /^([0-9a-z]+):([0-9a-z]+)?(\[.*)$/i;
     const fd = textList
         .join('')
         .split('\n')

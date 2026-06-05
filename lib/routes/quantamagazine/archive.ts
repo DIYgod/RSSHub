@@ -13,16 +13,16 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
     }
 
     // Handle LaTeX formulas
-    let processed = html.replaceAll(/\$latex([\S\s]+?)\$/g, '<img align="center" src="https://latex.codecogs.com/png.latex?$1"/>');
+    let processed = html.replaceAll(/\$latex([\s\S]+?)\$/g, '<img align="center" src="https://latex.codecogs.com/png.latex?$1"/>');
 
     // Handle embedded images with captions
-    processed = processed.replaceAll(/<div id=[\S\s]+?"src":"(https?:?[\S\s]+?)",[\S\s]+?"caption":"([\S\s]*?)",[\S\s]+?<\/div>?/g, (_match, src, cap) => {
+    processed = processed.replaceAll(/<div id=[\s\S]+?"src":"(https?:?[\s\S]+?)",[\s\S]+?"caption":"([\s\S]*?)",[\s\S]+?<\/div>?/g, (_match, src, cap) => {
         const imgUrl = src.replaceAll(/\\([^nu])/g, '$1');
         const img = `<img src="${imgUrl}" />`;
 
         const noBS = cap.replaceAll(/\\([^nu])/g, '$1');
         const removeNL = noBS.replaceAll(String.raw`\n`, '');
-        const caption = removeNL.replaceAll(/\\u(\d{1,3}[a-z]\d?|\d{4}?)/g, (_omit, s) => String.fromCodePoint(Number.parseInt(s, 16)));
+        const caption = removeNL.replaceAll(/\\u(\d{1,3}[a-z]\d?|\d{4})/g, (_omit, s) => String.fromCodePoint(Number.parseInt(s, 16)));
 
         return `<figure>${img}<figcaption>${caption}</figcaption></figure>`;
     });

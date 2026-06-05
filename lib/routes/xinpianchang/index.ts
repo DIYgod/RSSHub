@@ -34,7 +34,7 @@ async function handler(ctx) {
 
     const { data, response } = await getData(currentUrl, cache.tryGet);
 
-    let items = JSON.parse(response.match(/"list":(\[.*?]),"total"/)[1]);
+    let items = JSON.parse(response.match(/"list":(\[.*?\]),"total"/)[1]);
 
     items = await processItems(items.slice(0, limit), cache.tryGet);
 

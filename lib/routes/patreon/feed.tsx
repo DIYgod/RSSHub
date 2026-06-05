@@ -121,7 +121,7 @@ async function handler(ctx) {
         const ogUrl = $('meta[property="og:url"]').attr('content');
         if (ogUrl?.startsWith(`${baseUrl}/cw/`)) {
             const ogImage = $('meta[property="og:image"]').attr('content');
-            const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+?)\?/)?.[1];
+            const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+)\?/)?.[1];
             if (creatorId) {
                 const creator = await ofetch(`${baseUrl}/api/campaigns/${creatorId}`);
                 return {

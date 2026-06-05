@@ -11,7 +11,7 @@ const findNatgeo = ($) =>
     JSON.parse(
         $('script')
             .text()
-            .match(/\['__natgeo__']=({.*?});/)[1]
+            .match(/\['__natgeo__'\]=(\{.*?\});/)[1]
     );
 
 type StoryMedia = {

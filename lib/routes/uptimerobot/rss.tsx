@@ -6,7 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-const titleRegex = /(.+)\s+is\s+([A-Z]+)\s+\((.+)\)/;
+const titleRegex = /(.*\S)\s+is\s+([A-Z]+)\s+\((.+)\)/;
 
 const formatTime = (s) => {
     const duration = dayjs.duration(s - 0, 'seconds');

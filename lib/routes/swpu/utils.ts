@@ -1,5 +1,5 @@
 function isCompleteUrl(url) {
-    return /^\w+?:\/\/.*?\//.test(url);
+    return /^\w+:\/\/.*?\//.test(url);
 }
 
 function joinUrl(url1, url2) {

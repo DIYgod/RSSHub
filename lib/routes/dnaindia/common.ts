@@ -44,7 +44,7 @@ export async function handler(ctx) {
                     .map((item) => $(item).find('a').text());
                 // Process date
                 const timeText = $('p.dna-update').text();
-                const dateMatch = timeText.match(/Updated\s*:\s*([\w\s,:\d]+?)(?:\s*\||$)/);
+                const dateMatch = timeText.match(/Updated\s*:([\w\s,:]+)/);
                 let time = dateMatch ? dateMatch[1].trim() : '';
                 time = time.replace(/\s+IST$/, '');
                 const pubDate = timezone(parseDate(time), +5.5);

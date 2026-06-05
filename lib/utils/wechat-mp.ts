@@ -130,7 +130,7 @@ const showTypeMap = {
 const showTypeMapReverse = Object.fromEntries(Object.entries(showTypeMap).map(([k, v]) => [v, k]));
 
 class ExtractMetadata {
-    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(String.raw`\b${varName}\s*${assignPattern}\s*(?<quote>["'])(?<value>${valuePattern})\k<quote>`, 'mg');
+    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(String.raw`\b${varName}\s*${assignPattern}\s*(?<quote>["'])(?<value>${valuePattern})\k<quote>`, 'gm');
 
     private static genExtractFunc = (
         varName: string,

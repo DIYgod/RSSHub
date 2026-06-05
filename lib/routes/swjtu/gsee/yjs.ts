@@ -13,7 +13,7 @@ const getItem = (item) => {
     const newsDate = item
         .find('dd')
         .text()
-        .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0];
+        .match(/\d{4}(.)\d{1,2}\1\d{1,2}/)[0];
 
     const infoTitle = newsInfo.text();
     const link = rootURL + newsInfo.find('a').last().attr('href').slice(2);

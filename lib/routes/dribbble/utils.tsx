@@ -17,7 +17,7 @@ async function loadContent(link) {
     const shotData = JSON.parse(
         $('script')
             .text()
-            .match(/shotData:\s({.+?}),\n/)?.[1] ?? '{}'
+            .match(/shotData:\s(\{.+?\}),\n/)?.[1] ?? '{}'
     );
 
     // Join multiple shots together by selecting elements with class 'media-shot' or 'main-shot' or 'block-media-wrapper'

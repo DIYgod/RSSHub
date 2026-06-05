@@ -85,7 +85,7 @@ export async function handler(ctx) {
 
                 const imgListMatch = $('script')
                     .text()
-                    .match(/var imglist = (\[.*]);"\);/)[1];
+                    .match(/var imglist = (\[.*\]);"\);/)[1];
 
                 const imgList = JSON.parse(imgListMatch.replaceAll('url:', '"url":').replaceAll('caption:', '"caption":').replaceAll('fast_img_host+\\', '').replaceAll('\\', ''));
 

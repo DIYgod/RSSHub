@@ -52,7 +52,7 @@ async function handler(ctx) {
     });
     const query = `${params.toString()}&${advance}`;
     const res = await got.get(link, {
-        searchParams: query.replaceAll(/([\u4E00-\u9FA5])/g, (str) => encodeURIComponent(str)),
+        searchParams: query.replaceAll(/[\u4E00-\u9FA5]/g, (str) => encodeURIComponent(str)),
     });
     const $ = load(res.data);
 

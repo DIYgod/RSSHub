@@ -67,7 +67,7 @@ const getItem = (item, cache) => {
         // 'date' may be undefined. and 'parseDate' will return current time.
         // 转其他院的通知，获取不到具体时间，先从列表页获取具体信息
         if (dateText) {
-            const dateMatch = dateText.match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/);
+            const dateMatch = dateText.match(/\d{4}(.)\d{1,2}\1\d{1,2}/);
             if (!dateMatch || !dateMatch[0]) {
                 return null;
             }

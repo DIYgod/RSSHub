@@ -36,7 +36,7 @@ async function handler() {
     // 从HTML中提取JSON数据
     const $ = cheerio.load(response);
     const jsonScript = $('script:contains("WapHomeRenderData")').text();
-    const jsonMatch = jsonScript?.match(/window\.WapHomeRenderData\s*=\s*({.*})/s);
+    const jsonMatch = jsonScript?.match(/window\.WapHomeRenderData\s*=\s*(\{.*\})/s);
     if (!jsonMatch?.[1]) {
         throw new Error('WapHomeRenderData 数据未找到');
     }

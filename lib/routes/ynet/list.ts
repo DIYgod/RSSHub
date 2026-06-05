@@ -51,7 +51,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         id = defaultId;
     }
 
-    category = category.replaceAll(/[^a-zA-Z0-9-]/g, '');
+    category = category.replaceAll(/[^a-z0-9-]/gi, '');
 
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 

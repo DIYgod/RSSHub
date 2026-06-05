@@ -14,7 +14,7 @@ export async function getFulltext(url: string) {
     if (!config.caixin.cookie) {
         return;
     }
-    if (!/(\d+)\.html/.test(url)) {
+    if (!/\d+\.html/.test(url)) {
         return;
     }
     const articleID = url.match(/(\d+)\.html/)[1];

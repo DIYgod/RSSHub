@@ -68,7 +68,7 @@ async function handler(ctx) {
 
         const dateTimeStr = dateTimeRaw
             .trim()
-            .replace(/(\d{1,}\/\d{1,}\/\d{4})(\d{1,}:\d{1,}\s[AP]\.?M\.?)/, '$1 $2')
+            .replace(/(\d+\/\d+\/\d{4})(\d+:\d+\s[AP]\.?M\.?)/, '$1 $2')
             .replaceAll('P.M.', 'PM')
             .replaceAll('A.M.', 'AM');
 
@@ -78,7 +78,7 @@ async function handler(ctx) {
             .find(`#stApp_milestoneActivityLocation${i}`)
             .text()
             .trim()
-            .replaceAll(/\s*\n+\s*/g, '\n');
+            .replaceAll(/\s*\n\s*/g, '\n');
 
         const lines = activityCellText
             .split('\n')

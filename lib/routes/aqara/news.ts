@@ -23,7 +23,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = response
-        .match(/(parm\.newsTitle[\S\s]*?arr\.push\(parm\))/g)
+        .match(/(parm\.newsTitle[\s\S]*?arr\.push\(parm\))/g)
         .slice(0, limit)
         .map((item) => ({
             title: item.match(/parm\.newsTitle = '(.*?)'/)[1],
