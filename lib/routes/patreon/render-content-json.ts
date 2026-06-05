@@ -24,16 +24,16 @@ const renderText = (node: ContentNode): string => {
 const renderNode = (node: ContentNode): string => {
     switch (node.type) {
         case 'doc':
-            return (node.content ?? []).map(renderNode).join('');
+            return renderChildren(node.content);
         case 'paragraph':
-            return `<p>${(node.content ?? []).map(renderNode).join('')}</p>`;
+            return `<p>${renderChildren(node.content)}</p>`;
         case 'text':
             return renderText(node);
         case 'hardBreak':
             return '<br>';
         case 'heading': {
             const level = Math.min(6, Math.max(1, Number(node.attrs?.level) || 3));
-            return `<h${level}>${(node.content ?? []).map(renderNode).join('')}</h${level}>`;
+            return `<h${level}>${renderChildren(node.content)}</h${level}>`;
         }
         case 'image': {
             const src = node.attrs?.src ? escapeHtml(String(node.attrs.src)) : '';
@@ -41,17 +41,19 @@ const renderNode = (node: ContentNode): string => {
             return src ? `<img src="${src}" alt="${alt}">` : '';
         }
         case 'bulletList':
-            return `<ul>${(node.content ?? []).map(renderNode).join('')}</ul>`;
+            return `<ul>${renderChildren(node.content)}</ul>`;
         case 'orderedList':
-            return `<ol>${(node.content ?? []).map(renderNode).join('')}</ol>`;
+            return `<ol>${renderChildren(node.content)}</ol>`;
         case 'listItem':
-            return `<li>${(node.content ?? []).map(renderNode).join('')}</li>`;
+            return `<li>${renderChildren(node.content)}</li>`;
         case 'horizontalRule':
             return '<hr>';
         default:
-            return (node.content ?? []).map(renderNode).join('');
+            return renderChildren(node.content);
     }
 };
+
+const renderChildren = (nodes?: ContentNode[]) => (nodes ?? []).map((child) => renderNode(child)).join('');
 
 export const renderContentJson = (jsonString?: string | null): string => {
     if (!jsonString) {

@@ -115,8 +115,12 @@ async function handler(ctx) {
     const baseUrl = 'https://www.patreon.com';
     const link = `${baseUrl}/${creator}`;
 
+    const patreonHeaders: Record<string, string> = {
+        'User-Agent': config.trueUA,
+    };
+
     const creatorData = (await cache.tryGet(`patreon:creator:${creator}`, async () => {
-        const response = await ofetch(link);
+        const response = await ofetch(link, { headers: patreonHeaders });
 
         const $ = cheerio.load(response);
 
@@ -125,7 +129,7 @@ async function handler(ctx) {
             const ogImage = $('meta[property="og:image"]').attr('content');
             const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+)/)?.[1];
             if (creatorId) {
-                const creator = await ofetch(`${baseUrl}/api/campaigns/${creatorId}`);
+                const creator = await ofetch(`${baseUrl}/api/campaigns/${creatorId}`, { headers: patreonHeaders });
                 return {
                     id: creatorId,
                     attributes: creator.data.attributes,
@@ -147,9 +151,7 @@ async function handler(ctx) {
         throw new Error('Creator not found');
     }
 
-    const headers: Record<string, string> = {
-        'User-Agent': config.trueUA,
-    };
+    const headers: Record<string, string> = { ...patreonHeaders };
     if (config.patreon?.sessionId) {
         headers.Cookie = `session_id=${config.patreon.sessionId}`;
     }
