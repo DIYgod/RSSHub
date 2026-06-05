@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     let items = $('a')
         .toArray()
-        .filter((item) => /\/(\d+)\.html?/.test($(item).prop('href')))
+        .filter((item) => /\/\d+\.html?/.test($(item).prop('href')))
         .slice(0, limit)
         .map((item) => {
             item = $(item);

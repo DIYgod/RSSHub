@@ -62,7 +62,7 @@ async function handler(ctx) {
                     .eq(0)
                     .text()
                     .trim()
-                    .replaceAll(/[\b\t\n]/g, '');
+                    .replaceAll(/[\t\n]/g, '');
                 const data = metadata.startsWith('[') ? JSON.parse(metadata)[0] : JSON.parse(metadata);
                 // e.g. https://udn.com/news/story/7331/6576320
                 const content = $('.article-content__editor');
@@ -90,7 +90,7 @@ async function handler(ctx) {
                     // 轉角24小時
                     description = $('.story_body_content')
                         .html()
-                        .split(/<!--\d+?-->/g)
+                        .split(/<!--\d+-->/g)
                         .slice(1, -1)
                         .join('');
                 }

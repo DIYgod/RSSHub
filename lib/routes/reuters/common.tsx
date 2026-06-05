@@ -288,7 +288,7 @@ async function handler(ctx) {
 
                           const matches = content('script#fusion-metadata')
                               .text()
-                              .match(/Fusion.globalContent=({[\S\s]*?});/);
+                              .match(/Fusion.globalContent=(\{[\s\S]*?\});/);
 
                           if (matches) {
                               const data = JSON.parse(matches[1]);
@@ -310,7 +310,7 @@ async function handler(ctx) {
                           item.title = content('meta[property="og:title"]').attr('content');
                           item.pubDate = parseDate(detailResponse.data.match(/"datePublished":"(.*?)","dateModified/)[1]);
                           item.author = detailResponse.data
-                              .match(/{"@type":"Person","name":"(.*?)"}/g)
+                              .match(/\{"@type":"Person","name":"(.*?)"\}/g)
                               .map((p) => p.match(/"name":"(.*?)"/)[1])
                               .join(', ');
                           item.description = content('article').html();

@@ -145,7 +145,7 @@ async function handler(ctx) {
                       alt: item.venueName ?? item.title,
                   }
                 : undefined,
-            description: item.description?.replaceAll(/\["|"]/g, '') ?? undefined,
+            description: item.description?.replaceAll(/\["|"\]/g, '') ?? undefined,
             data: item.parkingLocationId
                 ? {
                       title: item.venueName ?? item.title,

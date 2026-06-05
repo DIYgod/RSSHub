@@ -150,7 +150,7 @@ export const parseList = ($: cheerio.CheerioAPI) => {
     const winPageData = JSON.parse(
         $('script:contains("window.WinPageData")')
             .text()
-            .match(/window\.WinPageData\s*=\s*({.*})/)?.[1] ?? '{}'
+            .match(/window\.WinPageData\s*=\s*(\{.*\})/)?.[1] ?? '{}'
     );
 
     return winPageData.data.article.map((item) => ({

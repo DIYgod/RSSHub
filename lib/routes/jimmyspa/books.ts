@@ -62,7 +62,7 @@ async function handler(ctx) {
                 const bookInfoWrap = detailPage('div.info_wrap').html() || '';
 
                 const processedDescription = bookDescription.replaceAll(/<img\b[^>]*>/g, (imgTag) =>
-                    imgTag.replaceAll(/\b(src|data-src)="(?!http|https|\/\/)([^"]*)"/g, (_, attrName, relativePath) => {
+                    imgTag.replaceAll(/\b(src|data-src)="(?!http|\/\/)([^"]*)"/g, (_, attrName, relativePath) => {
                         const absoluteImageUrl = new URL(relativePath, baseUrl).href;
                         return `${attrName}="${absoluteImageUrl}"`;
                     })

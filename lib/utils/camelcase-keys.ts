@@ -25,4 +25,4 @@ export const camelcaseKeys = <T = any>(obj: any): T => {
 export function camelcase(str: string) {
     return str.replace(/^_+/, '').replaceAll(/([_-][a-z])/gi, ($1) => $1.toUpperCase().replace('-', '').replace('_', ''));
 }
-const isMongoId = (id: string) => id.length === 24 && /^[\dA-Fa-f]{24}$/.test(id);
+const isMongoId = (id: string) => id.length === 24 && /^[\dA-F]{24}$/i.test(id);

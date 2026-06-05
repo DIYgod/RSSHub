@@ -35,7 +35,7 @@ export const route: Route = {
             return {
                 title: `宁波人社公告-${noticeCate}:${title.text()}`,
                 link: `http://rsj.ningbo.gov.cn${title.attr('href')}`,
-                pubDate: parseDate($('.news_date').text().replaceAll(/\[|]/g, '')),
+                pubDate: parseDate($('.news_date').text().replaceAll(/\[|\]/g, '')),
                 author: '宁波市人力资源和社会保障局',
                 description: title.text(),
             };

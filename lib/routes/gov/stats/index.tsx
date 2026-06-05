@@ -115,7 +115,7 @@ async function handler(ctx) {
 
                 // articles from www.news.cn or www.gov.cn
 
-                if (/(news\.cn|www\.gov\.cn)/.test(item.link)) {
+                if (/news\.cn|www\.gov\.cn/.test(item.link)) {
                     if (content('.year').text()) {
                         item.pubDate = timezone(parseDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`, 'YYYY/MM/DD HH:mm:ss'), +8);
                         item.author = content('.source')

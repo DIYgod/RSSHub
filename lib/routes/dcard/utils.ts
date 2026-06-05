@@ -28,7 +28,7 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
                     const data = JSON.parse(response);
                     let body = data.content;
                     body = body.replaceAll(/(?=https?:\/\/).*?(?<=\.(jpe?g|gif|png))/gi, (m) => `<img src="${m}">`);
-                    body = body.replaceAll(/(?=https?:\/\/).*(?<!jpe?g"?>?)$/gim, (m) => `<a href="${m}">${m}</a>`);
+                    body = body.replaceAll(/(?=https?:\/\/).+(?<!jpe?g"?>?)$/gim, (m) => `<a href="${m}">${m}</a>`);
                     body = body.replaceAll('\n', '<br>');
 
                     return body;

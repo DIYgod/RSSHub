@@ -11,7 +11,7 @@ const getOriginalImg = (url) => {
             format = 'jpg';
         }
         return `${m[1]}?format=${format}&name=orig`;
-    } else if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/.+)(\?.+)$/i))) {
+    } else if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/[^?]+)(\?.+)$/i))) {
         const pars = getQueryParams(url);
         if (!pars.format || !pars.name) {
             return url;

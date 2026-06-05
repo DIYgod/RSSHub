@@ -179,12 +179,12 @@ const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
 
 const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && /https?:\/\/[^\s]+/.test(node)) {
+        if (typeof node === 'string' && /https?:\/\/\S+/.test(node)) {
             let lastIndex = 0;
             let match: RegExpExecArray | null;
             const content: NodeContent[] = [];
 
-            const urlRe = /https?:\/\/[^\s]+/g;
+            const urlRe = /https?:\/\/\S+/g;
             while ((match = urlRe.exec(node)) !== null) {
                 if (match.index > lastIndex) {
                     content.push(node.slice(lastIndex, match.index));
@@ -250,7 +250,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     previewyoutube: (node) => ({
         tag: 'iframe',
         attrs: {
-            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[A-Za-z0-9_-]+/)?.[0]}`,
+            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[\w-]+/)?.[0]}`,
             title: 'YouTube video player',
             frameborder: '0',
             allowFullScreen: '1',

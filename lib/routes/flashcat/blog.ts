@@ -29,34 +29,32 @@ export const route: Route = {
 };
 
 async function handlerRoute(): Promise<Data> {
-    const response = await ofetch('https://flashcat.cloud/blog/');
+    const baseUrl = 'https://flashcat.cloud';
+    const link = `${baseUrl}/blog/`;
+    const response = await ofetch(link);
     const $ = load(response);
 
-    const items = $('.post-preview')
+    const items = $('.fc-content-card')
         .toArray()
         .map((elem) => {
-            const $elem = $(elem);
+            const $item = $(elem);
+            const [author, date] = $item
+                .find('.fc-content-card-meta')
+                .text()
+                .split('·')
+                .map((s) => s.trim());
             return {
-                title: $elem.find('.post-title').text(),
-                description: $elem.find('.post-content-preview').text(),
-                link: $elem.find('a').attr('href'),
-                pubDate: parseDate(
-                    $elem
-                        .find('.post-meta')
-                        .text()
-                        .match(/on\s+(\w+,\s+\w+\s+\d{1,2},\s+\d{4})/)?.[1] || ''
-                ),
-                author:
-                    $elem
-                        .find('.post-meta')
-                        .text()
-                        .match(/by\s+(.+?)\s+on/)?.[1] || '',
+                title: $item.find('.fc-content-card-title').text(),
+                description: $item.find('.fc-content-card-summary').text().trim(),
+                link: new URL($item.find('.fc-content-card-link').attr('href')!, baseUrl).href,
+                pubDate: date ? parseDate(date, 'YYYY-MM-DD') : undefined,
+                author,
             };
         });
 
     return {
         title: 'Flashcat 快猫星云博客',
-        link: 'https://flashcat.cloud/blog/',
+        link,
         item: items,
     };
 }

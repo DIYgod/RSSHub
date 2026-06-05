@@ -53,7 +53,7 @@ async function handler(ctx) {
 
     let newTitle = '';
 
-    if (!/^(\w+\/\w+)$/.test(category)) {
+    if (!/^\w+\/\w+$/.test(category)) {
         newTitle = `${title} - ${Object.hasOwn(categories, category) ? categories[category] : categories[Object.keys(categories)[0]]}`;
         category = `ac/${category}`;
     }

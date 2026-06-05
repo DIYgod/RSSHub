@@ -50,7 +50,7 @@ async function handler(ctx) {
     const ytInitialData = JSON.parse(
         $('script')
             .text()
-            .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
+            .match(/ytInitialData = (\{.*?\});/)?.[1] || '{}'
     );
     const externalId = ytInitialData.metadata.channelMetadataRenderer.externalId;
     const playlistId = (await utils.getChannelWithId(externalId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;

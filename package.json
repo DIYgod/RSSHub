@@ -177,6 +177,7 @@
         "eslint": "10.4.1",
         "eslint-nibble": "9.1.1",
         "eslint-plugin-n": "18.0.1",
+        "eslint-plugin-regexp": "3.1.0",
         "eslint-plugin-simple-import-sort": "13.0.0",
         "eslint-plugin-unicorn": "64.0.0",
         "eslint-plugin-yml": "3.4.0",

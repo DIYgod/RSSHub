@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const { data: currentResponse } = await got(currentUrl);
 
-    const type = currentResponse.match(/\[\\"type\\",\\"(\d+)\\",\\"d\\"]/)?.[1] ?? '1';
+    const type = currentResponse.match(/\[\\"type\\",\\"(\d+)\\",\\"d\\"\]/)?.[1] ?? '1';
 
     const { data: response } = await got(apiTopicUrl, {
         searchParams: {

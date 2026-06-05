@@ -24,7 +24,7 @@ async function loadContent(link) {
     let response;
     // 如果不是 大学的站点, 直接返回简单的标题即可
     // 判断 是否外站链接,如果是 则直接返回页面 不做单独的解析
-    const https_reg = /^https:\/\/www.wfu.edu.cn(.*)/;
+    const https_reg = /^https:\/\/www\.wfu\.edu\.cn\/.*/;
     if (!https_reg.test(link)) {
         return { description };
     }

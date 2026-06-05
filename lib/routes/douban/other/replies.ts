@@ -55,7 +55,7 @@ async function handler(ctx) {
                     url: item.link,
                 });
 
-                const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)}],/)[1] + '}]');
+                const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)\}\],/)[1] + '}]');
 
                 for (const c of comments) {
                     if (c.id === item.link.split('#')[1]) {

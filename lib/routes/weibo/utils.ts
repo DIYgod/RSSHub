@@ -26,11 +26,11 @@ const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDes
     let formattedHtml = html;
 
     if (!showEmojiInDescription) {
-        formattedHtml = formattedHtml.replaceAll(/<span class=["']?url-icon["']?><img\s[^>]*?alt=["']?([^>]+?)["']?\s[^>]*?\/><\/span>/g, '$1');
+        formattedHtml = formattedHtml.replaceAll(/<span class=["']?url-icon["']?><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/><\/span>/g, '$1');
     }
 
     if (!showLinkIconInDescription) {
-        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*?<span class=["']?surl-text["']?>([^<>]*?)<\/span><\/a>/g, '$1$2</a>');
+        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*<span class=["']?surl-text["']?>([^<>]*)<\/span><\/a>/g, '$1$2</a>');
     }
 
     return formattedHtml;
@@ -141,7 +141,7 @@ const weiboUtils = {
     })(),
     formatTitle: (html) =>
         html
-            .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>]+?)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
+            .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
             .replaceAll(/<span class=["']url-icon["']>(<img\s[^>]*>)<\/span>/g, '') // 去掉所有图标
             .replaceAll(/<img\s[^<]*>/g, '[图片]')
             // impossible to have inline script in weibo posts, but CodeQL complains about it

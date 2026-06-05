@@ -50,7 +50,7 @@ async function handler(ctx) {
                     item
                         .find('p.p4')
                         .text()
-                        .match(/] (\d+\.\d+);/)[1],
+                        .match(/\] (\d+\.\d+);/)[1],
                 ],
                 enclosure_url: link,
                 enclosure_length:

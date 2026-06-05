@@ -81,7 +81,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
             const zseCk = await cache.tryGet('zhihu:zse_ck', async () => {
                 const response = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
                 const script = await response._data.text();
-                return script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1] || '';
+                return script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1] || '';
             });
             if (zseCk) {
                 cookieStr = `${cookieStr}; __zse_ck=${zseCk}`;
@@ -107,7 +107,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
             }
             const response1 = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
             const script = await response1._data.text();
-            const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1];
+            const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1];
             const response2 = zseCk
                 ? await ofetch.raw(url, {
                       headers: {

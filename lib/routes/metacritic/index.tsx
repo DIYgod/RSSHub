@@ -81,7 +81,7 @@ async function handler(ctx) {
 
     if (platforms.length || networks.length) {
         const labels = {};
-        const labelPattern = String.raw`{label:"([^"]+)",value:(\d+),href:a,meta:{mcDisplayWeight`;
+        const labelPattern = String.raw`\{label:"([^"]+)",value:(\d+),href:a,meta:\{mcDisplayWeight`;
 
         for (const m of currentResponse.match(new RegExp(labelPattern, 'g'))) {
             const matches = m.match(new RegExp(labelPattern));

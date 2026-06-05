@@ -186,7 +186,7 @@ const gdgov = async (info, ctx) => {
                         title: data.art_title,
                         description: renderZcjdpt(data),
                         pubDate: timezone(parseDate(data.pub_time), +8),
-                        author: /(本|本网|本站)/.test(data.pub_unite) ? authorisme : data.pub_unite,
+                        author: /本/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };
                 });
             } else if (idlink.host === 'mp.weixin.qq.com') {
@@ -217,7 +217,7 @@ const gdgov = async (info, ctx) => {
                         title,
                         description,
                         pubDate: timezone(parseDate(pubDate, pubDate_format), +8),
-                        author: /本|本网|本站/.test(author) ? authorisme : author,
+                        author: /本/.test(author) ? authorisme : author,
                     };
                 });
             }

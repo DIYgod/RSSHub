@@ -45,7 +45,7 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const regex = /<!\[cdata\[([\S\s]*?)]]>(?=\s*<)/gi;
+    const regex = /<!\[cdata\[([\s\S]*?)\]\]>(?=\s*<)/gi;
     const data = response.data.replaceAll(regex, '$1');
 
     const $ = load(data, {

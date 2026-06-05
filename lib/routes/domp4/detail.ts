@@ -30,7 +30,7 @@ function getDomList($, detailUrl) {
 export function getItemList($, detailUrl, second) {
     const encoded = $('.article script[type]')
         .text()
-        .match(/return p}\('(.*)',(\d+),(\d+),'(.*)'.split\(/);
+        .match(/return p\}\('(.*)',(\d+),(\d+),'(.*)'.split\(/);
     // 若 script 标签没有内容，直接解析 dom
     if (!encoded) {
         return getDomList($, detailUrl);

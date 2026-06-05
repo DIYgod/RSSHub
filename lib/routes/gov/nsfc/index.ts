@@ -46,7 +46,7 @@ async function handler(ctx) {
                 title: item.prop('title') ?? item.text(),
                 link: new URL(item.prop('href'), rootUrl).href,
                 guid: `nsfc-${item.prop('id')}`,
-                pubDate: parseDate(item.next().text().replace(/\[]/g, '', ['YYYY-MM-DD', 'YY-MM-DD'])),
+                pubDate: parseDate(item.next().text().replace(/\[\]/g, '', ['YYYY-MM-DD', 'YY-MM-DD'])),
             };
         });
 

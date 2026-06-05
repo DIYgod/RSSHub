@@ -183,7 +183,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = JSON.parse(response.data.match(/null\(\[({.*})]\)/)[1]);
+    const data = JSON.parse(response.data.match(/null\(\[(\{.*\})\]\)/)[1]);
 
     let items: DataItem[];
 

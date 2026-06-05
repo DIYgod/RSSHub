@@ -59,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const metaStr: string = $$('div.newshead p span, div.title p span').text();
                     const pubDateStr: string | undefined = metaStr?.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
-                    const authors: DataItem['author'] = metaStr?.match(/来源：(.*?)/)?.[1];
+                    const authors: DataItem['author'] = metaStr?.match(/来源：(.*)/)?.[1];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     let processedItem: DataItem = {
