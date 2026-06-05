@@ -1,4 +1,4 @@
-import type { BrowserContext } from 'playwright-core';
+import type { BrowserContext } from 'patchright';
 
 import { setCookies } from '@/utils/playwright-utils';
 

@@ -1,6 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { BrowserContext } from 'playwright-core';
+import type { BrowserContext } from 'patchright';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';

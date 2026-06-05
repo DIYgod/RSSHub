@@ -1,4 +1,4 @@
-import type { BrowserContext } from 'playwright-core';
+import type { BrowserContext } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import wait from './wait';
