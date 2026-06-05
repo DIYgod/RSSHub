@@ -7929,6 +7929,9 @@
   "/sjtu/tongqu/:type?": [
     "SeanChao"
   ],
+  "/sjtu/cs/tzgg/:category": [
+    "BeaCox"
+  ],
   "/sjtu/cs/xshd": [
     "BeaCox"
   ],

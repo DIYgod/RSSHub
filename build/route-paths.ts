@@ -2577,6 +2577,7 @@ export type RoutePath =
   | `/sinchew*`
   | `/sis001/author/:id?`
   | `/sis001/forum/:id?`
+  | `/sjtu/cs/tzgg/:category`
   | `/sjtu/cs/xshd`
   | `/sjtu/gs/:type/:num?`
   | `/sjtu/jwc/:type?`
