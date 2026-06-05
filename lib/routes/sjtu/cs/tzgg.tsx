@@ -46,7 +46,7 @@ function parseListing(json: { content: string }): ListItem[] {
             return {
                 title,
                 link,
-                date: `${yearMonth}-${day.padStart(2, '0')}`,
+                date: `${yearMonth}-${day}`,
             };
         })
         .filter((it) => it.link && it.title);
