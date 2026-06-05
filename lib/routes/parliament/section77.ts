@@ -136,7 +136,7 @@ async function handler(ctx) {
                 ];
 
                 const voteText = $('.row.bg-status .col-md-4.text-right').text().trim();
-                const voteRegex = /^ผู้แสดงความคิดเห็น\s*(\d+)\s*คน\s*(\d+(?:\.\d+)?)%\s*(\d+(?:\.\d+)?)%/g.exec(voteText);
+                const voteRegex = /^ผู้แสดงความคิดเห็น\s*(\d+)\s*คน\s*(\d+(?:\.\d+)?)%\s*\d+(?:\.\d+)?%/.exec(voteText);
 
                 if (voteRegex) {
                     const voteTotal = Number.parseInt(voteRegex[0]);
@@ -148,7 +148,7 @@ async function handler(ctx) {
                 }
 
                 const dateText = $('.banner-detail .banner-detail-caption .blockquote p:last-child').text();
-                const dateRegex = /^รับฟังตั้งแต่วันที่\s(\d{1,2})\s*([\u0E00-\u0E7F]+)\s*(\d{4})/g.exec(dateText);
+                const dateRegex = /^รับฟังตั้งแต่วันที่\s(\d{1,2})\s*([\u0E00-\u0E7F]+)\s*(\d{4})/.exec(dateText);
 
                 if (dateRegex) {
                     item.pubDate = timezone(

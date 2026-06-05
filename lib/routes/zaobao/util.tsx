@@ -61,7 +61,7 @@ export const parseList = async (
                 let title, pubDate, category, images;
                 const jsonText = $1('script[type="application/ld+json"]')
                     .text()
-                    .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    .replaceAll(/\p{Cc}/gu, '');
                 const ldJson = JSON.parse(jsonText);
 
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');

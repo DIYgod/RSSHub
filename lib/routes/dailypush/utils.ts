@@ -143,7 +143,7 @@ function extractCategories(article: ReturnType<CheerioAPI>, $: CheerioAPI): stri
             const tagText = tagElement.text().trim();
 
             // Skip summary/stats links and navigation
-            if (tagHref && tagText && !tagHref.includes('article/') && !tagHref.includes('Summary') && tagText.length < 50 && !/^(Summary|stats|About|Tags|Toggle|Trending|Latest|Previous|Next)$/i.test(tagText)) {
+            if (tagHref && tagText && !tagHref.includes('article/') && !tagHref.includes('Summary') && tagText.length < 50 && !/^(?:Summary|stats|About|Tags|Toggle|Trending|Latest|Previous|Next)$/i.test(tagText)) {
                 return tagText;
             }
             return null;

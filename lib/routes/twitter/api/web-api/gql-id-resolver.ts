@@ -30,7 +30,7 @@ async function fetchTwitterPage(): Promise<string> {
 
 function extractQueryIds(scriptContent: string): Record<string, string> {
     const ids: Record<string, string> = {};
-    const matches = scriptContent.matchAll(/queryId:"([^"]+?)".+?operationName:"([^"]+?)"/g);
+    const matches = scriptContent.matchAll(/queryId:"([^"]+)".+?operationName:"([^"]+)"/g);
     for (const match of matches) {
         const [, queryId, operationName] = match;
         if (operationNames.includes(operationName)) {

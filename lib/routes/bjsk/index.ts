@@ -55,7 +55,8 @@ async function handler(ctx) {
                 item.description = $('.article-main').html();
                 item.author = $('.info')
                     .text()
-                    .match(/作者：(.*)\s+来源/)[1];
+                    .match(/作者：(.*?)来源/)[1]
+                    .trim();
                 return item;
             })
         )

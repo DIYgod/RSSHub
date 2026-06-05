@@ -65,7 +65,7 @@ async function handler() {
     const initialState = JSON.parse(
         $('script')
             .text()
-            .match(/window\.__INITIAL_STATE__=(.*);\(function\(\){var/)[1]
+            .match(/window\.__INITIAL_STATE__=(.*);\(function\(\)\{var/)[1]
     );
 
     const list = Object.values(initialState.courseindex.myModules).flatMap((mod) =>

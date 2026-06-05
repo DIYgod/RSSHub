@@ -139,7 +139,7 @@ async function handler(ctx) {
 
             const single = {
                 title: `${typeMap[item.type]}了: ${shortenTitle}`,
-                description: `${content}${linkTemplate}${imgTemplate}`.replace(/(<br>|\s)+$/, ''),
+                description: `${content}${linkTemplate}${imgTemplate}`.replace(/(?:<br>|\s)+$/, ''),
                 pubDate: parseDate(item.createdAt),
                 link: getLink(item.id, item.type),
                 _extra: repostContent && {

@@ -49,7 +49,7 @@ async function handler(ctx) {
         const feedUrl = new URL(`news/feed/${documentId}/rss.xml`, rootUrl).href;
 
         const feedResponse = await ofetch(feedUrl);
-        currentUrl = feedResponse.match(/<link>([\w-./:?]+)<\/link>/)[1];
+        currentUrl = feedResponse.match(/<link>([\w./:?-]+)<\/link>/)[1];
     }
 
     const currentResponse = await ofetch(currentUrl);
@@ -124,7 +124,7 @@ async function handler(ctx) {
                     item.title = content('meta[property="og:title"]').prop('content');
                     item.description = '';
 
-                    const enclosurePattern = String.raw`"(?:MIME|content)?Type":"([\w]+/[\w]+)".*?"(?:fileS|s)?ize":(\d+),.*?"url":"([\w-.:/?]+)"`;
+                    const enclosurePattern = String.raw`"(?:MIME|content)?Type":"(\w+/\w+)".*?"(?:fileS|s)?ize":(\d+),.*?"url":"([\w.:/?-]+)"`;
 
                     const enclosureMatches = detailResponse.match(new RegExp(enclosurePattern, 'g'));
 

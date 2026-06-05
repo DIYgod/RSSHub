@@ -40,7 +40,7 @@ async function handler(ctx) {
     const list = $('#ac-space-video-list a').toArray();
     const image = $('head style:contains("user-photo")')
         .text()
-        .match(/.user-photo{\n\s*background:url\((.*)\) 0% 0% \/ 100% no-repeat;/)?.[1];
+        .match(/.user-photo\{\n\s*background:url\((.*)\) 0% 0% \/ 100% no-repeat;/)?.[1];
 
     return {
         title,

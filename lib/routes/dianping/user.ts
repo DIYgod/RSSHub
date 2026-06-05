@@ -75,7 +75,7 @@ async function handler(ctx) {
         headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
 
-    const nickNameReg = /window\.nickName = "(.*?)"/g;
+    const nickNameReg = /window\.nickName = "(.*?)"/;
     const nickName = nickNameReg.exec(pageResponse as string)?.[1];
 
     const response = await ofetch(`https://m.dianping.com/member/ajax/NobleUserFeeds?userId=${id}`, {
