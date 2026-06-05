@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const ROOT_URL = 'https://www.lemonde.fr';
@@ -78,13 +79,12 @@ async function handler(ctx) {
         throw new Error(`Invalid category: ${category}`);
     }
 
-    const xml = await ofetch(feedUrl, { responseType: 'text' });
-    const { load } = await import('cheerio');
+    const xml = await ofetch(feedUrl);
     const $ = load(xml, { xml: true });
 
-    const channel = $('channel').first();
-    const feedTitle = channel.children('title').first().text();
-    const feedLink = channel.children('link').first().text() || ROOT_URL;
+    const channel = $('channel');
+    const feedTitle = channel.children('title').text();
+    const feedLink = channel.children('link').text() || ROOT_URL;
 
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
@@ -93,10 +93,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .map((el) => {
             const item = $(el);
-            const link = item.children('link').first().text() || item.children('guid').first().text();
-            const title = item.children('title').first().text();
-            const pubDateText = item.children('pubDate').first().text();
-            const summary = item.children('description').first().text();
+            const link = item.children('link').text() || item.children('guid').text();
+            const title = item.children('title').text();
+            const pubDateText = item.children('pubDate').text();
+            const summary = item.children('description').text();
+            const categoryList = item
+                .children('category')
+                .toArray()
+                .map((c) => $(c).text())
+                .filter(Boolean);
             const imageUrl = item.find(String.raw`media\:content`).attr('url') || item.find('content').attr('url');
             const imageCredit = item.find(String.raw`media\:credit`).text();
 
@@ -116,6 +121,7 @@ async function handler(ctx) {
                 link,
                 pubDate: pubDateText ? parseDate(pubDateText) : undefined,
                 description,
+                category: categoryList,
                 guid: link,
             };
         })
