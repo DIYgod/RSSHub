@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    name: 'Animal Político - Política',
+    name: 'Política',
     maintainers: ['Slayer015'],
     path: '/politica',
     categories: ['traditional-media'],
@@ -37,7 +37,7 @@ export const route: Route = {
 
         return {
             title: 'Animal Político - Política',
-            link: 'https://grupoanimal.mx/estados',
+            link: 'https://grupoanimal.mx/politica',
             item: items,
         };
     },
