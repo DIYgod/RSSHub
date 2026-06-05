@@ -86,7 +86,7 @@ async function viewCategory(category: string) {
 }
 
 async function handler(ctx) {
-    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((item) => item.match(/^(\d+)/i)[0] ?? item);
+    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((item) => item.match(/^(\d+)/)[0] ?? item);
     const limit = ctx.req.query('limit') ?? 25;
 
     let token;

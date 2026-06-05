@@ -15,7 +15,7 @@ function parseTitle(smartlinkUrl: string): string {
         let titleSlug = dateIndex !== -1 && dateIndex < pathSegments.length - 1 ? pathSegments[dateIndex + 1] : pathSegments.at(-1) || '';
 
         // Remove .html/.htm extension if present
-        titleSlug = titleSlug.replace(/\.(html?|htm)$/i, '');
+        titleSlug = titleSlug.replace(/\.(html?)$/i, '');
 
         // Convert hyphens to spaces and capitalize each word
         return toTitleCase(titleSlug.replaceAll('-', ' '));

@@ -238,8 +238,8 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
             // Possible formats: 10:21, 45分钟前, 09-15 19:57
             const currentYear = new Date().getFullYear();
             const currentDate = new Date();
-            const monthDayTimePattern = /^(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
-            const timeOnlyPattern = /^(\d{1,2}):(\d{2})$/;
+            const monthDayTimePattern = /^\d{2}-\d{2} \d{2}:\d{2}$/;
+            const timeOnlyPattern = /^\d{1,2}:\d{2}$/;
             let processedDateString = pubDateString;
 
             if (monthDayTimePattern.test(pubDateString)) {

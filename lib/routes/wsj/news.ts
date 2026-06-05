@@ -59,7 +59,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const contents = $('script:contains("window.__STATE__")').text();
-    const data = JSON.parse(contents.match(/{.*}/)[0]).data;
+    const data = JSON.parse(contents.match(/\{.*\}/)[0]).data;
     const filteredKeys = Object.entries(data)
         .filter(([key, value]) => {
             if (!key.startsWith('article')) {

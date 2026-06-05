@@ -68,7 +68,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 
-                const ssr = JSON.parse(`{${detailResponse.data.match(/window\.__INITIAL_STATE__ = {(.*)}/)[1]}}`);
+                const ssr = JSON.parse(`{${detailResponse.data.match(/window\.__INITIAL_STATE__ = \{(.*)\}/)[1]}}`);
 
                 const content = load(ssr.post.detail.content, null, false);
                 content('img').each((_, img) => {

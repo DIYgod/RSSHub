@@ -18,7 +18,7 @@ export default async function get_article(url) {
     const $ = load(data);
 
     const date_raw = $('div.talk_time').clone().children().remove().end().text();
-    const date_str_zh = date_raw.replaceAll(/^[^`]*发表于(.*分)[^`]*$/g, '$1'); // use [^`] to match \n
+    const date_str_zh = date_raw.replaceAll(/^[^`]*发表于(?=(.*分))\1[^`]*$/g, '$1'); // use [^`] to match \n
     const date_str = date_str_zh
         .replaceAll(/[年月]/g, '-')
         .replaceAll('时', ':')

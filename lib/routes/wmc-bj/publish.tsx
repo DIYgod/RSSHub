@@ -46,7 +46,7 @@ async function handler(ctx) {
             ),
             category: categories,
             guid: `${currentUrl}#${datetime}`,
-            pubDate: timezone(parseDate(/^[A-Za-z]{3}/.test(datetime) ? datetime.replace(/^\w+/, '') : datetime, ['DD MMM HH:mm', 'MM/DD HH:mm']), +0),
+            pubDate: timezone(parseDate(/^[A-Z]{3}/i.test(datetime) ? datetime.replace(/^\w+/, '') : datetime, ['DD MMM HH:mm', 'MM/DD HH:mm']), +0),
         },
     ];
 

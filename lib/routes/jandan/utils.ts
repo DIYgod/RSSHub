@@ -20,7 +20,7 @@ export const extractPageId = async (url: string, referer: string): Promise<strin
 
     $('script').each((_, script) => {
         const content = $(script).html() || '';
-        const match = content.match(/PAGE\s*=\s*{\s*id\s*:\s*(\d+)\s*}/);
+        const match = content.match(/PAGE\s*=\s*\{\s*id\s*:\s*(\d+)\s*\}/);
         if (match) {
             pageId = match[1];
         }
