@@ -137,8 +137,8 @@ export const route: Route = {
 
                     // use fullDration to extract startDate and endDate, if fullDuration is not exist, return empty data
                     const fullDuration = texts
-                        .find((text) => text.includes('展览时间：') || text.includes('时间：'))
-                        ?.replaceAll(/展览时间：|时间：/g, '')
+                        .find((text) => text.includes('时间：'))
+                        ?.replaceAll(/(?:展览)?时间：/g, '')
                         ?.trim();
 
                     if (!fullDuration) {
@@ -147,8 +147,8 @@ export const route: Route = {
 
                     let location =
                         texts
-                            .find((text) => text.includes('展览地点：') || text.includes('展出地点：') || text.includes('地点：'))
-                            ?.replaceAll(/展览地点：|展出地点：|地点：/g, '')
+                            .find((text) => text.includes('地点：'))
+                            ?.replaceAll(/(?:展(?:览|出))?地点：/g, '')
                             ?.trim() || '';
 
                     const locMatch = location.match(/^.*?(?:展厅)/) || [''];
