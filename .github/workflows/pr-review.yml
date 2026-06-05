@@ -104,6 +104,7 @@ jobs:
                           "grep*": "allow",
                           "head*": "allow",
                           "ls*": "allow",
+                          "rg*": "allow",
                           "sed*": "allow",
                           "tail*": "allow",
                           "wc*": "allow"
