@@ -136,7 +136,7 @@ async function handler(ctx) {
                 ];
 
                 const voteText = $('.row.bg-status .col-md-4.text-right').text().trim();
-                const voteRegex = /^ผู้แสดงความคิดเห็น\s*(\d+)\s*คน\s*(\d+(?:\.\d+)?)%\s*(\d+(?:\.\d+)?)%/.exec(voteText);
+                const voteRegex = /^ผู้แสดงความคิดเห็น\s*(\d+)\s*คน\s*(\d+(?:\.\d+)?)%\s*\d+(?:\.\d+)?%/.exec(voteText);
 
                 if (voteRegex) {
                     const voteTotal = Number.parseInt(voteRegex[0]);

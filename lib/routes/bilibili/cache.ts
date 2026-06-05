@@ -350,7 +350,7 @@ const getArticleDataFromCvid = async (cvid, uid) => {
             const newFormatData = JSON.parse(
                 $('script:contains("window.__INITIAL_STATE__")')
                     .text()
-                    .match(/window\.__INITIAL_STATE__\s*=\s*(.*?);\(/)[1]
+                    .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*?)?;\(/)[1]
             );
 
             if (newFormatData?.readInfo?.opus?.content?.paragraphs) {

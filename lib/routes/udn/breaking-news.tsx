@@ -62,7 +62,7 @@ async function handler(ctx) {
                     .eq(0)
                     .text()
                     .trim()
-                    .replaceAll(/[\b\t\n]/g, '');
+                    .replaceAll(/[\t\n]/g, '');
                 const data = metadata.startsWith('[') ? JSON.parse(metadata)[0] : JSON.parse(metadata);
                 // e.g. https://udn.com/news/story/7331/6576320
                 const content = $('.article-content__editor');

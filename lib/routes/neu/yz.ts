@@ -40,7 +40,7 @@ const parsePage = async (items, type) => {
                 })(),
                 author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
             };
-            if (type === DOWNLOAD_ID && /\.(pdf|docx?|xlsx?|zip|rar|7z)$/i.test(url)) {
+            if (type === DOWNLOAD_ID && /\.(?:pdf|docx?|xlsx?|zip|rar|7z)$/i.test(url)) {
                 resultItem.description = `
                         <p>${title}</p><br/>
                         <a href="${url}">点击进入下载地址传送门～</a>

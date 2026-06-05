@@ -150,7 +150,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 if (item.enclosure_url && item.enclosure_type) {
                     if (item.enclosure_type.startsWith('image/')) {
                         item.enclosure_url = replaceUrl(imageHotlinkTemplate, item.enclosure_url);
-                    } else if (/^(video|audio)\//.test(item.enclosure_type)) {
+                    } else if (/^(?:video|audio)\//.test(item.enclosure_type)) {
                         item.enclosure_url = replaceUrl(multimediaHotlinkTemplate, item.enclosure_url);
                     }
                 }

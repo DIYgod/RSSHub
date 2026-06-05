@@ -17,7 +17,7 @@ async function handler(ctx) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
-    if (!/^(https?):\/\/[^\s#$./?].\S*$/i.test(url)) {
+    if (!/^https?:\/\/[^\s#$./?].\S*$/i.test(url)) {
         throw new Error('Invalid URL');
     }
 

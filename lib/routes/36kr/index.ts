@@ -64,7 +64,7 @@ async function handler(ctx) {
             };
         });
 
-    if (!/^\/(search|newsflashes)/.test(path)) {
+    if (!/^\/(?:search|newsflashes)/.test(path)) {
         items = await Promise.all(items.map((item) => ProcessItem(item, cache.tryGet)));
     }
 

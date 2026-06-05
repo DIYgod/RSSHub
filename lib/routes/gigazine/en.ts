@@ -22,7 +22,7 @@ const getAbsoluteUrl = (path: string | undefined) => (path ? new URL(path, ROOT_
 const getArticleAuthor = ($: ReturnType<typeof load>) =>
     $('#article .items p')
         .text()
-        .match(/Posted by\s+(.+)$/)?.[1]
+        .match(/Posted by\s+(\S.*)$/)?.[1]
         ?.trim();
 const getArticleCategories = ($: ReturnType<typeof load>) => [
     ...new Set(

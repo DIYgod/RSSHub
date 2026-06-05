@@ -12,7 +12,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const toSize = (raw) => {
-    const matches = raw.match(/(\d+(\.\d+)?)(\w+)/);
+    const matches = raw.match(/(\d+(\.\d+)?)(\D\w*)/);
     return matches[3] === 'GB' ? matches[1] * 1024 : matches[1];
 };
 
