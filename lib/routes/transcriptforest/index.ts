@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const { data: firstResponse } = await got(rootUrl);
 
-    const data = JSON.parse(firstResponse.match(/({"props".*"scriptLoader":\[]})<\/script>/)?.[1]);
+    const data = JSON.parse(firstResponse.match(/(\{"props".*"scriptLoader":\[\]\})<\/script>/)?.[1]);
 
     const buildId = data.buildId;
     const defaultLocale = data.defaultLocale;

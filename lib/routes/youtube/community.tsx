@@ -52,7 +52,7 @@ async function handler(ctx) {
     const ytInitialData = JSON.parse(
         $('script')
             .text()
-            .match(/ytInitialData = ({.*?});/)?.[1] ?? '{}'
+            .match(/ytInitialData = (\{.*?\});/)?.[1] ?? '{}'
     );
 
     const channelMetadata = ytInitialData.metadata.channelMetadataRenderer;

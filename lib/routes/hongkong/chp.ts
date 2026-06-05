@@ -70,7 +70,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const list = JSON.parse(response.data.match(/"data":(\[{.*}])}/)[1]).map((item) => {
+    const list = JSON.parse(response.data.match(/"data":(\[\{.*\}\])\}/)[1]).map((item) => {
         let link: string;
 
         if (item.UrlPath_en) {

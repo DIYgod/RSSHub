@@ -6,7 +6,7 @@ import { config } from '@/config';
 import type { Data } from '@/types';
 import logger from '@/utils/logger';
 
-const templateRegex = /\${([^{}]+)}/g;
+const templateRegex = /\$\{([^{}]+)\}/g;
 const allowedUrlProperties = new Set(['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username']);
 
 // match path or sub-path

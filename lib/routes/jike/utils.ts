@@ -117,7 +117,7 @@ const topicDataHanding = (data, ctx) =>
                     //     default:
                     //         break;
                     // }
-                    const imgUrl = /\.[\da-z]+?\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/')[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
+                    const imgUrl = /\.[\da-z]+\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/')[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
                     description += `<br><img src="${imgUrl}">`;
                     // description += `<br><picture><source srcset="${
                     //     pic.picUrl.split('/thumbnail/')[0]

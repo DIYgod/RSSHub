@@ -46,7 +46,7 @@ async function handler(ctx) {
     if (subTitle === undefined) {
         subTitle = '';
     } else {
-        subTitle = subTitle.replaceAll(/[^\dA-Za-z]+/g, ' ').toUpperCase();
+        subTitle = subTitle.replaceAll(/[^\dA-Z]+/gi, ' ').toUpperCase();
         subTitle = ` - ${subTitle}`;
     }
 

@@ -80,7 +80,7 @@ async function handler(ctx) {
                         url: item.link,
                     });
                     const $ = load(response.body);
-                    item.author = /作者：(\S*)\s{4}/g.exec($('p', '.main_contit').text())[1];
+                    item.author = /作者：(\S*)\s{4}/.exec($('p', '.main_contit').text())[1];
                     item.description = $('#vsb_content').html();
                     return item;
                 })

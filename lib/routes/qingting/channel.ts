@@ -42,7 +42,7 @@ async function handler(ctx) {
             items.map((item) =>
                 cache.tryGet(item.link, async () => {
                     response = await ofetch(item.link);
-                    const data = JSON.parse(response.match(/},"program":(.*?),"plist":/)[1]);
+                    const data = JSON.parse(response.match(/\},"program":(.*?),"plist":/)[1]);
                     item.description = data.richtext;
                     return item;
                 })

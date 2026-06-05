@@ -53,7 +53,7 @@ async function handler(ctx) {
             .map((item) => {
                 const source = consumer.sourceContentFor(item).replaceAll(/\s\n/g, '');
 
-                const processedSource = source.replaceAll(/(\w+)={+([^{}]+)}+/g, (match, key, value) => {
+                const processedSource = source.replaceAll(/(\w+)=\{+([^{}]+)\}+/g, (match, key, value) => {
                     const processedValue = value.slice(1, -1).replaceAll('"', "'").trim();
                     return `${key}="${processedValue}"`;
                 });

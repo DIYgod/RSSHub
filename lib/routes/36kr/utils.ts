@@ -11,7 +11,7 @@ export const ProcessItem = (item, tryGet) =>
     tryGet(item.link, async () => {
         const detailResponse = await ofetch(item.link);
 
-        const cipherTextList = detailResponse.match(/{"state":"(.*)","isEncrypt":true}/) ?? [];
+        const cipherTextList = detailResponse.match(/\{"state":"(.*)","isEncrypt":true\}/) ?? [];
 
         if (cipherTextList.length === 0) {
             const $ = load(detailResponse);

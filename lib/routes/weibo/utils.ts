@@ -30,7 +30,7 @@ const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDes
     }
 
     if (!showLinkIconInDescription) {
-        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*?<span class=["']?surl-text["']?>([^<>]*?)<\/span><\/a>/g, '$1$2</a>');
+        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*<span class=["']?surl-text["']?>([^<>]*)<\/span><\/a>/g, '$1$2</a>');
     }
 
     return formattedHtml;

@@ -90,7 +90,7 @@ async function handler(ctx) {
                     // 轉角24小時
                     description = $('.story_body_content')
                         .html()
-                        .split(/<!--\d+?-->/g)
+                        .split(/<!--\d+-->/g)
                         .slice(1, -1)
                         .join('');
                 }

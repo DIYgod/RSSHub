@@ -154,7 +154,7 @@ async function handler(ctx) {
                 // To fetch magnets.
 
                 try {
-                    const matches = detailResponse.data.match(/var gid = (\d+);[\S\s]*var uc = (\d+);[\S\s]*var img = '(.*)';/);
+                    const matches = detailResponse.data.match(/var gid = (\d+);[\s\S]*var uc = (\d+);[\s\S]*var img = '(.*)';/);
 
                     const magnetResponse = await got({
                         method: 'get',

@@ -92,7 +92,7 @@ async function handler(ctx) {
 
                         const content = await mainPage.evaluate(() => {
                             const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
-                            const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?});/);
+                            const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?\});/);
                             return {
                                 articleContent,
                                 statusData: statusMatch ? statusMatch[1] : null,

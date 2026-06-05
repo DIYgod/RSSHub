@@ -29,7 +29,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const newsStream = JSON.parse(response.data.match(/"newsstream":(\[.*?]),"cooperation"/)[1]);
+    const newsStream = JSON.parse(response.data.match(/"newsstream":(\[.*?\]),"cooperation"/)[1]);
 
     let items = newsStream.slice(0, limit).map((item) => ({
         title: item.title,
@@ -47,9 +47,9 @@ async function handler(ctx) {
                 });
 
                 item.author = detailResponse.data.match(/"editorName":"(.*?)",/)[1];
-                item.category = detailResponse.data.match(/},"keywords":"(.*?)",/)[1].split(',');
+                item.category = detailResponse.data.match(/\},"keywords":"(.*?)",/)[1].split(',');
                 const image = item.description;
-                const description = JSON.parse(detailResponse.data.match(/"contentList":(\[.*?]),/)[1]).map((content) => content.data);
+                const description = JSON.parse(detailResponse.data.match(/"contentList":(\[.*?\]),/)[1]).map((content) => content.data);
                 item.description = renderToString(
                     <>
                         {image ? (

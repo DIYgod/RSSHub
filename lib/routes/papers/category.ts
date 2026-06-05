@@ -81,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const description: string = renderDescription({
                 pdfUrl: enclosureUrl,
-                kimiUrl: `${targetUrl.replace(/[a-zA-Z0-9.]+$/, 'kimi')}?paper=${doi}`,
+                kimiUrl: `${targetUrl.replace(/[a-z0-9.]+$/i, 'kimi')}?paper=${doi}`,
                 authors,
                 summary: $el.find('p.summary').text(),
             });

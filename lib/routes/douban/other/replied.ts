@@ -56,7 +56,7 @@ async function handler(ctx) {
                         method: 'get',
                         url: item.link,
                     });
-                    const match = detailResponse.data.match(/'comments':(.*)}],/);
+                    const match = detailResponse.data.match(/'comments':(.*)\}\],/);
 
                     if (match.length > 1) {
                         const content = load(detailResponse.data);

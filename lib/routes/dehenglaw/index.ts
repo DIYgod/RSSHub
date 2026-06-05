@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
     return {
         title: $('title')
             .text()
-            .replace(/\|.*?$/, `| ${$('li.onthis').text()}`),
+            .replace(/\|.*$/, `| ${$('li.onthis').text()}`),
         description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,

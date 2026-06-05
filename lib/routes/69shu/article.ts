@@ -54,8 +54,8 @@ const createItem = (url: string) =>
     cache.tryGet(url, async () => {
         const html = await get(url);
         const $ = load(html);
-        const { articleid, chapterid, chaptername } = parseObject(/bookinfo\s?=\s?{[\S\s]+?}/, $('head>script:not([src])').text());
-        const decryptionMap = parseObject(/_\d+\s?=\s?{[\S\s]+?}/, $('.txtnav+script').text());
+        const { articleid, chapterid, chaptername } = parseObject(/bookinfo\s?=\s?\{[\s\S]+?\}/, $('head>script:not([src])').text());
+        const decryptionMap = parseObject(/_\d+\s?=\s?\{[\s\S]+?\}/, $('.txtnav+script').text());
 
         return {
             title: chaptername,
@@ -70,7 +70,7 @@ const parseObject = (reg: RegExp, str: string): Record<string, string> => {
     const obj = {};
     const match = reg.exec(str);
     if (match) {
-        for (const line of match[0].matchAll(/(\w+):\s?["']?([\S\s]+?)["']?[\n,}]/g)) {
+        for (const line of match[0].matchAll(/(\w+):\s?["']?([\s\S]+?)["']?[\n,}]/g)) {
             obj[line[1]] = line[2];
         }
     }

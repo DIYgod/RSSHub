@@ -34,7 +34,7 @@ async function handler() {
     const tfxtqJsUrl = `${rootUrl}/data/gzWeather/weatherTips.js`;
 
     const response = await got.get(tfxtqJsUrl);
-    const data = JSON.parse(`[{${response.data.match(/Tips = {(.*?)}/)[1]}}]`);
+    const data = JSON.parse(`[{${response.data.match(/Tips = \{(.*?)\}/)[1]}}]`);
 
     const items = data.map((item) => ({
         title: item.title,
