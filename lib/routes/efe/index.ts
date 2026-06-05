@@ -25,7 +25,12 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['mlkgrnt'],
     example: '/efe/mundo',
-    parameters: { category: 'Categoría, por defecto mundo' },
+    parameters: {
+        category: {
+            description: 'Category slug, see table below. Defaults to mundo.',
+            default: 'mundo',
+        },
+    },
     handler,
     categories: ['new-media'],
     features: {
@@ -53,9 +58,9 @@ async function handler(ctx) {
     const $ = load(response);
 
     const links = new Set<string>();
-    $('.elementor-loop-container a[href]').each((_, el) => {
+    $(`.elementor-loop-container .elementor-post a[href^="${rootUrl}/${category}/"]`).each((_, el) => {
         const href = $(el).attr('href');
-        if (href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
+        if (href && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
             links.add(href);
         }
     });
@@ -66,24 +71,13 @@ async function handler(ctx) {
                 const detail = await ofetch(link);
                 const $detail = load(detail);
 
-                const title = $detail('title').first().text();
+                const title = $detail('title').text();
                 const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
                 const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
 
                 const image = $detail('meta[property="og:image"]').attr('content');
                 const content = $detail('.elementor-widget-theme-post-content');
                 content.find('.auto-banner').remove();
-                content.find('img').each((_, el) => {
-                    const img = $detail(el);
-                    const src = img.attr('src') || '';
-                    if (/logo-efe|logo-EFE-Comunica|GIF-CUENTA-ATRAS/i.test(src)) {
-                        img.remove();
-                    } else {
-                        for (const attr of ['srcset', 'data-recalc-dims', 'fetchpriority', 'class', 'style', 'width', 'height']) {
-                            img.removeAttr(attr);
-                        }
-                    }
-                });
                 const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
 
                 return {
