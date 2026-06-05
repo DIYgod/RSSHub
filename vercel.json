@@ -1,6 +1,7 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
+    "installCommand": "node scripts/vercel-install.mjs",
     "outputDirectory": "src",
     "rewrites": [
         {
