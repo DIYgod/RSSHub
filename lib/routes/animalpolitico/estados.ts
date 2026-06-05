@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    name: 'Animal Político - Estados',
+    name: 'Estados',
     maintainers: ['Slayer015'],
     path: '/estados',
     categories: ['traditional-media'],
