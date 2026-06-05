@@ -20,7 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     // Group 3: Trailing hyphens (unused, but for context)
     // Group 4: Update content
     // Uses global and multiline flags for all matches and line start/end anchors
-    const updateRegex = /^(-+)\s*\n(.*?)\s*\n(-+)\s*\n([\s\S]*?)(?=\n-{2,}|<\/p>)/gm;
+    const updateRegex = /^(-+)\s*\n(.*?)\s*\n(-+)\s*\n([\s\S]*?)(?=\n-{2}|<\/p>)/gm;
 
     const items: DataItem[] = [];
     let match: RegExpExecArray | null;
