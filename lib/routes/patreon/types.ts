@@ -71,6 +71,7 @@ interface Attributes {
     was_posted_by_campaign_owner: boolean;
     thumbnail?: Thumbnail;
     content?: string;
+    content_json_string?: string | null;
     embed?: null;
     post_file?: PostFile;
 }
