@@ -63,7 +63,7 @@ async function handler(ctx) {
             .find('.cc-cd-cb-l > a')
             .toArray()
             .filter((element) => shouldIncludeItem($(element).find('.e').text().trim(), threshold))
-            .map(async (e) => {
+            .map((e) => {
                 const itemTitle = $(e).find('.t').text().trim();
                 const itemLink = $(e).attr('href');
                 const heatRate = $(e).find('.e').text().trim();
