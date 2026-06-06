@@ -74,7 +74,7 @@ const feedMap: Record<string, string> = {
 export const route: Route = {
     path: '/en/:category?',
     categories: ['traditional-media'],
-    example: '/le-monde/en',
+    example: '/lemonde/en',
     view: ViewType.Articles,
     parameters: {
         category: {
