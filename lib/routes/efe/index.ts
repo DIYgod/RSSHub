@@ -58,7 +58,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     const links = new Set<string>();
-    $(`.elementor-loop-container .elementor-post a[href^="${rootUrl}/${category}/"]`).each((_, el) => {
+    $(`.elementor-loop-container a[href^="${rootUrl}/${category}/"]`).each((_, el) => {
         const href = $(el).attr('href');
         if (href && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
             links.add(href);
