@@ -27,7 +27,7 @@ const parseCookieArray = (cookies, domainFilter?: string | RegExp) => {
 const constructCookieArray = (cookieStr, domain) =>
     cookieStr.split('; ').map((item) => {
         const [name, value] = item.split('=');
-        return value === undefined ? { name: '', value: name, domain } : { name, value, domain };
+        return value === undefined ? { name: '', value: name, domain, path: '/' } : { name, value, domain, path: '/' };
     });
 
 /**
@@ -40,7 +40,7 @@ const constructCookieArray = (cookieStr, domain) =>
  */
 const setCookies = async (page, cookieStr, domain) => {
     const cookies = constructCookieArray(cookieStr, domain);
-    await page.setCookie(...cookies);
+    await page.context().addCookies(cookies);
 };
 
 /**
@@ -51,7 +51,7 @@ const setCookies = async (page, cookieStr, domain) => {
  * @return {Promise<string>} Cookie-header-style cookie string
  */
 const getCookies = async (page, domainFilter?: string) => {
-    const cookies = await page.cookies();
+    const cookies = await page.context().cookies();
     return parseCookieArray(cookies, domainFilter);
 };
 

@@ -1,6 +1,6 @@
 // oxlint-disable no-undef
-/* eslint-disable unicorn/prefer-spread */
-/* eslint-disable unicorn/prefer-math-trunc */
+// oxlint-disable unicorn/prefer-spread
+// oxlint-disable unicorn/prefer-math-trunc
 // @ts-nocheck
 
 // Credits:

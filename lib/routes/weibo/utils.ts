@@ -83,22 +83,21 @@ const weiboUtils = {
                 const { page, destroy } = await getPlaywrightPage(url, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.setUserAgent(weiboUtils.apiHeaders['User-Agent']);
-                        await page.setRequestInterception(true);
-                        page.on('request', (request) => {
+                        await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
+                        await page.route('**/*', (route) => {
+                            const request = route.request();
                             // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
                             if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
-                                request.abort();
+                                route.abort();
                                 return;
                             }
                             if (request.url().startsWith(url)) {
                                 times++;
                             }
-                            request.continue();
+                            route.continue();
                         });
                     },
-                    // networkidle2 returns too early if the connection is slow
-                    gotoConfig: { waitUntil: 'networkidle0' },
+                    gotoConfig: { waitUntil: 'networkidle' },
                 });
                 const cookies: string = await getCookies(page, 'weibo.cn');
                 await destroy();

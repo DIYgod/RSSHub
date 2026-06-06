@@ -4,19 +4,6 @@ const connect = vi.fn();
 const connectOverCDP = vi.fn();
 const launch = vi.fn();
 
-const routeContinue = vi.fn();
-const routeAbort = vi.fn();
-const route = {
-    request: vi.fn(),
-    continue: routeContinue,
-    abort: routeAbort,
-};
-
-const request = {
-    resourceType: vi.fn(),
-    url: vi.fn(),
-};
-
 let page: any;
 let context: any;
 let browser: any;
@@ -26,9 +13,7 @@ const createBrowserMocks = () => {
         context: vi.fn(),
         goto: vi.fn(),
         on: vi.fn(),
-        route: vi.fn(),
         setExtraHTTPHeaders: vi.fn(),
-        unroute: vi.fn(),
     };
 
     context = {
@@ -53,7 +38,7 @@ const proxyMock = {
     getDispatcherForProxy: vi.fn(),
 };
 
-vi.mock('playwright', () => ({
+vi.mock('patchright', () => ({
     chromium: {
         connect,
         connectOverCDP,
@@ -83,11 +68,6 @@ const resetMocks = () => {
     connect.mockReset();
     connectOverCDP.mockReset();
     launch.mockReset();
-    routeContinue.mockReset();
-    routeAbort.mockReset();
-    route.request.mockReset();
-    request.resourceType.mockReset();
-    request.url.mockReset();
     proxyMock.multiProxy = undefined;
     proxyMock.getCurrentProxy.mockReset();
     proxyMock.markProxyFailed.mockReset();
@@ -110,7 +90,7 @@ describe('getPlaywrightPage (mocked)', () => {
 
         const getPlaywrightPage = await loadPlaywright();
         const onBeforeLoad = vi.fn();
-        const close = browser.close;
+        const contextClose = context.close;
         const result = await getPlaywrightPage('https://example.com', {
             noGoto: true,
             onBeforeLoad,
@@ -118,17 +98,39 @@ describe('getPlaywrightPage (mocked)', () => {
 
         const endpoint = connect.mock.calls[0][0] as string;
         expect(connectOverCDP).not.toHaveBeenCalled();
-        expect(endpoint).toContain('launch-options=');
-        expect(endpoint).not.toContain('launch=');
-        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch-options') || '{}');
+        expect(endpoint).toContain('launch=');
+        expect(endpoint).not.toContain('launch-options=');
+        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
         expect(launchOptions.args).not.toContainEqual(expect.stringContaining('--user-agent='));
+        expect(launchOptions.executablePath).toBeUndefined();
+        expect(launchOptions.acceptInsecureCerts).toBe(true);
         expect(onBeforeLoad).toHaveBeenCalled();
 
         await result.destroy();
-        expect(close).toHaveBeenCalled();
+        expect(contextClose).toHaveBeenCalled();
     });
 
-    it('does not override the browser user agent', async () => {
+    it('merges browserless launch options with existing ws endpoint launch param', async () => {
+        resetMocks();
+        connect.mockResolvedValue(browser);
+        launch.mockResolvedValue(browser);
+        page.goto.mockResolvedValue(undefined);
+        browser.close.mockResolvedValue(undefined);
+        process.env.PLAYWRIGHT_WS_ENDPOINT = `ws://localhost:3000/?token=abc&launch=${encodeURIComponent(JSON.stringify({ stealth: true }))}`;
+        proxyMock.getCurrentProxy.mockReturnValue(null);
+
+        const getPlaywrightPage = await loadPlaywright();
+        const result = await getPlaywrightPage('https://example.com', { noGoto: true });
+
+        const endpoint = connect.mock.calls[0][0] as string;
+        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
+        expect(launchOptions.stealth).toBe(true);
+        expect(launchOptions.headless).toBe(true);
+
+        await result.destroy();
+    });
+
+    it('does override the default HeadlessChrome user agent', async () => {
         resetMocks();
         launch.mockResolvedValue(browser);
         page.goto.mockResolvedValue(undefined);
@@ -143,10 +145,12 @@ describe('getPlaywrightPage (mocked)', () => {
             })
         );
         expect(browser.newContext).toHaveBeenCalledWith(
-            expect.not.objectContaining({
+            expect.objectContaining({
                 userAgent: expect.any(String),
             })
         );
+        const contextOptions = browser.newContext.mock.calls[0][0];
+        expect(contextOptions.userAgent).not.toMatch(/HeadlessChrome/i);
     });
 
     it('supports extending the browser auto close timeout', async () => {
@@ -175,33 +179,6 @@ describe('getPlaywrightPage (mocked)', () => {
         }
     });
 
-    it('handles requestfinished events after the remote page closes', async () => {
-        resetMocks();
-        launch.mockResolvedValue(browser);
-        page.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
-
-        const getPlaywrightPage = await loadPlaywright();
-        const handler = vi.fn();
-        const rawOn = page.on;
-        await getPlaywrightPage('https://example.com', {
-            onBeforeLoad: (page) => {
-                page.on('requestfinished', handler);
-            },
-        });
-
-        const finishedHandler = rawOn.mock.calls.find(([event]) => event === 'requestfinished')?.[1];
-        await finishedHandler?.({
-            response: vi.fn().mockRejectedValue(new Error('closed')),
-            url: () => 'https://example.com/api',
-        });
-
-        expect(handler).toHaveBeenCalledTimes(1);
-        const finishedRequest = handler.mock.calls[0][0];
-        expect(finishedRequest.response()).toBeNull();
-        expect(finishedRequest.url()).toBe('https://example.com/api');
-    });
-
     it('marks proxy failed when navigation throws with multi-proxy', async () => {
         resetMocks();
         launch.mockResolvedValue(browser);
@@ -218,51 +195,5 @@ describe('getPlaywrightPage (mocked)', () => {
         await expect(getPlaywrightPage('https://example.com')).rejects.toThrow('fail');
 
         expect(proxyMock.markProxyFailed).toHaveBeenCalledWith(currentProxy.uri);
-    });
-
-    it('maps legacy networkidle waits to playwright networkidle', async () => {
-        resetMocks();
-        launch.mockResolvedValue(browser);
-        page.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
-
-        const getPlaywrightPage = await loadPlaywright();
-        const goto = page.goto;
-        await getPlaywrightPage('https://example.com', {
-            gotoConfig: {
-                waitUntil: 'networkidle2',
-            },
-        });
-
-        expect(goto).toHaveBeenCalledWith('https://example.com', {
-            waitUntil: 'networkidle',
-        });
-    });
-
-    it('keeps legacy request interception helpers', async () => {
-        resetMocks();
-        launch.mockResolvedValue(browser);
-        page.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
-        request.resourceType.mockReturnValue('image');
-        request.url.mockReturnValue('https://example.com/logo.png');
-        routeAbort.mockReturnValueOnce(new Promise((resolve) => setTimeout(resolve, 0)));
-        route.request.mockReturnValue(request);
-
-        const getPlaywrightPage = await loadPlaywright();
-        await getPlaywrightPage('https://example.com', {
-            onBeforeLoad: async (page) => {
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
-                });
-            },
-        });
-
-        const routeHandler = page.route.mock.calls[0][1];
-        await routeHandler(route);
-
-        expect(routeAbort).toHaveBeenCalled();
-        expect(routeContinue).not.toHaveBeenCalled();
     });
 });

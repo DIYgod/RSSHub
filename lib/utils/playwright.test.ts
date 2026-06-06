@@ -1,15 +1,14 @@
+import type { BrowserContext } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
-import type { Browser } from '@/utils/playwright';
 
 import wait from './wait';
 
-let browser: Browser | null = null;
+let context: BrowserContext | null = null;
 
 afterEach(async () => {
-    if (browser) {
-        await browser.close();
-        browser = null;
+    if (context) {
+        await context.close();
+        context = null;
     }
 
     delete process.env.PROXY_URI;
@@ -25,9 +24,10 @@ afterEach(async () => {
 describe('playwright', () => {
     it('playwright run', async () => {
         const { default: playwright } = await import('./playwright');
-        browser = await playwright();
+        context = await playwright();
+        const browser = context.browser();
         const startTime = Date.now();
-        const page = await browser.newPage();
+        const page = await context.newPage();
         await page.goto('https://www.google.com', {
             waitUntil: 'domcontentloaded',
         });
@@ -35,13 +35,13 @@ describe('playwright', () => {
         const html = await page.evaluate(() => document.body.innerHTML);
         expect(html.length).toBeGreaterThan(0);
 
-        expect(browser.isConnected()).toBe(true);
+        expect(browser?.isConnected()).toBe(true);
         const sleepTime = 31 * 1000 - (Date.now() - startTime);
         if (sleepTime > 0) {
             await wait(sleepTime);
         }
-        expect(browser.isConnected()).toBe(false);
-        browser = null;
+        expect(browser?.isConnected()).toBe(false);
+        context = null;
     }, 45000);
 });
 
@@ -50,18 +50,19 @@ describe('getPlaywrightPage', () => {
         const { getPlaywrightPage } = await import('./playwright');
         const playwright = await getPlaywrightPage('https://www.google.com');
         const page = playwright.page;
-        browser = playwright.browser;
+        context = playwright.context;
+        const browser = context.browser();
         const startTime = Date.now();
 
         const html = await page.evaluate(() => document.body.innerHTML);
         expect(html.length).toBeGreaterThan(0);
 
-        expect(browser.isConnected()).toBe(true);
+        expect(browser?.isConnected()).toBe(true);
         const sleepTime = 31 * 1000 - (Date.now() - startTime);
         if (sleepTime > 0) {
             await wait(sleepTime);
         }
-        expect(browser.isConnected()).toBe(false);
-        browser = null;
+        expect(browser?.isConnected()).toBe(false);
+        context = null;
     }, 45000);
 });

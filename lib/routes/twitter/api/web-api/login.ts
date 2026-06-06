@@ -29,8 +29,8 @@ async function login({ username, password, authenticationSecret }) {
         await loginLimiterQueue.removeTokens(1);
 
         const cookieJar = new CookieJar();
-        const browser = await playwright();
-        const page = await browser.newPage();
+        const context = await playwright();
+        const page = await context.newPage();
         await page.goto('https://x.com/i/flow/login');
         await page.waitForSelector('input[autocomplete="username"]');
         await page.type('input[autocomplete="username"]', username);
@@ -54,7 +54,7 @@ async function login({ username, password, authenticationSecret }) {
                         logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
                         resolve('');
                     }
-                    const cookies = await page.cookies();
+                    const cookies = await page.context().cookies();
                     for (const cookie of cookies) {
                         cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
                     }
@@ -64,7 +64,7 @@ async function login({ username, password, authenticationSecret }) {
             });
         });
         const cookieString = await waitForRequest;
-        await browser.close();
+        await context.close();
         return cookieString;
     } catch (error) {
         logger.error(`twitter debug: twitter username ${username} login failed:`, error);

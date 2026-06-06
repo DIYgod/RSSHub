@@ -76,9 +76,9 @@ const fetchPage = async (url: string): Promise<string> => {
             const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        allowedTypes.has(request.resourceType()) ? request.continue() : request.abort();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        allowedTypes.has(request.resourceType()) ? route.continue() : route.abort();
                     });
                 },
             });

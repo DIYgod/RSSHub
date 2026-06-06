@@ -43,12 +43,12 @@ async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
     const url = `${BASE_URL}/${tag}/${sort}`;
 
-    const browser = await playwright();
+    const context = await playwright();
     try {
-        const html = await fetchPageHtml(browser, url, 'article');
+        const html = await fetchPageHtml(context, url, 'article');
         const $ = load(html);
         const list = parseArticles($, BASE_URL);
-        const items = await enhanceItemsWithSummaries(browser, list);
+        const items = await enhanceItemsWithSummaries(context, list);
 
         const pageTitle = $('title').text() || `DailyPush - ${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
 
@@ -58,6 +58,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await browser.close();
+        await context.close();
     }
 }

@@ -18,18 +18,20 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const { page, destroy, browser } = await getPlaywrightPage('about:blank');
+    const { page, destroy, context } = await getPlaywrightPage('about:blank');
     if (config.javdb.session) {
-        await browser.setCookie({
-            name: '_jdb_session',
-            value: config.javdb.session,
-            domain,
-            path: '/',
-        });
+        await page.context().addCookies([
+            {
+                name: '_jdb_session',
+                value: config.javdb.session,
+                domain,
+                path: '/',
+            },
+        ]);
     }
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
     await page.goto(url.href, {
         waitUntil: 'domcontentloaded',
@@ -56,10 +58,10 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {

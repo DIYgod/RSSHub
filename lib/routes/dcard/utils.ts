@@ -1,6 +1,6 @@
 import pMap from 'p-map';
 
-const ProcessFeed = async (items, cookies, browser, limit, cache) => {
+const ProcessFeed = async (items, cookies, context, limit, cache) => {
     let newCookies = [];
     const result = await pMap(
         items.slice(0, limit),
@@ -10,19 +10,19 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
                 let response;
                 // try catch 处理被删除的帖子
                 try {
-                    const page = await browser.newPage();
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+                    const page = await context.newPage();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                     });
                     await page.setExtraHTTPHeaders({
                         referer: `https://www.dcard.tw/f/${i.forumAlias}/p/${i.id}`,
                     });
-                    await page.setCookie(...cookies);
+                    await page.context().addCookies(cookies);
                     await page.goto(url);
                     await page.waitForSelector('body > pre');
                     response = await page.evaluate(() => document.querySelector('body > pre').textContent);
-                    newCookies = await page.cookies();
+                    newCookies = await page.context().cookies();
                     await page.close();
 
                     const data = JSON.parse(response);

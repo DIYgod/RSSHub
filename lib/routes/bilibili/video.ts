@@ -140,7 +140,7 @@ async function applyCookie(page: Page, cookie: string) {
         .filter((item) => item !== undefined);
 
     if (cookies.length > 0) {
-        await page.setCookie(...cookies);
+        await page.context().addCookies(cookies);
     }
 }
 
@@ -184,9 +184,9 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
                 await applyCookie(page, cookie);
             }
 
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                allowedBrowserRequestTypes.has(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },

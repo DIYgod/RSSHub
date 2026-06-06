@@ -82,11 +82,11 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         url,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
             await page.goto(url, {
                 waitUntil: 'domcontentloaded',
@@ -94,7 +94,7 @@ async function handler(ctx) {
             await page.waitForSelector('.datalist');
 
             const html = await page.evaluate(() => document.documentElement.innerHTML);
-            await browser.close();
+            await context.close();
 
             const $ = load(html);
             return {

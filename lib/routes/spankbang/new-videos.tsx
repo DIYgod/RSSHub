@@ -22,15 +22,15 @@ const handler = async () => {
     const baseUrl = 'https://spankbang.com';
     const link = `${baseUrl}/new_videos/`;
 
-    const browser = await playwright();
+    const context = await playwright();
 
     const data = await cache.tryGet(
         link,
         async () => {
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
             });
             logger.http(`Requesting ${link}`);
             await page.goto(link, {
@@ -67,7 +67,7 @@ const handler = async () => {
         false
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: data.title,

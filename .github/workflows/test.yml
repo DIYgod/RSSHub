@@ -39,7 +39,7 @@ jobs:
             - name: Install dependencies (pnpm)
               run: pnpm i
             - name: Run postinstall script for dependencies
-              run: pnpm rb && pnpm exec playwright install chromium
+              run: pnpm rb && pnpm exec patchright install chromium
             - name: Build routes
               run: pnpm build
             - name: Build worker routes
@@ -90,7 +90,7 @@ jobs:
               run: pnpm build
             - name: Install bundled Chromium
               if: ${{ matrix.chromium.dependency == '' }}
-              run: pnpm exec playwright install chromium
+              run: pnpm exec patchright install chromium
             - name: Install Chromium
               if: ${{ matrix.chromium.dependency != '' }}
               # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means

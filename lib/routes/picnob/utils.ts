@@ -4,9 +4,9 @@ const playwrightGet = async (url) => {
     let data;
     const { destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 data = await (response.request().url().includes('/api/posts') ? response.json() : response.text());

@@ -60,13 +60,13 @@ async function handler(ctx) {
         async () => {
             const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? request.continue() : request.abort();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
                     });
                 },
                 gotoConfig: {
-                    waitUntil: 'networkidle0',
+                    waitUntil: 'networkidle',
                 },
             });
 

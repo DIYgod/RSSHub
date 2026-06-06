@@ -26,17 +26,15 @@ async function handler(ctx) {
     const { trackingNumber } = ctx.req.param();
     const url = `https://www.ups.com/track?loc=en_US&tracknum=${trackingNumber}`;
 
-    const browser = await playwright();
-    const page = await browser.newPage();
-
-    await page.setRequestInterception(true);
+    const context = await playwright();
+    const page = await context.newPage();
 
     // skip loading images, stylesheets, and fonts
-    page.on('request', (request) => {
-        if (['image', 'stylesheet', 'font', 'ping', 'fetch'].includes(request.resourceType())) {
-            request.abort();
+    await page.route('**/*', (route) => {
+        if (['image', 'stylesheet', 'font', 'ping', 'fetch'].includes(route.request().resourceType())) {
+            route.abort();
         } else {
-            request.continue();
+            route.continue();
         }
     });
 
@@ -57,7 +55,7 @@ async function handler(ctx) {
     await page.waitForSelector('tr[id^="stApp_activitydetails_row"]');
 
     const content = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(content);
 

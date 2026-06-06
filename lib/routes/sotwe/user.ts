@@ -61,11 +61,11 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `sotwe:user:${id}`,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
             const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
             logger.http(`Requesting ${apiUrl}`);
@@ -74,7 +74,7 @@ async function handler(ctx) {
             });
             const response = await page.evaluate(() => document.documentElement.textContent);
             await page.close();
-            await browser.close();
+            await context.close();
 
             return JSON.parse(response || '{}');
         },
