@@ -19,7 +19,95 @@ export const route: Route = {
             method: 'POST',
             body: {
                 operationName: 'GetEstadosPaginated',
-                query: 'fragment NotasGlobalesFields on NotasGlobales {\n  contenido\n  tituloHome\n  informacionDeLaNota {\n    autor\n    extracto\n    twitterAutor {\n      usuarioTwitter\n      __typename\n    }\n    __typename\n  }\n  imagenVideoDestacado {\n    tipoDeContenido\n    imagenDestacada {\n      imagenS3 {\n        node {\n          sourceUrl\n          sourceUrlMedium: sourceUrl(size: MEDIUM_LARGE)\n          sourceUrlList: sourceUrl(size: MEDIUM)\n          sourceUrlListLarge: sourceUrl(size: LARGE)\n          __typename\n        }\n        __typename\n      }\n      pieImagen\n      __typename\n    }\n    videoDestacado {\n      imagenVideoS3 {\n        node {\n          sourceUrl\n          sourceUrlMedium: sourceUrl(size: MEDIUM_LARGE)\n          sourceUrlList: sourceUrl(size: MEDIUM)\n          sourceUrlListLarge: sourceUrl(size: LARGE)\n          __typename\n        }\n        __typename\n      }\n      pieVideo\n      video\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nquery GetEstadosPaginated($first: Int = 8, $after: String) {\n  allEstados(first: $first, after: $after) {\n    pageInfo {\n      endCursor\n      hasNextPage\n      startCursor\n      hasPreviousPage\n      __typename\n    }\n    nodes {\n      id\n      title\n      slug\n      date\n      databaseId\n      notasGlobales {\n        ...NotasGlobalesFields\n        __typename\n      }\n      mostrarBannerEditorial {\n        mostrarBanner\n        __typename\n      }\n      notasPorosas {\n        contenidoRegistrado\n        __typename\n      }\n      tags {\n        nodes {\n          id\n          name\n          slug\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}',
+                query: /* GraphQl */ `fragment NotasGlobalesFields on NotasGlobales {
+                contenido
+                tituloHome
+                informacionDeLaNota {
+                    autor
+                    extracto
+                    twitterAutor {
+                    usuarioTwitter
+                    __typename
+                    }
+                    __typename
+                }
+                imagenVideoDestacado {
+                    tipoDeContenido
+                    imagenDestacada {
+                    imagenS3 {
+                        node {
+                        sourceUrl
+                        sourceUrlMedium: sourceUrl(size: MEDIUM_LARGE)
+                        sourceUrlList: sourceUrl(size: MEDIUM)
+                        sourceUrlListLarge: sourceUrl(size: LARGE)
+                        __typename
+                        }
+                        __typename
+                    }
+                    pieImagen
+                    __typename
+                    }
+                    videoDestacado {
+                    imagenVideoS3 {
+                        node {
+                        sourceUrl
+                        sourceUrlMedium: sourceUrl(size: MEDIUM_LARGE)
+                        sourceUrlList: sourceUrl(size: MEDIUM)
+                        sourceUrlListLarge: sourceUrl(size: LARGE)
+                        __typename
+                        }
+                        __typename
+                    }
+                    pieVideo
+                    video
+                    __typename
+                    }
+                    __typename
+                }
+                __typename
+                }
+
+                query GetEstadosPaginated($first: Int = 8, $after: String) {
+                allEstados(first: $first, after: $after) {
+                    pageInfo {
+                    endCursor
+                    hasNextPage
+                    startCursor
+                    hasPreviousPage
+                    __typename
+                    }
+                    nodes {
+                    id
+                    title
+                    slug
+                    date
+                    databaseId
+                    notasGlobales {
+                        ...NotasGlobalesFields
+                        __typename
+                    }
+                    mostrarBannerEditorial {
+                        mostrarBanner
+                        __typename
+                    }
+                    notasPorosas {
+                        contenidoRegistrado
+                        __typename
+                    }
+                    tags {
+                        nodes {
+                        id
+                        name
+                        slug
+                        __typename
+                        }
+                        __typename
+                    }
+                    __typename
+                    }
+                    __typename
+                }
+                }`,
                 variables: {
                     first: 25,
                 },
