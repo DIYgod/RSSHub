@@ -109,7 +109,11 @@ async function handler(ctx): Promise<Data> {
         feedLink: feedUrl,
         itunes_author: childText(channel, String.raw`itunes\:author`) || undefined,
         itunes_category: childAttr(channel, String.raw`itunes\:category`, 'text'),
-        itunes_explicit: childText(channel, String.raw`itunes\:explicit`) || undefined,
+        itunes_explicit:
+            channel
+                .children(String.raw`itunes\:explicit`)
+                .first()
+                .text() || undefined,
     };
 }
 
