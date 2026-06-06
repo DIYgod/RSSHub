@@ -7,11 +7,11 @@ export const route: Route = {
     maintainers: ['Slayer015'],
     path: '/politica',
     categories: ['new-media'],
-    example: '/animalpolitico/politica',
+    example: '/grupoanimal/politica',
     radar: [
         {
             source: ['www.grupoanimal.mx/politica'],
-            target: '/animalpolitico/politica',
+            target: '/grupoanimal/politica',
         },
     ],
     handler: async () => {
@@ -116,7 +116,7 @@ export const route: Route = {
         }));
 
         return {
-            title: 'Animal Político - Política',
+            title: 'Grupo Animal - Política',
             link: 'https://grupoanimal.mx/politica',
             item: items,
         };

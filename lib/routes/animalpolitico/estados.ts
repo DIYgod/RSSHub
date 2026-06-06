@@ -7,11 +7,11 @@ export const route: Route = {
     maintainers: ['Slayer015'],
     path: '/estados',
     categories: ['new-media'],
-    example: '/animalpolitico/estados',
+    example: '/grupoanimal/estados',
     radar: [
         {
             source: ['www.grupoanimal.mx/estados'],
-            target: '/animalpolitico/estados',
+            target: '/grupoanimal/estados',
         },
     ],
     handler: async () => {
@@ -124,7 +124,7 @@ export const route: Route = {
         }));
 
         return {
-            title: 'Animal Político - Estados',
+            title: 'Grupo Animal - Estados',
             link: 'https://grupoanimal.mx/estados',
             item: items,
         };
