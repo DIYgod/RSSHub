@@ -2627,6 +2627,7 @@ export type RoutePath =
   | `/sourceforge/:routeParams?`
   | `/southcn/nfapp/column/:column?`
   | `/southcn/nfapp/reporter/:reporter`
+  | `/soweather/warn`
   | `/spankbang/new_videos`
   | `/spglobal/ratings/:language?`
   | `/spotify/artist/:id`
