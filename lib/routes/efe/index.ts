@@ -67,6 +67,7 @@ async function handler(ctx) {
 
     const items = [];
     for (const link of [...links].slice(0, limit)) {
+        // eslint-disable-next-line no-await-in-loop -- sequential to avoid 429 rate limiting
         const item = await cache.tryGet(link, async () => {
             const detail = await ofetch(link);
             const $detail = load(detail);
