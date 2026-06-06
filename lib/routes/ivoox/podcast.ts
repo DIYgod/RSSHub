@@ -1,4 +1,3 @@
-import type { AnyNode, Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -65,50 +64,50 @@ async function handler(ctx): Promise<Data> {
                     const itemElement = $(element);
                     const enclosure = itemElement.children('enclosure');
                     const enclosureUrl = enclosure.attr('url');
-                    const guid = childText(itemElement, 'guid');
+                    const guid = itemElement.children('guid').text();
                     const itemId = normalizeEpisodeId(guid);
 
                     if (!enclosureUrl) {
                         return;
                     }
 
-                    const title = childText(itemElement, 'title');
-                    const link = childText(itemElement, 'link');
-                    const image = childAttr(itemElement, String.raw`itunes\:image`, 'href');
+                    const title = itemElement.children('title').text();
+                    const link = itemElement.children('link').text();
+                    const image = itemElement.children(String.raw`itunes\:image`).attr('href');
                     const length = parseOptionalInteger(enclosure.attr('length'));
                     const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl, link) : enclosureUrl;
 
                     return {
                         title,
-                        description: childText(itemElement, 'description') || undefined,
+                        description: itemElement.children('description').text() || undefined,
                         link: link || undefined,
-                        pubDate: parseOptionalDate(childText(itemElement, 'pubDate')),
+                        pubDate: parseOptionalDate(itemElement.children('pubDate').text()),
                         guid: guid || undefined,
                         enclosure_url: resolvedEnclosureUrl,
                         enclosure_type: enclosure.attr('type') || mediaTypeFromUrl(resolvedEnclosureUrl),
                         enclosure_title: title,
                         ...(length !== undefined && { enclosure_length: length }),
-                        itunes_duration: childText(itemElement, String.raw`itunes\:duration`) || undefined,
+                        itunes_duration: itemElement.children(String.raw`itunes\:duration`).text() || undefined,
                         itunes_item_image: image,
                     };
                 })
         )
     ).filter((current): current is DataItem => current !== undefined);
 
-    const rssImageUrl = childText(channel.children('image'), 'url');
-    const itunesImageUrl = childAttr(channel, String.raw`itunes\:image`, 'href');
+    const rssImageUrl = channel.children('image').children('url').text();
+    const itunesImageUrl = channel.children(String.raw`itunes\:image`).attr('href');
 
     return {
-        title: childText(channel, 'title'),
-        description: childText(channel, 'description') || undefined,
-        link: childText(channel, 'link') || rootUrl,
+        title: channel.children('title').text(),
+        description: channel.children('description').text() || undefined,
+        link: channel.children('link').text() || rootUrl,
         item: items,
         image: rssImageUrl || itunesImageUrl,
         itunes_image: itunesImageUrl || rssImageUrl || undefined,
-        language: normalizeLanguage(childText(channel, 'language')),
+        language: normalizeLanguage(channel.children('language').text()),
         feedLink: feedUrl,
-        itunes_author: childText(channel, String.raw`itunes\:author`) || undefined,
-        itunes_category: childAttr(channel, String.raw`itunes\:category`, 'text'),
+        itunes_author: channel.children(String.raw`itunes\:author`).text() || undefined,
+        itunes_category: channel.children(String.raw`itunes\:category`).attr('text'),
         itunes_explicit:
             channel
                 .children(String.raw`itunes\:explicit`)
@@ -155,14 +154,6 @@ function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string, referer: s
 
         return fallbackUrl;
     });
-}
-
-function childText(element: Cheerio<AnyNode>, selector: string): string {
-    return element.children(selector).text();
-}
-
-function childAttr(element: Cheerio<AnyNode>, selector: string, attribute: string): string | undefined {
-    return element.children(selector).attr(attribute);
 }
 
 function parseOptionalDate(value: string): Date | undefined {
