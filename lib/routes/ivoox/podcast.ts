@@ -51,7 +51,7 @@ async function handler(ctx): Promise<Data> {
     const feedUrl = `https://feeds.ivoox.com/feed_fg_f${id}_filtro_1.xml`;
     const response = await ofetch(feedUrl);
 
-    const $ = load(response, { xmlMode: true });
+    const $ = load(response, { xml: true });
     const channel = $('channel');
     if (!channel.length) {
         throw new Error(`Invalid iVoox podcast feed for ID ${id}`);
@@ -105,7 +105,13 @@ async function handler(ctx): Promise<Data> {
         feedLink: feedUrl,
         itunes_author: childText(channel, String.raw`itunes\:author`) || undefined,
         itunes_category: childAttr(channel, String.raw`itunes\:category`, 'text'),
-        itunes_explicit: decodeHTML(channel.children(String.raw`itunes\:explicit`).first().text()) || undefined,
+        itunes_explicit:
+            decodeHTML(
+                channel
+                    .children(String.raw`itunes\:explicit`)
+                    .first()
+                    .text()
+            ) || undefined,
     };
 }
 
