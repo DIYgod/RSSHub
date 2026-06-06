@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const ROOT_URL = 'https://www.lemonde.fr/en';
