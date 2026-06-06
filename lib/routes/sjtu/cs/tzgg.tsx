@@ -93,12 +93,7 @@ export const route: Route = {
     path: '/cs/tzgg/:category',
     categories: ['university'],
     example: '/sjtu/cs/tzgg/bkspy',
-    parameters: {
-        category: {
-            description: '通知类别',
-            options: Object.fromEntries(Object.entries(categoryMap).map(([k, v]) => [k, v.name])),
-        },
-    },
+    parameters: { category: '通知类别' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -115,6 +110,9 @@ export const route: Route = {
     maintainers: ['BeaCox'],
     handler,
     url: 'www.cs.sjtu.edu.cn/notice-xssw-bkspy.html',
+    description: `| 本科生培养 | 研究生培养 | 国际交流 | 党建德育 | 团学工作 | 职业发展 | 其他 |
+| ---------- | ---------- | -------- | -------- | -------- | -------- | ---- |
+| bkspy      | yjspy      | gjjl     | djdy     | txgz     | zyfz     | qt   |`,
 };
 
 async function handler(ctx): Promise<Data> {
