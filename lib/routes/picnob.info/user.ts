@@ -66,86 +66,86 @@ export const route: Route = {
 // };
 
 function handler(ctx) {
-    //     const baseUrl = 'https://picnob.info';
+    // const baseUrl = 'https://picnob.info';
     const id = ctx.req.param('id');
     return ctx.set('redirect', `/picnob/user/${id}`);
-    //     const type = ctx.req.param('type') ?? 'posts';
-    //     const INSTALKER_BACK_API_KEY = '1263fd960207e2d481eff2c60feeae1541f6e90419283f7e674a36d8ac706462';
-    //     const { h64ToString } = await xxhash();
+    // const type = ctx.req.param('type') ?? 'posts';
+    // const INSTALKER_BACK_API_KEY = '1263fd960207e2d481eff2c60feeae1541f6e90419283f7e674a36d8ac706462';
+    // const { h64ToString } = await xxhash();
 
-    //     if (type !== 'posts' && type !== 'stories') {
-    //         throw new Error('Invalid type parameter. Allowed values are "posts" and "stories".');
-    //     }
+    // if (type !== 'posts' && type !== 'stories') {
+    //     throw new Error('Invalid type parameter. Allowed values are "posts" and "stories".');
+    // }
 
-    //     // SHA256(id)
-    //     const requestHash = await cache.tryGet(
-    //         `picnob.info:pulls:${id}`,
-    //         async () => {
-    //             const pullInfo = await ofetch<Pull>(`${baseUrl}/api/v1/pulls`, {
-    //                 headers: {
-    //                     'x-api-key': INSTALKER_BACK_API_KEY,
-    //                 },
-    //                 method: 'POST',
-    //                 body: { account: id, type: 'all', isPrivate: false },
-    //             });
-    //             return pullInfo.request_hash;
-    //         },
-    //         config.cache.routeExpire,
-    //         false
-    //     );
-
-    //     for (let attempt = 0; attempt < 10; attempt++) {
-    //         // eslint-disable-next-line no-await-in-loop
-    //         const status = await ofetch<Status[]>(`${baseUrl}/api/v1/pulls/${requestHash}/status`, {
+    // // SHA256(id)
+    // const requestHash = await cache.tryGet(
+    //     `picnob.info:pulls:${id}`,
+    //     async () => {
+    //         const pullInfo = await ofetch<Pull>(`${baseUrl}/api/v1/pulls`, {
     //             headers: {
     //                 'x-api-key': INSTALKER_BACK_API_KEY,
     //             },
+    //             method: 'POST',
+    //             body: { account: id, type: 'all', isPrivate: false },
     //         });
-    //         const allSuccess = Array.isArray(status) && status.every((item) => item.status === 'success');
-    //         if (allSuccess) {
-    //             break;
-    //         }
-    //         if (attempt < 9) {
-    //             // eslint-disable-next-line no-await-in-loop
-    //             await wait(3000);
-    //         }
+    //         return pullInfo.request_hash;
+    //     },
+    //     config.cache.routeExpire,
+    //     false
+    // );
+
+    // for (let attempt = 0; attempt < 10; attempt++) {
+    //     // eslint-disable-next-line no-await-in-loop
+    //     const status = await ofetch<Status[]>(`${baseUrl}/api/v1/pulls/${requestHash}/status`, {
+    //         headers: {
+    //             'x-api-key': INSTALKER_BACK_API_KEY,
+    //         },
+    //     });
+    //     const allSuccess = Array.isArray(status) && status.every((item) => item.status === 'success');
+    //     if (allSuccess) {
+    //         break;
     //     }
+    //     if (attempt < 9) {
+    //         // eslint-disable-next-line no-await-in-loop
+    //         await wait(3000);
+    //     }
+    // }
 
-    //     const profile = await cache.tryGet(
-    //         `picnob.info:profile:${id}`,
-    //         () =>
-    //             ofetch<Profile>(`${baseUrl}/api/v1/accounts/${id}/profile`, {
-    //                 headers: {
-    //                     'x-api-key': INSTALKER_BACK_API_KEY,
-    //                 },
-    //             }),
-    //         config.cache.contentExpire
-    //     );
-    //     const data = await cache.tryGet(
-    //         `picnob.info:${type}:${id}`,
-    //         () =>
-    //             ofetch<Post[] | Story[]>(`${baseUrl}/api/v1/accounts/${id}/${type}`, {
-    //                 headers: {
-    //                     'x-api-key': INSTALKER_BACK_API_KEY,
-    //                 },
-    //             }),
-    //         config.cache.routeExpire,
-    //         false
-    //     );
+    // const profile = await cache.tryGet(
+    //     `picnob.info:profile:${id}`,
+    //     () =>
+    //         ofetch<Profile>(`${baseUrl}/api/v1/accounts/${id}/profile`, {
+    //             headers: {
+    //                 'x-api-key': INSTALKER_BACK_API_KEY,
+    //             },
+    //         }),
+    //     config.cache.contentExpire
+    // );
+    // const data = await cache.tryGet(
+    //     `picnob.info:${type}:${id}`,
+    //     () =>
+    //         ofetch<Post[] | Story[]>(`${baseUrl}/api/v1/accounts/${id}/${type}`, {
+    //             headers: {
+    //                 'x-api-key': INSTALKER_BACK_API_KEY,
+    //             },
+    //         }),
+    //     config.cache.routeExpire,
+    //     false
+    // );
 
-    //     const items = data.map((item) => ({
-    //         title: item.text?.split('\n')[0],
-    //         guid: item.id ?? h64ToString(`${item.account_name}:${item.takenAt}:${item.thumbnailImageUrl}`),
-    //         author: item.account_name,
-    //         pubDate: parseDate(item.takenAt),
-    //         description: renderDescription(item.postType ?? item.mediaType, item),
-    //     }));
+    // const items = data.map((item) => ({
+    //     title: item.text?.split('\n')[0],
+    //     guid: item.id ?? h64ToString(`${item.account_name}:${item.takenAt}:${item.thumbnailImageUrl}`),
+    //     author: item.account_name,
+    //     pubDate: parseDate(item.takenAt),
+    //     description: renderDescription(item.postType ?? item.mediaType, item),
+    // }));
 
-    //     return {
-    //         title: `${profile.fullName} (@${id}) ${type === 'stories' ? 'story' : 'public'} posts - Picnob`,
-    //         description: profile.biography.replaceAll('\n', ' '),
-    //         link: `https://www.instagram.com/${id}/`,
-    //         image: profile.profilePicHdImageId ?? profile.profilePicImageId,
-    //         item: items,
-    //     };
+    // return {
+    //     title: `${profile.fullName} (@${id}) ${type === 'stories' ? 'story' : 'public'} posts - Picnob`,
+    //     description: profile.biography.replaceAll('\n', ' '),
+    //     link: `https://www.instagram.com/${id}/`,
+    //     image: profile.profilePicHdImageId ?? profile.profilePicImageId,
+    //     item: items,
+    // };
 }
