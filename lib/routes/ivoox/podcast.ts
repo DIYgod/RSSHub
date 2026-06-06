@@ -1,6 +1,5 @@
 import type { AnyNode, Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import { decodeHTML } from 'entities';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
@@ -66,27 +65,29 @@ async function handler(ctx): Promise<Data> {
                     const itemElement = $(element);
                     const enclosure = itemElement.children('enclosure');
                     const enclosureUrl = enclosure.attr('url');
-                    const itemId = normalizeEpisodeId(childText(itemElement, 'guid'));
+                    const guid = childText(itemElement, 'guid');
+                    const itemId = normalizeEpisodeId(guid);
 
                     if (!enclosureUrl) {
                         return;
                     }
 
                     const title = childText(itemElement, 'title');
+                    const link = childText(itemElement, 'link');
                     const image = childAttr(itemElement, String.raw`itunes\:image`, 'href');
                     const length = parseOptionalInteger(enclosure.attr('length'));
-                    const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl, childText(itemElement, 'link')) : enclosureUrl;
+                    const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl, link) : enclosureUrl;
 
                     return {
                         title,
                         description: childText(itemElement, 'description') || undefined,
-                        link: childText(itemElement, 'link') || undefined,
+                        link: link || undefined,
                         pubDate: parseOptionalDate(childText(itemElement, 'pubDate')),
-                        guid: childText(itemElement, 'guid') || undefined,
+                        guid: guid || undefined,
                         enclosure_url: resolvedEnclosureUrl,
                         enclosure_type: enclosure.attr('type') || mediaTypeFromUrl(resolvedEnclosureUrl),
                         enclosure_title: title,
-                        ...(length === undefined ? {} : { enclosure_length: length }),
+                        ...(length !== undefined && { enclosure_length: length }),
                         itunes_duration: childText(itemElement, String.raw`itunes\:duration`) || undefined,
                         itunes_item_image: image,
                     };
@@ -94,24 +95,21 @@ async function handler(ctx): Promise<Data> {
         )
     ).filter((current): current is DataItem => current !== undefined);
 
+    const rssImageUrl = childText(channel.children('image'), 'url');
+    const itunesImageUrl = childAttr(channel, String.raw`itunes\:image`, 'href');
+
     return {
         title: childText(channel, 'title'),
         description: childText(channel, 'description') || undefined,
         link: childText(channel, 'link') || rootUrl,
         item: items,
-        image: childText(channel.children('image'), 'url') || childAttr(channel, String.raw`itunes\:image`, 'href'),
-        itunes_image: childAttr(channel, String.raw`itunes\:image`, 'href') || childText(channel.children('image'), 'url') || undefined,
+        image: rssImageUrl || itunesImageUrl,
+        itunes_image: itunesImageUrl || rssImageUrl || undefined,
         language: normalizeLanguage(childText(channel, 'language')),
         feedLink: feedUrl,
         itunes_author: childText(channel, String.raw`itunes\:author`) || undefined,
         itunes_category: childAttr(channel, String.raw`itunes\:category`, 'text'),
-        itunes_explicit:
-            decodeHTML(
-                channel
-                    .children(String.raw`itunes\:explicit`)
-                    .first()
-                    .text()
-            ) || undefined,
+        itunes_explicit: childText(channel, String.raw`itunes\:explicit`) || undefined,
     };
 }
 
@@ -156,7 +154,7 @@ function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string, referer: s
 }
 
 function childText(element: Cheerio<AnyNode>, selector: string): string {
-    return decodeHTML(element.children(selector).text());
+    return element.children(selector).text();
 }
 
 function childAttr(element: Cheerio<AnyNode>, selector: string, attribute: string): string | undefined {
