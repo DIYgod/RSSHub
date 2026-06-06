@@ -6,7 +6,7 @@ export const route: Route = {
     name: 'Estados',
     maintainers: ['Slayer015'],
     path: '/estados',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/animalpolitico/estados',
     radar: [
         {

@@ -6,7 +6,7 @@ export const route: Route = {
     name: 'Política',
     maintainers: ['Slayer015'],
     path: '/politica',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/animalpolitico/politica',
     radar: [
         {
