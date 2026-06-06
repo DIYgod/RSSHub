@@ -65,30 +65,30 @@ async function handler(ctx) {
         }
     });
 
-    const items = await Promise.all(
-        [...links].slice(0, limit).map((link) =>
-            cache.tryGet(link, async () => {
-                const detail = await ofetch(link);
-                const $detail = load(detail);
+    const items = [];
+    for (const link of [...links].slice(0, limit)) {
+        const item = await cache.tryGet(link, async () => {
+            const detail = await ofetch(link);
+            const $detail = load(detail);
 
-                const title = $detail('title').text();
-                const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
-                const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
+            const title = $detail('title').text();
+            const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
+            const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
 
-                const image = $detail('meta[property="og:image"]').attr('content');
-                const content = $detail('.elementor-widget-theme-post-content');
-                content.find('.auto-banner').remove();
-                const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
+            const image = $detail('meta[property="og:image"]').attr('content');
+            const content = $detail('.elementor-widget-theme-post-content');
+            content.find('.auto-banner').remove();
+            const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
 
-                return {
-                    title,
-                    link,
-                    pubDate,
-                    description,
-                };
-            })
-        )
-    );
+            return {
+                title,
+                link,
+                pubDate,
+                description,
+            };
+        });
+        items.push(item);
+    }
 
     return {
         title: `EFE Noticias - ${categories[category] || category}`,
