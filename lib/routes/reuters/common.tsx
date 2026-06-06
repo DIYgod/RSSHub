@@ -235,7 +235,7 @@ async function handler(ctx) {
                                 : {}),
                         }),
                     },
-                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
+                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS_FIREFOX,
                 });
                 return {
                     title: response.result.section.title,
