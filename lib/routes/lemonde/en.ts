@@ -182,7 +182,7 @@ async function handler(ctx) {
                 .toArray()
                 .map((c) => $(c).text())
                 .filter(Boolean);
-            const imageUrl = item.find(String.raw`media\:content`).attr('url') || item.find('content').attr('url');
+            const imageUrl = item.find(String.raw`media\:content`).attr('url');
             const imageCredit = item.find(String.raw`media\:credit`).text();
 
             let description = '';
