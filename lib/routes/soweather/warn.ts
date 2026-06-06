@@ -1,5 +1,6 @@
 import sanitizeHtml from 'sanitize-html';
 
+import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -34,7 +35,7 @@ interface RawWarning {
 }
 
 async function handler(): Promise<Data | null> {
-    const response = await cache.tryGet(`soweather:warn:${dataUrl}`, () => ofetch<string>(dataUrl, { parseResponse: (txt) => txt }));
+    const response = await cache.tryGet(`soweather:warn:${dataUrl}`, () => ofetch<string>(dataUrl, { parseResponse: (txt) => txt }), config.cache.routeExpire, false);
     const warnings = warningGroups.flatMap(([groupName, variableName]) =>
         parseWarnings(response, variableName)
             .filter((warning) => isRealWarning(warning))
