@@ -58,7 +58,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     const links = new Set<string>();
-    $(`.e-loop-item .elementor-widget-theme-post-title a[href]`).each((_, el) => {
+    $('.e-loop-item .elementor-widget-theme-post-title a[href]').each((_, el) => {
         const href = $(el).attr('href');
         if (href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
             links.add(href);
