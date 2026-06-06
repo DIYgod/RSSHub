@@ -38460,11 +38460,11 @@
       }
     ]
   },
-  "pixnoy.com": {
+  "picnob.com": {
     "_name": "Instagram",
     "www": [
       {
-        "title": "User Profile - Pixnoy",
+        "title": "User Profile - Picnob",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/profile/:id"
@@ -38472,7 +38472,7 @@
         "target": "/picnob/user/:id"
       },
       {
-        "title": "User Profile - Pixnoy",
+        "title": "User Profile - Picnob",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/profile/:id/tagged"
