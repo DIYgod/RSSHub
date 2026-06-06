@@ -5329,6 +5329,12 @@
     "wb14123",
     "pseudoyu"
   ],
+  "/lemonde/en/:category?": [
+    "mlkgrnt"
+  ],
+  "/lemonde/:category?": [
+    "mlkgrnt"
+  ],
   "/lenovo/drive/:selName": [
     "cscnk52"
   ],

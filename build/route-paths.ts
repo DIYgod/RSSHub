@@ -1747,6 +1747,8 @@ export type RoutePath =
   | `/leiphone/:do?/:keyword?`
   | `/leiphone/newsflash`
   | `/lemmy/:community/:sort?`
+  | `/lemonde/:category?`
+  | `/lemonde/en/:category?`
   | `/lenovo/drive/:selName`
   | `/lens/profile/:handle`
   | `/lephoceen/chrono`

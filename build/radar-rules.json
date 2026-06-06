@@ -28688,6 +28688,27 @@
       }
     ]
   },
+  "lemonde.fr": {
+    "_name": "Le Monde",
+    ".": [
+      {
+        "title": "News (English)",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/en/:category"
+        ],
+        "target": "/lemonde/en/:category"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/lemonde/:category"
+      }
+    ]
+  },
   "lenovo.com.cn": {
     "_name": "联想",
     ".": [
