@@ -27,6 +27,13 @@ export interface AnnouncementArticle {
 
 export type SquareFilterType = 'ALL' | 'QUOTE' | 'LIVE';
 
+export interface SquareTranslatedData {
+    title?: string | null;
+    content?: string | null;
+    body?: string | null;
+    bodyTextOnly?: string | null;
+}
+
 export interface SquareImageMeta {
     url: string;
     width?: number;
@@ -40,6 +47,7 @@ export interface SquareQuoteContent {
     webLink?: string;
     imageLink?: string;
     coverMeta?: SquareImageMeta | null;
+    translatedData?: SquareTranslatedData | null;
 }
 
 export interface SquarePost {
@@ -55,6 +63,7 @@ export interface SquarePost {
     coverMeta?: SquareImageMeta | null;
     hashtagList?: string[];
     quoteContent?: SquareQuoteContent | null;
+    translatedData?: SquareTranslatedData | null;
     commentCount?: number;
     likeCount?: number;
 }

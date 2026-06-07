@@ -96,7 +96,7 @@ describe('/binance/square/user/:username', () => {
         const result = await route.handler(ctx as any);
 
         expect(result.title).toBe('CZ (@CZ) — Binance Square');
-        expect(result.link).toBe('https://www.binance.com/square/profile/CZ');
+        expect(result.link).toBe('https://www.binance.com/en/square/profile/CZ');
         expect(result.item).toHaveLength(2);
         expect(result.item?.[0]?.title).toBe('Hello Square');
         expect(result.item?.[1]?.title).toBe("CZ's post");
@@ -190,5 +190,117 @@ describe('/binance/square/user/:username', () => {
         const result = await route.handler(createContext('cz', undefined, '3') as any);
 
         expect(result.item).toHaveLength(3);
+    });
+
+    it('passes language headers when lang=zh-CN', async () => {
+        tryGetMock.mockImplementation((_key, fetcher) => fetcher());
+        ofetchMock
+            .mockResolvedValueOnce({
+                code: '000000',
+                data: {
+                    squareUid: 'uid-1',
+                    displayName: 'CZ',
+                    username: 'CZ',
+                },
+            })
+            .mockResolvedValueOnce({
+                code: '000000',
+                success: true,
+                data: { contents: [] },
+            });
+
+        const { route } = await import('@/routes/binance/square-user');
+        const result = await route.handler(createContext('cz', 'lang=zh-CN') as any);
+
+        expect(result.link).toBe('https://www.binance.com/zh-CN/square/profile/CZ');
+        const postsHeaders = ofetchMock.mock.calls[1]?.[1]?.headers;
+        expect(postsHeaders?.lang).toBe('zh-CN');
+        expect(postsHeaders?.['Accept-Language']).toBe('zh-CN');
+        expect(postsHeaders?.Referer).toBe('https://www.binance.com/zh-CN/square/profile/cz');
+    });
+
+    it('uses translatedData content when language is not English', async () => {
+        tryGetMock.mockImplementation((_key, fetcher) => fetcher());
+        ofetchMock
+            .mockResolvedValueOnce({
+                code: '000000',
+                data: {
+                    squareUid: 'uid-1',
+                    displayName: 'CZ',
+                    username: 'CZ',
+                },
+            })
+            .mockResolvedValueOnce({
+                code: '000000',
+                success: true,
+                data: {
+                    contents: [
+                        {
+                            id: 3,
+                            bodyTextOnly: 'English body',
+                            translatedData: {
+                                content: '中文正文',
+                            },
+                            createTime: 1_770_000_000_000,
+                            webLink: 'https://www.binance.com/zh-CN/square/post/3',
+                        },
+                    ],
+                },
+            });
+
+        const { route } = await import('@/routes/binance/square-user');
+        const result = await route.handler(createContext('cz', 'lang=zh-CN') as any);
+
+        expect(result.item?.[0]?.title).toBe('中文正文');
+        expect(result.item?.[0]?.description).toContain('中文正文');
+        expect(result.item?.[0]?.description).not.toContain('English body');
+    });
+
+    it('supports combined filter and language routeParams', async () => {
+        tryGetMock.mockImplementation((_key, fetcher) => fetcher());
+        ofetchMock
+            .mockResolvedValueOnce({
+                code: '000000',
+                data: {
+                    squareUid: 'uid-1',
+                    displayName: 'CZ',
+                    username: 'CZ',
+                },
+            })
+            .mockResolvedValueOnce({
+                code: '000000',
+                success: true,
+                data: { contents: [] },
+            });
+
+        const { route } = await import('@/routes/binance/square-user');
+        await route.handler(createContext('cz', 'filter=quote&lang=zh-CN') as any);
+
+        expect(ofetchMock.mock.calls[1]?.[0]).toContain('filterType=QUOTE');
+        expect(ofetchMock.mock.calls[1]?.[1]?.headers?.lang).toBe('zh-CN');
+    });
+
+    it('normalizes language aliases from routeParams', async () => {
+        tryGetMock.mockImplementation((_key, fetcher) => fetcher());
+        ofetchMock
+            .mockResolvedValueOnce({
+                code: '000000',
+                data: {
+                    squareUid: 'uid-1',
+                    displayName: 'CZ',
+                    username: 'CZ',
+                },
+            })
+            .mockResolvedValueOnce({
+                code: '000000',
+                success: true,
+                data: { contents: [] },
+            });
+
+        const { route } = await import('@/routes/binance/square-user');
+        const result = await route.handler(createContext('cz', 'lang=zh') as any);
+
+        expect(result.link).toBe('https://www.binance.com/zh-CN/square/profile/CZ');
+        expect(ofetchMock.mock.calls[1]?.[1]?.headers?.lang).toBe('zh-CN');
     });
 });
