@@ -5,6 +5,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 interface ArticleNav {
     id: number;
@@ -76,7 +77,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 const item: DataItem = {
                     title: detail.title || article.title,
                     description,
-                    pubDate: dateStr ? parseDate(dateStr) : undefined,
+                    pubDate: dateStr ? timezone(parseDate(dateStr), +8) : undefined,
                     link,
                     guid: `shxsj:${article.id}`,
                     category: detail.nav?.filter((n) => n.pid !== 0).map((n) => n.title) ?? (article.cate_name ? [article.cate_name] : undefined),
