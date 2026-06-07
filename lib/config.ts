@@ -403,10 +403,6 @@ export type Config = {
     douban: {
         cookie?: string;
     };
-    southplus: {
-        cookie?: string;
-        ua?: string;
-    };
     ehentai: {
         ipb_member_id?: string;
         ipb_pass_hash?: string;
@@ -609,6 +605,10 @@ export type Config = {
     };
     sorrycc: {
         cookie?: string;
+    };
+    southplus: {
+        cookie?: string;
+        ua?: string;
     };
     spotify: {
         clientId?: string;
@@ -909,10 +909,6 @@ const calculateValue = () => {
         douban: {
             cookie: envs.DOUBAN_COOKIE,
         },
-        southplus: {
-            cookie: envs.SOUTHPLUS_COOKIE,
-            ua: envs.SOUTHPLUS_UA,
-        },
         ehentai: {
             ipb_member_id: envs.EH_IPB_MEMBER_ID,
             ipb_pass_hash: envs.EH_IPB_PASS_HASH,
@@ -1115,6 +1111,10 @@ const calculateValue = () => {
         },
         sorrycc: {
             cookie: envs.SORRYCC_COOKIES,
+        },
+        southplus: {
+            cookie: envs.SOUTHPLUS_COOKIE,
+            ua: envs.SOUTHPLUS_UA,
         },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,

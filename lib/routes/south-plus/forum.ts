@@ -5,6 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'https://south-plus.net';
@@ -26,8 +27,7 @@ async function handler(ctx) {
         headers.Cookie = cookie;
     }
 
-    const response = await fetch(forumUrl, { headers });
-    const html = await response.text();
+    const html = await ofetch(forumUrl, { headers });
     const $ = load(html);
 
     // Check if access is denied
@@ -50,26 +50,26 @@ async function handler(ctx) {
     const threadList = $('tr.tr3.t_one a[id^="a_ajax_"]')
         .toArray()
         .map((item) => {
-            const $item = $(item);
-            const titleEl = $item.find('a[id^="a_ajax_"]');
-            const threadLink = titleEl.attr('href');
-            const title = titleEl.text().trim();
+            const $el = $(item);
+            const $row = $el.closest('tr');
+            const threadLink = $el.attr('href');
+            const title = $el.text().trim();
             const link = threadLink ? new URL(threadLink, BASE_URL).href : '';
 
             // Author in column 2
-            const author = $item.find('a.bl[href*="action-show-uid"]').text().trim();
+            const author = $row.find('a.bl[href*="action-show-uid"]').text().trim();
 
             // Thread post date in column 2 (div.f10.gray2)
-            const postDateText = $item.find('div.f10.gray2').first().text().trim();
+            const postDateText = $row.find('div.f10.gray2').first().text().trim();
 
             // Last post date in column 4 (a.f10)
-            const lastPostDateText = $item.find('td.tal.y-style a.f10').last().text().trim();
+            const lastPostDateText = $row.find('td.tal.y-style a.f10').last().text().trim();
 
             // Use last post date as pubDate for RSS sorting
             const pubDate = parseDate(lastPostDateText) || parseDate(postDateText);
 
             // Thread category tag (e.g. [自购], [公告]) in column 1
-            const category = $item.find('a.s8').first().text().trim();
+            const category = $row.find('a.s8').first().text().trim();
 
             return {
                 title,
@@ -87,8 +87,7 @@ async function handler(ctx) {
         (item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const detailResponse = await fetch(item.link, { headers });
-                    const detailHtml = await detailResponse.text();
+                    const detailHtml = await ofetch(item.link, { headers });
                     const $detail = load(detailHtml);
 
                     // Get the main post content
@@ -96,22 +95,22 @@ async function handler(ctx) {
                     const contentEl = $detail('#read_tpc');
                     if (contentEl.length > 0) {
                         item.description = contentEl.html() ?? '';
-                    }
 
-                    // Get the original post date from tiptop area
-                    const dateEl = $detail('.tiptop .fl.gray');
-                    if (dateEl.length > 0) {
-                        const dateText = dateEl.first().text().trim();
-                        const dateMatch = dateText.match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-                        if (dateMatch) {
-                            item.pubDate = parseDate(dateMatch[1]);
+                        // Get the original post date from tiptop area
+                        const dateEl = $detail('.tiptop .fl.gray');
+                        if (dateEl.length > 0) {
+                            const dateText = dateEl.first().text().trim();
+                            const dateMatch = dateText.match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+                            if (dateMatch) {
+                                item.pubDate = parseDate(dateMatch[1]);
+                            }
                         }
-                    }
 
-                    // Get the author from the detail page
-                    const authorEl = $detail('.r_two a[href*="action-show-uid"] strong');
-                    if (authorEl.length > 0) {
-                        item.author = authorEl.first().text().trim();
+                        // Get the author from the detail page
+                        const authorEl = $detail('.r_two a[href*="action-show-uid"] strong');
+                        if (authorEl.length > 0) {
+                            item.author = authorEl.first().text().trim();
+                        }
                     }
                 } catch {
                     // If detail page fails, keep the list page data
