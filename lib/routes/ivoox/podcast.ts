@@ -65,7 +65,8 @@ async function handler(ctx): Promise<Data> {
                     const enclosure = itemElement.children('enclosure');
                     const enclosureUrl = enclosure.attr('url');
                     const guid = itemElement.children('guid').text();
-                    const itemId = normalizeEpisodeId(guid);
+                    const itemIdMatch = /(?:_rf_|\/)(\d+)(?:_\d+)?(?:\.html)?/i.exec(guid) ?? /(\d+)/.exec(guid);
+                    const itemId = itemIdMatch?.[1];
 
                     if (!enclosureUrl) {
                         return;
@@ -114,11 +115,6 @@ async function handler(ctx): Promise<Data> {
                 .first()
                 .text() || undefined,
     };
-}
-
-function normalizeEpisodeId(value: string): string | undefined {
-    const match = /(?:_rf_|\/)(\d+)(?:_\d+)?(?:\.html)?/i.exec(value) ?? /(\d+)/.exec(value);
-    return match?.[1];
 }
 
 function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string, referer: string): Promise<string> {
