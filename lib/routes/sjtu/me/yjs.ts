@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -11,7 +12,7 @@ const request = got.extend({
     headers: {
         accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         referer: `${baseUrl}/YanJS/`,
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36',
+        'user-agent': config.trueUA,
     },
 });
 
