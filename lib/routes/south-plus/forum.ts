@@ -47,13 +47,8 @@ async function handler(ctx) {
     //   [2] author (a.bl) + post date (div.f10.gray2)
     //   [3] replies/views
     //   [4] last post date (a.f10) + last poster (span.gray2)
-    const threadList = $('tr.tr3.t_one')
+    const threadList = $('tr.tr3.t_one a[id^="a_ajax_"]')
         .toArray()
-        .filter((item) => {
-            const $item = $(item);
-            const threadLink = $item.find('a[id^="a_ajax_"]').attr('href');
-            return Boolean(threadLink);
-        })
         .map((item) => {
             const $item = $(item);
             const titleEl = $item.find('a[id^="a_ajax_"]');
