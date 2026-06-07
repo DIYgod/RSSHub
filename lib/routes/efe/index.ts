@@ -57,39 +57,38 @@ async function handler(ctx) {
     const response = await ofetch(pageUrl);
     const $ = load(response);
 
-    const links = new Set<string>();
+    const links: string[] = [];
     $('.e-loop-item .elementor-widget-theme-post-title a[href]').each((_, el) => {
         const href = $(el).attr('href');
         if (href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
-            links.add(href);
+            links.push(href);
         }
     });
 
-    const items = [];
-    for (const link of [...links].slice(0, limit)) {
-        // eslint-disable-next-line no-await-in-loop -- sequential to avoid 429 rate limiting
-        const item = await cache.tryGet(link, async () => {
-            const detail = await ofetch(link);
-            const $detail = load(detail);
+    const items = await Promise.all(
+        links.slice(0, limit).map((link) =>
+            cache.tryGet(link, async () => {
+                const detail = await ofetch(link);
+                const $detail = load(detail);
 
-            const title = $detail('title').text();
-            const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
-            const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
+                const title = $detail('title').text();
+                const dateMatch = detail.match(/"datePublished":\s*"([^"]+)"/);
+                const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
 
-            const image = $detail('meta[property="og:image"]').attr('content');
-            const content = $detail('.elementor-widget-theme-post-content');
-            content.find('.auto-banner').remove();
-            const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
+                const image = $detail('meta[property="og:image"]').attr('content');
+                const content = $detail('.elementor-widget-theme-post-content');
+                content.find('.auto-banner').remove();
+                const description = (image ? `<figure><img src="${image}"></figure>` : '') + (content.html() || '');
 
-            return {
-                title,
-                link,
-                pubDate,
-                description,
-            };
-        });
-        items.push(item);
-    }
+                return {
+                    title,
+                    link,
+                    pubDate,
+                    description,
+                };
+            })
+        )
+    );
 
     return {
         title: `EFE Noticias - ${categories[category] || category}`,
