@@ -47,7 +47,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = $('link[rel="shortcut icon"]').prop('href').split('?')[0];
+    const icon = $('link[rel="shortcut icon"]').prop('href').split('?', 1)[0];
 
     return {
         item: items,

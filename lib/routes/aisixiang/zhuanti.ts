@@ -52,7 +52,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
-                author: a.text().split('：')[0],
+                author: a.text().split('：', 1)[0],
                 pubDate: timezone(parseDate(item.find('span').text()), +8),
             };
         });

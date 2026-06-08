@@ -32,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0] ?? undefined,
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined,
         language,
         id: targetUrl,
     };

@@ -73,7 +73,7 @@ export default async function fetch(slug: string) {
                 }
                 case 'youtube': {
                     const video = content[0].youtubeId;
-                    const id = video.split('?')[0];
+                    const id = video.split('?', 1)[0];
                     block = renderYouTube({ video: id });
 
                     break;

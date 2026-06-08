@@ -61,8 +61,8 @@ async function handler() {
                 const { data: detailResponse } = await got(item.link);
                 const content = load(detailResponse);
                 item.description = content('div.TRS_Editor').html();
-                item.author = content('div.sT_left span:first').text().split('：')[1];
-                const pubDate = content('div.sT_left span:last').text().split('：')[1];
+                item.author = content('div.sT_left span:first').text().split('：', 2)[1];
+                const pubDate = content('div.sT_left span:last').text().split('：', 2)[1];
                 item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
                 return item;
             })

@@ -135,7 +135,7 @@ async function handler(ctx) {
                         <b>Size:</b> {item.FileSize}
                     </p>
                     <p>
-                        <b>Download:</b> <a href={item.DownloadUrl.Global}>{item.DownloadUrl.Global.split('/').pop().split('?')[0]}</a>
+                        <b>Download:</b> <a href={item.DownloadUrl.Global}>{item.DownloadUrl.Global.split('/').pop().split('?', 1)[0]}</a>
                     </p>
                 </>
             )

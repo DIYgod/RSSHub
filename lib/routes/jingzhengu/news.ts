@@ -40,7 +40,7 @@ async function handler() {
     const list = response.data.articles.map((item) => ({
         title: item.title,
         description: item.summary,
-        link: `${baseUrl}/#/cn/Details_${item.addDate.split(' ')[0].replaceAll('-', '')}${item.id}.html`,
+        link: `${baseUrl}/#/cn/Details_${item.addDate.split(' ', 1)[0].replaceAll('-', '')}${item.id}.html`,
         pubDate: timezone(parseDate(item.addDate, 'YYYY-MM-DD HH:mm:ss'), 8),
         author: item.author,
         id: item.id,

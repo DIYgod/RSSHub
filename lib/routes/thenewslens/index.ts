@@ -62,7 +62,7 @@ async function handler(ctx) {
                 content('.article-img-container').each((_, el) => {
                     content(el).replaceWith(
                         renderDescription({
-                            image: content(el).find('img')?.attr('data-srcset').split('?')[0] ?? undefined,
+                            image: content(el).find('img')?.attr('data-srcset').split('?', 1)[0] ?? undefined,
                         })
                     );
                 });
@@ -73,7 +73,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((t) => content(t).attr('content'));
                 item.description = renderDescription({
-                    image: content('meta[property="og:image"]')?.attr('content').split('?')[0] ?? undefined,
+                    image: content('meta[property="og:image"]')?.attr('content').split('?', 1)[0] ?? undefined,
                     description: content('.article-main-box, article[itemprop="articleBody"]').html(),
                 });
 

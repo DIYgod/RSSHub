@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
     const image = new URL('images/cfhd/web202305/logo.png', rootImageUrl).href;
 
     return {
-        title: `${$('title').text().split(/-/)[0]} - ${$('li.cur').text()}`,
+        title: `${$('title').text().split(/-/, 1)[0]} - ${$('li.cur').text()}`,
         description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,

@@ -39,13 +39,13 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
 
     if (config.honeybadger.apiKey) {
         Honeybadger.notify(error, {
-            context: { name: requestPath.split('/')[1] },
+            context: { name: requestPath.split('/', 2)[1] },
         });
     }
 
     if (config.sentry.dsn) {
         Sentry.withScope((scope) => {
-            scope.setTag('name', requestPath.split('/')[1]);
+            scope.setTag('name', requestPath.split('/', 2)[1]);
             Sentry.captureException(error);
         });
     }

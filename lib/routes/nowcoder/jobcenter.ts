@@ -68,10 +68,10 @@ async function handler(ctx) {
             const time = item.find('div.reco-job-detail span').eq(1).text();
             const date = new Date();
             if (time.includes('天')) {
-                const day = time.split('天')[0];
+                const day = time.split('天', 1)[0];
                 date.setDate(date.getDate() - day);
             } else if (time.includes('小时')) {
-                const hour = time.split('小时')[0];
+                const hour = time.split('小时', 1)[0];
                 date.setHours(date.getHours() - hour);
             }
             return {

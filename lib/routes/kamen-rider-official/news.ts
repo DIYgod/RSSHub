@@ -147,7 +147,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: `${$('title').text().split(/ー/)[0]}${category ? ` - ${category}` : ''}`,
+        title: `${$('title').text().split(/ー/, 1)[0]}${category ? ` - ${category}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
         language: $('html').prop('lang'),

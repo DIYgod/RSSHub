@@ -45,7 +45,7 @@ async function handler(ctx) {
             .map((item) => ({
                 title: $(item).find('h3 a').text(),
                 link: $(item).find('h3 a').attr('href'),
-                author: $(item).find('.head_con_p_o span:nth-child(3)').text().split('：')[1],
+                author: $(item).find('.head_con_p_o span:nth-child(3)').text().split('：', 2)[1],
                 pubDate: timezone(parseDate($(item).find('.head_con_p_o span').first().text(), 'YYYY-MM-DD HH:mm'), +8),
                 description: $(item).find('p.com_about').text(),
                 category: $(item)

@@ -43,8 +43,8 @@ async function handler() {
             return {
                 title: item.find('h3').text(),
                 link: item.find('h3 a').attr('href'),
-                author: meta.split('|')[0].trim(),
-                pubDate: parseDate(meta.split('|')[1].trim()),
+                author: meta.split('|', 1)[0].trim(),
+                pubDate: parseDate(meta.split('|', 2)[1].trim()),
             };
         });
 

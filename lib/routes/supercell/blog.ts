@@ -81,7 +81,7 @@ function renderRichText(json: any): string {
                 case 'heading-4':
                 case 'heading-5':
                 case 'heading-6': {
-                    const level: string = node.nodeType.split('-')[1];
+                    const level: string = node.nodeType.split('-', 2)[1];
                     return `<h${level}>${renderNodeContent(node)}</h${level}>`;
                 }
                 case 'quote':

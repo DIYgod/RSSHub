@@ -74,7 +74,7 @@ async function handler(ctx) {
             const title = item.find('.title').text();
             return {
                 title,
-                description: renderToString(<img src={imageUrl.split('?')[0]} alt={title.trim()} />),
+                description: renderToString(<img src={imageUrl.split('?', 1)[0]} alt={title.trim()} />),
                 link: item.find('.title').attr('href'),
                 author: item.find('.author').text().trim().replace(/^by/, ''),
                 category: item.find('.fw-bold').text(),

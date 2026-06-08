@@ -63,7 +63,7 @@ async function handler(ctx) {
         $('img').each((_, e) => {
             e = $(e);
             e.attr('src', e.attr('data-src') ?? e.attr('srcset'));
-            e.attr('src', e.attr('src').split('?')[0]);
+            e.attr('src', e.attr('src').split('?', 1)[0]);
             e.removeAttr('data-src');
             e.removeAttr('srcset');
         });
@@ -72,7 +72,7 @@ async function handler(ctx) {
             author: item.yoast_head_json.author,
             description: renderToString(
                 <>
-                    {head.og_image?.length ? head.og_image.map((image) => <img src={image.url.split('?')[0]} />) : null}
+                    {head.og_image?.length ? head.og_image.map((image) => <img src={image.url.split('?', 1)[0]} />) : null}
                     {raw($.html())}
                 </>
             ),

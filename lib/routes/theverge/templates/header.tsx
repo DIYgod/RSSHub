@@ -34,7 +34,7 @@ export const renderHeader = ({ featuredImage, ledeMediaData }: HeaderRenderOptio
         <>
             {featuredImage?.image?.originalUrl ? (
                 <figure>
-                    <img src={featuredImage.image.originalUrl.split('?')[0]} alt={featuredImage.image.alt ?? undefined} />
+                    <img src={featuredImage.image.originalUrl.split('?', 1)[0]} alt={featuredImage.image.alt ?? undefined} />
                     <figcaption>{featuredImage.image.title}</figcaption>
                 </figure>
             ) : null}
@@ -44,7 +44,7 @@ export const renderHeader = ({ featuredImage, ledeMediaData }: HeaderRenderOptio
                     <>{ledeMediaData.embedHtml ? raw(ledeMediaData.embedHtml) : null}</>
                 ) : ledeMediaData.__typename === 'LedeMediaImageType' && !featuredImage ? (
                     <figure>
-                        <img src={ledeMediaData.image?.thumbnails?.horizontal?.url?.split('?')[0]} alt={ledeMediaData.image?.title ?? undefined} />
+                        <img src={ledeMediaData.image?.thumbnails?.horizontal?.url?.split('?', 1)[0]} alt={ledeMediaData.image?.title ?? undefined} />
                         <figcaption>{ledeMediaData.image?.credit?.plaintext || ledeMediaData.image?.title}</figcaption>
                     </figure>
                 ) : ledeMediaData.__typename === 'LedeMediaVideoType' ? (

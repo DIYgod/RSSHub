@@ -117,7 +117,7 @@ async function handler(ctx) {
     const suv = pageResponse.headers
         ?.getSetCookie()
         .find((e) => e.startsWith('SUV'))
-        ?.split(';')[0];
+        ?.split(';', 1)[0];
     const $ = cheerio.load(pageResponse._data);
 
     const CBDRenderConst = JSON.parse(

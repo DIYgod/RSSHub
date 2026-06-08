@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 .find('td.views-field-field-image a img')
                 .attr('src')
                 ?.replace(/styles\/thumbnail\/public/, '')
-                ?.split(/\?/)?.[0];
+                ?.split(/\?/, 1)?.[0];
 
             const description: string | undefined = renderDescription({
                 images: image

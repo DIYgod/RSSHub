@@ -153,7 +153,7 @@ async function handler(ctx) {
                 try {
                     let link;
                     if (category === 'auto' || category === 'house' || category === 'travel') {
-                        const category = item.link.split('.163.com')[0].split('//').pop().split('.').pop();
+                        const category = item.link.split('.163.com', 1)[0].split('//').pop().split('.').pop();
                         link = `https://3g.163.com/${category}/article/${item.link.split('/').pop()}`;
                     } else {
                         const pathname = new URL(item.link).pathname;

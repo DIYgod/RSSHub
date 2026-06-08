@@ -58,7 +58,7 @@ async function handler() {
                 });
                 const $ = load(gbk2utf8(response));
                 item.description = $('.artmainl .articlemain').first().html();
-                item.pubDate = timezone(parseDate($('.artmainl .info').text().split('|')[2].split('：')[1].trim()), +8);
+                item.pubDate = timezone(parseDate($('.artmainl .info').text().split('|', 3)[2].split('：', 2)[1].trim()), +8);
                 return item;
             })
         )

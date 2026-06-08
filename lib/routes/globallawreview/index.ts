@@ -45,7 +45,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link,
                 description: item.find('p.p2').html(),
-                author: item.find('p.p3 span').text() || a.text().split('：')[0],
+                author: item.find('p.p3 span').text() || a.text().split('：', 1)[0],
                 category: [
                     item
                         .find('p.p4')

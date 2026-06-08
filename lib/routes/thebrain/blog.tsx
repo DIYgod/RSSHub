@@ -29,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('h4 a');
 
             const title: string = $aEl.text();
-            const image: string | undefined = $el.find('div.round-corner-images img').attr('src') ? `https:${$el.find('div.round-corner-images img').attr('src')?.split(/\?/)[0]}` : undefined;
+            const image: string | undefined = $el.find('div.round-corner-images img').attr('src') ? `https:${$el.find('div.round-corner-images img').attr('src')?.split(/\?/, 1)[0]}` : undefined;
             const description: string | undefined = renderToString(
                 <>
                     {image ? (
@@ -88,7 +88,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     return {
                         name: $$authorEl.text(),
                         url: $$authorEl.attr('href') ? new URL($$authorEl.attr('href') as string, baseUrl).href : undefined,
-                        avatar: `https:${$$(authorEl).attr('src')?.split(/\?/)[0]}`,
+                        avatar: `https:${$$(authorEl).attr('src')?.split(/\?/, 1)[0]}`,
                     };
                 });
                 const upDatedStr: string | undefined = pubDateStr;

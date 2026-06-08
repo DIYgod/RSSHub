@@ -52,7 +52,7 @@ async function handler() {
                     .map((el) => $.html(el))
                     .join(''),
                 link: `${link}#${$item.prev().find('a[id]').attr('id')}`,
-                pubDate: parseDate($item.next().find('kbd').text()?.split('day, ')[1].trim(), 'MMMM Do, YYYY', 'en'),
+                pubDate: parseDate($item.next().find('kbd').text()?.split('day, ', 2)[1].trim(), 'MMMM Do, YYYY', 'en'),
             };
         });
 

@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     let items = response.data.data.list.map((item) => ({
         title: item.title,
-        link: item.url.split('?')[0],
+        link: item.url.split('?', 1)[0],
         author: item.source,
         pubDate: parseDate(item.timestamp * 1000),
         description: renderDescription({

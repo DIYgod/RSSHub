@@ -182,7 +182,7 @@ async function handler(ctx) {
     const resultItems = playList.map((item) => {
         const title = item.title;
         const trackId = item.trackId;
-        const itunesItemImage = item.coverLarge.split('!')[0] ?? albumCover;
+        const itunesItemImage = item.coverLarge.split('!', 1)[0] ?? albumCover;
         const link = `${baseUrl}/sound/${trackId}`;
         const pubDate = parseDate(item.createdAt, 'x');
         const duration = item.duration; // 时间长度：单位（秒）

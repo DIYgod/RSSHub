@@ -54,8 +54,8 @@ export const getWafTokenId = () =>
             const _wafTokenId = tokenIdResponse.headers
                 .getSetCookie()
                 .find((cookie) => cookie.startsWith('_waftokenid='))
-                ?.split(';')[0]
-                .split('=')[1];
+                ?.split(';', 1)[0]
+                .split('=', 2)[1];
 
             return _wafTokenId as string;
         },

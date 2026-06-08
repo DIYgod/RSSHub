@@ -12,7 +12,7 @@ const siteIcon = 'https://o.qoo-img.com/statics.qoo-app.com/cdn/img/QooApp_512.v
 const fixImg = ($) => {
     $('img').each((_, img) => {
         if (img.attribs['data-orig-file']) {
-            img.attribs.src = img.attribs['data-orig-file'].replace('i0.wp.com/', '').split('?')[0];
+            img.attribs.src = img.attribs['data-orig-file'].replace('i0.wp.com/', '').split('?', 1)[0];
             delete img.attribs['data-orig-file'];
             delete img.attribs['data-orig-size'];
             delete img.attribs['data-image-meta'];
@@ -21,7 +21,7 @@ const fixImg = ($) => {
             delete img.attribs['data-medium-file'];
             delete img.attribs['data-large-file'];
         }
-        img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?')[0];
+        img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?', 1)[0];
         delete img.attribs.srcset;
     });
 };

@@ -21,7 +21,7 @@ function parseTitle(smartlinkUrl: string): string {
         return toTitleCase(titleSlug.replaceAll('-', ' '));
     } catch {
         // If URL parsing fails, return the URL without query parameters as fallback
-        return smartlinkUrl.split('?')[0];
+        return smartlinkUrl.split('?', 1)[0];
     }
 }
 
@@ -37,7 +37,7 @@ function isYouTubeUrl(url: string): boolean {
 
 function getTitle(item: any): string {
     return isYouTubeUrl(item.smartlink)
-        ? item.smartlink.split('?')[0] // For YouTube URLs, use the URL without query parameters
+        ? item.smartlink.split('?', 1)[0] // For YouTube URLs, use the URL without query parameters
         : parseTitle(item.smartlink); // Use existing parseTitle for other URLs
 }
 
@@ -72,7 +72,7 @@ async function handler(ctx) {
     const parsedData = data;
     const items = parsedData.map((item) => ({
         title: getTitle(item),
-        link: item.smartlink.split('?')[0],
+        link: item.smartlink.split('?', 1)[0],
         description: `<p><img src="${item.imageUrl}"></p>`,
         pubDate: item.created,
         guid: item.id,

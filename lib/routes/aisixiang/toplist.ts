@@ -27,7 +27,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const title = `${$('a.hl').text() || ''}${$('title').text().split('_')[0]}`;
+    const title = `${$('a.hl').text() || ''}${$('title').text().split('_', 1)[0]}`;
 
     const items = $('div.tops_list')
         .slice(0, limit)

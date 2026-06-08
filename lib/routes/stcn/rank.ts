@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('img.stcn-logo').attr('src'),
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0],
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0],
         language,
         id: targetUrl,
     };

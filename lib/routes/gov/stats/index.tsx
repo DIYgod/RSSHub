@@ -75,7 +75,7 @@ async function handler(ctx) {
     const sid = headers
         ?.getSetCookie()
         .find((s) => s.startsWith('wzws_sessionid='))
-        ?.split(';')[0] as string;
+        ?.split(';', 1)[0] as string;
 
     const pathname = getSubPath(ctx) === '/stats' ? '/sj/zxfb/' : getSubPath(ctx).replace(/^\/stats(.*)/, '$1');
     const currentUrl = `${rootUrl}${pathname.endsWith('/') ? pathname : pathname + '/'}`;
