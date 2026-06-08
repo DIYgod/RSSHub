@@ -1,4 +1,4 @@
-// oxlint-disable unicorn/prefer-code-point
+// oxlint-disable unicorn/prefer-code-point unicorn-js/prefer-single-call
 // Credit:
 // https://blog.csdn.net/zjq592767809/article/details/126512798
 // https://blog.csdn.net/zhoumi_/article/details/126659351
