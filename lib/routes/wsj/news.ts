@@ -46,11 +46,11 @@ async function handler(ctx) {
     const lang = ctx.req.param('lang');
     const category = ctx.req.param('category') || '';
     const host = hostMap[lang];
-    let subTitle = ` - ${lang.toUpperCase()}`;
+    let subtitle = ` - ${lang.toUpperCase()}`;
     let url = host;
     if (category.length > 0) {
         url = `${host}/news/${category}`;
-        subTitle = `${subTitle} - ${category}`;
+        subtitle = `${subtitle} - ${category}`;
     }
     const response = await got({
         method: 'get',
@@ -76,9 +76,9 @@ async function handler(ctx) {
     const items = await pMap(list, (item) => parseArticle(item), { concurrency: 10 });
 
     return {
-        title: `WSJ${subTitle}`,
+        title: `WSJ${subtitle}`,
         link: url,
-        description: `WSJ${subTitle}`,
+        description: `WSJ${subtitle}`,
         item: items,
     };
 }

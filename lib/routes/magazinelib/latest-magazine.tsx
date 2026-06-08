@@ -42,12 +42,12 @@ async function handler(ctx) {
             _embed: 1,
         },
     });
-    let subTitle = query;
-    if (subTitle === undefined) {
-        subTitle = '';
+    let subtitle = query;
+    if (subtitle === undefined) {
+        subtitle = '';
     } else {
-        subTitle = subTitle.replaceAll(/[^\dA-Z]+/gi, ' ').toUpperCase();
-        subTitle = ` - ${subTitle}`;
+        subtitle = subtitle.replaceAll(/[^\dA-Z]+/gi, ' ').toUpperCase();
+        subtitle = ` - ${subtitle}`;
     }
 
     const items = response.data.map((obj) => {
@@ -68,9 +68,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: `MagazineLib - Latest Magazines${subTitle}`,
+        title: `MagazineLib - Latest Magazines${subtitle}`,
         link: `{host}/?s=${query}`,
-        description: `MagazineLib - Latest Magazines${subTitle}`,
+        description: `MagazineLib - Latest Magazines${subtitle}`,
         item: items.map((item) => ({
             title: item.title,
             link: item.link,

@@ -62,9 +62,9 @@ async function handler(ctx) {
 
     try {
         const metadataUrl = `https://repo1.maven.org/maven2/${identifier}/maven-metadata.xml`;
-        const metaDataResponse = await ofetch(metadataUrl);
+        const metadataResponse = await ofetch(metadataUrl);
 
-        const $meta = load(metaDataResponse, { xmlMode: true });
+        const $meta = load(metadataResponse, { xmlMode: true });
         const latestVersion = $meta('metadata > versioning > latest').text();
 
         if (!latestVersion) {
