@@ -57,13 +57,10 @@ async function handler(ctx) {
     const response = await ofetch(pageUrl);
     const $ = load(response);
 
-    const links: string[] = [];
-    $('.e-loop-item .elementor-widget-theme-post-title a[href]').each((_, el) => {
-        const href = $(el).attr('href');
-        if (href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href)) {
-            links.push(href);
-        }
-    });
+    const links = $('.e-loop-item .elementor-widget-theme-post-title a[href]')
+        .toArray()
+        .map((el) => $(el).attr('href'))
+        .filter((href): href is string => !!href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href));
 
     const items = await Promise.all(
         links.slice(0, limit).map((link) =>
