@@ -32,7 +32,7 @@ async function handler(ctx) {
             item = $(item);
 
             const a = item.find('div.newslist-txt h3 a, a.article_title').first();
-            const image = item.find('img.img-hover').prop('src')?.split(/\?/)[0] ?? undefined;
+            const image = item.find('img.img-hover').prop('src')?.split(/\?/, 1)[0] ?? undefined;
 
             return {
                 title: a.text(),
@@ -64,7 +64,7 @@ async function handler(ctx) {
                     el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/)[0] ?? undefined,
+                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
                                 alt: el.prop('title'),
                             },
                         })
@@ -123,11 +123,11 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
-    const author = subtitle.split(/,/)[0];
+    const author = subtitle.split(/,/, 1)[0];
 
     return {
         item: items,
-        title: $('title').text().split(/-/)[0].trim(),
+        title: $('title').text().split(/-/, 1)[0].trim(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh',

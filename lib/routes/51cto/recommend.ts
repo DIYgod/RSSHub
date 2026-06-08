@@ -41,7 +41,7 @@ async function getFullcontent(item, cookie = '') {
         try {
             // More details: https://github.com/DIYgod/RSSHub/pull/16583#discussion_r1738643033
             const _matches = articleResponse!.match(pattern)!.slice(0, 3);
-            const matches = _matches.map((str) => Number(str.split(':')[1]));
+            const matches = _matches.map((str) => Number(str.split(':', 2)[1]));
             const [v1, v2, v3] = matches;
             const cookie = '__tst_status=' + (v1 + v2 + v3) + '#;';
             return await getFullcontent(item, cookie);

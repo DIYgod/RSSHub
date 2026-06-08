@@ -83,7 +83,7 @@ async function handler(ctx) {
     );
 
     const items = data.data.map((item) => ({
-        title: sanitizeHtml(item.text.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
+        title: sanitizeHtml(item.text.split('\n', 1)[0], { allowedTags: [], allowedAttributes: {} }),
         description: renderDescription(item),
         link: `https://x.com/${id}/status/${item.id}`,
         pubDate: parseDate(item.createdAt, 'x'),

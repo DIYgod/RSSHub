@@ -57,7 +57,7 @@ async function handler(ctx) {
     const authorFeed = await getAuthorFeed(DID, filter, cache.tryGet);
 
     const items = authorFeed.feed.map(({ post }) => ({
-        title: post.record.text.split('\n')[0],
+        title: post.record.text.split('\n', 1)[0],
         description: renderPost({
             text: post.record.text.replaceAll('\n', '<br>'),
             embed: post.embed,
@@ -65,7 +65,7 @@ async function handler(ctx) {
         }),
         author: post.author.displayName,
         pubDate: parseDate(post.record.createdAt),
-        link: `https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('app.bsky.feed.post/')[1]}`,
+        link: `https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('app.bsky.feed.post/', 2)[1]}`,
         upvotes: post.likeCount,
         comments: post.replyCount,
     }));

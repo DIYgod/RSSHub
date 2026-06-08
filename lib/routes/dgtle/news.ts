@@ -26,12 +26,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const title: string | undefined = $(`div.whale_news_index-content-tab li[data_id="${id}"]`).text();
 
     return {
-        title: `${$('title').text().trim().split(/\s/)[0]}${title ? ` - ${title}` : id}`,
+        title: `${$('title').text().trim().split(/\s/, 1)[0]}${title ? ` - ${title}` : id}`,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0] ?? undefined,
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined,
         language,
         id: targetUrl,
     };

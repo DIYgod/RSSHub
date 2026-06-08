@@ -16,7 +16,7 @@ export const handler = async (ctx) => {
     const currentUrl = new URL(`arxiv/search?highlight=1&query=${keyword}&sort=0`, rootUrl).href;
     const feedUrl = new URL(`arxiv/search/feed?query=${keyword}`, rootUrl).href;
 
-    const site = keyword.split(/\//)[0];
+    const site = keyword.split(/\//, 1)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
     const feed = await parser.parseURL(feedUrl);
 

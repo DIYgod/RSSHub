@@ -44,7 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     // 如果存在的话就使用 meta 提供的链接, 然后重新获取一次页面的内容
     if (metaRefresh) {
-        const redirectPath = metaRefresh.split('URL=')[1];
+        const redirectPath = metaRefresh.split('URL=', 2)[1];
         sydwgkzpUrl = new URL(redirectPath, sydwgkzpUrl).href;
 
         const { data: newResponse } = await got(sydwgkzpUrl);

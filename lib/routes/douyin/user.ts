@@ -113,7 +113,7 @@ async function handler(ctx) {
         const description = templates.desc({ desc, media });
 
         return {
-            title: post.desc.split('\n')[0],
+            title: post.desc.split('\n', 1)[0],
             description,
             link: `https://www.douyin.com/video/${post.aweme_id}`,
             pubDate: parseDate(post.create_time * 1000),

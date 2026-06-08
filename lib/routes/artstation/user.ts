@@ -45,7 +45,7 @@ async function handler(ctx) {
             method: 'POST',
             headers,
         });
-        return tokenResponse.headers.getSetCookie()[0].split(';')[0].split('=')[1];
+        return tokenResponse.headers.getSetCookie()[0].split(';', 1)[0].split('=', 2)[1];
     });
 
     const { data: userData } = await got(`https://www.artstation.com/users/${handle}/quick.json`, {

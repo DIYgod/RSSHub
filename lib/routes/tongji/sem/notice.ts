@@ -28,8 +28,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'notice';
-    const subType = new Set(['enrollment', 'academic-paper', 'news', 'events', 'focus', 'collegerecruitment']);
-    const subTypeName = {
+    const subtype = new Set(['enrollment', 'academic-paper', 'news', 'events', 'focus', 'collegerecruitment']);
+    const subtypeName = {
         notice: '学院通知',
         enrollment: '招生通知',
         'academic-paper': '学术观点',
@@ -39,7 +39,7 @@ async function handler(ctx) {
         collegerecruitment: '教师与行政人员招聘',
     };
 
-    const url = `https://sem.tongji.edu.cn/semch/category/frontpage/${subType.has(type) ? type : 'notice'}`;
+    const url = `https://sem.tongji.edu.cn/semch/category/frontpage/${subtype.has(type) ? type : 'notice'}`;
 
     const results: Array<{ title: string; link: string; pubDate: Date }> = await getNotifByPage(url);
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
     // feed the data to rss
     return {
         title: '同济大学经济与管理学院',
-        description: String(subType.has(type) ? subTypeName[type] : '学院通知'),
+        description: String(subtype.has(type) ? subtypeName[type] : '学院通知'),
         image: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
         icon: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
         logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',

@@ -46,7 +46,7 @@ async function handler() {
                     link,
                     'body > div.container.container-fluid.dynava.no-padding.cleafix > div.con_wz_fr.fr.cleafix > form > div > h1',
                     'body > div.container.container-fluid.dynava.no-padding.cleafix > div.con_wz_fr.fr.cleafix > form > div > div:nth-child(2)',
-                    (date) => date.split('时间：')[1].split(' 作者：')[0]
+                    (date) => date.split('时间：', 2)[1].split(' 作者：', 1)[0]
                 );
                 const pubDate = parseDate(description.date, 'YYYY-MM-DD');
                 return {

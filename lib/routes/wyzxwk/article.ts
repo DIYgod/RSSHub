@@ -124,7 +124,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${$('title').text().split(' - ')[0]} - 乌有之乡网刊`,
+        title: `${$('title').text().split(' - ', 1)[0]} - 乌有之乡网刊`,
         link: currentUrl,
         item: items,
     };

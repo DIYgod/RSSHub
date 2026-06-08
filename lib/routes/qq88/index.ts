@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: item.text(),
                 link: item.attr('href'),
-                pubDate: parseDate(item.parent().next().find('.mh-meta-date').eq(-1).text().split('：')[1]),
+                pubDate: parseDate(item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1]),
             };
         });
 

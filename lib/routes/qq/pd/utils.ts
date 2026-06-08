@@ -56,7 +56,7 @@ function parseDataItem(item: FeedPatternData, texts: string[], images: { [id: st
 
 function parseArticle(feed: Feed, texts: string[], images: { [id: string]: FeedImage }): string {
     let result = '';
-    if (feed.patternInfo === undefined || feed.patternInfo === null || feed.patternInfo === '') {
+    if ([undefined, null, ''].includes(feed.patternInfo)) {
         feed.patternInfo = '[]';
     }
     const patterns: FeedPattern[] = JSON.parse(feed.patternInfo);

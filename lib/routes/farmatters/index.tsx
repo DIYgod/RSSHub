@@ -95,7 +95,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: `${$('title').text().split(/-/)[0].trim()} - ${subtitle}`,
+        title: `${$('title').text().split(/-/, 1)[0].trim()} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang'),

@@ -85,7 +85,7 @@ export const handler = async (ctx) => {
 
     return {
         title,
-        description: title.split(/_/)[0],
+        description: title.split(/_/, 1)[0],
         link: currentUrl,
         item: items,
         allowEmpty: true,

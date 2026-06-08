@@ -39,7 +39,7 @@ async function handler(ctx) {
     const response = await ofetch.raw(url);
     const cookies = response.headers
         .getSetCookie()
-        .map((item) => item.split(';')[0])
+        .map((item) => item.split(';', 1)[0])
         .join(';');
     const $ = load(response._data);
     const list = $('div.al-article-items')

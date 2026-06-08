@@ -73,7 +73,7 @@ async function handler(ctx) {
             description: renderDescription({
                 image: i.image
                     ? {
-                          src: i.image.imgSrc.split(/\?/)[0],
+                          src: i.image.imgSrc.split(/\?/, 1)[0],
                           alt: i.image.alt,
                       }
                     : undefined,
@@ -86,7 +86,7 @@ async function handler(ctx) {
 
         if (i.mediaIndicator) {
             item.enclosure_type = 'audio/mpeg';
-            item.itunes_item_image = i.image?.imgSrc.split(/\?/)[0] ?? undefined;
+            item.itunes_item_image = i.image?.imgSrc.split(/\?/, 1)[0] ?? undefined;
             item.itunes_duration = i.mediaIndicator.duration;
         }
 
@@ -111,7 +111,7 @@ async function handler(ctx) {
                                 element.replaceWith(
                                     renderDescription({
                                         image: {
-                                            src: element.find('img').prop('src').split(/\?/)[0],
+                                            src: element.find('img').prop('src').split(/\?/, 1)[0],
                                             alt: element.find('figcaption').text().trim(),
                                         },
                                     })
@@ -179,7 +179,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
         language: $('html').prop('lang'),
-        image: $('meta[property="og:image"]').prop('content').split('?')[0],
+        image: $('meta[property="og:image"]').prop('content').split('?', 1)[0],
         icon,
         logo: icon,
         subtitle: $('meta[property="og:title"]').prop('content'),

@@ -43,7 +43,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: $('head title').text().split('_')[0],
+        title: $('head title').text().split('_', 1)[0],
         description: $('head meta[name="Description"]').attr('content'),
         link: url,
         item: items,

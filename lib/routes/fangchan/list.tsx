@@ -79,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const categories: string[] = [...new Set([...(item.id as string[]), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
                     const authors: DataItem['author'] = $$('span.news-date')
                         .text()
-                        ?.split(/\d{4}-\d{2}-\d{2}/)?.[0]
+                        ?.split(/\d{4}-\d{2}-\d{2}/, 1)?.[0]
                         ?.trim()
                         ?.split(/\s/)
                         ?.map((author) => ({

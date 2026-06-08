@@ -37,7 +37,7 @@ async function handler(ctx): Promise<Data> {
         ignoreResponseError: true,
     });
 
-    const cookies = (initResponse.headers.getSetCookie?.() || []).map((c) => c.split(';')[0]).join('; ');
+    const cookies = (initResponse.headers.getSetCookie?.() || []).map((c) => c.split(';', 1)[0]).join('; ');
 
     const { html } = await ofetch(targetUrl, {
         headers: {

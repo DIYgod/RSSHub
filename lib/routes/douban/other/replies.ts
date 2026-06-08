@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)\}\],/)[1] + '}]');
 
                 for (const c of comments) {
-                    if (c.id === item.link.split('#')[1]) {
+                    if (c.id === item.link.split('#', 2)[1]) {
                         return {
                             link: item.link,
                             title: `${c.author.name} 于 ${c.create_time} 的回应`,

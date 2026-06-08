@@ -135,13 +135,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const description: string = $('meta[name="description"]').attr('content') ?? '';
 
     return {
-        title: $('title').text().split(/：/)[0],
+        title: $('title').text().split(/：/, 1)[0],
         description,
         link: targetUrl,
         item: items,
         allowEmpty: true,
         image: $('div.navbar-header img').attr('src'),
-        author: description.split(/：/)[0],
+        author: description.split(/：/, 1)[0],
         language,
         id: targetUrl,
     };

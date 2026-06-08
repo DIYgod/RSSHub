@@ -14,7 +14,7 @@ export function getDataItem(href: string) {
     const link = `${origin}${href}`;
 
     return cache.tryGet(link, async () => {
-        const prefix = href?.split('/')[1];
+        const prefix = href?.split('/', 2)[1];
         const res = await ofetch(link);
         const $ = load(res);
 

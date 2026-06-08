@@ -73,8 +73,8 @@ async function handler(ctx: Context) {
     const id = ctx.req.param('id');
     const lang = ctx.req.param('lang') ?? 'en-us';
     const baseurl = 'https://play.google.com/store/apps';
-    const hl = lang.split('-')[0].toLowerCase();
-    const gl = lang.split('-')[1].toLowerCase();
+    const hl = lang.split('-', 1)[0].toLowerCase();
+    const gl = lang.split('-', 2)[1].toLowerCase();
     const link = `${baseurl}/details?id=${id}&hl=${hl}&gl=${gl}`;
 
     const appInfo = await gPlay.app({ appId: id, lang: hl, country: gl });

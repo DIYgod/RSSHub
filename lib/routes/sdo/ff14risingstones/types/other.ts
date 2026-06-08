@@ -1,4 +1,4 @@
-export type TimeStamp = `${number}`;
+export type Timestamp = `${number}`;
 
 export type DateFormat = `${number}-${number}-${number}`;
 

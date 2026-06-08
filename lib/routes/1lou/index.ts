@@ -95,7 +95,7 @@ export const handler = async (ctx) => {
     const image = new URL($('img.logo-2').prop('src'), rootUrl).href;
 
     return {
-        title: `${$('title').text().split(/-/)[0]} - ${author}`,
+        title: `${$('title').text().split(/-/, 1)[0]} - ${author}`,
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,

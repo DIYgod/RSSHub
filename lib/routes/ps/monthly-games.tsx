@@ -35,7 +35,7 @@ export const route: Route = {
 
 const normalizeText = (text: string) => text.replaceAll(/\s+/g, ' ').trim();
 
-const getSrcsetUrl = (srcset?: string) => srcset?.split(',')[0]?.trim().split(/\s+/)[0];
+const getSrcsetUrl = (srcset?: string) => srcset?.split(',', 1)[0]?.trim().split(/\s+/, 1)[0];
 
 const getAbsoluteUrl = (url?: string) => (url ? new URL(url, baseUrl).href : undefined);
 

@@ -146,7 +146,7 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: title,
-        author: $('title').text().split(/\s-/)[0],
+        author: $('title').text().split(/\s-/, 1)[0],
         allowEmpty: true,
     };
 }

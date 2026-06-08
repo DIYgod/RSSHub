@@ -97,7 +97,7 @@ async function handler(ctx) {
         item: items,
         title,
         link: currentUrl,
-        description: title.split(/_/)[0],
+        description: title.split(/_/, 1)[0],
         language: 'zh',
         image,
         icon,

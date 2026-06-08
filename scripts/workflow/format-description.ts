@@ -175,7 +175,7 @@ function collectDescriptionEdits(sourceFile: typescript.SourceFile): Description
                         raw: init.text,
                     });
                 }
-            } else if ((name === 'ja' || name === 'zh' || name === 'zh-TW') && typescript.isObjectLiteralExpression(prop.initializer)) {
+            } else if (['ja', 'zh', 'zh-TW'].includes(name) && typescript.isObjectLiteralExpression(prop.initializer)) {
                 visitObject(prop.initializer);
             }
         }

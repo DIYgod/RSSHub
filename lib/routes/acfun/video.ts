@@ -59,7 +59,7 @@ async function handler(ctx) {
 
             return {
                 title: itemTitle,
-                description: renderDescription({ embed, aid, img: itemImg?.split('?')[0] }),
+                description: renderDescription({ embed, aid, img: itemImg?.split('?', 1)[0] }),
                 link: host + itemUrl,
                 pubDate: parseDate(itemDate, 'YYYY/MM/DD'),
             };

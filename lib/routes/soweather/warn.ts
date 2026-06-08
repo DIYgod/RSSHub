@@ -127,7 +127,7 @@ function buildContent(warning: RawWarning): string {
 
 function getWarningInfo(htmlword: string): string {
     return htmlword
-        .split('防御指引')[0]
+        .split('防御指引', 1)[0]
         .replaceAll(/(?:(?:\s|&nbsp;)*<br\s*\/?>)+\s*$/gi, '')
         .trim();
 }

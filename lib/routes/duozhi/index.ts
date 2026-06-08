@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                       ]
                     : undefined,
             });
-            const pubDateStr: string | undefined = $el.find('div.post-attr').text().split(/\|/)[0]?.trim();
+            const pubDateStr: string | undefined = $el.find('div.post-attr').text().split(/\|/, 1)[0]?.trim();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('span.post-tag a.link-tag').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
@@ -109,7 +109,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 });
                 const pubDateStr: string | undefined = $$('div.subject-meta')
                     .text()
-                    ?.split(/发布/)[0];
+                    ?.split(/发布/, 1)[0];
                 const categories: string[] = [
                     ...new Set([
                         ...(item.category ?? []),

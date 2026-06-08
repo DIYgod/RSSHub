@@ -25,7 +25,7 @@ async function handler(ctx: Context): Promise<Data> {
     const item = $('.category-style tr .style2')
         .toArray()
         .map((titleEle) => {
-            const date = $(titleEle).parent().next().find('td').text().split('-')[0]?.trim();
+            const date = $(titleEle).parent().next().find('td').text().split('-', 1)[0]?.trim();
 
             return {
                 title: $(titleEle).attr('title')?.trim() || '',

@@ -75,7 +75,7 @@ async function handler() {
                 const imageUrl = `https://media.springernature.com/full/springer-static/cover-hires/journal/${id}/${volume}/${issue}?as=webp`;
                 const contents = `<div align="center"><img src="${imageUrl}" alt="Volume ${volume} Issue ${issue}"></div>`;
 
-                const date = $('title').text().split(',')[1].trim();
+                const date = $('title').text().split(',', 2)[1].trim();
                 const issueDescription = $('div[data-test=issue-description]').html() ?? '';
 
                 return {

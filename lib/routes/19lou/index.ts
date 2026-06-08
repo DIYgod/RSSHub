@@ -108,7 +108,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('title').text().split('-')[0],
+        title: $('title').text().split('-', 1)[0],
         link: rootUrl,
         item: items,
     };

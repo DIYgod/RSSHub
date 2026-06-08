@@ -125,7 +125,7 @@ async function handler(ctx) {
             const cookieResponse = await ofetch.raw(`${rootUrl}${getPath}${key}&value=${md5(stringtoHex(value))}`);
             return cookieResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; ');
         });
 

@@ -55,7 +55,7 @@ async function handler(ctx) {
 
     const token = await parseToken(link);
     const $ = load(res1.data); // 使用 cheerio 加载返回的 HTML
-    const stock_name = $('.stock-name').text().split('(')[0];
+    const stock_name = $('.stock-name').text().split('(', 1)[0];
 
     let query_url = 'https://xueqiu.com/statuses';
     query_url += source === 'all' ? '/search.json' : '/stock_timeline.json';

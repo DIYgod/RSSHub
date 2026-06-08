@@ -64,7 +64,7 @@ async function handler(ctx) {
                     images: image
                         ? [
                               {
-                                  src: image.prop('data-src').split(/\?/)[0],
+                                  src: image.prop('data-src').split(/\?/, 1)[0],
                                   alt: image.prop('alt'),
                               },
                           ]
@@ -115,7 +115,7 @@ async function handler(ctx) {
 
     $ = load(currentResponse);
 
-    const title = $('title').text().split(/-/)[0].trim();
+    const title = $('title').text().split(/-/, 1)[0].trim();
     const icon = $('link[rel="icon"]').first().prop('href');
 
     return {

@@ -40,7 +40,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             item = $(item);
-            const link = item.attr('href').split('?')[0];
+            const link = item.attr('href').split('?', 1)[0];
 
             return {
                 title: item.text(),

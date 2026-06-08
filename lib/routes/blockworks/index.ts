@@ -46,7 +46,7 @@ async function handler(ctx): Promise<Data> {
         limitedItems
             .map((item) => ({
                 ...item,
-                link: item.link?.split('?')[0],
+                link: item.link?.split('?', 1)[0],
             }))
             .map((item) =>
                 cache.tryGet(item.link!, async () => {

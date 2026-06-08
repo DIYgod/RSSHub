@@ -68,7 +68,7 @@ async function handler(ctx) {
             item = $(item);
 
             return {
-                link: `${rootUrl}${item.attr('href').split('&')[0]}`,
+                link: `${rootUrl}${item.attr('href').split('&', 1)[0]}`,
             };
         });
 

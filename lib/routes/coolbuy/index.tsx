@@ -29,8 +29,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const items: DataItem[] = response.objects.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const image: string | undefined = item.cover_image?.split(/\?/)?.[0];
-        const banner: string | undefined = item.display_image?.split(/\?/)?.[0];
+        const image: string | undefined = item.cover_image?.split(/\?/, 1)?.[0];
+        const banner: string | undefined = item.display_image?.split(/\?/, 1)?.[0];
 
         const images = [banner, image].filter(Boolean).map((image) => ({
             src: image,
