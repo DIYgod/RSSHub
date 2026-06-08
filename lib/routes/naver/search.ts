@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import { decodeHTML } from 'entities';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -204,60 +205,38 @@ function buildItemFromTemplate(segment: string, templateId: string, title: strin
 
 function extractCafeItems(html: string) {
     const $ = load(html);
-    const items: Array<{
-        title: string;
-        link: string;
-        description: string;
-        author?: string;
-        pubDate?: Date;
-    }> = [];
 
-    $('li.bx').each((_i, el) => {
-        const $el = $(el);
-        const titleEl = $el.find('.title_link');
-        const title = titleEl.text().trim();
-        const link = titleEl.attr('href') || '';
-        const author = $el.find('.name').first().text().trim();
-        const timeText = $el.find('.sub').first().text().trim();
-        const descEl = $el.find('.dsc_link');
-        const description = descEl.length ? descEl.text().trim() : '';
+    return $('li.bx')
+        .toArray()
+        .map((el): DataItem | null => {
+            const $el = $(el);
+            const titleEl = $el.find('.title_link');
+            const title = titleEl.text().trim();
+            const link = titleEl.attr('href') || '';
+            const author = $el.find('.name').first().text().trim();
+            const timeText = $el.find('.sub').first().text().trim();
+            const descEl = $el.find('.dsc_link');
+            const description = descEl.length ? descEl.text().trim() : '';
 
-        if (!title || !link) {
-            return;
-        }
+            if (!title || !link) {
+                return null;
+            }
 
-        const pubDate = parseKoreanRelativeTime(timeText);
+            const pubDate = parseKoreanRelativeTime(timeText);
 
-        items.push({
-            title,
-            link,
-            description,
-            author: author || undefined,
-            ...(pubDate && { pubDate }),
-        });
-    });
-
-    return items;
+            return {
+                title,
+                link,
+                description,
+                author: author || undefined,
+                ...(pubDate && { pubDate }),
+            };
+        })
+        .filter((item): item is DataItem => item !== null);
 }
 
 function cleanText(text: string): string {
-    return text
-        .replaceAll(/&(amp|lt|gt|quot);/g, (match) => {
-            switch (match) {
-                case '&amp;':
-                    return '&';
-                case '&lt;':
-                    return '<';
-                case '&gt;':
-                    return '>';
-                case '&quot;':
-                    return '"';
-                default:
-                    return match;
-            }
-        })
-        .replaceAll('<mark>', '')
-        .replaceAll('</mark>', '');
+    return decodeHTML(text).replaceAll('<mark>', '').replaceAll('</mark>', '');
 }
 
 function parseKoreanRelativeTime(timeText: string): Date | undefined {
