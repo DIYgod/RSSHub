@@ -6027,6 +6027,9 @@
   "/nautiljon/releases/manga": [
     "Fafnor"
   ],
+  "/naver/search/:category/:keyword": [
+    "slowmande"
+  ],
   "/nbd/daily": [
     "yuuow"
   ],

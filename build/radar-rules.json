@@ -33380,6 +33380,19 @@
       }
     ]
   },
+  "naver.com": {
+    "_name": "네이버",
+    "m.search": [
+      {
+        "title": "검색",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/search.naver"
+        ],
+        "target": "/naver/search/:category/:keyword"
+      }
+    ]
+  },
   "nbd.com.cn": {
     "_name": "每经网",
     ".": [
