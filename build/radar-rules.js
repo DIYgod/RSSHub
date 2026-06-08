@@ -11981,7 +11981,7 @@
     ".":[ { title:"Precious Metals Report",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/:type/:name" ],
-        target:"/jbmaparams=>{const type=params.type;const name=params.name;if(type===\"report\"||type===\"cat_report\"||type===\"tag_report\"){return`/${type}${name?`/${name}`:\"\"}`}return`/${type}`}" },
+        target:"/jbmaparams=>{const type=params.type;const name=params.name;if([\"report\",\"cat_report\",\"tag_report\"].includes(type)){return`/${type}${name?`/${name}`:\"\"}`}return`/${type}`}" },
       { title:"Metals Forcus",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/cat_report/metals-forcus" ],
