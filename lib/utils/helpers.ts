@@ -54,8 +54,7 @@ export function parseDuration(timeStr: string | undefined | null): number | unde
     const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
     return clean
         .split(':')
-        .toReversed()
-        .reduce((total, part, idx) => {
+        .reduceRight((total, part, idx) => {
             const n = Number(part);
             if (Number.isNaN(n)) {
                 throw new TypeError(`Invalid segment: ${part}`);
