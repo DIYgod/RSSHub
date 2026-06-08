@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -62,8 +63,9 @@ async function handler(ctx) {
         .map((el) => $(el).attr('href'))
         .filter((href): href is string => !!href && href.startsWith(`${rootUrl}/${category}/`) && /\/\d{4}-\d{2}-\d{2}\//.test(href));
 
-    const items = await Promise.all(
-        links.slice(0, limit).map((link) =>
+    const items = await pMap(
+        links.slice(0, limit),
+        (link) =>
             cache.tryGet(link, async () => {
                 const detail = await ofetch(link);
                 const $detail = load(detail);
@@ -83,8 +85,8 @@ async function handler(ctx) {
                     pubDate,
                     description,
                 };
-            })
-        )
+            }),
+        { concurrency: 2 }
     );
 
     return {
