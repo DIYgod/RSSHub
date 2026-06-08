@@ -26,7 +26,7 @@ const fixImg = ($) => {
     });
 };
 
-const extractNotes = ($) => {
+const extractNotes = ($) =>
     $('.qoo-note-wrap')
         .toArray()
         .map((item) => {
@@ -43,6 +43,5 @@ const extractNotes = ($) => {
                 author,
             };
         });
-};
 
 export { appsUrl, extractNotes, fixImg, newsUrl, notesUrl, siteIcon, ssoUrl, userUrl };

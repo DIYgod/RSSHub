@@ -167,13 +167,11 @@ async function handler(ctx) {
 
                 single.title = `一觉醒来世界发生了什么 ${$$('title').text()}`;
 
-                single.description = '';
-                $$('div.container')
+                single.description = $$('div.container')
                     .find('li.item')
-                    // eslint-disable-next-line array-callback-return
-                    .map((i, j) => {
-                        single.description += `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`;
-                    });
+                    .toArray()
+                    .map((j) => `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`)
+                    .join('');
             }
 
             return single;

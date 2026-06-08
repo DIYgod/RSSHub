@@ -56,32 +56,31 @@ async function tryGetFullText(href, link, type) {
 }
 
 function tryGetAttachments(articleData, articleBody, type) {
-    if (type === 'ggtz') {
-        articleData('[id^=nattach]')
-            .prev()
-            .map((_, item) => {
-                const href = articleData(item).attr('href').slice(1);
-                const link = typeMap.ggtz.root + href;
-                const title = articleData(item).text();
-                articleBody += '<br/>';
-                articleBody += `<a href=${link}>${title}</a>`;
-                return null;
-            });
-    } else {
-        articleData('[id^=nattach]')
-            .parent()
-            .prev()
-            .map((_, item) => {
-                const href = articleData(item).find('a').attr('href').slice(1);
-                const link = typeMap[type].root + href;
-                const title = articleData(item).find('a').find('span').text();
-                articleBody += '<br/>';
-                articleBody += `<a href=${link}> ${title} </a>`;
-                return null;
-            });
-    }
-
-    return articleBody;
+    return (
+        articleBody +
+        (type === 'ggtz'
+            ? articleData('[id^=nattach]')
+                  .prev()
+                  .toArray()
+                  .map((item) => {
+                      const href = articleData(item).attr('href').slice(1);
+                      const link = typeMap.ggtz.root + href;
+                      const title = articleData(item).text();
+                      return `<br/><a href=${link}>${title}</a>`;
+                  })
+                  .join('')
+            : articleData('[id^=nattach]')
+                  .parent()
+                  .prev()
+                  .toArray()
+                  .map((item) => {
+                      const href = articleData(item).find('a').attr('href').slice(1);
+                      const link = typeMap[type].root + href;
+                      const title = articleData(item).find('a').find('span').text();
+                      return `<br/><a href=${link}> ${title} </a>`;
+                  })
+                  .join(''))
+    );
 }
 // A. got from hostPage     1.article(link), 2.article(title), 3.(pubDate)
 // B. got from articlePage  1.description(fullText), 2.article(author), 3.detailed(pubDate)
