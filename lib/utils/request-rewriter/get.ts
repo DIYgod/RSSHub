@@ -1,3 +1,4 @@
+// oxlint-disable unicorn-js/no-this-outside-of-class
 import type http from 'node:http';
 import type https from 'node:https';
 

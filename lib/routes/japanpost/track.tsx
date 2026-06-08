@@ -28,8 +28,6 @@ export async function track(ctx) {
     });
 
     const $ = load(response.data);
-    utils.expandEven($);
-    utils.expandOdd($);
 
     const list = $('.tableType01').eq(1).find('tr').slice(2);
     const officeList = $('.tableType03').eq(0).find('tr').slice(1);
@@ -51,8 +49,8 @@ export async function track(ctx) {
         throw new Error(resErrorText);
     }
 
-    const listEven = list.even();
-    const listOdd = list.odd();
+    const listEven = utils.even(list);
+    const listOdd = utils.odd(list);
 
     const packageType = $('.tableType01').eq(0).find('tr').eq(1).find('td').eq(1).text().trim();
     const packageService = $('.tableType01').eq(0).find('tr').eq(1).find('td').eq(2).text().trim();
