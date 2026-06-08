@@ -7,15 +7,17 @@ services:
         image: sunbi/rsshub:local
         restart: unless-stopped
         ports:
-            - '1200:1200'
+            - '127.0.0.1:1200:1200'
         environment:
             NODE_ENV: production
             CACHE_TYPE: redis
             CACHE_EXPIRE: 600
             REDIS_URL: redis://redis:6379/
             # Access control - only allow calls from your own services
-            ACCESS_KEY: '${RSSHUB_ACCESS_KEY}'
+            ACCESS_KEY: '${ACCESS_KEY}'
             ALLOW_LOCALHOST: 'true'
+            # Channel avatars on SPEC YouTube routes (server-side only — never VITE_*)
+            YOUTUBE_API_v3_KEY: '${YOUTUBE_API_v3_KEY}'
         # Naver auth (for cafe, etc.)
         # NAVER_COOKIE: "NID_AUT=...; NID_SES=..."
         depends_on:

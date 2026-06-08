@@ -33,11 +33,16 @@ const specExtraBaseSchema = z.object({
 // ─── Platform shapes ────────────────────────────────────────────────────────
 
 const specExtraYoutubeSchema = specExtraBaseSchema.extend({
-    type: z.enum(['youtube/video', 'youtube/membership-video']),
+    type: z.enum(['youtube/video', 'youtube/short', 'youtube/live', 'youtube/post', 'youtube/podcast', 'youtube/membership-video']),
     platform: z.literal('youtube'),
     channelId: z.string(),
     channelTitle: z.string(),
     isMembershipOnly: z.boolean(),
+    contentKind: z.enum(['video', 'short', 'live', 'post', 'podcast']).optional(),
+    thumbnail: z.string().optional(),
+    thumbnailFallback: z.string().optional(),
+    isLiveNow: z.boolean().optional(),
+    bodyText: z.string().optional(),
 });
 
 const specExtraVikiSchema = specExtraBaseSchema.extend({
