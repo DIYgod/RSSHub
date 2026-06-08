@@ -44,9 +44,9 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
     } satisfies Pick<LaunchOptions, 'proxy'>;
 };
 
+// Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation)
 const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'];
 
-// Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation), so we don't add those manually.
 const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
     args: COMMON_LAUNCH_ARGS,
     executablePath: config.chromiumExecutablePath || undefined,
@@ -54,52 +54,57 @@ const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
     ...getProxyOptions(currentProxy),
 });
 
-// Browserless accepts launch options as a `launch` URL query parameter (URL-encoded JSON).
-// (Patchright's own launch-server uses `launch-options` — RSSHub's WS_ENDPOINT targets browserless, so we emit `launch`.)
-// The browserless schema also differs from patchright's LaunchOptions: no `executablePath`, and `ignoreHTTPSErrors` is renamed to `acceptInsecureCerts`.
-type BrowserlessLaunchOptions = {
-    acceptInsecureCerts?: boolean;
-    args?: string[];
-    headless?: boolean;
-    ignoreDefaultArgs?: boolean | string[];
-    proxy?: LaunchOptions['proxy'];
-    slowMo?: number;
-    stealth?: boolean;
-};
+type BrowserlessLaunchOptions = Pick<LaunchOptions, 'args' | 'headless' | 'proxy'>;
+type BrowserlessCdpLaunchOptions = Omit<BrowserlessLaunchOptions, 'proxy'> & { stealth?: boolean };
 
 const toBrowserlessLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessLaunchOptions => ({
-    acceptInsecureCerts: true,
     args: COMMON_LAUNCH_ARGS,
     headless: true,
-    stealth: true,
     ...getProxyOptions(currentProxy),
 });
+
+// CDP accepts `stealth` but NOT a `proxy` object.
+const toBrowserlessCDPLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessCdpLaunchOptions => {
+    let proxyServerArgs: string[] = [];
+
+    if (currentProxy) {
+        if (currentProxy.urlHandler?.username || currentProxy.urlHandler?.password) {
+            logger.warn('Proxy authentication is not supported over CDP (--proxy-server), continue without proxy');
+        } else {
+            const server = currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://').replace(/\/$/, '');
+            proxyServerArgs = [`--proxy-server=${server}`];
+        }
+    }
+
+    return {
+        args: [...COMMON_LAUNCH_ARGS, ...proxyServerArgs],
+        headless: true,
+        stealth: true,
+    };
+};
 
 const getContextOptions = (): BrowserContextOptions => ({
     ignoreHTTPSErrors: true,
     userAgent: config.ua,
 });
 
+// CDP > WS > local
 const launchBrowser = async (currentProxy?: ProxyState | null) => {
-    const browser = config.playwrightWSEndpoint ? await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy))) : await chromium.launch(getLaunchOptions(currentProxy));
+    let browser: Browser;
+    if (config.playwrightCDPEndpoint) {
+        browser = await chromium.connectOverCDP(getBrowserlessEndpoint(config.playwrightCDPEndpoint, toBrowserlessCDPLaunchOptions(currentProxy)));
+    } else if (config.playwrightWSEndpoint) {
+        browser = await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy)));
+    } else {
+        browser = await chromium.launch(getLaunchOptions(currentProxy));
+    }
     const context = await browser.newContext(getContextOptions());
     return { browser, context };
 };
 
-// Merge our launch options into the existing `launch` query parameter so endpoint-level options
-// (e.g. `?launch=%7B%22stealth%22%3Atrue%7D`) are preserved instead of being overwritten.
 const getBrowserlessEndpoint = (endpoint: string, launchOptions: BrowserlessLaunchOptions) => {
     const endpointURL = new URL(endpoint);
-    const existing = endpointURL.searchParams.get('launch');
-    let merged: BrowserlessLaunchOptions = launchOptions;
-    if (existing) {
-        try {
-            merged = { ...(JSON.parse(existing) as BrowserlessLaunchOptions), ...launchOptions };
-        } catch {
-            // Existing value is not JSON (could be base64 or malformed); leave caller's options as the source of truth.
-        }
-    }
-    endpointURL.searchParams.set('launch', JSON.stringify(merged));
+    endpointURL.searchParams.set('launch', JSON.stringify(launchOptions));
     return endpointURL.toString();
 };
 
