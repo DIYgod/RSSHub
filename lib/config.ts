@@ -781,7 +781,7 @@ const calculateValue = () => {
             type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // Cache type; supports 'memory', 'redis', and 'http'. Set to empty string to disable cache.
             requestTimeout: toInt(envs.CACHE_REQUEST_TIMEOUT, 60),
             routeExpire: toInt(envs.CACHE_EXPIRE, 5 * 60), // 路由缓存时间，单位为秒
-            contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 60 * 60), // 不变内容缓存时间，单位为秒
+            contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 1 * 60 * 60), // 不变内容缓存时间，单位为秒
         },
         memory: {
             max: toInt(envs.MEMORY_MAX, Math.pow(2, 8)), // The maximum number of items that remain in the cache. This must be a positive finite intger.
