@@ -116,6 +116,8 @@ describe('playwright', () => {
         expect(html.length).toBeGreaterThan(0);
 
         expect(browser?.isConnected()).toBe(true);
+        await browser?.close();
+        expect(browser?.isConnected()).toBe(false);
     }, 10000);
 
     it('getPlaywrightPage', async () => {
