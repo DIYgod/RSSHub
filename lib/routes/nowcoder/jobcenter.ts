@@ -96,7 +96,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${ctx.req.param('recruitType') && (ctx.req.param('recruitType') === '2') ? '社招广场' : '实习广场'} - 牛客网`,
+        title: `${ctx.req.param('recruitType') && ctx.req.param('recruitType') === '2' ? '社招广场' : '实习广场'} - 牛客网`,
         link: rootUrl,
         item: items,
     };

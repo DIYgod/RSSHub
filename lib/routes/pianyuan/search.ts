@@ -44,7 +44,11 @@ async function handler(ctx) {
             const single = await cache.tryGet(link, async () => {
                 const res = await utils.request(link, cache);
                 const content = load(res.data);
-                detailLinks.push(...content('.ico.ico_bt').toArray().map((a) => $(a).attr('href')));
+                detailLinks.push(
+                    ...content('.ico.ico_bt')
+                        .toArray()
+                        .map((a) => $(a).attr('href'))
+                );
             });
             return single;
         })
