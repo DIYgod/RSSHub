@@ -105,7 +105,7 @@ function extractVideoItem(segment: string) {
     const author = authorMatch ? cleanText(authorMatch[1]) : '';
     const hrefMatches = [...segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g)];
     const links = hrefMatches.map((m) => m[1]);
-    const mediaDomains = /^(https?:\/\/)?(m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
+    const mediaDomains = /^(?:https?:\/\/)?(?:m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
     const link = links.find((l) => mediaDomains.test(l)) || links[0] || '';
     const dateMatch = segment.match(/"createdAt":"((?:[^"\\]|\\.)*)"/);
     const timeText = dateMatch?.[1] || '';
@@ -192,7 +192,7 @@ function buildItemFromTemplate(segment: string, templateId: string, title: strin
 
     let timeText = '';
     if (templateId === 'webItem') {
-        const timeMatch = segment.match(/\[{"text":"([^"]*)"}/);
+        const timeMatch = segment.match(/\[\{"text":"([^"]*)"\}/);
         timeText = timeMatch?.[1] || '';
     } else {
         const textMatch = segment.match(/"text":"([^"]*)"/);
@@ -251,7 +251,7 @@ function parseKoreanRelativeTime(timeText: string): Date | undefined {
         return absDate;
     }
 
-    const match = timeText.match(/(\d+)\s*(시간|분|일|주) 전|(\d+)분 이내|(\d+)시간 이내|방금/);
+    const match = timeText.match(/(\d+)\s*(시간|[분일주]) 전|(\d+)분 이내|(\d+)시간 이내|방금/);
     if (!match) {
         return;
     }
