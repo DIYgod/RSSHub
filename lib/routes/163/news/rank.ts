@@ -152,7 +152,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 try {
                     let link;
-                    if (category === 'auto' || category === 'house' || category === 'travel') {
+                    if (['auto', 'house', 'travel'].includes(category)) {
                         const category = item.link.split('.163.com', 1)[0].split('//').pop().split('.').pop();
                         link = `https://3g.163.com/${category}/article/${item.link.split('/').pop()}`;
                     } else {

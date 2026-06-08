@@ -36,7 +36,7 @@ async function handler(ctx) {
     });
     await page.route('**/*', (route) => {
         const resourceType = route.request().resourceType();
-        if (resourceType === 'image' || resourceType === 'media' || resourceType === 'font' || resourceType === 'stylesheet' || resourceType === 'ping') {
+        if (['image', 'media', 'font', 'stylesheet', 'ping'].includes(resourceType)) {
             route.abort();
         } else {
             route.continue();

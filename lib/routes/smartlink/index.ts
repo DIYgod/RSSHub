@@ -29,7 +29,7 @@ function isYouTubeUrl(url: string): boolean {
     try {
         const parsedUrl = new URL(url);
         const hostname = parsedUrl.hostname.toLowerCase();
-        return hostname === 'youtube.com' || hostname === 'www.youtube.com' || hostname === 'm.youtube.com' || hostname === 'youtu.be';
+        return ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtu.be'].includes(hostname);
     } catch {
         return false;
     }

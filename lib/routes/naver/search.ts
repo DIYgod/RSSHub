@@ -174,7 +174,7 @@ function extractGenericItem(segment: string, templateId: string) {
         return null;
     }
 
-    if (title === '더보기' || title === '관련도순' || title === '최신순') {
+    if (['더보기', '관련도순', '최신순'].includes(title)) {
         return null;
     }
 
