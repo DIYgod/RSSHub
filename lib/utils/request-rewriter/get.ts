@@ -88,7 +88,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         }
 
         // Remove the headerGeneratorOptions before passing to the original function
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // oxlint-disable-next-line no-unused-vars
         const { headerGeneratorOptions, ...cleanOptions } = options;
 
         return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;
