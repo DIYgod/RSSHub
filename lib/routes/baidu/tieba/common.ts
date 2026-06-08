@@ -6,13 +6,13 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 /**
- * 解析百度 cookie 字符串为 Puppeteer 可用的 cookie 对象数组
+ * 解析百度 cookie 字符串为 Playwright 可用的 cookie 对象数组
  * 正确处理包含 '=' 的 cookie 值
  */
-export function parseBaiduCookies(cookieStr: string): Array<{ name: string; value: string; domain: string }> {
+export function parseBaiduCookies(cookieStr: string): Array<{ name: string; value: string; domain: string; path: string }> {
     return cookieStr
         .split(';')
         .map((c) => Cookie.parse(c.trim()))
@@ -21,6 +21,7 @@ export function parseBaiduCookies(cookieStr: string): Array<{ name: string; valu
             name: c.key,
             value: c.value,
             domain: '.tieba.baidu.com',
+            path: '/',
         }));
 }
 
@@ -34,7 +35,7 @@ export function checkSecurityVerification(html: string): void {
 }
 
 /**
- * 使用 Puppeteer 获取贴吧页面内容
+ * 使用 Playwright 获取贴吧页面内容
  * 包含统一的 cookie 设置、安全验证检查和缓存逻辑
  * 带有重试机制处理瞬态错误
  */
@@ -63,10 +64,10 @@ export async function getTiebaPageContent(
 
             /* eslint-disable no-await-in-loop -- Intentional sequential retry logic */
             for (let attempt = 0; attempt < retries; attempt++) {
-                const { page, destroy } = await getPuppeteerPage(url, {
+                const { page, destroy } = await getPlaywrightPage(url, {
                     onBeforeLoad: async (page) => {
                         if (cookies.length > 0) {
-                            await page.setCookie(...cookies);
+                            await page.context().addCookies(cookies);
                         }
                     },
                     gotoConfig: { waitUntil: 'domcontentloaded' },

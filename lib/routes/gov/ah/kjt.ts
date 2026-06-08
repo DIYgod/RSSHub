@@ -95,7 +95,7 @@ export const route: Route = {
     example: '/gov/ah/kjt',
     parameters: { category: '分类，默认为 `kjzx/tzgg`，即通知公告，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [通知公告](https://kjt.ah.gov.cn/kjzx/tzgg/)，网址为 \`https://kjt.ah.gov.cn/kjzx/tzgg/\`。截取 \`https://kjt.ah.gov.cn/\` 到末尾 \`/\` 的部分 \`\` 作为参数填入，此时路由为 [\`/gov/ah/kjt/kjzx/tzgg\`](https://rsshub.app/gov/ah/kjt/kjzx/tzgg)。
+若订阅 [通知公告](https://kjt.ah.gov.cn/kjzx/tzgg/)，网址为 \`https://kjt.ah.gov.cn/kjzx/tzgg/\`。截取 \`https://kjt.ah.gov.cn/\` 到末尾 \`/\` 的部分 \\\`\\\` 作为参数填入，此时路由为 [\`/gov/ah/kjt/kjzx/tzgg\`](https://rsshub.app/gov/ah/kjt/kjzx/tzgg)。
 :::
 
 #### [科技资讯](https://kjt.ah.gov.cn/kjzx/index.html)
@@ -103,7 +103,7 @@ export const route: Route = {
 | [通知公告](https://kjt.ah.gov.cn/kjzx/tzgg/index.html) | [工作动态](https://kjt.ah.gov.cn/kjzx/gzdt/index.html) | [基层科技](https://kjt.ah.gov.cn/kjzx/jckj/index.html) | [媒体聚焦](https://kjt.ah.gov.cn/kjzx/mtjj/index.html) |
 | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
 | [kjzx/tzgg](https://rsshub.app/gov/ah/kjt/kjzx/tzgg)   | [kjzx/gzdt](https://rsshub.app/gov/ah/kjt/kjzx/gzdt)   | [kjzx/jckj](https://rsshub.app/gov/ah/kjt/kjzx/jckj)   | [kjzx/mtjj](https://rsshub.app/gov/ah/kjt/kjzx/mtjj)   |
-  
+
 | [重要转载](https://kjt.ah.gov.cn/kjzx/zyzz/index.html) | [图片视频](https://kjt.ah.gov.cn/kjzx/tpsp/index.html) |
 | ------------------------------------------------------ | ------------------------------------------------------ |
 | [kjzx/zyzz](https://rsshub.app/gov/ah/kjt/kjzx/zyzz)   | [kjzx/tpsp](https://rsshub.app/gov/ah/kjt/kjzx/tpsp)   |
@@ -122,9 +122,7 @@ export const route: Route = {
 
 | [创新平台](https://kjt.ah.gov.cn/kjzy/kjsj/cxpt/index.html)    | [创新园区](https://kjt.ah.gov.cn/kjzy/kjsj/cxyq/index.html)    | [创新许可](https://kjt.ah.gov.cn/kjzy/kjsj/cxxk/index.html)    |
 | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| [kjzy/kjsj/cxpt](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxpt) | [kjzy/kjsj/cxyq](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxyq) | [kjzy/kjsj/cxxk](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxxk) |
-
-  `,
+| [kjzy/kjsj/cxpt](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxpt) | [kjzy/kjsj/cxyq](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxyq) | [kjzy/kjsj/cxxk](https://rsshub.app/gov/ah/kjt/kjzy/kjsj/cxxk) |`,
     categories: ['government'],
 
     features: {

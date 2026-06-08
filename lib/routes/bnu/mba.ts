@@ -85,7 +85,7 @@ export const route: Route = {
     example: '/bnu/mba/xwdt',
     parameters: { category: '分类，默认为 xwdt，即新闻聚焦' },
     description: `::: tip
-  若订阅 [新闻聚焦](https://mba.bnu.edu.cn/xwdt/index.html)，网址为 \`https://mba.bnu.edu.cn/xwdt/index.html\`。截取 \`https://mba.bnu.edu.cn/\` 到末尾 \`/index.html\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/bnu/mba/xwdt\`](https://rsshub.app/bnu/mba/xwdt)。
+若订阅 [新闻聚焦](https://mba.bnu.edu.cn/xwdt/index.html)，网址为 \`https://mba.bnu.edu.cn/xwdt/index.html\`。截取 \`https://mba.bnu.edu.cn/\` 到末尾 \`/index.html\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/bnu/mba/xwdt\`](https://rsshub.app/bnu/mba/xwdt)。
 :::
 
 #### [主页](https://mba.bnu.edu.cn)
@@ -116,8 +116,7 @@ export const route: Route = {
 
 | [校外导师](https://mba.bnu.edu.cn/zyfz/xwds/index.html) | [企业实践](https://mba.bnu.edu.cn/zyfz/zycp/index.html) | [就业创业](https://mba.bnu.edu.cn/zyfz/jycy/index.html) |
 | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
-| [zyfz/xwds](https://rsshub.app/bnu/mba/zyfz/xwds)       | [zyfz/zycp](https://rsshub.app/bnu/mba/zyfz/zycp)       | [zyfz/jycy](https://rsshub.app/bnu/mba/zyfz/jycy)       |
-  `,
+| [zyfz/xwds](https://rsshub.app/bnu/mba/zyfz/xwds)       | [zyfz/zycp](https://rsshub.app/bnu/mba/zyfz/zycp)       | [zyfz/jycy](https://rsshub.app/bnu/mba/zyfz/jycy)       |`,
     categories: ['university'],
 
     features: {

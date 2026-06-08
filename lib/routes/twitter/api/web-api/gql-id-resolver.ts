@@ -30,7 +30,7 @@ async function fetchTwitterPage(): Promise<string> {
 
 function extractQueryIds(scriptContent: string): Record<string, string> {
     const ids: Record<string, string> = {};
-    const matches = scriptContent.matchAll(/queryId:"([^"]+?)".+?operationName:"([^"]+?)"/g);
+    const matches = scriptContent.matchAll(/queryId:"([^"]+)".+?operationName:"([^"]+)"/g);
     for (const match of matches) {
         const [, queryId, operationName] = match;
         if (operationNames.includes(operationName)) {
@@ -68,7 +68,7 @@ export async function resolveQueryIds(): Promise<Record<string, string>> {
         try {
             const parsed = typeof cached === 'string' ? JSON.parse(cached) : cached;
             if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
-                logger.debug(`twitter gql-id-resolver: using cached query IDs`);
+                logger.debug('twitter gql-id-resolver: using cached query IDs');
                 return { ...fallbackIds, ...parsed };
             }
         } catch {

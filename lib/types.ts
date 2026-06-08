@@ -26,6 +26,7 @@ export type Category =
     | 'study'
     | 'journal'
     | 'finance'
+    | 'sport'
     | 'other';
 
 // rss
@@ -330,7 +331,7 @@ interface RouteItem {
               }>
             | false;
 
-        /** set to `true` if the feed uses puppeteer */
+        /** set to `true` if the feed uses browser automation */
         requirePuppeteer?: boolean;
 
         /** set to `true` if the target website has an anti-crawler mechanism */

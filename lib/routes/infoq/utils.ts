@@ -103,7 +103,7 @@ function addCoverToDescription(content, cover) {
 }
 
 function parseContent(content) {
-    const isRichContent = content.startsWith(`{"`);
+    const isRichContent = content.startsWith('{"');
     if (!isRichContent) {
         return content;
     }

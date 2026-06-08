@@ -21,9 +21,9 @@ export const route: Route = {
     ],
     description: `Steam Community Sharefile's Changelog. Primary used for a workshop item.
 Helpful route parameters:
+
 - \`l=\` language parameter, change the language of description.
-- \`p=\` page parameter, change the results page. p=1 by default.
-`,
+- \`p=\` page parameter, change the results page. p=1 by default.`,
     name: 'Sharefile Changelog',
     maintainers: ['NyaaaDoge'],
 

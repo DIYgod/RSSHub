@@ -163,7 +163,7 @@ export const route: Route = {
             description: 'Category, `news-events/latest-news` by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Latest News](https://www.semiconductors.org/news-events/latest-news/), where the source URL is \`https://www.semiconductors.org/news-events/latest-news/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/semiconductors/news-events/latest-news\`](https://rsshub.app/semiconductors/news-events/latest-news).
 :::`,
     categories: ['new-media'],

@@ -32,7 +32,7 @@ export const route: Route = {
     handler,
     description: `参数可以从链接中拿到，如：
 
-  \`https://www.abmedia.io/category/technology-development\` 对应 \`/abmedia/technology-development\``,
+\`https://www.abmedia.io/category/technology-development\` 对应 \`/abmedia/technology-development\``,
 };
 
 async function handler(ctx) {

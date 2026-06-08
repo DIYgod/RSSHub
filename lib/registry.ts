@@ -95,7 +95,7 @@ if (Object.keys(modules).length) {
             | {
                   apiRoute: APIRoute;
               };
-        const namespace = module.split(/[/\\]/)[1];
+        const namespace = module.split(/[/\\]/, 2)[1];
         if ('namespace' in content) {
             namespaces[namespace] = Object.assign(
                 {

@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     let items = response.data.data.list.map((item) => ({
         title: item.title,
-        link: item.url.split('?')[0],
+        link: item.url.split('?', 1)[0],
         author: item.source,
         pubDate: parseDate(item.timestamp * 1000),
         description: renderDescription({
@@ -60,8 +60,8 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     content('.futu-news-time-stamp').remove();
-                    content('.nnstock').each(function () {
-                        content(this).replaceWith(`<a href="${content(this).attr('href')}">${content(this).text().replaceAll('$', '')}</a>`);
+                    content('.nnstock').each((_, el) => {
+                        content(el).replaceWith(`<a href="${content(el).attr('href')}">${content(el).text().replaceAll('$', '')}</a>`);
                     });
 
                     item.description = content('.origin_content').html();

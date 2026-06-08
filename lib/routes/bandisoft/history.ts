@@ -222,35 +222,34 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
 <details>
   <summary>More languages</summary>
 
-| Language             | ID  |
-| -------------------- | --- |
-| English              | en  |
-| 中文(简体)           | cn  |
-| 中文(繁體)           | tw  |
-| 日本語               | jp  |
-| Русский              | ru  |
-| Español              | es  |
-| Français             | fr  |
-| Deutsch              | de  |
-| Italiano             | it  |
-| Slovenčina           | sk  |
-| Українська           | uk  |
-| Беларуская           | be  |
-| Dansk                | da  |
-| Polski               | pl  |
-| Português Brasileiro | br  |
-| Čeština              | cs  |
-| Nederlands           | nl  |
-| Slovenščina          | sl  |
-| Türkçe               | tr  |
-| ภาษาไทย              | th  |
-| Ελληνικά             | gr  |
-| Oʻzbek               | uz  |
-| Romanian             | ro  |
-| 한국어               | kr  |
+| Language             | ID |
+| -------------------- | -- |
+| English              | en |
+| 中文 (简体)          | cn |
+| 中文 (繁體)          | tw |
+| 日本語               | jp |
+| Русский              | ru |
+| Español              | es |
+| Français             | fr |
+| Deutsch              | de |
+| Italiano             | it |
+| Slovenčina           | sk |
+| Українська           | uk |
+| Беларуская           | be |
+| Dansk                | da |
+| Polski               | pl |
+| Português Brasileiro | br |
+| Čeština              | cs |
+| Nederlands           | nl |
+| Slovenščina          | sl |
+| Türkçe               | tr |
+| ภาษาไทย              | th |
+| Ελληνικά             | gr |
+| Oʻzbek               | uz |
+| Romanian             | ro |
+| 한국어               | kr |
 
-</details>
-`,
+</details>`,
     categories: ['program-update'],
     features: {
         requireConfig: false,
@@ -297,34 +296,33 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
 <details>
   <summary>更多语言</summary>
 
-| Language             | ID  |
-| -------------------- | --- |
-| English              | en  |
-| 中文(简体)           | cn  |
-| 中文(繁體)           | tw  |
-| 日本語               | jp  |
-| Русский              | ru  |
-| Español              | es  |
-| Français             | fr  |
-| Deutsch              | de  |
-| Italiano             | it  |
-| Slovenčina           | sk  |
-| Українська           | uk  |
-| Беларуская           | be  |
-| Dansk                | da  |
-| Polski               | pl  |
-| Português Brasileiro | br  |
-| Čeština              | cs  |
-| Nederlands           | nl  |
-| Slovenščina          | sl  |
-| Türkçe               | tr  |
-| ภาษาไทย              | th  |
-| Ελληνικά             | gr  |
-| Oʻzbek               | uz  |
-| Romanian             | ro  |
-| 한국어               | kr  |
+| Language             | ID |
+| -------------------- | -- |
+| English              | en |
+| 中文 (简体)          | cn |
+| 中文 (繁體)          | tw |
+| 日本語               | jp |
+| Русский              | ru |
+| Español              | es |
+| Français             | fr |
+| Deutsch              | de |
+| Italiano             | it |
+| Slovenčina           | sk |
+| Українська           | uk |
+| Беларуская           | be |
+| Dansk                | da |
+| Polski               | pl |
+| Português Brasileiro | br |
+| Čeština              | cs |
+| Nederlands           | nl |
+| Slovenščina          | sl |
+| Türkçe               | tr |
+| ภาษาไทย              | th |
+| Ελληνικά             | gr |
+| Oʻzbek               | uz |
+| Romanian             | ro |
+| 한국어               | kr |
 
-</details>
-`,
+</details>`,
     },
 };

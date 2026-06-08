@@ -355,7 +355,7 @@ export const extractInitialData = ($: CheerioAPI): any => {
     const initialDataText = JSON.parse(
         $('script:contains("window.__INITIAL_DATA__")')
             .text()
-            .match(/window\.__INITIAL_DATA__\s*=\s*(.*);/)?.[1] ?? '"{}"'
+            .match(/window\.__INITIAL_DATA__\s*=\s*(\S.*)?;/)?.[1] ?? '"{}"'
     );
 
     return JSON.parse(initialDataText);

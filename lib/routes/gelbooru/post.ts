@@ -48,18 +48,17 @@ export const route: Route = {
     ],
     name: '标签查询',
     maintainers: ['magicFeirl'],
-    description: `
-- 默认查询: \`/gelbooru/post\` 功能等同查询 Gelbooru 网站最新的投稿
+    description: `- 默认查询: \`/gelbooru/post\` 功能等同查询 Gelbooru 网站最新的投稿
 - 单标签查询: \`/gelbooru/post/1girl\` 查询 \`1girl\` 的最新投稿
 - 多标签查询: \`/gelbooru/post/1girl school_uniform rating:general\`
 - 指定为原图: \`/gelbooru/post/1girl school_uniform rating:general/orig\`
-- 更多例子: 请参考 Gelbooru 官方 wiki https://gelbooru.com/index.php?page=wiki&s=&s=view&id=25921
+- 更多例子：请参考 Gelbooru 官方 wiki <https://gelbooru.com/index.php?page=wiki&s=&s=view&id=25921>
 
 **可选的 URL 参数**
-- limit 页面返回数据量，默认 40，可选 1 ~ 100
 
-e.g.: \`/gelbooru/post?limit=20&\`
-`,
+- limit 页面返回数据量，默认 40，可选 1 \\~ 100
+
+e.g.: \`/gelbooru/post?limit=20&\``,
     handler,
 };
 

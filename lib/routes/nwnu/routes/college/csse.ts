@@ -124,8 +124,7 @@ export const route: Route = {
             target: '/college/csse/:column',
         },
     ],
-    description: `
-| column | 标题       | 描述                                          |
+    description: `| column | 标题       | 描述                                          |
 | ------ | ---------- | --------------------------------------------- |
 | 2435   | 学院新闻   | 计算机科学与工程 学院新闻                     |
 | 2436   | 通知公告   | 计算机科学与工程 通知公告                     |

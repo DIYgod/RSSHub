@@ -52,7 +52,7 @@ async function handler(ctx) {
     const ytInitialData = JSON.parse(
         $('script')
             .text()
-            .match(/ytInitialData = ({.*?});/)?.[1] ?? '{}'
+            .match(/ytInitialData = (\{.*?\});/)?.[1] ?? '{}'
     );
 
     const channelMetadata = ytInitialData.metadata.channelMetadataRenderer;
@@ -76,7 +76,7 @@ async function handler(ctx) {
                 description: renderCommunityDescription(post.contentText.runs, media),
                 link: `https://www.youtube.com/post/${post.postId}`,
                 author: post.authorText.runs[0].text,
-                pubDate: parseRelativeDate(post.publishedTimeText.runs[0].text.split('(')[0]),
+                pubDate: parseRelativeDate(post.publishedTimeText.runs[0].text.split('(', 1)[0]),
             };
         });
 

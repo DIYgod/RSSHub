@@ -49,7 +49,7 @@ function getPeriodConfig(period) {
     }
     return {
         url: `${SUB_URL}most-view/`,
-        range: `all`,
+        range: 'all',
         title: `${SUB_NAME_PREFIX} - Most views`,
     };
 }

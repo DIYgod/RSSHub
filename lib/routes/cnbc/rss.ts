@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
     description: `Provides a better reading experience (full articles) over the official ones.
 
-  Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).`,
+Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).`,
 };
 
 async function handler(ctx) {

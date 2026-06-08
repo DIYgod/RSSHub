@@ -37,13 +37,13 @@ export const route: Route = {
     maintainers: ['axojhf', 'zhaoweizhong'],
     handler,
     url: 'www.lovelive-anime.jp/',
-    description: `| Sub-project Name | All Projects | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 蓮ノ空女学院 | イキヅライブ！ | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
-| -------------------------------- | -------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ------------ |  ------------ | ---------------------------------------- |
-| \`abbr\`parameter                  | <u>*No parameter*</u> | lovelive |     sunshine        | nijigasaki                                 | superstar              | hasunosora |  ikizulive  | yohane       | musical                                  |
+    description: `| Sub-project Name | All Projects          | Lovelive! | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 蓮ノ空女学院 | イキヅライブ！ | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+| ---------------- | --------------------- | --------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | -------------- | ------------ | ---------------------------------------- |
+| \`abbr\`parameter  | <u>*No parameter*</u> | lovelive  | sunshine             | nijigasaki                                 | superstar             | hasunosora   | ikizulive      | yohane       | musical                                  |
 
 | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | キャンペーン | その他 |
-| ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
-| \`category\`parameter | <u>*No parameter*</u> | music    | anime_movie   | cast_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | campaign  | other   |`,
+| ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------------ | ------ |
+| \`category\`parameter | <u>*No parameter*</u> | music    | anime\\_movie   | cast\\_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | campaign     | other  |`,
 };
 
 async function handler(ctx) {

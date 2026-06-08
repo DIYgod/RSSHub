@@ -33,10 +33,10 @@ export const route: Route = {
     handler,
     description: `For example:
 
-  -   默认查询 (什么 tag 都不加)：\`/booru/mmda/tags\`
-  -   默认查询单个 tag：\`/booru/mmda/tags/full_body\`
-  -   默认查询多个 tag：\`/booru/mmda/tags/full_body%20blue_eyes\`
-  -   默认查询根据作者查询：\`/booru/mmda/tags/user:xxxx\``,
+- 默认查询 (什么 tag 都不加)：\`/booru/mmda/tags\`
+- 默认查询单个 tag：\`/booru/mmda/tags/full_body\`
+- 默认查询多个 tag：\`/booru/mmda/tags/full_body%20blue_eyes\`
+- 默认查询根据作者查询：\`/booru/mmda/tags/user:xxxx\``,
 };
 
 async function handler(ctx) {
@@ -95,7 +95,7 @@ async function handler(ctx) {
                 statisticsTages.find('li, br, strong').remove();
                 const statisticsStr = statisticsTages.text();
 
-                const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/gm;
+                const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/g;
                 const result = {};
                 for (const match of statisticsStr.matchAll(regex)) {
                     const { key, value } = match.groups ?? ({} as { key: string; value: string });

@@ -36,7 +36,7 @@ export async function handler(ctx) {
     const response = await ofetch(link);
 
     if (response.statusCode !== 200) {
-        throw new InvalidParameterError(`无效序列号, 请检查你的序列号是否正确.`);
+        throw new InvalidParameterError('无效序列号, 请检查你的序列号是否正确.');
     }
 
     const driveList = response.data.partList.flatMap((part) => part.drivelist);

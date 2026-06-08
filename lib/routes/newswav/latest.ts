@@ -30,7 +30,7 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://newswav.com';
 
-    const response = await ofetch(`https://feed-api.newswav.com/api/web/feeds/latest`, {
+    const response = await ofetch('https://feed-api.newswav.com/api/web/feeds/latest', {
         query: {
             languages: 'en,ms,zh',
         },

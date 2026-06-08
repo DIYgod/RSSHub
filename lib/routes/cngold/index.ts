@@ -80,7 +80,7 @@ export const route: Route = {
     example: '/cngold/news-325',
     parameters: { category: '分类，默认为 `news-325`，即行业资讯，可在对应分类页 URL 中找到, Category, `news-325`，即行业资讯by default' },
     description: `::: tip
-  若订阅 [行业资讯](https://www.cngold.org.cn/news-325.html)，网址为 \`https://www.cngold.org.cn/news-325.html\`。截取 \`https://www.cngold.org.cn/\` 到末尾 \`.html\` 的部分 \`news-325\` 作为参数填入，此时路由为 [\`/cngold/news-325\`](https://rsshub.app/cngold/news-325)。
+若订阅 [行业资讯](https://www.cngold.org.cn/news-325.html)，网址为 \`https://www.cngold.org.cn/news-325.html\`。截取 \`https://www.cngold.org.cn/\` 到末尾 \`.html\` 的部分 \`news-325\` 作为参数填入，此时路由为 [\`/cngold/news-325\`](https://rsshub.app/cngold/news-325)。
 :::
 
 #### 资讯中心
@@ -104,9 +104,9 @@ export const route: Route = {
 
 #### [行业培训](https://www.cngold.org.cn/training.html)
 
-| [黄金投资分析师](https://www.cngold.org.cn/training-242.html) | [教育部1+X](https://www.cngold.org.cn/training-246.html) | [矿业权评估师](https://www.cngold.org.cn/training-338.html) | [其他培训](https://www.cngold.org.cn/training-247.html) |
-| ------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
-| [training-242](https://rsshub.app/cngold/training-242)        | [training-246](https://rsshub.app/cngold/training-246)   | [training-338](https://rsshub.app/cngold/training-338)      | [training-247](https://rsshub.app/cngold/training-247)  |
+| [黄金投资分析师](https://www.cngold.org.cn/training-242.html) | [教育部 1+X](https://www.cngold.org.cn/training-246.html) | [矿业权评估师](https://www.cngold.org.cn/training-338.html) | [其他培训](https://www.cngold.org.cn/training-247.html) |
+| ------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
+| [training-242](https://rsshub.app/cngold/training-242)        | [training-246](https://rsshub.app/cngold/training-246)    | [training-338](https://rsshub.app/cngold/training-338)      | [training-247](https://rsshub.app/cngold/training-247)  |
 
 #### [黄金科技](https://www.cngold.org.cn/technology.html)
 
@@ -114,8 +114,7 @@ export const route: Route = {
 | ------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
 | [technology-318](https://rsshub.app/cngold/technology-318)          | [technology-319](https://rsshub.app/cngold/technology-319)    | [technology-320](https://rsshub.app/cngold/technology-320)  | [technology-350](https://rsshub.app/cngold/technology-350)    |
 
-</details>
-    `,
+</details>`,
     categories: ['new-media'],
 
     features: {

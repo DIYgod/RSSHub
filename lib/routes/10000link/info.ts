@@ -214,8 +214,7 @@ export const route: Route = {
 
 | 政策          | 规划          | 案例           | 职场         | 供应链票据 |
 | ------------- | ------------- | -------------- | ------------ | ---------- |
-| newslists/A03 | newslists/A04 | newslists/GL03 | newslists/ZC | newsBill   |
-`,
+| newslists/A03 | newslists/A04 | newslists/GL03 | newslists/ZC | newsBill   |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

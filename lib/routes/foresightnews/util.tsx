@@ -80,7 +80,7 @@ const processItems = async (apiUrl, limit, ...parameters) => {
                     ) : null}
                     {item.img ? (
                         <figure>
-                            <img src={item.img.split('?')[0]} />
+                            <img src={item.img.split('?', 1)[0]} />
                         </figure>
                     ) : null}
                 </>

@@ -68,31 +68,31 @@ export const route: Route = {
 ##### \`f_WT\` list
 
 | Onsite | Remote | Hybrid |
-| ------ | ------- | ------ |
-|    1   |    2    |   3    |
+| ------ | ------ | ------ |
+| 1      | 2      | 3      |
 
 ##### \`geoId\`
 
-  Geographic location ID. You can find this ID in the URL of a LinkedIn job search page that is filtered by location.
+Geographic location ID. You can find this ID in the URL of a LinkedIn job search page that is filtered by location.
 
-  For example:
-  91000012 is the ID of East Asia.
+For example:
+91000012 is the ID of East Asia.
 
 ##### \`f_TPR\`
 
-  Time posted range. Here are some possible values:
+Time posted range. Here are some possible values:
 
-  *   \`r86400\`: Past 24 hours
-  *   \`r604800\`: Past week
-  *   \`r2592000\`: Past month
+- \`r86400\`: Past 24 hours
+- \`r604800\`: Past week
+- \`r2592000\`: Past month
 
-  For example:
+For example:
 
-  1.  If we want to search software engineer jobs of all levels and all job types, use \`/linkedin/jobs/all/all/software engineer\`
-  2.  If we want to search all entry level contractor/part time software engineer jobs, use \`/linkedin/jobs/P-C/2/software engineer\`
-  3.  If we want to search remote mid-senior level software engineer jobs in APAC posted within the last month, use \`/linkedin/jobs/F/4/software%20engineer/f_WT=2&geoId=91000003&f_TPR=r2592000\`
+1. If we want to search software engineer jobs of all levels and all job types, use \`/linkedin/jobs/all/all/software engineer\`
+2. If we want to search all entry level contractor/part time software engineer jobs, use \`/linkedin/jobs/P-C/2/software engineer\`
+3. If we want to search remote mid-senior level software engineer jobs in APAC posted within the last month, use \`/linkedin/jobs/F/4/software%20engineer/f_WT=2&geoId=91000003&f_TPR=r2592000\`
 
-  **To make it easier, the recommended way is to start a search on [LinkedIn](https://www.linkedin.com/jobs/search) and use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) to load the specific feed.**`,
+**To make it easier, the recommended way is to start a search on [LinkedIn](https://www.linkedin.com/jobs/search) and use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) to load the specific feed.**`,
 };
 
 async function handler(ctx) {

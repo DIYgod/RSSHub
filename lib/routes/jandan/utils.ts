@@ -20,7 +20,7 @@ export const extractPageId = async (url: string, referer: string): Promise<strin
 
     $('script').each((_, script) => {
         const content = $(script).html() || '';
-        const match = content.match(/PAGE\s*=\s*{\s*id\s*:\s*(\d+)\s*}/);
+        const match = content.match(/PAGE\s*=\s*\{\s*id\s*:\s*(\d+)\s*\}/);
         if (match) {
             pageId = match[1];
         }
@@ -148,7 +148,7 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
             title,
             items: [
                 {
-                    title: `解析错误: 鱼塘`,
+                    title: '解析错误: 鱼塘',
                     description: `解析鱼塘页面时出错: ${error instanceof Error ? error.message : String(error)}`,
                     link: currentUrl,
                     pubDate: new Date(),

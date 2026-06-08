@@ -86,12 +86,12 @@ const READABLE_CATEGORIES = {
 async function handler(ctx) {
     const category = ctx.req.param('category');
 
-    const subDomain = SUB_DOMAIN_MAP[category];
-    if (!subDomain) {
+    const subdomain = SUB_DOMAIN_MAP[category];
+    if (!subdomain) {
         throw new Error('未知的金属类型');
     }
 
-    const url = `https://${subDomain}`;
+    const url = `https://${subdomain}`;
 
     const response = await got({
         method: 'get',

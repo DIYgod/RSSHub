@@ -148,8 +148,7 @@ export const route: Route = {
 :::
 
 | newslist | r18list |
-| -------- | ------- |
-`,
+| -------- | ------- |`,
     categories: ['game'],
     features: {
         requireConfig: false,
@@ -190,7 +189,6 @@ export const route: Route = {
 :::
 
 | newslist | r18list |
-| -------- | ------- |
-`,
+| -------- | ------- |`,
     },
 };

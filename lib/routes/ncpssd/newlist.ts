@@ -37,7 +37,7 @@ async function handler() {
         const title = $(p)
             .find('a')
             .text()
-            .replaceAll(/(\r\n|\n|\r)/gm, '')
+            .replaceAll(/(\r\n|\n|\r)/g, '')
             .trim();
         const articleUrl =
             baseUrl +

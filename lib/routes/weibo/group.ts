@@ -32,11 +32,11 @@ export const route: Route = {
     maintainers: ['monologconnor', 'Rongronggg9'],
     handler,
     description: `::: warning
-  由于微博官方未提供自定义分组相关 api, 此方案必须使用用户\`Cookie\`进行抓取
+由于微博官方未提供自定义分组相关 api, 此方案必须使用用户\`Cookie\`进行抓取
 
-  因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
+因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
 
-  微博用户 Cookie 的配置可参照部署文档
+微博用户 Cookie 的配置可参照部署文档
 :::`,
 };
 
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 method: 'get',
                 url: `https://m.weibo.cn/feed/group?gid=${gid}`,
                 headers: {
-                    Referer: `https://m.weibo.cn/`,
+                    Referer: 'https://m.weibo.cn/',
                     Cookie: config.weibo.cookies,
                     ...weiboUtils.apiHeaders,
                 },

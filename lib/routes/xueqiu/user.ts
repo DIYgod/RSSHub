@@ -4,7 +4,7 @@ import { parseToken } from '@/routes/xueqiu/cookies';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -50,9 +50,9 @@ async function handler(ctx) {
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
 
-    const browser = await puppeteer();
+    const context = await playwright();
     try {
-        const mainPage = await browser.newPage();
+        const mainPage = await context.newPage();
 
         await mainPage.setExtraHTTPHeaders({
             Cookie: token as string,
@@ -92,7 +92,7 @@ async function handler(ctx) {
 
                         const content = await mainPage.evaluate(() => {
                             const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
-                            const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?});/);
+                            const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?\});/);
                             return {
                                 articleContent,
                                 statusData: statusMatch ? statusMatch[1] : null,
@@ -161,6 +161,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await browser.close();
+        await context.close();
     }
 }

@@ -29,7 +29,6 @@ export const route: Route = {
 You may need to setup cookie for a less restrictive rate limit and private profiles.
 :::
 
-
 | User timeline | Hashtag |
 | ------------- | ------- |
 | user          | tags    |`,

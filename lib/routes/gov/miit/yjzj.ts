@@ -35,7 +35,7 @@ async function handler() {
     const url = `${rootUrl}/gzcy/yjzj/index.html`;
 
     const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';')[0];
+    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
     const indexContent = load(cookieResponse.data);
     const dataRequestUrl = indexContent('div.clist_con > script:nth-child(2)')
         .toArray()
@@ -71,7 +71,7 @@ async function handler() {
 
                 item.description = content('#con_con')
                     .html()
-                    ?.replaceAll(/(<iframe.*?src=")(.*?)(".*?>)/g, '$1' + rootUrl + '$2$3');
+                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, '$1' + rootUrl + '$2$3');
 
                 return item;
             })
@@ -79,7 +79,7 @@ async function handler() {
     );
 
     return {
-        title: `工业和信息化部 - 意见征集`,
+        title: '工业和信息化部 - 意见征集',
         link: url,
         item: items,
     };

@@ -43,7 +43,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const advance = ctx.req.param('advance');
-    const link = `http://sousuo.gov.cn/list.htm`;
+    const link = 'http://sousuo.gov.cn/list.htm';
     const params = new URLSearchParams({
         n: 20,
         t: 'govall',
@@ -52,7 +52,7 @@ async function handler(ctx) {
     });
     const query = `${params.toString()}&${advance}`;
     const res = await got.get(link, {
-        searchParams: query.replaceAll(/([\u4E00-\u9FA5])/g, (str) => encodeURIComponent(str)),
+        searchParams: query.replaceAll(/[\u4E00-\u9FA5]/g, (str) => encodeURIComponent(str)),
     });
     const $ = load(res.data);
 

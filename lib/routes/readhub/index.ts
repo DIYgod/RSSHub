@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
     description: `| 热门话题 | 科技动态 | 医疗产业 | 财经快讯           |
 | -------- | -------- | -------- | ------------------ |
-|          | news     | medical  | financial_express |`,
+|          | news     | medical  | financial\\_express |`,
 };
 
 async function handler(ctx) {
@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const { data: currentResponse } = await got(currentUrl);
 
-    const type = currentResponse.match(/\[\\"type\\",\\"(\d+)\\",\\"d\\"]/)?.[1] ?? '1';
+    const type = currentResponse.match(/\[\\"type\\",\\"(\d+)\\",\\"d\\"\]/)?.[1] ?? '1';
 
     const { data: response } = await got(apiTopicUrl, {
         searchParams: {

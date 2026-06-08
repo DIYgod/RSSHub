@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data } = await got(`https://civitai.com/api/v1/models`, {
+    const { data } = await got('https://civitai.com/api/v1/models', {
         searchParams: {
             limit: 20,
             sort: 'Newest',
@@ -45,8 +45,8 @@ async function handler() {
     }));
 
     return {
-        title: `Civitai latest models`,
-        link: `https://civitai.com/`,
+        title: 'Civitai latest models',
+        link: 'https://civitai.com/',
         item: items,
     };
 }

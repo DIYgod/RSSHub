@@ -120,7 +120,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const link = `https://www.jiuyangongshe.com`;
+    const link = 'https://www.jiuyangongshe.com';
 
     const time = String(Date.now());
     const response = await ofetch<Community>('https://app.jiuyangongshe.com/jystock-app/api/v2/article/community', {

@@ -101,7 +101,7 @@ export const route: Route = {
         {
             title: '全国通信专业技术人员职业水平考试动态',
             source: ['www.txks.org.cn/index/work', 'www.txks.org.cn'],
-            target: `/news`,
+            target: '/news',
         },
     ],
     example: '/txks/news',

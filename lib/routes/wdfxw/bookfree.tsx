@@ -323,13 +323,12 @@ export const route: Route = {
 | [标准汇编](https://www.wdfxw.net/bookfree-00029.html)                     | [00029](https://rsshub.app/wdfxw/bookfree/00029)     |
 | [其他](https://www.wdfxw.net/bookfree-00030.html)                         | [00030](https://rsshub.app/wdfxw/bookfree/00030)     |
 | [职业资格考试](https://www.wdfxw.net/bookfree-00031.html)                 | [00031](https://rsshub.app/wdfxw/bookfree/00031)     |
-| [股票证券行业研究报告(研报）](https://www.wdfxw.net/bookfree-00032.html)  | [00032](https://rsshub.app/wdfxw/bookfree/00032)     |
+| [股票证券行业研究报告 (研报）](https://www.wdfxw.net/bookfree-00032.html) | [00032](https://rsshub.app/wdfxw/bookfree/00032)     |
 | [基金申请](https://www.wdfxw.net/bookfree-00033.html)                     | [00033](https://rsshub.app/wdfxw/bookfree/00033)     |
 | [教师资格证考试资料](https://www.wdfxw.net/bookfree-00034.html)           | [00034](https://rsshub.app/wdfxw/bookfree/00034)     |
 | [专利说明书](https://www.wdfxw.net/bookfree-00035.html)                   | [00035](https://rsshub.app/wdfxw/bookfree/00035)     |
 
-</details>
-`,
+</details>`,
     categories: ['reading'],
     features: {
         requireConfig: false,

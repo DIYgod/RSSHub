@@ -47,14 +47,14 @@ async function handler() {
             const title = item.text();
 
             let description = '';
-            item.nextUntil('h4').each(function () {
-                description += $(this).html();
+            item.nextUntil('h4').each((_, el) => {
+                description += $(el).html();
             });
             if (description === '') {
                 item.parent()
                     .nextUntil('h4')
-                    .each(function () {
-                        description += $(this).html();
+                    .each((_, el) => {
+                        description += $(el).html();
                     });
             }
 

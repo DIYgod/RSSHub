@@ -298,6 +298,26 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     return gridEntries || moduleItems || entries || [];
 };
 
+const getLegacyUser = (tweet: any) => tweet.core?.user_result?.result?.legacy || tweet.core?.user_results?.result?.legacy;
+
+const getCoreUser = (tweet: any) => tweet.core?.user_result?.result?.core || tweet.core?.user_results?.result?.core;
+
+const hydrateLegacyUser = (legacy: any, tweet: any) => {
+    legacy.user = getLegacyUser(tweet);
+
+    const coreUser = getCoreUser(tweet);
+    if (!legacy.user || !coreUser) {
+        return;
+    }
+
+    if (coreUser.name) {
+        legacy.user.name = coreUser.name;
+    }
+    if (coreUser.screen_name) {
+        legacy.user.screen_name = coreUser.screen_name;
+    }
+};
+
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
     const tweets: any[] = [];
     const filteredEntries: any[] = [];
@@ -318,6 +338,28 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         if (entry.entryId) {
             const content = entry.content || entry.item;
             let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
+            if (tweet?.__typename === 'TweetPreviewDisplay') {
+                const preview = tweet.tweet;
+                if (preview?.rest_id) {
+                    const userResult = preview.core?.user_results?.result;
+                    const fakeLegacy: any = {
+                        id_str: preview.rest_id,
+                        full_text: `[Subscribers Only] ${preview.text ?? ''}`,
+                        created_at: preview.created_at ?? '',
+                        entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
+                        user_id_str: userResult?.rest_id ?? '',
+                        favorite_count: preview.favorite_count ?? 0,
+                        reply_count: preview.reply_count ?? 0,
+                        retweet_count: preview.retweet_count ?? 0,
+                    };
+                    hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
+                    if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
+                        tweets.push(fakeLegacy);
+                    }
+                }
+                continue;
+            }
             if (tweet && tweet.tweet) {
                 tweet = tweet.tweet;
             }
@@ -327,32 +369,12 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                     if (!t?.legacy) {
                         continue;
                     }
-                    t.legacy.user = t.core?.user_result?.result?.legacy || t.core?.user_results?.result?.legacy;
-                    // Add name and screen_name from core to maintain compatibility
-                    if (t.legacy.user && t.core?.user_results?.result?.core) {
-                        const coreUser = t.core.user_results.result.core;
-                        if (coreUser.name) {
-                            t.legacy.user.name = coreUser.name;
-                        }
-                        if (coreUser.screen_name) {
-                            t.legacy.user.screen_name = coreUser.screen_name;
-                        }
-                    }
+                    hydrateLegacyUser(t.legacy, t);
                     t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
                     const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
-                    if (quote) {
+                    if (quote?.legacy) {
                         t.legacy.quoted_status = quote.legacy;
-                        t.legacy.quoted_status.user = quote.core.user_result?.result?.legacy || quote.core.user_results?.result?.legacy;
-                        // Add name and screen_name from core for quoted status user
-                        if (t.legacy.quoted_status.user && quote.core?.user_results?.result?.core) {
-                            const quoteCoreUser = quote.core.user_results.result.core;
-                            if (quoteCoreUser.name) {
-                                t.legacy.quoted_status.user.name = quoteCoreUser.name;
-                            }
-                            if (quoteCoreUser.screen_name) {
-                                t.legacy.quoted_status.user.screen_name = quoteCoreUser.screen_name;
-                            }
-                        }
+                        hydrateLegacyUser(t.legacy.quoted_status, quote);
                     }
                     if (t.note_tweet) {
                         const tmp = t.note_tweet.note_tweet_results.result;

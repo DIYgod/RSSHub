@@ -23,10 +23,10 @@ async function handler(ctx) {
     const title = $('a.bt_link').last().text().replace('>', '');
     const dataJs = $('div.left.zhengce_right > script[language="javascript"]').html() || $('div.centent_width > script[language="javascript"]').html();
     let items = dataJs
-        .match(/urls\[i]='(.*?)';headers\[i]="(.*?)";year\[i]='(\d+)';month\[i]='(\d+)';day\[i]='(\d+)';/g)
+        .match(/urls\[i\]='(.*?)';headers\[i\]="(.*?)";year\[i\]='(\d+)';month\[i\]='(\d+)';day\[i\]='(\d+)';/g)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .map((item) => {
-            const result = item.match(/urls\[i]='(.*?)';headers\[i]="(.*?)";year\[i]='(\d+)';month\[i]='(\d+)';day\[i]='(\d+)';/);
+            const result = item.match(/urls\[i\]='(.*?)';headers\[i\]="(.*?)";year\[i\]='(\d+)';month\[i\]='(\d+)';day\[i\]='(\d+)';/);
             return {
                 title: load(result[2])('a').attr('title') || result[2],
                 link: new URL(result[1], rootUrl).href,

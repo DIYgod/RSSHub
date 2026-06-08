@@ -21,8 +21,7 @@ export const route: Route = {
             target: '/zhibo',
         },
     ],
-    description: `
-#### 板块
+    description: `#### 板块
 
 | 电脑     | 手机     | 汽车     | 业界     | 游戏     |
 | -------- | -------- | -------- | -------- | -------- |
@@ -46,8 +45,7 @@ export const route: Route = {
 
 | 蔚来      | 理想       | 奔驰     | 宝马     | 大众     |
 | --------- | ---------- | -------- | -------- | -------- |
-| icid/7318 | icid/12947 | icid/429 | icid/461 | icid/481 |
-`,
+| icid/7318 | icid/12947 | icid/429 | icid/461 | icid/481 |`,
 };
 
 async function handler(ctx) {
@@ -55,7 +53,7 @@ async function handler(ctx) {
 
     let newTitle = '';
 
-    if (!/^(\w+\/\w+)$/.test(category)) {
+    if (!/^\w+\/\w+$/.test(category)) {
         newTitle = `${title} - ${Object.hasOwn(categories, category) ? categories[category] : categories[Object.keys(categories)[0]]}`;
         category = `ac/${category}`;
     }

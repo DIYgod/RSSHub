@@ -100,8 +100,8 @@ async function handler(ctx) {
     }));
 
     return {
-        title: `Bestblogs.dev`,
-        link: `https://www.bestblogs.dev/feeds`,
+        title: 'Bestblogs.dev',
+        link: 'https://www.bestblogs.dev/feeds',
         item: items,
     };
 }

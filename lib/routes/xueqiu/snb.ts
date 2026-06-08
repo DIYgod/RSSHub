@@ -35,7 +35,7 @@ async function handler(ctx) {
     });
 
     const data = response.data;
-    const pattern = /SNB.cubeInfo = {(.+)}/;
+    const pattern = /SNB.cubeInfo = \{(.+)\}/;
     const info = pattern.exec(data);
     const obj = JSON.parse('{' + info[1] + '}');
     const rebalancing_histories = obj.sell_rebalancing.rebalancing_histories;

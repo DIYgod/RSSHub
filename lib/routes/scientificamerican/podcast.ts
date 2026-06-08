@@ -209,8 +209,7 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
 
 | All | Science Quickly | Uncertain    |
 | --- | --------------- | ------------ |
-|     | science-quickly | science-talk |
-`,
+|     | science-quickly | science-talk |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -259,7 +258,6 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
 
 | 全部 | Science Quickly | Uncertain    |
 | ---- | --------------- | ------------ |
-|      | science-quickly | science-talk |
-`,
+|      | science-quickly | science-talk |`,
     },
 };

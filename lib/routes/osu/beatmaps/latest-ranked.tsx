@@ -343,7 +343,7 @@ async function handler(ctx): Promise<Data> {
         );
 
         return {
-            title: `${modeInTitle === 'true' ? `[${modeLiteralToDisplayNameMap[beatmapset.beatmaps[0].mode]}] ` : ``}${beatmapset.title_unicode ?? beatmapset.title}`,
+            title: `${modeInTitle === 'true' ? `[${modeLiteralToDisplayNameMap[beatmapset.beatmaps[0].mode]}] ` : ''}${beatmapset.title_unicode ?? beatmapset.title}`,
             description,
             pubDate,
             link: `https://osu.ppy.sh/beatmapsets/${beatmapset.id}`,

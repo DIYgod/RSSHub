@@ -78,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('div.header img').attr('arc') ? new URL($('div.header img').attr('arc') as string, baseUrl).href : undefined,
-        author: title.split(/-/)[0],
+        author: title.split(/-/, 1)[0],
         language,
         id: targetUrl,
     };

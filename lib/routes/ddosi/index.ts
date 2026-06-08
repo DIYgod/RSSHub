@@ -50,7 +50,7 @@ async function handler() {
     });
 
     return {
-        title: `雨苁`,
+        title: '雨苁',
         link: String(url),
         item: items,
     };

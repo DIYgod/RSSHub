@@ -112,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         .filter((_, el) => $$(el).text().includes('时间'))
                         .next()
                         .text()
-                        ?.split('至')[0]
+                        ?.split('至', 1)[0]
                         ?.trim();
                     const linkUrl: string | undefined = $$('val[data-name="weixinUrl"]').attr('data-value');
                     const categories: string[] = [...(item.category ?? []), $$('div.cost span.c').text()].filter(Boolean);
@@ -203,8 +203,7 @@ export const route: Route = {
 
 | 强力推荐  | 最新活动 |
 | --------- | -------- |
-| recommend | latest   |
-`,
+| recommend | latest   |`,
     categories: ['programming'],
     features: {
         requireConfig: false,

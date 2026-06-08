@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['sheetung'],
     handler,
     url: 'jyt.guizhou.gov.cn/zwgk/tzgg/',
-    description: '贵州省教育厅官方网站通知公告RSS源',
+    description: '贵州省教育厅官方网站通知公告 RSS 源',
 };
 
 async function handler(ctx) {

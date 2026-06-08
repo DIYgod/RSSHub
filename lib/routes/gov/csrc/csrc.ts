@@ -86,7 +86,7 @@ export const route: Route = {
     example: '/gov/csrc/zfxxgk_zdgk/c101971',
     parameters: { id: '频道 id，默认为 `c101971`，即行政处罚决定，可在对应频道页 URL 中找到' },
     description: `::: tip
-  若订阅 [行政处罚决定](http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml)，网址为 \`http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml\`。截取 \`http://www.csrc.gov.cn/csrc/\` 到末尾 \`/zfxxgk_zdgk.shtml\` 的部分 \`c101971\` 作为参数填入，此时路由为 [\`/gov/csrc/zfxxgk_zdgk/c101971\`](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101971)。
+若订阅 [行政处罚决定](http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml)，网址为 \`http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml\`。截取 \`http://www.csrc.gov.cn/csrc/\` 到末尾 \`/zfxxgk_zdgk.shtml\` 的部分 \`c101971\` 作为参数填入，此时路由为 [\`/gov/csrc/zfxxgk_zdgk/c101971\`](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101971)。
 :::
 
 #### [主动公开目录](http://www.csrc.gov.cn/csrc/c100035/zfxxgk_zdgk.shtml)
@@ -200,8 +200,7 @@ export const route: Route = {
 | [其他](http://www.csrc.gov.cn/csrc/c101799/zfxxgk_zdgk.shtml)                           | [c101799](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101799) |
 | [全国人大建议和政协提案复文公开](http://www.csrc.gov.cn/csrc/c101800/zfxxgk_zdgk.shtml) | [c101800](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101800) |
 
-</details>
-    `,
+</details>`,
     categories: ['government'],
 
     features: {

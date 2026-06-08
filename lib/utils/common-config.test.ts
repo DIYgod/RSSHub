@@ -43,7 +43,7 @@ describe('index', () => {
         const data = await configUtils({
             link: 'http://rsshub.test/buildData',
             url: 'http://rsshub.test/buildData',
-            title: `%title%`,
+            title: '%title%',
             params: {
                 title: 'buildData',
             },

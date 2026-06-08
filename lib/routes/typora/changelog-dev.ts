@@ -50,7 +50,7 @@ async function handler() {
         });
 
     return {
-        title: `Typora Changelog - Dev`,
+        title: 'Typora Changelog - Dev',
         link: currentUrl,
         description: 'Typora Changelog',
         item: items,

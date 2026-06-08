@@ -14,7 +14,7 @@ export const route: Route = {
     path: '/pkgs/:name/:routeParams?',
     parameters: { name: 'Packages name', routeParams: 'Filters of packages type. E.g. branch=edge&repo=main&arch=armv7&maintainer=Jakub%20Jirutka' },
     example: '/alpinelinux/pkgs/nodejs',
-    description: `Alpine Linux packages update`,
+    description: 'Alpine Linux packages update',
     handler,
     radar: [
         {

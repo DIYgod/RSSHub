@@ -50,15 +50,15 @@ const getInfoContent = (rootUrl, item) =>
                     name: $(item).text(),
                     url: `${rootUrl}/${$(item).attr('href')}`,
                 }));
-            const rawDate = $('#attribute > span:nth-child(3)').text().split('：')[1].trim();
+            const rawDate = $('#attribute > span:nth-child(3)').text().split('：', 2)[1].trim();
             return {
                 title: $('h1').text().trim(),
-                id: $('#attribute > span:nth-child(1)').text().split('：')[1].trim(),
-                infoNum: $('#attribute > span:nth-child(2)').text().split('：')[1].trim(),
+                id: $('#attribute > span:nth-child(1)').text().split('：', 2)[1].trim(),
+                infoNum: $('#attribute > span:nth-child(2)').text().split('：', 2)[1].trim(),
                 pubDate: parseDate(timezone(rawDate, +8)),
                 date: rawDate,
-                keyWord: $('#attribute > span:nth-child(6)').text().split('：')[1].trim(),
-                source: $('#attribute > span:nth-child(5)').text().split('：')[1].trim(),
+                keyWord: $('#attribute > span:nth-child(6)').text().split('：', 2)[1].trim(),
+                source: $('#attribute > span:nth-child(5)').text().split('：', 2)[1].trim(),
                 content: $('body > section > article').html(),
                 file: fileList,
                 link: item.url,

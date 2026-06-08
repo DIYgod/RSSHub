@@ -131,7 +131,6 @@ To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/s
         },
         description: `::: tip
 若订阅 [传染病发生动向调查周报](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/)，网址为 \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/\`，请截取 \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/\` 到末尾 \`/\` 的部分 \`2025\` 作为 \`year\` 参数填入，此时目标路由为 [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025)。
-:::
-`,
+:::`,
     },
 };

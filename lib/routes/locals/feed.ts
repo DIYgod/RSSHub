@@ -239,8 +239,8 @@ function extractCommunityInfo(html: string, community: string) {
         description: descriptionMatch?.[1],
         design: {
             image: {
-                big: imageMatch?.[1] || undefined,
-                thumb: imageMatch?.[2] || undefined,
+                big: imageMatch?.[1],
+                thumb: imageMatch?.[2],
             },
         },
         hashtag: community,

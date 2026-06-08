@@ -186,11 +186,9 @@ export const route: Route = {
     name: 'Channel Media',
     maintainers: ['synchrone'],
     handler,
-    description: `
-::: tip
-  Serves telegram media like pictures, video or files.
-:::
-`,
+    description: `::: tip
+Serves telegram media like pictures, video or files.
+:::`,
 };
 
 export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramClient, ctx: Context) {

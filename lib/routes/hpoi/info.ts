@@ -40,12 +40,12 @@ export const route: Route = {
     name: '情报',
     maintainers: ['sanmmm DIYgod'],
     description: `::: tip
-  情报类型中的*手办*、*模型*只是为了兼容, 实际效果等同于**全部**, 如果只需要**手办**类型的情报, 可以使用参数*catType*, e.g. /hpoi/info/all/hobby
+情报类型中的*手办*、*模型*只是为了兼容，实际效果等同于**全部**, 如果只需要**手办**类型的情报，可以使用参数*catType*, e.g. /hpoi/info/all/hobby
 :::
 
-|  手办   | 动漫模型 | 真实模型 | 毛绒布偶 | doll娃娃 | GK/其他 |
-| ------ | ------- | ------- | ------- | ------- | ------ |
-| hobby  |  model  |  real   | moppet  |  doll   | gkdiy  |`,
+| 手办  | 动漫模型 | 真实模型 | 毛绒布偶 | doll 娃娃 | GK / 其他 |
+| ----- | -------- | -------- | -------- | --------- | --------- |
+| hobby | model    | real     | moppet   | doll      | gkdiy     |`,
     handler,
 };
 

@@ -135,91 +135,93 @@ async function handler(ctx) {
         } = await ofetch(graphqlUrl, {
             method: 'POST',
             body: {
-                query: `query CommunityQuery($id: ID, $slug: String) {
-  community(where: { _id_EQ: $id, slug_EQ: $slug }) {
-    ...CommunityFragment
-    topContributors {
-      account {
-        _id
-        avatarUrl
-        avatarImage {
-          ...ImageFragment
-        }
-        username
-      }
-      score
-    }
-    topGemFinders {
-      account {
-        _id
-        avatarUrl
-        avatarImage {
-          ...ImageFragment
-        }
-        username
-      }
-      score
-    }
-  }
-}
-fragment AuthorFragment on Account {
-  _id
-  username
-  avatarUrl
-  avatarImage {
-    ...ImageFragment
-  }
-  badges {
-    name
-    iconUrl
-  }
-  blockStatus
-  roles {
-    name
-    iconUrl
-  }
-}
-fragment CommunityFragment on Community {
-  _id
-  name
-  slug
-  description
-  iconUrl
-  guidelinesPM
-  descriptionPM
-  iconImage {
-    ...ImageFragment
-  }
-  bannerUrl
-  bannerDesktopImage {
-    ...ImageFragment
-  }
-  bannerMobileImage {
-    ...ImageFragment
-  }
-  founder {
-    ...AuthorFragment
-    bio
-  }
-  manager {
-    ...AuthorFragment
-  }
-  memberCount
-  postCount
-  isJoinedByAccount
-  isPinnedByAccount
-  isJoinedByDefault
-  createdDate
-  editedDate
-  deletedDate
-}
-fragment ImageFragment on Image {
-  alt
-  height
-  width
-  url
-  blurhash
-}`,
+                query: /* GraphQL */ `
+                    query CommunityQuery($id: ID, $slug: String) {
+                        community(where: { _id_EQ: $id, slug_EQ: $slug }) {
+                            ...CommunityFragment
+                            topContributors {
+                                account {
+                                    _id
+                                    avatarUrl
+                                    avatarImage {
+                                        ...ImageFragment
+                                    }
+                                    username
+                                }
+                                score
+                            }
+                            topGemFinders {
+                                account {
+                                    _id
+                                    avatarUrl
+                                    avatarImage {
+                                        ...ImageFragment
+                                    }
+                                    username
+                                }
+                                score
+                            }
+                        }
+                    }
+                    fragment AuthorFragment on Account {
+                        _id
+                        username
+                        avatarUrl
+                        avatarImage {
+                            ...ImageFragment
+                        }
+                        badges {
+                            name
+                            iconUrl
+                        }
+                        blockStatus
+                        roles {
+                            name
+                            iconUrl
+                        }
+                    }
+                    fragment CommunityFragment on Community {
+                        _id
+                        name
+                        slug
+                        description
+                        iconUrl
+                        guidelinesPM
+                        descriptionPM
+                        iconImage {
+                            ...ImageFragment
+                        }
+                        bannerUrl
+                        bannerDesktopImage {
+                            ...ImageFragment
+                        }
+                        bannerMobileImage {
+                            ...ImageFragment
+                        }
+                        founder {
+                            ...AuthorFragment
+                            bio
+                        }
+                        manager {
+                            ...AuthorFragment
+                        }
+                        memberCount
+                        postCount
+                        isJoinedByAccount
+                        isPinnedByAccount
+                        isJoinedByDefault
+                        createdDate
+                        editedDate
+                        deletedDate
+                    }
+                    fragment ImageFragment on Image {
+                        alt
+                        height
+                        width
+                        url
+                        blurhash
+                    }
+                `,
                 variables: { slug: community },
             },
         });
@@ -232,148 +234,145 @@ fragment ImageFragment on Image {
     } = await ofetch(graphqlUrl, {
         method: 'POST',
         body: {
-            query: `query PostsQuery(
-  $first: Int
-  $after: String
-  $where: PostWhere
-  $sort: PostSort
-) {
-  posts(first: $first, after: $after, where: $where, sort: $sort) {
-    edges {
-      node {
-        ...PostsNodeFragment
-      }
-    }
-    pageInfo {
-      ...PageInfoFragment
-    }
-  }
-}
-fragment AuthorFragment on Account {
-  _id
-  username
-  avatarUrl
-  avatarImage {
-    ...ImageFragment
-  }
-  badges {
-    name
-    iconUrl
-  }
-  blockStatus
-  roles {
-    name
-    iconUrl
-  }
-}
-fragment CommunityFragment on Community {
-  _id
-  name
-  slug
-  description
-  iconUrl
-  guidelinesPM
-  descriptionPM
-  iconImage {
-    ...ImageFragment
-  }
-  bannerUrl
-  bannerDesktopImage {
-    ...ImageFragment
-  }
-  bannerMobileImage {
-    ...ImageFragment
-  }
-  founder {
-    ...AuthorFragment
-    bio
-  }
-  manager {
-    ...AuthorFragment
-  }
-  memberCount
-  postCount
-  isJoinedByAccount
-  isPinnedByAccount
-  isJoinedByDefault
-  createdDate
-  editedDate
-  deletedDate
-}
-fragment ImageFragment on Image {
-  alt
-  height
-  width
-  url
-  blurhash
-}
-fragment ModerationReasonFragment on ModerationRemovalReason {
-  id
-  key
-  description
-  message
-  type
-  createdDate
-  editedDate
-  deletedDate
-}
-fragment PageInfoFragment on PageInfo {
-  endCursor
-  hasNextPage
-  hasPreviousPage
-  startCursor
-}
-fragment PostsNodeFragment on Post {
-  _id
-  title
-  isSavedByAccount
-  moderationStatus
-  isDuggByAccount
-  voteDirectionByAccount
-  upvoteCount
-  downvoteCount
-  score
-  reportByAccount
-  slug
-  type
-  externalContent {
-    url
-    headline
-    subHeadline
-    imageUrl
-    iconUrl
-  }
-  commentCount
-  shareCount
-  textPreview
-  contextCards {
-    tldr {
-      text
-    }
-  }
-  community {
-    ...CommunityFragment
-  }
-  attachments {
-    __typename
-    ... on Image {
-      ...ImageFragment
-    }
-  }
-  author {
-    ...AuthorFragment
-  }
-  createdDate
-  editedDate
-  deletedDate
-  nsfw
-  text
-  pm
-  moderatedDate
-  moderationReason {
-    ...ModerationReasonFragment
-  }
-}`,
+            query: /* GraphQL */ `
+                query PostsQuery($first: Int, $after: String, $where: PostWhere, $sort: PostSort) {
+                    posts(first: $first, after: $after, where: $where, sort: $sort) {
+                        edges {
+                            node {
+                                ...PostsNodeFragment
+                            }
+                        }
+                        pageInfo {
+                            ...PageInfoFragment
+                        }
+                    }
+                }
+                fragment AuthorFragment on Account {
+                    _id
+                    username
+                    avatarUrl
+                    avatarImage {
+                        ...ImageFragment
+                    }
+                    badges {
+                        name
+                        iconUrl
+                    }
+                    blockStatus
+                    roles {
+                        name
+                        iconUrl
+                    }
+                }
+                fragment CommunityFragment on Community {
+                    _id
+                    name
+                    slug
+                    description
+                    iconUrl
+                    guidelinesPM
+                    descriptionPM
+                    iconImage {
+                        ...ImageFragment
+                    }
+                    bannerUrl
+                    bannerDesktopImage {
+                        ...ImageFragment
+                    }
+                    bannerMobileImage {
+                        ...ImageFragment
+                    }
+                    founder {
+                        ...AuthorFragment
+                        bio
+                    }
+                    manager {
+                        ...AuthorFragment
+                    }
+                    memberCount
+                    postCount
+                    isJoinedByAccount
+                    isPinnedByAccount
+                    isJoinedByDefault
+                    createdDate
+                    editedDate
+                    deletedDate
+                }
+                fragment ImageFragment on Image {
+                    alt
+                    height
+                    width
+                    url
+                    blurhash
+                }
+                fragment ModerationReasonFragment on ModerationRemovalReason {
+                    id
+                    key
+                    description
+                    message
+                    type
+                    createdDate
+                    editedDate
+                    deletedDate
+                }
+                fragment PageInfoFragment on PageInfo {
+                    endCursor
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                }
+                fragment PostsNodeFragment on Post {
+                    _id
+                    title
+                    isSavedByAccount
+                    moderationStatus
+                    isDuggByAccount
+                    voteDirectionByAccount
+                    upvoteCount
+                    downvoteCount
+                    score
+                    reportByAccount
+                    slug
+                    type
+                    externalContent {
+                        url
+                        headline
+                        subHeadline
+                        imageUrl
+                        iconUrl
+                    }
+                    commentCount
+                    shareCount
+                    textPreview
+                    contextCards {
+                        tldr {
+                            text
+                        }
+                    }
+                    community {
+                        ...CommunityFragment
+                    }
+                    attachments {
+                        __typename
+                        ... on Image {
+                            ...ImageFragment
+                        }
+                    }
+                    author {
+                        ...AuthorFragment
+                    }
+                    createdDate
+                    editedDate
+                    deletedDate
+                    nsfw
+                    text
+                    pm
+                    moderatedDate
+                    moderationReason {
+                        ...ModerationReasonFragment
+                    }
+                }
+            `,
             variables: { first: limit, where: { community: { slug_EQ: community } }, sort: 'RECENT' },
         },
     });

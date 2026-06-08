@@ -87,7 +87,7 @@ export const route: Route = {
     example: '/aibase/discover',
     parameters: { id: '发现分类，默认为空，即全部产品，可在对应发现分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [图片背景移除](https://top.aibase.com/discover/37-49)，网址为 \`https://top.aibase.com/discover/37-49\`。截取 \`https://top.aibase.com/discover/\` 到末尾的部分 \`37-49\` 作为参数填入，此时路由为 [\`/aibase/discover/37-49\`](https://rsshub.app/aibase/discover/37-49)。
+若订阅 [图片背景移除](https://top.aibase.com/discover/37-49)，网址为 \`https://top.aibase.com/discover/37-49\`。截取 \`https://top.aibase.com/discover/\` 到末尾的部分 \`37-49\` 作为参数填入，此时路由为 [\`/aibase/discover/37-49\`](https://rsshub.app/aibase/discover/37-49)。
 :::
 
 <details>
@@ -95,36 +95,36 @@ export const route: Route = {
 
 #### 图像处理
 
-| 分类                                                  | ID                                                |
-| ----------------------------------------------------- | ------------------------------------------------- |
-| [图片背景移除](https://top.aibase.com/discover/37-49) | [37-49](https://rsshub.app/aibase/discover/37-49) |
-| [图片无损放大](https://top.aibase.com/discover/37-50) | [37-50](https://rsshub.app/aibase/discover/37-50) |
-| [图片AI修复](https://top.aibase.com/discover/37-51)   | [37-51](https://rsshub.app/aibase/discover/37-51) |
-| [图像生成](https://top.aibase.com/discover/37-52)     | [37-52](https://rsshub.app/aibase/discover/37-52) |
-| [Ai图片拓展](https://top.aibase.com/discover/37-53)   | [37-53](https://rsshub.app/aibase/discover/37-53) |
-| [Ai漫画生成](https://top.aibase.com/discover/37-54)   | [37-54](https://rsshub.app/aibase/discover/37-54) |
-| [Ai生成写真](https://top.aibase.com/discover/37-55)   | [37-55](https://rsshub.app/aibase/discover/37-55) |
-| [电商图片制作](https://top.aibase.com/discover/37-83) | [37-83](https://rsshub.app/aibase/discover/37-83) |
-| [Ai图像转视频](https://top.aibase.com/discover/37-86) | [37-86](https://rsshub.app/aibase/discover/37-86) |
+| 分类                                                   | ID                                                |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| [图片背景移除](https://top.aibase.com/discover/37-49)  | [37-49](https://rsshub.app/aibase/discover/37-49) |
+| [图片无损放大](https://top.aibase.com/discover/37-50)  | [37-50](https://rsshub.app/aibase/discover/37-50) |
+| [图片 AI 修复](https://top.aibase.com/discover/37-51)  | [37-51](https://rsshub.app/aibase/discover/37-51) |
+| [图像生成](https://top.aibase.com/discover/37-52)      | [37-52](https://rsshub.app/aibase/discover/37-52) |
+| [Ai 图片拓展](https://top.aibase.com/discover/37-53)   | [37-53](https://rsshub.app/aibase/discover/37-53) |
+| [Ai 漫画生成](https://top.aibase.com/discover/37-54)   | [37-54](https://rsshub.app/aibase/discover/37-54) |
+| [Ai 生成写真](https://top.aibase.com/discover/37-55)   | [37-55](https://rsshub.app/aibase/discover/37-55) |
+| [电商图片制作](https://top.aibase.com/discover/37-83)  | [37-83](https://rsshub.app/aibase/discover/37-83) |
+| [Ai 图像转视频](https://top.aibase.com/discover/37-86) | [37-86](https://rsshub.app/aibase/discover/37-86) |
 
 #### 视频创作
 
-| 分类                                                | ID                                                |
-| --------------------------------------------------- | ------------------------------------------------- |
-| [视频剪辑](https://top.aibase.com/discover/38-56)   | [38-56](https://rsshub.app/aibase/discover/38-56) |
-| [生成视频](https://top.aibase.com/discover/38-57)   | [38-57](https://rsshub.app/aibase/discover/38-57) |
-| [Ai动画制作](https://top.aibase.com/discover/38-58) | [38-58](https://rsshub.app/aibase/discover/38-58) |
-| [字幕生成](https://top.aibase.com/discover/38-84)   | [38-84](https://rsshub.app/aibase/discover/38-84) |
+| 分类                                                 | ID                                                |
+| ---------------------------------------------------- | ------------------------------------------------- |
+| [视频剪辑](https://top.aibase.com/discover/38-56)    | [38-56](https://rsshub.app/aibase/discover/38-56) |
+| [生成视频](https://top.aibase.com/discover/38-57)    | [38-57](https://rsshub.app/aibase/discover/38-57) |
+| [Ai 动画制作](https://top.aibase.com/discover/38-58) | [38-58](https://rsshub.app/aibase/discover/38-58) |
+| [字幕生成](https://top.aibase.com/discover/38-84)    | [38-84](https://rsshub.app/aibase/discover/38-84) |
 
 #### 效率助手
 
-| 分类                                                | ID                                                |
-| --------------------------------------------------- | ------------------------------------------------- |
-| [AI文档工具](https://top.aibase.com/discover/39-59) | [39-59](https://rsshub.app/aibase/discover/39-59) |
-| [PPT](https://top.aibase.com/discover/39-60)        | [39-60](https://rsshub.app/aibase/discover/39-60) |
-| [思维导图](https://top.aibase.com/discover/39-61)   | [39-61](https://rsshub.app/aibase/discover/39-61) |
-| [表格处理](https://top.aibase.com/discover/39-62)   | [39-62](https://rsshub.app/aibase/discover/39-62) |
-| [Ai办公助手](https://top.aibase.com/discover/39-63) | [39-63](https://rsshub.app/aibase/discover/39-63) |
+| 分类                                                 | ID                                                |
+| ---------------------------------------------------- | ------------------------------------------------- |
+| [AI 文档工具](https://top.aibase.com/discover/39-59) | [39-59](https://rsshub.app/aibase/discover/39-59) |
+| [PPT](https://top.aibase.com/discover/39-60)         | [39-60](https://rsshub.app/aibase/discover/39-60) |
+| [思维导图](https://top.aibase.com/discover/39-61)    | [39-61](https://rsshub.app/aibase/discover/39-61) |
+| [表格处理](https://top.aibase.com/discover/39-62)    | [39-62](https://rsshub.app/aibase/discover/39-62) |
+| [Ai 办公助手](https://top.aibase.com/discover/39-63) | [39-63](https://rsshub.app/aibase/discover/39-63) |
 
 #### 写作灵感
 
@@ -135,27 +135,27 @@ export const route: Route = {
 
 #### 艺术灵感
 
-| 分类                                                | ID                                                |
-| --------------------------------------------------- | ------------------------------------------------- |
-| [音乐创作](https://top.aibase.com/discover/41-65)   | [41-65](https://rsshub.app/aibase/discover/41-65) |
-| [设计创作](https://top.aibase.com/discover/41-66)   | [41-66](https://rsshub.app/aibase/discover/41-66) |
-| [Ai图标生成](https://top.aibase.com/discover/41-67) | [41-67](https://rsshub.app/aibase/discover/41-67) |
+| 分类                                                 | ID                                                |
+| ---------------------------------------------------- | ------------------------------------------------- |
+| [音乐创作](https://top.aibase.com/discover/41-65)    | [41-65](https://rsshub.app/aibase/discover/41-65) |
+| [设计创作](https://top.aibase.com/discover/41-66)    | [41-66](https://rsshub.app/aibase/discover/41-66) |
+| [Ai 图标生成](https://top.aibase.com/discover/41-67) | [41-67](https://rsshub.app/aibase/discover/41-67) |
 
 #### 趣味
 
-| 分类                                                  | ID                                                |
-| ----------------------------------------------------- | ------------------------------------------------- |
-| [Ai名字生成器](https://top.aibase.com/discover/42-68) | [42-68](https://rsshub.app/aibase/discover/42-68) |
-| [游戏娱乐](https://top.aibase.com/discover/42-71)     | [42-71](https://rsshub.app/aibase/discover/42-71) |
-| [其他](https://top.aibase.com/discover/42-72)         | [42-72](https://rsshub.app/aibase/discover/42-72) |
+| 分类                                                   | ID                                                |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| [Ai 名字生成器](https://top.aibase.com/discover/42-68) | [42-68](https://rsshub.app/aibase/discover/42-68) |
+| [游戏娱乐](https://top.aibase.com/discover/42-71)      | [42-71](https://rsshub.app/aibase/discover/42-71) |
+| [其他](https://top.aibase.com/discover/42-72)          | [42-72](https://rsshub.app/aibase/discover/42-72) |
 
 #### 开发编程
 
-| 分类                                                | ID                                                |
-| --------------------------------------------------- | ------------------------------------------------- |
-| [开发编程](https://top.aibase.com/discover/43-73)   | [43-73](https://rsshub.app/aibase/discover/43-73) |
-| [Ai开放平台](https://top.aibase.com/discover/43-74) | [43-74](https://rsshub.app/aibase/discover/43-74) |
-| [Ai算力平台](https://top.aibase.com/discover/43-75) | [43-75](https://rsshub.app/aibase/discover/43-75) |
+| 分类                                                 | ID                                                |
+| ---------------------------------------------------- | ------------------------------------------------- |
+| [开发编程](https://top.aibase.com/discover/43-73)    | [43-73](https://rsshub.app/aibase/discover/43-73) |
+| [Ai 开放平台](https://top.aibase.com/discover/43-74) | [43-74](https://rsshub.app/aibase/discover/43-74) |
+| [Ai 算力平台](https://top.aibase.com/discover/43-75) | [43-75](https://rsshub.app/aibase/discover/43-75) |
 
 #### 聊天机器人
 
@@ -187,8 +187,8 @@ export const route: Route = {
 | 分类                                            | ID                                                    |
 | ----------------------------------------------- | ----------------------------------------------------- |
 | [法律](https://top.aibase.com/discover/138-139) | [138-139](https://rsshub.app/aibase/discover/138-139) |
-</details>
-    `,
+
+</details>`,
     categories: ['new-media'],
 
     features: {

@@ -35,13 +35,13 @@ export const route: Route = {
     url: 'nowcoder.com/',
     description: `可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
 
-  职位类型代码见下表：
+职位类型代码见下表：
 
 | 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
 
-  排序参数见下表：
+排序参数见下表：
 
 | 最新发布 | 最快处理 | 处理率最高 |
 | -------- | -------- | ---------- |
@@ -49,7 +49,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const rootUrl = `https://www.nowcoder.com/job/center/`;
+    const rootUrl = 'https://www.nowcoder.com/job/center/';
     const currentUrl = `${rootUrl}?${ctx.req.param('type') ? 'type=' + ctx.req.param('type') : ''}${ctx.req.param('city') ? '&city=' + ctx.req.param('city') : ''}${ctx.req.param('order') ? '&order=' + ctx.req.param('order') : ''}${
         ctx.req.param('recruitType') ? '&recruitType=' + ctx.req.param('recruitType') : ''
     }${ctx.req.param('latest') ? '&latest=' + ctx.req.param('latest') : ''}`;
@@ -68,10 +68,10 @@ async function handler(ctx) {
             const time = item.find('div.reco-job-detail span').eq(1).text();
             const date = new Date();
             if (time.includes('天')) {
-                const day = time.split('天')[0];
+                const day = time.split('天', 1)[0];
                 date.setDate(date.getDate() - day);
             } else if (time.includes('小时')) {
-                const hour = time.split('小时')[0];
+                const hour = time.split('小时', 1)[0];
                 date.setHours(date.getHours() - hour);
             }
             return {
@@ -96,7 +96,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${ctx.req.param('recruitType') ? (ctx.req.param('recruitType') === '2' ? '社招广场' : '实习广场') : '实习广场'} - 牛客网`,
+        title: `${ctx.req.param('recruitType') && ctx.req.param('recruitType') === '2' ? '社招广场' : '实习广场'} - 牛客网`,
         link: rootUrl,
         item: items,
     };

@@ -45,7 +45,7 @@ async function handler(ctx) {
             Authorization: `bearer ${config.github.access_token}`,
         },
         json: {
-            query: `
+            query: /* GraphQL */ `
             {
                 repository(owner: "${user}", name: "${repo}") {
                   stargazers(last: 10) {

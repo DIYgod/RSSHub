@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
-import { baseUrl, getItem, parseList, puppeteerFetch } from './utils';
+import { baseUrl, getItem, parseList, playwrightFetch } from './utils';
 
 export const route: Route = {
     path: '/casts/:cast',
@@ -27,14 +27,14 @@ export const route: Route = {
 async function handler(ctx) {
     const { cast } = ctx.req.param();
 
-    const browser = await puppeteer();
-    const response = await puppeteerFetch(`${baseUrl}/api/casts/${cast}?page=0`, browser);
+    const context = await playwright();
+    const response = await playwrightFetch(`${baseUrl}/api/casts/${cast}?page=0`, context);
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, browser))));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, context))));
 
-    await browser.close();
+    await context.close();
 
     return {
         title: `Watch ${response.cast.name} Jav Online | Japanese Adult Video - JavTrailers.com`,

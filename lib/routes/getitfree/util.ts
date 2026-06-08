@@ -184,7 +184,7 @@ const fetchData = async (url) => {
 
     const $ = load(response);
 
-    const title = $('title').text().split(/\|/)[0];
+    const title = $('title').text().split(/\|/, 1)[0];
     const image = new URL('wp-content/uploads/site_logo.png', rootUrl).href;
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
@@ -196,7 +196,7 @@ const fetchData = async (url) => {
         image,
         icon,
         logo: icon,
-        subtitle: title.split(/【/)[0],
+        subtitle: title.split(/【/, 1)[0],
         author: $('h1.logo a').prop('title'),
         allowEmpty: true,
     };

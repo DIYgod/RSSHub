@@ -91,7 +91,7 @@ async function handler(ctx) {
         )
     );
 
-    const title = $('title').text().split(/\s-/)[0];
+    const title = $('title').text().split(/\s-/, 1)[0];
     const icon = $('link[rel="apple-touch-icon"]').last().prop('href');
 
     return {

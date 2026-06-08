@@ -27,7 +27,7 @@ export const route: Route = {
 | -------- | ---- | ---- | -------- |
 
 ::: tip
-  分类为 **充电免停** 时，城市参数不起作用
+分类为 **充电免停** 时，城市参数不起作用
 :::
 
 <details>
@@ -98,6 +98,7 @@ export const route: Route = {
 
 | 曲阜 | 郴州 | 济源 | 兴义 |
 | ---- | ---- | ---- | ---- |
+
 </details>`,
 };
 
@@ -144,7 +145,7 @@ async function handler(ctx) {
                       alt: item.venueName ?? item.title,
                   }
                 : undefined,
-            description: item.description?.replaceAll(/\["|"]/g, '') ?? undefined,
+            description: item.description?.replaceAll(/\["|"\]/g, '') ?? undefined,
             data: item.parkingLocationId
                 ? {
                       title: item.venueName ?? item.title,

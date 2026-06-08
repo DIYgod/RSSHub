@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 
 export const route: Route = {
     path: '/daily',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/dongqiudi/daily',
     radar: [
         {

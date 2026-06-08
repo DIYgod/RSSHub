@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = `https://wsjkw.sh.gov.cn/yqtb/index.html`;
+    const url = 'https://wsjkw.sh.gov.cn/yqtb/index.html';
 
     const res = await got.get(url);
     const $ = load(res.data);
@@ -41,7 +41,7 @@ async function handler() {
             item = $(item);
             const title = item.find('a').text();
             const address = item.find('a').attr('href');
-            const host = `https://wsjkw.sh.gov.cn`;
+            const host = 'https://wsjkw.sh.gov.cn';
             const pubDate = parseDate(item.find('span').text(), 'YYYY-MM-DD');
             return {
                 title,

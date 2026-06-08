@@ -48,7 +48,7 @@ const parseArticle = (item, tryGet) =>
             const slideData = JSON.parse(
                 $('script')
                     .text()
-                    .match(/var slide_data = ({.*?})\s/)[1]
+                    .match(/var slide_data = (\{.*?\})\s/)[1]
             );
             item.description = renderToString(
                 <>

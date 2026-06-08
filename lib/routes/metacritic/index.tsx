@@ -81,7 +81,7 @@ async function handler(ctx) {
 
     if (platforms.length || networks.length) {
         const labels = {};
-        const labelPattern = String.raw`{label:"([^"]+)",value:(\d+),href:a,meta:{mcDisplayWeight`;
+        const labelPattern = String.raw`\{label:"([^"]+)",value:(\d+),href:a,meta:\{mcDisplayWeight`;
 
         for (const m of currentResponse.match(new RegExp(labelPattern, 'g'))) {
             const matches = m.match(new RegExp(labelPattern));
@@ -89,7 +89,7 @@ async function handler(ctx) {
             labels[
                 matches[1]
                     .toLowerCase()
-                    .split(/(\s\(|\\u002f(?!\s))/)[0]
+                    .split(/(\s\(|\\u002f(?!\s))/, 1)[0]
                     .replaceAll('-', '---')
                     .replaceAll(/\s\/\s/g, '-or-')
                     .replaceAll('+', '-plus')

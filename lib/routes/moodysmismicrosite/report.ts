@@ -31,19 +31,17 @@ export const route: Route = {
         },
     ],
     name: 'industry',
-    description: `
-| ID | Description |
-| ---   | ---   |
-| 0 | 企业 |
-| 1 | 金融机构 |
-| 2 | 主权 |
-| 3 | 地方政府及城投公司 |
-| 4 | 宏观经济 |
-| 5 | 结构融资 |
-| 6 | 基础设施项目融资 |
-| 7 | ESG |
-| 8 | 其他 |
-    `,
+    description: `| ID | Description        |
+| -- | ------------------ |
+| 0  | 企业               |
+| 1  | 金融机构           |
+| 2  | 主权               |
+| 3  | 地方政府及城投公司 |
+| 4  | 宏观经济           |
+| 5  | 结构融资           |
+| 6  | 基础设施项目融资   |
+| 7  | ESG                |
+| 8  | 其他               |`,
     maintainers: ['Cedaric'],
     handler,
 };

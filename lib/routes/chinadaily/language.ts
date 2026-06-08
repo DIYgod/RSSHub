@@ -228,22 +228,21 @@ export const route: Route = {
 <details>
   <summary>更多分类</summary>
 
-| 分类                                                                         | ID                                                                                                    |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| [精彩推荐](https://language.chinadaily.com.cn/thelatest)                     | [thelatest](https://rsshub.app/chinadaily/language/thelatest)                                         |
-| [每日一词](https://language.chinadaily.com.cn/news_hotwords/word_of_the_day) | [news_hotwords/word_of_the_day](https://rsshub.app/chinadaily/language/news_hotwords/word_of_the_day) |
-| [双语新闻](https://language.chinadaily.com.cn/news_bilingual)                | [news_bilingual](https://rsshub.app/chinadaily/language/news_bilingual)                               |
-| [新闻热词](https://language.chinadaily.com.cn/news_hotwords)                 | [news_hotwords](https://rsshub.app/chinadaily/language/news_hotwords)                                 |
-| [实用口语](https://language.chinadaily.com.cn/practice_tongue)               | [practice_tongue](https://rsshub.app/chinadaily/language/practice_tongue)                             |
-| [译词课堂](https://language.chinadaily.com.cn/trans_collect)                 | [trans_collect](https://rsshub.app/chinadaily/language/trans_collect)                                 |
-| [图片新闻](https://language.chinadaily.com.cn/news_photo)                    | [news_photo](https://rsshub.app/chinadaily/language/news_photo)                                       |
-| [视频精选](https://language.chinadaily.com.cn/video_links)                   | [video_links](https://rsshub.app/chinadaily/language/video_links)                                     |
-| [新闻播报](https://language.chinadaily.com.cn/audio_cd)                      | [audio_cd](https://rsshub.app/chinadaily/language/audio_cd)                                           |
-| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [audio_cd](https://rsshub.app/chinadaily/language/columnist)                                          |
-| [权威发布](https://language.chinadaily.com.cn/5af95d44a3103f6866ee845c)      | [5af95d44a3103f6866ee845c](https://rsshub.app/chinadaily/language/5af95d44a3103f6866ee845c)           |
+| 分类                                                                         | ID                                                                                                        |
+| ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| [精彩推荐](https://language.chinadaily.com.cn/thelatest)                     | [thelatest](https://rsshub.app/chinadaily/language/thelatest)                                             |
+| [每日一词](https://language.chinadaily.com.cn/news_hotwords/word_of_the_day) | [news\\_hotwords/word\\_of\\_the\\_day](https://rsshub.app/chinadaily/language/news_hotwords/word_of_the_day) |
+| [双语新闻](https://language.chinadaily.com.cn/news_bilingual)                | [news\\_bilingual](https://rsshub.app/chinadaily/language/news_bilingual)                                  |
+| [新闻热词](https://language.chinadaily.com.cn/news_hotwords)                 | [news\\_hotwords](https://rsshub.app/chinadaily/language/news_hotwords)                                    |
+| [实用口语](https://language.chinadaily.com.cn/practice_tongue)               | [practice\\_tongue](https://rsshub.app/chinadaily/language/practice_tongue)                                |
+| [译词课堂](https://language.chinadaily.com.cn/trans_collect)                 | [trans\\_collect](https://rsshub.app/chinadaily/language/trans_collect)                                    |
+| [图片新闻](https://language.chinadaily.com.cn/news_photo)                    | [news\\_photo](https://rsshub.app/chinadaily/language/news_photo)                                          |
+| [视频精选](https://language.chinadaily.com.cn/video_links)                   | [video\\_links](https://rsshub.app/chinadaily/language/video_links)                                        |
+| [新闻播报](https://language.chinadaily.com.cn/audio_cd)                      | [audio\\_cd](https://rsshub.app/chinadaily/language/audio_cd)                                              |
+| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [audio\\_cd](https://rsshub.app/chinadaily/language/columnist)                                             |
+| [权威发布](https://language.chinadaily.com.cn/5af95d44a3103f6866ee845c)      | [5af95d44a3103f6866ee845c](https://rsshub.app/chinadaily/language/5af95d44a3103f6866ee845c)               |
 
-</details>
-`,
+</details>`,
     categories: ['traditional-media'],
     features: {
         requireConfig: false,

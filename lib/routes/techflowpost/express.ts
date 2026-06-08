@@ -1,10 +1,7 @@
-import dayjs from 'dayjs';
-
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+import { getNewsflashItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/express',
@@ -13,34 +10,26 @@ export const route: Route = {
     example: '/techflowpost/express',
     radar: [
         {
-            source: ['techflowpost.com/newsletter/index.html'],
+            source: ['techflowpost.com/zh-CN/newsletter'],
         },
     ],
     name: '快讯',
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     maintainers: ['nczitzk'],
     handler,
-    url: 'techflowpost.com/',
+    url: 'techflowpost.com/zh-CN/newsletter',
 };
 
 async function handler(ctx) {
-    const rootUrl = 'https://www.techflowpost.com';
-    const currentUrl = `${rootUrl}/newsletter/index.html`;
-
-    const { data: response } = await got.post('https://www.techflowpost.com/ashx/newflash_index.ashx', {
-        form: {
-            pageindex: 1,
-            pagesize: ctx.req.query('limit') ?? 50,
-            time: dayjs().format('YYYY/M/D HH:mm:ss'),
-        },
-    });
-
-    const items = response.content.map((item) => ({
-        title: item.stitle,
-        link: `${rootUrl}/newsletter/detail_${item.nnewflash_id}.html`,
-        pubDate: timezone(parseDate(item.dcreate_time), +8),
-        updated: timezone(parseDate(item.dmodi_time), +8),
-        description: item.scontent,
-    }));
+    const currentUrl = `${rootUrl}/zh-CN/newsletter`;
+    const items = await getNewsflashItems(ctx.req.query('limit') ?? 50);
 
     return {
         title: '深潮TechFlow - 快讯',

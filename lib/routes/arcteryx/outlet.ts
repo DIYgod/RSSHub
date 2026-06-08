@@ -31,14 +31,14 @@ export const route: Route = {
 | ------------- | ------ | -------------- |
 | us            | ca     | gb             |
 
-  gender
+gender
 
 | male | female |
 | ---- | ------ |
 | mens | womens |
 
 ::: tip
-  Parameter \`country\` can be found within the url of \`Arcteryx\` website.
+Parameter \`country\` can be found within the url of \`Arcteryx\` website.
 :::`,
 };
 

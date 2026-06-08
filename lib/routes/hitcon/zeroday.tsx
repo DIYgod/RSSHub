@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     name: '漏洞',
@@ -46,12 +46,11 @@ async function handler(ctx: Context): Promise<Data> {
         url += `/${status}`;
     }
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
 
     logger.http(`Requesting ${url}`);
@@ -60,7 +59,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     const response = await page.evaluate(() => document.documentElement.innerHTML);
-    await browser.close();
+    await context.close();
 
     const $ = load(response);
     const items: DataItem[] = $('.zdui-strip-list>li')
@@ -71,9 +70,7 @@ async function handler(ctx: Context): Promise<Data> {
             const code = vulData
                 .find('.code')
                 .contents()
-                .filter(function () {
-                    return this.nodeType === 3;
-                })
+                .filter((_, el) => el.nodeType === 3)
                 .text();
             const risk = vulData.find('.risk span').eq(1).text();
             const vender = vulData.find('.vender').find('.v-name-full').text();

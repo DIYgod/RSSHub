@@ -14,10 +14,8 @@ export const route: Route = {
     path: '/:category?/:state?',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-Search housing by WBV-GPA, see "Angebote" menu item in https://www.wbv-gpa.at.
-Filtering by state is done client-side.
-`,
+    description: `Search housing by WBV-GPA, see "Angebote" menu item in <https://www.wbv-gpa.at>.
+Filtering by state is done client-side.`,
     parameters: {
         category: 'Anything behind `/angebote/` in the URL. Default: `wohnungen`',
         state: 'Optionally filter by Austrian state (`wien`, `steiermark`, ...)',

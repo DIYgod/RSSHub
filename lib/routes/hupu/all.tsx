@@ -31,7 +31,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  更多热帖版面参见 [论坛](https://bbs.hupu.com)
+更多热帖版面参见 [论坛](https://bbs.hupu.com)
 :::`,
 };
 
@@ -73,10 +73,10 @@ async function handler(ctx) {
 
                     const videos = [];
 
-                    content('.hupu-post-video').each(function () {
+                    content('.hupu-post-video').each((_, el) => {
                         videos.push({
-                            source: content(this).attr('src'),
-                            poster: content(this).attr('poster'),
+                            source: content(el).attr('src'),
+                            poster: content(el).attr('poster'),
                         });
                     });
 

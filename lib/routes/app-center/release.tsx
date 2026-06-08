@@ -112,7 +112,7 @@ export const route: Route = {
     maintainers: ['Rongronggg9'],
     handler,
     description: `::: tip
-  The parameters can be extracted from the Release page URL: \`https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group\`
+The parameters can be extracted from the Release page URL: \`https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group\`
 :::`,
 };
 
@@ -158,7 +158,7 @@ async function handler(ctx) {
                 const releaseResponse = await got(item.link);
                 const releaseInfo = releaseResponse.data;
 
-                const userName = releaseInfo.owner.display_name;
+                const username = releaseInfo.owner.display_name;
                 const appOS = releaseInfo.app_os;
                 const shortVersion = releaseInfo.short_version; // will be an empty string for Windows
                 const versionCode = releaseInfo.version;
@@ -181,7 +181,7 @@ async function handler(ctx) {
                 const appName = releaseInfo.app_display_name;
                 const distributionGroupId = releaseInfo.distribution_group_id;
                 const distributionGroupName = releaseInfo.distribution_groups.find((group) => group.id === distributionGroupId).display_name;
-                item._feed_title = `${appName} (${distributionGroupName}) for ${appOS} by ${userName} - App Center Releases`;
+                item._feed_title = `${appName} (${distributionGroupName}) for ${appOS} by ${username} - App Center Releases`;
                 item._feed_icon = releaseInfo.app_icon_url;
 
                 const version = shortVersion && versionCode ? `${shortVersion} (${versionCode})` : shortVersion || versionCode;
@@ -193,7 +193,7 @@ async function handler(ctx) {
                     (isExternalBuild ? '[External Build]' : '') +
                     `Version ${version}`;
                 item.link = link; // replace the link with the release page
-                item.author = userName;
+                item.author = username;
                 item.description = renderDescription({
                     releaseDate,
                     sizeInMBytes,

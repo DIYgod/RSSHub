@@ -32,11 +32,11 @@ export const route: Route = {
 async function handler() {
     let data;
     const response = await got.extend({ followRedirect: false }).get({
-        url: `https://trow.cc`,
+        url: 'https://trow.cc',
     });
     if (response.statusCode === 302) {
         const response2 = await got.extend({ followRedirect: false }).get({
-            url: `https://trow.cc`,
+            url: 'https://trow.cc',
             headers: {
                 cookie: response.headers['set-cookie'],
             },
@@ -50,9 +50,9 @@ async function handler() {
     const list = $('#portal_content .borderwrap[style="display:show"]');
 
     return {
-        title: `The Ring of Wonder - Portal`,
-        link: `https://trow.cc`,
-        description: `The Ring of Wonder 首页更新`,
+        title: 'The Ring of Wonder - Portal',
+        link: 'https://trow.cc',
+        description: 'The Ring of Wonder 首页更新',
         item: list.toArray().map((item) => {
             item = $(item);
             const dateraw = item.find('.postdetails').text();

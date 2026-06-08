@@ -75,7 +75,7 @@ async function handler(ctx) {
     const sid = headers
         ?.getSetCookie()
         .find((s) => s.startsWith('wzws_sessionid='))
-        ?.split(';')[0] as string;
+        ?.split(';', 1)[0] as string;
 
     const pathname = getSubPath(ctx) === '/stats' ? '/sj/zxfb/' : getSubPath(ctx).replace(/^\/stats(.*)/, '$1');
     const currentUrl = `${rootUrl}${pathname.endsWith('/') ? pathname : pathname + '/'}`;
@@ -115,7 +115,7 @@ async function handler(ctx) {
 
                 // articles from www.news.cn or www.gov.cn
 
-                if (/(news\.cn|www\.gov\.cn)/.test(item.link)) {
+                if (/news\.cn|www\.gov\.cn/.test(item.link)) {
                     if (content('.year').text()) {
                         item.pubDate = timezone(parseDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`, 'YYYY/MM/DD HH:mm:ss'), +8);
                         item.author = content('.source')

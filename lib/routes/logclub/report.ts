@@ -48,7 +48,7 @@ async function handler(ctx) {
         link: new URL(`front/lc_report/get_report_info/${item.id}`, rootUrl).href,
         description: renderDescription({
             image: {
-                src: item.img_url?.split(/\?/)[0] ?? undefined,
+                src: item.img_url?.split(/\?/, 1)[0] ?? undefined,
                 alt: item.title,
             },
         }),
@@ -70,7 +70,7 @@ async function handler(ctx) {
                     el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/)[0] ?? undefined,
+                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
                                 alt: el.prop('title'),
                             },
                         })
@@ -117,6 +117,6 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),
-        author: subtitle.split(/,/)[0],
+        author: subtitle.split(/,/, 1)[0],
     };
 }

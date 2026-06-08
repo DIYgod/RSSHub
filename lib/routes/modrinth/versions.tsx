@@ -84,8 +84,8 @@ export const route: Route = {
     handler,
     description: `| Name           | Example                                      |
 | -------------- | -------------------------------------------- |
-| loaders        | loaders=fabric&loaders=quilt&loaders=forge |
-| game_versions | game_versions=1.20.1&game_versions=1.20.2 |
+| loaders        | loaders=fabric\\&loaders=quilt\\&loaders=forge |
+| game\\_versions | game\\_versions=1.20.1\\&game\\_versions=1.20.2 |
 | featured       | featured=true                                |`,
 };
 
@@ -112,7 +112,7 @@ async function handler(ctx: Context) {
                 game_versions: parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '',
             },
         });
-        const authors = await ofetch<Author[]>(`https://api.modrinth.com/v2/users`, {
+        const authors = await ofetch<Author[]>('https://api.modrinth.com/v2/users', {
             query: {
                 ids: JSON.stringify([...new Set(versions.map((it) => it.author_id))]),
             },

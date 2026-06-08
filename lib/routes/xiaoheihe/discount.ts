@@ -19,9 +19,9 @@ export const route: Route = {
     name: '游戏折扣',
     maintainers: ['tssujt'],
     handler,
-    description: `| PC  | Switch  | PSN   | Xbox |
-| ----- | ------ | ----- | ----- |
-| pc    | switch | psn   | xbox  |`,
+    description: `| PC | Switch | PSN | Xbox |
+| -- | ------ | --- | ---- |
+| pc | switch | psn | xbox |`,
 };
 
 const PLATFORM_MAP = {
@@ -139,7 +139,7 @@ async function handler(ctx) {
 
     return {
         title: `小黑盒 ${platformInfo.desc} 游戏折扣`,
-        link: `https://xiaoheihe.cn`,
+        link: 'https://xiaoheihe.cn',
         item: items,
     };
 }

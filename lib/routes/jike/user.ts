@@ -139,7 +139,7 @@ async function handler(ctx) {
 
             const single = {
                 title: `${typeMap[item.type]}了: ${shortenTitle}`,
-                description: `${content}${linkTemplate}${imgTemplate}`.replace(/(<br>|\s)+$/, ''),
+                description: `${content}${linkTemplate}${imgTemplate}`.replace(/(?:<br>|\s)+$/, ''),
                 pubDate: parseDate(item.createdAt),
                 link: getLink(item.id, item.type),
                 _extra: repostContent && {
@@ -167,13 +167,11 @@ async function handler(ctx) {
 
                 single.title = `一觉醒来世界发生了什么 ${$$('title').text()}`;
 
-                single.description = '';
-                $$('div.container')
+                single.description = $$('div.container')
                     .find('li.item')
-                    // eslint-disable-next-line array-callback-return
-                    .map((i, j) => {
-                        single.description += `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`;
-                    });
+                    .toArray()
+                    .map((j) => `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`)
+                    .join('');
             }
 
             return single;

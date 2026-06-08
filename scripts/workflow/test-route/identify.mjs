@@ -5,7 +5,9 @@ const noFound = 'auto: route no found';
 const criticalFailure = 'auto: DO NOT merge';
 const routeTestFailed = 'auto: not ready to review';
 const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
-const requiredHeading = 'Example for the Proposed Route(s) / 路由地址示例';
+const requiredHeadings = ['Involved Issue / 该 PR 相关 Issue', 'Example for the Proposed Route(s) / 路由地址示例', 'New RSS Route Checklist / 新 RSS 路由检查表', 'Note / 说明'];
+const routeHeading = 'Example for the Proposed Route(s) / 路由地址示例';
+const requiredHeadingDepth = 2;
 
 /** @type {boolean} */
 const isPR = Boolean(process.env.PULL_REQUEST);
@@ -111,6 +113,19 @@ export default async function identify({ github, context, core }, body, number, 
         core.debug('PR created by ' + sender);
     }
 
+    const hasWriteAccess = await github.rest.repos
+        .getCollaboratorPermissionLevel({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            username: sender,
+        })
+        .then(({ data }) => ['admin', 'maintain', 'write'].includes(data.permission))
+        .catch((error) => {
+            core.warning(error);
+            return false;
+        });
+    core.debug(`hasWriteAccess: ${hasWriteAccess}`);
+
     /** @type {string[] | undefined} */
     let routes;
 
@@ -121,12 +136,15 @@ export default async function identify({ github, context, core }, body, number, 
         let searchEnd = ast.children.length;
 
         if (isPR) {
-            const headingIndex = ast.children.findIndex((node) => node.type === 'heading' && node.children?.some((child) => child.type === 'text' && child.value.trim() === requiredHeading));
-            core.debug(`headingIndex: ${headingIndex}`);
+            /** @param {string} text */
+            const findHeading = (text) => ast.children.findIndex((node) => node.type === 'heading' && node.depth === requiredHeadingDepth && node.children?.some((child) => child.type === 'text' && child.value.trim() === text));
 
-            if (headingIndex === -1) {
+            const missingHeadings = requiredHeadings.filter((text) => findHeading(text) === -1);
+            if (missingHeadings.length > 0) {
                 searchStart = -1; // skip search
             } else {
+                const headingIndex = findHeading(routeHeading);
+                core.debug(`headingIndex: ${headingIndex}`);
                 searchStart = headingIndex + 1;
                 const nextHeading = ast.children.findIndex((node, i) => i > headingIndex && node.type === 'heading');
                 if (nextHeading !== -1) {
@@ -175,7 +193,9 @@ export default async function identify({ github, context, core }, body, number, 
     await createFailedComment();
     if (isPR) {
         await addLabels([noFound]);
-        await updatePrState('closed');
+        if (!hasWriteAccess) {
+            await updatePrState('closed');
+        }
     }
 
     throw new Error('Please follow the PR rules: failed to detect route');

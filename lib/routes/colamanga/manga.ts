@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const domain = 'www.colamanga.com';
@@ -43,14 +43,13 @@ async function handler(ctx: Context) {
     const id = ctx.req.param('id');
     const url = `https://${domain}/${id}`;
 
-    const browser = await puppeteer();
+    const context = await playwright();
 
-    const page = await browser.newPage();
+    const page = await context.newPage();
 
-    await page.setRequestInterception(true);
-
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
 
     logger.http(`Requesting ${url}`);
@@ -60,7 +59,7 @@ async function handler(ctx: Context) {
     });
 
     const response = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(response);
 

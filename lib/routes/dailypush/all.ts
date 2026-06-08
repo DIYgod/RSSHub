@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { BASE_URL, enhanceItemsWithSummaries, fetchPageHtml, parseArticles } from './utils';
 
@@ -42,12 +42,12 @@ async function handler(ctx) {
     const { sort = '' } = ctx.req.param();
     const url = sort ? `${BASE_URL}/${sort}` : BASE_URL;
 
-    const browser = await puppeteer();
+    const context = await playwright();
     try {
-        const html = await fetchPageHtml(browser, url, 'article');
+        const html = await fetchPageHtml(context, url, 'article');
         const $ = load(html);
         const list = parseArticles($, BASE_URL);
-        const items = await enhanceItemsWithSummaries(browser, list);
+        const items = await enhanceItemsWithSummaries(context, list);
 
         const pageTitle = $('title').text() || 'DailyPush - All';
 
@@ -57,6 +57,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await browser.close();
+        await context.close();
     }
 }

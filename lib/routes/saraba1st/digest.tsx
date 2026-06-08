@@ -25,7 +25,7 @@ export const route: Route = {
     name: '论坛摘要',
     maintainers: ['shinemoon'],
     handler,
-    description: `版面网址如果为 \`https://stage1st.com/2b/forum-6-1.html\` 那么论坛 id 就是 \`forum-6-1\`。`,
+    description: '版面网址如果为 `https://stage1st.com/2b/forum-6-1.html` 那么论坛 id 就是 `forum-6-1`。',
 };
 
 async function handler(ctx) {
@@ -84,16 +84,16 @@ async function fetchContent(url) {
     const stubS = subind('<div>');
     subind('#postlist')
         .find('div[id*="post_"] ')
-        .each(function () {
-            if (subind(this).find('td[id*="postmessage_"]').length > 0) {
+        .each((_, el) => {
+            if (subind(el).find('td[id*="postmessage_"]').length > 0) {
                 const section = renderToString(
                     <DigestSection
                         author={{
-                            link: subind(this).find('.pls.favatar div.authi a').attr('href'),
-                            name: subind(this).find('.pls.favatar div.authi').text(),
-                            postinfo: subind(this).find('div.authi em[id*=authorposton]').text(),
+                            link: subind(el).find('.pls.favatar div.authi a').attr('href'),
+                            name: subind(el).find('.pls.favatar div.authi').text(),
+                            postinfo: subind(el).find('div.authi em[id*=authorposton]').text(),
                         }}
-                        msg={subind(this).find('td[id*="postmessage_"]').html()}
+                        msg={subind(el).find('td[id*="postmessage_"]').html()}
                         host={config.saraba1st.host}
                     />
                 );
@@ -101,8 +101,8 @@ async function fetchContent(url) {
             }
         });
 
-    stubS.find('img').each(function () {
-        const img = subind(this);
+    stubS.find('img').each((_, el) => {
+        const img = subind(el);
         const file = img.attr('file');
         if (file) {
             img.attr('src', file);

@@ -69,7 +69,7 @@ const extractArticle = (item) =>
         const { data: response } = await got(item.link);
         const $ = load(response);
         const scriptTagContent = $('script#fusion-metadata').text();
-        const jsonData = JSON.parse(scriptTagContent.match(/Fusion\.globalContent=({.*?});Fusion\.globalContentConfig/)[1]).content_elements;
+        const jsonData = JSON.parse(scriptTagContent.match(/Fusion\.globalContent=(\{.*?\});Fusion\.globalContentConfig/)[1]).content_elements;
         const filteredData = [];
         for (const v of jsonData) {
             if (v.type === 'header' && v.content.includes('What we’re reading')) {

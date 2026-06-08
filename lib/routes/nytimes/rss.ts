@@ -34,7 +34,7 @@ export const route: Route = {
     maintainers: ['HenryQW', 'pseudoyu', 'dzx-dzx'],
     handler,
     url: 'nytimes.com/',
-    description: `Enhance the official EN RSS feed`,
+    description: 'Enhance the official EN RSS feed',
 };
 
 async function handler(ctx) {

@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import type { Data, Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     name: 'Profile',
@@ -25,8 +25,8 @@ The profile page of the user, which contains the user's information, videos, and
 
 async function handler(ctx) {
     const { principalId } = ctx.req.param();
-    const browser = await puppeteer();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
 
     let retryCount = 0;
     let resolve;
@@ -34,13 +34,12 @@ async function handler(ctx) {
     const promise = new Promise((res) => {
         resolve = res;
     });
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        const resourceType = req.resourceType();
-        if (resourceType === 'image' || resourceType === 'media' || resourceType === 'font' || resourceType === 'stylesheet' || resourceType === 'ping') {
-            req.abort();
+    await page.route('**/*', (route) => {
+        const resourceType = route.request().resourceType();
+        if (['image', 'media', 'font', 'stylesheet', 'ping'].includes(resourceType)) {
+            route.abort();
         } else {
-            req.continue();
+            route.continue();
         }
     });
     page.on('response', async (res) => {
@@ -69,7 +68,7 @@ async function handler(ctx) {
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
     const resData = (await promise.catch((error) => error)) as any[];
 
-    await browser.close();
+    await context.close();
     const data: Data = {
         title: userInfo?.name ?? `${principalId}的作品 - 快手`,
         // description: JSON.stringify(resData),

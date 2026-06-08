@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 describe('registry', () => {
     // root
-    it(`/`, async () => {
+    it('/', async () => {
         const response = await app.request('/');
         expect(response.status).toBe(200);
         expect(response.headers.get('content-type')).toBe('text/html; charset=UTF-8');

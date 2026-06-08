@@ -28,13 +28,11 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    description: `
-| language | Description |
-| ---   | ---   |
-| tw | 臺灣正體 |
-| en | English |
-| jp | 日本語 |
-    `,
+    description: `| language | Description |
+| -------- | ----------- |
+| tw       | 臺灣正體    |
+| en       | English     |
+| jp       | 日本語      |`,
     maintainers: ['Cedaric'],
     handler,
 };

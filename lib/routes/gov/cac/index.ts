@@ -29,7 +29,7 @@ async function handler(ctx) {
                 .toArray()
                 .map((item) => {
                     const href = $(item).attr('href');
-                    if (href && /(?:http:)?\/\/www\.cac\.gov\.cn(.*?)\/(A.*?\.htm)/.test(href)) {
+                    if (href && /(?:http:)?\/\/www\.cac\.gov\.cn.*?\/A.*?\.htm/.test(href)) {
                         const matchArray = href.match(/(?:http:)?\/\/www\.cac\.gov\.cn(.*?)\/(A.*?\.htm)/);
                         if (matchArray && matchArray.length > 2) {
                             const path = matchArray[1];

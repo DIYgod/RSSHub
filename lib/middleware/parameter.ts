@@ -414,7 +414,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     }
                 }
             } else {
-                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun`);
+                throw new Error('Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun');
             }
         }
         // some parameters are processed in `anti-hotlink.js`

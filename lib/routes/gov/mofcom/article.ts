@@ -47,7 +47,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 let responses = await got(item.link);
                 // xwfb/xwlxfbh || xwfb/xwztfbh
-                const redirect = responses.data.match(/_cofing1={href:"(.*)",type/) || responses.data.match(/window\.location\.href='(.*)'/);
+                const redirect = responses.data.match(/_cofing1=\{href:"(.*)",type/) || responses.data.match(/window\.location\.href='(.*)'/);
                 if (redirect) {
                     responses = await got(redirect[1], {
                         headers: {

@@ -23,12 +23,12 @@ export const route: Route = {
 async function handler(ctx) {
     const pageSize = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const response = await ofetch('https://api.bestblogs.dev/api/newsletter/list', {
-        method: 'POST',
-        body: {
-            currentPage: 1,
+    const response = await ofetch('https://www.bestblogs.dev/api/proxy/newsletters', {
+        method: 'GET',
+        query: {
+            page: 1,
             pageSize,
-            userLanguage: 'zh',
+            language: 'zh',
         },
     });
 

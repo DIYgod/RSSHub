@@ -43,10 +43,9 @@ export const route: Route = {
             target: '/illust/latest',
         },
     ],
-    description: `
-| 急上昇 | 週間 | 月間 | 新着 |
-| ----- | ---- | ---- | ---- |
-| hot | week | month| latest |`,
+    description: `| 急上昇 | 週間 | 月間  | 新着   |
+| ------ | ---- | ----- | ------ |
+| hot    | week | month | latest |`,
 };
 
 async function handler(ctx): Promise<Data> {

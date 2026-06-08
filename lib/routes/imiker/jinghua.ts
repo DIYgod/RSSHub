@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://ask.imiker.com';
     const apiUrl = new URL('explore/main/list/', rootUrl).href;
-    const currentUrl = new URL(``, rootUrl).href;
+    const currentUrl = new URL('', rootUrl).href;
 
     const { data: response } = await got(apiUrl, {
         searchParams: {

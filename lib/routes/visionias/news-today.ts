@@ -66,8 +66,8 @@ async function handler(ctx): Promise<Data> {
         language: 'en',
         item: items,
         image: `${baseUrl}/current-affairs/images/news-today-logo.svg`,
-        icon: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
-        logo: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
+        icon: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
+        logo: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
         allowEmpty: true,
     };
 }
@@ -75,7 +75,7 @@ async function handler(ctx): Promise<Data> {
 async function processCurrentNews(currentUrl) {
     const response = await ofetch(`${baseUrl}${currentUrl}`);
     const $ = load(response);
-    const items = $(`#table-of-content > ul > li > a`)
+    const items = $('#table-of-content > ul > li > a')
         .toArray()
         .map((item) => {
             const link = $(item).attr('href');

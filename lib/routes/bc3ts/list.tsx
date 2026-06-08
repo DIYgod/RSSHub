@@ -63,7 +63,7 @@ async function handler(ctx) {
     });
 
     const items = response.data.map((p) => ({
-        title: p.title ?? p.content.split('\n')[0],
+        title: p.title ?? p.content.split('\n', 1)[0],
         description: p.content.replaceAll('\n', '<br>') + (p.media.length && renderMedia(p.media)),
         link: `${baseUrl}/post/${p.id}`,
         author: p.user.name,

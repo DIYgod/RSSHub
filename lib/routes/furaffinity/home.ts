@@ -75,7 +75,7 @@ async function handler(ctx) {
     return {
         title: 'Fur Affinity | Home',
         link: 'https://www.furaffinity.net/',
-        description: `Fur Affinity Index`,
+        description: 'Fur Affinity Index',
         item: items,
     };
 }

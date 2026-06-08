@@ -3,54 +3,51 @@ import { ViewType } from '@/types';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
 
-const query = `
-  query MostDiscussedFeed(
-    $first: Int
-    $supportedTypes: [String!] = ["article","share","freeform"]
-    ) {
-    page: mostDiscussedFeed(first: $first, supportedTypes: $supportedTypes) {
-      ...FeedPostConnection
+const query = /* GraphQL */ `
+    query MostDiscussedFeed($first: Int, $supportedTypes: [String!] = ["article", "share", "freeform"]) {
+        page: mostDiscussedFeed(first: $first, supportedTypes: $supportedTypes) {
+            ...FeedPostConnection
+        }
     }
-  }
 
-  fragment FeedPostConnection on PostConnection {
-    edges {
-      node {
-        ...FeedPost
-        contentHtml
-      }
+    fragment FeedPostConnection on PostConnection {
+        edges {
+            node {
+                ...FeedPost
+                contentHtml
+            }
+        }
     }
-  }
 
-  fragment FeedPost on Post {
-    ...SharedPostInfo
-  }
-
-  fragment SharedPostInfo on Post {
-    id
-    title
-    image
-    readTime
-    permalink
-    commentsPermalink
-    summary
-    createdAt
-    numUpvotes
-    numComments
-    author {
-      ...UserShortInfo
+    fragment FeedPost on Post {
+        ...SharedPostInfo
     }
-    tags
-  }
 
-  fragment UserShortInfo on User {
-    id
-    name
-    image
-    permalink
-    username
-    bio
-  }
+    fragment SharedPostInfo on Post {
+        id
+        title
+        image
+        readTime
+        permalink
+        commentsPermalink
+        summary
+        createdAt
+        numUpvotes
+        numComments
+        author {
+            ...UserShortInfo
+        }
+        tags
+    }
+
+    fragment UserShortInfo on User {
+        id
+        name
+        image
+        permalink
+        username
+        bio
+    }
 `;
 
 export const route: Route = {

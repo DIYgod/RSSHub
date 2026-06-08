@@ -68,12 +68,12 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 
-                const ssr = JSON.parse(`{${detailResponse.data.match(/window\.__INITIAL_STATE__ = {(.*)}/)[1]}}`);
+                const ssr = JSON.parse(`{${detailResponse.data.match(/window\.__INITIAL_STATE__ = \{(.*)\}/)[1]}}`);
 
                 const content = load(ssr.post.detail.content, null, false);
                 content('img').each((_, img) => {
-                    img.attribs.src = img.attribs.src.split('?x-oss-process')[0];
-                    img.attribs.src = img.attribs.src.split('!heading')[0];
+                    img.attribs.src = img.attribs.src.split('?x-oss-process', 1)[0];
+                    img.attribs.src = img.attribs.src.split('!heading', 1)[0];
                 });
 
                 item.description = content.html();
