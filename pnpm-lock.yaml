@@ -212,8 +212,8 @@ importers:
         specifier: 9.4.0
         version: 9.4.0
       rate-limiter-flexible:
-        specifier: 11.1.1
-        version: 11.1.1
+        specifier: 11.2.0
+        version: 11.2.0
       re2js:
         specifier: 2.8.3
         version: 2.8.3
@@ -3375,7 +3375,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.48:
@@ -5029,8 +5029,8 @@ packages:
   ramda@0.32.0:
     resolution: {integrity: sha512-GQWAHhxhxWBWA8oIBr1XahFVjQ9Fic6MK9ikijfd4TZHfE2+urfk+irVlR5VOn48uwMgM+loRRBJd6Yjsbc0zQ==}
 
-  rate-limiter-flexible@11.1.1:
-    resolution: {integrity: sha512-ZT/GnTlqjX+vEnI39tubPX8bQY7xIvp0e0q+DgxiA2RTfwj7t/jy6GTgdkJNb22qPCqjXJLoPLxff7RolmGc8Q==}
+  rate-limiter-flexible@11.2.0:
+    resolution: {integrity: sha512-L0eIK+BmFMi6NcvmtEg7RSswOFKi9MMD5RhBIypFfOve+G6Jl1Xbb8qEHgK3uRzNtkOFYF0L9f7P4rSf2PnUVw==}
 
   re2js@2.8.3:
     resolution: {integrity: sha512-lUKeXVwMqU302DM/WaOm33XF2hhzjGUZ8CbLg4zSAMpW2PPkJ2+is25AROevNiw+DytFmKU5gsQ92cB1Kxy+fA==}
@@ -10491,7 +10491,7 @@ snapshots:
 
   ramda@0.32.0: {}
 
-  rate-limiter-flexible@11.1.1: {}
+  rate-limiter-flexible@11.2.0: {}
 
   re2js@2.8.3: {}
 
