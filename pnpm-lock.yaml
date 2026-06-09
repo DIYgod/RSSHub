@@ -384,8 +384,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1(@types/node@25.9.2)(eslint@10.4.1(jiti@2.6.1))
       eslint-plugin-n:
-        specifier: 18.0.1
-        version: 18.0.1(eslint@10.4.1(jiti@2.6.1))(ts-declaration-location@1.0.7(typescript@5.9.3))(typescript@5.9.3)
+        specifier: 18.1.0
+        version: 18.1.0(eslint@10.4.1(jiti@2.6.1))(ts-declaration-location@1.0.7(typescript@5.9.3))(typescript@5.9.3)
       eslint-plugin-regexp:
         specifier: 3.1.0
         version: 3.1.0(eslint@10.4.1(jiti@2.6.1))
@@ -3468,8 +3468,8 @@ packages:
   endpoint@0.4.5:
     resolution: {integrity: sha512-oA2ALUF+d4Y0I8/WMV/0BuAZGHxfIdAygr9ZXP4rfzmp5zpYZmYKHKAbqRQnrE1YGdPhVg4D24CQkyx2qYEoHg==}
 
-  enhanced-resolve@5.21.0:
-    resolution: {integrity: sha512-otxSQPw4lkOZWkHpB3zaEQs6gWYEsmX4xQF68ElXC/TWvGxGMSGOvoNbaLXm6/cS/fSfHtsEdw90y20PCd+sCA==}
+  enhanced-resolve@5.23.0:
+    resolution: {integrity: sha512-yJN/BOOLxcOW2aQgeif9mSnaUB8KtvmMMp56oA1kx1CRfBKbhZm2pJ+NBY+3eOboHxix8lfjWpHE0Ei5U8RbSA==}
     engines: {node: '>=10.13.0'}
 
   entities@2.2.0:
@@ -3572,8 +3572,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@18.0.1:
-    resolution: {integrity: sha512-q3ARhk+eZRc7myR0KHx+R3/GJeOHF+Ir6PK95Pu2tEX8Sl/4BIpmmVLva2kPrjC2gCmn6WHlHm+3yeo6Rxhycw==}
+  eslint-plugin-n@18.1.0:
+    resolution: {integrity: sha512-hkUm9EtnFV2h2fE16jNVUfCVUqvPzI7fGLsFdun5lFt/pbmf2kCgDx6ymi9rx+NCUSggBmurJCZOfG20JBs/kg==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=8.57.1'
@@ -8486,7 +8486,7 @@ snapshots:
     dependencies:
       inherits: 2.0.4
 
-  enhanced-resolve@5.21.0:
+  enhanced-resolve@5.23.0:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -8664,17 +8664,17 @@ snapshots:
       eslint: 10.4.1(jiti@2.6.1)
       eslint-compat-utils: 0.5.1(eslint@10.4.1(jiti@2.6.1))
 
-  eslint-plugin-n@18.0.1(eslint@10.4.1(jiti@2.6.1))(ts-declaration-location@1.0.7(typescript@5.9.3))(typescript@5.9.3):
+  eslint-plugin-n@18.1.0(eslint@10.4.1(jiti@2.6.1))(ts-declaration-location@1.0.7(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@10.4.1(jiti@2.6.1))
-      enhanced-resolve: 5.21.0
+      enhanced-resolve: 5.23.0
       eslint: 10.4.1(jiti@2.6.1)
       eslint-plugin-es-x: 7.8.0(eslint@10.4.1(jiti@2.6.1))
       get-tsconfig: 4.14.0
       globals: 15.15.0
       globrex: 0.1.2
       ignore: 5.3.2
-      semver: 7.8.2
+      semver: 7.8.3
     optionalDependencies:
       ts-declaration-location: 1.0.7(typescript@5.9.3)
       typescript: 5.9.3
