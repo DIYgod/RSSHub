@@ -16162,6 +16162,19 @@
       }
     ]
   },
+  "efe.com": {
+    "_name": "EFE Noticias",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/efe/:category"
+      }
+    ]
+  },
   "egsea.com": {
     "_name": "e 公司",
     ".": [
