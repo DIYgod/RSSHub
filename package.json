@@ -95,7 +95,7 @@
         "http-cookie-agent": "8.0.0",
         "https-proxy-agent": "9.0.0",
         "iconv-lite": "0.7.2",
-        "imapflow": "1.3.6",
+        "imapflow": "1.3.7",
         "instagram-private-api": "1.46.1",
         "ioredis": "5.11.1",
         "ip-regex": "5.0.0",
