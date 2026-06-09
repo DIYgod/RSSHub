@@ -138,7 +138,7 @@ importers:
         version: 10.0.0
       http-cookie-agent:
         specifier: 8.0.0
-        version: 8.0.0(tough-cookie@6.0.1)(undici@8.4.0)
+        version: 8.0.0(tough-cookie@6.0.1)(undici@8.4.1)
       https-proxy-agent:
         specifier: 9.0.0
         version: 9.0.0
@@ -260,8 +260,8 @@ importers:
         specifier: 1.6.4
         version: 1.6.4
       undici:
-        specifier: 8.4.0
-        version: 8.4.0
+        specifier: 8.4.1
+        version: 8.4.1
       uuid:
         specifier: 14.0.0
         version: 14.0.0
@@ -430,7 +430,7 @@ importers:
         version: 2.13.4(@types/node@25.9.2)(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.30
-        version: 1.0.30(undici@8.4.0)(utf-8-validate@5.0.10)
+        version: 1.0.30(undici@8.4.1)(utf-8-validate@5.0.10)
       oxfmt:
         specifier: 0.53.0
         version: 0.53.0
@@ -5662,8 +5662,8 @@ packages:
     resolution: {integrity: sha512-uZsKNuzQxDMUY6M3pIMvy5tvlGmtq8XJ2oLAkfRKGNu+1VQAIvLy2xIVG5ATZl5wDXl/tddByAWCizRbOme+TA==}
     engines: {node: '>=20.18.1'}
 
-  undici@8.4.0:
-    resolution: {integrity: sha512-tDR4LgFBeV7YBWOFMlmbhtrnFVWuZ6HKbkG+88/csQdhK2tPlW78PnLI2VRjIQtTlslvgSZ4R43WBE+4g6rhng==}
+  undici@8.4.1:
+    resolution: {integrity: sha512-RNHlB4fxZK0IrkhBsxhlbx7s8kFWwr7rzzOqj5nvZugw3ig3RsB7KW3zVlV0eu8POl+rx5d1hmL7rRg0z1owow==}
     engines: {node: '>=22.19.0'}
 
   unenv@2.0.0-rc.24:
@@ -9162,12 +9162,12 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@8.0.0(tough-cookie@6.0.1)(undici@8.4.0):
+  http-cookie-agent@8.0.0(tough-cookie@6.0.1)(undici@8.4.1):
     dependencies:
       agent-base: 9.0.0
       tough-cookie: 6.0.1
     optionalDependencies:
-      undici: 8.4.0
+      undici: 8.4.1
 
   http-proxy-agent@9.0.0:
     dependencies:
@@ -10079,13 +10079,13 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.30(undici@8.4.0)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.30(undici@8.4.1)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.1.0
       iconv-lite: 0.7.2
       inspector: 0.5.0
       open: 8.4.2
-      undici: 8.4.0
+      undici: 8.4.1
       ws: 8.20.1(bufferutil@4.1.0)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - utf-8-validate
@@ -11168,7 +11168,7 @@ snapshots:
 
   undici@7.27.2: {}
 
-  undici@8.4.0: {}
+  undici@8.4.1: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
