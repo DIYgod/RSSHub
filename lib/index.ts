@@ -12,7 +12,7 @@ import logger from '@/utils/logger';
 const port = config.connect.port;
 const hostIPList = getLocalhostAddress();
 
-let server;
+let server: ReturnType<typeof serve> | undefined;
 if (config.enableCluster) {
     if (cluster.isPrimary) {
         logger.info(`🎉 RSSHub is running on port ${port}! Cheers!`);

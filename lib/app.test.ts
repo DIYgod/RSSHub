@@ -17,7 +17,8 @@ describe('request-rewriter', () => {
         await app.request('/test/httperror');
 
         // headers
-        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        expect(fetchSpy.mock.lastCall).toBeDefined();
+        const headers: Headers = fetchSpy.mock.lastCall[0].headers;
         expect(headers.get('user-agent')).toMatch(/Chrome/);
     });
 });
