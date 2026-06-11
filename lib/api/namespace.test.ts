@@ -46,5 +46,4 @@ describe('api/namespace', () => {
         expect(response.status).toBe(200);
         expect(await response.json()).toEqual(namespaces[nestedKey]);
     });
-
 });
