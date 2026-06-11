@@ -8,10 +8,20 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'http://kw.beijing.gov.cn';
 
 export const route: Route = {
-    path: '/beijing/kw/:channel',
-    name: 'Unknown',
+    path: '/kw/:channel',
+    name: '北京市科学技术委员会、中关村科技园区管理委员会',
+    example: '/gov/beijing/kw/col736',
+    parameters: { channel: '频道' },
+    radar: [
+        {
+            source: ['kw.beijing.gov.cn/col/:channel/index.html'],
+        },
+    ],
     maintainers: ['Fatpandac'],
     handler,
+    description: `频道参数可在官网获取，如：
+
+\`http://kw.beijing.gov.cn/col/col736/index.html\` 对应 \`/gov/beijing/kw/col736\``,
 };
 
 async function handler(ctx) {

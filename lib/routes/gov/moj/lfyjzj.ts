@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const DOMAIN = 'www.moj.gov.cn';
 
 export const route: Route = {
-    path: '/moj/lfyjzj',
+    path: '/lfyjzj',
     categories: ['government'],
     example: '/gov/moj/lfyjzj',
     parameters: {},

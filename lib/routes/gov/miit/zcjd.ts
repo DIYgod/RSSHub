@@ -10,7 +10,7 @@ const baseUrl = 'https://www.miit.gov.cn';
 const siteUrl = `${baseUrl}/zwgk/zcjd/index.html`;
 
 export const route: Route = {
-    path: '/miit/zcjd',
+    path: '/zcjd',
     categories: ['government'],
     example: '/gov/miit/zcjd',
     parameters: {},

@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const baseUrl = 'https://www.aac.moj.gov.tw';
 
 export const route: Route = {
-    path: '/moj/aac/news/:type?',
+    path: '/aac/news/:type?',
     categories: ['government'],
     example: '/gov/moj/aac/news',
     parameters: { type: '資料大類，留空為全部' },

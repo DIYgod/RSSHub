@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
-    path: '/miit/yjzj',
+    path: '/yjzj',
     categories: ['government'],
     example: '/gov/miit/yjzj',
     parameters: {},

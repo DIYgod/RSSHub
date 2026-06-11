@@ -8,9 +8,9 @@ import timezone from '@/utils/timezone';
 const rootUrl = 'http://www.tqyb.com.cn';
 
 export const route: Route = {
-    path: '/guangdong/tqyb/sncsyjxh',
+    path: '/sncsyjxh',
     categories: ['forecast'],
-    example: '/gov/guangdong/tqyb/sncsyjxh',
+    example: '/tqyb/sncsyjxh',
     parameters: {},
     features: {
         requireConfig: false,

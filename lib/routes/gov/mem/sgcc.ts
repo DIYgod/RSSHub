@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/mem/gk/sgcc/:category?',
+    path: '/gk/sgcc/:category?',
     categories: ['government'],
     example: '/gov/mem/gk/sgcc/tbzdsgdcbg',
     parameters: { category: '分类，见下表，默认为挂牌督办' },
@@ -21,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.mem.gov.cn/gk/sgcc/:category'],
-            target: '/mem/gk/sgcc/:category',
+            target: '/gk/sgcc/:category',
         },
     ],
     name: '事故及灾害查处',

@@ -17,6 +17,38 @@ import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
 
+const SEPARATOR = /[/\\]/;
+
+/**
+ * A directory under lib/routes that contains a `namespace.ts` is a "namespace root". Roots are keyed by their path
+ * relative to lib/routes, joined with `/` (e.g. `gov/cn`).
+ */
+export function collectNamespaceRoots(moduleKeys: string[]): Set<string> {
+    const roots = new Set<string>();
+    for (const key of moduleKeys) {
+        const segments = key.split(SEPARATOR).filter(Boolean);
+        if (segments.at(-1) === 'namespace.ts') {
+            roots.add(segments.slice(0, -1).join('/'));
+        }
+    }
+    return roots;
+}
+
+/**
+ * A module belongs to its longest matching namespace root; modules with no matching root fall back to their first
+ * path segment (flat namespaces). `location` is the module path relative to the resolved namespace root.
+ */
+export function resolveModuleNamespace(moduleKey: string, roots: Set<string>): { namespace: string; location: string } {
+    const segments = moduleKey.split(SEPARATOR).filter(Boolean);
+    for (let i = segments.length - 1; i >= 1; i--) {
+        const candidate = segments.slice(0, i).join('/');
+        if (roots.has(candidate)) {
+            return { namespace: candidate, location: segments.slice(i).join('/') };
+        }
+    }
+    return { namespace: segments[0], location: segments.slice(1).join('/') };
+}
+
 function isSafeRoutes(routes: RoutesType): boolean {
     return Object.values(routes).every((route: Route) => !route.features?.nsfw);
 }
@@ -84,6 +116,7 @@ if (config.feature.disable_nsfw) {
 }
 
 if (Object.keys(modules).length) {
+    const namespaceRoots = collectNamespaceRoots(Object.keys(modules));
     for (const module in modules) {
         const content = modules[module] as
             | {
@@ -95,7 +128,7 @@ if (Object.keys(modules).length) {
             | {
                   apiRoute: APIRoute;
               };
-        const namespace = module.split(/[/\\]/, 2)[1];
+        const { namespace, location } = resolveModuleNamespace(module, namespaceRoots);
         if ('namespace' in content) {
             namespaces[namespace] = Object.assign(
                 {
@@ -117,13 +150,13 @@ if (Object.keys(modules).length) {
                 for (const path of content.route.path) {
                     namespaces[namespace].routes[path] = {
                         ...content.route,
-                        location: module.split(/[/\\]/).slice(2).join('/'),
+                        location,
                     };
                 }
             } else {
                 namespaces[namespace].routes[content.route.path] = {
                     ...content.route,
-                    location: module.split(/[/\\]/).slice(2).join('/'),
+                    location,
                 };
             }
         } else if ('apiRoute' in content) {
@@ -138,13 +171,13 @@ if (Object.keys(modules).length) {
                 for (const path of content.apiRoute.path) {
                     namespaces[namespace].apiRoutes[path] = {
                         ...content.apiRoute,
-                        location: module.split(/[/\\]/).slice(2).join('/'),
+                        location,
                     };
                 }
             } else {
                 namespaces[namespace].apiRoutes[content.apiRoute.path] = {
                     ...content.apiRoute,
-                    location: module.split(/[/\\]/).slice(2).join('/'),
+                    location,
                 };
             }
         }
@@ -154,7 +187,7 @@ if (Object.keys(modules).length) {
 export { namespaces };
 
 const app = new Hono();
-const sortRoutes = (
+export const sortRoutes = (
     routes: Record<
         string,
         Route & {
@@ -178,12 +211,20 @@ const sortRoutes = (
             if (segmentA.startsWith(':') !== segmentB.startsWith(':')) {
                 return segmentA.startsWith(':') ? 1 : -1;
             }
+
+            // Regex-constrained parameters have priority over plain parameters
+            if (segmentA.startsWith(':') && segmentA.includes('{') !== segmentB.includes('{')) {
+                return segmentA.includes('{') ? -1 : 1;
+            }
         }
 
         return 0;
     });
 
-for (const namespace in namespaces) {
+// Deeper namespaces register first so a parent's param routes cannot shadow them
+const namespacesByDepth = Object.keys(namespaces).toSorted((a, b) => b.split('/').length - a.split('/').length);
+
+for (const namespace of namespacesByDepth) {
     const subApp = app.basePath(`/${namespace}`);
 
     const namespaceData = namespaces[namespace];
@@ -217,7 +258,7 @@ for (const namespace in namespaces) {
     }
 }
 
-for (const namespace in namespaces) {
+for (const namespace of namespacesByDepth) {
     const subApp = app.basePath(`/api/${namespace}`);
 
     const namespaceData = namespaces[namespace];

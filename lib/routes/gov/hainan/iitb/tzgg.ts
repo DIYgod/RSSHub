@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/hainan/iitb/tzgg',
+    path: '/iitb/tzgg',
     categories: ['government'],
     example: '/gov/hainan/iitb/tzgg',
     url: 'iitb.hainan.gov.cn/iitb/tzgg/list2.shtml',

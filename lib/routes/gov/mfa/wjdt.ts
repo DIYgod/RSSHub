@@ -19,8 +19,8 @@ const categories = {
 };
 
 export const route: Route = {
-    path: ['/fmprc/:category?', '/mfa/wjdt/:category?'],
-    name: 'Unknown',
+    path: '/wjdt/:category?',
+    name: '外交动态',
     maintainers: ['nicolaszf', 'nczitzk'],
     handler,
     description: `| 分类       | category |

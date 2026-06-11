@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/tianjin/tjrcgzw-notice/:cate/:subCate',
+    path: '/tjrcgzw-notice/:cate/:subCate',
     categories: ['government'],
     example: '/gov/tianjin/tjrcgzw-notice/rczc/sjrczc/',
     parameters: {
@@ -14,10 +14,10 @@ export const route: Route = {
     radar: [
         {
             source: ['hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/'],
-            target: '/tianjin/tjrcgzw-notice/:cate/:subCate',
+            target: '/tjrcgzw-notice/:cate/:subCate',
         },
     ],
-    name: '天津人才工作网-公告',
+    name: '人才工作网-公告',
     url: 'hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/',
     maintainers: ['HaoyuLee'],
     async handler(ctx) {

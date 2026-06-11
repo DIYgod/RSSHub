@@ -4,7 +4,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -40,18 +39,18 @@ const renderDescription = ({ description, attachments }: DescriptionProps): stri
     );
 
 export const route: Route = {
-    path: '/stats/*',
-    name: '国家统计局 通用',
+    path: '/:path{.+}?',
+    name: '通用',
     url: 'www.stats.gov.cn',
     categories: ['government'],
     maintainers: ['bigfei', 'nczitzk', 'reply2future'],
     example: '/gov/stats/sj/zxfb',
+    parameters: { path: '路径，默认为 统计数据 > 最新发布' },
     handler,
     radar: [
         {
-            title: '国家统计局 通用',
             source: ['www.stats.gov.cn/*path'],
-            target: '/gov/stats/*path',
+            target: '/:path',
         },
     ],
     description: `::: tip
@@ -77,7 +76,8 @@ async function handler(ctx) {
         .find((s) => s.startsWith('wzws_sessionid='))
         ?.split(';', 1)[0] as string;
 
-    const pathname = getSubPath(ctx) === '/stats' ? '/sj/zxfb/' : getSubPath(ctx).replace(/^\/stats(.*)/, '$1');
+    const { path = 'sj/zxfb' } = ctx.req.param();
+    const pathname = `/${path}`;
     const currentUrl = `${rootUrl}${pathname.endsWith('/') ? pathname : pathname + '/'}`;
 
     const response = await ofetch(currentUrl, {

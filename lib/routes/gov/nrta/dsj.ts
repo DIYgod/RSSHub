@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/nrta/dsj/:category?',
+    path: '/dsj/:category?',
     categories: ['government'],
     example: '/gov/nrta/dsj',
     parameters: { category: '分类，见下表，默认为备案公示' },

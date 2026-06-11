@@ -190,7 +190,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
     );
 
 export const route: Route = {
-    path: '/hangzhou/zwfw',
+    path: '/zwfw',
     categories: ['government'],
     example: '/gov/hangzhou/zwfw',
     features: {

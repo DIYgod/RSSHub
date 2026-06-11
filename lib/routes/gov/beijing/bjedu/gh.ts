@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/beijing/bjedu/gh/:urlPath?',
+    path: '/bjedu/gh/:urlPath?',
     categories: ['government'],
     example: '/gov/beijing/bjedu/gh',
     parameters: { urlPath: '路径，默认为 `zxtzgg`' },
@@ -22,10 +22,10 @@ export const route: Route = {
     radar: [
         {
             source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
-            target: '/beijing/bjedu/gh/:urlPath',
+            target: '/bjedu/gh/:urlPath',
         },
     ],
-    name: '通用',
+    name: '教育委员会 - 通用',
     maintainers: ['TonyRL'],
     handler,
     description: `::: tip
@@ -39,7 +39,8 @@ async function handler(ctx) {
     const baseUrl = 'https://gh.bjedu.cn';
     const { urlPath = 'zxtzgg' } = ctx.req.param();
 
-    const { data: response, url: link } = await got(`${baseUrl}/ghsite/${urlPath}/index.html`);
+    const currentUrl = `${baseUrl}/ghsite/${urlPath}/index.html`;
+    const { data: response, url: link = currentUrl } = await got(currentUrl);
     const $ = load(response);
 
     const list = $('.content li a')
