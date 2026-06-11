@@ -30,7 +30,7 @@ export const route: Route = {
             url: apiUrl,
         });
         const $ = load(response.data, {
-            xmlMode: true,
+            xml: true,
         });
 
         const items = $('record')

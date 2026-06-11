@@ -78,7 +78,7 @@ export const route: Route = {
         });
 
         const $ = load(response.data, {
-            xmlMode: true, // use xmlMode to preserve CDATA sections inside <script>
+            xml: true, // use xmlMode to preserve CDATA sections inside <script>
         });
 
         const items = await Promise.all(
