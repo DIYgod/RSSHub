@@ -7,7 +7,7 @@ import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/pbc/tradeAnnouncement',
+    path: '/tradeAnnouncement',
     categories: ['finance'],
     example: '/gov/pbc/tradeAnnouncement',
     parameters: {},

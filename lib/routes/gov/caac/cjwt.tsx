@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/caac/cjwt/:category?',
+    path: '/cjwt/:category?',
     categories: ['government'],
     example: '/gov/caac/cjwt',
     parameters: { category: '分类，见下表，默认为全部' },
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['caac.gov.cn/HDJL/'],
-            target: '/caac/cjwt',
+            target: '/cjwt',
         },
     ],
     name: '公众留言',

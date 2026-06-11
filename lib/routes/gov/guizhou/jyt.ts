@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/guizhou/jyt/tzgg',
+    path: '/jyt/tzgg',
     categories: ['government'],
     example: '/gov/guizhou/jyt/tzgg',
     parameters: {},
@@ -22,10 +22,10 @@ export const route: Route = {
     radar: [
         {
             source: ['jyt.guizhou.gov.cn/zwgk/tzgg/', 'jyt.guizhou.gov.cn/zwgk/tzgg/index.html'],
-            target: '/guizhou/jyt/tzgg',
+            target: '/jyt/tzgg',
         },
     ],
-    name: '贵州省教育厅 - 通知公告',
+    name: '教育厅 - 通知公告',
     maintainers: ['sheetung'],
     handler,
     url: 'jyt.guizhou.gov.cn/zwgk/tzgg/',

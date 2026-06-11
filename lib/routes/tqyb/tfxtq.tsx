@@ -7,9 +7,9 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'http://www.tqyb.com.cn';
 
 export const route: Route = {
-    path: '/guangdong/tqyb/tfxtq',
+    path: '/tfxtq',
     categories: ['forecast'],
-    example: '/gov/guangdong/tqyb/tfxtq',
+    example: '/tqyb/tfxtq',
     parameters: {},
     features: {
         requireConfig: false,

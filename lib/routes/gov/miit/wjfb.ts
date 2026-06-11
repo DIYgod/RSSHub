@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
-    path: '/miit/wjfb/:ministry',
+    path: '/wjfb/:ministry',
     categories: ['government'],
     example: '/gov/miit/wjfb/ghs',
     parameters: { ministry: '部门缩写，可以在对应 URL 中获取' },

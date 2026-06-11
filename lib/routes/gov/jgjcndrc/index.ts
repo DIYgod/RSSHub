@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/jgjcndrc/:columnId?/:subColumnId?',
+    path: '/:columnId?/:subColumnId?',
     name: '中华人民共和国国家发展和改革委员会价格监测中心',
     url: 'www.jgjcndrc.org.cn',
     maintainers: ['nczitzk'],

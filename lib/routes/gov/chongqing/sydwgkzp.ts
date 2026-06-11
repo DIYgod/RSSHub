@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/chongqing/sydwgkzp/:year?',
+    path: '/sydwgkzp/:year?',
     url: 'rlsbj.cq.gov.cn/',
     categories: ['government'],
     example: '/gov/chongqing/sydwgkzp',
@@ -19,7 +19,7 @@ export const route: Route = {
             source: ['rlsbj.cq.gov.cn/'],
         },
     ],
-    name: '重庆市人民政府 人力社保局 - 事业单位公开招聘',
+    name: '人力社保局 - 事业单位公开招聘',
     maintainers: ['MajexH'],
     handler,
 };

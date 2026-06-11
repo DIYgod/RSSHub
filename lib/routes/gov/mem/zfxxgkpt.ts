@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/mem/gk/zfxxgkpt/fdzdgknr',
+    path: '/gk/zfxxgkpt/fdzdgknr',
     categories: ['government'],
     example: '/gov/mem/gk/zfxxgkpt/fdzdgknr',
     parameters: {},
@@ -21,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr'],
-            target: '/mem/gk/zfxxgkpt/fdzdgknr',
+            target: '/gk/zfxxgkpt/fdzdgknr',
         },
     ],
     name: '法定主动公开内容',

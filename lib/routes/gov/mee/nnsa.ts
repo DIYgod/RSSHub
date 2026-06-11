@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/mee/nnsa/:category{.+}?',
+    path: '/nnsa/:category{.+}?',
     name: '国家核安全局',
     url: 'nnsa.mee.gov.cn',
     maintainers: ['nczitzk'],
@@ -245,102 +245,102 @@ export const route: Route = {
     radar: [
         {
             source: ['nnsa.mee.gov.cn/:category'],
-            target: '/mee/nnsa/:category',
+            target: '/nnsa/:category',
         },
         {
             title: '要闻动态 - 时政要闻',
             source: ['nnsa.mee.gov.cn/ywdt/szyw/'],
-            target: '/mee/nnsa/ywdt/szyw',
+            target: '/nnsa/ywdt/szyw',
         },
         {
             title: '要闻动态 - 环境要闻',
             source: ['nnsa.mee.gov.cn/ywdt/hjyw/'],
-            target: '/mee/nnsa/ywdt/hjyw',
+            target: '/nnsa/ywdt/hjyw',
         },
         {
             title: '要闻动态 - 监管动态',
             source: ['nnsa.mee.gov.cn/ywdt/gzdt/'],
-            target: '/mee/nnsa/ywdt/gzdt',
+            target: '/nnsa/ywdt/gzdt',
         },
         {
             title: '要闻动态 - 行业资讯',
             source: ['nnsa.mee.gov.cn/ywdt/hyzx/'],
-            target: '/mee/nnsa/ywdt/hyzx',
+            target: '/nnsa/ywdt/hyzx',
         },
         {
             title: '要闻动态 - 国际资讯',
             source: ['nnsa.mee.gov.cn/ywdt/gjzx/'],
-            target: '/mee/nnsa/ywdt/gjzx',
+            target: '/nnsa/ywdt/gjzx',
         },
         {
             title: '要闻动态 - 公示公告',
             source: ['nnsa.mee.gov.cn/ywdt/gsqg/'],
-            target: '/mee/nnsa/ywdt/gsqg',
+            target: '/nnsa/ywdt/gsqg',
         },
         {
             title: '要闻动态 - 曝光台',
             source: ['nnsa.mee.gov.cn/ywdt/bgt/'],
-            target: '/mee/nnsa/ywdt/bgt',
+            target: '/nnsa/ywdt/bgt',
         },
         {
             title: '政策文件 - 中央有关文件',
             source: ['nnsa.mee.gov.cn/zcwj/zyygwj/'],
-            target: '/mee/nnsa/zcwj/zyygwj',
+            target: '/nnsa/zcwj/zyygwj',
         },
         {
             title: '政策文件 - 国务院有关文件',
             source: ['nnsa.mee.gov.cn/zcwj/gwyygwj/'],
-            target: '/mee/nnsa/zcwj/gwyygwj',
+            target: '/nnsa/zcwj/gwyygwj',
         },
         {
             title: '政策文件 - 部文件',
             source: ['nnsa.mee.gov.cn/zcwj/bwj/'],
-            target: '/mee/nnsa/zcwj/bwj',
+            target: '/nnsa/zcwj/bwj',
         },
         {
             title: '政策文件 - 核安全局文件',
             source: ['nnsa.mee.gov.cn/zcwj/haqjwj/'],
-            target: '/mee/nnsa/zcwj/haqjwj',
+            target: '/nnsa/zcwj/haqjwj',
         },
         {
             title: '政策文件 - 其他',
             source: ['nnsa.mee.gov.cn/zcwj/qt/'],
-            target: '/mee/nnsa/zcwj/qt',
+            target: '/nnsa/zcwj/qt',
         },
         {
             title: '政策文件 - 解读',
             source: ['nnsa.mee.gov.cn/zcwj/jd/'],
-            target: '/mee/nnsa/zcwj/jd',
+            target: '/nnsa/zcwj/jd',
         },
         {
             title: '业务工作 - 核动力厂和研究堆',
             source: ['nnsa.mee.gov.cn/ywdh/fyd/'],
-            target: '/mee/nnsa/ywdh/fyd',
+            target: '/nnsa/ywdh/fyd',
         },
         {
             title: '业务工作 - 核燃料、放废',
             source: ['nnsa.mee.gov.cn/ywdh/hrlff/'],
-            target: '/mee/nnsa/ywdh/hrlff',
+            target: '/nnsa/ywdh/hrlff',
         },
         {
             title: '业务工作 - 核技术、电磁、矿冶',
             source: ['nnsa.mee.gov.cn/ywdh/hjsdcky/'],
-            target: '/mee/nnsa/ywdh/hjsdcky',
+            target: '/nnsa/ywdh/hjsdcky',
         },
         {
             title: '业务工作 - 监测与应急',
             source: ['nnsa.mee.gov.cn/ywdh/jcyj_1/'],
-            target: '/mee/nnsa/ywdh/jcyj_1',
+            target: '/nnsa/ywdh/jcyj_1',
         },
         {
             title: '业务工作 - 核安全设备与人员',
             source: ['nnsa.mee.gov.cn/ywdh/haqsbry/'],
-            target: '/mee/nnsa/ywdh/haqsbry',
+            target: '/nnsa/ywdh/haqsbry',
         },
         {
             title: '业务工作 - 国际合作',
             source: ['nnsa.mee.gov.cn/ywdh/gjhz/'],
-            target: '/mee/nnsa/ywdh/gjhz',
+            target: '/nnsa/ywdh/gjhz',
         },
     ],
     view: ViewType.Articles,
