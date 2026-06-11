@@ -17,7 +17,7 @@ const extractDates = (durationStr: string) => {
         return { startDate, endDate };
     }
 
-    const parts = durationStr.split(/——|-|—|~/).map((p) => p.trim());
+    const parts = durationStr.split(/[-—~]+/).map((p) => p.trim());
     const startStr = parts[0];
     const endStr = parts[1];
 
