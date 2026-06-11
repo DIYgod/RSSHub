@@ -477,7 +477,6 @@ export type RoutePath =
   | `/caus/:category?`
   | `/cbaigui*`
   | `/cbc/topics/:topic?`
-  | `/cbirc/:category?`
   | `/cbndata/information/:id?`
   | `/cbnweek/`
   | `/cbpanet/dzp_news/:bigId?/:smallId?`
@@ -1183,39 +1182,44 @@ export type RoutePath =
   | `/google/search/:keyword/:language?`
   | `/gov/ah/kjt/:category{.+}?`
   | `/gov/beijing/bjedu/gh/:urlPath?`
-  | `/gov/beijing/bphc/*`
+  | `/gov/beijing/bphc/:caty`
   | `/gov/beijing/jw/tzgg`
   | `/gov/beijing/kw/:channel`
   | `/gov/caac/cjwt/:category?`
-  | `/gov/cac/*`
-  | `/gov/cbirc/:id?`
-  | `/gov/ccdi/*`
+  | `/gov/cac/:path{.+}`
+  | `/gov/ccdi/:path{.+}?`
   | `/gov/chinamine-safety/xw/:category{.+}?`
   | `/gov/chinamine-safety/zfxxgk/:category{.+}?`
   | `/gov/chinatax/latest`
   | `/gov/chongqing/gzw/:category{.+}?`
   | `/gov/chongqing/rsks`
   | `/gov/chongqing/sydwgkzp/:year?`
-  | `/gov/cmse/*`
   | `/gov/cmse/fxrw`
+  | `/gov/cmse/fxrw/:id/:category`
+  | `/gov/cmse/gfgg`
+  | `/gov/cmse/gjhz`
+  | `/gov/cmse/hqsy/:id`
+  | `/gov/cmse/kjkx/:id`
+  | `/gov/cmse/kpjy/:id`
+  | `/gov/cmse/xwzx/yzjz`
+  | `/gov/cmse/xwzx/zhxw`
+  | `/gov/cmse/ztbd/:id`
   | `/gov/cn/news/:uid`
-  | `/gov/cnnic/*`
+  | `/gov/cnnic/:path{.+}?`
   | `/gov/csrc/auditstatus/:apply_id`
   | `/gov/csrc/news/:suffix{.+}?`
   | `/gov/csrc/zfxxgk_zdgk/:id?`
   | `/gov/customs/list/:gchannel?`
-  | `/gov/dianbai/*`
-  | `/gov/fmprc/:category?`
+  | `/gov/dianbai/:path{.+}`
   | `/gov/forestry/gjlckjdjt/:category?`
-  | `/gov/gaozhou/*`
-  | `/gov/guangdong/tqyb/sncsyjxh`
-  | `/gov/guangdong/tqyb/tfxtq`
+  | `/gov/gaozhou/:path{.+}`
   | `/gov/guizhou/jyt/tzgg`
-  | `/gov/gz/:channel/:category`
+  | `/gov/gz/xw/:category`
+  | `/gov/gz/zwgk/:category`
   | `/gov/hainan/iitb/tzgg`
   | `/gov/hangzhou/zwfw`
   | `/gov/hebei/czt/xwdt/:category?`
-  | `/gov/huazhou/*`
+  | `/gov/huazhou/:path{.+}`
   | `/gov/huizhou/zwgk/:category?`
   | `/gov/hunan/changsha/major-email`
   | `/gov/immiau/news`
@@ -1223,20 +1227,20 @@ export type RoutePath =
   | `/gov/jiangsu/wlt/:page?`
   | `/gov/jinan/healthcommission/medical_exam_notice`
   | `/gov/lswz/:category{.+}?`
-  | `/gov/maoming/*`
+  | `/gov/maoming/:path{.+}`
   | `/gov/maonan/:category`
   | `/gov/mee/nnsa/:category{.+}?`
   | `/gov/mee/ywdt/:category?`
   | `/gov/mem/gk/sgcc/:category?`
   | `/gov/mem/gk/zfxxgkpt/fdzdgknr`
   | `/gov/mfa/wjdt/:category?`
-  | `/gov/mgs/*`
+  | `/gov/mgs/:path{.+}`
   | `/gov/miit/wjfb/:ministry`
   | `/gov/miit/wjgs`
   | `/gov/miit/yjzj`
   | `/gov/miit/zcjd`
   | `/gov/miit/zcwj`
-  | `/gov/mmht/*`
+  | `/gov/mmht/:path{.+}`
   | `/gov/moa/gjs/:category{.+}?`
   | `/gov/moa/suburl/:suburl{.+}`
   | `/gov/moa/szcpxx`
@@ -1253,13 +1257,14 @@ export type RoutePath =
   | `/gov/ndrc/xwdt/:category{.+}?`
   | `/gov/ndrc/zfxxgk`
   | `/gov/nea/sjzz/:bureau`
+  | `/gov/nfra/:id?`
   | `/gov/nifdc/:path{.+}?`
-  | `/gov/nmpa/*`
-  | `/gov/nopss/*`
+  | `/gov/nmpa/:path{.+}`
+  | `/gov/nopss/:path{.+}?`
   | `/gov/npc/:caty`
   | `/gov/nrta/dsj/:category?`
   | `/gov/nrta/news/:category?`
-  | `/gov/nsfc/*`
+  | `/gov/nsfc/:path{.+}?`
   | `/gov/pbc/goutongjiaoliu`
   | `/gov/pbc/gzlw`
   | `/gov/pbc/tradeAnnouncement`
@@ -1269,18 +1274,13 @@ export type RoutePath =
   | `/gov/safe/complaint/:site?`
   | `/gov/samr/xgzlyhd/:category?/:department?`
   | `/gov/sasac/:path{.+}`
-  | `/gov/sdb/*`
+  | `/gov/sdb/:path{.+}`
   | `/gov/sh/fgw/:category{.+}?`
   | `/gov/sh/rsj/ksxm`
   | `/gov/sh/wgj/:page?`
   | `/gov/sh/wsjkw/yqtb`
-  | `/gov/sh/yjj/*`
+  | `/gov/sh/yjj/:path{.+}?`
   | `/gov/shaanxi/kjt/:id?`
-  | `/gov/shanghai/fgw/:category{.+}?`
-  | `/gov/shanghai/rsj/ksxm`
-  | `/gov/shanghai/wgj/:page?`
-  | `/gov/shanghai/wsjkw/yqtb`
-  | `/gov/shanghai/yjj/*`
   | `/gov/shenzhen/hrss/szksy/:caty/:page?`
   | `/gov/shenzhen/szlh/zwfw/zffw/:caty`
   | `/gov/shenzhen/xxgk/zfxxgj/:caty`
@@ -1288,7 +1288,7 @@ export type RoutePath =
   | `/gov/shenzhen/zzb/:caty/:page?`
   | `/gov/sichuan/deyang/govpublicinfo/:countyName/:infoType?`
   | `/gov/sichuan/deyang/mztoday/:infoType?`
-  | `/gov/stats/*`
+  | `/gov/stats/:path{.+}?`
   | `/gov/suzhou/doc`
   | `/gov/suzhou/fg/:category{.+}?`
   | `/gov/suzhou/news/:uid`
@@ -1296,7 +1296,7 @@ export type RoutePath =
   | `/gov/tianjin/tjftz-notice/:channelId`
   | `/gov/tianjin/tjrcgzw-notice/:cate/:subCate`
   | `/gov/wuhan/sy/whyw`
-  | `/gov/xinyi/*`
+  | `/gov/xinyi/:path{.+}`
   | `/gov/xuzhou/hrss/:category?`
   | `/gov/zhejiang/gwy/:category?/:column?`
   | `/gov/zhengce/:category{.+}?`
@@ -2858,6 +2858,8 @@ export type RoutePath =
   | `/toranoana/news/:category?`
   | `/toutiao/user/token/:token`
   | `/towardsdatascience/latest`
+  | `/tqyb/sncsyjxh`
+  | `/tqyb/tfxtq`
   | `/tradingview/blog/:category{.+}?`
   | `/tradingview/desktop`
   | `/tradingview/pine/:version?`
