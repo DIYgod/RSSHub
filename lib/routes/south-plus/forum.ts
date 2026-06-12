@@ -13,16 +13,18 @@ const BASE_URL = 'https://south-plus.net';
 async function handler(ctx) {
     const fid = ctx.req.param('fid') ?? '8';
     const cookie = config.southplus.cookie;
-    const ua = config.southplus.ua || config.trueUA;
+    const ua = config.southplus.ua;
 
     const forumUrl = `${BASE_URL}/thread.php?fid-${fid}.html`;
 
     const headers: Record<string, string> = {
-        'User-Agent': ua,
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'zh-CN,zh;q=0.9',
         Referer: 'https://south-plus.net/index.php',
     };
+    if (ua) {
+        headers['User-Agent'] = ua;
+    }
     if (cookie) {
         headers.Cookie = cookie;
     }
@@ -166,7 +168,7 @@ eb9e6_winduser=XXXX...XXXX%3D%3D; eb9e6_cknum=YYYY...YYYY%3D; eb9e6_ck_info=%2F%
 ::: tip UA 说明
 South Plus 服务器会校验 Cookie 与浏览器 User-Agent 的绑定关系。Cookie 仅在登录时使用的浏览器版本下有效，不同版本或不同平台的 UA 均会被拒绝。
 
-如需更换 Cookie，请同时更新 \`SOUTHPLUS_UA\` 为对应浏览器的 UA 字符串。
+如需更换 Cookie，请同时设置 \`SOUTHPLUS_UA\` 为对应浏览器的 UA 字符串。未设置时 RSSHub 会自动生成随机的浏览器 UA。
 
 如果 Cookie 是通过代理获取的，需设置 RSSHub 全局环境变量 \`PROXY_URI\`（如 \`http://host:port\`），否则服务器会拒绝认证。
 :::
@@ -181,7 +183,7 @@ South Plus 服务器会校验 Cookie 与浏览器 User-Agent 的绑定关系。C
             {
                 name: 'SOUTHPLUS_UA',
                 optional: true,
-                description: '浏览器 User-Agent，需与获取 Cookie 时使用的浏览器版本完全一致。可从浏览器 F12 → Network → 请求头中复制。未设置时使用 RSSHub 内置 UA。',
+                description: '浏览器 User-Agent，需与获取 Cookie 时使用的浏览器版本完全一致。可从浏览器 F12 → Network → 请求头中复制。未设置时由 RSSHub 自动生成随机浏览器 UA。',
             },
         ],
         requirePuppeteer: false,
