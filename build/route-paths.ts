@@ -1361,6 +1361,7 @@ export type RoutePath =
   | `/hdu/auto/:type?`
   | `/hdu/cs`
   | `/hdu/cs/pg`
+  | `/hebeimuseum/list/:type?`
   | `/hebtv/nbszxd`
   | `/hedwig/posts/:site`
   | `/hellobtc/information/:channel?`

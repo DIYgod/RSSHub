@@ -4213,6 +4213,9 @@
   "/hdu/auto/:type?": [
     "jalenzz"
   ],
+  "/hebeimuseum/list/:type?": [
+    "magazian"
+  ],
   "/hebtv/nbszxd": [
     "iamqiz",
     "nczitzk"

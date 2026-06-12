@@ -22731,6 +22731,19 @@
       }
     ]
   },
+  "hebeimuseum.org.cn": {
+    "_name": "Hebei Museum",
+    "www": [
+      {
+        "title": "Temporary Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/list-26-1.html"
+        ],
+        "target": "/hebeimuseum/list"
+      }
+    ]
+  },
   "hebtv.com": {
     "_name": "河北网络广播电视台",
     "web.cmc": [
