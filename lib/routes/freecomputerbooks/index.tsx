@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -109,13 +110,14 @@ async function insertDescriptionInto(item) {
     content.find('img[src$="/hot.gif"]').remove();
     content.find(':contains(Similar Books)').nextAll().addBack().remove();
 
+    const allowedTags = [...sanitizeHtml.defaults.allowedTags, 'img'];
     item.description = renderToString(
         <>
             <figure>
                 <img src={imageURL ?? ''} />
             </figure>
-            {raw(metadata.toString())}
-            {raw(content.toString())}
+            {raw(sanitizeHtml(metadata.toString(), { allowedTags }))}
+            {raw(sanitizeHtml(content.toString(), { allowedTags }))}
         </>
     );
 
