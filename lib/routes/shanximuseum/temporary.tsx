@@ -67,8 +67,8 @@ export const route = {
                         },
                     });
 
-                    const resData = response.data?.data; // The actual data is nested under the 'data' property in the response
-                    const list = Array.isArray(resData?.list) ? resData.list : []; // resData may be undefined or not an array, resDate.list is an array
+                    const resData = response.data?.data;
+                    const list = Array.isArray(resData) ? resData : resData?.list || [];
 
                     return list.map((item) => {
                         const title = item.title;
