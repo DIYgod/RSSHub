@@ -54,7 +54,7 @@ async function handler(ctx) {
             description: routeData.description ? md.render(routeData.description) : '',
             link: `https://docs.rsshub.app/${isEnglish ? '' : 'zh/'}routes/${namespace}`,
             category: routeData.categories,
-            guid: `/${namespace}${routePath === '/' ? '' : routePath}`,
+            guid: routePath.replace(/\/$/, ''),
             author: routeData.maintainers.join(', '),
         }))
     );
