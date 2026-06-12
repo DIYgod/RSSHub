@@ -114,8 +114,7 @@ If you subscribe to [Trends & Insights (China)](https://www.joneslanglasalle.com
 | China Mainland | 中文     | zh        |
 | China Mainland | English  | en        |
 | Hong Kong      | 中文     | zh-hk     |
-| Hong Kong      | English  | en-hk     |
-`,
+| Hong Kong      | English  | en-hk     |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -172,12 +171,11 @@ If you subscribe to [Trends & Insights (China)](https://www.joneslanglasalle.com
 若订阅 [中国大陆洞察](https://www.joneslanglasalle.com.cn/zh-cn/insights)，语言参数为 \`zh\`。若订阅 [香港洞察](https://www.jll.com/zh-hk/insights)，语言参数为 \`zh-hk\`。
 :::
 
-| 地区   | 语言    | 参数  |
-| ------ | ------- | ----- |
-| 中国大陆 | 中文  | zh    |
+| 地区     | 语言    | 参数  |
+| -------- | ------- | ----- |
+| 中国大陆 | 中文    | zh    |
 | 中国大陆 | English | en    |
-| 香港   | 中文    | zh-hk |
-| 香港   | English | en-hk |
-`,
+| 香港     | 中文    | zh-hk |
+| 香港     | English | en-hk |`,
     },
 };

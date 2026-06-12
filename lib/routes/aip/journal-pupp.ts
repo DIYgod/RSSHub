@@ -18,12 +18,12 @@ const handler = async (ctx) => {
     }
 
     // use Playwright due to the obstacle by cloudflare challenge
-    const browser = await playwright();
+    const context = await playwright();
 
     const { jrnlName, list } = await cache.tryGet(
         jrnlUrl,
         async () => {
-            const response = await playwrightGet(jrnlUrl, browser);
+            const response = await playwrightGet(jrnlUrl, context);
             const $ = load(response);
             const jrnlName = $('.header-journal-title').text();
             const list = $('.card')
@@ -52,7 +52,7 @@ const handler = async (ctx) => {
         false
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: jrnlName,

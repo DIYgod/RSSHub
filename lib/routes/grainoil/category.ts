@@ -135,8 +135,7 @@ export const route: Route = {
 | 统计资料 | newsListChannel/20 |
 | 综合信息 | newsListChannel/21 |
 
-</details>
-`,
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

@@ -117,7 +117,7 @@ export const route: Route = {
     example: '/ithome/zt/xijiayi',
     parameters: { category: '专题 id，默认为 xijiayi，即 [喜加一](https://www.ithome.com/zt/xijiayi)，可在对应专题页 URL 中找到' },
     description: `::: tip
-  更多专题请见 [IT之家专题](https://www.ithome.com/zt)
+更多专题请见 [IT 之家专题](https://www.ithome.com/zt)
 :::`,
     categories: ['new-media'],
 

@@ -309,8 +309,7 @@ export const route: Route = {
 | [国产电影](https://www.hao6v.me/s/guochandianying/)  | [s/guochandianying](https://rsshub.app/6v123/s/guochandianying)   |
 | [欧洲电影](https://www.hao6v.me/s/xijudianying/)     | [s/xijudianying](https://rsshub.app/6v123/s/xijudianying)         |
 
-</details>
-`,
+</details>`,
     categories: ['multimedia'],
     features: {
         requireConfig: false,

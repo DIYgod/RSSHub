@@ -385,56 +385,56 @@ export const route: Route = {
 
 #### 编程语言
 
-| 分类                                                                                          | ID                                                                                                                 |
-| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [ActionScript](http://www.banshujiang.cn/category/programming_language/ActionScript/page/1)   | [category/programming_language/ActionScript](https://rsshub.app/banshujiang/programming_language/ActionScript)     |
-| [ASP.net](http://www.banshujiang.cn/category/programming_language/ASP.net/page/1)             | [category/programming_language/ASP.net](https://rsshub.app/banshujiang/programming_language/ASP.net)               |
-| [C](http://www.banshujiang.cn/category/programming_language/C)                                | [category/programming_language/C](https://rsshub.app/banshujiang/programming_language/C)                           |
-| [C#](http://www.banshujiang.cn/category/programming_language/C%23)                            | [category/programming_language/C%23](https://rsshub.app/banshujiang/programming_language/C%23)                     |
-| [C++](http://www.banshujiang.cn/category/programming_language/C++)                            | [category/programming_language/C++](https://rsshub.app/banshujiang/programming_language/C++)                       |
-| [CoffeeScript](http://www.banshujiang.cn/category/programming_language/CoffeeScript)          | [category/programming_language/CoffeeScript](https://rsshub.app/banshujiang/programming_language/CoffeeScript)     |
-| [CSS](http://www.banshujiang.cn/category/programming_language/CSS)                            | [category/programming_language/CSS)                                                                                |
-| [Dart](http://www.banshujiang.cn/category/programming_language/Dart)                          | [category/programming_language/Dart](https://rsshub.app/banshujiang/programming_language/Dart)                     |
-| [Elixir](http://www.banshujiang.cn/category/programming_language/Elixir)                      | [category/programming_language/Elixir](https://rsshub.app/banshujiang/programming_language/Elixir)                 |
-| [Erlang](http://www.banshujiang.cn/category/programming_language/Erlang)                      | [category/programming_language/Erlang](https://rsshub.app/banshujiang/programming_language/Erlang)                 |
-| [F#](http://www.banshujiang.cn/category/programming_language/F%23)                            | [category/programming_language/F%23](https://rsshub.app/banshujiang/programming_language/F%23)                     |
-| [Go](http://www.banshujiang.cn/category/programming_language/Go)                              | [category/programming_language/Go](https://rsshub.app/banshujiang/programming_language/Go)                         |
-| [Groovy](http://www.banshujiang.cn/category/programming_language/Groovy)                      | [category/programming_language/Groovy](https://rsshub.app/banshujiang/programming_language/Groovy)                 |
-| [Haskell](http://www.banshujiang.cn/category/programming_language/Haskell)                    | [category/programming_language/Haskell](https://rsshub.app/banshujiang/programming_language/Haskell)               |
-| [HTML5](http://www.banshujiang.cn/category/programming_language/HTML5)                        | [category/programming_language/HTML5](https://rsshub.app/banshujiang/programming_language/HTML5)                   |
-| [Java](http://www.banshujiang.cn/category/programming_language/Java)                          | [category/programming_language/Java](https://rsshub.app/banshujiang/programming_language/Java)                     |
-| [JavaScript](http://www.banshujiang.cn/category/programming_language/JavaScript)              | [category/programming_language/JavaScript](https://rsshub.app/banshujiang/programming_language/JavaScript)         |
-| [Kotlin](http://www.banshujiang.cn/category/programming_language/Kotlin)                      | [category/programming_language/Kotlin](https://rsshub.app/banshujiang/programming_language/Kotlin)                 |
-| [Lua](http://www.banshujiang.cn/category/programming_language/Lua)                            | [category/programming_language/Lua](https://rsshub.app/banshujiang/programming_language/Lua)                       |
-| [Objective-C](http://www.banshujiang.cn/category/programming_language/Objective-C)            | [category/programming_language/Objective-C](https://rsshub.app/banshujiang/programming_language/Objective-C)       |
-| [Perl](http://www.banshujiang.cn/category/programming_language/Perl)                          | [category/programming_language/Perl](https://rsshub.app/banshujiang/programming_language/Perl)                     |
-| [PHP](http://www.banshujiang.cn/category/programming_language/PHP)                            | [category/programming_language/PHP](https://rsshub.app/banshujiang/programming_language/PHP)                       |
-| [PowerShell](http://www.banshujiang.cn/category/programming_language/PowerShell)              | [category/programming_language/PowerShell](https://rsshub.app/banshujiang/programming_language/PowerShell)         |
-| [Python](http://www.banshujiang.cn/category/programming_language/Python)                      | [category/programming_language/Python](https://rsshub.app/banshujiang/programming_language/Python)                 |
-| [R](http://www.banshujiang.cn/category/programming_language/R/page/1)                         | [category/programming_language/R](https://rsshub.app/banshujiang/programming_language/R)                           |
-| [Ruby](http://www.banshujiang.cn/category/programming_language/Ruby/page/1)                   | [category/programming_language/Ruby](https://rsshub.app/banshujiang/programming_language/Ruby)                     |
-| [Rust](http://www.banshujiang.cn/category/programming_language/Rust/page/1)                   | [category/programming_language/Rust](https://rsshub.app/banshujiang/programming_language/Rust)                     |
-| [Scala](http://www.banshujiang.cn/category/programming_language/Scala/page/1)                 | [category/programming_language/Scala](https://rsshub.app/banshujiang/programming_language/Scala)                   |
-| [Shell Script](http://www.banshujiang.cn/category/programming_language/Shell%20Script/page/1) | [category/programming_language/Shell%20Script](https://rsshub.app/banshujiang/programming_language/Shell%20Script) |
-| [SQL](http://www.banshujiang.cn/category/programming_language/SQL/page/1)                     | [category/programming_language/SQL](https://rsshub.app/banshujiang/programming_language/SQL)                       |
-| [Swift](http://www.banshujiang.cn/category/programming_language/Swift/page/1)                 | [category/programming_language/Swift](https://rsshub.app/banshujiang/programming_language/Swift)                   |
-| [TypeScript](http://www.banshujiang.cn/category/programming_language/TypeScript/page/1)       | [category/programming_language/TypeScript](https://rsshub.app/banshujiang/programming_language/TypeScript)         |
+| 分类                                                                                          | ID                                                                                                                  |
+| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [ActionScript](http://www.banshujiang.cn/category/programming_language/ActionScript/page/1)   | [category/programming\\_language/ActionScript](https://rsshub.app/banshujiang/programming_language/ActionScript)     |
+| [ASP.net](http://www.banshujiang.cn/category/programming_language/ASP.net/page/1)             | [category/programming\\_language/ASP.net](https://rsshub.app/banshujiang/programming_language/ASP.net)               |
+| [C](http://www.banshujiang.cn/category/programming_language/C)                                | [category/programming\\_language/C](https://rsshub.app/banshujiang/programming_language/C)                           |
+| [C#](http://www.banshujiang.cn/category/programming_language/C%23)                            | [category/programming\\_language/C%23](https://rsshub.app/banshujiang/programming_language/C%23)                     |
+| [C++](http://www.banshujiang.cn/category/programming_language/C++)                            | [category/programming\\_language/C++](https://rsshub.app/banshujiang/programming_language/C++)                       |
+| [CoffeeScript](http://www.banshujiang.cn/category/programming_language/CoffeeScript)          | [category/programming\\_language/CoffeeScript](https://rsshub.app/banshujiang/programming_language/CoffeeScript)     |
+| [CSS](http://www.banshujiang.cn/category/programming_language/CSS)                            | \\[category/programming\\_language/CSS)                                                                               |
+| [Dart](http://www.banshujiang.cn/category/programming_language/Dart)                          | [category/programming\\_language/Dart](https://rsshub.app/banshujiang/programming_language/Dart)                     |
+| [Elixir](http://www.banshujiang.cn/category/programming_language/Elixir)                      | [category/programming\\_language/Elixir](https://rsshub.app/banshujiang/programming_language/Elixir)                 |
+| [Erlang](http://www.banshujiang.cn/category/programming_language/Erlang)                      | [category/programming\\_language/Erlang](https://rsshub.app/banshujiang/programming_language/Erlang)                 |
+| [F#](http://www.banshujiang.cn/category/programming_language/F%23)                            | [category/programming\\_language/F%23](https://rsshub.app/banshujiang/programming_language/F%23)                     |
+| [Go](http://www.banshujiang.cn/category/programming_language/Go)                              | [category/programming\\_language/Go](https://rsshub.app/banshujiang/programming_language/Go)                         |
+| [Groovy](http://www.banshujiang.cn/category/programming_language/Groovy)                      | [category/programming\\_language/Groovy](https://rsshub.app/banshujiang/programming_language/Groovy)                 |
+| [Haskell](http://www.banshujiang.cn/category/programming_language/Haskell)                    | [category/programming\\_language/Haskell](https://rsshub.app/banshujiang/programming_language/Haskell)               |
+| [HTML5](http://www.banshujiang.cn/category/programming_language/HTML5)                        | [category/programming\\_language/HTML5](https://rsshub.app/banshujiang/programming_language/HTML5)                   |
+| [Java](http://www.banshujiang.cn/category/programming_language/Java)                          | [category/programming\\_language/Java](https://rsshub.app/banshujiang/programming_language/Java)                     |
+| [JavaScript](http://www.banshujiang.cn/category/programming_language/JavaScript)              | [category/programming\\_language/JavaScript](https://rsshub.app/banshujiang/programming_language/JavaScript)         |
+| [Kotlin](http://www.banshujiang.cn/category/programming_language/Kotlin)                      | [category/programming\\_language/Kotlin](https://rsshub.app/banshujiang/programming_language/Kotlin)                 |
+| [Lua](http://www.banshujiang.cn/category/programming_language/Lua)                            | [category/programming\\_language/Lua](https://rsshub.app/banshujiang/programming_language/Lua)                       |
+| [Objective-C](http://www.banshujiang.cn/category/programming_language/Objective-C)            | [category/programming\\_language/Objective-C](https://rsshub.app/banshujiang/programming_language/Objective-C)       |
+| [Perl](http://www.banshujiang.cn/category/programming_language/Perl)                          | [category/programming\\_language/Perl](https://rsshub.app/banshujiang/programming_language/Perl)                     |
+| [PHP](http://www.banshujiang.cn/category/programming_language/PHP)                            | [category/programming\\_language/PHP](https://rsshub.app/banshujiang/programming_language/PHP)                       |
+| [PowerShell](http://www.banshujiang.cn/category/programming_language/PowerShell)              | [category/programming\\_language/PowerShell](https://rsshub.app/banshujiang/programming_language/PowerShell)         |
+| [Python](http://www.banshujiang.cn/category/programming_language/Python)                      | [category/programming\\_language/Python](https://rsshub.app/banshujiang/programming_language/Python)                 |
+| [R](http://www.banshujiang.cn/category/programming_language/R/page/1)                         | [category/programming\\_language/R](https://rsshub.app/banshujiang/programming_language/R)                           |
+| [Ruby](http://www.banshujiang.cn/category/programming_language/Ruby/page/1)                   | [category/programming\\_language/Ruby](https://rsshub.app/banshujiang/programming_language/Ruby)                     |
+| [Rust](http://www.banshujiang.cn/category/programming_language/Rust/page/1)                   | [category/programming\\_language/Rust](https://rsshub.app/banshujiang/programming_language/Rust)                     |
+| [Scala](http://www.banshujiang.cn/category/programming_language/Scala/page/1)                 | [category/programming\\_language/Scala](https://rsshub.app/banshujiang/programming_language/Scala)                   |
+| [Shell Script](http://www.banshujiang.cn/category/programming_language/Shell%20Script/page/1) | [category/programming\\_language/Shell%20Script](https://rsshub.app/banshujiang/programming_language/Shell%20Script) |
+| [SQL](http://www.banshujiang.cn/category/programming_language/SQL/page/1)                     | [category/programming\\_language/SQL](https://rsshub.app/banshujiang/programming_language/SQL)                       |
+| [Swift](http://www.banshujiang.cn/category/programming_language/Swift/page/1)                 | [category/programming\\_language/Swift](https://rsshub.app/banshujiang/programming_language/Swift)                   |
+| [TypeScript](http://www.banshujiang.cn/category/programming_language/TypeScript/page/1)       | [category/programming\\_language/TypeScript](https://rsshub.app/banshujiang/programming_language/TypeScript)         |
 
 #### 移动开发
 
-| 分类                                                                            | ID                                                                                               |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| [Android](http://www.banshujiang.cn/category/mobile_development/Android/page/1) | [category/mobile_development/Android](https://rsshub.app/banshujiang/mobile_development/Android) |
-| [iOS](http://www.banshujiang.cn/category/mobile_development/iOS/page/1)         | [category/mobile_development/iOS](https://rsshub.app/banshujiang/mobile_development/iOS)         |
+| 分类                                                                            | ID                                                                                                |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [Android](http://www.banshujiang.cn/category/mobile_development/Android/page/1) | [category/mobile\\_development/Android](https://rsshub.app/banshujiang/mobile_development/Android) |
+| [iOS](http://www.banshujiang.cn/category/mobile_development/iOS/page/1)         | [category/mobile\\_development/iOS](https://rsshub.app/banshujiang/mobile_development/iOS)         |
 
 #### 操作系统
 
-| 分类                                                                                | ID                                                                                                     |
-| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [Linux](http://www.banshujiang.cn/category/operation_system/Linux/page/1)           | [category/operation_system/Linux](https://rsshub.app/banshujiang/operation_system/Linux)               |
-| [Mac OS X](http://www.banshujiang.cn/category/operation_system/Mac%20OS%20X/page/1) | [category/operation_system/Mac%20OS%20X](https://rsshub.app/banshujiang/operation_system/Mac%20OS%20X) |
-| [Unix](http://www.banshujiang.cn/category/operation_system/Unix/page/1)             | [category/operation_system/Unix](https://rsshub.app/banshujiang/operation_system/Unix)                 |
-| [Windows](http://www.banshujiang.cn/category/operation_system/Windows/page/1)       | [category/operation_system/Windows](https://rsshub.app/banshujiang/operation_system/Windows)           |
+| 分类                                                                                | ID                                                                                                      |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [Linux](http://www.banshujiang.cn/category/operation_system/Linux/page/1)           | [category/operation\\_system/Linux](https://rsshub.app/banshujiang/operation_system/Linux)               |
+| [Mac OS X](http://www.banshujiang.cn/category/operation_system/Mac%20OS%20X/page/1) | [category/operation\\_system/Mac%20OS%20X](https://rsshub.app/banshujiang/operation_system/Mac%20OS%20X) |
+| [Unix](http://www.banshujiang.cn/category/operation_system/Unix/page/1)             | [category/operation\\_system/Unix](https://rsshub.app/banshujiang/operation_system/Unix)                 |
+| [Windows](http://www.banshujiang.cn/category/operation_system/Windows/page/1)       | [category/operation\\_system/Windows](https://rsshub.app/banshujiang/operation_system/Windows)           |
 
 #### 数据库
 
@@ -450,29 +450,28 @@ export const route: Route = {
 
 #### 开源软件
 
-| 分类                                                                            | ID                                                                                        |
-| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| [Apache 项目](http://www.banshujiang.cn/category/open_source/Apache项目/page/1) | [category/open_source/Apache 项目](https://rsshub.app/banshujiang/open_source/Apache项目) |
-| [Web 开发](http://www.banshujiang.cn/category/open_source/Web开发/page/1)       | [category/open_source/Web 开发](https://rsshub.app/banshujiang/open_source/Web开发)       |
-| [区块链](http://www.banshujiang.cn/category/open_source/区块链/page/1)          | [category/open_source/区块链](https://rsshub.app/banshujiang/open_source/区块链)          |
-| [程序开发](http://www.banshujiang.cn/category/open_source/程序开发/page/1)      | [category/open_source/程序开发](https://rsshub.app/banshujiang/open_source/程序开发)      |
+| 分类                                                                            | ID                                                                                         |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [Apache 项目](http://www.banshujiang.cn/category/open_source/Apache项目/page/1) | [category/open\\_source/Apache 项目](https://rsshub.app/banshujiang/open_source/Apache项目) |
+| [Web 开发](http://www.banshujiang.cn/category/open_source/Web开发/page/1)       | [category/open\\_source/Web 开发](https://rsshub.app/banshujiang/open_source/Web开发)       |
+| [区块链](http://www.banshujiang.cn/category/open_source/区块链/page/1)          | [category/open\\_source/ 区块链](https://rsshub.app/banshujiang/open_source/区块链)         |
+| [程序开发](http://www.banshujiang.cn/category/open_source/程序开发/page/1)      | [category/open\\_source/ 程序开发](https://rsshub.app/banshujiang/open_source/程序开发)     |
 
 #### 其他
 
-| 分类                                                                 | ID                                                                       |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [人工智能](http://www.banshujiang.cn/category/other/人工智能/page/1) | [category/other/人工智能](https://rsshub.app/banshujiang/other/人工智能) |
-| [容器技术](http://www.banshujiang.cn/category/other/容器技术/page/1) | [category/other/容器技术](https://rsshub.app/banshujiang/other/容器技术) |
+| 分类                                                                 | ID                                                                        |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| [人工智能](http://www.banshujiang.cn/category/other/人工智能/page/1) | [category/other/ 人工智能](https://rsshub.app/banshujiang/other/人工智能) |
+| [容器技术](http://www.banshujiang.cn/category/other/容器技术/page/1) | [category/other/ 容器技术](https://rsshub.app/banshujiang/other/容器技术) |
 
 #### 语言
 
-| 分类                                                            | ID                                                                     |
-| --------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| [中文](http://www.banshujiang.cn/category/language/中文/page/1) | [category/language/中文](https://rsshub.app/banshujiang/language/中文) |
-| [英文](http://www.banshujiang.cn/category/language/英文/page/1) | [category/language/英文](https://rsshub.app/banshujiang/language/英文) |
+| 分类                                                            | ID                                                                      |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [中文](http://www.banshujiang.cn/category/language/中文/page/1) | [category/language/ 中文](https://rsshub.app/banshujiang/language/中文) |
+| [英文](http://www.banshujiang.cn/category/language/英文/page/1) | [category/language/ 英文](https://rsshub.app/banshujiang/language/英文) |
 
-</details>
-`,
+</details>`,
     categories: ['reading'],
     features: {
         requireConfig: false,

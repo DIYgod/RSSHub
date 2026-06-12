@@ -61,9 +61,7 @@ async function handler(ctx) {
                     item.description = content('div.left_zw').html();
                     const info = content('div.left-t')
                         .contents()
-                        .filter(function () {
-                            return this.type === 'text';
-                        })
+                        .filter((_, el) => el.type === 'text')
                         .text()
                         .split('　');
                     item.pubDate = timezone(parseDate(info[0], 'YYYY年MM月DD日 HH:mm'), +8);

@@ -29,7 +29,7 @@ export const route: Route = {
     description: `There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is \`https://medium.com/?tag=web3\`, then the tag is \`web3\`.
 
 ::: warning
-  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 :::`,
 };
 

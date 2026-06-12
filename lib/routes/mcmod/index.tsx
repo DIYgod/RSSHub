@@ -48,9 +48,9 @@ export const route: Route = {
     maintainers: ['hualiong'],
     description: `\`:type\` 类型可选如下
 
-| 随机显示MOD | 最新收录MOD | 最近编辑MOD |
-| ------ | --- | ---- |
-| random | new | edit |`,
+| 随机显示 MOD | 最新收录 MOD | 最近编辑 MOD |
+| ------------ | ------------ | ------------ |
+| random       | new          | edit         |`,
     handler: async (ctx) => {
         const type = ctx.req.param('type');
         const $get = ofetch.create({ baseURL: 'https://www.mcmod.cn' });
@@ -65,7 +65,7 @@ export const route: Route = {
                 const time = each.find('div .time');
                 return {
                     title: each.find('div > .name > a').text(),
-                    image: each.find('img').attr('src')?.split('@')[0],
+                    image: each.find('img').attr('src')?.split('@', 1)[0],
                     link: each.children('a').attr('href'),
                     pubDate: time.attr('title') && timezone(parseDate(time.attr('title')!.slice(6), 'YYYY-MM-DD HH:mm:ss'), +8),
                 };
@@ -85,7 +85,7 @@ export const route: Route = {
                             return {
                                 name: name.text(),
                                 url: 'https://www.mcmod.cn' + name.attr('href'),
-                                avatar: each.find('.avatar img').attr('src')?.split('?')[0],
+                                avatar: each.find('.avatar img').attr('src')?.split('?', 1)[0],
                             };
                         });
 

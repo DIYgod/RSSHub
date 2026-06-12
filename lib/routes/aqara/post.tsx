@@ -52,13 +52,13 @@ async function handler(ctx) {
 
         // To handle lazy-loaded images.
 
-        content('figure').each(function () {
-            const image = content(this).find('img');
+        content('figure').each((_, el) => {
+            const image = content(el).find('img');
             const src = (image.prop('data-actualsrc') ?? image.prop('data-original') ?? image.prop('src')).replace(/(-\d+x\d+)/, '');
             const width = image.prop('data-rawwidth') ?? image.prop('width');
             const height = image.prop('data-rawheight') ?? image.prop('height');
 
-            content(this).replaceWith(
+            content(el).replaceWith(
                 renderToString(
                     <figure>
                         <img src={src} width={width} height={height} />

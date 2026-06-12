@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/mem/gk/zfxxgkpt/fdzdgknr',
+    path: '/gk/zfxxgkpt/fdzdgknr',
     categories: ['government'],
     example: '/gov/mem/gk/zfxxgkpt/fdzdgknr',
     parameters: {},
@@ -21,13 +21,13 @@ export const route: Route = {
     radar: [
         {
             source: ['www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr'],
-            target: '/mem/gk/zfxxgkpt/fdzdgknr',
+            target: '/gk/zfxxgkpt/fdzdgknr',
         },
     ],
     name: '法定主动公开内容',
     maintainers: ['skeaven'],
     handler,
-    description: '应急管理部法定主动公开内容,包含通知、公告、督办、政策解读等，可供应急相关工作人员及时获取政策信息',
+    description: '应急管理部法定主动公开内容，包含通知、公告、督办、政策解读等，可供应急相关工作人员及时获取政策信息',
 };
 
 async function handler(ctx) {

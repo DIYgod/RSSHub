@@ -600,135 +600,134 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
-订阅 [开源广场](https://oshwhub.com/) 中最新发布的项目标签含 “51单片机”和“智能家居”的标准版项目，此时路由为 [\`/oshwhub/explore/new/std/51单片机,智能家居\`](https://rsshub.app/oshwhub/explore/new/std/51单片机,智能家居)。
+    description: `::: tip
+订阅 [开源广场](https://oshwhub.com/) 中最新发布的项目标签含 “51 单片机” 和 “智能家居” 的标准版项目，此时路由为 [\`/oshwhub/explore/new/std/51单片机,智能家居\`](https://rsshub.app/oshwhub/explore/new/std/51单片机,智能家居)。
 :::
 
 <details>
   <summary>更多标签</summary>
 
-  #### [嵌入式](https://oshwhub.com/explore?tag=049aa3a2401d45af82141d8cda443355)
+#### [嵌入式](https://oshwhub.com/explore?tag=049aa3a2401d45af82141d8cda443355)
 
-  | 名称                                                                             | ID                                                                                                              |
-  | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [51单片机](https://oshwhub.com/explore?tag=3b0f18b7516447f4b98a3830b1f3b665)     | [3b0f18b7516447f4b98a3830b1f3b665](https://rsshub.app/oshwhub/explore/new/all/3b0f18b7516447f4b98a3830b1f3b665) |
-  | [STM单片机](https://oshwhub.com/explore?tag=ccf89e646cd446a3b83b2f52b0199b62)    | [ccf89e646cd446a3b83b2f52b0199b62](https://rsshub.app/oshwhub/explore/new/all/ccf89e646cd446a3b83b2f52b0199b62) |
-  | [AVR单片机](https://oshwhub.com/explore?tag=3f6426c635ff442291209a3384a84102)    | [3f6426c635ff442291209a3384a84102](https://rsshub.app/oshwhub/explore/new/all/3f6426c635ff442291209a3384a84102) |
-  | [MM单片机](https://oshwhub.com/explore?tag=cc3d1169f18c416c8757901ea6df6223)     | [cc3d1169f18c416c8757901ea6df6223](https://rsshub.app/oshwhub/explore/new/all/cc3d1169f18c416c8757901ea6df6223) |
-  | [HK单片机](https://oshwhub.com/explore?tag=b97db05d4ca84ec586b573ac8a30f903)     | [b97db05d4ca84ec586b573ac8a30f903](https://rsshub.app/oshwhub/explore/new/all/b97db05d4ca84ec586b573ac8a30f903) |
-  | [GD单片机](https://oshwhub.com/explore?tag=b20331637f5145acacdcba7b4b425f86)     | [b20331637f5145acacdcba7b4b425f86](https://rsshub.app/oshwhub/explore/new/all/b20331637f5145acacdcba7b4b425f86) |
-  | [Arduino](https://oshwhub.com/explore?tag=656035358f114d88a6d7ae9f2f008004)      | [656035358f114d88a6d7ae9f2f008004](https://rsshub.app/oshwhub/explore/new/all/656035358f114d88a6d7ae9f2f008004) |
-  | [Linux](https://oshwhub.com/explore?tag=a970fe2004094a908bccfcd3a19d8119)        | [a970fe2004094a908bccfcd3a19d8119](https://rsshub.app/oshwhub/explore/new/all/a970fe2004094a908bccfcd3a19d8119) |
-  | [RA单片机](https://oshwhub.com/explore?tag=10f420434b2e499a9d55a053a1b68532)     | [10f420434b2e499a9d55a053a1b68532](https://rsshub.app/oshwhub/explore/new/all/10f420434b2e499a9d55a053a1b68532) |
-  | [FPGA](https://oshwhub.com/explore?tag=b9dc4e4d3185457fb0b036697c60c304)         | [b9dc4e4d3185457fb0b036697c60c304](https://rsshub.app/oshwhub/explore/new/all/b9dc4e4d3185457fb0b036697c60c304) |
-  | [创客教育套件](https://oshwhub.com/explore?tag=7a7e2ffe306f45d49aceeccf643164f1) | [7a7e2ffe306f45d49aceeccf643164f1](https://rsshub.app/oshwhub/explore/new/all/7a7e2ffe306f45d49aceeccf643164f1) |
-  | [DSP](https://oshwhub.com/explore?tag=7afd043f0472485f8a0bdd03b7f2b430)          | [7afd043f0472485f8a0bdd03b7f2b430](https://rsshub.app/oshwhub/explore/new/all/7afd043f0472485f8a0bdd03b7f2b430) |
-  | [ESP8266/32](https://oshwhub.com/explore?tag=6f6eefa0fcb54ab4b75469c64646d9e9)   | [6f6eefa0fcb54ab4b75469c64646d9e9](https://rsshub.app/oshwhub/explore/new/all/6f6eefa0fcb54ab4b75469c64646d9e9) |
-  | [Hi3861](https://oshwhub.com/explore?tag=08da4fffef66412c98862b56bc6de8e0)       | [08da4fffef66412c98862b56bc6de8e0](https://rsshub.app/oshwhub/explore/new/all/08da4fffef66412c98862b56bc6de8e0) |
-  | [CH单片机](https://oshwhub.com/explore?tag=46713082ee6e4e5d83ab50b2dde261f9)     | [46713082ee6e4e5d83ab50b2dde261f9](https://rsshub.app/oshwhub/explore/new/all/46713082ee6e4e5d83ab50b2dde261f9) |
-  | [CW32单片机](https://oshwhub.com/explore?tag=68b1cd8ff95c4a77ada1feac74a15cd7)   | [68b1cd8ff95c4a77ada1feac74a15cd7](https://rsshub.app/oshwhub/explore/new/all/68b1cd8ff95c4a77ada1feac74a15cd7) |
-  | [N32单片机](https://oshwhub.com/explore?tag=a8174b755bb840c284354adda36bea97)    | [a8174b755bb840c284354adda36bea97](https://rsshub.app/oshwhub/explore/new/all/a8174b755bb840c284354adda36bea97) |
-  | [全志系列](https://oshwhub.com/explore?tag=02c3807273ea47c4aaa6708b897a1608)     | [02c3807273ea47c4aaa6708b897a1608](https://rsshub.app/oshwhub/explore/new/all/02c3807273ea47c4aaa6708b897a1608) |
-  | [AIR32](https://oshwhub.com/explore?tag=91c29b363a024e73afe4fb2adc3d6336)        | [91c29b363a024e73afe4fb2adc3d6336](https://rsshub.app/oshwhub/explore/new/all/91c29b363a024e73afe4fb2adc3d6336) |
-  | [树莓派](https://oshwhub.com/explore?tag=68fb2b4eacf244b6b99e208bd0c0453c)       | [68fb2b4eacf244b6b99e208bd0c0453c](https://rsshub.app/oshwhub/explore/new/all/68fb2b4eacf244b6b99e208bd0c0453c) |
-  | [RISC-V](https://oshwhub.com/explore?tag=5bf7f884bccf4507acc36a729d8b5078)       | [5bf7f884bccf4507acc36a729d8b5078](https://rsshub.app/oshwhub/explore/new/all/5bf7f884bccf4507acc36a729d8b5078) |
-  | [玄铁](https://oshwhub.com/explore?tag=e0a360d42a954a29bb6a3e5eee0395fd)         | [e0a360d42a954a29bb6a3e5eee0395fd](https://rsshub.app/oshwhub/explore/new/all/e0a360d42a954a29bb6a3e5eee0395fd) |
-  | [Canaan(嘉楠)](https://oshwhub.com/explore?tag=3dec6606d3ca4b898eb86a78fd4c40ea) | [3dec6606d3ca4b898eb86a78fd4c40ea](https://rsshub.app/oshwhub/explore/new/all/3dec6606d3ca4b898eb86a78fd4c40ea) |
+| 名称                                                                              | ID                                                                                                              |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [51 单片机](https://oshwhub.com/explore?tag=3b0f18b7516447f4b98a3830b1f3b665)     | [3b0f18b7516447f4b98a3830b1f3b665](https://rsshub.app/oshwhub/explore/new/all/3b0f18b7516447f4b98a3830b1f3b665) |
+| [STM 单片机](https://oshwhub.com/explore?tag=ccf89e646cd446a3b83b2f52b0199b62)    | [ccf89e646cd446a3b83b2f52b0199b62](https://rsshub.app/oshwhub/explore/new/all/ccf89e646cd446a3b83b2f52b0199b62) |
+| [AVR 单片机](https://oshwhub.com/explore?tag=3f6426c635ff442291209a3384a84102)    | [3f6426c635ff442291209a3384a84102](https://rsshub.app/oshwhub/explore/new/all/3f6426c635ff442291209a3384a84102) |
+| [MM 单片机](https://oshwhub.com/explore?tag=cc3d1169f18c416c8757901ea6df6223)     | [cc3d1169f18c416c8757901ea6df6223](https://rsshub.app/oshwhub/explore/new/all/cc3d1169f18c416c8757901ea6df6223) |
+| [HK 单片机](https://oshwhub.com/explore?tag=b97db05d4ca84ec586b573ac8a30f903)     | [b97db05d4ca84ec586b573ac8a30f903](https://rsshub.app/oshwhub/explore/new/all/b97db05d4ca84ec586b573ac8a30f903) |
+| [GD 单片机](https://oshwhub.com/explore?tag=b20331637f5145acacdcba7b4b425f86)     | [b20331637f5145acacdcba7b4b425f86](https://rsshub.app/oshwhub/explore/new/all/b20331637f5145acacdcba7b4b425f86) |
+| [Arduino](https://oshwhub.com/explore?tag=656035358f114d88a6d7ae9f2f008004)       | [656035358f114d88a6d7ae9f2f008004](https://rsshub.app/oshwhub/explore/new/all/656035358f114d88a6d7ae9f2f008004) |
+| [Linux](https://oshwhub.com/explore?tag=a970fe2004094a908bccfcd3a19d8119)         | [a970fe2004094a908bccfcd3a19d8119](https://rsshub.app/oshwhub/explore/new/all/a970fe2004094a908bccfcd3a19d8119) |
+| [RA 单片机](https://oshwhub.com/explore?tag=10f420434b2e499a9d55a053a1b68532)     | [10f420434b2e499a9d55a053a1b68532](https://rsshub.app/oshwhub/explore/new/all/10f420434b2e499a9d55a053a1b68532) |
+| [FPGA](https://oshwhub.com/explore?tag=b9dc4e4d3185457fb0b036697c60c304)          | [b9dc4e4d3185457fb0b036697c60c304](https://rsshub.app/oshwhub/explore/new/all/b9dc4e4d3185457fb0b036697c60c304) |
+| [创客教育套件](https://oshwhub.com/explore?tag=7a7e2ffe306f45d49aceeccf643164f1)  | [7a7e2ffe306f45d49aceeccf643164f1](https://rsshub.app/oshwhub/explore/new/all/7a7e2ffe306f45d49aceeccf643164f1) |
+| [DSP](https://oshwhub.com/explore?tag=7afd043f0472485f8a0bdd03b7f2b430)           | [7afd043f0472485f8a0bdd03b7f2b430](https://rsshub.app/oshwhub/explore/new/all/7afd043f0472485f8a0bdd03b7f2b430) |
+| [ESP8266/32](https://oshwhub.com/explore?tag=6f6eefa0fcb54ab4b75469c64646d9e9)    | [6f6eefa0fcb54ab4b75469c64646d9e9](https://rsshub.app/oshwhub/explore/new/all/6f6eefa0fcb54ab4b75469c64646d9e9) |
+| [Hi3861](https://oshwhub.com/explore?tag=08da4fffef66412c98862b56bc6de8e0)        | [08da4fffef66412c98862b56bc6de8e0](https://rsshub.app/oshwhub/explore/new/all/08da4fffef66412c98862b56bc6de8e0) |
+| [CH 单片机](https://oshwhub.com/explore?tag=46713082ee6e4e5d83ab50b2dde261f9)     | [46713082ee6e4e5d83ab50b2dde261f9](https://rsshub.app/oshwhub/explore/new/all/46713082ee6e4e5d83ab50b2dde261f9) |
+| [CW32 单片机](https://oshwhub.com/explore?tag=68b1cd8ff95c4a77ada1feac74a15cd7)   | [68b1cd8ff95c4a77ada1feac74a15cd7](https://rsshub.app/oshwhub/explore/new/all/68b1cd8ff95c4a77ada1feac74a15cd7) |
+| [N32 单片机](https://oshwhub.com/explore?tag=a8174b755bb840c284354adda36bea97)    | [a8174b755bb840c284354adda36bea97](https://rsshub.app/oshwhub/explore/new/all/a8174b755bb840c284354adda36bea97) |
+| [全志系列](https://oshwhub.com/explore?tag=02c3807273ea47c4aaa6708b897a1608)      | [02c3807273ea47c4aaa6708b897a1608](https://rsshub.app/oshwhub/explore/new/all/02c3807273ea47c4aaa6708b897a1608) |
+| [AIR32](https://oshwhub.com/explore?tag=91c29b363a024e73afe4fb2adc3d6336)         | [91c29b363a024e73afe4fb2adc3d6336](https://rsshub.app/oshwhub/explore/new/all/91c29b363a024e73afe4fb2adc3d6336) |
+| [树莓派](https://oshwhub.com/explore?tag=68fb2b4eacf244b6b99e208bd0c0453c)        | [68fb2b4eacf244b6b99e208bd0c0453c](https://rsshub.app/oshwhub/explore/new/all/68fb2b4eacf244b6b99e208bd0c0453c) |
+| [RISC-V](https://oshwhub.com/explore?tag=5bf7f884bccf4507acc36a729d8b5078)        | [5bf7f884bccf4507acc36a729d8b5078](https://rsshub.app/oshwhub/explore/new/all/5bf7f884bccf4507acc36a729d8b5078) |
+| [玄铁](https://oshwhub.com/explore?tag=e0a360d42a954a29bb6a3e5eee0395fd)          | [e0a360d42a954a29bb6a3e5eee0395fd](https://rsshub.app/oshwhub/explore/new/all/e0a360d42a954a29bb6a3e5eee0395fd) |
+| [Canaan (嘉楠)](https://oshwhub.com/explore?tag=3dec6606d3ca4b898eb86a78fd4c40ea) | [3dec6606d3ca4b898eb86a78fd4c40ea](https://rsshub.app/oshwhub/explore/new/all/3dec6606d3ca4b898eb86a78fd4c40ea) |
 
-  #### [DIY设计/硬件设计](https://oshwhub.com/explore?tag=b40d10b303384f2c8fc10764dea14413)
+#### [DIY 设计 / 硬件设计](https://oshwhub.com/explore?tag=b40d10b303384f2c8fc10764dea14413)
 
-  | 名称                                                                              | ID                                                                                                              |
-  | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [立创泰山派](https://oshwhub.com/explore?tag=26b12f4862cc4aa8a7a6ff653d9de9ed)    | [26b12f4862cc4aa8a7a6ff653d9de9ed](https://rsshub.app/oshwhub/explore/new/all/26b12f4862cc4aa8a7a6ff653d9de9ed) |
-  | [立创梁山派](https://oshwhub.com/explore?tag=51f92f98f8c3465ebc12e014b654a15c)    | [51f92f98f8c3465ebc12e014b654a15c](https://rsshub.app/oshwhub/explore/new/all/51f92f98f8c3465ebc12e014b654a15c) |
-  | [仿真器/编程器](https://oshwhub.com/explore?tag=1b87c2546ea3444e9817a1faf8f76ff2) | [1b87c2546ea3444e9817a1faf8f76ff2](https://rsshub.app/oshwhub/explore/new/all/1b87c2546ea3444e9817a1faf8f76ff2) |
-  | [电赛TI开发板](https://oshwhub.com/explore?tag=d4b25b821c8d4f7cb1bd871853400521)  | [d4b25b821c8d4f7cb1bd871853400521](https://rsshub.app/oshwhub/explore/new/all/d4b25b821c8d4f7cb1bd871853400521) |
-  | [电源/能源](https://oshwhub.com/explore?tag=e804983891e743439072af4e05aba50d)     | [e804983891e743439072af4e05aba50d](https://rsshub.app/oshwhub/explore/new/all/e804983891e743439072af4e05aba50d) |
-  | [信号/通信](https://oshwhub.com/explore?tag=b13a722e49ae40f4ae15c7448c0e807b)     | [b13a722e49ae40f4ae15c7448c0e807b](https://rsshub.app/oshwhub/explore/new/all/b13a722e49ae40f4ae15c7448c0e807b) |
-  | [测量/仪器](https://oshwhub.com/explore?tag=b1fb4acdb7354d81b3ed3c18050d0580)     | [b1fb4acdb7354d81b3ed3c18050d0580](https://rsshub.app/oshwhub/explore/new/all/b1fb4acdb7354d81b3ed3c18050d0580) |
-  | [课设/毕设](https://oshwhub.com/explore?tag=7711ced2a349485d85a6cae11c91cc5d)     | [7711ced2a349485d85a6cae11c91cc5d](https://rsshub.app/oshwhub/explore/new/all/7711ced2a349485d85a6cae11c91cc5d) |
-  | [DIY设计](https://oshwhub.com/explore?tag=d3cacd30fc1a4dbea35aba2f00c755e3)       | [d3cacd30fc1a4dbea35aba2f00c755e3](https://rsshub.app/oshwhub/explore/new/all/d3cacd30fc1a4dbea35aba2f00c755e3) |
-  | [声光设计](https://oshwhub.com/explore?tag=fbca6abc8a114614a5598bf7c33fb72e)      | [fbca6abc8a114614a5598bf7c33fb72e](https://rsshub.app/oshwhub/explore/new/all/fbca6abc8a114614a5598bf7c33fb72e) |
-  | [555定时器](https://oshwhub.com/explore?tag=e53cdda17f4840158e9f9a82354f923d)     | [e53cdda17f4840158e9f9a82354f923d](https://rsshub.app/oshwhub/explore/new/all/e53cdda17f4840158e9f9a82354f923d) |
-  | [方案验证板](https://oshwhub.com/explore?tag=90637fd096424071a21927e5cdc436de)    | [90637fd096424071a21927e5cdc436de](https://rsshub.app/oshwhub/explore/new/all/90637fd096424071a21927e5cdc436de) |
-  | [面板设计](https://oshwhub.com/explore?tag=8e9b3ad4569943b19f701cf06d3be169)      | [8e9b3ad4569943b19f701cf06d3be169](https://rsshub.app/oshwhub/explore/new/all/8e9b3ad4569943b19f701cf06d3be169) |
+| 名称                                                                                | ID                                                                                                              |
+| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [立创泰山派](https://oshwhub.com/explore?tag=26b12f4862cc4aa8a7a6ff653d9de9ed)      | [26b12f4862cc4aa8a7a6ff653d9de9ed](https://rsshub.app/oshwhub/explore/new/all/26b12f4862cc4aa8a7a6ff653d9de9ed) |
+| [立创梁山派](https://oshwhub.com/explore?tag=51f92f98f8c3465ebc12e014b654a15c)      | [51f92f98f8c3465ebc12e014b654a15c](https://rsshub.app/oshwhub/explore/new/all/51f92f98f8c3465ebc12e014b654a15c) |
+| [仿真器 / 编程器](https://oshwhub.com/explore?tag=1b87c2546ea3444e9817a1faf8f76ff2) | [1b87c2546ea3444e9817a1faf8f76ff2](https://rsshub.app/oshwhub/explore/new/all/1b87c2546ea3444e9817a1faf8f76ff2) |
+| [电赛 TI 开发板](https://oshwhub.com/explore?tag=d4b25b821c8d4f7cb1bd871853400521)  | [d4b25b821c8d4f7cb1bd871853400521](https://rsshub.app/oshwhub/explore/new/all/d4b25b821c8d4f7cb1bd871853400521) |
+| [电源 / 能源](https://oshwhub.com/explore?tag=e804983891e743439072af4e05aba50d)     | [e804983891e743439072af4e05aba50d](https://rsshub.app/oshwhub/explore/new/all/e804983891e743439072af4e05aba50d) |
+| [信号 / 通信](https://oshwhub.com/explore?tag=b13a722e49ae40f4ae15c7448c0e807b)     | [b13a722e49ae40f4ae15c7448c0e807b](https://rsshub.app/oshwhub/explore/new/all/b13a722e49ae40f4ae15c7448c0e807b) |
+| [测量 / 仪器](https://oshwhub.com/explore?tag=b1fb4acdb7354d81b3ed3c18050d0580)     | [b1fb4acdb7354d81b3ed3c18050d0580](https://rsshub.app/oshwhub/explore/new/all/b1fb4acdb7354d81b3ed3c18050d0580) |
+| [课设 / 毕设](https://oshwhub.com/explore?tag=7711ced2a349485d85a6cae11c91cc5d)     | [7711ced2a349485d85a6cae11c91cc5d](https://rsshub.app/oshwhub/explore/new/all/7711ced2a349485d85a6cae11c91cc5d) |
+| [DIY 设计](https://oshwhub.com/explore?tag=d3cacd30fc1a4dbea35aba2f00c755e3)        | [d3cacd30fc1a4dbea35aba2f00c755e3](https://rsshub.app/oshwhub/explore/new/all/d3cacd30fc1a4dbea35aba2f00c755e3) |
+| [声光设计](https://oshwhub.com/explore?tag=fbca6abc8a114614a5598bf7c33fb72e)        | [fbca6abc8a114614a5598bf7c33fb72e](https://rsshub.app/oshwhub/explore/new/all/fbca6abc8a114614a5598bf7c33fb72e) |
+| [555 定时器](https://oshwhub.com/explore?tag=e53cdda17f4840158e9f9a82354f923d)      | [e53cdda17f4840158e9f9a82354f923d](https://rsshub.app/oshwhub/explore/new/all/e53cdda17f4840158e9f9a82354f923d) |
+| [方案验证板](https://oshwhub.com/explore?tag=90637fd096424071a21927e5cdc436de)      | [90637fd096424071a21927e5cdc436de](https://rsshub.app/oshwhub/explore/new/all/90637fd096424071a21927e5cdc436de) |
+| [面板设计](https://oshwhub.com/explore?tag=8e9b3ad4569943b19f701cf06d3be169)        | [8e9b3ad4569943b19f701cf06d3be169](https://rsshub.app/oshwhub/explore/new/all/8e9b3ad4569943b19f701cf06d3be169) |
 
-  #### [物联网/智能硬件](https://oshwhub.com/explore?tag=a40182a4166848b0bfa2339022de3f32)
+#### [物联网 / 智能硬件](https://oshwhub.com/explore?tag=a40182a4166848b0bfa2339022de3f32)
 
-  | 名称                                                                              | ID                                                                                                              |
-  | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [蓝牙/蓝牙mesh](https://oshwhub.com/explore?tag=252438513ded4c87b8bac438d006a0b8) | [252438513ded4c87b8bac438d006a0b8](https://rsshub.app/oshwhub/explore/new/all/252438513ded4c87b8bac438d006a0b8) |
-  | [WiFi/以太网](https://oshwhub.com/explore?tag=f2beb30a80134f3e9595b51148f55cf8)   | [f2beb30a80134f3e9595b51148f55cf8](https://rsshub.app/oshwhub/explore/new/all/f2beb30a80134f3e9595b51148f55cf8) |
-  | [射频/2.4G](https://oshwhub.com/explore?tag=72cccbeca286458a9fb31fbbff8cd57f)     | [72cccbeca286458a9fb31fbbff8cd57f](https://rsshub.app/oshwhub/explore/new/all/72cccbeca286458a9fb31fbbff8cd57f) |
-  | [GSM/GPRS](https://oshwhub.com/explore?tag=e2f58f5ada1b46aaa30899996e1bffee)      | [e2f58f5ada1b46aaa30899996e1bffee](https://rsshub.app/oshwhub/explore/new/all/e2f58f5ada1b46aaa30899996e1bffee) |
-  | [无线定位](https://oshwhub.com/explore?tag=3c3111e1320c48dd8e60e46201140402)      | [3c3111e1320c48dd8e60e46201140402](https://rsshub.app/oshwhub/explore/new/all/3c3111e1320c48dd8e60e46201140402) |
-  | [4G/5G技术](https://oshwhub.com/explore?tag=3e9823af89424add8e16c8d86dbe6365)     | [3e9823af89424add8e16c8d86dbe6365](https://rsshub.app/oshwhub/explore/new/all/3e9823af89424add8e16c8d86dbe6365) |
-  | [智能家居](https://oshwhub.com/explore?tag=f1f6fe3058c4476486baa2d51469c116)      | [f1f6fe3058c4476486baa2d51469c116](https://rsshub.app/oshwhub/explore/new/all/f1f6fe3058c4476486baa2d51469c116) |
+| 名称                                                                                 | ID                                                                                                              |
+| ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| [蓝牙 / 蓝牙 mesh](https://oshwhub.com/explore?tag=252438513ded4c87b8bac438d006a0b8) | [252438513ded4c87b8bac438d006a0b8](https://rsshub.app/oshwhub/explore/new/all/252438513ded4c87b8bac438d006a0b8) |
+| [WiFi / 以太网](https://oshwhub.com/explore?tag=f2beb30a80134f3e9595b51148f55cf8)    | [f2beb30a80134f3e9595b51148f55cf8](https://rsshub.app/oshwhub/explore/new/all/f2beb30a80134f3e9595b51148f55cf8) |
+| [射频 / 2.4G](https://oshwhub.com/explore?tag=72cccbeca286458a9fb31fbbff8cd57f)      | [72cccbeca286458a9fb31fbbff8cd57f](https://rsshub.app/oshwhub/explore/new/all/72cccbeca286458a9fb31fbbff8cd57f) |
+| [GSM/GPRS](https://oshwhub.com/explore?tag=e2f58f5ada1b46aaa30899996e1bffee)         | [e2f58f5ada1b46aaa30899996e1bffee](https://rsshub.app/oshwhub/explore/new/all/e2f58f5ada1b46aaa30899996e1bffee) |
+| [无线定位](https://oshwhub.com/explore?tag=3c3111e1320c48dd8e60e46201140402)         | [3c3111e1320c48dd8e60e46201140402](https://rsshub.app/oshwhub/explore/new/all/3c3111e1320c48dd8e60e46201140402) |
+| [4G/5G 技术](https://oshwhub.com/explore?tag=3e9823af89424add8e16c8d86dbe6365)       | [3e9823af89424add8e16c8d86dbe6365](https://rsshub.app/oshwhub/explore/new/all/3e9823af89424add8e16c8d86dbe6365) |
+| [智能家居](https://oshwhub.com/explore?tag=f1f6fe3058c4476486baa2d51469c116)         | [f1f6fe3058c4476486baa2d51469c116](https://rsshub.app/oshwhub/explore/new/all/f1f6fe3058c4476486baa2d51469c116) |
 
-  #### [电子模块](https://oshwhub.com/explore?tag=8fba85199b604bb98cda470603f98299)
+#### [电子模块](https://oshwhub.com/explore?tag=8fba85199b604bb98cda470603f98299)
 
-  | 名称                                                                             | ID                                                                                                              |
-  | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [电源模块](https://oshwhub.com/explore?tag=2613794836ff4fa2954e4cca5749584a)     | [2613794836ff4fa2954e4cca5749584a](https://rsshub.app/oshwhub/explore/new/all/2613794836ff4fa2954e4cca5749584a) |
-  | [显示模块](https://oshwhub.com/explore?tag=00aa2be7c4d44b5ea060419ca57a94e0)     | [00aa2be7c4d44b5ea060419ca57a94e0](https://rsshub.app/oshwhub/explore/new/all/00aa2be7c4d44b5ea060419ca57a94e0) |
-  | [通信模块](https://oshwhub.com/explore?tag=a99c667254ab41f788ffbcb3e78e152b)     | [a99c667254ab41f788ffbcb3e78e152b](https://rsshub.app/oshwhub/explore/new/all/a99c667254ab41f788ffbcb3e78e152b) |
-  | [传感器模块](https://oshwhub.com/explore?tag=b643637f21ea4464aeb312f29ca0131e)   | [b643637f21ea4464aeb312f29ca0131e](https://rsshub.app/oshwhub/explore/new/all/b643637f21ea4464aeb312f29ca0131e) |
-  | [电机驱动模块](https://oshwhub.com/explore?tag=7676fdaf039847e3808481a4437e004b) | [7676fdaf039847e3808481a4437e004b](https://rsshub.app/oshwhub/explore/new/all/7676fdaf039847e3808481a4437e004b) |
-  | [其他模块](https://oshwhub.com/explore?tag=22a10af7cd434f1d8c28588b030963c5)     | [22a10af7cd434f1d8c28588b030963c5](https://rsshub.app/oshwhub/explore/new/all/22a10af7cd434f1d8c28588b030963c5) |
+| 名称                                                                             | ID                                                                                                              |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [电源模块](https://oshwhub.com/explore?tag=2613794836ff4fa2954e4cca5749584a)     | [2613794836ff4fa2954e4cca5749584a](https://rsshub.app/oshwhub/explore/new/all/2613794836ff4fa2954e4cca5749584a) |
+| [显示模块](https://oshwhub.com/explore?tag=00aa2be7c4d44b5ea060419ca57a94e0)     | [00aa2be7c4d44b5ea060419ca57a94e0](https://rsshub.app/oshwhub/explore/new/all/00aa2be7c4d44b5ea060419ca57a94e0) |
+| [通信模块](https://oshwhub.com/explore?tag=a99c667254ab41f788ffbcb3e78e152b)     | [a99c667254ab41f788ffbcb3e78e152b](https://rsshub.app/oshwhub/explore/new/all/a99c667254ab41f788ffbcb3e78e152b) |
+| [传感器模块](https://oshwhub.com/explore?tag=b643637f21ea4464aeb312f29ca0131e)   | [b643637f21ea4464aeb312f29ca0131e](https://rsshub.app/oshwhub/explore/new/all/b643637f21ea4464aeb312f29ca0131e) |
+| [电机驱动模块](https://oshwhub.com/explore?tag=7676fdaf039847e3808481a4437e004b) | [7676fdaf039847e3808481a4437e004b](https://rsshub.app/oshwhub/explore/new/all/7676fdaf039847e3808481a4437e004b) |
+| [其他模块](https://oshwhub.com/explore?tag=22a10af7cd434f1d8c28588b030963c5)     | [22a10af7cd434f1d8c28588b030963c5](https://rsshub.app/oshwhub/explore/new/all/22a10af7cd434f1d8c28588b030963c5) |
 
-  #### [电子应用](https://oshwhub.com/explore?tag=9759ce685d0f4fb9b5c48c2f99d1b528)
+#### [电子应用](https://oshwhub.com/explore?tag=9759ce685d0f4fb9b5c48c2f99d1b528)
 
-  | 名称                                                                         | ID                                                                                                              |
-  | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [汽车电子](https://oshwhub.com/explore?tag=cc45e77e32764600a9edd9c6bec9a932) | [cc45e77e32764600a9edd9c6bec9a932](https://rsshub.app/oshwhub/explore/new/all/cc45e77e32764600a9edd9c6bec9a932) |
-  | [消费电子](https://oshwhub.com/explore?tag=e5831c441f25423d88a7311a9b276871) | [e5831c441f25423d88a7311a9b276871](https://rsshub.app/oshwhub/explore/new/all/e5831c441f25423d88a7311a9b276871) |
-  | [工业电子](https://oshwhub.com/explore?tag=ba95313da8b24bbfbcf00182447f6063) | [ba95313da8b24bbfbcf00182447f6063](https://rsshub.app/oshwhub/explore/new/all/ba95313da8b24bbfbcf00182447f6063) |
-  | [家用电子](https://oshwhub.com/explore?tag=7bee905a7730453c803339f2a1dc77cf) | [7bee905a7730453c803339f2a1dc77cf](https://rsshub.app/oshwhub/explore/new/all/7bee905a7730453c803339f2a1dc77cf) |
-  | [医疗电子](https://oshwhub.com/explore?tag=b3e25776aa9d438980f140b7577b1af7) | [b3e25776aa9d438980f140b7577b1af7](https://rsshub.app/oshwhub/explore/new/all/b3e25776aa9d438980f140b7577b1af7) |
-  | [工业4.0](https://oshwhub.com/explore?tag=2d6d5c8697cc4061a66e6fb06e30f587)  | [2d6d5c8697cc4061a66e6fb06e30f587](https://rsshub.app/oshwhub/explore/new/all/2d6d5c8697cc4061a66e6fb06e30f587) |
-  | [开源复刻](https://oshwhub.com/explore?tag=935421b496b44f178a554fbdaa568e0a) | [935421b496b44f178a554fbdaa568e0a](https://rsshub.app/oshwhub/explore/new/all/935421b496b44f178a554fbdaa568e0a) |
-  | [电子竞赛](https://oshwhub.com/explore?tag=08a877289c3f4f34b2ca8905996e07ed) | [08a877289c3f4f34b2ca8905996e07ed](https://rsshub.app/oshwhub/explore/new/all/08a877289c3f4f34b2ca8905996e07ed) |
-  | [AI视觉](https://oshwhub.com/explore?tag=e2d486a270aa46f790318c714cc77d02)   | [e2d486a270aa46f790318c714cc77d02](https://rsshub.app/oshwhub/explore/new/all/e2d486a270aa46f790318c714cc77d02) |
+| 名称                                                                         | ID                                                                                                              |
+| ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [汽车电子](https://oshwhub.com/explore?tag=cc45e77e32764600a9edd9c6bec9a932) | [cc45e77e32764600a9edd9c6bec9a932](https://rsshub.app/oshwhub/explore/new/all/cc45e77e32764600a9edd9c6bec9a932) |
+| [消费电子](https://oshwhub.com/explore?tag=e5831c441f25423d88a7311a9b276871) | [e5831c441f25423d88a7311a9b276871](https://rsshub.app/oshwhub/explore/new/all/e5831c441f25423d88a7311a9b276871) |
+| [工业电子](https://oshwhub.com/explore?tag=ba95313da8b24bbfbcf00182447f6063) | [ba95313da8b24bbfbcf00182447f6063](https://rsshub.app/oshwhub/explore/new/all/ba95313da8b24bbfbcf00182447f6063) |
+| [家用电子](https://oshwhub.com/explore?tag=7bee905a7730453c803339f2a1dc77cf) | [7bee905a7730453c803339f2a1dc77cf](https://rsshub.app/oshwhub/explore/new/all/7bee905a7730453c803339f2a1dc77cf) |
+| [医疗电子](https://oshwhub.com/explore?tag=b3e25776aa9d438980f140b7577b1af7) | [b3e25776aa9d438980f140b7577b1af7](https://rsshub.app/oshwhub/explore/new/all/b3e25776aa9d438980f140b7577b1af7) |
+| [工业 4.0](https://oshwhub.com/explore?tag=2d6d5c8697cc4061a66e6fb06e30f587) | [2d6d5c8697cc4061a66e6fb06e30f587](https://rsshub.app/oshwhub/explore/new/all/2d6d5c8697cc4061a66e6fb06e30f587) |
+| [开源复刻](https://oshwhub.com/explore?tag=935421b496b44f178a554fbdaa568e0a) | [935421b496b44f178a554fbdaa568e0a](https://rsshub.app/oshwhub/explore/new/all/935421b496b44f178a554fbdaa568e0a) |
+| [电子竞赛](https://oshwhub.com/explore?tag=08a877289c3f4f34b2ca8905996e07ed) | [08a877289c3f4f34b2ca8905996e07ed](https://rsshub.app/oshwhub/explore/new/all/08a877289c3f4f34b2ca8905996e07ed) |
+| [AI 视觉](https://oshwhub.com/explore?tag=e2d486a270aa46f790318c714cc77d02)  | [e2d486a270aa46f790318c714cc77d02](https://rsshub.app/oshwhub/explore/new/all/e2d486a270aa46f790318c714cc77d02) |
 
-  #### [电工电子](https://oshwhub.com/explore?tag=9456044232c4473d809b794e2c1c5b3c)
+#### [电工电子](https://oshwhub.com/explore?tag=9456044232c4473d809b794e2c1c5b3c)
 
-  | 名称                                                                         | ID                                                                                                              |
-  | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [电路分析](https://oshwhub.com/explore?tag=827cd3b7542646d682f9588973647e96) | [827cd3b7542646d682f9588973647e96](https://rsshub.app/oshwhub/explore/new/all/827cd3b7542646d682f9588973647e96) |
-  | [电力电子](https://oshwhub.com/explore?tag=a08b61928be54154bb1a346f7630e4ba) | [a08b61928be54154bb1a346f7630e4ba](https://rsshub.app/oshwhub/explore/new/all/a08b61928be54154bb1a346f7630e4ba) |
-  | [模拟电路](https://oshwhub.com/explore?tag=858b54c552714ef586fd28705d79e1ec) | [858b54c552714ef586fd28705d79e1ec](https://rsshub.app/oshwhub/explore/new/all/858b54c552714ef586fd28705d79e1ec) |
-  | [数字电路](https://oshwhub.com/explore?tag=027f0293ca4e4c0e982c3b11f13b64b6) | [027f0293ca4e4c0e982c3b11f13b64b6](https://rsshub.app/oshwhub/explore/new/all/027f0293ca4e4c0e982c3b11f13b64b6) |
-  | [高频电路](https://oshwhub.com/explore?tag=8938b321c55a41b092da9443fcfba334) | [8938b321c55a41b092da9443fcfba334](https://rsshub.app/oshwhub/explore/new/all/8938b321c55a41b092da9443fcfba334) |
-  | [仿真电路](https://oshwhub.com/explore?tag=b29c5f43ff8c4f39930174732044842c) | [b29c5f43ff8c4f39930174732044842c](https://rsshub.app/oshwhub/explore/new/all/b29c5f43ff8c4f39930174732044842c) |
+| 名称                                                                         | ID                                                                                                              |
+| ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [电路分析](https://oshwhub.com/explore?tag=827cd3b7542646d682f9588973647e96) | [827cd3b7542646d682f9588973647e96](https://rsshub.app/oshwhub/explore/new/all/827cd3b7542646d682f9588973647e96) |
+| [电力电子](https://oshwhub.com/explore?tag=a08b61928be54154bb1a346f7630e4ba) | [a08b61928be54154bb1a346f7630e4ba](https://rsshub.app/oshwhub/explore/new/all/a08b61928be54154bb1a346f7630e4ba) |
+| [模拟电路](https://oshwhub.com/explore?tag=858b54c552714ef586fd28705d79e1ec) | [858b54c552714ef586fd28705d79e1ec](https://rsshub.app/oshwhub/explore/new/all/858b54c552714ef586fd28705d79e1ec) |
+| [数字电路](https://oshwhub.com/explore?tag=027f0293ca4e4c0e982c3b11f13b64b6) | [027f0293ca4e4c0e982c3b11f13b64b6](https://rsshub.app/oshwhub/explore/new/all/027f0293ca4e4c0e982c3b11f13b64b6) |
+| [高频电路](https://oshwhub.com/explore?tag=8938b321c55a41b092da9443fcfba334) | [8938b321c55a41b092da9443fcfba334](https://rsshub.app/oshwhub/explore/new/all/8938b321c55a41b092da9443fcfba334) |
+| [仿真电路](https://oshwhub.com/explore?tag=b29c5f43ff8c4f39930174732044842c) | [b29c5f43ff8c4f39930174732044842c](https://rsshub.app/oshwhub/explore/new/all/b29c5f43ff8c4f39930174732044842c) |
 
-  #### [电子竞赛/活动](https://oshwhub.com/explore?tag=be87aefef90542438ff784899e6e0270)
+#### [电子竞赛 / 活动](https://oshwhub.com/explore?tag=be87aefef90542438ff784899e6e0270)
 
-  | 名称                                                                              | ID                                                                                                              |
-  | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-  | [星火计划2025](https://oshwhub.com/explore?tag=9d75d82c34d74d8eb385281a6ebc7fe9)  | [9d75d82c34d74d8eb385281a6ebc7fe9](https://rsshub.app/oshwhub/explore/new/all/9d75d82c34d74d8eb385281a6ebc7fe9) |
-  | [彩色丝印](https://oshwhub.com/explore?tag=4776bafa72df43879ea082ae1345d5bb)      | [4776bafa72df43879ea082ae1345d5bb](https://rsshub.app/oshwhub/explore/new/all/4776bafa72df43879ea082ae1345d5bb) |
-  | [立创大赛](https://oshwhub.com/explore?tag=f7eefe9c39ff49dabbea446863af30e3)      | [f7eefe9c39ff49dabbea446863af30e3](https://rsshub.app/oshwhub/explore/new/all/f7eefe9c39ff49dabbea446863af30e3) |
-  | [互联网+](https://oshwhub.com/explore?tag=10d9b29096d347629eea7fe3a78eb290)       | [10d9b29096d347629eea7fe3a78eb290](https://rsshub.app/oshwhub/explore/new/all/10d9b29096d347629eea7fe3a78eb290) |
-  | [创新杯/创青春](https://oshwhub.com/explore?tag=e6920b7defbf47f78e811379ab06b3a2) | [e6920b7defbf47f78e811379ab06b3a2](https://rsshub.app/oshwhub/explore/new/all/e6920b7defbf47f78e811379ab06b3a2) |
-  | [FPGA大赛](https://oshwhub.com/explore?tag=3348af772eb54f769e345c1c6312c3a9)      | [3348af772eb54f769e345c1c6312c3a9](https://rsshub.app/oshwhub/explore/new/all/3348af772eb54f769e345c1c6312c3a9) |
-  | [其他比赛](https://oshwhub.com/explore?tag=06ed1c7532594f59916f7ce037a6f3ff)      | [06ed1c7532594f59916f7ce037a6f3ff](https://rsshub.app/oshwhub/explore/new/all/06ed1c7532594f59916f7ce037a6f3ff) |
-  | [星火计划2024](https://oshwhub.com/explore?tag=5f4e56750b0445a7a024b01cc8fa7122)  | [5f4e56750b0445a7a024b01cc8fa7122](https://rsshub.app/oshwhub/explore/new/all/5f4e56750b0445a7a024b01cc8fa7122) |
-  | [星火计划2023](https://oshwhub.com/explore?tag=15637284a6f545128f80a11443cdf1a0)  | [15637284a6f545128f80a11443cdf1a0](https://rsshub.app/oshwhub/explore/new/all/15637284a6f545128f80a11443cdf1a0) |
+| 名称                                                                                | ID                                                                                                              |
+| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [星火计划 2025](https://oshwhub.com/explore?tag=9d75d82c34d74d8eb385281a6ebc7fe9)   | [9d75d82c34d74d8eb385281a6ebc7fe9](https://rsshub.app/oshwhub/explore/new/all/9d75d82c34d74d8eb385281a6ebc7fe9) |
+| [彩色丝印](https://oshwhub.com/explore?tag=4776bafa72df43879ea082ae1345d5bb)        | [4776bafa72df43879ea082ae1345d5bb](https://rsshub.app/oshwhub/explore/new/all/4776bafa72df43879ea082ae1345d5bb) |
+| [立创大赛](https://oshwhub.com/explore?tag=f7eefe9c39ff49dabbea446863af30e3)        | [f7eefe9c39ff49dabbea446863af30e3](https://rsshub.app/oshwhub/explore/new/all/f7eefe9c39ff49dabbea446863af30e3) |
+| [互联网 +](https://oshwhub.com/explore?tag=10d9b29096d347629eea7fe3a78eb290)        | [10d9b29096d347629eea7fe3a78eb290](https://rsshub.app/oshwhub/explore/new/all/10d9b29096d347629eea7fe3a78eb290) |
+| [创新杯 / 创青春](https://oshwhub.com/explore?tag=e6920b7defbf47f78e811379ab06b3a2) | [e6920b7defbf47f78e811379ab06b3a2](https://rsshub.app/oshwhub/explore/new/all/e6920b7defbf47f78e811379ab06b3a2) |
+| [FPGA 大赛](https://oshwhub.com/explore?tag=3348af772eb54f769e345c1c6312c3a9)       | [3348af772eb54f769e345c1c6312c3a9](https://rsshub.app/oshwhub/explore/new/all/3348af772eb54f769e345c1c6312c3a9) |
+| [其他比赛](https://oshwhub.com/explore?tag=06ed1c7532594f59916f7ce037a6f3ff)        | [06ed1c7532594f59916f7ce037a6f3ff](https://rsshub.app/oshwhub/explore/new/all/06ed1c7532594f59916f7ce037a6f3ff) |
+| [星火计划 2024](https://oshwhub.com/explore?tag=5f4e56750b0445a7a024b01cc8fa7122)   | [5f4e56750b0445a7a024b01cc8fa7122](https://rsshub.app/oshwhub/explore/new/all/5f4e56750b0445a7a024b01cc8fa7122) |
+| [星火计划 2023](https://oshwhub.com/explore?tag=15637284a6f545128f80a11443cdf1a0)   | [15637284a6f545128f80a11443cdf1a0](https://rsshub.app/oshwhub/explore/new/all/15637284a6f545128f80a11443cdf1a0) |
 
-  #### [电子设计大赛](https://oshwhub.com/explore?tag=f207d2c4ad2644b7acb4f8345bf6cee6)
+#### [电子设计大赛](https://oshwhub.com/explore?tag=f207d2c4ad2644b7acb4f8345bf6cee6)
 
-  | 名称                                                                           | ID                                                                                                              |
-  | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-  | [校内选拔赛](https://oshwhub.com/explore?tag=b9b469bc5f9f43fbbca7ea1b42ad261f) | [b9b469bc5f9f43fbbca7ea1b42ad261f](https://rsshub.app/oshwhub/explore/new/all/b9b469bc5f9f43fbbca7ea1b42ad261f) |
-  | [省赛/区赛](https://oshwhub.com/explore?tag=9ba4444f3c4e4c0ca6de5c5473cde4a8)  | [9ba4444f3c4e4c0ca6de5c5473cde4a8](https://rsshub.app/oshwhub/explore/new/all/9ba4444f3c4e4c0ca6de5c5473cde4a8) |
-  | [2013年电赛](https://oshwhub.com/explore?tag=9b0656c41291403db63ecdd67d8caf07) | [9b0656c41291403db63ecdd67d8caf07](https://rsshub.app/oshwhub/explore/new/all/9b0656c41291403db63ecdd67d8caf07) |
-  | [2015年电赛](https://oshwhub.com/explore?tag=fe146745542a4dde99883058b5325863) | [fe146745542a4dde99883058b5325863](https://rsshub.app/oshwhub/explore/new/all/fe146745542a4dde99883058b5325863) |
-  | [2019年电赛](https://oshwhub.com/explore?tag=b3894c65a5ca47f19bab8867da884f04) | [b3894c65a5ca47f19bab8867da884f04](https://rsshub.app/oshwhub/explore/new/all/b3894c65a5ca47f19bab8867da884f04) |
-  | [2021年电赛](https://oshwhub.com/explore?tag=6ccb9fbbd3294c6ba93570c8d35e5310) | [6ccb9fbbd3294c6ba93570c8d35e5310](https://rsshub.app/oshwhub/explore/new/all/6ccb9fbbd3294c6ba93570c8d35e5310) |
-  | [2023年电赛](https://oshwhub.com/explore?tag=b1e24499fcdb47c7896baf96b0e40aaa) | [b1e24499fcdb47c7896baf96b0e40aaa](https://rsshub.app/oshwhub/explore/new/all/b1e24499fcdb47c7896baf96b0e40aaa) |
+| 名称                                                                            | ID                                                                                                              |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [校内选拔赛](https://oshwhub.com/explore?tag=b9b469bc5f9f43fbbca7ea1b42ad261f)  | [b9b469bc5f9f43fbbca7ea1b42ad261f](https://rsshub.app/oshwhub/explore/new/all/b9b469bc5f9f43fbbca7ea1b42ad261f) |
+| [省赛 / 区赛](https://oshwhub.com/explore?tag=9ba4444f3c4e4c0ca6de5c5473cde4a8) | [9ba4444f3c4e4c0ca6de5c5473cde4a8](https://rsshub.app/oshwhub/explore/new/all/9ba4444f3c4e4c0ca6de5c5473cde4a8) |
+| [2013 年电赛](https://oshwhub.com/explore?tag=9b0656c41291403db63ecdd67d8caf07) | [9b0656c41291403db63ecdd67d8caf07](https://rsshub.app/oshwhub/explore/new/all/9b0656c41291403db63ecdd67d8caf07) |
+| [2015 年电赛](https://oshwhub.com/explore?tag=fe146745542a4dde99883058b5325863) | [fe146745542a4dde99883058b5325863](https://rsshub.app/oshwhub/explore/new/all/fe146745542a4dde99883058b5325863) |
+| [2019 年电赛](https://oshwhub.com/explore?tag=b3894c65a5ca47f19bab8867da884f04) | [b3894c65a5ca47f19bab8867da884f04](https://rsshub.app/oshwhub/explore/new/all/b3894c65a5ca47f19bab8867da884f04) |
+| [2021 年电赛](https://oshwhub.com/explore?tag=6ccb9fbbd3294c6ba93570c8d35e5310) | [6ccb9fbbd3294c6ba93570c8d35e5310](https://rsshub.app/oshwhub/explore/new/all/6ccb9fbbd3294c6ba93570c8d35e5310) |
+| [2023 年电赛](https://oshwhub.com/explore?tag=b1e24499fcdb47c7896baf96b0e40aaa) | [b1e24499fcdb47c7896baf96b0e40aaa](https://rsshub.app/oshwhub/explore/new/all/b1e24499fcdb47c7896baf96b0e40aaa) |
 
-</details>
-`,
+</details>`,
     categories: ['programming'],
     features: {
         requireConfig: false,

@@ -42,11 +42,11 @@ export const route: Route = {
     categories: ['new-media'],
     description: `Type 栏目（对应 Ghost 标签）：
 
-| 最新   | 速递     | 评论    | 国际          | 大陆     | 香港     | 台湾   | 科技       | 专题   | 日报        | 周报   |
-| ------ | -------- | ------- | ------------- | -------- | -------- | ------ | ---------- | ------ | ----------- | ------ |
+| 最新   | 速递     | 评论    | 国际          | 大陆     | 香港     | 台湾   | 科技       | 专题    | 日报        | 周报   |
+| ------ | -------- | ------- | ------------- | -------- | -------- | ------ | ---------- | ------- | ----------- | ------ |
 | latest | whatsnew | opinion | international | mainland | hongkong | taiwan | technology | feature | daily-brief | weekly |
 
-:::tip
+::: tip
 设置环境变量 \`INITIUM_MEMBER_COOKIE\` 可获取付费文章全文。
 :::`,
 };

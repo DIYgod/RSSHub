@@ -91,13 +91,11 @@ export const route: Route = {
     path: '/news/:category',
     name: 'CATTI 考试消息',
     maintainers: ['PrinOrange'],
-    description: `
-| Category  | 标题       | 描述                |
-|-----------|------------|--------------------|
-| ggl       | 通知公告   | CATTI 考试通知和公告 |
-| ywdt      | 要闻动态   | CATTI 考试要闻动态   |
-| zxzc      | 最新政策   | CATTI 考试最新政策   |
-`,
+    description: `| Category | 标题     | 描述                 |
+| -------- | -------- | -------------------- |
+| ggl      | 通知公告 | CATTI 考试通知和公告 |
+| ywdt     | 要闻动态 | CATTI 考试要闻动态   |
+| zxzc     | 最新政策 | CATTI 考试最新政策   |`,
     handler,
     categories: ['study'],
     parameters: {

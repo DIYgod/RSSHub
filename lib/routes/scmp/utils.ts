@@ -81,7 +81,7 @@ export const parseItem = async (item) => {
     item.summary = renderHTML(article.summary.json);
     item.description = renderHTML(article.subHeadline.json) + renderHTML(article.images.find((i) => i.type === 'leading')) + renderHTML(article.body.json);
     item.updated = parseDate(article.updatedDate, 'x');
-    item.category = [...new Set([...article.topics.map((t) => t.name), ...article.sections.flatMap((t) => t.value.map((v) => v.name)), ...article.keywords.map((k) => k?.split(', '))])];
+    item.category = [...new Set([...article.topics.map((t) => t.name), ...(article.sectionsV2?.flatMap((t) => t.value.map((v) => v.name)) ?? []), ...article.keywords.map((k) => k?.split(', '))])];
 
     // N.B. gallery in article is not rendered
     // e.g., { type: 'div', attribs: { class: 'scmp-photo-gallery', 'data-gallery-nid': '3239409' }}

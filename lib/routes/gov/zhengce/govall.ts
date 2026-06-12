@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/zhengce/govall/:advance?',
+    path: '/govall/:advance?',
     categories: ['government'],
     example: '/gov/zhengce/govall/orpro=555&notpro=2&search_field=title',
     parameters: { advance: '高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' },
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.gov.cn/'],
-            target: '/zhengce/govall',
+            target: '/govall',
         },
     ],
     name: '信息稿件',
@@ -52,7 +52,7 @@ async function handler(ctx) {
     });
     const query = `${params.toString()}&${advance}`;
     const res = await got.get(link, {
-        searchParams: query.replaceAll(/([\u4E00-\u9FA5])/g, (str) => encodeURIComponent(str)),
+        searchParams: query.replaceAll(/[\u4E00-\u9FA5]/g, (str) => encodeURIComponent(str)),
     });
     const $ = load(res.data);
 

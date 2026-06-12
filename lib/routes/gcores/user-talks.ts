@@ -120,8 +120,7 @@ export const route: Route = {
     },
     description: `::: tip
 若订阅用户 [这样重这样轻](https://www.gcores.com/users/31418/talks) 的动态，网址为 \`https://www.gcores.com/users/31418/talks\`，请截取 \`https://www.gcores.com/users/\` 到 \`/talks\` 之间的部分 \`31418\` 作为 \`id\` 参数填入，此时目标路由为 [\`/gcores/users/31418/talks\`](https://rsshub.app/gcores/users/31418/talks)。
-:::
-`,
+:::`,
     categories: ['game'],
     features: {
         requireConfig: false,

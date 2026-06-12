@@ -35,7 +35,7 @@ export const route: Route = {
             },
         ],
     },
-    description: '云谦的博客，部分内容存在权限校验，访问完整内容请部署RSSHub私有实例并配置授权信息',
+    description: '云谦的博客，部分内容存在权限校验，访问完整内容请部署 RSSHub 私有实例并配置授权信息',
 };
 
 async function handler(ctx: Context): Promise<Data> {

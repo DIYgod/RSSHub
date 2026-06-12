@@ -34,7 +34,7 @@ export const handler = async (ctx): Promise<Data> => {
         const href = item.prop('href');
         const link = href ? (href.startsWith('/') ? new URL(href, rootUrl).href : href) : undefined;
 
-        if (link && /\/(article|video)\/\w+\.html/.test(link)) {
+        if (link && /\/(?:article|video)\/\w+\.html/.test(link)) {
             items[link] = {
                 title: item.text(),
                 link,
@@ -52,6 +52,7 @@ export const handler = async (ctx): Promise<Data> => {
                     const content = load(detailResponse);
                     const image = content('div.article-img img').first();
                     const video = content('#video-player').first();
+                    content('p.report-view').remove();
 
                     item.title = content('div.article-header h1').eq(0).text();
                     item.description = renderDescription({

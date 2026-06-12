@@ -72,7 +72,7 @@ async function handler(ctx) {
                 const initialData = JSON.parse(
                     $('script')
                         .text()
-                        .match(/window\.__INITIAL_STATE__\s*=\s*({.*?});/)[1]
+                        .match(/window\.__INITIAL_STATE__\s*=\s*(\{.*?\});/)[1]
                 );
 
                 item.description = renderDescription(item.thumb, item.description, initialData.pageData.detail.ext.content);

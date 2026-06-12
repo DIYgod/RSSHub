@@ -317,6 +317,7 @@ export const route: Route = {
 | ----------------------- | ------------------------------- |
 | Tips For Adult Students | tips-for-adult-students-4132468 |
 | Getting Your Ged        | getting-your-ged-4132466        |
+
 </details>`,
 };
 

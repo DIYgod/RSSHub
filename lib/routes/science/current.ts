@@ -46,8 +46,8 @@ export const route: Route = {
 |  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
 |     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
-  -   Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
-  -   Leaving it empty (\`/science/current\`) to get update from Science.`,
+- Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
+- Leaving it empty (\`/science/current\`) to get update from Science.`,
 };
 
 async function handler(ctx) {
@@ -66,9 +66,9 @@ async function handler(ctx) {
         .toArray()
         .map((item) => getItem(item, $));
 
-    const browser = await playwright();
-    const items = await fetchDesc(list, browser, cache.tryGet);
-    await browser.close();
+    const context = await playwright();
+    const items = await fetchDesc(list, context, cache.tryGet);
+    await context.close();
 
     return {
         title: `${pageTitleName} | Current Issue`,

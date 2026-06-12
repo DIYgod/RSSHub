@@ -26,11 +26,11 @@ export const route: Route = {
     handler,
     description: `**\`language\`**
 
-  Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
+Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
 
-  -   \`cn\` (Chinese), for Pornhub in China [https://cn.pornhub.com](https://cn.pornhub.com)；
+- \`cn\` (Chinese), for Pornhub in China <https://cn.pornhub.com>；
 
-  -   \`jp\` (Japanese), for Pornhub in Japan [https://jp.pornhub.com](https://jp.pornhub.com) etc.`,
+- \`jp\` (Japanese), for Pornhub in Japan <https://jp.pornhub.com> etc.`,
 };
 
 async function handler(ctx) {

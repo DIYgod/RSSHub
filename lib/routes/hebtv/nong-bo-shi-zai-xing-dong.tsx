@@ -134,7 +134,7 @@ async function handler(ctx) {
     );
 
     const description = $('meta[name="description"]').prop('content');
-    const author = description.split(/,/)[0];
+    const author = description.split(/,/, 1)[0];
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
     return {

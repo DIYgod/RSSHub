@@ -109,8 +109,7 @@ export const route: Route = {
             target: '/department/academic-affairs/:column',
         },
     ],
-    description: `
-| column | 标题     | 描述                     |
+    description: `| column | 标题     | 描述                     |
 | ------ | -------- | ------------------------ |
 | tzgg   | 通知公告 | 西北师范大学教务通知公告 |
 | jwkx   | 教务快讯 | 西北师范大学教务快讯     |`,

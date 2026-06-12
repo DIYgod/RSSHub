@@ -18,9 +18,8 @@ export const route: Route = {
     path: '/:json?',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-When applying a filter on https://www.oevw.at/suche, a POST request is sent
-to https://www.oevw.at/suche/filter. You can take its JSON body, URL-encode it
+    description: `When applying a filter on <https://www.oevw.at/suche>, a POST request is sent
+to <https://www.oevw.at/suche/filter>. You can take its JSON body, URL-encode it
 (\`encodeURIComponent('{...}')\`) and append it to the URL, see example URL.
 for this route.`,
     parameters: {
@@ -32,7 +31,7 @@ for this route.`,
 
         // first, get https://www.oevw.at/suche to extract csrf token and cookies
         const res = await ofetch.raw(BASE_URL);
-        const cookies = res.headers.getSetCookie().map((setCookie: string) => setCookie.split(';')[0].trim());
+        const cookies = res.headers.getSetCookie().map((setCookie: string) => setCookie.split(';', 1)[0].trim());
         const csrfToken = csrfTokenRegex.exec(res._data)![1];
         const headers = {
             Origin: ORIGIN_URL,

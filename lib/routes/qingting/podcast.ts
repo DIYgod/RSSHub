@@ -83,7 +83,7 @@ async function handler(ctx) {
                     },
                 });
 
-                const detail = JSON.parse(detailRes.match(/},"program":(.*?),"plist":/)[1]);
+                const detail = JSON.parse(detailRes.match(/\},"program":(.*?),"plist":/)[1]);
 
                 const rssItem = {
                     title: item.title,

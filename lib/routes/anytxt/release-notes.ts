@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $el.text();
             const description: string | undefined = $el.next().html() ?? '';
-            const pubDateStr: string | undefined = title.split(/\s/)[0];
+            const pubDateStr: string | undefined = title.split(/\s/, 1)[0];
             const linkUrl: string | undefined = targetUrl;
             const upDatedStr: string | undefined = pubDateStr;
 

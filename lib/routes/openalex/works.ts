@@ -34,7 +34,7 @@ export const handler = async (ctx) => {
     // Get date 14 days ago (2 weeks)
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-    const twoWeeksAgoStr = twoWeeksAgo.toISOString().split('T')[0];
+    const twoWeeksAgoStr = twoWeeksAgo.toISOString().split('T', 1)[0];
 
     // Build filter parameters
     const filters = [`publication_date:>${twoWeeksAgoStr}`, 'has_abstract:true', `primary_location.source.id:${journals}`];
@@ -92,7 +92,7 @@ export const handler = async (ctx) => {
             };
         })
         .filter((item) => {
-            const day = item.pubDate instanceof Date ? item.pubDate.toISOString().split('T')[0] : '';
+            const day = item.pubDate instanceof Date ? item.pubDate.toISOString().split('T', 1)[0] : '';
             const titleKey = `${item.normalizedTitle}::${day}`;
             if (seenTitleKeys.has(titleKey)) {
                 return false;
@@ -181,6 +181,7 @@ export const route: Route = {
     description: `Get recent scientific publications from OpenAlex filtered by journal and optionally by topic classification (last 2 weeks).
 
 Examples:
+
 - /openalex/s64187185 - All works from a journal (no topic filter)
 - /openalex/s64187185/subfield/2604 - Filter by subfield
 - /openalex/s64187185|s123456/topic/T10001|T10002 - Filter by topic with multiple journals

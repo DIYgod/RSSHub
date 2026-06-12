@@ -12,9 +12,9 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/dedao',
     parameters: { category: '分类，见下表，默认为`news`' },
-    description: `| 新闻 | 人物故事 | 视频 |
-| ---- | ---- | ---- |
-| news | figure | video |`,
+    description: `| 新闻 | 人物故事 | 视频  |
+| ---- | -------- | ----- |
+| news | figure   | video |`,
     handler,
 };
 
@@ -33,7 +33,7 @@ async function handler(ctx) {
     let items = (category === 'news' ? data.news : category === 'figure' ? data.figure : data.videoList).map((item) => ({
         title: item.title,
         pubDate: parseDate(item.online_time),
-        link: `${rootUrl}/${category === 'news' ? 'article/' : category === 'figure' ? 'people/' : ''}${item.online_time.split('T')[0].split('-').join('')}/${item.token}`,
+        link: `${rootUrl}/${category === 'news' ? 'article/' : category === 'figure' ? 'people/' : ''}${item.online_time.split('T', 1)[0].split('-').join('')}/${item.token}`,
     }));
 
     items = await Promise.all(

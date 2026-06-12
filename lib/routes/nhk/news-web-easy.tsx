@@ -48,7 +48,7 @@ async function handler(ctx) {
     });
     const buildAuthorizeCookie = buildAuthorizeResponse.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
 
     const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location'), {
@@ -63,7 +63,7 @@ async function handler(ctx) {
     });
     const idpCookie = idpResponse.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
 
     const data = await ofetch('https://news.web.nhk/news/easy/news-list.json', {

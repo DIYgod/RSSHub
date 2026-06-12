@@ -626,10 +626,9 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [星林社区遥感开发者培训班的最新内容](https://www.jl1mall.com/forum/)，此时路由为 [\`/jl1mall/forum/2/\`](https://rsshub.app/jl1mall/forum/2/遥感开发者培训班)。
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

@@ -23,8 +23,9 @@ export const route: Route = {
     maintainers: ['HenryQW'],
     handler,
     description: `搜狐号 ID 可以通过以下方式获取：
-  1.  通过浏览器搜索相关搜狐号 \`果壳 site: mp.sohu.com\`。
-  2.  通过浏览器控制台执行 \`window.globalConst.mkeyConst_mkey\`，返回的即为搜狐号 ID。`,
+
+1. 通过浏览器搜索相关搜狐号 \`果壳 site: mp.sohu.com\`。
+2. 通过浏览器控制台执行 \`window.globalConst.mkeyConst_mkey\`，返回的即为搜狐号 ID。`,
 };
 
 function randomString(length = 32) {
@@ -116,7 +117,7 @@ async function handler(ctx) {
     const suv = pageResponse.headers
         ?.getSetCookie()
         .find((e) => e.startsWith('SUV'))
-        ?.split(';')[0];
+        ?.split(';', 1)[0];
     const $ = cheerio.load(pageResponse._data);
 
     const CBDRenderConst = JSON.parse(
@@ -139,7 +140,7 @@ async function handler(ctx) {
     const blockRenderData = JSON.parse(
         $('script:contains("column_2_text")')
             .text()
-            .match(/({.*})/)?.[1]
+            .match(/(\{.*\})/)?.[1]
     );
     const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
     const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))].param.data.list[0];

@@ -13,7 +13,7 @@ export const route: Route = {
     },
     example: '/theinitium/follow/articles',
     categories: ['new-media'],
-    description: `:::warning
+    description: `::: warning
 此路由已停用。端传媒已迁移到 Ghost CMS，不再支持通过 API 获取个人追踪内容。请改用标签或栏目订阅。
 :::`,
 };

@@ -18,9 +18,7 @@ const parseArticleContent = ($) => {
     const content = $('[itemprop="articleBody"]');
     $('*')
         .contents()
-        .filter(function () {
-            return this.nodeType === 8;
-        })
+        .filter((_, el) => el.nodeType === 8)
         .remove();
     content.find('aside').remove();
     content.find('.videoPlayerContainer').remove();

@@ -162,8 +162,7 @@ export const route: Route = {
 
 | 综合 | 公告 | 赛事 | 攻略 | 社区 |
 | ---- | ---- | ---- | ---- | ---- |
-| 23   | 24   | 25   | 27   | 28   |
-`,
+| 23   | 24   | 25   | 27   | 28   |`,
     categories: ['game'],
     features: {
         requireConfig: false,

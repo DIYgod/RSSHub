@@ -19,11 +19,9 @@ export const route: Route = {
     path: '*',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-Note that, on https://www.gesiba.at/immobilien/wohnungen, filters are added to
+    description: `Note that, on <https://www.gesiba.at/immobilien/wohnungen>, filters are added to
 the URL like \`&filter[plz]=1100,1120\`, but the endpoint used here expects it
-like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
-`,
+like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter`,
 
     async handler(ctx) {
         let params = getSubPath(ctx).slice(1);

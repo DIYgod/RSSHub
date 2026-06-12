@@ -238,8 +238,8 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
             // Possible formats: 10:21, 45分钟前, 09-15 19:57
             const currentYear = new Date().getFullYear();
             const currentDate = new Date();
-            const monthDayTimePattern = /^(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
-            const timeOnlyPattern = /^(\d{1,2}):(\d{2})$/;
+            const monthDayTimePattern = /^\d{2}-\d{2} \d{2}:\d{2}$/;
+            const timeOnlyPattern = /^\d{1,2}:\d{2}$/;
             let processedDateString = pubDateString;
 
             if (monthDayTimePattern.test(pubDateString)) {
@@ -257,9 +257,9 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
                 .filter(Boolean);
 
             content('.basketballTobbs_tag').remove();
-            content('.hupu-img').each(function () {
-                const imgSrc = content(this).attr('data-gif') || content(this).attr('data-origin') || content(this).attr('src');
-                content(this).parent().html(`<img src="${imgSrc}">`);
+            content('.hupu-img').each((_, el) => {
+                const imgSrc = content(el).attr('data-gif') || content(el).attr('data-origin') || content(el).attr('src');
+                content(el).parent().html(`<img src="${imgSrc}">`);
             });
 
             // 分别获取内容元素

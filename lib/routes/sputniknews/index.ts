@@ -60,13 +60,13 @@ export const route: Route = {
 | ----- | -------- | -------- | ----- | ---- | ------- |
 | world | covid-19 | business | sport | tech | opinion |
 
-  Categories for Chinese site:
+Categories for Chinese site:
 
 | 新闻 | 中国  | 俄罗斯 | 国际            | 俄中关系                 | 评论    |
 | ---- | ----- | ------ | --------------- | ------------------------ | ------- |
-| news | china | russia | category_guoji | russia_china_relations | opinion |
+| news | china | russia | category\\_guoji | russia\\_china\\_relations | opinion |
 
-  Language
+Language
 
 | Language    | Id          |
 | ----------- | ----------- |

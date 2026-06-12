@@ -31,8 +31,8 @@ async function handler(ctx) {
     const data = await ofetch(link);
     const items = data.data.media.map((item) => ({
         title: item.title === '-' ? item.comment : item.title,
-        link: item.product_url.split('?')[0],
-        description: `<p><img src="${item.image_url.split('?')[0]}"></p>${item.comment ? `<p>${item.comment}</p>` : ''}`,
+        link: item.product_url.split('?', 1)[0],
+        description: `<p><img src="${item.image_url.split('?', 1)[0]}"></p>${item.comment ? `<p>${item.comment}</p>` : ''}`,
         guid: item.id,
     }));
     return {

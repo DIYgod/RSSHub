@@ -101,22 +101,21 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/moa/zdscxx/:category{.+}?',
-    name: '中华人民共和国农业农村部数据',
+    path: '/zdscxx/:category{.+}?',
+    name: '数据',
     url: 'www.moa.gov.cn',
     maintainers: ['nczitzk'],
     handler,
     example: '/gov/moa/zdscxx',
     parameters: { category: '分类，默认为全部，见下表' },
     description: `::: tip
-  若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 \`价格指数\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/价格指数\`](https://rsshub.app/gov/moa/zdscxx/价格指数)。
+若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 \`价格指数\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/价格指数\`](https://rsshub.app/gov/moa/zdscxx/价格指数)。
 
-  若订阅 \`央视网\` 报告来源 的 \`蔬菜生产\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/央视网/蔬菜生产\`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。
+若订阅 \`央视网\` 报告来源 的 \`蔬菜生产\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/央视网/蔬菜生产\`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。
 :::
 
 | 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |
-| -------- | -------- | ------------ | ------------ | -------- | -------- |
-    `,
+| -------- | -------- | ------------ | ------------ | -------- | -------- |`,
     categories: ['government'],
 
     features: {
@@ -132,32 +131,32 @@ export const route: Route = {
         {
             title: '价格指数',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/价格指数',
+            target: '/zdscxx/价格指数',
         },
         {
             title: '供需形势',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/供需形势',
+            target: '/zdscxx/供需形势',
         },
         {
             title: '分析报告周报',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/分析报告周报',
+            target: '/zdscxx/分析报告周报',
         },
         {
             title: '分析报告日报',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/分析报告日报',
+            target: '/zdscxx/分析报告日报',
         },
         {
             title: '日历信息',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/日历信息',
+            target: '/zdscxx/日历信息',
         },
         {
             title: '蔬菜生产',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/蔬菜生产',
+            target: '/zdscxx/蔬菜生产',
         },
     ],
 };

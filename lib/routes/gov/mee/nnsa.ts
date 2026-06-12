@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/mee/nnsa/:category{.+}?',
+    path: '/nnsa/:category{.+}?',
     name: '国家核安全局',
     url: 'nnsa.mee.gov.cn',
     maintainers: ['nczitzk'],
@@ -190,49 +190,48 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [环境要闻](https://nnsa.mee.gov.cn/ywdt/hjyw/)，其源网址为 \`https://nnsa.mee.gov.cn/ywdt/hjyw/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/gov/mee/nnsa/ywdt/hjyw\`](https://rsshub.app/gov/mee/nnsa/ywdt/hjyw)。
 :::
 
 <details>
   <summary>更多分类</summary>
 
-  #### [要闻动态](https://nnsa.mee.gov.cn/ywdt/)
+#### [要闻动态](https://nnsa.mee.gov.cn/ywdt/)
 
-  | 分类                                           | ID                                                     |
-  | ---------------------------------------------- | ------------------------------------------------------ |
-  | [时政要闻](https://nnsa.mee.gov.cn/ywdt/szyw/) | [ywdt/szyw](https://rsshub.app/gov/mee/nnsa/ywdt/szyw) |
-  | [环境要闻](https://nnsa.mee.gov.cn/ywdt/hjyw/) | [ywdt/hjyw](https://rsshub.app/gov/mee/nnsa/ywdt/hjyw) |
-  | [监管动态](https://nnsa.mee.gov.cn/ywdt/gzdt/) | [ywdt/gzdt](https://rsshub.app/gov/mee/nnsa/ywdt/gzdt) |
-  | [行业资讯](https://nnsa.mee.gov.cn/ywdt/hyzx/) | [ywdt/hyzx](https://rsshub.app/gov/mee/nnsa/ywdt/hyzx) |
-  | [国际资讯](https://nnsa.mee.gov.cn/ywdt/gjzx/) | [ywdt/gjzx](https://rsshub.app/gov/mee/nnsa/ywdt/gjzx) |
-  | [公示公告](https://nnsa.mee.gov.cn/ywdt/gsqg/) | [ywdt/gsqg](https://rsshub.app/gov/mee/nnsa/ywdt/gsqg) |
-  | [曝光台](https://nnsa.mee.gov.cn/ywdt/bgt/)    | [ywdt/bgt](https://rsshub.app/gov/mee/nnsa/ywdt/bgt)   |
+| 分类                                           | ID                                                     |
+| ---------------------------------------------- | ------------------------------------------------------ |
+| [时政要闻](https://nnsa.mee.gov.cn/ywdt/szyw/) | [ywdt/szyw](https://rsshub.app/gov/mee/nnsa/ywdt/szyw) |
+| [环境要闻](https://nnsa.mee.gov.cn/ywdt/hjyw/) | [ywdt/hjyw](https://rsshub.app/gov/mee/nnsa/ywdt/hjyw) |
+| [监管动态](https://nnsa.mee.gov.cn/ywdt/gzdt/) | [ywdt/gzdt](https://rsshub.app/gov/mee/nnsa/ywdt/gzdt) |
+| [行业资讯](https://nnsa.mee.gov.cn/ywdt/hyzx/) | [ywdt/hyzx](https://rsshub.app/gov/mee/nnsa/ywdt/hyzx) |
+| [国际资讯](https://nnsa.mee.gov.cn/ywdt/gjzx/) | [ywdt/gjzx](https://rsshub.app/gov/mee/nnsa/ywdt/gjzx) |
+| [公示公告](https://nnsa.mee.gov.cn/ywdt/gsqg/) | [ywdt/gsqg](https://rsshub.app/gov/mee/nnsa/ywdt/gsqg) |
+| [曝光台](https://nnsa.mee.gov.cn/ywdt/bgt/)    | [ywdt/bgt](https://rsshub.app/gov/mee/nnsa/ywdt/bgt)   |
 
-  #### [政策文件](https://nnsa.mee.gov.cn/zcwj/)
+#### [政策文件](https://nnsa.mee.gov.cn/zcwj/)
 
-  | 分类                                                    | ID                                                           |
-  | ------------------------------------------------------- | ------------------------------------------------------------ |
-  | [中央有关文件](https://nnsa.mee.gov.cn/zcwj/zyygwj/)    | [zcwj/zyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/zyygwj)   |
-  | [国务院有关文件](https://nnsa.mee.gov.cn/zcwj/gwyygwj/) | [zcwj/gwyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/gwyygwj) |
-  | [部文件](https://nnsa.mee.gov.cn/zcwj/bwj/)             | [zcwj/bwj](https://rsshub.app/gov/mee/nnsa/zcwj/bwj)         |
-  | [核安全局文件](https://nnsa.mee.gov.cn/zcwj/haqjwj/)    | [zcwj/haqjwj](https://rsshub.app/gov/mee/nnsa/zcwj/haqjwj)   |
-  | [其他](https://nnsa.mee.gov.cn/zcwj/qt/)                | [zcwj/qt](https://rsshub.app/gov/mee/nnsa/zcwj/qt)           |
-  | [解读](https://nnsa.mee.gov.cn/zcwj/jd/)                | [zcwj/jd](https://rsshub.app/gov/mee/nnsa/zcwj/jd)           |
+| 分类                                                    | ID                                                           |
+| ------------------------------------------------------- | ------------------------------------------------------------ |
+| [中央有关文件](https://nnsa.mee.gov.cn/zcwj/zyygwj/)    | [zcwj/zyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/zyygwj)   |
+| [国务院有关文件](https://nnsa.mee.gov.cn/zcwj/gwyygwj/) | [zcwj/gwyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/gwyygwj) |
+| [部文件](https://nnsa.mee.gov.cn/zcwj/bwj/)             | [zcwj/bwj](https://rsshub.app/gov/mee/nnsa/zcwj/bwj)         |
+| [核安全局文件](https://nnsa.mee.gov.cn/zcwj/haqjwj/)    | [zcwj/haqjwj](https://rsshub.app/gov/mee/nnsa/zcwj/haqjwj)   |
+| [其他](https://nnsa.mee.gov.cn/zcwj/qt/)                | [zcwj/qt](https://rsshub.app/gov/mee/nnsa/zcwj/qt)           |
+| [解读](https://nnsa.mee.gov.cn/zcwj/jd/)                | [zcwj/jd](https://rsshub.app/gov/mee/nnsa/zcwj/jd)           |
 
-  #### [业务工作](https://nnsa.mee.gov.cn/ywdh/)
+#### [业务工作](https://nnsa.mee.gov.cn/ywdh/)
 
-  | 分类                                                        | ID                                                           |
-  | ----------------------------------------------------------- | ------------------------------------------------------------ |
-  | [核动力厂和研究堆](https://nnsa.mee.gov.cn/ywdh/fyd/)       | [ywdh/fyd](https://rsshub.app/gov/mee/nnsa/ywdh/fyd)         |
-  | [核燃料、放废](https://nnsa.mee.gov.cn/ywdh/hrlff/)         | [ywdh/hrlff](https://rsshub.app/gov/mee/nnsa/ywdh/hrlff)     |
-  | [核技术、电磁、矿冶](https://nnsa.mee.gov.cn/ywdh/hjsdcky/) | [ywdh/hjsdcky](https://rsshub.app/gov/mee/nnsa/ywdh/hjsdcky) |
-  | [监测与应急](https://nnsa.mee.gov.cn/ywdh/jcyj_1/)          | [ywdh/jcyj_1](https://rsshub.app/gov/mee/nnsa/ywdh/jcyj_1)   |
-  | [核安全设备与人员](https://nnsa.mee.gov.cn/ywdh/haqsbry/)   | [ywdh/haqsbry](https://rsshub.app/gov/mee/nnsa/ywdh/haqsbry) |
-  | [国际合作](https://nnsa.mee.gov.cn/ywdh/gjhz/)              | [ywdh/gjhz](https://rsshub.app/gov/mee/nnsa/ywdh/gjhz)       |
+| 分类                                                        | ID                                                           |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| [核动力厂和研究堆](https://nnsa.mee.gov.cn/ywdh/fyd/)       | [ywdh/fyd](https://rsshub.app/gov/mee/nnsa/ywdh/fyd)         |
+| [核燃料、放废](https://nnsa.mee.gov.cn/ywdh/hrlff/)         | [ywdh/hrlff](https://rsshub.app/gov/mee/nnsa/ywdh/hrlff)     |
+| [核技术、电磁、矿冶](https://nnsa.mee.gov.cn/ywdh/hjsdcky/) | [ywdh/hjsdcky](https://rsshub.app/gov/mee/nnsa/ywdh/hjsdcky) |
+| [监测与应急](https://nnsa.mee.gov.cn/ywdh/jcyj_1/)          | [ywdh/jcyj\\_1](https://rsshub.app/gov/mee/nnsa/ywdh/jcyj_1)  |
+| [核安全设备与人员](https://nnsa.mee.gov.cn/ywdh/haqsbry/)   | [ywdh/haqsbry](https://rsshub.app/gov/mee/nnsa/ywdh/haqsbry) |
+| [国际合作](https://nnsa.mee.gov.cn/ywdh/gjhz/)              | [ywdh/gjhz](https://rsshub.app/gov/mee/nnsa/ywdh/gjhz)       |
 
-</details>
-`,
+</details>`,
     categories: ['government'],
     features: {
         requireConfig: false,
@@ -246,102 +245,102 @@ export const route: Route = {
     radar: [
         {
             source: ['nnsa.mee.gov.cn/:category'],
-            target: '/mee/nnsa/:category',
+            target: '/nnsa/:category',
         },
         {
             title: '要闻动态 - 时政要闻',
             source: ['nnsa.mee.gov.cn/ywdt/szyw/'],
-            target: '/mee/nnsa/ywdt/szyw',
+            target: '/nnsa/ywdt/szyw',
         },
         {
             title: '要闻动态 - 环境要闻',
             source: ['nnsa.mee.gov.cn/ywdt/hjyw/'],
-            target: '/mee/nnsa/ywdt/hjyw',
+            target: '/nnsa/ywdt/hjyw',
         },
         {
             title: '要闻动态 - 监管动态',
             source: ['nnsa.mee.gov.cn/ywdt/gzdt/'],
-            target: '/mee/nnsa/ywdt/gzdt',
+            target: '/nnsa/ywdt/gzdt',
         },
         {
             title: '要闻动态 - 行业资讯',
             source: ['nnsa.mee.gov.cn/ywdt/hyzx/'],
-            target: '/mee/nnsa/ywdt/hyzx',
+            target: '/nnsa/ywdt/hyzx',
         },
         {
             title: '要闻动态 - 国际资讯',
             source: ['nnsa.mee.gov.cn/ywdt/gjzx/'],
-            target: '/mee/nnsa/ywdt/gjzx',
+            target: '/nnsa/ywdt/gjzx',
         },
         {
             title: '要闻动态 - 公示公告',
             source: ['nnsa.mee.gov.cn/ywdt/gsqg/'],
-            target: '/mee/nnsa/ywdt/gsqg',
+            target: '/nnsa/ywdt/gsqg',
         },
         {
             title: '要闻动态 - 曝光台',
             source: ['nnsa.mee.gov.cn/ywdt/bgt/'],
-            target: '/mee/nnsa/ywdt/bgt',
+            target: '/nnsa/ywdt/bgt',
         },
         {
             title: '政策文件 - 中央有关文件',
             source: ['nnsa.mee.gov.cn/zcwj/zyygwj/'],
-            target: '/mee/nnsa/zcwj/zyygwj',
+            target: '/nnsa/zcwj/zyygwj',
         },
         {
             title: '政策文件 - 国务院有关文件',
             source: ['nnsa.mee.gov.cn/zcwj/gwyygwj/'],
-            target: '/mee/nnsa/zcwj/gwyygwj',
+            target: '/nnsa/zcwj/gwyygwj',
         },
         {
             title: '政策文件 - 部文件',
             source: ['nnsa.mee.gov.cn/zcwj/bwj/'],
-            target: '/mee/nnsa/zcwj/bwj',
+            target: '/nnsa/zcwj/bwj',
         },
         {
             title: '政策文件 - 核安全局文件',
             source: ['nnsa.mee.gov.cn/zcwj/haqjwj/'],
-            target: '/mee/nnsa/zcwj/haqjwj',
+            target: '/nnsa/zcwj/haqjwj',
         },
         {
             title: '政策文件 - 其他',
             source: ['nnsa.mee.gov.cn/zcwj/qt/'],
-            target: '/mee/nnsa/zcwj/qt',
+            target: '/nnsa/zcwj/qt',
         },
         {
             title: '政策文件 - 解读',
             source: ['nnsa.mee.gov.cn/zcwj/jd/'],
-            target: '/mee/nnsa/zcwj/jd',
+            target: '/nnsa/zcwj/jd',
         },
         {
             title: '业务工作 - 核动力厂和研究堆',
             source: ['nnsa.mee.gov.cn/ywdh/fyd/'],
-            target: '/mee/nnsa/ywdh/fyd',
+            target: '/nnsa/ywdh/fyd',
         },
         {
             title: '业务工作 - 核燃料、放废',
             source: ['nnsa.mee.gov.cn/ywdh/hrlff/'],
-            target: '/mee/nnsa/ywdh/hrlff',
+            target: '/nnsa/ywdh/hrlff',
         },
         {
             title: '业务工作 - 核技术、电磁、矿冶',
             source: ['nnsa.mee.gov.cn/ywdh/hjsdcky/'],
-            target: '/mee/nnsa/ywdh/hjsdcky',
+            target: '/nnsa/ywdh/hjsdcky',
         },
         {
             title: '业务工作 - 监测与应急',
             source: ['nnsa.mee.gov.cn/ywdh/jcyj_1/'],
-            target: '/mee/nnsa/ywdh/jcyj_1',
+            target: '/nnsa/ywdh/jcyj_1',
         },
         {
             title: '业务工作 - 核安全设备与人员',
             source: ['nnsa.mee.gov.cn/ywdh/haqsbry/'],
-            target: '/mee/nnsa/ywdh/haqsbry',
+            target: '/nnsa/ywdh/haqsbry',
         },
         {
             title: '业务工作 - 国际合作',
             source: ['nnsa.mee.gov.cn/ywdh/gjhz/'],
-            target: '/mee/nnsa/ywdh/gjhz',
+            target: '/nnsa/ywdh/gjhz',
         },
     ],
     view: ViewType.Articles,

@@ -42,6 +42,24 @@ describe('cache', () => {
         expect(await memory.has('missing')).toBe(false);
     });
 
+    it('tryGet preserves snowflake ID precision', async () => {
+        process.env.CACHE_TYPE = 'memory';
+        const cache = (await import('@/utils/cache')).default;
+        if (!cache.clients.memoryCache || !cache.status.available) {
+            throw new Error('Memory cache client error');
+        }
+
+        const snowflakeId = '1234567890123456789';
+        const fetcher = vi.fn(() => Promise.resolve(snowflakeId));
+
+        const fresh = await cache.tryGet('snowflake', fetcher);
+        expect(fresh).toBe(snowflakeId);
+        const cached = await cache.tryGet('snowflake', fetcher);
+        expect(typeof cached).toBe('string');
+        expect(cached).toBe(snowflakeId);
+        expect(fetcher).toHaveBeenCalledTimes(1);
+    });
+
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
         const cache = (await import('@/utils/cache')).default;

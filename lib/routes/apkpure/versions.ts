@@ -28,11 +28,11 @@ async function handler(ctx) {
     const baseUrl = 'https://apkpure.com';
     const link = `${baseUrl}/${region}/${pkg}/versions`;
 
-    const browser = await playwright();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
     logger.http(`Requesting ${link}`);
     await page.goto(link, {
@@ -40,7 +40,7 @@ async function handler(ctx) {
     });
 
     const r = await page.evaluate(() => document.documentElement.innerHTML);
-    await browser.close();
+    await context.close();
 
     const $ = load(r);
     const img = new URL($('.ver-top img').attr('src'));

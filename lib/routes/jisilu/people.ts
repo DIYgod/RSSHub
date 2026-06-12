@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const items: DataItem[] = await processItems($$, $$('*'), limit);
 
-    const author = $('meta[name="keywords"]').prop('content').split(/,/)[0];
+    const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');
 
     return {
@@ -74,8 +74,7 @@ export const route: Route = {
 
 ::: tip
 前往 [用户排名](https://www.jisilu.cn/users/) 查看更多用户。
-:::
-`,
+:::`,
     categories: ['finance'],
     features: {
         requireConfig: false,

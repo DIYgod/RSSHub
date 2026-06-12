@@ -69,16 +69,15 @@ const browserCloseTimeout = 90000;
 
 const getErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
-const isVideoListApiJsonResponse = (response: BrowserResponse) => {
+const isVideoListApiResponse = (response: BrowserResponse) => {
     const request = response.request();
-    const contentType = response.headers()['content-type'];
-    return response.url().includes(videoListApiPath) && request.method() === 'GET' && (request.resourceType() === 'xhr' || request.resourceType() === 'fetch') && contentType?.includes('application/json');
+    return response.url().includes(videoListApiPath) && request.method() === 'GET' && (request.resourceType() === 'xhr' || request.resourceType() === 'fetch');
 };
 
 const waitForVideoListResponse = async (page: Page) => {
     try {
         return {
-            response: await page.waitForResponse(isVideoListApiJsonResponse, { timeout: browserResponseTimeout }),
+            response: await page.waitForResponse(isVideoListApiResponse, { timeout: browserResponseTimeout }),
         };
     } catch (error) {
         return { error };
@@ -91,6 +90,33 @@ const navigateToVideoPage = async (page: Page, videoUrl: string) => {
     } catch (error) {
         logger.warn(`[bilibili/video] video page navigation did not finish before the response wait ended: ${getErrorMessage(error)}`);
     }
+};
+
+const getVideoListResponse = async (responsePromise: ReturnType<typeof waitForVideoListResponse>) => {
+    const videoListResponseResult = await responsePromise;
+    if ('error' in videoListResponseResult) {
+        throw new Error(`Bilibili browser mode did not receive a video list response within ${browserResponseTimeout}ms: ${getErrorMessage(videoListResponseResult.error)}`);
+    }
+
+    return videoListResponseResult.response;
+};
+
+const waitForVideoListResponseFromVideoPage = async (page: Page, videoUrl: string): Promise<BrowserResponse> => {
+    const videoListResponsePromise = waitForVideoListResponse(page);
+    await navigateToVideoPage(page, videoUrl);
+
+    const response = await getVideoListResponse(videoListResponsePromise);
+
+    if (response.status() !== 200) {
+        throw new Error(`Bilibili browser mode returned unexpected video list API status ${response.status()}`);
+    }
+
+    const contentType = response.headers()['content-type'];
+    if (!contentType?.includes('application/json')) {
+        throw new Error(`Bilibili browser mode returned non-JSON response with status ${response.status()}; BILIBILI_COOKIE_* may be required`);
+    }
+
+    return response;
 };
 
 async function applyCookie(page: Page, cookie: string) {
@@ -114,7 +140,7 @@ async function applyCookie(page: Page, cookie: string) {
         .filter((item) => item !== undefined);
 
     if (cookies.length > 0) {
-        await page.setCookie(...cookies);
+        await page.context().addCookies(cookies);
     }
 }
 
@@ -147,11 +173,10 @@ async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
 
 async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
     const cookie = cache.getConfiguredCookie();
-    const userUrl = `https://space.bilibili.com/${uid}`;
-    const videoUrl = `${userUrl}/video`;
+    const videoUrl = `https://space.bilibili.com/${uid}/video`;
     logger.info(`[bilibili/video] fetching via playwright: ${videoUrl}`);
 
-    const { destroy, page } = await getPlaywrightPage(userUrl, {
+    const { destroy, page } = await getPlaywrightPage(videoUrl, {
         closeTimeout: browserCloseTimeout,
         noGoto: true,
         onBeforeLoad: async (page) => {
@@ -159,25 +184,16 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
                 await applyCookie(page, cookie);
             }
 
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                allowedBrowserRequestTypes.has(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                allowedBrowserRequestTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },
     });
 
     try {
-        const videoListResponsePromise = waitForVideoListResponse(page);
-        await page.goto(userUrl, { waitUntil: 'domcontentloaded' });
-        void navigateToVideoPage(page, videoUrl);
-
-        const videoListResponseResult = await videoListResponsePromise;
-        if ('error' in videoListResponseResult) {
-            throw new Error(`Bilibili browser mode did not receive a JSON video list response within ${browserResponseTimeout}ms: ${getErrorMessage(videoListResponseResult.error)}`);
-        }
-
-        const response = videoListResponseResult.response;
+        const response = await waitForVideoListResponseFromVideoPage(page, videoUrl);
         const data = (await response.json()) as VideoListResponse;
         if (data.code) {
             logger.error(JSON.stringify(data.data));

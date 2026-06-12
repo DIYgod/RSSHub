@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/forestry/gjlckjdjt/:category?',
+    path: '/gjlckjdjt/:category?',
     categories: ['government'],
     example: '/gov/forestry/gjlckjdjt',
     parameters: { category: '分类，见下表，默认为全部' },

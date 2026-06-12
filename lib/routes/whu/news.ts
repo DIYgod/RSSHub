@@ -16,15 +16,13 @@ export const route: Route = {
     name: '新闻网',
     maintainers: [],
     handler,
-    description: `
-category 参数可选，范围如下:
+    description: `category 参数可选，范围如下:
 
-| 新闻栏目 | 武大资讯 | 学术动态 | 珞珈影像 | 武大视频 |
-| -------- | -------- | -------- | -------- | -------- |
-| 参数     |  0 或 \`wdzx/wdyw\`  | 1 或 \`kydt\` | 2 或 \`stkj/ljyx\` | 3 或 \`stkj/wdsp\` |
+| 新闻栏目 | 武大资讯         | 学术动态    | 珞珈影像         | 武大视频         |
+| -------- | ---------------- | ----------- | ---------------- | ---------------- |
+| 参数     | 0 或 \`wdzx/wdyw\` | 1 或 \`kydt\` | 2 或 \`stkj/ljyx\` | 3 或 \`stkj/wdsp\` |
 
-此外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。
-`,
+此外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。`,
 };
 
 const parseCategory = (category: string | number) => {

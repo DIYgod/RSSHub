@@ -110,7 +110,7 @@ const ProcessItems = (items, limit, tryGet) =>
                         url: item.link,
                     });
 
-                    const content = JSON.parse(detailResponse.data.match(/"__NEXT_DATA__" type="application\/json">({"props":.*})<\/script>/)[1]);
+                    const content = JSON.parse(detailResponse.data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/)[1]);
 
                     item.description = renderDescription({
                         image: content.props.initialProps.pageProps.article.originalImage.cdnUrl,

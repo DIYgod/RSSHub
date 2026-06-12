@@ -11,7 +11,7 @@ const getOriginalImg = (url) => {
             format = 'jpg';
         }
         return `${m[1]}?format=${format}&name=orig`;
-    } else if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/.+)(\?.+)$/i))) {
+    } else if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/[^?]+)(\?.+)$/i))) {
         const pars = getQueryParams(url);
         if (!pars.format || !pars.name) {
             return url;
@@ -25,6 +25,7 @@ const getOriginalImg = (url) => {
     }
 };
 const replaceBreak = (text) => text.replaceAll(/<br><br>|<br>/g, ' ');
+const quoteSeparator = "<hr style='border:0;border-top:1px solid #80808030;margin:12px 0;'>";
 
 const formatText = (item) => {
     let text = item.full_text;
@@ -65,6 +66,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.get('sizeOfAuthorAvatar')), 48),
         sizeOfQuotedAuthorAvatar: fallback(params.sizeOfQuotedAuthorAvatar, queryToInteger(routeParams.get('sizeOfQuotedAuthorAvatar')), 24),
         mediaNumber: fallback(params.mediaNumber, queryToInteger(routeParams.get('mediaNumber')), false),
+        showEmojiForSubscriberOnly: fallback(params.showEmojiForSubscriberOnly, queryToBoolean(routeParams.get('showEmojiForSubscriberOnly')), false),
+        showSymbolForSubscriberOnly: fallback(params.showSymbolForSubscriberOnly, queryToBoolean(routeParams.get('showSymbolForSubscriberOnly')), true),
+        showFullPrefixForSubscriberOnly: fallback(params.showFullPrefixForSubscriberOnly, queryToBoolean(routeParams.get('showFullPrefixForSubscriberOnly')), false),
     };
 
     params = mergedParams;
@@ -84,6 +88,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         showTimestampInDescription,
         showQuotedInTitle,
         mediaNumber,
+        showEmojiForSubscriberOnly,
+        showSymbolForSubscriberOnly,
+        showFullPrefixForSubscriberOnly,
         widthOfPics,
         heightOfPics,
         sizeOfAuthorAvatar,
@@ -197,6 +204,12 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
     };
 
     return data.map((item) => {
+        // Handle subscriber-only prefix based on user preference
+        if (item.full_text?.startsWith('[Subscribers Only]')) {
+            const text = item.full_text.replace('[Subscribers Only] ', '');
+            const prefix = showFullPrefixForSubscriberOnly ? '🔒 [Subscribers Only] ' : showEmojiForSubscriberOnly ? '🔒 ' : showSymbolForSubscriberOnly ? '[Subscribers Only] ' : '';
+            item.full_text = `${prefix}${text}`;
+        }
         const originalItem = item;
         item = item.retweeted_status || item;
         item.full_text = item.full_text || item.text;
@@ -213,12 +226,13 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (quoteData?.user) {
                 quoteData.full_text = quoteData.full_text || quoteData.text;
                 const author = quoteData.user;
+                if (!readable) {
+                    quote += quoteSeparator;
+                }
                 quote += '<div class="rsshub-quote">';
                 if (readable) {
                     quote += `<br clear='both' /><div style='clear: both'></div>`;
                     quote += `<blockquote style='background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;'>`;
-                } else {
-                    quote += '<br><br>';
                 }
 
                 if (readable) {

@@ -25,8 +25,8 @@ export const route: Route = {
     name: '教务处通知公告',
     maintainers: ['StudyingLover'],
     handler,
-    description: `| 分类 | 参数 |
-| ---- | ---- |
+    description: `| 分类     | 参数 |
+| -------- | ---- |
 | 通知公告 | tzgg |`,
 };
 

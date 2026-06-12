@@ -142,26 +142,25 @@ To subscribe to [Highlights](https://www.app-sales.net/highlights/), where the s
 <details>
   <summary>More countries</summary>
 
-| Currency | Country       | ID  |
-| -------- | ------------- | --- |
-| USD      | United States | us  |
-| EUR      | Austria       | at  |
-| AUD      | Australia     | au  |
-| BRL      | Brazil        | br  |
-| CAD      | Canada        | ca  |
-| EUR      | France        | fr  |
-| EUR      | Germany       | de  |
-| INR      | India         | in  |
-| EUR      | Italy         | it  |
-| EUR      | Netherlands   | nl  |
-| PLN      | Poland        | pl  |
-| RUB      | Russia        | ru  |
-| EUR      | Spain         | es  |
-| SEK      | Sweden        | se  |
-| GBP      | Great Britain | gb  |
+| Currency | Country       | ID |
+| -------- | ------------- | -- |
+| USD      | United States | us |
+| EUR      | Austria       | at |
+| AUD      | Australia     | au |
+| BRL      | Brazil        | br |
+| CAD      | Canada        | ca |
+| EUR      | France        | fr |
+| EUR      | Germany       | de |
+| INR      | India         | in |
+| EUR      | Italy         | it |
+| EUR      | Netherlands   | nl |
+| PLN      | Poland        | pl |
+| RUB      | Russia        | ru |
+| EUR      | Spain         | es |
+| SEK      | Sweden        | se |
+| GBP      | Great Britain | gb |
 
-</details>
-`,
+</details>`,
     categories: ['program-update'],
     features: {
         requireConfig: false,

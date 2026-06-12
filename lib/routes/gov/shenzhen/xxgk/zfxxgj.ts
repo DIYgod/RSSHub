@@ -29,7 +29,7 @@ const config = {
 };
 
 export const route: Route = {
-    path: '/shenzhen/xxgk/zfxxgj/:caty',
+    path: '/xxgk/zfxxgj/:caty',
     categories: ['government'],
     example: '/gov/shenzhen/xxgk/zfxxgj/tzgg',
     parameters: { caty: '信息类别' },
@@ -41,7 +41,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '深圳市人民政府',
+    name: '政府信息公开',
     maintainers: ['laoxua'],
     handler,
     description: `| 通知公告 | 政府采购 | 资金信息 | 重大项目 |

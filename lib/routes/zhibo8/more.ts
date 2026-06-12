@@ -33,8 +33,7 @@ export const route: Route = {
         },
     ],
     name: '滚动新闻',
-    description: `
-| NBA | 足球  | 电竞     | 综合   |
+    description: `| NBA | 足球  | 电竞     | 综合   |
 | --- | ----- | -------- | ------ |
 | nba | zuqiu | dianjing | zonghe |`,
     maintainers: ['nczitzk'],

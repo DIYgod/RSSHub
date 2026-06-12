@@ -60,8 +60,8 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     const session = headerResponse.headers
         .getSetCookie()
         .find((e) => e.startsWith('sl-session'))
-        ?.split(';')[0]
-        .split('sl-session=')[1];
+        ?.split(';', 1)[0]
+        .split('sl-session=', 2)[1];
     const onceId = headerResponse._data.match(/once_id:\s*"(.*?)",/)?.[1];
     logger.debug(`getSafeLineCookie: sl-session=${session}, onceId=${onceId}`);
     if (!/window\.captcha/.test(headerResponse._data)) {
@@ -69,7 +69,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
         return {
             cookie: headerResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; '),
             data: headerResponse._data,
         };
@@ -121,7 +121,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
         return {
             cookie: headerResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; '),
             data: headerResponse._data,
         };
@@ -135,7 +135,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
 
     const cookie = response.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
     logger.debug(`getSafeLineCookie: ${cookie}`);
 
@@ -150,7 +150,7 @@ export const parseList = ($: cheerio.CheerioAPI) => {
     const winPageData = JSON.parse(
         $('script:contains("window.WinPageData")')
             .text()
-            .match(/window\.WinPageData\s*=\s*({.*})/)?.[1] ?? '{}'
+            .match(/window\.WinPageData\s*=\s*(\{.*\})/)?.[1] ?? '{}'
     );
 
     return winPageData.data.article.map((item) => ({

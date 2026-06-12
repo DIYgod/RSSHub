@@ -45,8 +45,8 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                content('.wp-block-image').each(function () {
-                    content(this).html(`<img src="${content(this).find('img').attr('data-orig-file')}">`);
+                content('.wp-block-image').each((_, el) => {
+                    content(el).html(`<img src="${content(el).find('img').attr('data-orig-file')}">`);
                 });
 
                 item.description = content('div[data-widget_type="theme-post-content.default"]').html();

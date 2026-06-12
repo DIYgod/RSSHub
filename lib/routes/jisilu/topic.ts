@@ -23,7 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     $('div.pagination').remove();
 
-    const author = $('meta[name="keywords"]').prop('content').split(/,/)[0];
+    const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');
 
     return {
@@ -55,8 +55,7 @@ export const route: Route = {
 
 ::: tip
 前往 [话题广场](https://www.jisilu.cn/topic) 查看更多话题。
-:::
-`,
+:::`,
     categories: ['finance'],
     features: {
         requireConfig: false,

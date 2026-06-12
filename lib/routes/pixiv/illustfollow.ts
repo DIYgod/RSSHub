@@ -37,7 +37,7 @@ export const route: Route = {
     handler,
     url: 'www.pixiv.net/bookmark_new_illust.php',
     description: `::: warning
-  Only for self-hosted
+Only for self-hosted
 :::`,
 };
 

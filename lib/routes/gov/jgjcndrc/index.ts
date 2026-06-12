@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/jgjcndrc/:columnId?/:subColumnId?',
+    path: '/:columnId?/:subColumnId?',
     name: '中华人民共和国国家发展和改革委员会价格监测中心',
     url: 'www.jgjcndrc.org.cn',
     maintainers: ['nczitzk'],
@@ -95,9 +95,9 @@ export const route: Route = {
         subColumnId: '子栏目 id，默认为空，可在对应子栏目页 URL 中找到',
     },
     description: `::: tip
-  若订阅 [通知公告](https://www.jgjcndrc.org.cn/list?clmId=1832739866673426433)，网址为 \`https://www.jgjcndrc.org.cn/list?clmId=1832739866673426433\`。截取 \`clmId\` 的参数部分 \`1832739866673426433\` 作为参数填入，此时路由为 [\`/gov/jgjcndrc/1832739866673426433\`](https://rsshub.app/gov/jgjcndrc/1832739866673426433)。
+若订阅 [通知公告](https://www.jgjcndrc.org.cn/list?clmId=1832739866673426433)，网址为 \`https://www.jgjcndrc.org.cn/list?clmId=1832739866673426433\`。截取 \`clmId\` 的参数部分 \`1832739866673426433\` 作为参数填入，此时路由为 [\`/gov/jgjcndrc/1832739866673426433\`](https://rsshub.app/gov/jgjcndrc/1832739866673426433)。
 
-  若订阅 [国内外市场价格监测情况周报](https://www.jgjcndrc.org.cn/list?clmId=1832298113994649601&sclmId=1832751799531220993)，网址为 \`https://www.jgjcndrc.org.cn/list?clmId=1832298113994649601&sclmId=1832751799531220993\`。截取 \`clmId\` 和 \`sclmId\` 的参数部分 \`1832298113994649601\` 和 \`1832751799531220993\` 作为参数填入，此时路由为 [\`/gov/jgjcndrc/1832298113994649601/1832751799531220993\`](https://rsshub.app/gov/jgjcndrc/1832298113994649601/1832751799531220993)。
+若订阅 [国内外市场价格监测情况周报](https://www.jgjcndrc.org.cn/list?clmId=1832298113994649601\\&sclmId=1832751799531220993)，网址为 \`https://www.jgjcndrc.org.cn/list?clmId=1832298113994649601&sclmId=1832751799531220993\`。截取 \`clmId\` 和 \`sclmId\` 的参数部分 \`1832298113994649601\` 和 \`1832751799531220993\` 作为参数填入，此时路由为 [\`/gov/jgjcndrc/1832298113994649601/1832751799531220993\`](https://rsshub.app/gov/jgjcndrc/1832298113994649601/1832751799531220993)。
 :::`,
     categories: ['government'],
 

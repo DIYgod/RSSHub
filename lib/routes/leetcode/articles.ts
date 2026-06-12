@@ -59,7 +59,7 @@ async function handler() {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
-                const titleSlug = info.link.split('/')[4];
+                const titleSlug = info.link.split('/', 5)[4];
 
                 const questionContent = await ofetch(gqlEndpoint, {
                     method: 'POST',

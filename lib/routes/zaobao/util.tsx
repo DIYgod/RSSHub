@@ -61,7 +61,7 @@ export const parseList = async (
                 let title, pubDate, category, images;
                 const jsonText = $1('script[type="application/ld+json"]')
                     .text()
-                    .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    .replaceAll(/\p{Cc}/gu, '');
                 const ldJson = JSON.parse(jsonText);
 
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
@@ -166,7 +166,7 @@ const processImageData = (isSg, images, $1) => {
             src: img.url
                 .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
                 .replaceAll('s3/files', 's3fs-public')
-                .split('?')[0],
+                .split('?', 1)[0],
             title: img.caption,
         })) as ImageData[];
     }
@@ -181,7 +181,7 @@ const processImageData = (isSg, images, $1) => {
                     .attr('src')
                     .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
                     .replaceAll('s3/files', 's3fs-public')
-                    .split('?')[0],
+                    .split('?', 1)[0],
                 title: hkImg.attr('title'),
             },
         ] as ImageData[];

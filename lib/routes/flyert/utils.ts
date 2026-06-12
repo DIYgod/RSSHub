@@ -26,11 +26,11 @@ async function loadContent(link) {
     const firstpost = $('.firstpost');
 
     // 修改图片中的链接
-    firstpost.find('ignore_js_op img').each(function () {
-        $(this).attr('src', $(this).attr('file'));
+    firstpost.find('ignore_js_op img').each((_, el) => {
+        $(el).attr('src', $(el).attr('file'));
         // 移除无用属性
         for (const attr of ['id', 'aid', 'zoomfile', 'file', 'zoomfile', 'class', 'onclick', 'title', 'inpost', 'alt', 'onmouseover']) {
-            $(this).removeAttr(attr);
+            $(el).removeAttr(attr);
         }
     });
 

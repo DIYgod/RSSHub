@@ -104,7 +104,7 @@ export const route: Route = {
 | ------------ | ----- | -------- | ------------ |
 | fanclubs     | posts | products | commissions  |
 
-  Category
+Category
 
 | 分类                   | 分类名     |
 | ---------------------- | ---------- |
@@ -130,19 +130,19 @@ export const route: Route = {
 | ショップ               | shop       |
 | その他                 | other      |
 
-  Ranking period
+Ranking period
 
 | デイリー | ウィークリー | マンスリー | 全期間 |
 | -------- | ------------ | ---------- | ------ |
 | daily    | weekly       | monthly    | all    |
 
-  Sorting
+Sorting
 
 | 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
 | -------------- | ------------ | -------------- | ------------ | -------------- |
-| updater        | update_old  | newer          | create_old  | popular        |
+| updater        | update\\_old  | newer          | create\\_old  | popular        |
 
-  Rating
+Rating
 
 | すべて | 一般のみ | R18 のみ |
 | ------ | -------- | -------- |

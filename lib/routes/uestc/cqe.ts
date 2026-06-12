@@ -52,17 +52,17 @@ async function handler(ctx) {
         throw new InvalidParameterError('type not supported');
     }
 
-    const browser = await playwright();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(baseUrl + pageUrl, {
-        waitUntil: 'networkidle2',
+        waitUntil: 'networkidle',
     });
     const content = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(content);
 

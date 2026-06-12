@@ -89,7 +89,7 @@ export const route: Route = {
         },
     },
     description: `::: tip
-订阅 [依發售日新至舊排序的文學小說](https://www.bookwalker.com.tw/search?order=sell_desc&s=34)，其源网址为 \`https://www.bookwalker.com.tw/search?order=sell_desc&s=34\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/bookwalker/search/order=sell_desc&s=34\`](https://rsshub.app/bookwalker/search/order=sell_desc&s=34)。
+订阅 [依發售日新至舊排序的文學小說](https://www.bookwalker.com.tw/search?order=sell_desc\\&s=34)，其源网址为 \`https://www.bookwalker.com.tw/search?order=sell_desc&s=34\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/bookwalker/search/order=sell_desc&s=34\`](https://rsshub.app/bookwalker/search/order=sell_desc\\&s=34)。
 :::`,
     categories: ['shopping'],
     features: {

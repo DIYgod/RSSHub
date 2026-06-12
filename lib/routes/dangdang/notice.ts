@@ -32,9 +32,9 @@ export const route: Route = {
     handler,
     description: `| 类型     | type |
 | -------- | ---- |
-| 全部      | 0    |
-| 其他      | 1    |
-| 规则变更   | 2    |`,
+| 全部     | 0    |
+| 其他     | 1    |
+| 规则变更 | 2    |`,
 };
 
 async function handler(ctx) {

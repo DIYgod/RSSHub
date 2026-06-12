@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/beijing/bjedu/gh/:urlPath?',
+    path: '/bjedu/gh/:urlPath?',
     categories: ['government'],
     example: '/gov/beijing/bjedu/gh',
     parameters: { urlPath: '路径，默认为 `zxtzgg`' },
@@ -22,16 +22,16 @@ export const route: Route = {
     radar: [
         {
             source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
-            target: '/beijing/bjedu/gh/:urlPath',
+            target: '/bjedu/gh/:urlPath',
         },
     ],
-    name: '通用',
+    name: '教育委员会 - 通用',
     maintainers: ['TonyRL'],
     handler,
     description: `::: tip
-  路径处填写对应页面 URL 中 \`https://gh.bjedu.cn/ghsite/\` 和 \`/index.html\` 之间的字段。下面是一个例子。
+路径处填写对应页面 URL 中 \`https://gh.bjedu.cn/ghsite/\` 和 \`/index.html\` 之间的字段。下面是一个例子。
 
-  若订阅 [通知公告](https://gh.bjedu.cn/ghsite/zxtzgg/index.html) 则将对应页面 URL \`https://gh.bjedu.cn/ghsite/zxtzgg/index.html\` 中 \`https://gh.bjedu.cn/ghsite/\` 和 \`/index.html\` 之间的字段 \`zxtzgg\` 作为路径填入。此时路由为 [\`/gov/beijing/bjedu/gh/zxtzgg\`](https://rsshub.app/gov/beijing/bjedu/gh/zxtzgg)
+若订阅 [通知公告](https://gh.bjedu.cn/ghsite/zxtzgg/index.html) 则将对应页面 URL \`https://gh.bjedu.cn/ghsite/zxtzgg/index.html\` 中 \`https://gh.bjedu.cn/ghsite/\` 和 \`/index.html\` 之间的字段 \`zxtzgg\` 作为路径填入。此时路由为 [\`/gov/beijing/bjedu/gh/zxtzgg\`](https://rsshub.app/gov/beijing/bjedu/gh/zxtzgg)
 :::`,
 };
 
@@ -39,7 +39,8 @@ async function handler(ctx) {
     const baseUrl = 'https://gh.bjedu.cn';
     const { urlPath = 'zxtzgg' } = ctx.req.param();
 
-    const { data: response, url: link } = await got(`${baseUrl}/ghsite/${urlPath}/index.html`);
+    const currentUrl = `${baseUrl}/ghsite/${urlPath}/index.html`;
+    const { data: response, url: link = currentUrl } = await got(currentUrl);
     const $ = load(response);
 
     const list = $('.content li a')

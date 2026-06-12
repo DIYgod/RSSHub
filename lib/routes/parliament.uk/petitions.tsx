@@ -100,21 +100,20 @@ If you subscribe to [Recent petitions](https://petition.parliament.uk/petitions?
 <details>
 <summary>More states</summary>
 
-| Name                            | ID                |
-| ------------------------------- | ----------------- |
-| All petitions                   | all               |
-| Open petitions                  | open              |
-| Recent petitions                | recent            |
-| Closed petitions                | closed            |
-| Rejected petitions              | rejected          |
-| Awaiting government response    | awaiting_response |
-| Government responses            | with_response     |
-| Awaiting a debate in Parliament | awaiting_debate   |
-| Debated in Parliament           | debated           |
-| Not debated in Parliament       | not_debated       |
+| Name                            | ID                 |
+| ------------------------------- | ------------------ |
+| All petitions                   | all                |
+| Open petitions                  | open               |
+| Recent petitions                | recent             |
+| Closed petitions                | closed             |
+| Rejected petitions              | rejected           |
+| Awaiting government response    | awaiting\\_response |
+| Government responses            | with\\_response     |
+| Awaiting a debate in Parliament | awaiting\\_debate   |
+| Debated in Parliament           | debated            |
+| Not debated in Parliament       | not\\_debated       |
 
-</details>
-    `,
+</details>`,
     categories: ['government'],
     features: {
         requireConfig: false,

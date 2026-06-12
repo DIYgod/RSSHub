@@ -26,11 +26,11 @@ async function handler(ctx) {
     const { topic } = ctx.req.param();
     const baseUrl = 'https://commonslibrary.parliament.uk';
     const url = `${baseUrl}/type/${topic}/`;
-    const browser = await playwright();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
@@ -47,7 +47,7 @@ async function handler(ctx) {
             description: $(article).find('p').last().text().trim(),
             pubDate: timezone($(article).find('.card__date time').attr('datetime')),
         }));
-    await browser.close();
+    await context.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,
         link: url,

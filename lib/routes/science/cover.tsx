@@ -40,7 +40,7 @@ export const route: Route = {
     url: 'science.org/',
     description: `Subscribe to the cover images of Science journals, and get the latest publication updates in time.
 
-  Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.`,
+Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.`,
 };
 
 async function handler() {

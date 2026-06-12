@@ -23,9 +23,9 @@ export const route: Route = {
     name: '研究生招生信息网',
     maintainers: ['niuyi1017'],
     handler,
-    description: `| 通知公告 | 招生拓展 | 政策文件 | 
-| -------- | -------- |-------- |
-| tzgg     | zstz     | zcwj    | `,
+    description: `| 通知公告 | 招生拓展 | 政策文件 |
+| -------- | -------- | -------- |
+| tzgg     | zstz     | zcwj     |`,
 };
 
 async function handler(ctx) {

@@ -81,7 +81,7 @@ async function handler(ctx) {
         // Do nothing
     }
 
-    const browser = await playwright();
+    const context = await playwright();
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.splice(0, 10).map(async (item) => {
@@ -122,7 +122,7 @@ async function handler(ctx) {
                         hasEnVersion = true;
                         link = $('.dual-btn a').last().attr().href;
 
-                        response = await utils.PuppeterGetter(ctx, browser, link);
+                        response = await utils.PuppeterGetter(ctx, context, link);
                     }
                 }
             }
@@ -154,7 +154,7 @@ async function handler(ctx) {
         })
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title,

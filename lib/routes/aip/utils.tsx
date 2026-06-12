@@ -1,11 +1,11 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-const playwrightGet = async (url, browser) => {
-    const page = await browser.newPage();
+const playwrightGet = async (url, context) => {
+    const page = await context.newPage();
     // await page.setExtraHTTPHeaders({ referer: host });
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',

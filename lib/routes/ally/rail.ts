@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
     url: 'rail.ally.net.cn/',
     description: `::: tip
-  默认抓取前 20 条，可通过 \`?limit=\` 改变。
+默认抓取前 20 条，可通过 \`?limit=\` 改变。
 :::`,
 };
 

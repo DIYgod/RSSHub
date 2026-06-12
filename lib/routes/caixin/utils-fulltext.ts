@@ -14,7 +14,7 @@ export async function getFulltext(url: string) {
     if (!config.caixin.cookie) {
         return;
     }
-    if (!/(\d+)\.html/.test(url)) {
+    if (!/\d+\.html/.test(url)) {
         return;
     }
     const articleID = url.match(/(\d+)\.html/)[1];
@@ -24,7 +24,7 @@ export async function getFulltext(url: string) {
     const userID = config.caixin.cookie
         .split(';')
         .find((e) => e.includes('SA_USER_UID'))
-        ?.split('=')[1]; //
+        ?.split('=', 2)[1]; //
 
     const rawString = `id=${articleID}&uid=${userID}&${nonce}=nonce`;
 

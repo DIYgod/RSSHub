@@ -12,9 +12,9 @@
     },
     "plugins": ["eslint", "typescript", "node", "unicorn", "import"],
     "jsPlugins": [
-        { "name": "import-x-js", "specifier": "eslint-plugin-import-x" },
         { "name": "n", "specifier": "eslint-plugin-n" },
         { "name": "unicorn-js", "specifier": "eslint-plugin-unicorn" },
+        { "name": "regexp", "specifier": "eslint-plugin-regexp" },
         "@stylistic/eslint-plugin",
         "eslint-plugin-simple-import-sort",
         "oxlint-plugin-eslint",
@@ -33,19 +33,19 @@
         "no-const-assign": "error",
         "no-constant-binary-expression": "error",
         "no-constant-condition": "error",
-        // "no-control-regex": "error", -> off
+        "no-control-regex": "error",
         "no-debugger": "error",
         "no-dupe-class-members": "error",
         "no-dupe-else-if": "error",
         "no-dupe-keys": "error",
         "no-duplicate-case": "error",
-        "no-empty-character-class": "error",
+        // "no-empty-character-class": "error", -> off, handled by eslint-plugin-regexp
         "no-empty-pattern": "error",
         "no-ex-assign": "error",
         "no-fallthrough": "error",
         "no-func-assign": "error",
         "no-import-assign": "error",
-        "no-invalid-regexp": "error",
+        // "no-invalid-regexp": "error", -> off, handled by eslint-plugin-regexp
         "no-irregular-whitespace": "error",
         "no-loss-of-precision": "error",
         "no-misleading-character-class": "error",
@@ -66,7 +66,7 @@
         "no-unsafe-optional-chaining": "error",
         "no-unused-private-class-members": "error",
         // "no-unused-vars": "error", -> off for @typescript-eslint/no-unused-vars
-        "no-useless-backreference": "error",
+        // "no-useless-backreference": "error", -> off, handled by eslint-plugin-regexp
         "use-isnan": "error",
         "valid-typeof": "error",
         // #endregion
@@ -149,12 +149,15 @@
         // #endregion
 
         // #region --- unicorn recommended ---
+        // "unicorn-js/better-dom-traversing": "error", false postive on cheerio
         "unicorn/catch-error-name": "error",
         "unicorn/consistent-assert": "error",
+        "unicorn-js/consistent-compound-words": "error", // use jsPlugins
         "unicorn/consistent-date-clone": "error",
         "unicorn/consistent-empty-array-spread": "error",
         "unicorn/consistent-existence-index-check": "error",
         // "unicorn/consistent-function-scoping": "error",
+        "unicorn-js/consistent-json-file-read": "error", // use jsPlugins
         "unicorn/consistent-template-literal-escape": "error",
         "unicorn/empty-brace-spaces": "error",
         "unicorn/error-message": "error",
@@ -162,29 +165,38 @@
         // "unicorn/expiring-todo-comments": "error", // not yet implemented
         // "unicorn/explicit-length-check": "error",
         // "unicorn/filename-case": "error",
-        "unicorn-js/import-style": "error", // use jsPlugins
+        "unicorn/import-style": "error",
         "unicorn-js/isolated-functions": "error", // use jsPlugins
         "unicorn/new-for-builtins": "error",
         "unicorn/no-abusive-eslint-disable": "error",
         "unicorn/no-accessor-recursion": "error",
         "unicorn/no-anonymous-default-export": "error",
         // "unicorn/no-array-callback-reference": "error",
+        "unicorn-js/no-array-fill-with-reference-type": "error", // use jsPlugins
         "unicorn/no-array-for-each": "error",
+        "unicorn-js/no-array-from-fill": "error", // use jsPlugins
         "unicorn/no-array-method-this-argument": "error",
         // "unicorn/no-array-reduce": "error",
         "unicorn/no-array-reverse": "error",
         // "unicorn/no-array-sort": "error",
         // "unicorn/no-await-expression-member": "error",
         "unicorn/no-await-in-promise-methods": "error",
+        "unicorn-js/no-blob-to-file": "error", // use jsPlugins
+        "unicorn-js/no-canvas-to-image": "error", // use jsPlugins
+        "unicorn-js/no-confusing-array-splice": "error", // use jsPlugins
         "unicorn/no-console-spaces": "error",
         "unicorn/no-document-cookie": "error",
+        "unicorn-js/no-duplicate-set-values": "error", // use jsPlugins
         // "unicorn/no-empty-file": "error",
+        "unicorn-js/no-exports-in-scripts": "error", // use jsPlugins
         // "unicorn/no-for-loop": "error", // won't be implemented
         // "unicorn/no-hex-escape": "error",
         "unicorn/no-immediate-mutation": "error",
+        "unicorn-js/no-incorrect-query-selector": "error", // use jsPlugins
         "unicorn/no-instanceof-builtins": "error",
         "unicorn/no-invalid-fetch-options": "error",
         "unicorn/no-invalid-remove-event-listener": "error",
+        "unicorn-js/no-late-current-target-access": "error", // use jsPlugins
         "unicorn/no-lonely-if": "error",
         "unicorn/no-magic-array-flat-depth": "error",
         // "unicorn/no-named-default": "error", -> use import/no-named-default
@@ -202,14 +214,17 @@
         "unicorn/no-static-only-class": "error",
         "unicorn/no-thenable": "error",
         "unicorn/no-this-assignment": "error",
+        "unicorn-js/no-this-outside-of-class": "error", // use jsPlugins
         "unicorn/no-typeof-undefined": "error",
         "unicorn/no-unnecessary-array-flat-depth": "error",
         "unicorn/no-unnecessary-array-splice-count": "error",
         "unicorn/no-unnecessary-await": "error",
+        "unicorn-js/no-unnecessary-nested-ternary": "error", // use jsPlugins
         "unicorn-js/no-unnecessary-polyfills": "error", // use jsPlugins
         "unicorn/no-unnecessary-slice-end": "error",
         "unicorn/no-unreadable-array-destructuring": "error",
         "unicorn/no-unreadable-iife": "error",
+        "unicorn-js/no-unused-array-method-return": "error", // use jsPlugins
         "unicorn/no-useless-collection-argument": "error",
         "unicorn/no-useless-error-capture-stack-trace": "error",
         "unicorn/no-useless-fallback-in-spread": "error",
@@ -227,6 +242,7 @@
         "unicorn/prefer-array-flat": "error",
         "unicorn/prefer-array-flat-map": "error",
         "unicorn/prefer-array-index-of": "error",
+        "unicorn-js/prefer-array-last-methods": "error", // use jsPlugins
         "unicorn/prefer-array-some": "error",
         "unicorn/prefer-at": "error",
         "unicorn/prefer-bigint-literals": "error",
@@ -242,10 +258,15 @@
         "unicorn/prefer-dom-node-text-content": "error",
         "unicorn/prefer-event-target": "error",
         "unicorn-js/prefer-export-from": "error", // use jsPlugins
+        "unicorn-js/prefer-get-or-insert-computed": "error", // use jsPlugins
         // "unicorn/prefer-global-this": "error",
+        // "unicorn-js/prefer-https": "error",
         "unicorn/prefer-includes": "error",
+        "unicorn-js/prefer-includes-over-repeated-comparisons": "error", // use jsPlugins
+        // "unicorn-js/prefer-iterator-to-array-at-end": "error",
         "unicorn/prefer-keyboard-event-key": "error",
         "unicorn/prefer-logical-operator-over-ternary": "error",
+        "unicorn-js/prefer-math-abs": "error", // use jsPlugins
         "unicorn/prefer-math-min-max": "error",
         "unicorn/prefer-math-trunc": "error",
         "unicorn/prefer-modern-dom-apis": "error",
@@ -259,6 +280,7 @@
         "unicorn/prefer-optional-catch-binding": "error",
         "unicorn/prefer-prototype-methods": "error",
         "unicorn/prefer-query-selector": "error",
+        "unicorn-js/prefer-queue-microtask": "error", // use jsPlugins
         "unicorn/prefer-reflect-apply": "error",
         "unicorn/prefer-regexp-test": "error",
         "unicorn/prefer-response-static-json": "error",
@@ -266,8 +288,12 @@
         "unicorn/prefer-set-size": "error",
         "unicorn-js/prefer-simple-condition-first": "error", // use jsPlugins
         "unicorn-js/prefer-single-call": "error", // use jsPlugins
+        "unicorn-js/prefer-split-limit": "error", // use jsPlugins
         // "unicorn/prefer-spread": "error",
+        "unicorn-js/prefer-string-match-all": "error", // use jsPlugins
+        "unicorn-js/prefer-string-pad-start-end": "error", // use jsPlugins
         "unicorn/prefer-string-raw": "error",
+        "unicorn-js/prefer-string-repeat": "error", // use jsPlugins
         "unicorn/prefer-string-replace-all": "error",
         // "unicorn/prefer-string-slice": "error",
         "unicorn/prefer-string-starts-ends-with": "error",
@@ -280,9 +306,11 @@
         // "unicorn/prevent-abbreviations": "error",
         "unicorn/relative-url-style": "error",
         "unicorn/require-array-join-separator": "error",
+        "unicorn-js/require-css-escape": "error", // use jsPlugins
         "unicorn/require-module-attributes": "error",
         "unicorn/require-module-specifiers": "error",
         "unicorn/require-number-to-fixed-digits-argument": "error",
+        "unicorn-js/require-passive-events": "error", // use jsPlugins
         // "unicorn/switch-case-braces": "error",
         "unicorn-js/switch-case-break-position": "error", // use jsPlugins
         "unicorn-js/template-indent": "error", // use jsPlugins
@@ -290,12 +318,74 @@
         "unicorn/throw-new-error": "error",
         // #endregion
 
+        // #region --- regexp recommended ---
+        "regexp/confusing-quantifier": "warn",
+        "regexp/control-character-escape": "error",
+        "regexp/match-any": "error",
+        "regexp/negation": "error",
+        "regexp/no-contradiction-with-assertion": "error",
+        "regexp/no-dupe-characters-character-class": "error",
+        "regexp/no-dupe-disjunctions": "error",
+        "regexp/no-empty-alternative": "warn",
+        "regexp/no-empty-capturing-group": "error",
+        "regexp/no-empty-character-class": "error",
+        "regexp/no-empty-group": "error",
+        "regexp/no-empty-lookarounds-assertion": "error",
+        "regexp/no-empty-string-literal": "error",
+        "regexp/no-escape-backspace": "error",
+        "regexp/no-extra-lookaround-assertions": "error",
+        "regexp/no-invalid-regexp": "error",
+        "regexp/no-invisible-character": "error",
+        "regexp/no-lazy-ends": "warn",
+        "regexp/no-legacy-features": "error",
+        "regexp/no-misleading-capturing-group": "error",
+        "regexp/no-misleading-unicode-character": "error",
+        "regexp/no-missing-g-flag": "error",
+        "regexp/no-non-standard-flag": "error",
+        "regexp/no-obscure-range": "error",
+        "regexp/no-optional-assertion": "error",
+        "regexp/no-potentially-useless-backreference": "warn",
+        "regexp/no-super-linear-backtracking": "error",
+        "regexp/no-trivially-nested-assertion": "error",
+        "regexp/no-trivially-nested-quantifier": "error",
+        "regexp/no-unused-capturing-group": "error",
+        "regexp/no-useless-assertions": "error",
+        "regexp/no-useless-backreference": "error",
+        "regexp/no-useless-character-class": "error",
+        "regexp/no-useless-dollar-replacements": "error",
+        "regexp/no-useless-escape": "error",
+        "regexp/no-useless-flag": "warn",
+        "regexp/no-useless-lazy": "error",
+        "regexp/no-useless-non-capturing-group": "error",
+        "regexp/no-useless-quantifier": "error",
+        "regexp/no-useless-range": "error",
+        "regexp/no-useless-set-operand": "error",
+        "regexp/no-useless-string-literal": "error",
+        "regexp/no-useless-two-nums-quantifier": "error",
+        "regexp/no-zero-quantifier": "error",
+        "regexp/optimal-lookaround-quantifier": "warn",
+        "regexp/optimal-quantifier-concatenation": "error",
+        "regexp/prefer-character-class": "error",
+        "regexp/prefer-d": "error",
+        "regexp/prefer-plus-quantifier": "error",
+        "regexp/prefer-predefined-assertion": "error",
+        "regexp/prefer-question-quantifier": "error",
+        "regexp/prefer-range": "error",
+        "regexp/prefer-set-operation": "error",
+        "regexp/prefer-star-quantifier": "error",
+        "regexp/prefer-unicode-codepoint-escapes": "error",
+        "regexp/prefer-w": "error",
+        "regexp/simplify-set-operations": "error",
+        "regexp/sort-flags": "error",
+        "regexp/strict": "error",
+        "regexp/use-ignore-case": "error",
+        // #endregion
+
         // --- custom rules ---
         // #region --- possible problems ---
         "array-callback-return": ["error", { "allowImplicit": true }],
 
         "no-await-in-loop": "error",
-        "no-control-regex": "off",
         "no-prototype-builtins": "off",
         "no-undef": "off", // typescript/eslint-recommended, ts(2552)
         // #endregion
@@ -360,6 +450,22 @@
             {
                 "selector": "CallExpression[callee.name=\"load\"] AwaitExpression > CallExpression",
                 "message": "Do not use await in call expressions. Extract the result into a variable first."
+            },
+            {
+                "selector": "Identifier[name=\"_ctx\"]",
+                "message": "Usage of `_ctx` is not allowed."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"each\"] > FunctionExpression",
+                "message": "Use an arrow function instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"filter\"] > FunctionExpression",
+                "message": "Use an arrow function instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"map\"] > FunctionExpression",
+                "message": "Use an arrow function instead."
             }
         ],
 
@@ -369,11 +475,11 @@
         "no-useless-rename": "error",
         "no-var": "error",
         "eslint-js/object-shorthand": "error", // use jsPlugins
-        "eslint-js/prefer-arrow-callback": "error", // use jsPlugins
+        "prefer-arrow-callback": "error",
         "prefer-const": "error",
         "prefer-object-has-own": "error",
-        "eslint-js/prefer-regex-literals": [
-            "error", // use jsPlugins
+        "prefer-regex-literals": [
+            "error",
             {
                 "disallowRedundantWrapping": true
             }
@@ -517,7 +623,7 @@
         "simple-import-sort/exports": "error",
 
         "import-x/first": "error",
-        "import-x-js/newline-after-import": "error", // use jsPlugins
+        "import-x/newline-after-import": "error",
         "no-duplicate-imports": "off",
         "import-x/no-duplicates": "error",
 

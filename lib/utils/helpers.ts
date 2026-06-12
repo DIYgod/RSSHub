@@ -52,14 +52,11 @@ export function parseDuration(timeStr: string | undefined | null): number | unde
         return;
     }
     const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
-    return clean
-        .split(':')
-        .toReversed()
-        .reduce((total, part, idx) => {
-            const n = Number(part);
-            if (Number.isNaN(n)) {
-                throw new TypeError(`Invalid segment: ${part}`);
-            }
-            return total + n * Math.pow(60, idx);
-        }, 0);
+    return clean.split(':').reduceRight((total, part, idx, arr) => {
+        const n = Number(part);
+        if (Number.isNaN(n)) {
+            throw new TypeError(`Invalid segment: ${part}`);
+        }
+        return total + n * Math.pow(60, arr.length - 1 - idx);
+    }, 0);
 }

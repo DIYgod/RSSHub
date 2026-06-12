@@ -19,6 +19,7 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     description: `::: info Category
+
 | Category              | Link               |
 | --------------------- | ------------------ |
 | **Business**          | business           |
@@ -36,6 +37,7 @@ export const route: Route = {
 | Financial Ratios      | stock-ratios       |
 | Investor's Psychology | behavioral-finance |
 | Mutual Funds          | mutual-fund        |
+
 :::`,
 };
 

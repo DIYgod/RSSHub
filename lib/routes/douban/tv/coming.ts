@@ -55,7 +55,7 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
         return undefined;
     }
 
-    const datePart = pubDateText.split('(')[0];
+    const datePart = pubDateText.split('(', 1)[0];
     return parseDate(datePart);
 };
 
@@ -65,7 +65,7 @@ const getSortTimestamp = (pubdate?: string[]): number => {
         return Number.POSITIVE_INFINITY;
     }
 
-    const datePart = pubDateText.split('(')[0].trim();
+    const datePart = pubDateText.split('(', 1)[0].trim();
     const match = /^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?/.exec(datePart);
     if (!match) {
         return Number.POSITIVE_INFINITY;
@@ -134,10 +134,10 @@ export const route: Route = {
 | sortBy   | 排序方式         | hot/time | hot    |
 | count    | 请求上游返回数量 | 正整数   | 10     |
 
-  用例：\`/douban/tv/coming/hot/10\`
+用例：\`/douban/tv/coming/hot/10\`
 
 ::: tip
-  服务端请求固定使用 \`sortby=hot\` 拉取数据，再按 \`sortBy\` 参数在本地重排；条目数量可通过 \`count\` 调整，仍可叠加 RSSHub 通用参数 \`limit\`。
+服务端请求固定使用 \`sortby=hot\` 拉取数据，再按 \`sortBy\` 参数在本地重排；条目数量可通过 \`count\` 调整，仍可叠加 RSSHub 通用参数 \`limit\`。
 :::`,
 };
 

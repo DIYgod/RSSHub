@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
     const { data: themeResponse } = await got(themeUrl);
 
     let items = themeResponse
-        .match(/{"title":".*?"string":".*?"}}/g)
+        .match(/\{"title":".*?"string":".*?"\}\}/g)
         .slice(0, limit)
         .map((item) => {
             item = JSON.parse(

@@ -35,7 +35,7 @@ export const route: Route = {
     ],
     handler,
     description: `::: tip
-For example, the category for https://www.washingtonpost.com/national/investigations would be /national/investigations.
+For example, the category for <https://www.washingtonpost.com/national/investigations> would be /national/investigations.
 :::`,
 };
 

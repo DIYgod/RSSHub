@@ -11,7 +11,7 @@ const deprecatedRoute = 'route: deprecated';
 const route = 'route';
 
 // DnD (do-not-disturb) usernames, add yours here to avoid being notified
-// eslint-disable-next-line unicorn/no-useless-collection-argument
+// oxlint-disable-next-line unicorn/no-useless-collection-argument
 const dndUsernames = new Set([]);
 
 /**
@@ -100,7 +100,7 @@ export default async function callMaintainer({ github, context, core }) {
                 core.warning(error);
             });
 
-    if (context.payload.issue.state === 'closed') {
+    if (context.payload.issue.state === 'closed' && context.payload.issue.state_reason !== 'not_planned') {
         await updateIssueState('open');
     }
 

@@ -51,7 +51,7 @@ async function handler() {
 
                 item.title = content('div.con_tit > h2').text();
                 item.description = content('div.con_txt').html();
-                item.pubDate = parseDate(content('div.con_tit > p > span').text().split('时间：')[1]);
+                item.pubDate = parseDate(content('div.con_tit > p > span').text().split('时间：', 2)[1]);
 
                 return item;
             })

@@ -23,7 +23,7 @@ const getTagId = (tid: string) =>
             .find(([key]) => key.startsWith('node'))
             ?.pop() as Tag;
 
-        return node?.id.split(':')[1];
+        return node?.id.split(':', 2)[1];
     });
 
 const handler = async (ctx) => {

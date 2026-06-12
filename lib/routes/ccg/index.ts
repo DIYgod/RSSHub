@@ -148,8 +148,7 @@ export const route: Route = {
 | 分类                                   | ID                                  |
 | -------------------------------------- | ----------------------------------- |
 | [新闻动态](http://www.ccg.org.cn/news) | [news](https://rsshub.app/ccg/news) |
-| [媒体报道](http://www.ccg.org.cn/mtbd) | [mtbd](https://rsshub.app/ccg/mtbd) |
-`,
+| [媒体报道](http://www.ccg.org.cn/mtbd) | [mtbd](https://rsshub.app/ccg/mtbd) |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

@@ -19,9 +19,9 @@ export const route: Route = {
     ],
     name: '本科创新创业教育网',
     maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
-    description: `| 通知公告     | 新闻动态     | 学科竞赛     | 常用资源     |
-| ------------ | ------------ | ------------ | ------------ |
-| announcement | news         | contest      | resources    |`,
+    description: `| 通知公告     | 新闻动态 | 学科竞赛 | 常用资源  |
+| ------------ | -------- | -------- | --------- |
+| announcement | news     | contest  | resources |`,
     handler: async (ctx) => {
         const fragList = {
             announcement: {

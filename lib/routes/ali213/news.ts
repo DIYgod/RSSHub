@@ -134,7 +134,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             ...item,
                             title,
                             description,
-                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/)[0]), +8),
+                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/, 1)[0]), +8),
                             content: {
                                 html: description,
                                 text: $$('div#Content').html() ?? '',
@@ -196,8 +196,7 @@ export const route: Route = {
 | 科技     | tech    |
 | 电竞     | esports |
 | 娱乐     | amuse   |
-| 手游     | mobile  |
-`,
+| 手游     | mobile  |`,
     categories: ['game'],
     features: {
         requireConfig: false,
