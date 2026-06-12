@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -114,8 +115,8 @@ async function insertDescriptionInto(item) {
             <figure>
                 <img src={imageURL ?? ''} />
             </figure>
-            {raw(metadata.toString())}
-            {raw(content.toString())}
+            {raw(sanitizeHtml(metadata.toString(), { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']) }))}
+            {raw(sanitizeHtml(content.toString(), { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']) }))}
         </>
     );
 
