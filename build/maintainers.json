@@ -7695,6 +7695,12 @@
   "/scvtc/xygg": [
     "nczitzk"
   ],
+  "/sdmuseum/exhibitions": [
+    "magazian"
+  ],
+  "/sdmuseum/news": [
+    "magazian"
+  ],
   "/sdo/ff14risingstones/posts/:pid?/:type?": [
     "KarasuShin"
   ],

@@ -41586,6 +41586,27 @@
       }
     ]
   },
+  "sdmuseum.com": {
+    "_name": "Shan Dong Museum",
+    "www": [
+      {
+        "title": "Temporary Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/col/col271702/index.html"
+        ],
+        "target": "/sdmuseum/exhibitions"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/col/col270324/index.html"
+        ],
+        "target": "/sdmuseum/news"
+      }
+    ]
+  },
   "sdu.edu.cn": {
     "_name": "山东大学",
     "www.cs": [
