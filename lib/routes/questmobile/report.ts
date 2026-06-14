@@ -238,7 +238,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const author = $('meta[property="og:title"]').prop('content').split(/-/)[0];
+    const author = $('meta[property="og:title"]').prop('content').split(/-/, 1)[0];
     const categories = [industryObj?.value, labelObj?.value].filter(Boolean);
     const image = $(`img[alt="${author}"]`).prop('src');
     const icon = $('link[rel="shortcut icon"]').prop('href');

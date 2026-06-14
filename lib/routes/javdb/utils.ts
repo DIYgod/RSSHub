@@ -97,7 +97,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     );
 
     const htmlTitle = $('title').text();
-    const subject = htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
+    const subject = htmlTitle.includes('|') ? htmlTitle.split('|', 1)[0] : '';
 
     await destroy();
 

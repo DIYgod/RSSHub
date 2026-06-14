@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: `${$('title').text().split('_')[0]} - 新浪体育`,
+        title: `${$('title').text().split('_', 1)[0]} - 新浪体育`,
         description: $('meta[name="description"]').attr('content'),
         link: currentUrl,
         item: items,

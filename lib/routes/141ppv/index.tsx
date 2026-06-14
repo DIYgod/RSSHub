@@ -163,7 +163,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `141PPV - ${$('title').text().split('-')[0].trim()}`,
+        title: `141PPV - ${$('title').text().split('-', 1)[0].trim()}`,
         link: currentUrl,
         item: items,
     };

@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 const rootURL = 'http://rsj.taiyuan.gov.cn/';
 
 export const route: Route = {
-    path: '/taiyuan/rsj/:caty/:page?',
+    path: '/rsj/:caty/:page?',
     categories: ['government'],
     example: '/gov/taiyuan/rsj/gggs',
     parameters: { caty: '信息类别', page: '页码' },
@@ -25,7 +25,7 @@ export const route: Route = {
             source: ['rsj.taiyuan.gov.cn/*'],
         },
     ],
-    name: '太原市人力资源和社会保障局政府公开信息',
+    name: '人力资源和社会保障局政府公开信息',
     maintainers: ['2PoL'],
     handler,
     url: 'rsj.taiyuan.gov.cn/*',

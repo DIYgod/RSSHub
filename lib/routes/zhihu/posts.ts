@@ -90,7 +90,7 @@ async function handler(ctx) {
         title: `${userProfile.name} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
         description: userProfile.headline,
-        image: userProfile.avatarUrl.split('?')[0],
+        image: userProfile.avatarUrl.split('?', 1)[0],
         // banner: userData?.coverUrl?.split('?')[0],
         item: items,
     };

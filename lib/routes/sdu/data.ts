@@ -7,7 +7,7 @@ export default {
             titlePrefix: '(威海)新闻网|',
             docs: 'https://docs.rsshub.app/routes/university#shan-dong-da-xue-wei-hai',
             getTarget(url) {
-                return this.route + '/' + url.replace(/\.htm$/, '');
+                return '/news/' + url.replace(/\.htm$/, '');
             },
             url: 'https://xinwen.wh.sdu.edu.cn/',
             columns: {
@@ -64,7 +64,7 @@ export default {
             titlePrefix: '(威海)教务处|',
             docs: 'https://docs.rsshub.app/routes/university#shan-dong-da-xue-wei-hai',
             getTarget(url) {
-                return this.route + '/' + url.replace(/\.htm$/, '');
+                return '/jwc/' + url.replace(/\.htm$/, '');
             },
             url: 'https://jwc.wh.sdu.edu.cn/',
             columns: {

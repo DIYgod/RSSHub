@@ -50,7 +50,7 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
     maintainers: ['ananyatimalsina'],
     handler: async (ctx) => {
         const { channel } = ctx.req.param();
-        const cid = channel.split('-id')[1];
+        const cid = channel.split('-id', 2)[1];
 
         if (!cid) {
             throw new Error('Invalid channel format. Missing -id');

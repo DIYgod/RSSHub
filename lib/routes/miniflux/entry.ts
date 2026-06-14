@@ -77,7 +77,7 @@ async function handler(ctx) {
 
         switch (filter) {
             case 'mark':
-                if ((option === 'read' || option === 'removed' || option === 'unread') && !setMark.length) {
+                if (['read', 'removed', 'unread'].includes(option) && !setMark.length) {
                     mark = option;
                     setMark.push(1);
                 }

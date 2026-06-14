@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
-    path: '/miit/yjzj',
+    path: '/yjzj',
     categories: ['government'],
     example: '/gov/miit/yjzj',
     parameters: {},
@@ -35,7 +35,7 @@ async function handler() {
     const url = `${rootUrl}/gzcy/yjzj/index.html`;
 
     const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';')[0];
+    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
     const indexContent = load(cookieResponse.data);
     const dataRequestUrl = indexContent('div.clist_con > script:nth-child(2)')
         .toArray()

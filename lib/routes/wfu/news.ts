@@ -33,7 +33,7 @@ async function loadContent(link) {
         response = await got.get(link);
     } catch (error) {
         // 如果网络问题 直接出错
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             description = 'Page 404 Please Check!';
         }
         return { description };
@@ -99,7 +99,7 @@ async function handler(ctx) {
             const $ = load(item); // 将列表项加载成 html
             const $item_url = 'https://www.wfu.edu.cn' + $('a').attr('href'); // 获取 每一项的url
             const $title = $('a>div.txt>h1').text(); // 获取每个的标题
-            const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：')[1]), +8); // 获取发布时间
+            const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：', 2)[1]), +8); // 获取发布时间
 
             // 列表上提取到的信息
             // 标题 链接

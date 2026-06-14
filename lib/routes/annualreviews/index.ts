@@ -59,7 +59,7 @@ async function handler(ctx) {
                 doi,
                 guid: doi,
                 title: item.find('title').text(),
-                link: item.find('link').attr('href').split('?')[0],
+                link: item.find('link').attr('href').split('?', 1)[0],
                 description: item.find('content').text(),
                 pubDate: parseDate(item.find('published').text()),
                 author: item

@@ -33,7 +33,7 @@ async function handler(ctx) {
     let items = (category === 'news' ? data.news : category === 'figure' ? data.figure : data.videoList).map((item) => ({
         title: item.title,
         pubDate: parseDate(item.online_time),
-        link: `${rootUrl}/${category === 'news' ? 'article/' : category === 'figure' ? 'people/' : ''}${item.online_time.split('T')[0].split('-').join('')}/${item.token}`,
+        link: `${rootUrl}/${category === 'news' ? 'article/' : category === 'figure' ? 'people/' : ''}${item.online_time.split('T', 1)[0].split('-').join('')}/${item.token}`,
     }));
 
     items = await Promise.all(

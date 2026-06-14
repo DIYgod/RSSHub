@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/suzhou/news/:uid',
+    path: '/news/:uid',
     categories: ['government'],
     example: '/gov/suzhou/news/news',
     parameters: { uid: '栏目名' },

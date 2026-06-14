@@ -1,4 +1,4 @@
-// oxlint-disable unicorn/prefer-math-trunc
+// oxlint-disable unicorn/prefer-math-trunc unicorn-js/no-this-outside-of-class unicorn-js/no-array-from-fill
 // oxlint-disable no-unused-vars
 /* eslint-disable prefer-rest-params */
 /* eslint-disable default-case */

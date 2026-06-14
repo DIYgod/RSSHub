@@ -7,18 +7,18 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/chongqing/gzw/:category{.+}?',
+    path: '/gzw/:category{.+}?',
     parameters: {
         category: '分类，见下表，默认为通知公告',
     },
-    name: '重庆市人民政府 国有资产监督管理委员会',
+    name: '国有资产监督管理委员会',
     url: 'gzw.cq.gov.cn',
     maintainers: ['nczitzk'],
     handler,
     radar: [
         {
             source: 'gzw.cq.gov.cn/*category',
-            target: '/chongqing/gzw/*category',
+            target: '/gzw/*category',
         },
     ],
     description: `| 通知公告  | 国企资讯 | 国企简介 | 国企招聘 |

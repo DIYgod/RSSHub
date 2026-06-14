@@ -11,7 +11,7 @@ export const header = {
     'x-api-version': '3.0.91',
 };
 
-const fixImageUrl = (url: string) => url.split('?')[0].replace('_b.jpg', '.jpg').replace('_r.jpg', '.jpg').replace('_720w.jpg', '.jpg');
+const fixImageUrl = (url: string) => url.split('?', 1)[0].replace('_b.jpg', '.jpg').replace('_r.jpg', '.jpg').replace('_720w.jpg', '.jpg');
 
 export const processImage = (content: string) => {
     const $ = load(content, null, false);
@@ -113,7 +113,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
                       headers: {
                           cookie: `${response1.headers
                               .getSetCookie()
-                              .map((s) => s.split(';')[0])
+                              .map((s) => s.split(';', 1)[0])
                               .join('; ')}; __zse_ck=${zseCk}`,
                       },
                   })
@@ -123,7 +123,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
                 (response2 || response1).headers
                     .getSetCookie()
                     .find((s) => s.startsWith('d_c0='))
-                    ?.split(';')[0]
+                    ?.split(';', 1)[0]
                     .trim()
                     .slice('d_c0='.length) || '';
 

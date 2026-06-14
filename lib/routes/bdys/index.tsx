@@ -150,7 +150,7 @@ async function handler(ctx) {
                 });
                 const downloadResponse = await got({
                     method: 'get',
-                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/')[4].split('.')[0]}`,
+                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/', 5)[4].split('.', 1)[0]}`,
                     headers,
                 });
                 const content = load(detailResponse.data);

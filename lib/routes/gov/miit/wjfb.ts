@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
-    path: '/miit/wjfb/:ministry',
+    path: '/wjfb/:ministry',
     categories: ['government'],
     example: '/gov/miit/wjfb/ghs',
     parameters: { ministry: '部门缩写，可以在对应 URL 中获取' },
@@ -35,7 +35,7 @@ async function handler(ctx) {
     const url = `${rootUrl}/jgsj/${ministry}/wjfb/index.html`;
 
     const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';')[0];
+    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
     const indexContent = load(cookieResponse.data);
     const title = indexContent('div.dqwz > a:nth-child(4)').text();
     const dataRequestUrl = indexContent('div.lmy_main_rb > script:nth-child(2)')

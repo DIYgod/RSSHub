@@ -111,8 +111,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/mot/:category{.+}?',
-    name: '中华人民共和国交通运输部',
+    path: '/:category{.+}?',
+    name: '通用',
     url: 'www.mot.gov.cn',
     maintainers: ['ladeng07', 'nczitzk'],
     handler,
@@ -161,17 +161,17 @@ export const route: Route = {
         {
             title: '交通要闻',
             source: ['www.mot.gov.cn/jiaotongyaowen/'],
-            target: '/mot/jiaotongyaowen',
+            target: '/jiaotongyaowen',
         },
         {
             title: '时政要闻',
             source: ['www.mot.gov.cn/shizhengyaowen/'],
-            target: '/mot/shizhengyaowen',
+            target: '/shizhengyaowen',
         },
         {
             title: '重要会议',
             source: ['www.mot.gov.cn/zhongyaohuiyi/'],
-            target: '/mot/zhongyaohuiyi',
+            target: '/zhongyaohuiyi',
         },
     ],
     view: ViewType.Articles,

@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/tianjin/tjftz-notice/:channelId',
+    path: '/tjftz-notice/:channelId',
     categories: ['government'],
     example: '/gov/tianjin/tjftz-notice/6302',
     parameters: {
@@ -14,7 +14,7 @@ export const route: Route = {
     radar: [
         {
             source: ['tjftz.gov.cn/channels/:channelId.html'],
-            target: '/tianjin/tjftz-notice/:channelId',
+            target: '/tjftz-notice/:channelId',
         },
     ],
     name: '天津港保税区-公告',

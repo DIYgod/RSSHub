@@ -104,7 +104,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `141JAV - ${$('title').text().split('-')[0].trim()}`,
+        title: `141JAV - ${$('title').text().split('-', 1)[0].trim()}`,
         link: currentUrl,
         item: items,
     };

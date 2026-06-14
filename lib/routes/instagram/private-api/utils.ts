@@ -23,7 +23,7 @@ async function login(ig, cache) {
         //     logger.info('Instagram preLoginFlow fail: ' + error);
         // }
         await ig.account.login(username, password);
-        process.nextTick(() => ig.simulate.postLoginFlow());
+        queueMicrotask(() => ig.simulate.postLoginFlow());
         logger.debug('Instagram login success.');
     }
     // Post request hook

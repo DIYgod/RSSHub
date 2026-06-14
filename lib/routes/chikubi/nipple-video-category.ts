@@ -44,7 +44,7 @@ async function handler(ctx): Promise<Data> {
     const items = await processItems(list);
 
     return {
-        title: `動画カテゴリー: ${feed.title?.split('-')[0]} - chikubi.jp`,
+        title: `動画カテゴリー: ${feed.title?.split('-', 1)[0]} - chikubi.jp`,
         link: `${baseUrl}${url}`,
         item: items,
     };

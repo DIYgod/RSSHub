@@ -7,10 +7,25 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/nifdc/:path{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    name: '国家药品监督管理局医疗器械标准管理中心 - 通用',
+    example: '/gov/nifdc/bshff/ylqxbzhgl/qxggtzh',
+    parameters: { path: '路径，默认为公告通告' },
+    radar: [
+        {
+            source: ['www.nifdc.org.cn/nifdc/*path/index.html', 'www.nifdc.org.cn/nifdc/*path'],
+            target: '/:path',
+        },
+    ],
+    maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+
+路径处填写对应页面 URL 中 \`https://www.nifdc.org.cn/nifdc/\` 与 \`/index.html\` 之间的字段，下面是一个例子。
+
+若订阅 [公告通告](https://www.nifdc.org.cn/nifdc/bshff/ylqxbzhgl/qxggtzh/index.html) 则将对应页面 URL <https://www.nifdc.org.cn/nifdc/bshff/ylqxbzhgl/qxggtzh/index.html> 中 \`https://www.nifdc.org.cn/nifdc/\` 和 \`/index.html\` 之间的字段 \`bshff/ylqxbzhgl/qxggtzh\` 作为路径填入。此时路由为 [\`/gov/nifdc/bshff/ylqxbzhgl/qxggtzh\`](https://rsshub.app/gov/nifdc/bshff/ylqxbzhgl/qxggtzh)
+
+:::`,
 };
 
 async function handler(ctx) {

@@ -69,7 +69,7 @@ async function handler(ctx) {
     }
 
     return {
-        title: `36氪 - ${$('title').text().split('_')[0]}`,
+        title: `36氪 - ${$('title').text().split('_', 1)[0]}`,
         link: currentUrl,
         item: items,
     };

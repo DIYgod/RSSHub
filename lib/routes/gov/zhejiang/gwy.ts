@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/zhejiang/gwy/:category?/:column?',
+    path: '/gwy/:category?/:column?',
     categories: ['government'],
     example: '/gov/zhejiang/gwy/1',
     parameters: { category: '分类，见下表，默认为全部', column: '地市专栏，见下表，默认为全部' },
@@ -21,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zjks.gov.cn/zjgwy/website/init.htm', 'zjks.gov.cn/zjgwy/website/queryDetail.htm', 'zjks.gov.cn/zjgwy/website/queryMore.htm'],
-            target: '/zhejiang/gwy',
+            target: '/gwy',
         },
     ],
     name: '通知',

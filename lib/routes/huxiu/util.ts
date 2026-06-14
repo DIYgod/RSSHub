@@ -33,7 +33,7 @@ const cleanUpHTML = (data) => {
             e.parent().replaceWith(
                 renderDescription({
                     image: {
-                        src: (e.prop('src') ?? e.prop('_src')).split(/\?/)[0],
+                        src: (e.prop('src') ?? e.prop('_src')).split(/\?/, 1)[0],
                         width: e.prop('data-w'),
                         height: e.prop('data-h'),
                     },
@@ -221,7 +221,7 @@ const fetchMemberData = async (id: string, type: string, items, titlePrefix?: st
             const detail = await fetchArticleDetail(firstArticleId);
             const username = detail.user_info?.username ?? detail.author;
             const description = detail.user_info?.yijuhua ?? `${username ?? `用户 ${id}`}的${type === 'moment' ? '24 小时' : '文章'}`;
-            const image = detail.user_info?.avatar?.split(/\?/)[0];
+            const image = detail.user_info?.avatar?.split(/\?/, 1)[0];
 
             return buildFeedMetadata({
                 title: username ?? `用户 ${id}`,
@@ -460,7 +460,7 @@ const extractAuthor = (item) => item.user_info?.username ?? item.brief_column?.n
  * @param {Object} item - The item to extract image from.
  * @returns {string|undefined} - The image URL or undefined.
  */
-const extractImageSrc = (item) => item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/)[0];
+const extractImageSrc = (item) => item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/, 1)[0];
 
 /**
  * Maps a single item to a processed item object.

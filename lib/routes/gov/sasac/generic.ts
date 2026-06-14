@@ -6,10 +6,25 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/sasac/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}',
+    name: '通用',
+    example: '/gov/sasac/n2588030/n16436141',
+    parameters: { path: '路径，可在 URL 找到' },
+    radar: [
+        {
+            source: ['www.sasac.gov.cn/*path/index.html', 'www.sasac.gov.cn/*path'],
+            target: '/:path',
+        },
+    ],
+    maintainers: ['TonyRL'],
     handler,
+    description: `::: tip
+
+路径处填写对应页面 URL 中 \`http://www.sasac.gov.cn/\` 与 \`/index.html\` 之间的字段，下面是一个例子。
+
+若订阅 [其他](http://www.sasac.gov.cn/n2588030/n16436141/index.html) 则将对应页面 URL <http://www.sasac.gov.cn/n2588030/n16436141/index.html> 中 \`http://www.sasac.gov.cn/\` 和 \`/index.html\` 之间的字段 \`n2588030/n16436141\` 作为路径填入。此时路由为 [\`/gov/sasac/n2588030/n16436141\`](https://rsshub.app/gov/sasac/n2588030/n16436141)
+
+:::`,
 };
 
 async function handler(ctx) {
@@ -26,7 +41,7 @@ async function handler(ctx) {
             item = $(item);
             return {
                 title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), response.url).href,
+                link: new URL(item.find('a').attr('href'), url).href,
                 pubDate: parseDate(item.find('span').text().replace('[', '').replace(']', '')),
             };
         });

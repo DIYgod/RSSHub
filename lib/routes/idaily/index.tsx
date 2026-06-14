@@ -77,7 +77,7 @@ async function handler(ctx) {
         language: 'zh',
         image,
         subtitle: $('meta[name="keywords"]').prop('content'),
-        author: title.split(/\s/)[0],
+        author: title.split(/\s/, 1)[0],
         allowEmpty: true,
     };
 }

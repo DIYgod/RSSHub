@@ -70,7 +70,7 @@ const render = (data: { image?: string; description?: string }) => {
     $('img').each((_, e) => {
         const $e = $(e);
         const src = $e.attr('src');
-        $e.attr('src', src?.split('?')[0]);
+        $e.attr('src', src?.split('?', 1)[0]);
     });
 
     return $.html();

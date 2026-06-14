@@ -73,7 +73,7 @@ async function handler(ctx) {
 
     return {
         title: `内蒙古广播电视台 - ${author}`,
-        link: items[0].link.split(/\/\d{4}-\d{2}-\d{2}\//)[0],
+        link: items[0].link.split(/\/\d{4}-\d{2}-\d{2}\//, 1)[0],
         item: items,
         image: `${imageUrl.host}${imageUrl.filepath}${imageUrl.filename}`,
         itunes_author: author,

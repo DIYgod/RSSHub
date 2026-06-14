@@ -3,7 +3,7 @@ import type { Route } from '@/types';
 import { processZxfkItems } from './util';
 
 export const route: Route = {
-    path: '/safe/business/:site?',
+    path: '/business/:site?',
     categories: ['government'],
     example: '/gov/safe/business/beijing',
     parameters: { site: '站点，见上表，默认为 beijing' },

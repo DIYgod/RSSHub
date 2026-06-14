@@ -719,7 +719,7 @@ const toBoolean = (value: string | undefined, defaultValue: boolean) => {
     if (value === undefined) {
         return defaultValue;
     } else {
-        return value === '' || value === '0' || value === 'false' ? false : !!value;
+        return ['', '0', 'false'].includes(value) ? false : !!value;
     }
 };
 

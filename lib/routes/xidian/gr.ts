@@ -235,7 +235,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    if (category === 'yyjs_jbqk' || category === 'yyjs_jbqk1' || category === 'yyjs_jbqk2' || category === 'yyjs_jbqk4') {
+    if (['yyjs_jbqk', 'yyjs_jbqk1', 'yyjs_jbqk2', 'yyjs_jbqk4'].includes(category)) {
         return {
             title: $('.right-bt-left').text(),
             link: url,

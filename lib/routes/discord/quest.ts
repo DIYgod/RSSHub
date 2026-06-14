@@ -48,7 +48,7 @@ async function handler() {
             author: quest.config.messages.game_publisher,
             pubDate: parseDate(quest.config.starts_at),
             category: tasks,
-            link: quest.config.application.link.split('?')[0],
+            link: quest.config.application.link.split('?', 1)[0],
             guid: quest.id,
         };
     });

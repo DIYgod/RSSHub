@@ -185,7 +185,7 @@ const renderGuestItems = (items) => {
         }
 
         return {
-            title: summary.split('\n')[0],
+            title: summary.split('\n', 1)[0],
             id: node.id,
             pubDate: parseDate(node.taken_at_timestamp, 'X'),
             author: node.owner.username,

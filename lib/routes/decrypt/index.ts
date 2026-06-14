@@ -52,7 +52,7 @@ async function handler(ctx): Promise<Data> {
                         const result = await extractFullText(item.link);
                         return {
                             title: item.title || 'Untitled',
-                            link: item.link.split('?')[0], // Clean URL by removing query parameters
+                            link: item.link.split('?', 1)[0], // Clean URL by removing query parameters
                             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                             description: result?.fullText ?? (item.content || ''),
                             author: item.creator || 'Decrypt',
@@ -66,7 +66,7 @@ async function handler(ctx): Promise<Data> {
                         // Fallback to RSS content
                         return {
                             title: item.title || 'Untitled',
-                            link: item.link.split('?')[0],
+                            link: item.link.split('?', 1)[0],
                             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                             description: item.content || '',
                             author: item.creator || 'Decrypt',

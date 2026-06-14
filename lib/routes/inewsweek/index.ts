@@ -62,7 +62,7 @@ async function handler(ctx) {
                         parseDate(
                             $('div.editor')
                                 .html()
-                                .split(/(\s{2,})/)[2]
+                                .split(/(\s{2,})/, 3)[2]
                         ),
                         +8
                     );

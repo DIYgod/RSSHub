@@ -36,9 +36,9 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://sse.tongji.edu.cn';
     const type = ctx.req.param('type') || 'xytz';
-    const subType = ['bkstz', 'yjstz', 'jgtz', 'qttz'];
+    const subtype = ['bkstz', 'yjstz', 'jgtz', 'qttz'];
 
-    const listUrl = `${baseUrl}/xxzx/${subType.includes(type) ? `xytz/${type}` : type}.htm`;
+    const listUrl = `${baseUrl}/xxzx/${subtype.includes(type) ? `xytz/${type}` : type}.htm`;
     const response = await got({
         method: 'get',
         url: listUrl,

@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/cmse/fxrw',
+    path: '/fxrw',
     categories: ['government'],
     example: '/gov/cmse/fxrw',
     parameters: {},

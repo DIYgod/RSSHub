@@ -87,7 +87,7 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find('h5').text().trim(),
                 link: rootUrl + href,
-                id: href?.split('/').pop()?.split('.')[0],
+                id: href?.split('/').pop()?.split('.', 1)[0],
             };
         }) as DataItem[];
 

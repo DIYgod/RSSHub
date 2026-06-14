@@ -36,7 +36,7 @@ async function handler(ctx) {
     const topTitle = $('div.toptip > a').get(1);
     let feedTitle = $('title').text();
     if (isSpecial) {
-        feedTitle = feedTitle.split('_')[1];
+        feedTitle = feedTitle.split('_', 2)[1];
     } else if (topTitle) {
         feedTitle = $(topTitle).text();
     }

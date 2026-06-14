@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     // extract the relevant data from the API response
     const items = userThreads.map((item) => ({
-        title: item.thread.t.info.text.split('\n')[0],
+        title: item.thread.t.info.text.split('\n', 1)[0],
         link: `${baseUrl}/thread/${item.thread_id}`,
         pubDate: parseDate(item.thread.created_at),
         updated: parseDate(item.thread.updated_at),

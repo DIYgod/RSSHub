@@ -101,8 +101,8 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/moa/zdscxx/:category{.+}?',
-    name: '中华人民共和国农业农村部数据',
+    path: '/zdscxx/:category{.+}?',
+    name: '数据',
     url: 'www.moa.gov.cn',
     maintainers: ['nczitzk'],
     handler,
@@ -131,32 +131,32 @@ export const route: Route = {
         {
             title: '价格指数',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/价格指数',
+            target: '/zdscxx/价格指数',
         },
         {
             title: '供需形势',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/供需形势',
+            target: '/zdscxx/供需形势',
         },
         {
             title: '分析报告周报',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/分析报告周报',
+            target: '/zdscxx/分析报告周报',
         },
         {
             title: '分析报告日报',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/分析报告日报',
+            target: '/zdscxx/分析报告日报',
         },
         {
             title: '日历信息',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/日历信息',
+            target: '/zdscxx/日历信息',
         },
         {
             title: '蔬菜生产',
             source: ['zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp'],
-            target: '/gov/moa/zdscxx/蔬菜生产',
+            target: '/zdscxx/蔬菜生产',
         },
     ],
 };

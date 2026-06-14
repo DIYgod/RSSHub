@@ -40,7 +40,7 @@ async function handler() {
     const item = list.toArray().map((item) => {
         const title = $(item).find('a').text();
         const link = $(item).find('a').attr('href');
-        const pubDate = parseDate($(item).find('small').text().split(':')[1].trim(), 'DD/MM/YYYY');
+        const pubDate = parseDate($(item).find('small').text().split(':', 2)[1].trim(), 'DD/MM/YYYY');
         const desc = renderToString(<SsmNewsDescription link={link} />);
 
         return {

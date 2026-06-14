@@ -102,7 +102,7 @@ const topicDataHanding = (data, ctx) =>
         if (item.pictures) {
             for (const pic of item.pictures) {
                 if (pic.format === 'gif') {
-                    description += `<img src="${pic.picUrl.split('?imageMogr2/')[0]}">`;
+                    description += `<img src="${pic.picUrl.split('?imageMogr2/', 1)[0]}">`;
                 } else {
                     // jpeg, bmp, png, gif, webp
                     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
@@ -117,7 +117,7 @@ const topicDataHanding = (data, ctx) =>
                     //     default:
                     //         break;
                     // }
-                    const imgUrl = /\.[\da-z]+\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/')[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
+                    const imgUrl = /\.[\da-z]+\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/', 1)[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
                     description += `<br><img src="${imgUrl}">`;
                     // description += `<br><picture><source srcset="${
                     //     pic.picUrl.split('/thumbnail/')[0]

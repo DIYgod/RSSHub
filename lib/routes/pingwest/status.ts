@@ -52,7 +52,7 @@ async function handler() {
             let description = rightNode.text();
             const imgUrl = $item('.news-img img');
             if (imgUrl.length) {
-                imgUrl.attr('src', imgUrl.attr('src').split('?x-')[0]);
+                imgUrl.attr('src', imgUrl.attr('src').split('?x-', 1)[0]);
                 description += `<br>${imgUrl.parent().html()}`;
             }
             return {

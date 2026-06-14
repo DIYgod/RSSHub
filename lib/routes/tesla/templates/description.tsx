@@ -79,12 +79,12 @@ export const renderDescription = ({ data, image, description, categoryToUrl, med
                                                     <h3>有效期</h3>
                                                     {voucher.activateDate ? (
                                                         <>
-                                                            <b>{voucher.activateDate.split(/T/)[0]}</b> 起
+                                                            <b>{voucher.activateDate.split(/T/, 1)[0]}</b> 起
                                                         </>
                                                     ) : null}
                                                     {voucher.expirationDate ? (
                                                         <>
-                                                            <b>{voucher.expirationDate.split(/T/)[0]}</b> 止
+                                                            <b>{voucher.expirationDate.split(/T/, 1)[0]}</b> 止
                                                         </>
                                                     ) : null}
                                                 </>

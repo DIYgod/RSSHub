@@ -7,10 +7,10 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: ['/zhengce/zuixin', '/zhengce/:category{.+}?'],
+    path: '/:category{.+}?',
     categories: ['government'],
-    example: '/gov/zhengce/zuixin',
-    parameters: {},
+    example: '/gov/zhengce',
+    parameters: { category: '分类，见下表，默认为最新' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,16 +21,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.gov.cn/zhengce/zuixin.htm', 'www.gov.cn/'],
+            source: ['www.gov.cn/zhengce/*category'],
+            target: '/:category',
         },
     ],
-    name: '最新政策',
-    maintainers: ['SettingDust', 'nczitzk'],
+    name: '政策',
+    maintainers: ['nczitzk'],
     handler,
-    url: 'www.gov.cn/zhengce/zuixin.htm',
+    url: 'www.gov.cn/zhengce/',
+    description: `| 最新政策 | 政策解读 | 图解政策    |
+| -------- | -------- | ----------- |
+| zuixin   | jiedu    | jiedu/tujie |`,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const { category = 'zuixin' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
