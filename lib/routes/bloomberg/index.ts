@@ -3,10 +3,11 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 
-import { parseArticle, parseNewsList, rootUrl } from './utils';
+import { parseArticle, parseLineupNewsList, parseNewsList, rootUrl, websiteUrl } from './utils';
 
 const siteTitleMapping = {
     '/': 'News',
+    ai: 'AI',
     bpol: 'Politics',
     bbiz: 'Business',
     markets: 'Markets',
@@ -19,6 +20,8 @@ const siteTitleMapping = {
     businessweek: 'Businessweek',
     citylab: 'CityLab',
 };
+
+const lineupSites = new Set(['ai']);
 
 export const route: Route = {
     path: '/:site?',
@@ -39,11 +42,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Bloomberg Site',
+    name: 'Site',
     maintainers: ['bigfei'],
     description: `| Site ID      | Title        |
 | ------------ | ------------ |
 | /            | News         |
+| ai           | AI           |
 | bpol         | Politics     |
 | bbiz         | Business     |
 | markets      | Markets      |
@@ -60,9 +64,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const site = ctx.req.param('site');
-    const currentUrl = site ? `${rootUrl}/${site}/sitemap_news.xml` : `${rootUrl}/sitemap_news.xml`;
+    const currentUrl = site ? `${websiteUrl}/${site}` : websiteUrl;
+    const sourceUrl = site ? `${rootUrl}/${site}/sitemap_news.xml` : `${rootUrl}/sitemap_news.xml`;
 
-    const list = await parseNewsList(currentUrl, ctx);
+    const list = site && lineupSites.has(site) ? await parseLineupNewsList(site, ctx) : await parseNewsList(sourceUrl, ctx);
     const items = await pMap(list, (item) => parseArticle(item), { concurrency: 1 });
     return {
         title: `Bloomberg - ${siteTitleMapping[site ?? '/']}`,

@@ -13,6 +13,7 @@ import { renderLedeMedia } from './templates/lede-media';
 import { renderVideoMedia } from './templates/video-media';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
+const websiteUrl = 'https://www.bloomberg.com';
 const idSel = 'script[id^="article-info"][type="application/json"], script[class^="article-info"][type="application/json"], script#dvz-config';
 const idUrl = 'https://www.bloomberg.com/article/api/story/id/';
 
@@ -91,6 +92,53 @@ const parseNewsList = async (url, ctx) => {
             };
             return item;
         });
+};
+
+const parseLineupNewsList = async (slug, ctx) => {
+    const currentUrl = `${websiteUrl}/${slug}`;
+    const apiUrl = `${websiteUrl}/lineup/api/lazy_load_stories?slug=${slug}&page=1`;
+    const response = await ofetch(apiUrl, {
+        headers: {
+            accept: 'application/json',
+            referer: currentUrl,
+        },
+    });
+
+    if (!response.html) {
+        throw new Error(`Unable to fetch Bloomberg ${slug} channel stories. The lineup API returned no HTML.`);
+    }
+
+    const $ = load(response.html);
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const seenLinks = new Set<string>();
+    const items = $('article')
+        .toArray()
+        .map((article) => {
+            const articleElement = $(article);
+            const headline = articleElement.find('a.story-list-story__info__headline-link, a[href*="/news/"]').first();
+            const href = headline.attr('href');
+            if (!href) {
+                return;
+            }
+
+            const link = new URL(href, websiteUrl).href;
+            if (seenLinks.has(link)) {
+                return;
+            }
+            seenLinks.add(link);
+
+            const id = articleElement.attr('data-id');
+            return {
+                title: headline.text(),
+                link,
+                ...(articleElement.attr('data-updated-at') || articleElement.find('time').attr('datetime') ? { pubDate: parseDate(articleElement.attr('data-updated-at') || articleElement.find('time').attr('datetime')) } : {}),
+                ...(id ? { guid: `bloomberg:${id}` } : {}),
+            };
+        })
+        .filter((item) => item?.title && item.link)
+        .slice(0, limit);
+
+    return items;
 };
 
 const parseArticle = (item) =>
@@ -607,4 +655,4 @@ const documentToHtmlString = async (document) => {
     return str;
 };
 
-export { parseArticle, parseNewsList, rootUrl };
+export { parseArticle, parseLineupNewsList, parseNewsList, rootUrl, websiteUrl };
