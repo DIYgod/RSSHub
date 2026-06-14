@@ -6363,7 +6363,7 @@
         "source": [
           "/"
         ],
-        "target": "/bangumi.moe/*"
+        "target": "/bangumi.moe/:tags{.+}?"
       }
     ]
   },
@@ -18099,7 +18099,7 @@
         "source": [
           "/"
         ],
-        "target": "/gisreportsonline/:path{.*}"
+        "target": "/gisreportsonline/:path{.+}?"
       }
     ]
   },

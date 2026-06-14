@@ -12,8 +12,8 @@ export type RoutePath =
   | `/12306/:date/:from/:to/:type?`
   | `/12306/zxdt/:id?`
   | `/12371/:category?`
-  | `/141jav/:type/:keyword{.*}?`
-  | `/141ppv/:type/:keyword{.*}?`
+  | `/141jav/:type/:keyword{.+}?`
+  | `/141ppv/:type/:keyword{.+}?`
   | `/163/ds/:id`
   | `/163/dy/:id`
   | `/163/dy2/:id`
@@ -196,7 +196,7 @@ export type RoutePath =
   | `/apiseven/blog`
   | `/apkpure/versions/:pkg/:region?`
   | `/apnews/mobile/:path{.+}?`
-  | `/apnews/nav/:nav{.*}?`
+  | `/apnews/nav/:nav{.+}?`
   | `/apnews/rss/:category?`
   | `/apnews/sitemap/:route`
   | `/apnews/topics/:topic?`
@@ -261,7 +261,7 @@ export type RoutePath =
   | `/bandcamp/tag/:tag?`
   | `/bandcamp/weekly`
   | `/bandisoft/history/:id?/:language?`
-  | `/bangumi.moe/*`
+  | `/bangumi.moe/:tags{.+}?`
   | `/bangumi.online/`
   | `/bangumi.tv/:type/followrank`
   | `/bangumi.tv/calendar/today`
@@ -1121,7 +1121,7 @@ export type RoutePath =
   | `/gf-cn/news/:category?`
   | `/gigazine/en`
   | `/gihyo/list/group/:id`
-  | `/gisreportsonline/:path{.*}`
+  | `/gisreportsonline/:path{.+}?`
   | `/gitcode/commits/:owner/:repo/:branch?`
   | `/gitee/commits/:owner/:repo`
   | `/gitee/events/:owner/:repo`

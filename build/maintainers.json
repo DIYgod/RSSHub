@@ -90,11 +90,11 @@
   "/10jqka/realtimenews/:tag?": [
     "nczitzk"
   ],
-  "/141jav/:type/:keyword{.*}?": [
+  "/141jav/:type/:keyword{.+}?": [
     "cgkings",
     "nczitzk"
   ],
-  "/141ppv/:type/:keyword{.*}?": [
+  "/141ppv/:type/:keyword{.+}?": [
     "cgkings",
     "nczitzk"
   ],
@@ -599,7 +599,7 @@
     "mjysci",
     "TonyRL"
   ],
-  "/apnews/nav/:nav{.*}?": [
+  "/apnews/nav/:nav{.+}?": [
     "zoenglinghou",
     "mjysci",
     "TonyRL"
@@ -789,7 +789,7 @@
   "/bandisoft/history/:id?/:language?": [
     "nczitzk"
   ],
-  "/bangumi.moe/*": [
+  "/bangumi.moe/:tags{.+}?": [
     "nczitzk"
   ],
   "/bangumi.online/": [
@@ -3459,7 +3459,7 @@
   "/gihyo/list/group/:id": [
     "masakichi"
   ],
-  "/gisreportsonline/:path{.*}": [
+  "/gisreportsonline/:path{.+}?": [
     "dzx-dzx"
   ],
   "/gitcode/commits/:owner/:repo/:branch?": [
