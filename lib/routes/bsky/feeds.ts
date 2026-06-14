@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/profile/:handle/feed/:space/:routeParams?',
     categories: ['social-media'],
     view: ViewType.SocialMedia,
-    example: '/bsky.app/profile/jaz.bsky.social/feed/cv:cat',
+    example: '/bsky/profile/jaz.bsky.social/feed/cv:cat',
     parameters: {
         handle: 'User handle, can be found in URL',
         space: 'Space ID, can be found in URL',

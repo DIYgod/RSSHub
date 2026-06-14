@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:path{.+}?',
     categories: ['new-media'],
-    example: '/gis/c/security-challenges/',
+    example: '/gisreportsonline/gis/c/security-challenges/',
     parameters: { path: '包含"Reports"页面下的路径' },
     name: '报告',
     maintainers: ['dzx-dzx'],

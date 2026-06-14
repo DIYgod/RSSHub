@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/news',
     categories: ['anime'],
-    example: '/news',
+    example: '/acgvinyl/news',
     features: {
         requireConfig: false,
         requirePuppeteer: false,

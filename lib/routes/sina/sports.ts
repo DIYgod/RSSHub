@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/sports/:type?',
     name: '新浪体育',
     categories: ['sport'],
-    example: '/sports',
+    example: '/sina/sports',
     parameters: { type: '类别' },
     maintainers: ['nczitzk'],
     handler,

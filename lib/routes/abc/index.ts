@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:category{.+}?',
-    example: '/wa',
+    example: '/abc/wa',
     radar: [
         {
             source: ['abc.net.au/:category*'],

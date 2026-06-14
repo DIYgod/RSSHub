@@ -21,7 +21,7 @@ const sortMap = {
 };
 
 export const route: Route = {
-    path: ['/pd/guild/:id/:sub?/:sort?'],
+    path: '/pd/guild/:id/:sub?/:sort?',
     categories: ['bbs'],
     example: '/qq/pd/guild/qrp4pkq01d/650967831/created',
     parameters: {

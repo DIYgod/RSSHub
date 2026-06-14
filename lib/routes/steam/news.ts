@@ -14,7 +14,7 @@ export const route: Route = {
     url: 'steamcommunity.com',
     maintainers: ['keocheung'],
     handler,
-    example: '/news/958260/english',
+    example: '/steam/news/958260/english',
     parameters: {
         appid: 'Game App ID, all digits, can be found in the URL',
         language: 'Language, english by default, see below for more languages',

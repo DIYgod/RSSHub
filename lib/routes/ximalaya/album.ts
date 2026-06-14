@@ -50,7 +50,7 @@ function judgeTrue(str, ...validStrings) {
 }
 
 export const route: Route = {
-    path: ['/:type/:id/:all/:shownote?'],
+    path: '/:type/:id/:all/:shownote?',
     categories: ['multimedia'],
     example: '/ximalaya/album/299146',
     parameters: {
