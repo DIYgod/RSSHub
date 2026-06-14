@@ -18,8 +18,8 @@ export const route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.zjmuseum.com.cn/cn/#/Exhibition/TemporaryExhibition'],
-            target: '/exhibition',
+            source: ['www.zjmuseum.com.cn/cn/'],
+            target: '/exhibition/:type?',
         },
     ],
     handler: async (ctx) => {
