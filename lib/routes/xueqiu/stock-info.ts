@@ -48,14 +48,19 @@ async function handler(ctx) {
     const source = typename[type];
 
     const link = `https://xueqiu.com/S/${id}`;
+    const cookie = await parseToken(link);
+
     const res1 = await got({
         method: 'get',
         url: link,
+        headers: {
+            Cookie: cookie,
+            Referer: 'https://xueqiu.com/',
+        },
     });
 
-    const token = await parseToken(link);
-    const $ = load(res1.data); // 使用 cheerio 加载返回的 HTML
-    const stock_name = $('.stock-name').text().split('(', 1)[0];
+    const $ = load(res1.data);
+    const stock_name = $('.stock-name').text().split('(', 1)[0] || id;
 
     let query_url = 'https://xueqiu.com/statuses';
     query_url += source === 'all' ? '/search.json' : '/stock_timeline.json';
@@ -74,7 +79,7 @@ async function handler(ctx) {
             hl: '0',
         }),
         headers: {
-            Cookie: token,
+            Cookie: cookie,
             Referer: link,
         },
     });
