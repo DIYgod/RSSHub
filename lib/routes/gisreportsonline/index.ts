@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:path{.*}',
+    path: '/:path{.+}?',
     categories: ['new-media'],
     example: '/gis/c/security-challenges/',
     parameters: { path: '包含"Reports"页面下的路径' },
@@ -22,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://www.gisreportsonline.com';
-    const currentUrl = `${rootUrl}/${ctx.req.param('path')}`;
+    const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? ''}`;
     const response = await ofetch(currentUrl);
 
     const $ = load(response);

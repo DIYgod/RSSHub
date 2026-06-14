@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:type/:keyword{.*}?',
+    path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
     name: '通用',
     maintainers: ['cgkings', 'nczitzk'],
