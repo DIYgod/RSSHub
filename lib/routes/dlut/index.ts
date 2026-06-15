@@ -58,25 +58,21 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     switch (site) {
-        case 'panjin': {
+        case 'panjin':
             items = $('a.news').slice(0, -4);
-
             break;
-        }
-        case 'fldpj': {
+
+        case 'fldpj':
             items = $('li[id^="line_u9"]').find('a');
-
             break;
-        }
-        case 'ss': {
+
+        case 'ss':
             items = $('.list04 .item a');
-
             break;
-        }
-        default: {
+
+        default:
             $('.Next, .rjxw_left, .pb_sys_common').remove();
             items = $('.txt, .itemlist, .wall, .list, .list01, .ny_list, .rjxw_right, .rj_yjs_con, .c_hzjl_list1, .winstyle67894, .winstyle80936, .winstyle50738, #lili').find('a');
-        }
     }
 
     items = items
