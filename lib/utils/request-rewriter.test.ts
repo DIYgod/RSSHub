@@ -1,3 +1,4 @@
+// oxlint-disable unicorn-js/no-global-object-property-assignment
 import http from 'node:http';
 import https from 'node:https';
 

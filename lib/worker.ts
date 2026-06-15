@@ -1,3 +1,4 @@
+// oxlint-disable unicorn-js/no-global-object-property-assignment
 // Cloudflare Worker entry point
 // This file contains Worker-specific initialization and polyfills
 
