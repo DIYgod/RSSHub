@@ -62,15 +62,7 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
 };
 
 function sortBy(items: any[], key: string) {
-    return items.toSorted((a, b) => {
-        if (a[key] < b[key]) {
-            return -1;
-        }
-        if (a[key] > b[key]) {
-            return 1;
-        }
-        return 0;
-    });
+    return items.toSorted((a, b) => a[key].localeCompare(b[key]));
 }
 
 function uniqBy(items: any[], key: string) {
