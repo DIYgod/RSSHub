@@ -18,7 +18,6 @@
         "@stylistic/eslint-plugin",
         "eslint-plugin-simple-import-sort",
         "oxlint-plugin-eslint",
-        "./eslint-plugins/no-then.js",
         "./eslint-plugins/nsfw-flag.js"
     ],
     "rules": {
@@ -716,9 +715,6 @@
             }
         ],
         // #endregion
-
-        // github
-        "github/no-then": "warn",
 
         // rsshub
         "@rsshub/nsfw-flag/add-nsfw-flag": "error"
