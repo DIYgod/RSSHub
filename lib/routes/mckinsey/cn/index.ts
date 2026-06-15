@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: {
         category: {
             description: '分类，留空为 `最新洞见`',
-            options: Object.entries(categories).map(([, label]) => ({ value: label.slug, label: label.name })),
+            options: Object.values(categories).map((label) => ({ value: label.slug, label: label.name })),
             default: '最新洞见',
         },
     },

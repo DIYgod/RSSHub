@@ -44,8 +44,8 @@ async function handler() {
             queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll("'", '"').replaceAll('|', '"')),
         }))[0];
 
-    const dataUrl = `${dataRequestUrl.url}?${Object.keys(dataRequestUrl.queryData)
-        .map((key) => `${key}=${dataRequestUrl.queryData[key]}`)
+    const dataUrl = `${dataRequestUrl.url}?${Object.entries(dataRequestUrl.queryData)
+        .map(([key, value]) => `${key}=${value}`)
         .join('&')}`;
     const response = await got({
         method: 'get',

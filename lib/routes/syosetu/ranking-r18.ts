@@ -20,7 +20,7 @@ import { NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, Rankin
 
 const getParameters = () => {
     // Generate options for sub parameter
-    const subOptions = Object.entries(SyosetuSub).map(([, value]) => ({
+    const subOptions = Object.values(SyosetuSub).map((value) => ({
         value,
         label: syosetuSubToJapanese[value],
     }));

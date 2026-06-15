@@ -36,8 +36,8 @@ export const handler = async (ctx) => {
 
         const categories = category.split(/\//);
         for (const c of categories) {
-            for (const key of Object.keys(filters)) {
-                if (filters[key].includes(c)) {
+            for (const [key, value] of Object.entries(filters)) {
+                if (value.includes(c)) {
                     filterForm[key] = c;
                 }
             }

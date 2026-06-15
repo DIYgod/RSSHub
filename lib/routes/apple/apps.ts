@@ -129,8 +129,7 @@ async function handler(ctx) {
         image = platformAttribute.iconArtwork?.url?.replace('{w}x{h}{c}.{f}', '3000x3000bb.webp');
     } else {
         title = appName;
-        for (const pid of Object.keys(platformAttributes)) {
-            const platformAttribute = platformAttributes[pid];
+        for (const [pid, platformAttribute] of Object.entries(platformAttributes)) {
             items = [
                 ...items,
                 ...platformAttribute.versionHistory.map((v) => ({

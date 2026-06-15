@@ -86,8 +86,8 @@ const decrypt = (txt: string, articleid: string, chapterid: string, decryptionMa
     const lineMap = {};
     const articleKey = Number(articleid) + 3_061_711;
     const chapterKey = Number(chapterid) + 3_421_001;
-    for (const key of Object.keys(decryptionMap)) {
-        lineMap[(Number(key) ^ chapterKey) - articleKey] = (Number(decryptionMap[key]) ^ chapterKey) - articleKey;
+    for (const [key, value] of Object.entries(decryptionMap)) {
+        lineMap[(Number(key) ^ chapterKey) - articleKey] = (Number(value) ^ chapterKey) - articleKey;
     }
 
     return txt

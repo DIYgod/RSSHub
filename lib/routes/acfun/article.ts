@@ -45,7 +45,7 @@ export const route: Route = {
     parameters: {
         categoryId: {
             description: '分区 ID',
-            options: Object.keys(categoryMap).map((id) => ({ value: id, label: categoryMap[id].title })),
+            options: Object.entries(categoryMap).map(([id, value]) => ({ value: id, label: value.title })),
         },
         sortType: {
             description: '排序',
