@@ -98,7 +98,7 @@ export default async function identify({ github, context, core }, body, number, 
         if (issue.state === 'closed') {
             await updatePrState('open');
         }
-        if (issue.labels.some((e) => e.name === criticalFailure) || issue.labels.some((e) => e.name === routeTestFailed)) {
+        if (issue.labels.some((e) => e.name === criticalFailure || e.name === routeTestFailed)) {
             await removeLabel(criticalFailure);
             await removeLabel(routeTestFailed);
         }
