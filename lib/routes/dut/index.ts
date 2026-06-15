@@ -12,9 +12,25 @@ import shortcuts from './shortcuts';
 
 export const route: Route = {
     path: ['/*/*', '/:0?'],
-    name: 'Unknown',
+    name: '站点栏目',
     maintainers: [],
     handler,
+    example: '/dut/ss/bkstz',
+    parameters: {
+        0: '站点，如 `news`、`teach`、`ss`，默认为 `news`',
+        1: '栏目路径或快捷名称，如 `bkstz`，默认为对应站点的默认栏目',
+    },
+    description: '大连理工大学各站点栏目，支持直接填写栏目路径或使用内置快捷名称。',
+    categories: ['university'],
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
 };
 
 async function handler(ctx) {
@@ -41,6 +57,8 @@ async function handler(ctx) {
         items = $('a.news').slice(0, -4);
     } else if (site === 'fldpj') {
         items = $('li[id^="line_u9"]').find('a');
+    } else if (site === 'ss') {
+        items = $('.list04 .item a');
     } else {
         $('.Next, .rjxw_left, .pb_sys_common').remove();
         items = $('.txt, .itemlist, .wall, .list, .list01, .ny_list, .rjxw_right, .rj_yjs_con, .c_hzjl_list1, .winstyle67894, .winstyle80936, .winstyle50738, #lili').find('a');
@@ -67,7 +85,7 @@ async function handler(ctx) {
                     dateMatch = item.parent().parent().text().match(dateRegex);
                 }
 
-                result.title = item.text().trim() === '' ? item.next().text() : item.text();
+                result.title = item.attr('title') ?? (item.find('h2').text() || item.text());
                 if (dateMatch) {
                     result.pubDate = parseDate(dateMatch[1].replaceAll(/年|月/g, '-'));
                 }
