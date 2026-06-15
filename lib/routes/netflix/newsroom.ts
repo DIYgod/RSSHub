@@ -161,7 +161,8 @@ const render = (node) => {
             const title = Object.values(node.data?.title)[0] || '';
             if (contentType.startsWith('image/')) {
                 return `<img src="${url}" alt="${title}">`;
-            } else if (contentType.startsWith('video/')) {
+            }
+            if (contentType.startsWith('video/')) {
                 return renderVideo({ url, contentType });
             }
             return '';

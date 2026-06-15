@@ -139,12 +139,11 @@ export default {
             }
 
             return v as T;
-        } else {
-            const value = await getValueFunc();
-            cacheModule.set(key, JSON.stringify(value), maxAge);
-
-            return value;
         }
+        const value = await getValueFunc();
+        cacheModule.set(key, JSON.stringify(value), maxAge);
+
+        return value;
     },
     globalCache,
 };

@@ -50,11 +50,14 @@ function getDiscountDesc(discount) {
 function getLowestDesc(priceInfo, isSuperLowest = false) {
     if (!('is_lowest' in priceInfo) || priceInfo.is_lowest === 0) {
         return '';
-    } else if (isSuperLowest) {
+    }
+    if (isSuperLowest) {
         return '[超史低]';
-    } else if (priceInfo.is_lowest && priceInfo.is_lowest === 1 && priceInfo.new_lowest && priceInfo.new_lowest === 1) {
+    }
+    if (priceInfo.is_lowest && priceInfo.is_lowest === 1 && priceInfo.new_lowest && priceInfo.new_lowest === 1) {
         return '[新史低]';
-    } else if (priceInfo.is_lowest && priceInfo.is_lowest === 1) {
+    }
+    if (priceInfo.is_lowest && priceInfo.is_lowest === 1) {
         return '[史低]';
     }
 }
@@ -65,9 +68,8 @@ function getHeyboxPriceDesc(heyboxPriceInfo) {
         discountPrice = discountPrice - heyboxPriceInfo.coupon_info.max_reduce;
         const formatPrice = Number.isInteger(discountPrice) ? discountPrice.toFixed(0) : discountPrice.toFixed(2);
         return `| 券后价: ${formatPrice} [${heyboxPriceInfo.coupon_info.coupon_desc}]`;
-    } else {
-        return '';
     }
+    return '';
 }
 
 async function handler(ctx) {

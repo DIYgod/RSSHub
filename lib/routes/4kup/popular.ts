@@ -40,7 +40,8 @@ function getPeriodConfig(period) {
             range: 'last7days',
             title: `${SUB_NAME_PREFIX} - Top views in 7 days`,
         };
-    } else if (period === '30') {
+    }
+    if (period === '30') {
         return {
             url: `${SUB_URL}hot-of-month/`,
             range: 'last30days',

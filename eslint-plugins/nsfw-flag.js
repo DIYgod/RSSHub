@@ -188,10 +188,9 @@ export default eslintCompatPlugin({
                                             if (featuresObject.properties.length > 0) {
                                                 const lastFeatureProp = featuresObject.properties.at(-1);
                                                 return fixer.insertTextAfter(lastFeatureProp, ',\n        nsfw: true');
-                                            } else {
-                                                // features 是空对象
-                                                return fixer.replaceTextRange([featuresObject.range[0] + 1, featuresObject.range[1] - 1], '\n        nsfw: true,\n    ');
                                             }
+                                            // features 是空对象
+                                            return fixer.replaceTextRange([featuresObject.range[0] + 1, featuresObject.range[1] - 1], '\n        nsfw: true,\n    ');
                                         },
                                     });
                                 } else if (nsfwProperty.value && (nsfwProperty.value.type !== 'Literal' || nsfwProperty.value.value !== true)) {

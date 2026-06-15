@@ -41,9 +41,8 @@ export default {
                 await Promise.all([kvNamespace.put(key, value, { expirationTtl: ttl }), cacheTtl ? kvNamespace.put(cacheTtlKey, cacheTtl, { expirationTtl: ttl }) : Promise.resolve()]);
             }
             return value || '';
-        } else {
-            return null;
         }
+        return null;
     },
     has: async (key: string) => {
         if (key && status.available && kvNamespace) {

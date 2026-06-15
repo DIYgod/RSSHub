@@ -49,11 +49,10 @@ export const route: Route = {
                         });
                         item.description = $read.html()?.trim();
                         return item;
-                    } else {
-                        // file to download
-                        item.description = '点击认证后访问内容';
-                        return item;
                     }
+                    // file to download
+                    item.description = '点击认证后访问内容';
+                    return item;
                 })
             )
         );

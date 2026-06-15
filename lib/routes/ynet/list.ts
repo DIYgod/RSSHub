@@ -28,9 +28,8 @@ async function getFinalContentAndUrl(url: string, redirects: number = 0, maxRedi
         const newRedirects = redirects + 1;
 
         return getFinalContentAndUrl(nextUrl, newRedirects, maxRedirects);
-    } else {
-        return [responseContent, url];
     }
+    return [responseContent, url];
 }
 
 export const handler = async (ctx: Context): Promise<Data> => {

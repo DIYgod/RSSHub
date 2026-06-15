@@ -13,9 +13,8 @@ const getTrueHour = (rank_type, rank_id, hour) => {
     const flag = ['pinlei', 'dianshang'].includes(rank_type) && [...rank_two_hour, ...rank_four_hour].includes(rank_id) && hour === '3';
     if (flag) {
         return rank_two_hour.includes(rank_id) ? '2' : '4';
-    } else {
-        return hour;
     }
+    return hour;
 };
 
 const typeOptions = [

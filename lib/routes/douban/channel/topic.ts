@@ -75,9 +75,8 @@ async function handler(ctx) {
                         pubDate: new Date(item.create_time),
                         link: item.url,
                     };
-                } else {
-                    return null;
                 }
+                return null;
             })
             .filter(Boolean),
         allowEmpty: true,

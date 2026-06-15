@@ -296,9 +296,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     const encodedlink = encodeURIComponent(item.link);
                     item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.req.query('tgiv')}`;
                     return item;
-                } else {
-                    return item;
                 }
+                return item;
             });
         }
 

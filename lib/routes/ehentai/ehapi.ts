@@ -193,13 +193,12 @@ async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb
 }
 
 async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false) {
-    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
     if (page) {
         return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb);
-    } else {
-        const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
-        return updateBittorrent_url(cache, items);
     }
+    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
+    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
+    return updateBittorrent_url(cache, items);
 }
 
 function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {

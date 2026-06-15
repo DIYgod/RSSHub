@@ -5,7 +5,6 @@ import utils from './utils';
 
 const getLinkAndTitle = (type, period) => {
     const baseURL = 'https://api.coolapk.com/v6/page/dataList?url=';
-    let link;
     const res = {};
     const types = {
         jrrm: {
@@ -32,6 +31,12 @@ const getLinkAndTitle = (type, period) => {
         },
     };
 
+    if (type === 'jrrm') {
+        res.link = types.jrrm.url;
+        res.title = types.jrrm.title;
+        return res;
+    }
+    let link;
     const periods = {
         daily: {
             description: '日榜',
@@ -42,12 +47,7 @@ const getLinkAndTitle = (type, period) => {
             statType: '7days',
         },
     };
-
-    if (type === 'jrrm') {
-        res.link = types.jrrm.url;
-        res.title = types.jrrm.title;
-        return res;
-    } else if (type === 'ktb') {
+    if (type === 'ktb') {
         const trans = {
             daily: {
                 description: '周榜',

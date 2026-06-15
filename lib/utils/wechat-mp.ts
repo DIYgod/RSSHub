@@ -100,7 +100,8 @@ const forEachScript = ($: CheerioAPI | string, callback: (script) => void, defau
         } catch (error) {
             if (error instanceof LoopReturn) {
                 return error.to_return;
-            } else if (error instanceof LoopContinue) {
+            }
+            if (error instanceof LoopContinue) {
                 continue;
             }
             throw error;

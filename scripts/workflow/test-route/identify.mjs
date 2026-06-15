@@ -109,9 +109,8 @@ export default async function identify({ github, context, core }, body, number, 
         await removeLabel();
         await addLabels(['auto: ready to merge']);
         return;
-    } else {
-        core.debug('PR created by ' + sender);
     }
+    core.debug('PR created by ' + sender);
 
     const hasWriteAccess = await github.rest.repos
         .getCollaboratorPermissionLevel({

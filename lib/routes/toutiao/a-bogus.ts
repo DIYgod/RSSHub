@@ -45,33 +45,33 @@ function rotateLeft32(e, r) {
 function T(j) {
     if (0 <= j && j < 16) {
         return 0x79_cc_45_19;
-    } else if (16 <= j && j < 64) {
-        return 0x7a_87_9d_8a;
-    } else {
-        logger.error('invalid j for constant Tj');
     }
+    if (16 <= j && j < 64) {
+        return 0x7a_87_9d_8a;
+    }
+    logger.error('invalid j for constant Tj');
 }
 
 function FF(j, x, y, z) {
     if (0 <= j && j < 16) {
         return (x ^ y ^ z) >>> 0;
-    } else if (16 <= j && j < 64) {
-        return ((x & y) | (x & z) | (y & z)) >>> 0;
-    } else {
-        logger.error('invalid j for bool function FF');
-        return 0;
     }
+    if (16 <= j && j < 64) {
+        return ((x & y) | (x & z) | (y & z)) >>> 0;
+    }
+    logger.error('invalid j for bool function FF');
+    return 0;
 }
 
 function GG(j, x, y, z) {
     if (0 <= j && j < 16) {
         return (x ^ y ^ z) >>> 0;
-    } else if (16 <= j && j < 64) {
-        return ((x & y) | (~x & z)) >>> 0;
-    } else {
-        logger.error('invalid j for bool function GG');
-        return 0;
     }
+    if (16 <= j && j < 64) {
+        return ((x & y) | (~x & z)) >>> 0;
+    }
+    logger.error('invalid j for bool function GG');
+    return 0;
 }
 
 function reset(this: any) {
@@ -168,34 +168,33 @@ function _compress(this: any, t) {
     if (t < 64) {
         logger.error('compress error: not enough data');
         return;
-    } else {
-        const f = expand(t);
-        const i = this.reg.slice(0);
-        for (let c = 0; c < 64; c++) {
-            let o = rotateLeft32(i[0], 12) + i[4] + rotateLeft32(T(c), c);
-            o = (0xff_ff_ff_ff & o) >>> 0;
-            o = rotateLeft32(o, 7);
+    }
+    const f = expand(t);
+    const i = this.reg.slice(0);
+    for (let c = 0; c < 64; c++) {
+        let o = rotateLeft32(i[0], 12) + i[4] + rotateLeft32(T(c), c);
+        o = (0xff_ff_ff_ff & o) >>> 0;
+        o = rotateLeft32(o, 7);
 
-            const s = (o ^ rotateLeft32(i[0], 12)) >>> 0;
-            let u = FF(c, i[0], i[1], i[2]);
-            u = u + i[3] + s + f[c + 68];
-            u = (0xff_ff_ff_ff & u) >>> 0;
+        const s = (o ^ rotateLeft32(i[0], 12)) >>> 0;
+        let u = FF(c, i[0], i[1], i[2]);
+        u = u + i[3] + s + f[c + 68];
+        u = (0xff_ff_ff_ff & u) >>> 0;
 
-            let b = GG(c, i[4], i[5], i[6]);
-            b = b + i[7] + o + f[c];
-            b = (0xff_ff_ff_ff & b) >>> 0;
-            i[3] = i[2];
-            i[2] = rotateLeft32(i[1], 9);
-            i[1] = i[0];
-            i[0] = u;
-            i[7] = i[6];
-            i[6] = rotateLeft32(i[5], 19);
-            i[5] = i[4];
-            i[4] = (b ^ rotateLeft32(b, 9) ^ rotateLeft32(b, 17)) >>> 0;
-        }
-        for (let l = 0; l < 8; l++) {
-            this.reg[l] = (this.reg[l] ^ i[l]) >>> 0;
-        }
+        let b = GG(c, i[4], i[5], i[6]);
+        b = b + i[7] + o + f[c];
+        b = (0xff_ff_ff_ff & b) >>> 0;
+        i[3] = i[2];
+        i[2] = rotateLeft32(i[1], 9);
+        i[1] = i[0];
+        i[0] = u;
+        i[7] = i[6];
+        i[6] = rotateLeft32(i[5], 19);
+        i[5] = i[4];
+        i[4] = (b ^ rotateLeft32(b, 9) ^ rotateLeft32(b, 17)) >>> 0;
+    }
+    for (let l = 0; l < 8; l++) {
+        this.reg[l] = (this.reg[l] ^ i[l]) >>> 0;
     }
 }
 

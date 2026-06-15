@@ -91,15 +91,14 @@ async function handler(ctx) {
                     };
                     return single;
                 });
-            } else {
-                const single = {
-                    title: titleList[index],
-                    link: itemUrl,
-                    description: '该通知为文件，请点击原文链接↑下载',
-                    pubDate: parseDate(dateList[index]),
-                };
-                return single;
             }
+            const single = {
+                title: titleList[index],
+                link: itemUrl,
+                description: '该通知为文件，请点击原文链接↑下载',
+                pubDate: parseDate(dateList[index]),
+            };
+            return single;
         })
     );
     let info = '通知公告';

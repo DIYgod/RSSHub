@@ -93,9 +93,6 @@ async function handler(ctx) {
 
     const bookTitle = $('.book-title > h1').text();
     const bookIntro = $('#intro-all').text();
-    const coverImgSrc = $('.book-cover img').attr('src');
-    // 对最新更新的章节增加了pubDate
-    const reg = /最近[于於].+更新至/;
     // 处理已下架的漫画
     if ($('.status > span').text().indexOf('已下架') > 0) {
         return {
@@ -104,37 +101,39 @@ async function handler(ctx) {
             description: bookIntro,
             item: [{ link: `${baseUrl}/comic/${id}/`, title: bookTitle, description: '已下架' }],
         };
-    } else {
-        const pub_date_str = $('.status > span')
-            .text()
-            .match(reg)[0]
-            .replace(/最近[于於] \[/, '')
-            .replace('] 更新至', '');
-        // 为了能在闭包内访问到这个日期而不是每次需要处理这个最近更新日期
-        $.pubDate = parseDate(pub_date_str);
-        $.newChapterCnt = 0;
-        const chapters = getChapters($);
-        const genResult = (chapter) => ({
-            link: chapter.link,
-            title: chapter.title,
-            pubDate: chapter.pub_date,
-            category: chapter.category,
-            description: `
+    }
+    const coverImgSrc = $('.book-cover img').attr('src');
+    // 对最新更新的章节增加了pubDate
+    const reg = /最近[于於].+更新至/;
+    const pub_date_str = $('.status > span')
+        .text()
+        .match(reg)[0]
+        .replace(/最近[于於] \[/, '')
+        .replace('] 更新至', '');
+    // 为了能在闭包内访问到这个日期而不是每次需要处理这个最近更新日期
+    $.pubDate = parseDate(pub_date_str);
+    $.newChapterCnt = 0;
+    const chapters = getChapters($);
+    const genResult = (chapter) => ({
+        link: chapter.link,
+        title: chapter.title,
+        pubDate: chapter.pub_date,
+        category: chapter.category,
+        description: `
             <h1>${chapter.num}</h1>
             <img src='${coverImgSrc}' />
         `.trim(),
-        });
-        const items = chapters.map((element) => genResult(element));
-        let itemsLen = items.length;
-        if (chapterCnt > 0) {
-            itemsLen = Math.max(chapterCnt, $.newChapterCnt);
-        }
-
-        return {
-            title: `看漫画 - ${bookTitle}`,
-            link: `${baseUrl}/comic/${id}/`,
-            description: bookIntro,
-            item: items.slice(0, itemsLen),
-        };
+    });
+    const items = chapters.map((element) => genResult(element));
+    let itemsLen = items.length;
+    if (chapterCnt > 0) {
+        itemsLen = Math.max(chapterCnt, $.newChapterCnt);
     }
+
+    return {
+        title: `看漫画 - ${bookTitle}`,
+        link: `${baseUrl}/comic/${id}/`,
+        description: bookIntro,
+        item: items.slice(0, itemsLen),
+    };
 }

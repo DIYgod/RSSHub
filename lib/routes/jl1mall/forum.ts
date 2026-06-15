@@ -24,7 +24,8 @@ const findMainIds = (data: readonly any[], searchKey: string): MainIdsResult => 
                         racer2: grandParentMainId,
                         racer3: item.mainId as string,
                     };
-                } else if (parentMainId !== undefined) {
+                }
+                if (parentMainId !== undefined) {
                     return {
                         name: item.name as string,
                         racer2: item.mainId as string,

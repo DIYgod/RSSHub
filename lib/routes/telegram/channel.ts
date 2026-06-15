@@ -355,38 +355,37 @@ async function handler(ctx) {
                     const replyObj = item.find('.tgme_widget_message_reply');
                     if (replyObj.length === 0) {
                         return '';
-                    } else {
-                        const replyAuthorObj = replyObj.find('.tgme_widget_message_author_name');
-                        const replyAuthor = replyAuthorObj.length ? replyAuthorObj.text() : '';
-                        const viaBotObj = replyObj.find('.tgme_widget_message_via_bot');
-                        const viaBotText = viaBotObj.length ? ` via <b>${viaBotObj.text()}</b>` : '';
-                        const replyLinkHref = replyObj.attr('href');
-                        const replyLink = replyLinkHref.length ? replyLinkHref : '';
-                        const replyMetaTextObj = replyObj.find('.tgme_widget_message_metatext');
-                        const replyMetaText = replyMetaTextObj.length ? `<p><small>${replyMetaTextObj.html()}</small></p>` : '';
-                        const replyTextObj = replyObj.find('.tgme_widget_message_text');
-                        const replyText = replyTextObj.length ? `<p>${replyTextObj.html()}</p>` : '';
+                    }
+                    const replyAuthorObj = replyObj.find('.tgme_widget_message_author_name');
+                    const replyAuthor = replyAuthorObj.length ? replyAuthorObj.text() : '';
+                    const viaBotObj = replyObj.find('.tgme_widget_message_via_bot');
+                    const viaBotText = viaBotObj.length ? ` via <b>${viaBotObj.text()}</b>` : '';
+                    const replyLinkHref = replyObj.attr('href');
+                    const replyLink = replyLinkHref.length ? replyLinkHref : '';
+                    const replyMetaTextObj = replyObj.find('.tgme_widget_message_metatext');
+                    const replyMetaText = replyMetaTextObj.length ? `<p><small>${replyMetaTextObj.html()}</small></p>` : '';
+                    const replyTextObj = replyObj.find('.tgme_widget_message_text');
+                    const replyText = replyTextObj.length ? `<p>${replyTextObj.html()}</p>` : '';
 
-                        extra = {
-                            links: [
-                                {
-                                    type: 'reply',
-                                    url: replyLink,
-                                },
-                            ],
-                        };
-                        return replyLink === ''
-                            ? `<div class="rsshub-quote"><blockquote>
+                    extra = {
+                        links: [
+                            {
+                                type: 'reply',
+                                url: replyLink,
+                            },
+                        ],
+                    };
+                    return replyLink === ''
+                        ? `<div class="rsshub-quote"><blockquote>
                                     <p><b>${replyAuthor}</b>${viaBotText}:</p>
                                     ${replyMetaText}
                                     ${replyText}
                                 </blockquote></div>`
-                            : `<div class="rsshub-quote"><blockquote>
+                        : `<div class="rsshub-quote"><blockquote>
                                     <p><a href='${replyLink}'><b>${replyAuthor}</b>${viaBotText}:</a></p>
                                     ${replyMetaText}
                                     ${replyText}
                                 </blockquote></div>`;
-                    }
                 };
 
                 /* via bot */
@@ -396,9 +395,8 @@ async function handler(ctx) {
                         const userLink = viaBotObj.attr('href');
                         const userHtml = userLink ? `<a href="${userLink}">${viaBotObj.text()}</a>` : viaBotObj.text();
                         return `<p>via <b>${userHtml}</b></p>`;
-                    } else {
-                        return '';
                     }
+                    return '';
                 };
 
                 /* images and videos */
@@ -520,9 +518,8 @@ async function handler(ctx) {
                         const mapBackgroundUrlSrc = mapBackgroundUrl && mapBackgroundUrl[1];
                         const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0];
                         return locationLink ? `<a href="${locationLink}">${mapImgHtml}</a>` : mapImgHtml;
-                    } else {
-                        return '';
                     }
+                    return '';
                 };
 
                 /* voice */
@@ -552,9 +549,8 @@ async function handler(ctx) {
                             minute *= 60;
                         }
                         return second.toString();
-                    } else {
-                        return '';
                     }
+                    return '';
                 };
 
                 /* link preview */

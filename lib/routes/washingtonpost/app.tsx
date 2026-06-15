@@ -91,9 +91,8 @@ async function handler(ctx) {
                     if (error instanceof FetchError && error.statusCode === 415) {
                         // Interactive or podcast contents will return 415 Unsupported Media Type. Keep calm and carry on.
                         return item;
-                    } else {
-                        throw error;
                     }
+                    throw error;
                 }
                 item.title = response.data.title ?? item.title;
                 item.author =

@@ -271,7 +271,8 @@ const processLedeMedia = async (story_json) => {
             video: kind === 'video' && (await processVideo(story_json.ledeAttachment.bmmrId)),
         };
         return renderLedeMedia(media);
-    } else if (story_json.lede) {
+    }
+    if (story_json.lede) {
         const lede = story_json.lede;
         const image = {
             src: lede.url,
@@ -280,7 +281,8 @@ const processLedeMedia = async (story_json) => {
             credit: lede.credit?.replaceAll(capRegex, '') ?? '',
         };
         return renderImageFigure(image);
-    } else if (story_json.imageAttachments) {
+    }
+    if (story_json.imageAttachments) {
         const attachment = Object.values(story_json.imageAttachments)[0];
         if (attachment) {
             const image = {
@@ -292,7 +294,8 @@ const processLedeMedia = async (story_json) => {
             return renderImageFigure(image);
         }
         return '';
-    } else if (story_json.type === 'Lede') {
+    }
+    if (story_json.type === 'Lede') {
         const props = story_json.props;
 
         const media = {
@@ -409,13 +412,14 @@ const nodeRenderers = {
         const { attributes: attr, value: val } = node;
         if (attr?.emphasis && attr?.strong) {
             return `<strong><em>${val}</em></strong>`;
-        } else if (attr?.emphasis) {
-            return `<em>${val}</em>`;
-        } else if (attr?.strong) {
-            return `<strong>${val}</strong>`;
-        } else {
-            return val;
         }
+        if (attr?.emphasis) {
+            return `<em>${val}</em>`;
+        }
+        if (attr?.strong) {
+            return `<strong>${val}</strong>`;
+        }
+        return val;
     },
     'inline-newsletter': async (node, nextNode) => `<div>${await nextNode(node.content)}</div>`,
     'inline-recirc': async (node, nextNode) => `<div>${await nextNode(node.content)}</div>`,

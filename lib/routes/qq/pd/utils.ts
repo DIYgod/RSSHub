@@ -111,7 +111,8 @@ export function parseFeed(feed: Feed): string {
     if (feed.feed_type === 1) {
         // post: text and attachments
         return parsePost(feed, texts, images);
-    } else if (feed.feed_type === 2) {
+    }
+    if (feed.feed_type === 2) {
         // article: pattern info
         return parseArticle(feed, texts, images);
     }

@@ -58,9 +58,8 @@ async function handler(ctx) {
                     link,
                     pubDate: parseDate($(item).find('.fbsj').text()),
                 };
-            } else {
-                return null;
             }
+            return null;
         })
         .filter(Boolean);
 

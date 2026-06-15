@@ -38,7 +38,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const slug = ctx.req.param('slug');
-    const limit = 20;
 
     if (slug) {
         // Get specific series by slug
@@ -69,32 +68,32 @@ async function handler(ctx) {
             link: `https://polymarket.com/series/${series.slug}`,
             item: items,
         };
-    } else {
-        // List all series
-        const data = await ofetch<Series[]>(`${GAMMA_API}/series`, {
-            query: {
-                limit,
-                order: 'volume',
-                ascending: false,
-            },
-        });
+    }
+    // List all series
+    const limit = 20;
+    const data = await ofetch<Series[]>(`${GAMMA_API}/series`, {
+        query: {
+            limit,
+            order: 'volume',
+            ascending: false,
+        },
+    });
 
-        const items = data.map((series) => ({
-            title: series.title,
-            description: `
+    const items = data.map((series) => ({
+        title: series.title,
+        description: `
                 ${series.description ? `<p>${series.description}</p>` : ''}
                 <p><strong>Volume:</strong> $${Number(series.volume || 0).toLocaleString()}</p>
                 <p><strong>Liquidity:</strong> $${Number(series.liquidity || 0).toLocaleString()}</p>
                 ${series.image ? `<img src="${series.image}" alt="${series.title}" style="max-width: 100%;">` : ''}
             `,
-            link: `https://polymarket.com/series/${series.slug}`,
-            pubDate: series.createdAt ? parseDate(series.createdAt) : undefined,
-        }));
+        link: `https://polymarket.com/series/${series.slug}`,
+        pubDate: series.createdAt ? parseDate(series.createdAt) : undefined,
+    }));
 
-        return {
-            title: 'Polymarket - Series',
-            link: 'https://polymarket.com',
-            item: items,
-        };
-    }
+    return {
+        title: 'Polymarket - Series',
+        link: 'https://polymarket.com',
+        item: items,
+    };
 }

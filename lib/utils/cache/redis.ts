@@ -50,9 +50,8 @@ export default {
                 value = value + '';
             }
             return value || '';
-        } else {
-            return null;
         }
+        return null;
     },
     has: async (key: string) => {
         if (key && status.available && clients.redisClient) {

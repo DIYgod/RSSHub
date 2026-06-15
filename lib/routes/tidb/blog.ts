@@ -33,7 +33,8 @@ const parseParagraphChildren = (children: any[]): string =>
         .map((child: any) => {
             if (child.text !== undefined) {
                 return escapeHtml(child.text);
-            } else if (child.type === 'image') {
+            }
+            if (child.type === 'image') {
                 return parseImageNode(child);
             }
             return '';

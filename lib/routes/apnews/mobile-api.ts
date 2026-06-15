@@ -72,16 +72,16 @@ async function handler(ctx) {
                     description: e.description,
                     guid: e.id,
                 };
-            } else if (e.__typename === 'VideoPlaylistItem') {
+            }
+            if (e.__typename === 'VideoPlaylistItem') {
                 return {
                     title: e.title,
                     link: e.url,
                     description: e.description,
                     guid: e.contentId,
                 };
-            } else {
-                return;
             }
+            return;
         })
         .filter(Boolean)
         .toSorted((a, b) => b.pubDate - a.pubDate)

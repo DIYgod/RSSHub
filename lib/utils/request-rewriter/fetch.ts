@@ -114,11 +114,10 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
                         }
                         logger.debug(`Retrying request with proxy ${nextProxy.uri}: ${request.url}`);
                         return attemptRequest(attempt + 1);
-                    } else {
-                        logger.warn('No more proxies available, trying without proxy');
-                        delete options.dispatcher;
-                        return attemptRequest(attempt + 1);
                     }
+                    logger.warn('No more proxies available, trying without proxy');
+                    delete options.dispatcher;
+                    return attemptRequest(attempt + 1);
                 }
             }
             throw error;

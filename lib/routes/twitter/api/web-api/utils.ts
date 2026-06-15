@@ -62,16 +62,15 @@ const getAuth = async (retry: number) => {
             logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
             await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
             return await getAuth(retry - 1);
-        } else {
-            logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
-            await cache.set(`${lockPrefix}${token}`, '1', 20);
-            return {
-                token,
-                username: config.twitter.username?.[index],
-                password: config.twitter.password?.[index],
-                authenticationSecret: config.twitter.authenticationSecret?.[index],
-            };
         }
+        logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+        await cache.set(`${lockPrefix}${token}`, '1', 20);
+        return {
+            token,
+            username: config.twitter.username?.[index],
+            password: config.twitter.password?.[index],
+            authenticationSecret: config.twitter.authenticationSecret?.[index],
+        };
     }
 };
 

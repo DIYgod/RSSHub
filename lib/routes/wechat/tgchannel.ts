@@ -142,7 +142,8 @@ async function handler(ctx) {
             if (mpName && author !== mpName) {
                 // 指定了要筛选的公众号名，且该文章不是该公众号发的
                 return; // 丢弃
-            } else if (!mpName && author) {
+            }
+            if (!mpName && author) {
                 // 没有指定要筛选的公众号名，且匹配到了作者
                 title = author + ': ' + title; // 给标题里加上获取到的作者
             }

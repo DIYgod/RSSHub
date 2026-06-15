@@ -110,22 +110,22 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (ctx.get('redirect')) {
         return ctx.redirect(ctx.get('redirect'), 301);
-    } else if (ctx.get('no-content')) {
+    }
+    if (ctx.get('no-content')) {
         return ctx.body(null);
-    } else {
-        // retain .ums for backward compatibility
-        switch (outputType) {
-            case 'ums':
-            case 'rss3':
-                return ctx.json(rss3(result));
-            case 'json':
-                ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
-                return ctx.body(json(result));
-            case 'atom':
-                return ctx.render(<Atom data={result} />);
-            default:
-                return ctx.render(<RSS data={result} />);
-        }
+    }
+    // retain .ums for backward compatibility
+    switch (outputType) {
+        case 'ums':
+        case 'rss3':
+            return ctx.json(rss3(result));
+        case 'json':
+            ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
+            return ctx.body(json(result));
+        case 'atom':
+            return ctx.render(<Atom data={result} />);
+        default:
+            return ctx.render(<RSS data={result} />);
     }
 };
 

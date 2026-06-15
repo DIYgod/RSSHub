@@ -38,7 +38,8 @@ const createAgentForProxy = (uri: string, proxyObj: Record<string, any>): any =>
                 'proxy-authorization': proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
             },
         });
-    } else if (uri.startsWith('socks')) {
+    }
+    if (uri.startsWith('socks')) {
         return new SocksProxyAgent(uri);
     }
     return null;

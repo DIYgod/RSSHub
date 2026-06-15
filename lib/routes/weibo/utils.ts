@@ -65,9 +65,8 @@ const weiboUtils = {
                     if (renew?.message) {
                         logger.warn(coolingDownMessage);
                         throw renew;
-                    } else {
-                        throw new Error(coolingDownMessage);
                     }
+                    throw new Error(coolingDownMessage);
                 }
                 coolingDown = true;
                 setTimeout(() => {

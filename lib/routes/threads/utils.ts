@@ -82,7 +82,8 @@ const getUserId = (user: string): Promise<string> =>
             if (result) {
                 if (typeof result === 'string') {
                     return result;
-                } else if (typeof result === 'number') {
+                }
+                if (typeof result === 'number') {
                     return result.toString();
                 }
             }

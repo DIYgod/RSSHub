@@ -124,7 +124,8 @@ async function handler(ctx) {
                 if (tagStrategy === TAG_STRATEGY_ANY) {
                     // Filter if any of the tags match
                     return tag.some((t) => Object.values(itemTags).some((tagObj) => tagObj.name === t));
-                } else if (tagStrategy === TAG_STRATEGY_ALL) {
+                }
+                if (tagStrategy === TAG_STRATEGY_ALL) {
                     // Filter if all tags match
                     return tag.every((t) => Object.values(itemTags).some((tagObj) => tagObj.name === t));
                 }

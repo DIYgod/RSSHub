@@ -67,7 +67,8 @@ async function handler(ctx) {
                 // eg. https://www.kantarworldpanel.com/dwl.php?sn=publications&id=1632.
                 if (item.link === currentUrl || !item.link.startsWith(rootUrl)) {
                     return item;
-                } else if (/dwl\.php/.test(item.link)) {
+                }
+                if (/dwl\.php/.test(item.link)) {
                     item.enclosure_url = item.link;
                     item.enclosure_type = 'application/pdf';
 
