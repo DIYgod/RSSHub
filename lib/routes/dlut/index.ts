@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -10,15 +10,19 @@ import { isValidHost } from '@/utils/valid-host';
 import defaults from './defaults';
 import shortcuts from './shortcuts';
 
+type DlutItem = DataItem & {
+    link: string;
+};
+
 export const route: Route = {
-    path: ['/*/*', '/:0?'],
+    path: ['/:site/:category{.+}', '/:site?'],
     name: '站点栏目',
     maintainers: [],
     handler,
     example: '/dlut/ss/bkstz',
     parameters: {
-        0: '站点，如 `news`、`teach`、`ss`，默认为 `news`',
-        1: '栏目路径或快捷名称，如 `bkstz`，默认为对应站点的默认栏目',
+        site: '站点，如 `news`、`teach`、`ss`，默认为 `news`',
+        category: '栏目路径或快捷名称，如 `bkstz`，默认为对应站点的默认栏目',
     },
     description: '大连理工大学各站点栏目，支持直接填写栏目路径或使用内置快捷名称。',
     categories: ['university'],
@@ -34,13 +38,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const site = ctx.params[0] ?? 'news';
+    const { site = 'news' } = ctx.req.param();
     if (!isValidHost(site)) {
         throw new InvalidParameterError('Invalid site');
     }
 
     let items;
-    let category = ctx.params[1] ?? (Object.hasOwn(defaults, site) ? defaults[site] : '');
+    let { category = Object.hasOwn(defaults, site) ? defaults[site] : '' } = ctx.req.param();
     category = Object.hasOwn(shortcuts, site) && Object.hasOwn(shortcuts[site], category) ? shortcuts[site][category] : category;
 
     const rootUrl = `https://${site}.dlut.edu.cn`;
@@ -53,25 +57,42 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    if (site === 'panjin') {
-        items = $('a.news').slice(0, -4);
-    } else if (site === 'fldpj') {
-        items = $('li[id^="line_u9"]').find('a');
-    } else if (site === 'ss') {
-        items = $('.list04 .item a');
-    } else {
-        $('.Next, .rjxw_left, .pb_sys_common').remove();
-        items = $('.txt, .itemlist, .wall, .list, .list01, .ny_list, .rjxw_right, .rj_yjs_con, .c_hzjl_list1, .winstyle67894, .winstyle80936, .winstyle50738, #lili').find('a');
+    switch (site) {
+        case 'panjin': {
+            items = $('a.news').slice(0, -4);
+
+            break;
+        }
+        case 'fldpj': {
+            items = $('li[id^="line_u9"]').find('a');
+
+            break;
+        }
+        case 'ss': {
+            items = $('.list04 .item a');
+
+            break;
+        }
+        default: {
+            $('.Next, .rjxw_left, .pb_sys_common').remove();
+            items = $('.txt, .itemlist, .wall, .list, .list01, .ny_list, .rjxw_right, .rj_yjs_con, .c_hzjl_list1, .winstyle67894, .winstyle80936, .winstyle50738, #lili').find('a');
+        }
     }
 
     items = items
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
-        .map((item) => {
+        .flatMap((item) => {
             item = $(item);
 
-            const result = {
-                link: item.attr('href').startsWith('http') ? item.attr('href') : `${rootUrl}/${item.attr('href').replace(/^[./]+/, '')}`,
+            const href = item.attr('href');
+            if (!href) {
+                return [];
+            }
+
+            const result: DlutItem = {
+                title: '',
+                link: href.startsWith('http') ? href : `${rootUrl}/${href.replace(/^[./]+/, '')}`,
             };
 
             if (site === 'fldpj') {
@@ -91,7 +112,7 @@ async function handler(ctx) {
                 }
             }
 
-            return result;
+            return [result];
         });
 
     items = await Promise.all(
