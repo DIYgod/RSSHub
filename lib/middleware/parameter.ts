@@ -264,7 +264,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
-                    isFilter = isFilter && !category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter = isFilter && category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;

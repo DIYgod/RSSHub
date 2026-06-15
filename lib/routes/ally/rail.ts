@@ -83,7 +83,7 @@ async function handler(ctx) {
         .filter(Boolean);
     const uniqueItems: DataItem[] = [];
     for (const item of items) {
-        if (!uniqueItems.some((uniqueItem) => uniqueItem.link === item?.link)) {
+        if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
             uniqueItems.push(item!);
         }
     }

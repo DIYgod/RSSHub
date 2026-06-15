@@ -26,7 +26,7 @@ export async function getPostItems(params: {
     };
     if (finalSearchParams.time_range !== undefined) {
         finalSearchParams.time_range = finalSearchParams.time_range.toUpperCase();
-        if (!TimeRangeParam.options.some((option) => option.value === finalSearchParams.time_range)) {
+        if (TimeRangeParam.options.every((option) => option.value !== finalSearchParams.time_range)) {
             throw new Error(`Invalid time range: ${finalSearchParams.time_range}`);
         }
         // The Voronoi API doesn't support "ALL"

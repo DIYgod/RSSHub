@@ -25,7 +25,7 @@ async function parseBodyRoutes(body, core) {
     // Is this a bug report?
     const title = ast.children[0].children[0].value.trim();
     core.debug(`title: ${title}`);
-    if (!matchTitle.some((ele) => ele.localeCompare(title) === 0)) {
+    if (matchTitle.every((ele) => ele.localeCompare(title) !== 0)) {
         return null;
     }
 

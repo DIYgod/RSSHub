@@ -81,7 +81,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
                 url.host !== proxy.proxyUrlHandler?.host &&
                 url.host !== 'localhost' &&
                 !url.host.startsWith('127.') &&
-                ![config.playwrightWSEndpoint, config.playwrightCDPEndpoint].some((endpoint) => endpoint?.includes(url.host))
+                [config.playwrightWSEndpoint, config.playwrightCDPEndpoint].every((endpoint) => !endpoint?.includes(url.host))
             ) {
                 options.agent = proxy.agent;
             }
