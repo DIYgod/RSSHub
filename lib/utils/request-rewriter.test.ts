@@ -270,7 +270,7 @@ describe('request-rewriter', () => {
         try {
             const { default: wrappedFetch } = await import('@/utils/request-rewriter/fetch');
             const time = Date.now();
-            const tasks = Array.from({ length: 20 }).map(() => wrappedFetch('http://rsshub.test/headers'));
+            const tasks = Array.from({ length: 20 }, () => wrappedFetch('http://rsshub.test/headers'));
 
             await vi.advanceTimersByTimeAsync(3000);
             await Promise.all(tasks);
