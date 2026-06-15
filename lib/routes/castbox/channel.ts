@@ -9,7 +9,7 @@ const PERMUTAION_MAP = [24, 13, 4, 19, 6, 0, 8, 21, 25, 7, 28, 1, 15, 31, 10, 9,
 const getNonce = (params: Record<string, any>) => {
     const m = new Date().toISOString().slice(0, 10).replaceAll('-', '');
 
-    const sortedKeys = Object.keys(params).toSorted();
+    const sortedKeys = Object.keys(params).toSorted((a, b) => a.localeCompare(b));
     const queryParts = sortedKeys.map((k) => `${k}=${params[k]}`);
     const queryStr = queryParts.join('&');
 

@@ -115,5 +115,5 @@ async function searchTagIds(tags, rootUrl): Promise<string[]> {
         )
     );
 
-    return tagIds.toSorted();
+    return tagIds.toSorted((a, b) => a.localeCompare(b));
 }

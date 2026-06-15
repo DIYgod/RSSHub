@@ -353,6 +353,8 @@ const generateSignature = () => {
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();
+    // server-validated signature relies on JS default codepoint sort; localeCompare reorders mixed-case nonce vs lowercase appSecret
+    // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const r = [appSecret, timestamp, nonce].toSorted();
     return {
         nonce,

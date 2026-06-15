@@ -64,7 +64,7 @@ async function handler(ctx) {
         gkdiy: 'GK/其他',
     };
 
-    const filterArr = catType.split('|').toSorted();
+    const filterArr = catType.split('|').toSorted((a, b) => a.localeCompare(b));
 
     const filterSet = new Set(filterArr.map((e: string) => classMap[e]));
     if (catType.includes('all')) {
