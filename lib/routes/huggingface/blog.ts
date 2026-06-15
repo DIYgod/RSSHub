@@ -62,7 +62,7 @@ async function handler() {
             name: author.fullname || author.name,
         })),
         upvotes: blog.upvotes,
-        image: blog.thumbnail ? new URL(blog.thumbnail, 'https://huggingface.co').toString() : undefined,
+        image: blog.thumbnail ? new URL(blog.thumbnail, 'https://huggingface.co').href : undefined,
         category: blog.tags,
     }));
 

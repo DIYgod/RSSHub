@@ -46,7 +46,7 @@ async function handler(ctx) {
             const linkUrl = new URL(link);
             // cleanup query paramter
             linkUrl.query = linkUrl.search = '';
-            link = linkUrl.toString();
+            link = linkUrl.href;
 
             return cache.tryGet(link, async () => {
                 let result = await got(link);

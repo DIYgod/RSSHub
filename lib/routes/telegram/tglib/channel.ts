@@ -40,7 +40,7 @@ export function withSearchParams(src: string, params: Record<string, string>) {
     for (const [key, value] of Object.entries(params)) {
         url.searchParams.set(key, value);
     }
-    return url.toString();
+    return url.href;
 }
 
 export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number) {
@@ -52,7 +52,7 @@ export function getMessageMediaUrl(requestUrl: string, username: string, message
             url.searchParams.set(key, value);
         }
     }
-    return url.toString();
+    return url.href;
 }
 
 export function getMediaLink(src: string, m: Api.TypeMessageMedia) {

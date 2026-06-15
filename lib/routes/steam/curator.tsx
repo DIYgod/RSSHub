@@ -48,7 +48,7 @@ Examples:
             }
         }
 
-        const response = await ofetch(url.toString());
+        const response = await ofetch(url.href);
         const $ = load(response.results_html ?? '');
 
         const items = $('.recommendation')
@@ -83,7 +83,7 @@ Examples:
 
         return {
             title: `Steam Curator ${id} Reviews`,
-            link: url.toString(),
+            link: url.href,
             item: items,
         };
     },

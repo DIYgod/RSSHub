@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((el) => ({
             pubDate: timezone(parseDate($(el).find('.news-time2').text()), 8),
-            link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+            link: new URL($(el).find('a').attr('href'), baseUrl).href,
             title: $(el).find('a').text(),
         }));
 

@@ -604,7 +604,7 @@ const redirectHelper = async (url: string, maxRedirects: number = 5) => {
         } else if (maxRedirects <= 1) {
             error('too many redirects', url);
         }
-        return await redirectHelper(new URL(location, url).toString(), maxRedirects - 1);
+        return await redirectHelper(new URL(location, url).href, maxRedirects - 1);
     }
     return raw;
 };

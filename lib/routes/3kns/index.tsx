@@ -114,7 +114,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: $('title').text(),
-        link: currentUrl.toString(),
+        link: currentUrl.href,
         allowEmpty: true,
         item: items,
     };

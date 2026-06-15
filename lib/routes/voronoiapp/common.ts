@@ -52,7 +52,7 @@ export async function getPostItems(params: {
             url.searchParams.set(key, finalSearchParams[key]);
         }
     }
-    const data = await ofetch<Post[]>(url.toString());
+    const data = await ofetch<Post[]>(url.href);
     const items: DataItem[] = data.map((post) => ({
         title: post.headline,
         link: `https://www.voronoiapp.com/${post.category.split(' ').join('-').toLowerCase()}/${post.link}`,

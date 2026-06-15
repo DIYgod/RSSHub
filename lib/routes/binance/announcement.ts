@@ -90,7 +90,7 @@ const handler: Route['handler'] = async (ctx) => {
         lang: language,
     };
 
-    const response = (await ofetch<ArticleListResponse>(listUrl.toString(), { headers })) as ArticleListResponse;
+    const response = (await ofetch<ArticleListResponse>(listUrl.href, { headers })) as ArticleListResponse;
     const catalogs = response.data?.catalogs ?? [];
 
     const itemsWithDate = catalogs.flatMap((catalog) =>

@@ -117,7 +117,7 @@ async function getToken(): Promise<string> {
         return cacheToken;
     }
 
-    const payload = await ofetch(String(new URL('auths/token/get', BASE_URL)), {
+    const payload = await ofetch(new URL('auths/token/get', BASE_URL).href, {
         headers: COMMON_HEADERS,
     }).then((x) => x.payload);
     const { token, expires } = payload;
@@ -159,7 +159,7 @@ async function handler(ctx: Context): Promise<Data> {
     const { area: _area } = ctx.req.param();
     const area = _area ?? 'news';
     const token = await getToken();
-    const data = await ofetch(String(new URL(`contents/search/${area}?limit=20&offset=0`, BASE_URL)), {
+    const data = await ofetch(new URL(`contents/search/${area}?limit=20&offset=0`, BASE_URL).href, {
         headers: {
             ...COMMON_HEADERS,
             Authorization: `Bearer ${token}`,
