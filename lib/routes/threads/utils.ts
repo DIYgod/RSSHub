@@ -60,8 +60,9 @@ const getUserId = (user: string): Promise<string> =>
             });
 
             const dom = new JSDOM(response);
+            const { document } = dom.window;
 
-            for (const el of dom.window.document.querySelectorAll('script[data-sjs]')) {
+            for (const el of document.querySelectorAll('script[data-sjs]')) {
                 try {
                     const data = JSONPath({
                         path: '$..user_id',
