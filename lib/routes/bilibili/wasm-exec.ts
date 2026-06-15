@@ -1,4 +1,4 @@
-// oxlint-disable unicorn/prefer-math-trunc unicorn-js/no-this-outside-of-class unicorn-js/no-array-from-fill
+// oxlint-disable unicorn/prefer-math-trunc unicorn-js/no-this-outside-of-class unicorn-js/no-array-from-fill unicorn-js/no-global-object-property-assignment unicorn-js/no-unnecessary-global-this unicorn-js/no-undeclared-class-members unicorn-js/prefer-array-from-map
 // oxlint-disable no-unused-vars
 /* eslint-disable prefer-rest-params */
 /* eslint-disable default-case */

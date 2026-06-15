@@ -1,4 +1,4 @@
-// oxlint-disable no-useless-concat
+// oxlint-disable no-useless-concat unicorn-js/no-useless-concat
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
