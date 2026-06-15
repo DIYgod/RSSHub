@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
-const setCookie = function (cookieName, cookieValue, seconds, path, domain, secure) {
+const setCookie = function (cookieName, cookieValue, seconds, path, domain, secure?) {
     let expires = null;
     if (seconds !== -1) {
         expires = new Date();

@@ -292,7 +292,7 @@ const parseFilterStr = (filterStr) => {
      *                             e.g. `category` or `tag`.
      * @returns {Object} The parsed filters object.
      */
-    const parseStr = (filterStr, filters = {}, filterKey) => {
+    const parseStr = (filterStr, filters = {}, filterKey?) => {
         if (!filterStr) {
             return filters;
         }

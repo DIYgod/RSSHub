@@ -375,7 +375,7 @@ const processBody = async (body_html, story_json) => {
     return $.html();
 };
 
-const processVideo = async (bmmrId, summary) => {
+const processVideo = async (bmmrId, summary?) => {
     const api = `https://www.bloomberg.com/multimedia/api/embed?id=${bmmrId}`;
     const res = await redirectGot(api);
 
