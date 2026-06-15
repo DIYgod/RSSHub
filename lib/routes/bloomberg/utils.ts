@@ -410,7 +410,7 @@ const nodeRenderers = {
     paragraph: async (node, nextNode) => `<p>${await nextNode(node.content)}</p>`,
     text: (node) => {
         const { attributes: attr, value: val } = node;
-        if (attr?.emphasis && attr?.strong) {
+        if (attr?.emphasis && attr.strong) {
             return `<strong><em>${val}</em></strong>`;
         }
         if (attr?.emphasis) {
