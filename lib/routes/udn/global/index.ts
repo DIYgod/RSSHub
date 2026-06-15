@@ -80,7 +80,7 @@ async function handler(ctx) {
         const hotItems = getItems(categoriesConf.hot);
 
         const combinedItems = [...hotItems, ...defaultItems];
-        items = [...new Map(combinedItems.map((item) => [item.link, item])).values()];
+        items = new Map(combinedItems.map((item) => [item.link, item])).values().toArray();
     }
 
     items = await Promise.all(

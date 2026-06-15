@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export function removeDuplicateByKey(items, key: string) {
-    return [...new Map(items.map((x) => [x[key], x])).values()];
+    return new Map(items.map((x) => [x[key], x])).values().toArray();
 }
 
 export function fetchArticle(item) {

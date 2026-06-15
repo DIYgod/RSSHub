@@ -29,7 +29,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
 
     // Handle lottie-player animations
     // Multiple lottie-players might exist (desktop/mobile versions) - replace all with placeholders first
-    const lottieMatches = [...processed.matchAll(/<lottie-player[^>]*src="([^"]+)"[^>]*><\/lottie-player>/g)];
+    const lottieMatches = processed.matchAll(/<lottie-player[^>]*src="([^"]+)"[^>]*><\/lottie-player>/g).toArray();
     const uniqueAnimations = new Set();
 
     // Replace each lottie-player, but track unique animations by filename

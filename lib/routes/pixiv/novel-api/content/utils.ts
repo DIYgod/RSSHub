@@ -19,7 +19,7 @@ export async function parseNovelContent(content: string, images: Record<string, 
         // 如果有 token，處理 pixiv 圖片引用
         // If token exists, process pixiv image references
         if (token) {
-            const imageMatches = [...content.matchAll(/\[pixivimage:(\d+)(?:-(\d+))?\]/g)];
+            const imageMatches = content.matchAll(/\[pixivimage:(\d+)(?:-(\d+))?\]/g).toArray();
             const imageIdToUrl = new Map<string, string>();
 
             // 批量獲取圖片資訊

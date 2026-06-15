@@ -27,7 +27,7 @@ const getArticleDesc = async (articleUrl) => {
     }
     const images = getImages($content);
     const otherImages = await Promise.all(
-        [...Array.from({ length: pageCnt - 1 }).keys()].map(async (pageIndex) => {
+        Array.from({ length: pageCnt - 1 }).keys().toArray().map(async (pageIndex) => {
             const pageUrl = articleUrl.replace('.html', () => `_${pageIndex + 1}.html`);
             const pageResponse = await got(pageUrl);
             return getImages(load(pageResponse.data));

@@ -57,7 +57,7 @@ async function handler(ctx) {
     if (getAll) {
         const totals = response.data.paging.totals;
 
-        const offsetList = [...Array.from({ length: Math.round(totals / 20) }).keys()].map((item) => item * 20).slice(1);
+        const offsetList = Array.from({ length: Math.round(totals / 20) }).keys().toArray().map((item) => item * 20).slice(1);
         const otherList = await Promise.all(
             offsetList.map((offset) =>
                 cache.tryGet(`https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`, async () => {
