@@ -43,7 +43,7 @@ export const route: Route = {
                         try {
                             const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                            item.description = $('div.article')?.html()?.replaceAll('src="/', () => `src="${baseUrl}/`)?.replaceAll('href="/', () => `href="${baseUrl}/`)?.trim();
                             return item;
                         } catch {
                             // intranet

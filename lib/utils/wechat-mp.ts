@@ -68,7 +68,7 @@ const toggleWerror = (() => {
 const replaceReturnNewline = (() => {
     const returnRegExp = /\r|\\(r|x0d)/g;
     const newlineRegExp = /\n|\\(n|x0a)/g;
-    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, replaceReturnWith).replaceAll(newlineRegExp, replaceNewlineWith);
+    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, () => replaceReturnWith).replaceAll(newlineRegExp, () => replaceNewlineWith);
 })();
 const fixUrl = (() => {
     const ampRegExp = /(&|\\x26)amp;/g;

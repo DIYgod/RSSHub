@@ -57,7 +57,7 @@ export const route: Route = {
     url: 'cls.cn/telegraph',
     description: `| 看盘  | 公司         | 加红 | 提醒   | 基金 | 港美股 |
 | ----- | ------------ | ---- | ------ | ---- | ------ |
-| watch | announcement | red  | remind | fund | hk\\_us |`,
+| watch | announcement | red  | remind | fund | hk_us |`,
 };
 
 async function handler(ctx: Context) {

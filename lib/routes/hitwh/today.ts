@@ -54,7 +54,7 @@ async function handler() {
                         try {
                             const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.wp_articlecontent').html() && $('div.wp_articlecontent').html().replaceAll('src="/', `src="${baseUrl}/`).replaceAll('href="/', `href="${baseUrl}/`).trim();
+                            item.description = $('div.wp_articlecontent').html() && $('div.wp_articlecontent').html().replaceAll('src="/', () => `src="${baseUrl}/`).replaceAll('href="/', () => `href="${baseUrl}/`).trim();
                             return item;
                         } catch {
                             // intranet

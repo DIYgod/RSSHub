@@ -6,18 +6,11 @@ import getIllustDetail from '../../api/get-illust-detail';
 import pixivUtils from '../../utils';
 
 export function convertPixivProtocolExtended(caption: string): string {
-    const protocolMap = new Map([
-        [/pixiv:\/\/novels\/(\d+)/g, 'https://www.pixiv.net/novel/show.php?id=$1'],
-        [/pixiv:\/\/illusts\/(\d+)/g, 'https://www.pixiv.net/artworks/$1'],
-        [/pixiv:\/\/users\/(\d+)/g, 'https://www.pixiv.net/users/$1'],
-        [/pixiv:\/\/novel\/series\/(\d+)/g, 'https://www.pixiv.net/novel/series/$1'],
-    ]);
-
-    let convertedText = caption;
-    for (const [pattern, replacement] of protocolMap) {
-        convertedText = convertedText.replace(pattern, replacement);
-    }
-    return convertedText;
+    return caption
+        .replaceAll(/pixiv:\/\/novels\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/novel/show.php?id=${p1}`)
+        .replaceAll(/pixiv:\/\/illusts\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/artworks/${p1}`)
+        .replaceAll(/pixiv:\/\/users\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/users/${p1}`)
+        .replaceAll(/pixiv:\/\/novel\/series\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/novel/series/${p1}`);
 }
 
 // docs: https://www.pixiv.help/hc/ja/articles/235584168-小説作品の本文内に使える特殊タグとは

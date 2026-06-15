@@ -19,7 +19,7 @@ export const getPath = (request: Request): string => {
 
 const humanize = (times: string[]) => {
     const [delimiter, separator] = [',', '.'];
-    const orderTimes = times.map((v) => v.replaceAll(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + delimiter));
+    const orderTimes = times.map((v) => v.replaceAll(/(\d)(?=(\d{3})+(?!\d))/g, (_match, p1) => p1 + delimiter));
     return orderTimes.join(separator);
 };
 

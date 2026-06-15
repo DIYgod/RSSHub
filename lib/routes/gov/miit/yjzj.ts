@@ -71,7 +71,7 @@ async function handler() {
 
                 item.description = content('#con_con')
                     .html()
-                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, '$1' + rootUrl + '$2$3');
+                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, (_match, p1, p2, p3) => p1 + rootUrl + p2 + p3);
 
                 return item;
             })

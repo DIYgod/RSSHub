@@ -26,7 +26,7 @@ const getConfiguredCookie = () => {
         for (const key of Object.keys(config.bilibili.cookies)) {
             const cookie = config.bilibili.cookies[key];
             if (cookie) {
-                const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
                 config.bilibili.cookies[key] = updatedCookie;
             }
         }
@@ -53,7 +53,7 @@ const getCookie = (disableConfig = false) => {
                         if (request.url() === 'https://api.bilibili.com/x/web-interface/nav') {
                             const cookies = await page.context().cookies();
                             let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
                             resolve(cookieString);
                         }
                     });

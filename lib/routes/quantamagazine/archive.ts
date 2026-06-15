@@ -51,7 +51,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
             const linkUrl = articleLink || rootUrl;
             const badgeImg = 'https://img.shields.io/badge/🎬-View_Interactive_Animation-0066CC?style=for-the-badge';
             const replacement = `<p style="text-align: center; margin: 20px 0;"><a href="${linkUrl}" target="_blank"><img src="${badgeImg}" alt="View Interactive Animation" /></a></p>`;
-            processed = processed.replace(match[0], replacement);
+            processed = processed.replace(match[0], () => replacement);
         }
     }
 

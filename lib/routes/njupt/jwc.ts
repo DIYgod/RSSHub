@@ -84,8 +84,8 @@ async function handler(ctx) {
                         link: itemUrl,
                         description: $('.wp_articlecontent')
                             .html()
-                            .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', `href="${new URL('.', host).href}`)
+                            .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                            .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                             .trim(),
                         pubDate: parseDate($('.Article_PublishDate').text().replace('发布时间：', '')),
                     };

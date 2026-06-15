@@ -57,7 +57,7 @@ async function handler(ctx) {
 
             return {
                 title: item.text(),
-                link: item.attr('href').replace(/^\./, currentUrl),
+                link: item.attr('href').replace(/^\./, () => currentUrl),
             };
         });
 

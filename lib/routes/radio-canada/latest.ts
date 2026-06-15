@@ -85,8 +85,8 @@ const parseDescriptionFromState = (rcState) => {
     for (const [index, attachment] of (news?.data?.newsStory?.body?.attachments ?? []).entries()) {
         const placeholder = `<!--body:attachment:${index}-->`;
         const picture = attachment?.picture;
-        const imageUrl = picture?.pattern ? picture?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', attachment?.dimensionRatio ?? '16x9') : '';
-        bodyWithImg = bodyWithImg.replace(placeholder, `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>`);
+        const imageUrl = picture?.pattern ? picture?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', () => attachment?.dimensionRatio ?? '16x9') : '';
+        bodyWithImg = bodyWithImg.replace(placeholder, () => `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>`);
     }
     return header + primer + bodyWithImg;
 };

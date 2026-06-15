@@ -179,7 +179,7 @@ function updateBittorrent_url(cache, items) {
     // 下种子文件需要动态密码，密码每几次请求就更新一次
     for (const item of items) {
         if (item.enclosure_url) {
-            item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, `torrent?p=${p}`);
+            item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, () => `torrent?p=${p}`);
             cache.set(item.bittorrent_page_url, item.enclosure_url);
         }
     }

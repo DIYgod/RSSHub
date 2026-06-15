@@ -130,7 +130,7 @@ async function handler(ctx: Context): Promise<Data> {
         const title = item.event_name;
         const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
-                .replaceAll('{STEAM_CLAN_IMAGE}', `${clanRootUrl}/images`)
+                .replaceAll('{STEAM_CLAN_IMAGE}', () => `${clanRootUrl}/images`)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/(\[\/h\d\])\n/g, '$1')

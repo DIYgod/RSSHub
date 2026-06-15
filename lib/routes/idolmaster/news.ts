@@ -93,7 +93,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const rsp = await got(item.link);
                 const content = load(rsp.data);
                 const nextData = JSON.parse(content('script#__NEXT_DATA__').text());
-                item.description = `<div lang="ja">${nextData.props.pageProps.data.content?.replaceAll('<img src="', `<img src="${apiUrl}/sitern/api/idolmaster/Image/get?path=`)}</div>`;
+                item.description = `<div lang="ja">${nextData.props.pageProps.data.content?.replaceAll('<img src="', () => `<img src="${apiUrl}/sitern/api/idolmaster/Image/get?path=`)}</div>`;
                 return item;
             })
         )

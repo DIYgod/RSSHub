@@ -45,7 +45,7 @@ const parseNewsList = async (url, selector, ctx) => {
         });
     const title = $('.other_Location')
         .text()
-        .replace(/(.+)首页/, owner);
+        .replace(/(.+)首页/, () => owner);
     return { list, title };
 };
 

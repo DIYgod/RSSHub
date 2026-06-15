@@ -47,7 +47,7 @@ async function handler(ctx) {
                 author: album_name,
                 description,
                 pubDate: time,
-                link: real_url.replace('?', `/photo/${item[0]}?`),
+                link: real_url.replace('?', () => `/photo/${item[0]}?`),
                 guid: item[0],
             };
         }),

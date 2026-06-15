@@ -35,7 +35,7 @@ const renderTodayDescription = (bgm, siteMeta) =>
             <img src={bgm.image} />
             <ul>
                 {bgm.sites.map((site) => {
-                    const url = site.url ?? siteMeta[site.site].urlTemplate.replace('{{id}}', site.id);
+                    const url = site.url ?? siteMeta[site.site].urlTemplate.replace('{{id}}', () => site.id);
                     const title = siteMeta[site.site].title;
 
                     return (

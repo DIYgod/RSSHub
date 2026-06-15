@@ -64,7 +64,7 @@ function decodeCipherText(p, a, c, k, e, d) {
     e = function (c) {
         return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
     };
-    if (!''.replace(/^/, String)) {
+    if (!''.replace(/^/, () => '')) {
         while (c--) {
             d[e(c.toString())] = k[c] || e(c.toString());
         }
@@ -80,7 +80,7 @@ function decodeCipherText(p, a, c, k, e, d) {
     }
     while (c--) {
         if (k[c]) {
-            p = p.replaceAll(new RegExp(String.raw`\b` + e(c.toString()) + String.raw`\b`, 'g'), k[c]);
+            p = p.replaceAll(new RegExp(String.raw`\b` + e(c.toString()) + String.raw`\b`, 'g'), () => k[c]);
         }
     }
     return p;

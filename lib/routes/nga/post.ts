@@ -55,6 +55,7 @@ async function handler(ctx) {
     const deepReplace = (str, pattern, replace) => {
         // 对于可能存在嵌套的样式一路 replace 到最深处
         while (pattern.test(str)) {
+            // oxlint-disable-next-line unicorn-js/no-unsafe-string-replacement -- replacement values are trusted capture-ref literals from formatContent
             str = str.replace(pattern, replace);
         }
         return str;

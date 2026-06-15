@@ -69,8 +69,8 @@ async function handler(ctx) {
                         link: itemUrl,
                         description: $('.v_news_content')
                             .html()
-                            .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', `href="${new URL('.', host).href}`)
+                            .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                            .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                             .trim(),
                         pubDate: $('.author p').eq(1).text().replace('时间:', ''),
                     };
