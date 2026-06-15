@@ -43,7 +43,7 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
         headers: {
             cdeviceinfo: encodeURIComponent(JSON.stringify(devioceInfo)),
             cdeviceno: cookieMap.get('token'),
-            cookie: [...cookieMap.entries()].map(([key, value]) => `${key}=${value}`).join('; '),
+            cookie: [...cookieMap].map(([key, value]) => `${key}=${value}`).join('; '),
             crpsign: md5(accessToken + /* sign/cusut (empty) + idToken (empty) + userInfo.userId (empty) + */ 'web' + cookieMap.get('token') + (payload ? JSON.stringify(payload) : '') + requestPath + '999web' + traceId),
             crtraceid: traceId,
             csappid: 'web',

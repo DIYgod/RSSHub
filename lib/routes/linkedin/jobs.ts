@@ -39,7 +39,7 @@ export const route: Route = {
 
                 const newSearchParams = new URLSearchParams();
                 // Copy non-existent key-value pairs from searchParams to newSearchParams
-                for (const [key, value] of searchParams.entries()) {
+                for (const [key, value] of searchParams) {
                     if (!['f_JT', 'f_E', 'keywords'].includes(key)) {
                         newSearchParams.append(key, value);
                     }

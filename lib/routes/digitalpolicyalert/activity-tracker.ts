@@ -16,7 +16,7 @@ const createSearchParams = (queryString: string, limit: number = 30): URLSearchP
 
 const searchParamsToObject = (searchParams: URLSearchParams): Record<string, string> => {
     const obj: Record<string, string> = {};
-    for (const [key, value] of searchParams.entries()) {
+    for (const [key, value] of searchParams) {
         obj[key] = value;
     }
     return obj;

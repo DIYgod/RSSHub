@@ -16,7 +16,7 @@ export function sign(payload: Map<string, any>) {
     const map = new Map();
     const lowerCaseKeys: string[] = [];
 
-    for (const [key, value] of payload.entries()) {
+    for (const [key, value] of payload) {
         const lowerCaseKey = key.toLowerCase();
         lowerCaseKeys.push(lowerCaseKey);
         map.set(lowerCaseKey, typeof value === 'string' ? value.toLowerCase() : value);
