@@ -87,10 +87,11 @@ async function handler(ctx) {
                     // TODO: Use Temporal.Duration when https://tc39.es/proposal-temporal/ is GA
                     const durationMatch = ldJson.audio.duration?.match(/P0DT(\d+)H(\d+)M(\d+)S/);
                     if (durationMatch) {
-                        item.itunes_duration = durationMatch
-                            .slice(1)
-                            .map((x) => Number.parseInt(x))
-                            .reduce((a, b) => a * 60 + b);
+                        let seconds = 0;
+                        for (const part of durationMatch.slice(1)) {
+                            seconds = seconds * 60 + Number.parseInt(part);
+                        }
+                        item.itunes_duration = seconds;
                     }
                     item.enclosure_url = ldJson.audio.contentUrl;
                     item.enclosure_type = 'audio/mpeg';

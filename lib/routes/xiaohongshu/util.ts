@@ -151,9 +151,9 @@ const getBoard = (url, cache) =>
 const formatText = (text) => text.replaceAll(/(\r\n|\r|\n)/g, '<br>').replaceAll('\t', '&emsp;');
 
 // tag_list.id has nothing to do with its url
-const formatTagList = (tagList) => tagList.reduce((acc, item) => acc + `#${item.name} `, '');
+const formatTagList = (tagList) => tagList.map((item) => `#${item.name} `).join('');
 
-const formatImageList = (imageList) => imageList.reduce((acc, item) => acc + `<img src="${item.url}"><br>`, '');
+const formatImageList = (imageList) => imageList.map((item) => `<img src="${item.url}"><br>`).join('');
 
 const formatNote = (url, note) => ({
     title: note.title,

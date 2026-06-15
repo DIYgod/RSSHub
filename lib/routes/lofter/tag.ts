@@ -117,7 +117,9 @@ async function handler(ctx) {
         }
 
         const images = post.photoLinks
-            ? JSON.parse(post.photoLinks).reduce((accumulator, currentValue) => accumulator + `<img src="${currentValue.orign}"/>`, '') // small | middle | orign
+            ? JSON.parse(post.photoLinks)
+                  .map((currentValue) => `<img src="${currentValue.orign}"/>`) // small | middle | orign
+                  .join('')
             : '';
 
         const digest = load(post.digest);
