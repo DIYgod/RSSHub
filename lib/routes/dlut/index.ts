@@ -15,7 +15,7 @@ export const route: Route = {
     name: '站点栏目',
     maintainers: [],
     handler,
-    example: '/dut/ss/bkstz',
+    example: '/dlut/ss/bkstz',
     parameters: {
         0: '站点，如 `news`、`teach`、`ss`，默认为 `news`',
         1: '栏目路径或快捷名称，如 `bkstz`，默认为对应站点的默认栏目',
