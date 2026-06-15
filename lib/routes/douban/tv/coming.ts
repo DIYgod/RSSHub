@@ -62,20 +62,20 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
 const getSortTimestamp = (pubdate?: string[]): number => {
     const pubDateText = getPubDateText(pubdate);
     if (!pubDateText) {
-        return Number.POSITIVE_INFINITY;
+        return Infinity;
     }
 
     const datePart = pubDateText.split('(', 1)[0].trim();
     const match = /^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?/.exec(datePart);
     if (!match) {
-        return Number.POSITIVE_INFINITY;
+        return Infinity;
     }
 
     const year = Number.parseInt(match[1], 10);
     const month = match[2] ? Number.parseInt(match[2], 10) : 1;
     const day = match[3] ? Number.parseInt(match[3], 10) : 1;
     const timestamp = Date.UTC(year, month - 1, day);
-    return Number.isNaN(timestamp) ? Number.POSITIVE_INFINITY : timestamp;
+    return Number.isNaN(timestamp) ? Infinity : timestamp;
 };
 
 const getWishCount = (wishCount?: number | string): number => {
