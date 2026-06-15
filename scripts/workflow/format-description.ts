@@ -190,10 +190,7 @@ function collectDescriptionEdits(sourceFile: typescript.SourceFile): Description
             continue;
         }
         for (const decl of stmt.declarationList.declarations) {
-            if (!isTargetTypedDeclaration(decl)) {
-                continue;
-            }
-            if (decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
+            if (isTargetTypedDeclaration(decl) && decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
                 visitObject(decl.initializer);
             }
         }
