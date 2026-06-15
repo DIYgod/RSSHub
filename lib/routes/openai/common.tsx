@@ -1,3 +1,5 @@
+import https from 'node:https';
+
 import { load } from 'cheerio';
 
 import { config } from '@/config';
@@ -8,11 +10,44 @@ import { parseDate } from '@/utils/parse-date';
 
 export const BASE_URL = new URL('https://openai.com');
 
+// OpenAI article pages return Cloudflare 403 (`cf-mitigated: challenge`) through request-rewriter's undici.fetch path.
+// The patched https.request path works, so keep this route-local.
+const fetchArticleHtml = async (url: string) =>
+    await new Promise<string>((resolve, reject) => {
+        const request = https.request(
+            url,
+            {
+                headers: {
+                    'User-Agent': config.ua,
+                    'accept-encoding': 'identity',
+                },
+            },
+            (response) => {
+                let html = '';
+                response.setEncoding('utf8');
+                response.on('data', (chunk) => {
+                    html += chunk;
+                });
+                response.on('end', () => {
+                    if (!response.statusCode || response.statusCode < 200 || response.statusCode >= 300) {
+                        reject(new Error(`[GET] "${url}": ${response.statusCode}`));
+                        return;
+                    }
+
+                    resolve(html);
+                });
+            }
+        );
+
+        request.on('error', reject);
+        request.end();
+    });
+
 /** Fetch the details of an article. */
 export const fetchArticleDetails = async (url: string) => {
     // Ensure trailing slash to avoid 301 redirect
     const normalizedUrl = url.endsWith('/') ? url : `${url}/`;
-    const html = await ofetch(normalizedUrl, { responseType: 'text' });
+    const html = await fetchArticleHtml(normalizedUrl);
     const $ = load(html);
 
     const $article = $('#main article');
