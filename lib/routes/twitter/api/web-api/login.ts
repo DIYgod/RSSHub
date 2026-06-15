@@ -61,8 +61,7 @@ async function login({ username, password, authenticationSecret }) {
                     cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
                 }
                 logger.debug(`twitter debug: twitter username ${username} login success`);
-                    resolve(JSON.stringify(cookieJar.serializeSync()));
-                }
+                resolve(JSON.stringify(cookieJar.serializeSync()));
             });
         });
         const cookieString = await waitForRequest;
