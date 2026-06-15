@@ -14,8 +14,7 @@ const rule = {
         },
     },
 
-    createOnce(context) {
-        return {
+    createOnce: (context) => ({
             MemberExpression(node) {
                 if (node.property && node.property.name === 'then') {
                     context.report({
@@ -31,8 +30,7 @@ const rule = {
                     });
                 }
             },
-        };
-    },
+        }),
 };
 
 export default eslintCompatPlugin({
