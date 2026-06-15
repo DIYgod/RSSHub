@@ -11,15 +11,13 @@ const destroy = vi.fn();
 const getPlaywrightPage = vi.fn();
 const goto = vi.fn();
 const on = vi.fn();
-const setCookie = vi.fn();
-const setRequestInterception = vi.fn();
+const pageRoute = vi.fn();
 const waitForResponse = vi.fn();
 
 const page = {
     goto,
     on,
-    setCookie,
-    setRequestInterception,
+    route: pageRoute,
     waitForResponse,
 };
 
@@ -66,8 +64,7 @@ describe('/bilibili/user/video/:uid', () => {
         getPlaywrightPage.mockReset();
         goto.mockReset();
         on.mockReset();
-        setCookie.mockReset();
-        setRequestInterception.mockReset();
+        pageRoute.mockReset();
         waitForResponse.mockReset();
     });
 
@@ -109,6 +106,7 @@ describe('/bilibili/user/video/:uid', () => {
         getPlaywrightPage.mockImplementation(async (_url, options) => {
             await options.onBeforeLoad?.(page);
             return {
+                context: {},
                 destroy,
                 page,
             };
@@ -171,6 +169,7 @@ describe('/bilibili/user/video/:uid', () => {
         getPlaywrightPage.mockImplementation(async (_url, options) => {
             await options.onBeforeLoad?.(page);
             return {
+                context: {},
                 destroy,
                 page,
             };

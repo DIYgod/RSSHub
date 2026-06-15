@@ -119,8 +119,8 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: ['/sh/fgw/:category{.+}?', '/shanghai/fgw/:category{.+}?'],
-    name: '上海市发展和改革委员会',
+    path: '/fgw/:category{.+}?',
+    name: '发展和改革委员会',
     url: 'fgw.sh.gov.cn',
     maintainers: ['nczitzk'],
     handler,
@@ -156,12 +156,12 @@ export const route: Route = {
         {
             title: '最新信息公开',
             source: ['fgw.sh.gov.cn/fgw_zxxxgk/index.html'],
-            target: '/sh/fgw/fgw_zxxxgk',
+            target: '/fgw/fgw_zxxxgk',
         },
         {
             title: '要闻动态',
             source: ['fgw.sh.gov.cn/fgw_fzggdt/index.html'],
-            target: '/sh/fgw/fgw_fzggdt',
+            target: '/fgw/fgw_fzggdt',
         },
     ],
 };

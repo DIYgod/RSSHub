@@ -9,17 +9,17 @@ const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断 host
 
 export const route: Route = {
-    path: '/moa/suburl/:suburl{.+}',
+    path: '/suburl/:suburl{.+}',
     categories: ['government'],
     example: '/gov/moa/suburl/gk/zcjd/',
     radar: [
         {
             source: ['moa.gov.cn/'],
-            target: '/moa/suburl/:suburl',
+            target: '/suburl/:suburl',
         },
     ],
     parameters: { suburl: '下级目录，请使用最下级的目录' },
-    name: '中华人民共和国农业农村部 - 新闻',
+    name: '新闻',
     maintainers: ['Origami404', 'lyqluis'],
     handler,
     url: 'moa.gov.cn/',

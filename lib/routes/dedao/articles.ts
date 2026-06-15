@@ -7,7 +7,7 @@ import got from '@/utils/got';
 export const route: Route = {
     path: '/articles/:id?',
     categories: ['new-media'],
-    example: '/articles/9', // 示例路径更新
+    example: '/dedao/articles/9',
     parameters: { id: '文章类型 ID，8 为得到头条，9 为得到精选，默认为 8' },
     features: {
         requireConfig: false,

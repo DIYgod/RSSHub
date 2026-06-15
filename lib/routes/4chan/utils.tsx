@@ -46,7 +46,7 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
             description: renderToString(renderPost({ post: thread, board, viewOptions })),
             link: `https://boards.4chan.org/${board}/thread/${thread.no}`,
             pubDate: parseDate(thread.time * 1000),
-            title: thread.sub ?? sanitizeHtml(thread.com?.split('<br>')[0] ?? '', { allowedTags: [] }),
+            title: thread.sub ?? sanitizeHtml(thread.com?.split('<br>', 1)[0] ?? '', { allowedTags: [] }),
         }));
 };
 

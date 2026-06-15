@@ -31,7 +31,7 @@ export const handler = async (ctx) => {
                 title: item.find('strong').text(),
                 pubDate: timezone(parseDate(item.find('div.list-dated').text().split(/\|/).pop()), +8),
                 link: new URL(item.find('a.links').prop('href'), rootUrl).href,
-                author: item.find('div.list-dated').text().split(/\|/)[0],
+                author: item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,
             };
         });
@@ -106,7 +106,7 @@ export const route: Route = {
     url: 'chinese.joins.com',
     maintainers: ['nczitzk'],
     handler,
-    example: '/chinese',
+    example: '/joins/chinese',
     parameters: { category: '分类，默认为空，可在对应分类页 URL 中找到 `sc_section_code`' },
     description: `::: tip
 若订阅 [财经](https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1)，网址为 \`https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1\`。截取 \`sc_section_code\` 的值作为参数填入，此时路由为 [\`/joins/chinese/S1N1\`](https://rsshub.app/joins/chinese/S1N1)。

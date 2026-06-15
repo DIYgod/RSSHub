@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/:language?'],
+    path: '/:language?',
     name: '每日环球视野',
     example: '/idaily',
     maintainers: ['zphw', 'nczitzk'],
@@ -77,7 +77,7 @@ async function handler(ctx) {
         language: 'zh',
         image,
         subtitle: $('meta[name="keywords"]').prop('content'),
-        author: title.split(/\s/)[0],
+        author: title.split(/\s/, 1)[0],
         allowEmpty: true,
     };
 }

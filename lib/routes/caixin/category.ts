@@ -60,7 +60,7 @@ async function handler(ctx) {
     const entity = JSON.parse(
         $('script')
             .text()
-            .match(/var entity = ({.*?})/)[1]
+            .match(/var entity = (\{.*?\})/)[1]
     );
 
     const {

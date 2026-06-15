@@ -44,7 +44,7 @@ const getItem = (item, cache) => {
             $('div.info span:nth-of-type(3)')
                 .text()
                 .slice(3)
-                .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)?.[0]
+                .match(/\d{4}(.)\d{1,2}\1\d{1,2}/)?.[0]
         );
         const description = $('div.detail-wrap').html();
         return {

@@ -59,7 +59,7 @@ async function handler(ctx) {
 
     // Get filterShorts parameter (default to true if not specified)
     const filterShortsStr = params.get('filterShorts');
-    const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
+    const filterShorts = [null, '', 'true'].includes(filterShortsStr);
 
     const isJsonFeed = ctx.req.query('format') === 'json';
 

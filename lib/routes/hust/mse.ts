@@ -85,7 +85,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         image,
-        author: title.split(/-/)[0]?.trim(),
+        author: title.split(/-/, 1)[0]?.trim(),
         language,
     };
 };

@@ -83,7 +83,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('p.meta-info').contents().first().text().trim().split(/\s/)[0], 'YYYY-MM-DD');
+                item.pubDate = parseDate($$('p.meta-info').contents().first().text().trim().split(/\s/, 1)[0], 'YYYY-MM-DD');
                 item.category = $$('p.meta-info a[rel="category tag"]')
                     .toArray()
                     .map((c) => $$(c).text());

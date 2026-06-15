@@ -88,9 +88,9 @@ async function handler(ctx) {
                 const { page, destroy } = await getPlaywrightPage(profileUrl, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.setRequestInterception(true);
-                        page.on('request', (request) => {
-                            expectResourceTypes.has(request.resourceType()) ? request.continue() : request.abort();
+                        await page.route('**/*', (route) => {
+                            const request = route.request();
+                            expectResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
                         });
                     },
                 });

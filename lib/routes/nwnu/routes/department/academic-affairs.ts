@@ -102,7 +102,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/department/academic-affairs/tzgg',
+    example: '/nwnu/department/academic-affairs/tzgg',
     radar: [
         {
             source: ['jwc.nwnu.edu.cn/:column/list.htm'],

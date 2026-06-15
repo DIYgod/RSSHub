@@ -11,7 +11,7 @@ export const handler = async (ctx) => {
     const { language = 'zh' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
-    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Za-z-]/g, '')}.zhonglun.com`;
+    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Z-]/gi, '')}.zhonglun.com`;
     const currentUrl = new URL('research/articles', rootUrl).href;
 
     const { data: response } = await got(currentUrl);

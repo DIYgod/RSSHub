@@ -17,7 +17,7 @@ const columns = {
 };
 
 export const route: Route = {
-    path: '/mee/ywdt/:category?',
+    path: '/ywdt/:category?',
     categories: ['government'],
     example: '/gov/mee/ywdt/hjywnews',
     parameters: { category: '分类名，预设 `szyw`' },
@@ -32,7 +32,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.mee.gov.cn/ywdt/:category'],
-            target: '/mee/ywdt/:category',
+            target: '/ywdt/:category',
         },
     ],
     name: '要闻动态',

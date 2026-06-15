@@ -31,7 +31,7 @@ const extractTokens = async (user): Promise<{ lsd: string }> => {
 
     const $ = load(response);
     const data = $('script:contains("LSD"):first').text();
-    const lsd = data.match(/"LSD",\[],{"token":"([\w@-]+)"},/)?.[1];
+    const lsd = data.match(/"LSD",\[\],\{"token":"([\w@-]+)"\},/)?.[1];
 
     if (!lsd) {
         throw new NotFoundError('LSD token not found');

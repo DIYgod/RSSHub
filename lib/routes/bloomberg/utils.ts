@@ -55,7 +55,7 @@ const apiEndpoints = {
     },
 };
 
-const pageTypeRegex1 = /\/(?<page>[\w-]*?)\/(?<link>\d{4}-\d{2}-\d{2}\/.*)/;
+const pageTypeRegex1 = /\/(?<page>[\w-]*)\/(?<link>\d{4}-\d{2}-\d{2}\/.*)/;
 const pageTypeRegex2 = /(?<!news|politics)\/(?<page>features\/|graphics\/)(?<link>.*)/;
 const regex = [pageTypeRegex1, pageTypeRegex2];
 
@@ -110,7 +110,7 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+                    if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -224,7 +224,7 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             return {
                 title: item.title,
                 link: item.link,

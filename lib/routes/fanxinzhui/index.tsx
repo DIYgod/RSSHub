@@ -65,7 +65,7 @@ async function handler(ctx) {
                 content('div.info ul li').each((_, el) => {
                     el = content(el);
 
-                    const key = el.find('span').text().split(/:/)[0];
+                    const key = el.find('span').text().split(/:/, 1)[0];
                     const value = el.contents().last().text().trim();
 
                     if (key === '类型') {

@@ -7,7 +7,7 @@ import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/pbc/tradeAnnouncement',
+    path: '/tradeAnnouncement',
     categories: ['finance'],
     example: '/gov/pbc/tradeAnnouncement',
     parameters: {},
@@ -27,11 +27,11 @@ export const route: Route = {
 async function handler() {
     const link = 'http://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/index.html';
 
-    const browser = await playwright();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
@@ -52,10 +52,10 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailPage = await browser.newPage();
-                await detailPage.setRequestInterception(true);
-                detailPage.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                const detailPage = await context.newPage();
+                await detailPage.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
                 await detailPage.goto(item.link, {
                     waitUntil: 'domcontentloaded',
@@ -69,7 +69,7 @@ async function handler() {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: '中国人民银行 - 货币政策司公开市场交易公告',

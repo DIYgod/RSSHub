@@ -55,7 +55,7 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
         return undefined;
     }
 
-    const datePart = pubDateText.split('(')[0];
+    const datePart = pubDateText.split('(', 1)[0];
     return parseDate(datePart);
 };
 
@@ -65,7 +65,7 @@ const getSortTimestamp = (pubdate?: string[]): number => {
         return Number.POSITIVE_INFINITY;
     }
 
-    const datePart = pubDateText.split('(')[0].trim();
+    const datePart = pubDateText.split('(', 1)[0].trim();
     const match = /^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?/.exec(datePart);
     if (!match) {
         return Number.POSITIVE_INFINITY;

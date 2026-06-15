@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/zj/ningborsjnotice/:colId?',
+    path: '/ningborsjnotice/:colId?',
     categories: ['government'],
     example: '/gov/zj/ningborsjnotice/1229676740',
     parameters: {
@@ -14,7 +14,7 @@ export const route: Route = {
     radar: [
         {
             source: ['rsj.ningbo.gov.cn/col/col1229676740/index.html'],
-            target: '/zj/ningborsjnotice/:colId?',
+            target: '/ningborsjnotice/:colId?',
         },
     ],
     name: '宁波市人力资源和社会保障局-公告',
@@ -35,7 +35,7 @@ export const route: Route = {
             return {
                 title: `宁波人社公告-${noticeCate}:${title.text()}`,
                 link: `http://rsj.ningbo.gov.cn${title.attr('href')}`,
-                pubDate: parseDate($('.news_date').text().replaceAll(/\[|]/g, '')),
+                pubDate: parseDate($('.news_date').text().replaceAll(/\[|\]/g, '')),
                 author: '宁波市人力资源和社会保障局',
                 description: title.text(),
             };

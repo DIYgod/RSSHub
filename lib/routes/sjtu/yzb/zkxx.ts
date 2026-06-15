@@ -69,7 +69,7 @@ async function handler(ctx) {
 
     return {
         link: pageUrl,
-        title: `${baseTitle} -- ${$('title').text().split('-')[0]}`,
+        title: `${baseTitle} -- ${$('title').text().split('-', 1)[0]}`,
         item: items,
     };
 }

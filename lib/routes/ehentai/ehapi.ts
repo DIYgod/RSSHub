@@ -161,7 +161,7 @@ function getBittorrent(cache, bittorrent_page_url) {
                     const match = onclick.match(/'(.*?)'/);
                     if (match) {
                         bittorrent_url = match[1];
-                        const match_p = bittorrent_url.match(/torrent\?p=(.*?)$/);
+                        const match_p = bittorrent_url.match(/torrent\?p=(.*)$/);
                         if (match_p) {
                             p = match_p[1];
                         }

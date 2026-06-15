@@ -6,7 +6,7 @@ import type { PortfolioResponse } from './types';
 import { customFetch, fetchPortfolioItem, parseUserData } from './utils';
 
 export const route: Route = {
-    path: ['/portfolio/:user'],
+    path: '/portfolio/:user',
     categories: ['social-media'],
     example: '/cara/portfolio/fengz',
     parameters: { user: 'username' },

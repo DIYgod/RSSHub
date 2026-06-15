@@ -13,7 +13,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const accessKey = ctx.req.query('key');
     const accessCode = ctx.req.query('code');
 
-    if (requestPath === '/' || requestPath === '/robots.txt' || requestPath === '/favicon.ico' || requestPath === '/logo.png') {
+    if (['/', '/robots.txt', '/favicon.ico', '/logo.png'].includes(requestPath)) {
         await next();
     } else {
         if (config.accessKey && !(config.accessKey === accessKey || accessCode === md5(requestPath + config.accessKey))) {

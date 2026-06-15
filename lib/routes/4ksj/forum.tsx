@@ -114,7 +114,7 @@ async function handler(ctx) {
             const scriptUrl = new URL(scriptPath, rootUrl).href;
 
             const scriptResponse = await ofetch(scriptUrl);
-            const key = scriptResponse.match(/{var key="(.*?)"/)?.[1];
+            const key = scriptResponse.match(/\{var key="(.*?)"/)?.[1];
             const value = scriptResponse.match(/",value="(.*?)"/)?.[1];
             const getPath = scriptResponse.match(/\.get\("(.*?&key=)"/)?.[1];
 
@@ -125,7 +125,7 @@ async function handler(ctx) {
             const cookieResponse = await ofetch.raw(`${rootUrl}${getPath}${key}&value=${md5(stringtoHex(value))}`);
             return cookieResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; ');
         });
 

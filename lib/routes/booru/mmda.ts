@@ -95,7 +95,7 @@ async function handler(ctx) {
                 statisticsTages.find('li, br, strong').remove();
                 const statisticsStr = statisticsTages.text();
 
-                const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/gm;
+                const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/g;
                 const result = {};
                 for (const match of statisticsStr.matchAll(regex)) {
                     const { key, value } = match.groups ?? ({} as { key: string; value: string });

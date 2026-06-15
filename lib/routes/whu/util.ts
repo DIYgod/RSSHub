@@ -68,7 +68,7 @@ const getItemDetail = async (item, rootUrl) => {
             video.replaceWith(
                 renderDescription({
                     video: {
-                        src: new URL(video.prop('vurl').split('?')[0], rootUrl).href,
+                        src: new URL(video.prop('vurl').split('?', 1)[0], rootUrl).href,
                         width: content(video).prop('vwidth'),
                         height: content(video).prop('vheight'),
                     },

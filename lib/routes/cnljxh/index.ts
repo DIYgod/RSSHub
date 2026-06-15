@@ -55,7 +55,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('div.content_title h2').text();
                 const description: string | undefined = $$('div.content_div').html() ?? '';
-                const authors: DataItem['author'] = $$('div.content_title p').text().split(/\s/)[0]?.split(/：/).pop();
+                const authors: DataItem['author'] = $$('div.content_title p').text().split(/\s/, 1)[0]?.split(/：/).pop();
 
                 let processedItem: DataItem = {
                     title,

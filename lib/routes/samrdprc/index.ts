@@ -87,7 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: new URL('images/logo_DPRC.png', baseUrl).href,
-        author: $('meta[name="keyword"]').attr('content')?.split(/,/)[0],
+        author: $('meta[name="keyword"]').attr('content')?.split(/,/, 1)[0],
         language,
         id: $('meta[property="og:url"]').attr('content'),
     };

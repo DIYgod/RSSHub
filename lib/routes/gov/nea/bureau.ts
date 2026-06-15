@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/nea/sjzz/:bureau',
+    path: '/sjzz/:bureau',
     categories: ['government'],
     example: '/gov/nea/sjzz/ghs',
     parameters: {
@@ -42,7 +42,7 @@ export const route: Route = {
     radar: [
         {
             source: ['nea.gov.cn/sjzz/:bureau/index.htm'],
-            target: '/nea/sjzz/:bureau',
+            target: '/sjzz/:bureau',
         },
     ],
     name: '司工作进展',

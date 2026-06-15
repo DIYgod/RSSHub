@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/ndrc/xwdt/:category{.+}?',
+    path: '/xwdt/:category{.+}?',
     name: '新闻动态',
     example: '/gov/ndrc/xwdt',
     parameters: { category: '分类，见下表，默认为新闻发布' },

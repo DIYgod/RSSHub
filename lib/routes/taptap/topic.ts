@@ -83,7 +83,7 @@ async function handler(ctx) {
                 const author = moment.author.user.name;
                 const topicId = isRepost ? moment.reposted_moment.topic.id_str : moment.topic.id_str;
                 // raw_text sometimes is "" so || is better than ??
-                const title = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.title || moment.topic.summary.split(' ')[0];
+                const title = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.title || moment.topic.summary.split(' ', 1)[0];
                 let description = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.summary || '';
                 if (isRepost) {
                     description += (moment.reposted_moment.topic.title || '') + ((await topicPost(appId, topicId, lang)) || '');

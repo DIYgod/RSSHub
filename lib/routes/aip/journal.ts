@@ -43,7 +43,7 @@ async function handler(ctx) {
     const $ = load(response);
     const jrnlName = $('meta[property="og:title"]')
         .attr('content')
-        .match(/(?:[^=]*=)?\s*([^>]+)\s*/)[1];
+        .match(/(?:[^=]*=)?\s*([^>]+)/)[1];
     const publication = $('.al-article-item-wrap.al-normal');
 
     const list = publication.toArray().map((item) => {

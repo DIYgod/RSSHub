@@ -6,14 +6,14 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.science.org';
 
-const fetchDesc = (list, browser, tryGet) =>
+const fetchDesc = (list, context, tryGet) =>
     Promise.all(
         list.map((item) =>
             tryGet(item.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
 
                 await page.goto(item.link, {

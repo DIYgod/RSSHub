@@ -88,7 +88,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/)?.[0]?.trim() ?? '';
+    const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/, 1)?.[0]?.trim() ?? '';
     const image = new URL($('div.header__fnw-logo img').prop('src'), rootUrl).href;
 
     return {

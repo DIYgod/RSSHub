@@ -62,7 +62,7 @@ Examples:
                 const reviewContent = el.find('.recommendation_desc').text().trim();
                 const reviewDateText = el.find('.curator_review_date').text().trim();
 
-                const notCurrentYearPattern = /,\s\b\d{4}\b$/;
+                const notCurrentYearPattern = /,\s\d{4}$/;
                 const reviewPubDate = notCurrentYearPattern.test(reviewDateText) ? parseDate(reviewDateText) : parseDate(`${reviewDateText}, ${new Date().getFullYear()}`);
 
                 const description = renderToString(<SteamCuratorDescription image={appImage} description={reviewContent} />);

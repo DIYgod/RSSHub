@@ -19,7 +19,7 @@ export const parseThumbnail = (type: 'video' | 'image', item: any) => {
     }
 
     // regex borrowed from https://stackoverflow.com/a/3726073
-    const match = /https?:\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]*)(&(amp;)?[\w=?]*)?/.exec(item.embedUrl);
+    const match = /https?:\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]*)(?:&(?:amp;)?[\w=?]*)?/.exec(item.embedUrl);
     if (match) {
         return `<img src="${imageRootUrl}/image/embed/original/youtube/${match[1]}">`;
     }

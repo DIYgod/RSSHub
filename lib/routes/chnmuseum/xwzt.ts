@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/zx/xwzt',
     categories: ['travel'],
-    example: '/zx/xwzt',
+    example: '/chnmuseum/zx/xwzt',
     parameters: {},
     features: {
         requireConfig: false,

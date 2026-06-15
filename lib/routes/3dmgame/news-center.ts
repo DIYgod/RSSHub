@@ -64,7 +64,7 @@ async function handler(ctx) {
     const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: '3DM - ' + $('title').text().split('_')[0],
+        title: '3DM - ' + $('title').text().split('_', 1)[0],
         description: $('meta[name="Description"]').attr('content'),
         link: url,
         item: out,

@@ -67,7 +67,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
             const ytInitialData = JSON.parse(
                 $('script')
                     .text()
-                    .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
+                    .match(/ytInitialData = (\{.*?\});/)?.[1] || '{}'
             );
             const metadataRenderer = ytInitialData.metadata.channelMetadataRenderer;
 

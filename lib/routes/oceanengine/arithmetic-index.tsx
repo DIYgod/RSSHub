@@ -111,15 +111,15 @@ async function handler(ctx) {
     const item = await cache.tryGet(
         link,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
             const res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
-            await browser.close();
+            await context.close();
 
             const rawData = JSON.parse(res).data;
             const data = decrypt(rawData).hot_list[0];

@@ -108,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     return {
         title,
-        description: title.split(/-/)[0],
+        description: title.split(/-/, 1)[0],
         link: targetUrl,
         item: items,
         allowEmpty: true,

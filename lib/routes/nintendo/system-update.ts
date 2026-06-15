@@ -47,7 +47,7 @@ async function handler() {
                 .toArray()
                 .map((element) => $(element).html())
                 .join('\n');
-            const matched_version = /(\d\.)+\d/.exec(heading);
+            const matched_version = /(?:\d\.)+\d/.exec(heading);
 
             return {
                 title: heading,

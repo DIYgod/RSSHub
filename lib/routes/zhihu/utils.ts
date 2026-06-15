@@ -11,7 +11,7 @@ export const header = {
     'x-api-version': '3.0.91',
 };
 
-const fixImageUrl = (url: string) => url.split('?')[0].replace('_b.jpg', '.jpg').replace('_r.jpg', '.jpg').replace('_720w.jpg', '.jpg');
+const fixImageUrl = (url: string) => url.split('?', 1)[0].replace('_b.jpg', '.jpg').replace('_r.jpg', '.jpg').replace('_720w.jpg', '.jpg');
 
 export const processImage = (content: string) => {
     const $ = load(content, null, false);
@@ -81,7 +81,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
             const zseCk = await cache.tryGet('zhihu:zse_ck', async () => {
                 const response = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
                 const script = await response._data.text();
-                return script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1] || '';
+                return script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1] || '';
             });
             if (zseCk) {
                 cookieStr = `${cookieStr}; __zse_ck=${zseCk}`;
@@ -107,13 +107,13 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
             }
             const response1 = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
             const script = await response1._data.text();
-            const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1];
+            const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1];
             const response2 = zseCk
                 ? await ofetch.raw(url, {
                       headers: {
                           cookie: `${response1.headers
                               .getSetCookie()
-                              .map((s) => s.split(';')[0])
+                              .map((s) => s.split(';', 1)[0])
                               .join('; ')}; __zse_ck=${zseCk}`,
                       },
                   })
@@ -123,7 +123,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
                 (response2 || response1).headers
                     .getSetCookie()
                     .find((s) => s.startsWith('d_c0='))
-                    ?.split(';')[0]
+                    ?.split(';', 1)[0]
                     .trim()
                     .slice('d_c0='.length) || '';
 

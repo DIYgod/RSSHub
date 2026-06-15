@@ -74,7 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('div.article h1').text();
                 const leadHtml = ($$('p.lead').html() ?? '') + ($$('div.lead').html() ?? '');
                 const description: string | undefined = item.description + renderDescription({ description: leadHtml || undefined });
-                const pubDateStr: string | undefined = $$('div.article div.text-muted').text().split(/\sUhr/)?.[0];
+                const pubDateStr: string | undefined = $$('div.article div.text-muted').text().split(/\sUhr/, 1)?.[0];
                 const image: string | undefined = $$('div.article img').first().attr('src');
                 const upDatedStr: string | undefined = pubDateStr;
 

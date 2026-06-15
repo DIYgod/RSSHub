@@ -93,7 +93,7 @@ async function handler(ctx) {
 
             return {
                 title: item.find('a.xst').text(),
-                link: new URL(item.find(' a.xst').prop('href').split('&extra=')[0], rootUrl).href,
+                link: new URL(item.find(' a.xst').prop('href').split('&extra=', 1)[0], rootUrl).href,
                 author: item.find('td.by-author cite').text(),
                 pubDate: parseRelativeDate(item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };

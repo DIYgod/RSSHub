@@ -101,7 +101,7 @@ function tryFixStatus(status) {
     }
 
     if (status.sharing_url) {
-        status.sharing_url = status.sharing_url.split('&')[0];
+        status.sharing_url = status.sharing_url.split('&', 1)[0];
     }
 
     if (!result.isFixSuccess) {

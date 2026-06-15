@@ -48,7 +48,7 @@ async function handler(ctx) {
     const response = await ofetch(columnUrl);
     const $ = load(response);
 
-    const bigTitle = $('title').text().split('-')[0].trim();
+    const bigTitle = $('title').text().split('-', 1)[0].trim();
 
     const list = $('li[id^=line_u10]')
         .toArray()

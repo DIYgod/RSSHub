@@ -70,12 +70,12 @@ async function handler(ctx) {
                             .remove()
                             .end()
                             .html()
-                            ?.replaceAll(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
+                            ?.replaceAll(/(<img.*?) src="[^"]*"(.*?>)/g, '$1$2')
                             .replaceAll(/(<img.*?)zoomfile(.*?>)/g, '$1src$2');
                         const pattlHtml = content(item)
                             .find('div.pattl')
                             .html()
-                            ?.replaceAll(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
+                            ?.replaceAll(/(<img.*?) src="[^"]*"(.*?>)/g, '$1$2')
                             .replaceAll(/(<img.*?)zoomfile(.*?>)/g, '$1src$2');
                         const author = content(item).find('a.xw1').text().trim();
 

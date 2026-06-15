@@ -87,8 +87,8 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/moa/szcpxx',
-    name: '中华人民共和国农业农村部生猪专题重要政策',
+    path: '/szcpxx',
+    name: '生猪专题重要政策',
     url: 'www.moa.gov.cn',
     maintainers: ['nczitzk'],
     handler,
@@ -109,7 +109,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.moa.gov.cn/ztzl/szcpxx/zyzc/index.htm'],
-            target: '/moa/szcpxx',
+            target: '/szcpxx',
         },
     ],
 };

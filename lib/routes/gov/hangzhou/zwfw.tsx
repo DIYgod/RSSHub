@@ -190,7 +190,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
     );
 
 export const route: Route = {
-    path: '/hangzhou/zwfw',
+    path: '/zwfw',
     categories: ['government'],
     example: '/gov/hangzhou/zwfw',
     features: {
@@ -216,7 +216,7 @@ async function handler() {
     const host = 'https://www.hangzhou.gov.cn/col/col1256349/index.html';
     const response = await ofetch(host);
 
-    const browser = await playwright();
+    const context = await playwright();
     const link = host;
     const formatted = response
         .replace('<script type="text/xml">', '')
@@ -251,7 +251,7 @@ async function handler() {
                 const host = new URL(item.link).hostname;
                 if (host === 'www.zjzwfw.gov.cn') {
                     // 来源为浙江政务服务网
-                    const content = await crawler(item, browser);
+                    const content = await crawler(item, context);
                     const $ = load(content);
                     item.description = renderDescription(analyzer($('.item-left .item .bg_box')));
                     item.author = '浙江政务服务网';
@@ -278,7 +278,7 @@ async function handler() {
         )
     );
 
-    await browser.close();
+    await context.close();
     return {
         allowEmpty: true,
         title: '杭州市人民政府-政务服务公开',

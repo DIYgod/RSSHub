@@ -71,11 +71,11 @@ async function request(link, cache) {
     if (set_cookie) {
         for (const e of set_cookie) {
             if (e.includes('security_session_verify')) {
-                cache.set(security_key, e.split(';')[0]);
+                cache.set(security_key, e.split(';', 1)[0]);
             } else if (e.includes('PHPSESSID')) {
-                cache.set(PHPSESSID_key, e.split(';')[0]);
+                cache.set(PHPSESSID_key, e.split(';', 1)[0]);
             } else if (e.includes('py_loginauth')) {
-                cache.set(loginauth_key, e.split(';')[0]);
+                cache.set(loginauth_key, e.split(';', 1)[0]);
             }
         }
     }

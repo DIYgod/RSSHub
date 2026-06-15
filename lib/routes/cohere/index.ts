@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/blog'],
+    path: '/blog',
     name: 'Blog',
     url: 'cohere.com/blog',
     maintainers: ['Loongphy'],

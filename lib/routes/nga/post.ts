@@ -48,7 +48,7 @@ async function handler(ctx) {
     const getLastPageId = async (tid, authorId) => {
         const $ = await getPage(tid, authorId);
         const nav = $('#pagebtop');
-        const match = nav.html().match(/{0:'\/read\.php\?tid=(\d+).*?',1:(\d+),.*?}/);
+        const match = nav.html().match(/\{0:'\/read\.php\?tid=(\d)[^']*',1:(\d+),[^}]*\}/);
         return match ? match[2] : 1;
     };
 
@@ -62,33 +62,33 @@ async function handler(ctx) {
 
     const formatContent = (str) => {
         // 简单样式
-        str = deepReplace(str, /\[(b|u|i|del|code|sub|sup)](.+?)\[\/\1]/g, '<$1>$2</$1>');
+        str = deepReplace(str, /\[([bui]|del|code|sub|sup)\](.+?)\[\/\1\]/g, '<$1>$2</$1>');
         str = str
-            .replaceAll(/\[dice](.+?)\[\/dice]/g, '<b>ROLL : $1</b>')
-            .replaceAll(/\[color=(.+?)](.+?)\[\/color]/g, '<span style="color:$1;">$2</span>')
-            .replaceAll(/\[font=(.+?)](.+?)\[\/font]/g, '<span style="font-family:$1;">$2</span>')
-            .replaceAll(/\[size=(.+?)](.+?)\[\/size]/g, '<span style="font-size:$1;">$2</span>')
-            .replaceAll(/\[align=(.+?)](.+?)\[\/align]/g, '<span style="text-align:$1;">$2</span>');
+            .replaceAll(/\[dice\](.+?)\[\/dice\]/g, '<b>ROLL : $1</b>')
+            .replaceAll(/\[color=([^\]]+)\](.+?)\[\/color\]/g, '<span style="color:$1;">$2</span>')
+            .replaceAll(/\[font=([^\]]+)\](.+?)\[\/font\]/g, '<span style="font-family:$1;">$2</span>')
+            .replaceAll(/\[size=([^\]]+)\](.+?)\[\/size\]/g, '<span style="font-size:$1;">$2</span>')
+            .replaceAll(/\[align=([^\]]+)\](.+?)\[\/align\]/g, '<span style="text-align:$1;">$2</span>');
         // 列表
-        str = deepReplace(str, /\[\*](.+?)(?=\[\*]|\[\/list])/g, '<li>$1</li>');
-        str = deepReplace(str, /\[list](.+?)\[\/list]/g, '<ul>$1</ul>');
+        str = deepReplace(str, /\[\*\](.+?)(?=\[\*\]|\[\/list\])/g, '<li>$1</li>');
+        str = deepReplace(str, /\[list\](.+?)\[\/list\]/g, '<ul>$1</ul>');
         // 图片
-        str = str.replaceAll(/\[img](.+?)\[\/img]/g, (m, src) => `<img src='${src[0] === '.' ? 'https://img.nga.178.com/attachments' + src.slice(1) : src}'></img>`);
+        str = str.replaceAll(/\[img\](.+?)\[\/img\]/g, (m, src) => `<img src='${src[0] === '.' ? 'https://img.nga.178.com/attachments' + src.slice(1) : src}'></img>`);
         // 折叠
-        str = deepReplace(str, /\[collapse(?:=(.+?))?](.+?)\[\/collapse]/g, '<details><summary>$1</summary>$2</details>');
+        str = deepReplace(str, /\[collapse(?:=([^\]]+))?\](.+?)\[\/collapse\]/g, '<details><summary>$1</summary>$2</details>');
         // 引用
-        str = deepReplace(str, /\[quote](.+?)\[\/quote]/g, '<blockquote>$1</blockquote>')
-            .replaceAll(/\[@(.+?)]/g, '<a href="https://nga.178.com/nuke.php?func=ucp&username=$1">@$1</a>')
-            .replaceAll(/\[uid=(\d+)](.+?)\[\/uid]/g, '<a href="https://nga.178.com/nuke.php?func=ucp&uid=$1">@$2</a>')
-            .replaceAll(/\[tid=(\d+)](.+?)\[\/tid]/g, '<a href="https://nga.178.com/read.php?tid=$1">$2</a>')
-            .replaceAll(/\[pid=(\d+),(\d+),(\d+)](.+?)\[\/pid]/g, (m, pid, tid, page, str) => {
+        str = deepReplace(str, /\[quote\](.+?)\[\/quote\]/g, '<blockquote>$1</blockquote>')
+            .replaceAll(/\[@(.+?)\]/g, '<a href="https://nga.178.com/nuke.php?func=ucp&username=$1">@$1</a>')
+            .replaceAll(/\[uid=(\d+)\](.+?)\[\/uid\]/g, '<a href="https://nga.178.com/nuke.php?func=ucp&uid=$1">@$2</a>')
+            .replaceAll(/\[tid=(\d+)\](.+?)\[\/tid\]/g, '<a href="https://nga.178.com/read.php?tid=$1">$2</a>')
+            .replaceAll(/\[pid=(\d+),(\d+),(\d+)\](.+?)\[\/pid\]/g, (m, pid, tid, page, str) => {
                 const url = `https://nga.178.com/read.php?tid=${tid}&page=${page}#pid${pid}Anchor`;
                 return `<a href="${url}">${str}</a>`;
             });
         // 链接
-        str = str.replaceAll(/\[url=(.+?)](.+?)\[\/url]/g, '<a href="$1">$2</a>');
+        str = str.replaceAll(/\[url=([^\]]+)\](.+?)\[\/url\]/g, '<a href="$1">$2</a>');
         // 分割线
-        str = str.replaceAll(/\[h](.+?)\[\/h]/g, '<h4 style="font-size:1.17em;font-weight:bold;border-bottom:1px solid #aaa;clear:both;margin:1.33em 0 0.2em 0;">$1</h4>');
+        str = str.replaceAll(/\[h\](.+?)\[\/h\]/g, '<h4 style="font-size:1.17em;font-weight:bold;border-bottom:1px solid #aaa;clear:both;margin:1.33em 0 0.2em 0;">$1</h4>');
         return str;
     };
 

@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -9,14 +8,7 @@ import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
-export const route: Route = {
-    path: '/cmse/*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export async function handler(ctx) {
     const path = getSubPath(ctx).replaceAll(/(^\/cmse|\/$)/g, '');
 
     const rootUrl = 'http://www.cmse.gov.cn';

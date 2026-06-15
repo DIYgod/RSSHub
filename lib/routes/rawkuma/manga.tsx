@@ -70,7 +70,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                const imageMatches = detailResponse.match(/"images":(\[.*?])}],"lazyload"/);
+                const imageMatches = detailResponse.match(/"images":(\[.*?\])\}\],"lazyload"/);
 
                 const images = imageMatches ? JSON.parse(imageMatches[1]) : [];
 

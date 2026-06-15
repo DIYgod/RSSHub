@@ -86,19 +86,18 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const url = `${host}index/${cate}.htm`;
 
-    const { page, destroy, browser } = await getPlaywrightPage(url, {
+    const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
             await page.setExtraHTTPHeaders(headers);
-            await page.setUserAgent(headers['User-Agent']);
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                allowedResourceTypes.has(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
-        gotoConfig: { waitUntil: 'networkidle2' },
+        gotoConfig: { waitUntil: 'networkidle' },
     });
 
-    const cookies = await browser.cookies();
+    const cookies = await page.context().cookies();
     const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
 
     const response = await page.content();

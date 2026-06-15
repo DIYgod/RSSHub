@@ -16,7 +16,7 @@ const md = MarkdownIt({
 export const route: Route = {
     path: '/posts/:site',
     categories: ['blog'],
-    example: '/posts/walnut',
+    example: '/hedwig/posts/walnut',
     parameters: { site: '站点名，原则上只要是 `{site}.hedwig.pub` 都可以匹配' },
     features: {
         supportRadar: false,

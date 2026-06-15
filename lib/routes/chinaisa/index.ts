@@ -221,7 +221,7 @@ async function handler(ctx) {
 
                 item.title = content('div.article_title').contents().first().text() || item.title;
                 item.description = content('div.article_main').html();
-                item.author = matches[1].split(/&/)[0];
+                item.author = matches[1].split(/&/, 1)[0];
                 item.guid = `chinaisa-${item.guid}`;
                 item.pubDate = parseDate(matches[2]);
 

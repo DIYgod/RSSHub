@@ -4,7 +4,7 @@ import { handler } from './common';
 
 export const route: Route = {
     name: '头条资讯',
-    path: ['/'],
+    path: '/',
     example: '/cnbeta',
     radar: [
         {

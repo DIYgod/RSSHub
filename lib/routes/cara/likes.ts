@@ -7,7 +7,7 @@ import type { PostsResponse } from './types';
 import { customFetch, parseUserData } from './utils';
 
 export const route: Route = {
-    path: ['/likes/:user'],
+    path: '/likes/:user',
     categories: ['social-media'],
     example: '/cara/likes/fengz',
     parameters: { user: 'username' },

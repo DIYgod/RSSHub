@@ -26,14 +26,14 @@ export const route: Route = {
 async function handler(ctx) {
     const { studio } = ctx.req.param();
 
-    const browser = await playwright();
-    const response = await playwrightFetch(`${baseUrl}/api/studios/${studio}?page=0`, browser);
+    const context = await playwright();
+    const response = await playwrightFetch(`${baseUrl}/api/studios/${studio}?page=0`, context);
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, browser))));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, context))));
 
-    await browser.close();
+    await context.close();
 
     return {
         title: `${response.studio.hotDvdIds?.join(' ') ?? response.studio.name} Jav Online | Japanese Adult Video - JavTrailers.com`,

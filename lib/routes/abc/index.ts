@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:category{.+}?',
-    example: '/wa',
+    example: '/abc/wa',
     radar: [
         {
             source: ['abc.net.au/:category*'],
@@ -49,7 +49,7 @@ async function handler(ctx) {
         const feedUrl = new URL(`news/feed/${documentId}/rss.xml`, rootUrl).href;
 
         const feedResponse = await ofetch(feedUrl);
-        currentUrl = feedResponse.match(/<link>([\w-./:?]+)<\/link>/)[1];
+        currentUrl = feedResponse.match(/<link>([\w./:?-]+)<\/link>/)[1];
     }
 
     const currentResponse = await ofetch(currentUrl);
@@ -73,7 +73,7 @@ async function handler(ctx) {
             description: renderDescription({
                 image: i.image
                     ? {
-                          src: i.image.imgSrc.split(/\?/)[0],
+                          src: i.image.imgSrc.split(/\?/, 1)[0],
                           alt: i.image.alt,
                       }
                     : undefined,
@@ -86,7 +86,7 @@ async function handler(ctx) {
 
         if (i.mediaIndicator) {
             item.enclosure_type = 'audio/mpeg';
-            item.itunes_item_image = i.image?.imgSrc.split(/\?/)[0] ?? undefined;
+            item.itunes_item_image = i.image?.imgSrc.split(/\?/, 1)[0] ?? undefined;
             item.itunes_duration = i.mediaIndicator.duration;
         }
 
@@ -111,7 +111,7 @@ async function handler(ctx) {
                                 element.replaceWith(
                                     renderDescription({
                                         image: {
-                                            src: element.find('img').prop('src').split(/\?/)[0],
+                                            src: element.find('img').prop('src').split(/\?/, 1)[0],
                                             alt: element.find('figcaption').text().trim(),
                                         },
                                     })
@@ -124,7 +124,7 @@ async function handler(ctx) {
                     item.title = content('meta[property="og:title"]').prop('content');
                     item.description = '';
 
-                    const enclosurePattern = String.raw`"(?:MIME|content)?Type":"([\w]+/[\w]+)".*?"(?:fileS|s)?ize":(\d+),.*?"url":"([\w-.:/?]+)"`;
+                    const enclosurePattern = String.raw`"(?:MIME|content)?Type":"(\w+/\w+)".*?"(?:fileS|s)?ize":(\d+),.*?"url":"([\w.:/?-]+)"`;
 
                     const enclosureMatches = detailResponse.match(new RegExp(enclosurePattern, 'g'));
 
@@ -179,7 +179,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
         language: $('html').prop('lang'),
-        image: $('meta[property="og:image"]').prop('content').split('?')[0],
+        image: $('meta[property="og:image"]').prop('content').split('?', 1)[0],
         icon,
         logo: icon,
         subtitle: $('meta[property="og:title"]').prop('content'),

@@ -80,7 +80,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: new Date(item.find('span.source').text().split(' | ')[0] + ' GMT+1').toUTCString(),
+                pubDate: new Date(item.find('span.source').text().split(' | ', 1)[0] + ' GMT+1').toUTCString(),
             };
         });
 

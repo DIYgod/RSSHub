@@ -54,7 +54,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link,
-        image: decodeURIComponent($('.person div.slot').attr('data-args')).replace('avatar=', '').split('?')[0],
+        image: decodeURIComponent($('.person div.slot').attr('data-args')).replace('avatar=', '').split('?', 1)[0],
         language: $('html').attr('lang'),
         item: items,
     };

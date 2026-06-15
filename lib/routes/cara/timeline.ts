@@ -7,7 +7,7 @@ import type { PostsResponse } from './types';
 import { customFetch, parseUserData } from './utils';
 
 export const route: Route = {
-    path: ['/timeline/:user'],
+    path: '/timeline/:user',
     categories: ['social-media'],
     example: '/cara/timeline/fengz',
     parameters: { user: 'username' },

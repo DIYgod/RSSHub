@@ -11,7 +11,7 @@ export const ProcessItem = (item, tryGet) =>
     tryGet(item.link, async () => {
         const detailResponse = await ofetch(item.link);
 
-        const cipherTextList = detailResponse.match(/{"state":"(.*)","isEncrypt":true}/) ?? [];
+        const cipherTextList = detailResponse.match(/\{"state":"(.*)","isEncrypt":true\}/) ?? [];
 
         if (cipherTextList.length === 0) {
             const $ = load(detailResponse);
@@ -54,8 +54,8 @@ export const getWafTokenId = () =>
             const _wafTokenId = tokenIdResponse.headers
                 .getSetCookie()
                 .find((cookie) => cookie.startsWith('_waftokenid='))
-                ?.split(';')[0]
-                .split('=')[1];
+                ?.split(';', 1)[0]
+                .split('=', 2)[1];
 
             return _wafTokenId as string;
         },

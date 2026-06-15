@@ -11,7 +11,7 @@ type WorkData = {
     productImages?: ProductImage[];
 };
 
-const normalizeUrl = (url: string) => (url.includes('?x-oss-process') ? url.split('?')[0] : url);
+const normalizeUrl = (url: string) => (url.includes('?x-oss-process') ? url.split('?', 1)[0] : url);
 
 export const renderWork = (data: WorkData): string =>
     renderToString(
