@@ -5,7 +5,8 @@ const uuid = (length = 20) => {
     const e = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + Date.now();
     const r: string[] = [];
     for (let i = 0; i < length; i++) {
-        r.push(e.charAt(Math.floor(Math.random() * e.length)));
+        const index = Math.floor(Math.random() * e.length);
+        r.push(e.charAt(index));
     }
     return r.join('');
 };

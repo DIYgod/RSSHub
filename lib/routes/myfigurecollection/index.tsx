@@ -82,8 +82,11 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     item.title = content('.headline').text();
+                    const pictures = /myfigurecollection\.net\/picture\//.test(item.link)
+                        ? [{ src: content('meta[property="og:image"]').attr('content') }]
+                        : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content')));
                     item.description = renderDescription(
-                        /myfigurecollection\.net\/picture\//.test(item.link) ? [{ src: content('meta[property="og:image"]').attr('content') }] : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content'))),
+                        pictures,
                         content('.form-field')
                             .toArray()
                             .map((f) => ({

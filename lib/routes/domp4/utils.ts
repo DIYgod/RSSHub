@@ -80,7 +80,8 @@ function decodeCipherText(p, a, c, k, e, d) {
     }
     while (c--) {
         if (k[c]) {
-            p = p.replaceAll(new RegExp(String.raw`\b` + e(c.toString()) + String.raw`\b`, 'g'), () => k[c]);
+            const token = e(c.toString());
+            p = p.replaceAll(new RegExp(String.raw`\b` + token + String.raw`\b`, 'g'), () => k[c]);
         }
     }
     return p;
