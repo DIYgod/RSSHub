@@ -9,11 +9,11 @@ import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 import { PRESETS } from '@/utils/header-generator';
 
 const originalGlobals = {
-    fetch: globalThis.fetch,
-    Headers: globalThis.Headers,
-    FormData: globalThis.FormData,
-    Request: globalThis.Request,
-    Response: globalThis.Response,
+    fetch,
+    Headers,
+    FormData,
+    Request,
+    Response,
 };
 const originalHttp = {
     get: http.get,

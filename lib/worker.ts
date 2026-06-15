@@ -7,7 +7,7 @@ import '@/utils/request-rewriter';
 
 // Polyfill MessagePort for undici compatibility
 // undici uses MessagePort for type checking in webidl
-if (globalThis.MessagePort === undefined) {
+if (typeof MessagePort === 'undefined') {
     // @ts-expect-error Minimal polyfill for undici compatibility
     globalThis.MessagePort = class MessagePort extends EventTarget {
         onmessage: ((event: MessageEvent) => void) | null = null;
