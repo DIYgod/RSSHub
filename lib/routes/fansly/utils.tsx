@@ -150,7 +150,7 @@ const renderTipGoal = (tipGoalId, tipGoals) => {
 
 export { baseUrl, findAccountById, getAccountByUsername, getTagId, getTagSuggestion, getTimelineByAccountId, icon, parseAttachments, parseDescription, parseMedia, renderMedia, renderPoll, renderTipGoal };
 
-const FanslyMedia = ({ poster, src }: { poster?: { location?: string } | null; src?: { location?: string } }) => (
+const FanslyMedia = ({ poster, src }: { poster?: null | { location?: string }; src?: { location?: string } }) => (
     <>
         {poster && src ? (
             <video controls preload="metadata" poster={poster.location}>

@@ -205,10 +205,10 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
         },
         60 * 60 * 24 * 30, // 30 days
         false
-    )) as {
+    )) as null | {
         oauth_token: string;
         oauth_token_secret: string;
-    } | null;
+    };
 }
 
 export default login;

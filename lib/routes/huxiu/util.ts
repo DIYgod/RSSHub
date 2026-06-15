@@ -408,7 +408,7 @@ const processAudioInfo = (info) => {
  * @param {Object} item - The item to resolve identifiers for.
  * @returns {Object|null} - Object with guid and link, or null if invalid item.
  */
-const resolveItemIdentifiers = (item): { guid: string; link: string } | null => {
+const resolveItemIdentifiers = (item): null | { guid: string; link: string } => {
     if (item.object_type === 8) {
         return {
             guid: `huxiu-moment-${item.object_id}`,

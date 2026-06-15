@@ -98,11 +98,10 @@ export const twitterGot = async (
         });
     }
     let dispatchers:
-        | {
+        undefined | {
               jar: CookieJar;
               agent: CookieAgent | ProxyAgent;
-          }
-        | undefined;
+          };
     if (cookie) {
         logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
         if (typeof cookie === 'string') {
