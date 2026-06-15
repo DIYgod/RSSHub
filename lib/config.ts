@@ -1219,24 +1219,25 @@ const calculateValue = () => {
 };
 calculateValue();
 (async () => {
-    if (envs.REMOTE_CONFIG) {
-        const { default: logger } = await import('@/utils/logger');
-        try {
-            const data = await ofetch(envs.REMOTE_CONFIG, {
-                headers: {
-                    Authorization: `Basic ${envs.REMOTE_CONFIG_AUTH}`,
-                },
-            });
-            if (data) {
-                envs = Object.assign(envs, data);
-                calculateValue();
-                logger.info('Remote config loaded.');
-            } else {
-                logger.error('Remote config load failed.');
-            }
-        } catch (error) {
-            logger.error('Remote config load failed.', error);
+    if (!envs.REMOTE_CONFIG) {
+        return;
+    }
+    const { default: logger } = await import('@/utils/logger');
+    try {
+        const data = await ofetch(envs.REMOTE_CONFIG, {
+            headers: {
+                Authorization: `Basic ${envs.REMOTE_CONFIG_AUTH}`,
+            },
+        });
+        if (data) {
+            envs = Object.assign(envs, data);
+            calculateValue();
+            logger.info('Remote config loaded.');
+        } else {
+            logger.error('Remote config load failed.');
         }
+    } catch (error) {
+        logger.error('Remote config load failed.', error);
     }
 })();
 

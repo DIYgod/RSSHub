@@ -104,10 +104,12 @@ const parseItems = (list, context, tryGet) =>
                 const meta = JSON.parse($('head script[type="application/ld+json"]').eq(0).text());
                 $('.article__head .breadcrumb, .article__head h1, .article__provideViews, .ad').remove();
                 $('img.lazyload').each((_, img) => {
-                    if (img.attribs['data-src']) {
-                        img.attribs.src = img.attribs['data-src'];
-                        delete img.attribs['data-src'];
+                    if (!img.attribs['data-src']) {
+                    	return;
                     }
+
+                    img.attribs.src = img.attribs['data-src'];
+                    delete img.attribs['data-src'];
                 });
 
                 item.title = $('head title').text();

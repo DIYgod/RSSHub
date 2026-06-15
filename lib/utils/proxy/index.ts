@@ -105,21 +105,22 @@ const getCurrentProxy = (): ProxyState | null => {
 };
 
 const markProxyFailed = (failedProxyUri: string) => {
-    if (multiProxy) {
-        multiProxy.markProxyFailed(failedProxyUri);
-        const nextProxy = multiProxy.getNextProxy();
-        if (nextProxy) {
-            proxyUri = nextProxy.uri;
-            proxyUrlHandler = nextProxy.urlHandler || null;
-            agent = createAgentForProxy(nextProxy.uri, proxyObj);
-            dispatcher = createDispatcherForProxy(nextProxy.uri, proxyObj);
-            logger.info(`Switched to proxy: ${nextProxy.uri}`);
-        } else {
-            logger.warn('No available proxies remaining');
-            agent = null;
-            dispatcher = null;
-            proxyUri = undefined;
-        }
+    if (!multiProxy) {
+        return;
+    }
+    multiProxy.markProxyFailed(failedProxyUri);
+    const nextProxy = multiProxy.getNextProxy();
+    if (nextProxy) {
+        proxyUri = nextProxy.uri;
+        proxyUrlHandler = nextProxy.urlHandler || null;
+        agent = createAgentForProxy(nextProxy.uri, proxyObj);
+        dispatcher = createDispatcherForProxy(nextProxy.uri, proxyObj);
+        logger.info(`Switched to proxy: ${nextProxy.uri}`);
+    } else {
+        logger.warn('No available proxies remaining');
+        agent = null;
+        dispatcher = null;
+        proxyUri = undefined;
     }
 };
 

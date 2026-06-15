@@ -40,10 +40,11 @@ if (isWorker) {
             cacheModule.init();
             const { redisClient } = cacheModule.clients;
             globalCache.get = async (key) => {
-                if (key && cacheModule.status.available && redisClient) {
-                    const value = await redisClient.get(key);
-                    return value;
+                if (!key || !cacheModule.status.available || !redisClient) {
+                    return;
                 }
+                const value = await redisClient.get(key);
+                return value;
             };
             globalCache.has = async (key) => {
                 if (key && cacheModule.status.available && redisClient) {

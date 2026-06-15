@@ -73,14 +73,15 @@ export const handler = async (ctx) => {
                 const $$ = load(post.html);
 
                 $$('a').each((_, ele) => {
-                    if (ele.attribs.href?.includes('utm_campaign')) {
-                        const url = new URL(ele.attribs.href);
-                        url.searchParams.delete('utm_campaign');
-                        url.searchParams.delete('utm_source');
-                        url.searchParams.delete('utm_medium');
-                        url.searchParams.delete('_hsenc');
-                        ele.attribs.href = url.href;
+                    if (!ele.attribs.href?.includes('utm_campaign')) {
+                        return;
                     }
+                    const url = new URL(ele.attribs.href);
+                    url.searchParams.delete('utm_campaign');
+                    url.searchParams.delete('utm_source');
+                    url.searchParams.delete('utm_medium');
+                    url.searchParams.delete('_hsenc');
+                    ele.attribs.href = url.href;
                 });
 
                 const title = post.title;
