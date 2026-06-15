@@ -36,9 +36,8 @@ async function handler(ctx) {
     const category = ctx.req.param('category');
     const categoryUrl = `${SUB_URL}category/${category}/`;
 
-    const {
-        data: [{ id: categoryId }],
-    } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
+    const { data } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
+    const categoryId = data[0].id;
     const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}`);
 
     return {

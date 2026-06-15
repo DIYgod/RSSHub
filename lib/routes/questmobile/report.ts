@@ -165,10 +165,9 @@ async function handler(ctx) {
     const apiTreeUrl = new URL('api/v2/report/industry-label-tree', rootUrl).href;
 
     const {
-        data: {
-            data: { industryTree, labelTree },
-        },
+        data: { data: treeData },
     } = await got(apiTreeUrl);
+    const { industryTree, labelTree } = treeData;
 
     const industries = parseTree(industryTree);
     const labels = parseTree(labelTree);

@@ -39,14 +39,11 @@ async function handler(ctx: Context): Promise<Data> {
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
 
     const {
-        props: {
-            pageProps: { __APOLLO_STATE__ },
-        },
+        props: { pageProps },
     } = nextData;
+    const { __APOLLO_STATE__ } = pageProps;
 
-    const {
-        [`Work:${id}`]: { title, catchphrase },
-    } = __APOLLO_STATE__;
+    const { title, catchphrase } = __APOLLO_STATE__[`Work:${id}`];
 
     const values = Object.values(__APOLLO_STATE__);
     const episodes = values.filter((value) => value.__typename === 'Episode') as NextDataEpisode[];
