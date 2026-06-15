@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { id = 'c101972' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'http://www.csrc.gov.cn';
     const apiUrl = new URL('getLocalList', rootUrl).href;

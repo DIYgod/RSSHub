@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 24;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 24;
 
     const rootUrl = 'https://asiantolick.com';
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;

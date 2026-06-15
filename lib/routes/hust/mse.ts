@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'sylm/xyxw' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const domain = 'mse.hust.edu.cn';
     const rootUrl = `https://${domain}`;

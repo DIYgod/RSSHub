@@ -40,7 +40,7 @@ async function handler(ctx) {
         data: { data: chapters },
     } = await getChapters(id, uuid);
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 3;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 3;
 
     const items = await Promise.all(
         chapters.chapters

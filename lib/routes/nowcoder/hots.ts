@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '1';
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
     const size = Number.isFinite(limit) && limit > 0 ? limit : 20;
 
     let link: string;

@@ -9,7 +9,7 @@ import { parseArticle, parseArticleList, parsePost, parsePostList, rootUrl } fro
 
 export const handler = async (ctx) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const decodedParams = params
         ? decodeURIComponent(params)

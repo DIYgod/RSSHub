@@ -34,7 +34,7 @@ export default {
             const [value, cacheTtl] = await Promise.all([kvNamespace.get(key), kvNamespace.get(cacheTtlKey)]);
 
             if (value && refresh) {
-                const ttl = cacheTtl ? Number.parseInt(cacheTtl, 10) : config.cache.contentExpire;
+                const ttl = cacheTtl ? Number(cacheTtl) : config.cache.contentExpire;
                 // Refresh TTL by re-setting the value
                 // KV doesn't have a native expire refresh, so we need to re-put
                 // Use waitUntil pattern in production for non-blocking refresh

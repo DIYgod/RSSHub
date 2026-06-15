@@ -15,7 +15,7 @@ const defaultFeedPath = 'vncwdhq2xje7wp/rawzi0ruu6p6a1';
 
 export const handler = async (ctx): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
 
     // Reason: filter supports category/slug or just a slug directly for backward compatibility
     const slug = parseSlug(filter);

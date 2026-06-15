@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { type = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.ccfa.org.cn';
     const currentUrl = new URL(`portal/cn/xiehui_list.jsp?type=${type}`, rootUrl).href;

@@ -650,7 +650,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 25;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://www.ndrc.gov.cn';
     const currentUrl = new URL(`fggz${category ? `/${category.endsWith('/') ? category : `${category}/`}` : '/'}`, rootUrl).href;

@@ -91,7 +91,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || DEFAULT_LIMIT;
+    const limit = Number(ctx.req.query('limit')) || DEFAULT_LIMIT;
 
     const html = await ofetch(LIST_URL, getRequestOptions(ROOT_URL));
     const $ = load(html);

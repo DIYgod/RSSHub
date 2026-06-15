@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     category = category.replaceAll(/[^a-z0-9-]/gi, '');
 
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = `https://${category ? `${category}.` : ''}ynet.com`;
     const targetUrl: string = new URL(`list/${id}.html`, baseUrl).href;

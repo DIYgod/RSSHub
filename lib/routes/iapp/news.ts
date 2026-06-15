@@ -24,7 +24,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
     const baseUrl = 'https://iapp.org';
     const link = `${baseUrl}/news`;
 

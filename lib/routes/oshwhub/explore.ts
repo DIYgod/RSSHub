@@ -45,7 +45,7 @@ const md = MarkdownIt({
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'new', origin = 'all', projectTag } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
+    const limit = Number(ctx.req.query('limit') ?? '15');
 
     const baseUrl = 'https://oshwhub.com';
     const apiUrl: string = new URL('api/project', baseUrl).href;

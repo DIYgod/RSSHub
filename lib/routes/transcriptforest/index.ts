@@ -35,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.transcriptforest.com';
 

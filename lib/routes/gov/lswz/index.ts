@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'html/xinwen/index' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 25;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://www.lswz.gov.cn';
     const currentUrl = new URL(`${category}.shtml`, rootUrl).href;

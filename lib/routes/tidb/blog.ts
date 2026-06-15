@@ -65,7 +65,7 @@ const parseContentToHtml = (content: any[]): string =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;

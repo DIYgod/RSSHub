@@ -59,7 +59,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
 };
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts`;
     const posts = await ofetch(apiUrl, {

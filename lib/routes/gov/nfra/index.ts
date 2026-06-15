@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { id = '915' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 18;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 18;
 
     const rootUrl = 'https://www.nfra.gov.cn';
     const apiUrl = new URL(`cn/static/data/DocInfo/SelectDocByItemIdAndChild/data_itemId=${id},pageIndex=1,pageSize=18.json`, rootUrl).href;

@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { tag } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 1;
 
     const rootUrl = 'https://www.deeplearning.ai';
     const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}/`, rootUrl).href;

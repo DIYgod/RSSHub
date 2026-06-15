@@ -55,7 +55,7 @@ async function handler(ctx) {
     const path = ctx.req.param('path');
     let thePath = path ? `/${path}` : '';
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const shortcutMatches = thePath.match(/(\/news)?\/([\w-]+)/);
 

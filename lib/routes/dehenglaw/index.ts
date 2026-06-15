@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { language = 'CN', category = 'paper' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 6;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 6;
 
     const rootUrl = 'https://www.dehenglaw.com';
     const currentUrl = new URL(`${language}/${category}/0008/000901.aspx`, rootUrl).href;

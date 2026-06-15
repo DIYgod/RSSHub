@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zxyw' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '11', 10);
+    const limit = Number(ctx.req.query('limit') ?? '11');
 
     const rootUrl = 'https://www.chinacdc.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;

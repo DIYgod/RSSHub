@@ -108,7 +108,7 @@ const langMap = {
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
     const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number.parseInt(limitQuery, 10) : 100;
+    const limit = limitQuery ? Number(limitQuery) : 100;
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';

@@ -52,7 +52,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'mundo';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const pageUrl = `${rootUrl}/${category}/`;
 
     const response = await ofetch(pageUrl);

@@ -159,7 +159,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { language = 'en' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
 
     if (language === 'zh') {
         return cnNewsHander(limit);

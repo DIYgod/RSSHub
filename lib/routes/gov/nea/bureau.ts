@@ -53,7 +53,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { bureau } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 35;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 35;
 
     const rootUrl = 'https://www.nea.gov.cn';
     const link = `${rootUrl}/sjzz/${bureau}/index.htm`;

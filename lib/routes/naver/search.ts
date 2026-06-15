@@ -260,7 +260,7 @@ function parseKoreanRelativeTime(timeText: string): Date | undefined {
         return;
     }
 
-    const num = Number.parseInt(match[1] || match[3] || match[4] || '0', 10);
+    const num = Number(match[1] || match[3] || match[4] || '0');
     const unit = match[2] || '';
 
     if (unit.includes('분')) {

@@ -200,7 +200,7 @@ const siteTitle = '艾瑞咨询';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type: paramType = defaultType, id: paramId = '' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const typeObj = types?.[paramType] ?? Object.values(types).find((obj) => obj.label === paramType || obj.value === paramType);
     if (!typeObj) {
@@ -342,7 +342,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     data.reportpic,
                     ...Array.from(
                         {
-                            length: Number.parseInt(data.PagesCount ?? data.pagesCount, 10),
+                            length: Number(data.PagesCount ?? data.pagesCount),
                         },
                         (_, index) => `${imageBaseUrl}/${typeObj.imageSlug}/${item.detailId}/${index + 1}.jpg`
                     ),

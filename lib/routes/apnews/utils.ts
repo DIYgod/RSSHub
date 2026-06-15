@@ -52,7 +52,7 @@ export function fetchArticle(item) {
 
         const url = new URL(item.link);
         const description = url.hash ? $(url.hash).parent().find('.LiveBlogPost-body').html() : ldjson.description;
-        const pubDate = url.hash ? parseDate(Number.parseInt($(url.hash).parent().attr('data-posted-date-timestamp'), 10)) : parseDate(ldjson.coverageStartTime);
+        const pubDate = url.hash ? parseDate(Number($(url.hash).parent().attr('data-posted-date-timestamp'))) : parseDate(ldjson.coverageStartTime);
 
         return {
             ...item,

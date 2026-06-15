@@ -17,7 +17,7 @@ export const parseInteger = (value?: string | number, fallback?: number): number
         return fallback === undefined ? NaN : fallback;
     }
 
-    const parsed = Number.parseInt(value, 10);
+    const parsed = Number(value);
 
     if (fallback !== undefined && Number.isNaN(parsed)) {
         return fallback;

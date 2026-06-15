@@ -15,7 +15,7 @@ const parseJucheDate = (dateString) => {
     const dateMatch = dateString.match(/(\d+)\D(\d+)\D(\d+)/);
     const [jucheYear, month, day] = dateMatch ? dateMatch.slice(1) : [null, null, null];
     if (jucheYear && month && day) {
-        const year = Number.parseInt(jucheYear, 10) + 1911;
+        const year = Number(jucheYear) + 1911;
         return parseDate(`${year}-${month}-${day}`, 'YYYY-M-D');
     }
     return null;

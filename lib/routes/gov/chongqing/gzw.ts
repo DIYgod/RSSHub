@@ -28,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'tzgg_191' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://gzw.cq.gov.cn';
     const currentUrl = new URL(category, rootUrl).href;

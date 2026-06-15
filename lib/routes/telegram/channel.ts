@@ -470,7 +470,7 @@ async function handler(ctx) {
                             let width = 0;
                             const widthStr = $node.css('width');
                             if (widthStr && widthStr.endsWith('px')) {
-                                width = Number.parseFloat(widthStr);
+                                width = Number(widthStr);
                             }
                             /*
                              * Height is present when the message is an album but does not exist in other cases.
@@ -480,7 +480,7 @@ async function handler(ctx) {
                             let height = 0;
                             const heightStr = $node.css('height');
                             if (heightStr && heightStr.endsWith('px')) {
-                                height = Number.parseFloat(heightStr);
+                                height = Number(heightStr);
                             }
                             /*
                              * Only calculate height when needed.
@@ -489,7 +489,7 @@ async function handler(ctx) {
                              */
                             const aspectRatioStr = $node.find('.tgme_widget_message_photo').css('padding-top');
                             if (height <= 0 && width > 0 && aspectRatioStr && aspectRatioStr.endsWith('%')) {
-                                height = (Number.parseFloat(aspectRatioStr) / 100) * width;
+                                height = (Number(aspectRatioStr) / 100) * width;
                             }
                             // Only set width/height when >32 to avoid invisible images.
                             width > 32 && attrs.push(`width="${width}"`);
@@ -545,7 +545,7 @@ async function handler(ctx) {
                         let second = 0,
                             minute = 1;
                         while (p.length > 0) {
-                            second += minute * Number.parseInt(p.pop(), 10);
+                            second += minute * Number(p.pop());
                             minute *= 60;
                         }
                         return second.toString();

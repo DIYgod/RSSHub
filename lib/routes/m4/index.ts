@@ -22,7 +22,7 @@ async function handler(ctx) {
     if (!isValidHost(id)) {
         throw new InvalidParameterError('Invalid id');
     }
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = `http://${id}.m4.cn`;
     const currentUrl = new URL(category ? `/${category.replace(/\/$/, '')}/` : '/', rootUrl).href;

@@ -53,7 +53,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
 
     const apiRootUrl = 'http://api.cmc.hebtv.com';
     const apiUrl = new URL('cmsback/api/article/getMyArticleDetail', apiRootUrl).href;

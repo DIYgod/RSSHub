@@ -225,7 +225,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number.parseInt(limitQuery as string, 10) : 20;
+    const limit = limitQuery ? Number(limitQuery as string) : 20;
 
     let list: DataItem[];
 

@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { type = 'news', id } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'http://cpcaauto.com';
     const currentUrl = new URL(`news.php${type ? `?types=${type}${id ? `&anid=${id}` : ''}` : ''}`, rootUrl).href;

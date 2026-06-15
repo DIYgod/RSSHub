@@ -15,7 +15,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'main/noticeannouncement/cfmmcnotice' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'http://www.cfmmc.com';
     const apiUrl = new URL('servlet/json', rootUrl).href;

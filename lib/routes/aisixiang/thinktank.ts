@@ -29,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, type = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const currentUrl = new URL(`thinktank/${id}.html`, rootUrl).href;
 

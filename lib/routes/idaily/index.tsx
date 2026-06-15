@@ -24,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'zh-hans' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://idaily-cdn.idailycdn.com';
     const apiUrl = new URL(`api/list/v3/iphone/${language}`, rootUrl).href;

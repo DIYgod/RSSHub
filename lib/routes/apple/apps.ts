@@ -79,7 +79,7 @@ async function handler(ctx) {
     }
     platform = undefined;
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://apps.apple.com';
     const currentUrl = new URL(`${country}/app/${id}`, rootUrl).href;

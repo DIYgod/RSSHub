@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 18;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 18;
 
     const domain = '423down.com';
     const rootUrl = `https://www.${domain}`;

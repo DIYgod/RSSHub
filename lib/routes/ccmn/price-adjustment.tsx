@@ -133,7 +133,7 @@ async function handler(ctx) {
                 .trim();
 
             const changeStr = $avgSpan.find('.up_down').text().trim();
-            const changeNum = Number.parseFloat(changeStr);
+            const changeNum = Number(changeStr);
 
             let icon; // 如果 change 为 0 或者无法解析，则不显示图标
             if (changeNum > 0) {

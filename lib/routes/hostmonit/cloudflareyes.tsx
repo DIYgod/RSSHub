@@ -74,7 +74,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'v4' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const domain = 'hostmonit.com';
     const title = `CloudFlareYes${type === 'v6' ? type.toUpperCase() : ''}`;

@@ -50,7 +50,7 @@ const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.binance.com';
     const rawType = ctx.req.param('type');
     const rawLang = ctx.req.param('lang');
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
     const pageSize = Number.isNaN(limit) || limit <= 0 ? 20 : limit;
 
     let type = rawType;

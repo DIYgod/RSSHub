@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://chinese.joins.com';
     const currentUrl = new URL(`news/articleList.html?view_type=s${category ? `&sc_section_code=${category}` : ''}`, rootUrl).href;

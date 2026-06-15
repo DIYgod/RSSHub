@@ -23,7 +23,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const user = ctx.req.param('user');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
     const userInfo = await parseUserData(user);
 
     const api = `${API_HOST}/profiles/portfolio?id=${userInfo.id}&take=${limit}`;

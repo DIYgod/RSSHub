@@ -64,7 +64,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '', id = '' } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') || '20', 10);
+    const limit = Number(ctx.req.query('limit') || '20');
     const hasTopicId = id && Object.hasOwn(categories, category);
 
     const rootUrl = 'https://news.now.com';

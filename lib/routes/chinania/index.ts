@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'xiehuidongtai/xiehuitongzhi' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 25;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://www.chinania.org.cn';
     const currentUrl = new URL(`html/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;

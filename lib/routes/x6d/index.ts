@@ -51,7 +51,7 @@ export const route: Route = {
 
 export async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 22;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 22;
 
     const rootUrl = 'https://xd.x6d.com';
 

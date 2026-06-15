@@ -13,7 +13,7 @@ import { renderDescription } from './templates/security-releases';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = 'en-us' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://support.apple.com';
     const targetUrl: string = new URL(`${language}/100100`, baseUrl).href;

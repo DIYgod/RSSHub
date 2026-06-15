@@ -25,7 +25,7 @@ function isValidDate(dateString: string): boolean {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
     const query: string = ctx.req.param('query') ?? '';
     const queries: Record<string, string> = {
         stock: '',

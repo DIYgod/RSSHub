@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const sort = ctx.req.param('sort') || 'U';
-    const score = Number.parseFloat(ctx.req.param('score')) || 0;
+    const score = Number(ctx.req.param('score')) || 0;
     const tags = ctx.req.param('tags') || '';
 
     const response = await got({
@@ -41,7 +41,7 @@ async function handler(ctx) {
         link: 'https://movie.douban.com/tag/#/?sort=U&range=0,10&tags=',
         item: movies
             .map((item) => {
-                const itemScore = Number.parseFloat(item.rate) || 0;
+                const itemScore = Number(item.rate) || 0;
 
                 return itemScore >= score
                     ? {

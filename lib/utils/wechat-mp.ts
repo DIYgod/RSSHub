@@ -391,7 +391,7 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
             if (width && ratio) {
                 const width_ = Math.min(Number.parseInt(width), 677);
                 $iframe.attr('width', width_.toString());
-                $iframe.attr('height', (width_ / Number.parseFloat(ratio)).toString());
+                $iframe.attr('height', (width_ / Number(ratio)).toString());
             }
         } // else {} FIXME: https://mp.weixin.qq.com/s?__biz=Mzg5Mjk3MzE4OQ==&mid=2247549515&idx=2&sn=a608fca597f0589c1aebd6d0b82ff6e9
     });

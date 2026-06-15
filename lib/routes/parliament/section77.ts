@@ -140,8 +140,8 @@ async function handler(ctx) {
 
                 if (voteRegex) {
                     const voteTotal = Number.parseInt(voteRegex[0]);
-                    const upvotePercent = Number.parseFloat(voteRegex[1]);
-                    const downvotePercent = Number.parseFloat(voteRegex[2]);
+                    const upvotePercent = Number(voteRegex[1]);
+                    const downvotePercent = Number(voteRegex[2]);
 
                     item.upvotes = Number.parseInt((upvotePercent / 100) * voteTotal);
                     item.downvotes = Number.parseInt((downvotePercent / 100) * voteTotal);

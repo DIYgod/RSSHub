@@ -174,7 +174,7 @@ async function handler(ctx) {
     const { limit } = ctx.req.query();
 
     // 请求链接
-    let searchUrl = `https://api.stunning.kr/api/v1/dantats/portfolio?state=Public&limit=${limit ? Number.parseInt(limit, 10) : 20}&search=${query}&orderBy=${order}`;
+    let searchUrl = `https://api.stunning.kr/api/v1/dantats/portfolio?state=Public&limit=${limit ? Number(limit) : 20}&search=${query}&orderBy=${order}`;
     // 分类
     const index = (Number(category) || 0) - 1;
     const matchedCategory = categoryMap[index];
