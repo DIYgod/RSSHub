@@ -82,12 +82,15 @@ async function handler(ctx): Promise<Data> {
         return await getNSFWUserNovels(id, fullContent, limit);
     }
 
-    const nonR18Result = await getSFWUserNovels(id, fullContent, limit).catch((error) => {
-        if (error.name === 'Error') {
-            return null;
+    let nonR18Result;
+    try {
+        nonR18Result = await getSFWUserNovels(id, fullContent, limit);
+    } catch (error: any) {
+        if (error.name !== 'Error') {
+            throw error;
         }
-        throw error;
-    });
+        nonR18Result = null;
+    }
 
     if (nonR18Result) {
         return nonR18Result;

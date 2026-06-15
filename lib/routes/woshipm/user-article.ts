@@ -35,7 +35,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 12;
     const link = `${baseUrl}/u/${id}`;
 
-    const data = await got(link).then((res) => res.data);
+    const data = (await got(link)).data;
     const $ = load(data);
     const name = $('.author--meta .name').text();
 

@@ -52,7 +52,7 @@ async function handler(ctx) {
                     resolve({});
                 }
                 setTimeout(() => {
-                    page.reload().then();
+                    page.reload();
                     retryCount++;
                 }, 3000);
             }
@@ -66,7 +66,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
-    const resData = (await promise.catch((error) => error)) as any[];
+    const resData = await promise;
 
     await context.close();
     const data: Data = {

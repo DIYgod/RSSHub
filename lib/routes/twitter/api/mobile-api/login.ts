@@ -118,42 +118,39 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
 
                 headers['x-guest-token'] = guestToken.data.guest_token;
 
-                let task = await ofetch
-                    .raw(
-                        ENDPOINT +
-                            '?' +
-                            new URLSearchParams({
-                                flow_name: 'login',
-                                api_version: '1',
-                                known_device_token: '',
-                                sim_country_code: 'us',
-                            }).toString(),
-                        {
-                            method: 'POST',
-                            headers,
-                            body: {
-                                flow_token: null,
-                                input_flow_data: {
-                                    country_code: null,
-                                    flow_context: {
-                                        referrer_context: {
-                                            referral_details: 'utm_source=google-play&utm_medium=organic',
-                                            referrer_url: '',
-                                        },
-                                        start_location: {
-                                            location: 'deeplink',
-                                        },
+                const { headers: _headers, _data } = await ofetch.raw(
+                    ENDPOINT +
+                        '?' +
+                        new URLSearchParams({
+                            flow_name: 'login',
+                            api_version: '1',
+                            known_device_token: '',
+                            sim_country_code: 'us',
+                        }).toString(),
+                    {
+                        method: 'POST',
+                        headers,
+                        body: {
+                            flow_token: null,
+                            input_flow_data: {
+                                country_code: null,
+                                flow_context: {
+                                    referrer_context: {
+                                        referral_details: 'utm_source=google-play&utm_medium=organic',
+                                        referrer_url: '',
                                     },
-                                    requested_variant: null,
-                                    target_user_id: 0,
+                                    start_location: {
+                                        location: 'deeplink',
+                                    },
                                 },
+                                requested_variant: null,
+                                target_user_id: 0,
                             },
-                        }
-                    )
-                    .then(({ headers: _headers, _data }) => {
-                        headers.att = _headers.get('att');
-                        return { data: _data };
-                    });
+                        },
+                    }
+                );
+                headers.att = _headers.get('att');
+                let task = { data: _data };
 
                 logger.debug('Twitter login flow start.');
                 const runTask = async ({ data }) => {
