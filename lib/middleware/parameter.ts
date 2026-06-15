@@ -406,9 +406,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (num.test(ctx.req.query('brief')!)) {
                 const brief: number = Number.parseInt(ctx.req.query('brief')!);
                 for (const item of data.item) {
-                    let text;
                     if (item.description) {
-                        text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
+                        const text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
                         item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
                     }
                 }
