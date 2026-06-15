@@ -66,7 +66,7 @@ export const route: Route = {
         });
 
         const museumName = namespace.zh?.name || namespace.name;
-        const titleTag = currentType ? `${currentType.name}` : '正在展览';
+        const titleTag = currentType ? currentType.name : '正在展览';
         const $ = load(response.data);
 
         const itemElements = $('.item').toArray();

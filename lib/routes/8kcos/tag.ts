@@ -34,7 +34,7 @@ async function handler(ctx) {
     const items = await getPosts(limit, { tags: tagInfo.id });
 
     return {
-        title: `${tagInfo.title}`,
+        title: tagInfo.title,
         link: `${SUB_URL}/tag/${tag}/`,
         item: items,
     };

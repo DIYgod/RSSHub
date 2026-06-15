@@ -1,3 +1,4 @@
+// oxlint-disable unicorn-js/no-useless-template-literals
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { afterAll, afterEach } from 'vitest';
