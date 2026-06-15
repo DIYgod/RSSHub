@@ -69,8 +69,9 @@ export async function parseNovelContent(content: string, images: Record<string, 
         // 處理作者上傳的圖片
         // Process author uploaded images
         content = content.replaceAll(/\[uploadedimage:(\d+)\]/g, (match, imageId) => {
-            if (images[imageId]) {
-                return `<img src="${pixivUtils.getProxiedImageUrl(images[imageId])}" alt="novel illustration ${imageId}">`;
+            const imageUrl = images[imageId];
+            if (imageUrl) {
+                return `<img src="${pixivUtils.getProxiedImageUrl(imageUrl)}" alt="novel illustration ${imageId}">`;
             }
             return match;
         });

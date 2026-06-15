@@ -128,7 +128,7 @@ const getLinkName = async (link) => {
             });
         return Object.fromEntries(data);
     });
-    if (link in links) {
+    if (Object.hasOwn(links, link)) {
         return links[link];
     }
     return '列表';

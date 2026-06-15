@@ -93,7 +93,10 @@ const decrypt = (txt: string, articleid: string, chapterid: string, decryptionMa
     return txt
         .replaceAll(/\u2003|\n/g, '')
         .split('<br><br>')
-        .flatMap((line, index, array) => (lineMap[index] ? array[lineMap[index]] : line).split('<br>'))
+        .flatMap((line, index, array) => {
+            const mapped = lineMap[index];
+            return (mapped ? array[mapped] : line).split('<br>');
+        })
         .slice(1, -2)
         .join('<br><br>');
 };

@@ -116,7 +116,7 @@ async function handler(ctx) {
 
     if (['hk', 'tw'].includes(region)) {
         const { categoryMap } = regionConfig[region];
-        if (category && !categoryMap[category]) {
+        if (category && !Object.hasOwn(categoryMap, category)) {
             throw new InvalidParameterError(`Unknown category for ${region}: ${category}`);
         }
         const tags = category ? categoryMap[category].tags : undefined;

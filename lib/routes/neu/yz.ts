@@ -73,7 +73,7 @@ const parsePage = async (items, type) => {
 
 const handler = async (ctx) => {
     let type = ctx.req.param('type');
-    if (idMp[type]) {
+    if (Object.hasOwn(idMp, type)) {
         type = idMp[type];
     }
     const newsUrl = `${BASE_URL}/${type}/list.htm`;

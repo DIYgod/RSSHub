@@ -44,8 +44,9 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
 
         for (const header of HEADER_LIST) {
-            if (!request.headers.has(header) && generatedHeaders[header]) {
-                request.headers.set(header, generatedHeaders[header]);
+            const headerValue = generatedHeaders[header];
+            if (!request.headers.has(header) && headerValue) {
+                request.headers.set(header, headerValue);
             }
         }
     } else if (!request.headers.get('user-agent')) {

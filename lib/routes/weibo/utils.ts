@@ -610,8 +610,9 @@ const weiboUtils = {
         const replace = (html) => html.replaceAll(regex, 'tvax'); // enforce `tvax` as `tva` has a strict WAF
         const replaceKV = (obj, keys) => {
             for (const key of keys) {
-                if (obj[key]) {
-                    obj[key] = replace(obj[key]);
+                const value = obj[key];
+                if (value) {
+                    obj[key] = replace(value);
                 }
             }
         };

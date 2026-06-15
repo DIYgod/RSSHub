@@ -77,7 +77,7 @@ const getSafeId = () =>
 
 async function handler(ctx) {
     const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
-    const subformId = subformName in forumIdMaps ? forumIdMaps[subformName] : subformName;
+    const subformId = Object.hasOwn(forumIdMaps, subformName) ? forumIdMaps[subformName] : subformName;
     const type = ctx.req.param('type');
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;

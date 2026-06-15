@@ -58,8 +58,9 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             }
 
             for (const header of HEADER_LIST) {
-                if (!headersLowerCaseKeys.has(header) && generatedHeaders[header]) {
-                    options.headers[header] = generatedHeaders[header];
+                const generatedHeader = generatedHeaders[header];
+                if (!headersLowerCaseKeys.has(header) && generatedHeader) {
+                    options.headers[header] = generatedHeader;
                 }
             }
         } else if (!headersLowerCaseKeys.has('user-agent')) {

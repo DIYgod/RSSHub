@@ -41,7 +41,7 @@ export const handler = async (ctx) => {
 
     // Add type filter if provided
     if (type && ids) {
-        if (!filterTypeMap[type]) {
+        if (!Object.hasOwn(filterTypeMap, type)) {
             throw new Error(`Invalid type: ${type}. Must be one of: ${Object.keys(filterTypeMap).join(', ')}`);
         }
         const typeField = filterTypeMap[type];

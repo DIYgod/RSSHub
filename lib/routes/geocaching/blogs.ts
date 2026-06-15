@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     if (language === 'en') {
         searchParams.categories_exclude = Object.values(languageToCategory).join(',');
-    } else if (language in languageToCategory) {
+    } else if (Object.hasOwn(languageToCategory, language)) {
         searchParams.categories = languageToCategory[language];
     } else if (language === 'all') {
         // do nothing
@@ -104,9 +104,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: language in languageToLabel ? `Geocaching Blog - ${languageToLabel[language]}` : 'Geocaching Blog',
+        title: Object.hasOwn(languageToLabel, language) ? `Geocaching Blog - ${languageToLabel[language]}` : 'Geocaching Blog',
         link: `${baseUrl}/blog/`,
-        language: language in languageToCategory ? language : 'en',
+        language: Object.hasOwn(languageToCategory, language) ? language : 'en',
         image: 'https://i.ytimg.com/vi_webp/G28VxvBoSLQ/maxresdefault.webp',
         icon: `${baseUrl}/blog/favicon.ico`,
         logo: `${baseUrl}/blog/favicon.ico`,

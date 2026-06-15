@@ -68,7 +68,7 @@ export const route: Route = {
             }) || [];
         const res = {};
         for (const current of items) {
-            if (!res[current.link]) {
+            if (!Object.hasOwn(res, current.link)) {
                 res[current.link] = current;
             }
         }

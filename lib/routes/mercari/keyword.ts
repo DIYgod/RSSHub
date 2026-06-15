@@ -56,7 +56,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { sort, order, status, keyword } = ctx.req.param();
-    const statusArray = MercariStatus[status] ? [MercariStatus[status]] : [];
+    const statusValue = MercariStatus[status];
+    const statusArray = statusValue ? [statusValue] : [];
     const searchItems = (await fetchSearchItems(MercariSort[sort], MercariOrder[order], statusArray, keyword)).items;
     const items = await Promise.all(
         searchItems.map((item) =>

@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     let items = [];
     let dataTitle = '';
-    if (categoryList[category]) {
+    if (Object.hasOwn(categoryList, category)) {
         const response = await got({
             method: 'get',
             url,

@@ -163,7 +163,7 @@ async function handler(ctx: Context): Promise<Data> {
         searchParams.type = novelType;
     }
 
-    if (!(sub in syosetuSubToNocgenre)) {
+    if (!Object.hasOwn(syosetuSubToNocgenre, sub)) {
         throw new InvalidParameterError(`Invalid subsite: ${sub}`);
     }
     const nocgenre = syosetuSubToNocgenre[sub];

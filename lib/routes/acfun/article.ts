@@ -94,7 +94,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { categoryId, sortType = 'createTime', timeRange = 'all' } = ctx.req.param();
-    if (!categoryMap[categoryId]) {
+    if (!Object.hasOwn(categoryMap, categoryId)) {
         throw new InvalidParameterError(`Invalid category Id: ${categoryId}`);
     }
     if (!sortTypeEnum.has(sortType)) {

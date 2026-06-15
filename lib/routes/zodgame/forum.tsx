@@ -54,10 +54,10 @@ async function handler(ctx) {
 
     const ThreadList = info.forum_threadlist
         .map((item) => {
-            if (!info.threadtypes.types[item.typeid]) {
+            const type = info.threadtypes.types[item.typeid];
+            if (!type) {
                 return;
             }
-            const type = info.threadtypes.types[item.typeid];
 
             return {
                 tid: item.tid,

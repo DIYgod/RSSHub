@@ -63,12 +63,12 @@ for (const namespace in namespacesToProcess) {
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
                 if (domain) {
-                    if (!radar[domain]) {
+                    if (!Object.hasOwn(radar, domain)) {
                         radar[domain] = {
                             _name: namespaceData.name,
                         };
                     }
-                    if (!radar[domain][subdomain]) {
+                    if (!Object.hasOwn(radar[domain], subdomain)) {
                         radar[domain][subdomain] = [];
                     }
                     radar[domain][subdomain].push({

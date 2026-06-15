@@ -139,7 +139,7 @@ if (Object.keys(modules).length) {
                 content.namespace
             );
         } else if ('route' in content) {
-            if (!namespaces[namespace]) {
+            if (!Object.hasOwn(namespaces, namespace)) {
                 namespaces[namespace] = {
                     name: namespace,
                     routes: {},
@@ -160,7 +160,7 @@ if (Object.keys(modules).length) {
                 };
             }
         } else if ('apiRoute' in content) {
-            if (!namespaces[namespace]) {
+            if (!Object.hasOwn(namespaces, namespace)) {
                 namespaces[namespace] = {
                     name: namespace,
                     routes: {},

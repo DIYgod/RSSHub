@@ -195,7 +195,7 @@ async function handlePostList(type: string, sub: string): Promise<DataItem[]> {
                 base: `${baseUrl}/${category.path}`,
             };
         });
-    } else if (sub in category.sub) {
+    } else if (Object.hasOwn(category.sub, sub)) {
         urlList.push({
             url: `${baseUrl}/${category.path}/${category.sub[sub].path}.htm`,
             base: `${baseUrl}/${category.path}`,

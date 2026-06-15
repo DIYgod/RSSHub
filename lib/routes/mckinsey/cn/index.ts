@@ -60,7 +60,7 @@ async function handler(ctx) {
     let categorySlug = '';
     if (category === '25') {
         /* empty */
-    } else if (categories[category]) {
+    } else if (Object.hasOwn(categories, category)) {
         // Category number for backwards compatibility
         categorySlug = categories[category].slug;
     } else {

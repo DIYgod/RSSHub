@@ -9,10 +9,10 @@ for (const namespace in namespaces) {
     for (const path in namespaces[namespace].routes) {
         if (namespaces[namespace].routes[path].categories?.length) {
             for (const category of namespaces[namespace].routes[path].categories!) {
-                if (!categoryList[category]) {
+                if (!Object.hasOwn(categoryList, category)) {
                     categoryList[category] = {};
                 }
-                if (!categoryList[category][namespace]) {
+                if (!Object.hasOwn(categoryList[category], namespace)) {
                     categoryList[category][namespace] = {
                         ...namespaces[namespace],
                         routes: {},

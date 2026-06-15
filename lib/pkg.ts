@@ -42,7 +42,7 @@ export async function registerRoute(namespace: string, route: Route, namespaceCo
 
     const { namespaces } = await import('./registry');
 
-    if (!namespaces[namespace]) {
+    if (!Object.hasOwn(namespaces, namespace)) {
         namespaces[namespace] = {
             ...namespaceConfig,
             name: namespaceConfig?.name || namespace,

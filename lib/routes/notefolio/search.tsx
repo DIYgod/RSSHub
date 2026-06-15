@@ -177,8 +177,9 @@ async function handler(ctx) {
     let searchUrl = `https://api.stunning.kr/api/v1/dantats/portfolio?state=Public&limit=${limit ? Number.parseInt(limit, 10) : 20}&search=${query}&orderBy=${order}`;
     // 分类
     const index = (Number(category) || 0) - 1;
-    if (index >= 0 && categoryMap[index]) {
-        searchUrl += `&category=${categoryMap[index].category}`;
+    const matchedCategory = categoryMap[index];
+    if (index >= 0 && matchedCategory) {
+        searchUrl += `&category=${matchedCategory.category}`;
     }
     // 时间范围
     if (time !== 'all' && ['one-day', 'week', 'month', 'three-month'].includes(time)) {

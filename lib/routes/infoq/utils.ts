@@ -84,7 +84,7 @@ const parseToSimpleTexts = (content) =>
             },
         };
 
-        if (i.type in funcMaps) {
+        if (Object.hasOwn(funcMaps, i.type)) {
             return funcMaps[i.type]();
         }
 

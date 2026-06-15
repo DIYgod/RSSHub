@@ -42,7 +42,8 @@ For example, the category for <https://www.washingtonpost.com/national/investiga
 function handleDuplicates(array) {
     const objects = {};
     for (const obj of array) {
-        objects[obj.id] = objects[obj.id] ? Object.assign(objects[obj.id], obj) : obj;
+        const existing = objects[obj.id];
+        objects[obj.id] = existing ? Object.assign(existing, obj) : obj;
     }
     return Object.values(objects);
 }

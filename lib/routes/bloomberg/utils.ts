@@ -101,7 +101,7 @@ const parseArticle = (item) =>
             .map((a) => a && a.groups)[0];
         if (group) {
             const { page, link } = group;
-            if (apiEndpoints[page]) {
+            if (Object.hasOwn(apiEndpoints, page)) {
                 const api = { ...apiEndpoints[page] };
                 let res;
 
@@ -582,7 +582,7 @@ const nextNode = async (nodes) => {
 };
 
 const nodeToHtmlString = async (node, obj) => {
-    if (!node.type || !nodeRenderers[node.type]) {
+    if (!node.type || !Object.hasOwn(nodeRenderers, node.type)) {
         return `<node>${node.type}</node>`;
     }
     const str = await nodeRenderers[node.type](node, nextNode, obj);

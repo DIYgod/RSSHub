@@ -162,7 +162,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                     }
 
                     // If task does not exist in `flowTasks`, we need to implement it.
-                    if (!(subtask_id in flowTasks)) {
+                    if (!Object.hasOwn(flowTasks, subtask_id)) {
                         logger.error(`Twitter login flow task failed: unknown subtask: ${subtask_id}`);
                         return;
                     }
