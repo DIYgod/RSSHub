@@ -1,4 +1,4 @@
-// oxlint-disable unicorn/prefer-code-point unicorn-js/prefer-single-call unicorn-js/prefer-array-from-map unicorn/prefer-spread
+// oxlint-disable unicorn/prefer-code-point unicorn/prefer-single-call unicorn-js/prefer-array-from-map unicorn/prefer-spread
 // Credit:
 // https://blog.csdn.net/zjq592767809/article/details/126512798
 // https://blog.csdn.net/zhoumi_/article/details/126659351
