@@ -10,9 +10,12 @@ import { parseDate } from '@/utils/parse-date';
 
 export const BASE_URL = new URL('https://openai.com');
 
+const redirectStatusCodes = new Set([301, 302, 303, 307, 308]);
+const maxRedirects = 5;
+
 // OpenAI article pages return Cloudflare 403 (`cf-mitigated: challenge`) through request-rewriter's undici.fetch path.
 // The patched https.request path works, so keep this route-local.
-const fetchArticleHtml = async (url: string) =>
+const fetchArticleHtml = async (url: string, redirects: number = 0): Promise<string> =>
     await new Promise<string>((resolve, reject) => {
         const request = https.request(
             url,
@@ -23,17 +26,45 @@ const fetchArticleHtml = async (url: string) =>
                 },
             },
             (response) => {
+                const { statusCode } = response;
+
+                // Follow legacy article redirects to match ofetch's previous behavior.
+                if (statusCode && redirectStatusCodes.has(statusCode)) {
+                    response.resume();
+
+                    const location = response.headers.location;
+                    if (!location) {
+                        reject(new Error(`[GET] "${url}": ${statusCode} redirect without location`));
+                        return;
+                    }
+
+                    if (redirects >= maxRedirects) {
+                        reject(new Error(`[GET] "${url}": too many redirects`));
+                        return;
+                    }
+
+                    void (async () => {
+                        try {
+                            resolve(await fetchArticleHtml(new URL(location, url).href, redirects + 1));
+                        } catch (error) {
+                            reject(error);
+                        }
+                    })();
+                    return;
+                }
+
+                if (!statusCode || statusCode < 200 || statusCode >= 300) {
+                    response.resume();
+                    reject(new Error(`[GET] "${url}": ${statusCode}`));
+                    return;
+                }
+
                 let html = '';
                 response.setEncoding('utf8');
                 response.on('data', (chunk) => {
                     html += chunk;
                 });
                 response.on('end', () => {
-                    if (!response.statusCode || response.statusCode < 200 || response.statusCode >= 300) {
-                        reject(new Error(`[GET] "${url}": ${response.statusCode}`));
-                        return;
-                    }
-
                     resolve(html);
                 });
             }
