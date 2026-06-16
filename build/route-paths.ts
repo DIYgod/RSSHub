@@ -130,8 +130,8 @@ export type RoutePath =
   | `/agefans/detail/:id`
   | `/agefans/update`
   | `/agirls/:category?`
-  | `/agirls/topic/:topic`
   | `/agirls/topic_list`
+  | `/agirls/topic/:topic`
   | `/agora0/:category?`
   | `/agora0/pen0`
   | `/agri/:category{.+}?`
@@ -810,8 +810,8 @@ export type RoutePath =
   | `/docschina/weekly/:category?`
   | `/dol/announce/:owner?/:province?/:office?`
   | `/domp4/detail/:id`
-  | `/domp4/latest/:type?`
   | `/domp4/latest_movie_bt`
+  | `/domp4/latest/:type?`
   | `/dongqiudi/daily`
   | `/dongqiudi/player_news/:id`
   | `/dongqiudi/result/:team`
@@ -844,7 +844,7 @@ export type RoutePath =
   | `/douban/movie/weekly/:type?`
   | `/douban/music/latest/:area?`
   | `/douban/people/:userid/status/:routeParams?`
-  | `/douban/people/:userid/wish/:routeParams?`
+  | `/douban/people/:userid/wish`
   | `/douban/recommended/:type?/:routeParams?`
   | `/douban/replied/:uid`
   | `/douban/replies/:uid`
@@ -866,8 +866,8 @@ export type RoutePath =
   | `/duozhi/:category{.+}?`
   | `/duozhuayu/search/:wd`
   | `/dushu/fuzhou`
-  | `/dut/*/*`
   | `/dut/:0?`
+  | `/dut/*/*`
   | `/dw/news/:lang?/:id?`
   | `/dw/rss/:channel?`
   | `/dx2025/:type?/:category?`
@@ -1148,8 +1148,8 @@ export type RoutePath =
   | `/github/stars/:user/:repo`
   | `/github/topics/:name/:qs?`
   | `/github/trending/:since/:language/:spoken_language?`
-  | `/github/user/followers/:user`
   | `/github/user_event/:username/:types?`
+  | `/github/user/followers/:user`
   | `/github/wiki/:user/:repo/:page?`
   | `/gitkraken/release-note`
   | `/gitpod/blog`
@@ -1544,8 +1544,8 @@ export type RoutePath =
   | `/inoreader/rss/:user/:tag`
   | `/inspirehep/authors/:id`
   | `/inspirehep/literature/:q`
-  | `/instagram/2/:category/:key`
   | `/instagram/:category/:key`
+  | `/instagram/2/:category/:key`
   | `/instructables/projects/:category?`
   | `/investor/:id{.+}?`
   | `/iplaysoft/`
@@ -1767,8 +1767,8 @@ export type RoutePath =
   | `/lifeweek/tag/:id`
   | `/lightnovel/:keywords/:security_key?`
   | `/likeshop/:site`
-  | `/line/today/:edition/publisher/:id`
   | `/line/today/:edition?/:tab?`
+  | `/line/today/:edition/publisher/:id`
   | `/lineageos/changes`
   | `/link3/events`
   | `/link3/profile/:handle`
@@ -2022,8 +2022,8 @@ export type RoutePath =
   | `/ngocn2/:category?`
   | `/nhentai/index/:key/:keyword/:mode?`
   | `/nhentai/search/:keyword/:mode?`
-  | `/nhk/news/:lang?`
   | `/nhk/news_web_easy`
+  | `/nhk/news/:lang?`
   | `/niaogebiji/`
   | `/niaogebiji/cat/:cat`
   | `/niaogebiji/today`
@@ -2125,10 +2125,10 @@ export type RoutePath =
   | `/nwnu/department/postgraduate/:column`
   | `/nyaa/search/:query?`
   | `/nyaa/sukebei/search/:query?`
-  | `/nyaa/sukebei/user/:username/search/:query?`
   | `/nyaa/sukebei/user/:username?`
-  | `/nyaa/user/:username/search/:query?`
+  | `/nyaa/sukebei/user/:username/search/:query?`
   | `/nyaa/user/:username?`
+  | `/nyaa/user/:username/search/:query?`
   | `/nyc/mayors-office-news/:types?/:categories?`
   | `/nycu/aa/:id?`
   | `/nycu/announcement/:type`
@@ -2294,8 +2294,8 @@ export type RoutePath =
   | `/polymarket/search/:query`
   | `/polymarket/series/:slug?`
   | `/polymarket/user/:address`
-  | `/pornhub/category/:caty/:img?`
   | `/pornhub/category_url/:url?/:language?/:img?`
+  | `/pornhub/category/:caty/:img?`
   | `/pornhub/model/:username/:language?/:sort?/:img?`
   | `/pornhub/pornstar/:username/:language?/:sort?/:img?`
   | `/pornhub/search/:keyword/:img?`
@@ -2887,8 +2887,8 @@ export type RoutePath =
   | `/twitch/live/:login`
   | `/twitch/schedule/:login`
   | `/twitch/video/:login/:filter?`
-  | `/twitter/home/:routeParams?`
   | `/twitter/home_latest/:routeParams?`
+  | `/twitter/home/:routeParams?`
   | `/twitter/keyword/:keyword/:routeParams?`
   | `/twitter/likes/:id/:routeParams?`
   | `/twitter/list/:id/:routeParams?`
@@ -3030,8 +3030,8 @@ export type RoutePath =
   | `/weibo/search/hot/:fulltext?`
   | `/weibo/super_index/:id/:type?/:routeParams?`
   | `/weibo/timeline/:uid/:feature?/:routeParams?`
-  | `/weibo/user/:uid/:routeParams?`
   | `/weibo/user_bookmarks/:uid/:routeParams?`
+  | `/weibo/user/:uid/:routeParams?`
   | `/wellcee/rent/:city/:district?`
   | `/wellcee/support-city`
   | `/wenku8/:category?`
@@ -3144,8 +3144,8 @@ export type RoutePath =
   | `/xueqiu/stock_info/:id/:type?`
   | `/xueqiu/timeline/:usergroup_id?`
   | `/xueqiu/today`
-  | `/xueqiu/user/:id/:type?`
   | `/xueqiu/user_stock/:id`
+  | `/xueqiu/user/:id/:type?`
   | `/xunhupay/blog`
   | `/xupt/jyc/:type?`
   | `/xwenming/:category?`

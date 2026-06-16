@@ -2560,7 +2560,7 @@
   "/douban/replies/:uid": [
     "nczitzk"
   ],
-  "/douban/people/:userid/wish/:routeParams?": [
+  "/douban/people/:userid/wish": [
     "exherb"
   ],
   "/douyin/hashtag/:cid/:routeParams?": [
