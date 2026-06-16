@@ -17,7 +17,7 @@
         { "name": "regexp", "specifier": "eslint-plugin-regexp" },
         "@stylistic/eslint-plugin",
         "eslint-plugin-simple-import-sort",
-        "oxlint-plugin-eslint",
+        { "name": "eslint-js", "specifier": "oxlint-plugin-eslint" },
         "./eslint-plugins/nsfw-flag.js"
     ],
     "rules": {
