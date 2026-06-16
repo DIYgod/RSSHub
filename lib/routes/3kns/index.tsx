@@ -98,7 +98,11 @@ async function handler(ctx: Context): Promise<Data> {
                 description:
                     renderToString(
                         <ThreeKnsDescription
-                            cover={$item.find('.entry-media img').attr('src')?.trim().replace('.', () => baseUrl)}
+                            cover={$item
+                                .find('.entry-media img')
+                                .attr('src')
+                                ?.trim()
+                                .replace('.', () => baseUrl)}
                             title={title}
                             tid={$item.find('.jb-chakan').text().trim()}
                             category={category}

@@ -105,7 +105,7 @@ const parseItems = (list, context, tryGet) =>
                 $('.article__head .breadcrumb, .article__head h1, .article__provideViews, .ad').remove();
                 $('img.lazyload').each((_, img) => {
                     if (!img.attribs['data-src']) {
-                    	return;
+                        return;
                     }
 
                     img.attribs.src = img.attribs['data-src'];

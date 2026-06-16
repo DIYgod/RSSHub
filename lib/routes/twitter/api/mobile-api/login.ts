@@ -57,27 +57,31 @@ const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Reco
 // So abstract these tasks out into a map so that they can be dynamically executed during the login flow.
 // If there are missing tasks in the future, simply add the implementation of that task to it.
 const flowTasks = {
-    LoginEnterUserIdentifier: async ({ flowToken, username }) => await postTask(flowToken, 'LoginEnterUserIdentifier', {
+    LoginEnterUserIdentifier: async ({ flowToken, username }) =>
+        await postTask(flowToken, 'LoginEnterUserIdentifier', {
             enter_text: {
                 suggestion_id: null,
                 text: username,
                 link: 'next_link',
             },
         }),
-    LoginEnterPassword: async ({ flowToken, password }) => await postTask(flowToken, 'LoginEnterPassword', {
+    LoginEnterPassword: async ({ flowToken, password }) =>
+        await postTask(flowToken, 'LoginEnterPassword', {
             enter_password: {
                 password,
                 link: 'next_link',
             },
         }),
-    LoginEnterAlternateIdentifierSubtask: async ({ flowToken, phoneOrEmail }) => await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
+    LoginEnterAlternateIdentifierSubtask: async ({ flowToken, phoneOrEmail }) =>
+        await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
             enter_text: {
                 suggestion_id: null,
                 text: phoneOrEmail,
                 link: 'next_link',
             },
         }),
-    AccountDuplicationCheck: async ({ flowToken }) => await postTask(flowToken, 'AccountDuplicationCheck', {
+    AccountDuplicationCheck: async ({ flowToken }) =>
+        await postTask(flowToken, 'AccountDuplicationCheck', {
             check_logged_in_account: {
                 link: 'AccountDuplicationCheck_false',
             },

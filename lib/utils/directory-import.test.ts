@@ -18,7 +18,7 @@ describe('directory-import', () => {
 
     afterEach(() => {
         if (!tempDir) {
-        	return;
+            return;
         }
 
         fs.rmSync(tempDir, { recursive: true, force: true });

@@ -99,7 +99,8 @@ export const twitterGot = async (
         });
     }
     let dispatchers:
-        undefined | {
+        | undefined
+        | {
               jar: CookieJar;
               agent: CookieAgent | ProxyAgent;
           };

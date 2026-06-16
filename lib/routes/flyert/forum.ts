@@ -90,7 +90,11 @@ export const route: Route = {
         {
             source: ['www.flyert.com.cn/forum.php'],
             target: (_, url) => {
-                const params = url.searchParams.entries().toArray().map(([key, value]) => key + '=' + value).join('&');
+                const params = url.searchParams
+                    .entries()
+                    .toArray()
+                    .map(([key, value]) => key + '=' + value)
+                    .join('&');
 
                 return `/forum${params ? `/${encodeURIComponent(params)}` : ''}`;
             },

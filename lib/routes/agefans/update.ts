@@ -58,7 +58,7 @@ async function handler() {
 
                 content('img').each((_, ele) => {
                     if (!ele.attribs['data-original']) {
-                    	return;
+                        return;
                     }
 
                     ele.attribs.src = ele.attribs['data-original'];

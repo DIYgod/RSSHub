@@ -6,7 +6,7 @@ const fixImage = (element) => {
     element.find('.story-image__stretch').remove();
     element.find('.story-image__image').each((_, img) => {
         if (!(img.attribs['data-src'] && img.attribs['data-large-image'])) {
-        	return;
+            return;
         }
 
         img.attribs.src = img.attribs['data-large-image'];

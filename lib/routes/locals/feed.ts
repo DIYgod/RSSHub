@@ -129,7 +129,14 @@ function getRequestHeaders(session: string) {
 }
 
 function extractAssetUrls(html: string) {
-    return [...new Set(html.matchAll(/\/_build\/assets\/[^"'\s>]+\.js/g).toArray().map((match) => match[0]))];
+    return [
+        ...new Set(
+            html
+                .matchAll(/\/_build\/assets\/[^"'\s>]+\.js/g)
+                .toArray()
+                .map((match) => match[0])
+        ),
+    ];
 }
 
 function extractFeedActionId(asset: string) {

@@ -83,7 +83,7 @@ async function handler(ctx) {
 
                 $('.figure__image').each((_, elem) => {
                     if (!elem.attribs['data-lg-src']) {
-                    	return;
+                        return;
                     }
 
                     $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);

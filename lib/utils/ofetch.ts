@@ -20,7 +20,7 @@ const rofetch = createFetch({ fetch: (...args: Parameters<typeof fetch>) => fetc
     // timeout: config.requestTimeout,
     onResponseError({ request, response, options }) {
         if (!options.retry) {
-        	return;
+            return;
         }
 
         logger.warn(`Request ${request} with error ${response.status} remaining retry attempts: ${options.retry}`);

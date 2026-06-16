@@ -39,7 +39,7 @@ export const processContent = (html: string): string => {
         changed = false;
         $('*').each((_, el) => {
             if (!(el.type === 'tag' && !ALLOWED_TAGS.has(el.name))) {
-            	return;
+                return;
             }
 
             $(el).replaceWith($(el).html() || '');

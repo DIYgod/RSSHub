@@ -19,7 +19,7 @@ const renderPostDetail = async (item) =>
         content('#videoImg').remove();
         content('img').each((_, img) => {
             if (!img.attribs.src2) {
-            	return;
+                return;
             }
 
             img.attribs.src = img.attribs.src2;

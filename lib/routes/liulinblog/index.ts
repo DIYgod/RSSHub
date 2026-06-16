@@ -77,7 +77,11 @@ async function handler(ctx) {
                 item.guid = `liulinblog-${content('article').first().prop('id')}`;
                 item.pubDate = parseDate(content('span.meta-date time').first().prop('datetime'));
                 item.comments = content('h3.comments-title').text()
-                    ? Number(content('h3.comments-title').text().match(/\((\d+)\)/))
+                    ? Number(
+                          content('h3.comments-title')
+                              .text()
+                              .match(/\((\d+)\)/)
+                      )
                     : 0;
 
                 return item;

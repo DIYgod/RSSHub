@@ -143,15 +143,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const categories: string[] = [...new Set([...(item.category ?? []), origin ?? undefined, ...tags, result.license].filter(Boolean) as string[])];
                 const authors: DataItem['author'] = new Map(
-                        [result.owner, result.creator, ...result.members].map((author) => {
-                            const item = {
-                                name: author.nickname,
-                                url: new URL(author.username, baseUrl).href,
-                                avatar: author.avatar ? `https:${author.avatar}` : undefined,
-                            };
-                            return [`${item.name}|${item.url}`, item];
-                        })
-                    ).values().toArray();
+                    [result.owner, result.creator, ...result.members].map((author) => {
+                        const item = {
+                            name: author.nickname,
+                            url: new URL(author.username, baseUrl).href,
+                            avatar: author.avatar ? `https:${author.avatar}` : undefined,
+                        };
+                        return [`${item.name}|${item.url}`, item];
+                    })
+                )
+                    .values()
+                    .toArray();
                 const guid: string = result.uuid ? `oshwhub-${result.uuid}` : item.guid || '';
                 const image: string | undefined = result.thumb?.startsWith('https:') ? result.thumb : `https:${result.thumb}`;
                 const upDatedStr: string | undefined = result.updated_at || pubDateStr;

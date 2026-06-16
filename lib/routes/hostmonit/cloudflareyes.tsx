@@ -139,7 +139,9 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: $('title').text().replace(/- .*$/, () => `- ${title}`),
+        title: $('title')
+            .text()
+            .replace(/- .*$/, () => `- ${title}`),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang'),

@@ -30,7 +30,7 @@ async function handler(ctx) {
 
                 $('.entry img').each((_, img) => {
                     if (!(img.attribs['data-original'] || img.attribs['data-src'])) {
-                    	return;
+                        return;
                     }
 
                     img.attribs.src = img.attribs['data-original'] || img.attribs['data-src'];
