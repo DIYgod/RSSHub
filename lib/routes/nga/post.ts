@@ -23,7 +23,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     // 图片
     img: (node, { render }) => {
         const src = render(node.content ?? []);
-        return { tag: 'img', attrs: { src: src[0] === '.' ? 'https://img.nga.178.com/attachments' + src.slice(1) : src }, content: null };
+        return { tag: 'img', attrs: { src: src.startsWith('.') ? 'https://img.nga.178.com/attachments' + src.slice(1) : src }, content: null };
     },
     // 折叠
     collapse: (node) => ({ tag: 'details', content: [{ tag: 'summary', content: [attrValue(node)] }, ...childrenOf(node)] }),
