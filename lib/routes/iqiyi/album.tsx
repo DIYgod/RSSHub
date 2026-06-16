@@ -23,7 +23,7 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `::: tip
-  可抓取內容根据服务器所在地区而定
+可抓取內容根据服务器所在地区而定
 :::`,
 };
 

@@ -29,7 +29,7 @@ async function handler(ctx) {
     let data = response;
     if (typeof response !== 'object') {
         // remove php warnings before JSON
-        data = JSON.parse(response.match(/\[(.*)]/)[0]);
+        data = JSON.parse(response.match(/\[(.*)\]/)[0]);
     }
 
     const items = data.map((item) => ({

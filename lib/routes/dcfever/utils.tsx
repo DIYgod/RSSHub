@@ -76,7 +76,7 @@ const parseItem = (item) =>
 
         content.find('img').each((_, e) => {
             if (e.attribs.src?.includes('?')) {
-                e.attribs.src = e.attribs.src.split('?')[0];
+                e.attribs.src = e.attribs.src.split('?', 1)[0];
             }
         });
 

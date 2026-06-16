@@ -33,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'http://www.news.cn';
     const currentUrl = new URL('xhsxw.htm', rootUrl).href;
@@ -97,7 +97,7 @@ async function handler(ctx) {
         item: items,
         title,
         link: currentUrl,
-        description: title.split(/_/)[0],
+        description: title.split(/_/, 1)[0],
         language: 'zh',
         image,
         icon,

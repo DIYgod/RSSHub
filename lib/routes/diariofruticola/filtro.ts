@@ -12,7 +12,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://diariofruticola.cl';
     const targetUrl: string = new URL(`filtro/${filter}`, baseUrl).href;
@@ -103,8 +103,7 @@ export const route: Route = {
     },
     description: `::: tip
 If you subscribe to [Cerezas](https://www.diariofruticola.cl/filtro/cerezas/71/)，where the URL is \`https://www.diariofruticola.cl/filtro/cerezas/71/\`, extract the part \`https://diariofruticola.cl/filtro\` to the end, which is \`/\`, and use it as the parameter to fill in. Therefore, the route will be [\`/diariofruticola/filtro/cerezas/71\`](https://rsshub.app/diariofruticola/filtro/cerezas/71).
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

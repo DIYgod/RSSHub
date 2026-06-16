@@ -27,7 +27,7 @@ export const route: Route = {
     name: 'chapter',
     maintainers: ['huangliangshusheng'],
     handler,
-    description: 'Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)',
+    description: 'Eg: <https://syosetu.org/novel/264928>',
 };
 
 async function handler(ctx) {
@@ -51,7 +51,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), +9),
             };
         })
-        .toSorted((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
+        .toSorted((a, b) => b.pubDate - a.pubDate)
         .slice(0, limit);
 
     const item_list = await Promise.all(

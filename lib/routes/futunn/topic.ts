@@ -38,14 +38,14 @@ async function getTopic(rootUrl, id, seqMarkInput = '') {
             topicTitle: topic.title,
             topicDescription: topic.detail,
         };
-    } else if (hasMore === 1) {
-        return getTopic(rootUrl, id, seqMark);
-    } else {
-        return {
-            topicTitle: '',
-            topicDescription: '',
-        };
     }
+    if (hasMore === 1) {
+        return getTopic(rootUrl, id, seqMark);
+    }
+    return {
+        topicTitle: '',
+        topicDescription: '',
+    };
 }
 
 async function handler(ctx) {
@@ -86,8 +86,8 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     content('.futu-news-time-stamp').remove();
-                    content('.nnstock').each(function () {
-                        content(this).replaceWith(`<a href="${content(this).attr('href')}">${content(this).text().replaceAll('$', '')}</a>`);
+                    content('.nnstock').each((_, el) => {
+                        content(el).replaceWith(`<a href="${content(el).attr('href')}">${content(el).text().replaceAll('$', '')}</a>`);
                     });
 
                     item.description = content('.origin_content').html();

@@ -60,9 +60,9 @@ export const route: Route = {
     example: '/4ksj/4k-uhd-1',
     parameters: { id: '分类 id，默认为最新4K电影' },
     description: `::: tip
-  若订阅 [最新 4K 电影](https://www.4ksj.com/4k-uhd-1.html)，网址为 \`https://www.4ksj.com/4k-uhd-1.html\`。截取 \`https://www.4ksj.com/\` 到末尾 \`.html\` 的部分 \`4k-uhd-1\` 作为参数，此时路由为 [\`/4ksj/4k-uhd-1\`](https://rsshub.app/4ksj/4k-uhd-1)。
+若订阅 [最新 4K 电影](https://www.4ksj.com/4k-uhd-1.html)，网址为 \`https://www.4ksj.com/4k-uhd-1.html\`。截取 \`https://www.4ksj.com/\` 到末尾 \`.html\` 的部分 \`4k-uhd-1\` 作为参数，此时路由为 [\`/4ksj/4k-uhd-1\`](https://rsshub.app/4ksj/4k-uhd-1)。
 
-  若订阅子分类 [Dolby Vision 动作 4K 电影](https://www.4ksj.com/4k-uhd-s7-display-3-dytypes-1-1.html)，网址为 \`https://www.4ksj.com/4k-uhd-s7-display-3-dytypes-1-1.html\`。截取 \`https://www.4ksj.com/forum-\` 到末尾 \`.html\` 的部分 \`4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1\` 作为参数，此时路由为 [\`/4ksj/4k-uhd-s7-display-3-dytypes-1-1\`](https://rsshub.app/4ksj/4k-uhd-s7-display-3-dytypes-1-1)。
+若订阅子分类 [Dolby Vision 动作 4K 电影](https://www.4ksj.com/4k-uhd-s7-display-3-dytypes-1-1.html)，网址为 \`https://www.4ksj.com/4k-uhd-s7-display-3-dytypes-1-1.html\`。截取 \`https://www.4ksj.com/forum-\` 到末尾 \`.html\` 的部分 \`4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1\` 作为参数，此时路由为 [\`/4ksj/4k-uhd-s7-display-3-dytypes-1-1\`](https://rsshub.app/4ksj/4k-uhd-s7-display-3-dytypes-1-1)。
 :::`,
     categories: ['multimedia'],
 };
@@ -114,7 +114,7 @@ async function handler(ctx) {
             const scriptUrl = new URL(scriptPath, rootUrl).href;
 
             const scriptResponse = await ofetch(scriptUrl);
-            const key = scriptResponse.match(/{var key="(.*?)"/)?.[1];
+            const key = scriptResponse.match(/\{var key="(.*?)"/)?.[1];
             const value = scriptResponse.match(/",value="(.*?)"/)?.[1];
             const getPath = scriptResponse.match(/\.get\("(.*?&key=)"/)?.[1];
 
@@ -125,7 +125,7 @@ async function handler(ctx) {
             const cookieResponse = await ofetch.raw(`${rootUrl}${getPath}${key}&value=${md5(stringtoHex(value))}`);
             return cookieResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; ');
         });
 

@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/sh/wsjkw/yqtb', '/shanghai/wsjkw/yqtb'],
+    path: '/wsjkw/yqtb',
     categories: ['government'],
     example: '/gov/sh/wsjkw/yqtb',
     parameters: {},
@@ -22,7 +22,7 @@ export const route: Route = {
             source: ['wsjkw.sh.gov.cn/'],
         },
     ],
-    name: '上海卫健委 疫情通报',
+    name: '卫健委 疫情通报',
     maintainers: ['zcf0508'],
     handler,
     url: 'wsjkw.sh.gov.cn/',

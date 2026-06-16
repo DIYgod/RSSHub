@@ -2,7 +2,7 @@
 // https://github.com/devcontainers/images/blob/v0.4.19/src/typescript-node/.devcontainer/devcontainer.json
 {
     "name": "Node.js & TypeScript",
-    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-bookworm",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker": {
             "version": "latest"
@@ -40,7 +40,7 @@
         }
     },
 
-    "onCreateCommand": "sudo apt-get update && export DEBIAN_FRONTEND=noninteractive && sudo apt-get -y install --no-install-recommends ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-utils redis-server default-jre-headless && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo rm -rf /var/lib/apt/lists/*",
+    "onCreateCommand": "sudo apt-get update && export DEBIAN_FRONTEND=noninteractive && sudo apt-get -y install --no-install-recommends ca-certificates fonts-liberation libasound2t64 libatk-bridge2.0-0t64 libatk1.0-0t64 libatspi2.0-0t64 libcairo2 libcups2t64 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0t64 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-utils redis-server default-jre-headless && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo rm -rf /var/lib/apt/lists/*",
 
     "updateContentCommand": "export JAVA_HOME=/usr/lib/jvm/default-java && pnpm config set store-dir ~/.local/share/pnpm/store && pnpm i && pnpm rb && pnpx rebrowser-puppeteer browsers install chrome",
 

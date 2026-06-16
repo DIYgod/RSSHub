@@ -49,7 +49,7 @@ const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], prox
             logger.warn('PAC_URI contains username and/or password, ignoring PROXY_AUTH');
             proxyObj.auth = undefined;
         } else if (['http:', 'https:'].includes(pacUrlHandler.protocol)) {
-            logger.info('PROXY_AUTH is set and will be used for requests from Node.js. However, requests from puppeteer will not use it');
+            logger.info('PROXY_AUTH is set and will be used for requests from Node.js. However, requests from Playwright will not use it');
             promptProxyUri = true;
         } else {
             logger.warn(`PROXY_AUTH is only supported by HTTP(S) proxies, but got ${pacUrlHandler.protocol}, ignoring`);

@@ -186,7 +186,7 @@ async function handler() {
 
     const handleText = (s) => {
         // 处理多语言代码展示问题
-        s = s.replaceAll(/(```)([\d#+A-Za-z-]+)\s*?(\[.*?])?\n/g, '\r\n###$2\r\n$1$2\r\n');
+        s = s.replaceAll(/(```)([\d#+A-Z-]+)\s*?(\[.*?\])?\n/gi, '\r\n###$2\r\n$1$2\r\n');
         return s;
     };
     return {

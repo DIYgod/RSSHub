@@ -76,7 +76,7 @@ async function handler(ctx) {
 
                         const content = load(detailResponse.data);
 
-                        const matches = detailResponse.data.match(/新闻来源:(.*?)于.*(\d{4}(?:-\d{2}){2} (?:\d{1,2}:){2}\d{1,2})/);
+                        const matches = detailResponse.data.match(/新闻来源:([^于]*)于.*(\d{4}(?:-\d{2}){2} (?:\d{1,2}:){2}\d{1,2})/);
 
                         item.title = content('h2').text();
                         item.author = matches[1].trim();

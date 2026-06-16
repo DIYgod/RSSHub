@@ -59,10 +59,10 @@ async function handler(ctx) {
 
                 content('.iconfont').remove();
 
-                content('img[data-src]').each(function () {
-                    content(this).attr(
+                content('img[data-src]').each((_, el) => {
+                    content(el).attr(
                         'src',
-                        content(this)
+                        content(el)
                             .attr('data-src')
                             .replace(/_logonews/, '')
                     );

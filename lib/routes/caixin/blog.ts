@@ -41,7 +41,7 @@ async function handler(ctx) {
         const user = $('div.indexMainConri > script[type="text/javascript"]')
             .text()
             .slice('window.user = '.length + 1)
-            .split(';')[0]
+            .split(';', 1)[0]
             .replaceAll(/\s/g, '');
         const authorId = user.match(/id:"(\d+)"/)[1];
         const authorName = user.match(/name:"(.*?)"/)[1];
@@ -77,28 +77,27 @@ async function handler(ctx) {
             image: avatar,
             item: items,
         };
-    } else {
-        const { data } = await got('https://blog.caixin.com/blog-api/post/index', {
-            searchParams: {
-                page: 1,
-                size: limit,
-            },
-        });
-        const posts = data.data.map((item) => ({
-            title: item.title,
-            description: item.brief,
-            author: item.authorName,
-            link: item.postUrl.replace('http://', 'https://'),
-            pubDate: parseDate(item.publishTime, 'x'),
-        }));
-        const items = await Promise.all(posts.map((item) => cache.tryGet(item.link, () => parseBlogArticle(item))));
-
-        return {
-            title: '财新博客 - 全部',
-            link: 'https://blog.caixin.com',
-            // description: introduce,
-            // image: avatar,
-            item: items,
-        };
     }
+    const { data } = await got('https://blog.caixin.com/blog-api/post/index', {
+        searchParams: {
+            page: 1,
+            size: limit,
+        },
+    });
+    const posts = data.data.map((item) => ({
+        title: item.title,
+        description: item.brief,
+        author: item.authorName,
+        link: item.postUrl.replace('http://', 'https://'),
+        pubDate: parseDate(item.publishTime, 'x'),
+    }));
+    const items = await Promise.all(posts.map((item) => cache.tryGet(item.link, () => parseBlogArticle(item))));
+
+    return {
+        title: '财新博客 - 全部',
+        link: 'https://blog.caixin.com',
+        // description: introduce,
+        // image: avatar,
+        item: items,
+    };
 }

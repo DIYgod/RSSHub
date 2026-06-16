@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 12;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
 
     const rootUrl = 'https://lrepacks.net';
     const currentUrl = new URL(category, rootUrl).href;
@@ -116,7 +116,7 @@ export const route: Route = {
     example: '/lrepacks',
     parameters: { category: 'Category, Homepage by default' },
     description: `::: tip
-  If you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is \`https://lrepacks.net/repaki-sistemnyh-programm/\`, extract the part \`https://lrepacks.net/\` to the end, which is \`repaki-sistemnyh-programm\`, and use it as the parameter to fill in. Therefore, the route will be [\`/lrepacks/repaki-sistemnyh-programm\`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).
+If you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is \`https://lrepacks.net/repaki-sistemnyh-programm/\`, extract the part \`https://lrepacks.net/\` to the end, which is \`repaki-sistemnyh-programm\`, and use it as the parameter to fill in. Therefore, the route will be [\`/lrepacks/repaki-sistemnyh-programm\`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).
 
 | Category                                                                        | ID                                                                                           |
 | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -129,6 +129,7 @@ export const route: Route = {
 | [Разные программы](https://lrepacks.net/repaki-raznyh-programm/)                | [repaki-raznyh-programm](https://rsshub.app/lrepacks/repaki-raznyh-programm)                 |
 | [Системные библиотеки](https://lrepacks.net/sistemnye-biblioteki/)              | [sistemnye-biblioteki](https://rsshub.app/lrepacks/sistemnye-biblioteki)                     |
 | [Важная информация](https://lrepacks.net/informaciya/)                          | [informaciya](https://rsshub.app/lrepacks/informaciya)                                       |
+
 :::`,
     categories: ['program-update'],
 

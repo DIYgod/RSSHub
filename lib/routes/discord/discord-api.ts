@@ -98,33 +98,33 @@ export const searchGuildMessages = (guildId: string, authorization: string, para
 export const getQuests = (authorization: string) =>
     cache.tryGet(
         'discord:quests',
-        () =>
-            ofetch<QuestResponse>(`${apiUrl}/quests/@me`, {
+        () => {
+            const superProperties = JSON.stringify({
+                os: 'Windows',
+                browser: 'Chrome',
+                device: '',
+                system_locale: 'en-GB',
+                has_client_mods: false,
+                browser_user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                browser_version: '120.0',
+                os_version: '10',
+                referrer: '',
+                referring_domain: '',
+                referrer_current: '',
+                referring_domain_current: '',
+                release_channel: 'stable',
+                client_build_number: Math.floor(Math.random() * (500000 - 400000 + 1)) + 400000,
+                client_event_source: null,
+                client_launch_id: crypto.randomUUID(),
+                client_app_state: 'unfocused',
+            });
+            return ofetch<QuestResponse>(`${apiUrl}/quests/@me`, {
                 headers: {
                     authorization,
-                    'X-Super-Properties': Buffer.from(
-                        JSON.stringify({
-                            os: 'Windows',
-                            browser: 'Chrome',
-                            device: '',
-                            system_locale: 'en-GB',
-                            has_client_mods: false,
-                            browser_user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                            browser_version: '120.0',
-                            os_version: '10',
-                            referrer: '',
-                            referring_domain: '',
-                            referrer_current: '',
-                            referring_domain_current: '',
-                            release_channel: 'stable',
-                            client_build_number: Math.floor(Math.random() * (500000 - 400000 + 1)) + 400000,
-                            client_event_source: null,
-                            client_launch_id: crypto.randomUUID(),
-                            client_app_state: 'unfocused',
-                        })
-                    ).toString('base64'),
+                    'X-Super-Properties': Buffer.from(superProperties).toString('base64'),
                 },
-            }),
+            });
+        },
         config.cache.routeExpire,
         false
     ) as Promise<QuestResponse>;

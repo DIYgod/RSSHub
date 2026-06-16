@@ -15,11 +15,9 @@ export const route: Route = {
     example: '/openrice/zh/hongkong/promos',
     parameters: { lang: '语言，缺省为 zh' },
     name: '香港餐厅滋讯',
-    description: `
-| 简体 | 繁體 | EN |
-| ----- | ------ | ----- |
-| zh-cn | zh | en |
-  `,
+    description: `| 简体  | 繁體 | EN |
+| ----- | ---- | -- |
+| zh-cn | zh   | en |`,
 };
 
 async function handler(ctx) {

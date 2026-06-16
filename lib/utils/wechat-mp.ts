@@ -68,7 +68,7 @@ const toggleWerror = (() => {
 const replaceReturnNewline = (() => {
     const returnRegExp = /\r|\\(r|x0d)/g;
     const newlineRegExp = /\n|\\(n|x0a)/g;
-    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, replaceReturnWith).replaceAll(newlineRegExp, replaceNewlineWith);
+    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, () => replaceReturnWith).replaceAll(newlineRegExp, () => replaceNewlineWith);
 })();
 const fixUrl = (() => {
     const ampRegExp = /(&|\\x26)amp;/g;
@@ -100,7 +100,8 @@ const forEachScript = ($: CheerioAPI | string, callback: (script) => void, defau
         } catch (error) {
             if (error instanceof LoopReturn) {
                 return error.to_return;
-            } else if (error instanceof LoopContinue) {
+            }
+            if (error instanceof LoopContinue) {
                 continue;
             }
             throw error;
@@ -130,7 +131,7 @@ const showTypeMap = {
 const showTypeMapReverse = Object.fromEntries(Object.entries(showTypeMap).map(([k, v]) => [v, k]));
 
 class ExtractMetadata {
-    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(String.raw`\b${varName}\s*${assignPattern}\s*(?<quote>["'])(?<value>${valuePattern})\k<quote>`, 'mg');
+    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(String.raw`\b${varName}\s*${assignPattern}\s*(?<quote>["'])(?<value>${valuePattern})\k<quote>`, 'gm');
 
     private static genExtractFunc = (
         varName: string,
@@ -390,7 +391,7 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
             if (width && ratio) {
                 const width_ = Math.min(Number.parseInt(width), 677);
                 $iframe.attr('width', width_.toString());
-                $iframe.attr('height', (width_ / Number.parseFloat(ratio)).toString());
+                $iframe.attr('height', (width_ / Number(ratio)).toString());
             }
         } // else {} FIXME: https://mp.weixin.qq.com/s?__biz=Mzg5Mjk3MzE4OQ==&mid=2247549515&idx=2&sn=a608fca597f0589c1aebd6d0b82ff6e9
     });
@@ -604,7 +605,7 @@ const redirectHelper = async (url: string, maxRedirects: number = 5) => {
         } else if (maxRedirects <= 1) {
             error('too many redirects', url);
         }
-        return await redirectHelper(new URL(location, url).toString(), maxRedirects - 1);
+        return await redirectHelper(new URL(location, url).href, maxRedirects - 1);
     }
     return raw;
 };

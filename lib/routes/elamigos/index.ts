@@ -117,12 +117,13 @@ function sanitizeHtml(pageHtml: string): string {
     $page('script, style, link, nav').remove();
 
     $page('*').each((_: number, elem: any) => {
-        if (elem.attribs) {
-            const attributes = Object.keys(elem.attribs);
-            for (const attr of attributes) {
-                if (attr.toLowerCase().startsWith('on')) {
-                    $page(elem).removeAttr(attr);
-                }
+        if (!elem.attribs) {
+            return;
+        }
+        const attributes = Object.keys(elem.attribs);
+        for (const attr of attributes) {
+            if (attr.toLowerCase().startsWith('on')) {
+                $page(elem).removeAttr(attr);
             }
         }
     });

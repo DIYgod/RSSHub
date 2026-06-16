@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/versions/:pkg/:region?',
@@ -28,11 +28,11 @@ async function handler(ctx) {
     const baseUrl = 'https://apkpure.com';
     const link = `${baseUrl}/${region}/${pkg}/versions`;
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
     logger.http(`Requesting ${link}`);
     await page.goto(link, {
@@ -40,7 +40,7 @@ async function handler(ctx) {
     });
 
     const r = await page.evaluate(() => document.documentElement.innerHTML);
-    await browser.close();
+    await context.close();
 
     const $ = load(r);
     const img = new URL($('.ver-top img').attr('src'));

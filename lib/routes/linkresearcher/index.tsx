@@ -59,7 +59,7 @@ async function handler(ctx: Context): Promise<Data> {
     const query = filters.get('query') ?? '';
     const category = filters.get('category') ?? ('theses' as keyof typeof categoryMap);
 
-    if (!(category in categoryMap)) {
+    if (!Object.hasOwn(categoryMap, category)) {
         throw new InvalidParameterError('Invalid category');
     }
     let title = categoryMap[category] as string;

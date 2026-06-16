@@ -163,10 +163,10 @@ async function handler(ctx) {
 
                         content('.m-linkCard').remove();
 
-                        content('.m-photo').each(function () {
-                            content(this).html(
+                        content('.m-photo').each((_, el) => {
+                            content(el).html(
                                 renderExclusiveDescription({
-                                    image: content(this).find('img').attr('data-src'),
+                                    image: content(el).find('img').attr('data-src'),
                                 })
                             );
                         });

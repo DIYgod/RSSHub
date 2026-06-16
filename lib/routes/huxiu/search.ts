@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const baseTitle = siteTitle;
 
     const apiUrl = new URL('api/article', apiSearchRootUrl).href;

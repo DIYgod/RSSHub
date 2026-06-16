@@ -13,7 +13,8 @@ export const hdGallery = (gallery) =>
     gallery.map((item) => {
         if (item.startsWith('https://pics.dmm.co.jp/')) {
             return item.replace(/-(\d+)\.jpg$/, 'jp-$1.jpg');
-        } else if (item.startsWith('https://image.mgstage.com/')) {
+        }
+        if (item.startsWith('https://image.mgstage.com/')) {
             return item.replace(/cap_t1_/, 'cap_e_');
         }
         return item;
@@ -27,12 +28,12 @@ export const parseList = (videos) =>
         contentId: item.contentId,
     }));
 
-export const puppeteerFetch = async (url: string, browser) => {
-    const page = await browser.newPage();
+export const playwrightFetch = async (url: string, context) => {
+    const page = await context.newPage();
     await page.setExtraHTTPHeaders(headers);
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
 
     logger.http(`Requesting ${url}`);
@@ -45,8 +46,8 @@ export const puppeteerFetch = async (url: string, browser) => {
     return response;
 };
 
-export const getItem = async (item, browser) => {
-    const response = await puppeteerFetch(`${baseUrl}/api/video/${item.contentId}`, browser);
+export const getItem = async (item, context) => {
+    const response = await playwrightFetch(`${baseUrl}/api/video/${item.contentId}`, context);
 
     const videoInfo: Video = response.video;
     videoInfo.gallery = hdGallery(videoInfo.gallery);

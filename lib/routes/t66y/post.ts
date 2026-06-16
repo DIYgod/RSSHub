@@ -18,7 +18,7 @@ function parseItems(tid: string, $: cheerio.CheerioAPI) {
             const pid = footer.find('.tipad a[title]').attr('id')?.slice(2);
 
             return {
-                title: content?.split('<br>')[0],
+                title: content?.split('<br>', 1)[0],
                 description: content,
                 author: $item
                     .find('b')
@@ -50,9 +50,9 @@ export const route: Route = {
     maintainers: ['cnzgray'],
     handler,
     description: `::: tip
-  帖子 id 查找办法:
+帖子 id 查找办法:
 
-  打开想跟踪的帖子，比如：\`https://t66y.com/htm_data/20/1811/3286088.html\` 其中 \`3286088\` 就是帖子 id。
+打开想跟踪的帖子，比如：\`https://t66y.com/htm_data/20/1811/3286088.html\` 其中 \`3286088\` 就是帖子 id。
 :::`,
 };
 
@@ -71,7 +71,7 @@ async function handler(ctx) {
 
     const firstPage = parseItems(tid, $);
 
-    const pageSize = $('.w70 input').eq(0).attr('value')?.split('/')[1];
+    const pageSize = $('.w70 input').eq(0).attr('value')?.split('/', 2)[1];
     let pageUrls: string[] = [];
     if (pageSize) {
         const length = Number.parseInt(pageSize);

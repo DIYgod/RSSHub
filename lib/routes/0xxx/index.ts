@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
+    const limit = Number(ctx.req.query('limit') ?? '100');
 
     const baseUrl = 'https://0xxx.ws';
     const targetUrl: string = new URL(filter ? `?${filter}` : '', baseUrl).href;
@@ -134,10 +134,9 @@ export const route: Route = {
             description: 'Filter',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Movie HD 1080p](https://0xxx.ws?category=Movie-HD-1080p), where the source URL is \`https://0xxx.ws?category=Movie-HD-1080p\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/0xxx/category=Movie-HD-1080p\`](https://rsshub.app/0xxx/category=Movie-HD-1080p).
-:::
-`,
+:::`,
     categories: ['multimedia'],
     features: {
         requireConfig: false,

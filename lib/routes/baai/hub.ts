@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { apiHost, baseUrl, getTagsData, parseEventDetail, parseItem } from './utils';
 
 export const route: Route = {
-    path: ['/hub/:tagId?/:sort?/:range?'],
+    path: '/hub/:tagId?/:sort?/:range?',
     categories: ['programming'],
     example: '/baai/hub',
     parameters: {

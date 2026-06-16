@@ -22,7 +22,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const score = Number.parseFloat(ctx.req.param('score')) || 0;
+    const score = Number(ctx.req.param('score')) || 0;
     const response = await got({
         method: 'get',
         url: 'https://movie.douban.com/cinema/nowplaying/beijing',
@@ -36,7 +36,7 @@ async function handler(ctx) {
             .toArray()
             .map((i) => {
                 const item = $(i);
-                const itemScore = Number.parseFloat(item.attr('data-score')) || 0;
+                const itemScore = Number(item.attr('data-score')) || 0;
                 return itemScore >= score
                     ? {
                           title: item.attr('data-title'),

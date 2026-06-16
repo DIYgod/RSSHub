@@ -28,7 +28,7 @@ const getEventList = async ({ type, gids, size, language }) => {
     return list;
 };
 
-const replaceImgDomain = (content) => content.replaceAll(PRIVATE_IMG, PUBLIC_IMG);
+const replaceImgDomain = (content) => content.replaceAll(PRIVATE_IMG, () => PUBLIC_IMG);
 
 const getPostContent = (list, { language }) =>
     Promise.all(

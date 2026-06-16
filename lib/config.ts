@@ -8,8 +8,9 @@ type ConfigEnvKeys =
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
     | 'NODE_NAME'
-    | 'PUPPETEER_REAL_BROWSER_SERVICE'
+    | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
+    | 'PLAYWRIGHT_CDP_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
     // Network
     | 'PORT'
@@ -259,8 +260,8 @@ export type Config = {
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
-    puppeteerRealBrowserService?: string;
-    puppeteerWSEndpoint?: string;
+    playwrightWSEndpoint?: string;
+    playwrightCDPEndpoint?: string;
     chromiumExecutablePath?: string;
     // network
     connect: {
@@ -717,9 +718,8 @@ const TRUE_UA = 'RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-
 const toBoolean = (value: string | undefined, defaultValue: boolean) => {
     if (value === undefined) {
         return defaultValue;
-    } else {
-        return value === '' || value === '0' || value === 'false' ? false : !!value;
     }
+    return ['', '0', 'false'].includes(value) ? false : !!value;
 };
 
 const toInt = (value: string | undefined, defaultValue?: number) => (value === undefined ? defaultValue : Number.parseInt(value));
@@ -756,8 +756,8 @@ const calculateValue = () => {
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
-        puppeteerRealBrowserService: envs.PUPPETEER_REAL_BROWSER_SERVICE,
-        puppeteerWSEndpoint: envs.PUPPETEER_WS_ENDPOINT,
+        playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
+        playwrightCDPEndpoint: envs.PLAYWRIGHT_CDP_ENDPOINT,
         chromiumExecutablePath: envs.CHROMIUM_EXECUTABLE_PATH,
         // network
         connect: {
@@ -1219,24 +1219,25 @@ const calculateValue = () => {
 };
 calculateValue();
 (async () => {
-    if (envs.REMOTE_CONFIG) {
-        const { default: logger } = await import('@/utils/logger');
-        try {
-            const data = await ofetch(envs.REMOTE_CONFIG, {
-                headers: {
-                    Authorization: `Basic ${envs.REMOTE_CONFIG_AUTH}`,
-                },
-            });
-            if (data) {
-                envs = Object.assign(envs, data);
-                calculateValue();
-                logger.info('Remote config loaded.');
-            } else {
-                logger.error('Remote config load failed.');
-            }
-        } catch (error) {
-            logger.error('Remote config load failed.', error);
+    if (!envs.REMOTE_CONFIG) {
+        return;
+    }
+    const { default: logger } = await import('@/utils/logger');
+    try {
+        const data = await ofetch(envs.REMOTE_CONFIG, {
+            headers: {
+                Authorization: `Basic ${envs.REMOTE_CONFIG_AUTH}`,
+            },
+        });
+        if (data) {
+            envs = Object.assign(envs, data);
+            calculateValue();
+            logger.info('Remote config loaded.');
+        } else {
+            logger.error('Remote config load failed.');
         }
+    } catch (error) {
+        logger.error('Remote config load failed.', error);
     }
 })();
 

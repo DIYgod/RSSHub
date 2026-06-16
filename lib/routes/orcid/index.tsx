@@ -30,7 +30,6 @@ async function handler(ctx) {
 
     const items = response.data.groups;
     const works: any[] = [];
-    const out = [];
 
     for (const item of items) {
         for (const work of item.works) {
@@ -38,7 +37,7 @@ async function handler(ctx) {
         }
     }
 
-    works.map((work) => {
+    const out = works.map((work) => {
         let Str = '';
 
         for (const identifier of work.workExternalIdentifiers) {
@@ -64,7 +63,6 @@ async function handler(ctx) {
             ),
             guid: work.putCode.value,
         };
-        out.push(info);
         return info;
     });
 

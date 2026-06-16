@@ -31,9 +31,9 @@ export const route: Route = {
 | articles | localarticles | history  | all-comment |
 
 ::: tip
-  支持形如 \`https://www.storm.mg/category/118\` 的路由，即 [\`/storm/category/118\`](https://rsshub.app/storm/category/118)
+支持形如 \`https://www.storm.mg/category/118\` 的路由，即 [\`/storm/category/118\`](https://rsshub.app/storm/category/118)
 
-  支持形如 \`https://www.storm.mg/localarticle-category/s149845\` 的路由，即 [\`/storm/localarticle-category/s149845\`](https://rsshub.app/storm/localarticle-category/s149845)
+支持形如 \`https://www.storm.mg/localarticle-category/s149845\` 的路由，即 [\`/storm/localarticle-category/s149845\`](https://rsshub.app/storm/localarticle-category/s149845)
 :::`,
 };
 

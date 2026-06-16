@@ -49,7 +49,7 @@ async function handler() {
                 link: item.find('.title-link').attr('href'),
                 title: item.find('.show-title').text(),
                 author: item.find('.show-artist').text(),
-                pubDate: parseDate(item.find('.show-time-container').text().trim().split(' UTC')[0]),
+                pubDate: parseDate(item.find('.show-time-container').text().trim().split(' UTC', 1)[0]),
                 description: `<img src="${
                     item
                         .find('.show-thumb-image')

@@ -60,12 +60,12 @@ async function handler(ctx) {
 
                 content('.ads-frame, .read-more-msg').remove();
 
-                content('figure').each(function () {
-                    content(this).replaceWith(
+                content('figure').each((_, el) => {
+                    content(el).replaceWith(
                         renderToString(
                             <figure>
-                                <img src={content(this).find('img').attr('src')} />
-                                <figcaption>{content(this).find('figcaption').text()}</figcaption>
+                                <img src={content(el).find('img').attr('src')} />
+                                <figcaption>{content(el).find('figcaption').text()}</figcaption>
                             </figure>
                         )
                     );

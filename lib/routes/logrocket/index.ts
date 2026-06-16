@@ -40,7 +40,7 @@ async function handler(ctx) {
             return {
                 title: title.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('.post-card-author-name').next().text().split(' ⋅ ')[0], 'MMM D, YYYY'),
+                pubDate: parseDate(item.find('.post-card-author-name').next().text().split(' ⋅ ', 1)[0], 'MMM D, YYYY'),
                 author: item.find('.post-card-author-name').text(),
             };
         });

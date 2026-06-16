@@ -57,7 +57,7 @@ const renderPost = ({ id, type_label: type, cast, /** livestream  */ message /**
             return renderCast(cast);
         case 'message':
             return {
-                title: message.text.split('\n')[0],
+                title: message.text.split('\n', 1)[0],
                 description: message.text.replaceAll('\n', '<br>'),
                 pubDate: parseDate(message.created_at),
                 link: `https://otobanana.com/${type}/${id}`,

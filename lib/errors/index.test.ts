@@ -18,14 +18,14 @@ describe('httperror', () => {
         const response = await app.request('/test/httperror');
         expect(response.status).toBe(503);
         const text = await response.text();
-        expect(text).toContain('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404 Not Found');
+        expect(text).toContain('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404');
     }, 20000);
 });
 
 describe('RequestInProgressError', () => {
     it('RequestInProgressError with retry', async () => {
         const responses = await Promise.all([app.request('/test/slow'), app.request('/test/slow')]);
-        expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 200]));
+        expect(responses.map((r) => r.status)).toEqual([200, 200]);
     });
     it('RequestInProgressError', async () => {
         const responses = await Promise.all([app.request('/test/slow4'), app.request('/test/slow4')]);

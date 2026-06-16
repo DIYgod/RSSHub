@@ -12,7 +12,8 @@ const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
 const pageType = (href) => {
     if (href === undefined) {
         return 'unknown';
-    } else if (!href.startsWith('http')) {
+    }
+    if (!href.startsWith('http')) {
         return 'in-site';
     }
     const url = new URL(href);
@@ -94,57 +95,56 @@ async function handler(ctx) {
                 },
             ],
         };
-    } else {
-        const $ = load(response.data);
-
-        let list;
-        list = type === 'picture' ? $('.picList > li').toArray() : $('.indexList > li').toArray();
-
-        list = list.map((item) => {
-            const href = $('h4 > a', item).attr('href');
-            const type = pageType(href);
-            return {
-                title: $('h4 > a', item).text(),
-                link: type === 'in-site' ? news_base_url + href : href,
-                type,
-            };
-        });
-
-        const items = await Promise.all(
-            list.map((item) => {
-                switch (item.type) {
-                    case 'tju-news':
-                    case 'in-site':
-                        return cache.tryGet(item.link, async () => {
-                            try {
-                                delete item.type;
-                                const detailResponse = await got(item.link);
-                                const content = load(detailResponse.data);
-                                item.pubDate = timezone(
-                                    parseDate(
-                                        content('.contentTime')
-                                            .text()
-                                            .match(/\d{4}-\d{2}-\d{2}/)[0],
-                                        'YYYY-MM-DD'
-                                    ),
-                                    +8
-                                );
-                                item.description = content('.v_news_content').html();
-                            } catch {
-                                // ignore error handler
-                            }
-                            return item;
-                        });
-                    default:
-                        return item;
-                }
-            })
-        );
-
-        return {
-            title: '天津大学新闻网 - ' + subtitle,
-            link: news_base_url + path,
-            item: items,
-        };
     }
+    const $ = load(response.data);
+
+    let list;
+    list = type === 'picture' ? $('.picList > li').toArray() : $('.indexList > li').toArray();
+
+    list = list.map((item) => {
+        const href = $('h4 > a', item).attr('href');
+        const type = pageType(href);
+        return {
+            title: $('h4 > a', item).text(),
+            link: type === 'in-site' ? news_base_url + href : href,
+            type,
+        };
+    });
+
+    const items = await Promise.all(
+        list.map((item) => {
+            switch (item.type) {
+                case 'tju-news':
+                case 'in-site':
+                    return cache.tryGet(item.link, async () => {
+                        try {
+                            delete item.type;
+                            const detailResponse = await got(item.link);
+                            const content = load(detailResponse.data);
+                            item.pubDate = timezone(
+                                parseDate(
+                                    content('.contentTime')
+                                        .text()
+                                        .match(/\d{4}-\d{2}-\d{2}/)[0],
+                                    'YYYY-MM-DD'
+                                ),
+                                +8
+                            );
+                            item.description = content('.v_news_content').html();
+                        } catch {
+                            // ignore error handler
+                        }
+                        return item;
+                    });
+                default:
+                    return item;
+            }
+        })
+    );
+
+    return {
+        title: '天津大学新闻网 - ' + subtitle,
+        link: news_base_url + path,
+        item: items,
+    };
 }

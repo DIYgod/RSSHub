@@ -1,4 +1,4 @@
-// oxlint-disable unicorn/prefer-math-trunc
+// oxlint-disable unicorn/prefer-math-trunc unicorn-js/no-this-outside-of-class
 // xxhash-wasm shim for Cloudflare Workers
 // Uses Web Crypto API instead of WebAssembly
 

@@ -88,7 +88,7 @@ const bakeFiltersWithPair = async (filters) => {
         const filter = await getFilterByKeyAndKeyword(key, keyword);
 
         return [
-            ...(filter?.id && filter?.slug
+            ...(filter?.id && filter.slug
                 ? [
                       {
                           id: filter.id,
@@ -184,7 +184,7 @@ const fetchData = async (url) => {
 
     const $ = load(response);
 
-    const title = $('title').text().split(/\|/)[0];
+    const title = $('title').text().split(/\|/, 1)[0];
     const image = new URL('wp-content/uploads/site_logo.png', rootUrl).href;
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
@@ -196,7 +196,7 @@ const fetchData = async (url) => {
         image,
         icon,
         logo: icon,
-        subtitle: title.split(/【/)[0],
+        subtitle: title.split(/【/, 1)[0],
         author: $('h1.logo a').prop('title'),
         allowEmpty: true,
     };
@@ -292,7 +292,7 @@ const parseFilterStr = (filterStr) => {
      *                             e.g. `category` or `tag`.
      * @returns {Object} The parsed filters object.
      */
-    const parseStr = (filterStr, filters = {}, filterKey) => {
+    const parseStr = (filterStr, filters = {}, filterKey?) => {
         if (!filterStr) {
             return filters;
         }

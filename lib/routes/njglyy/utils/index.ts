@@ -31,8 +31,8 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
                     item.title = $(contentSelector.title).text();
                     item.description = $(contentSelector.content)
                         .html()
-                        .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                        .replaceAll('href="/', `href="${new URL('.', host).href}`)
+                        .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                        .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                         .trim();
                     const preDate = $(contentSelector.date)
                         .text()

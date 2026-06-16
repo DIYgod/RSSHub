@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const baseIndexUrl = 'https://www.sice.uestc.edu.cn/index.htm';
 const host = 'https://www.sice.uestc.edu.cn/';
@@ -33,17 +33,17 @@ export const route: Route = {
 };
 
 async function handler() {
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(baseIndexUrl, {
-        waitUntil: 'networkidle2',
+        waitUntil: 'networkidle',
     });
     const content = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(content);
 

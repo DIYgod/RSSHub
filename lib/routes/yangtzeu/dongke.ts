@@ -15,7 +15,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
     const currentUrl = new URL(`${getSubPath(ctx).replace(/^\/dongke/, '') || '/yqzl/xyxw'}.htm`, rootUrl).href;

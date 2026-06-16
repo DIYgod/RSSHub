@@ -30,10 +30,10 @@ export const route: Route = {
     name: '未读消息',
     maintainers: ['pilgrimlyieu'],
     handler,
-    description: `:::warning
-  用户消息需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+    description: `::: warning
+用户消息需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
-  此路由返回所有未读消息类型的汇总状态。
+此路由返回所有未读消息类型的汇总状态。
 :::`,
 };
 

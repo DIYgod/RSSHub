@@ -17,9 +17,9 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['MilliumOrion'],
     handler,
-    description: `Use the category ID to retrieve a list of articles, category ID.  
-From the page source of \`https://techcrunch.com/category/***\`, locate the \`{category_id}\`  
-Example:  
+    description: `Use the category ID to retrieve a list of articles, category ID.\\
+From the page source of \`https://techcrunch.com/category/***\`, locate the \`{category_id}\`\\
+Example:\\
 \`html\` -> \`head\` -> \`<link rel="alternate" title="JSON" type="application/json" href="https://techcrunch.com/wp-json/wp/v2/categories/{category_id}">\``,
 };
 

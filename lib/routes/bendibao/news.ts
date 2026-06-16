@@ -37,9 +37,9 @@ export const route: Route = {
 | 广州   | gz   |
 | 深圳   | sz   |
 
-  更多城市请参见 [这里](http://www.bendibao.com/city.htm)
+更多城市请参见 [这里](http://www.bendibao.com/city.htm)
 
-  > **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。`,
+> **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。`,
 };
 
 async function handler(ctx) {

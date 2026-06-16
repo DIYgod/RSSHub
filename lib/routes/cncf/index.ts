@@ -40,7 +40,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('span.post-archive__title').text().trim(),
             link: $(item).find('span.post-archive__title > a').attr('href'),
-            pubDate: parseDate($(item).find('span.post-archive__item_date').text().split('|')[0]),
+            pubDate: parseDate($(item).find('span.post-archive__item_date').text().split('|', 1)[0]),
         }));
 
     const items = await Promise.all(

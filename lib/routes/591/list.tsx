@@ -173,7 +173,7 @@ export const route: Route = {
     maintainers: ['Yukaii'],
     handler,
     description: `::: tip
-  Copy the URL of the 591 filter housing page and remove the front part \`https://rent.591.com.tw/?\`, you will get the query parameters.
+Copy the URL of the 591 filter housing page and remove the front part \`https://rent.591.com.tw/?\`, you will get the query parameters.
 :::`,
 };
 

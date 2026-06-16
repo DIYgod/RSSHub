@@ -69,7 +69,7 @@ Categories
         const data = await ofetch(`https://www.nyc.gov/bin/nyc/articlesearch.json?pageSize=10&currentPage=1&types=${types}&categories=${categories}`);
         const list = data.results.map((item) => {
             const imageUrl = item.articleImage ? baseUrl + item.articleImage : undefined;
-            const imageExtension = item.articleImage ? item.articleImage.split('.')[1] : undefined;
+            const imageExtension = item.articleImage ? item.articleImage.split('.', 2)[1] : undefined;
 
             return {
                 title: item.title,

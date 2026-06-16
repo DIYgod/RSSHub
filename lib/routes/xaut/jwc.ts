@@ -22,7 +22,7 @@ export const route: Route = {
     maintainers: ['mocusez'],
     handler,
     description: `::: warning
-  有些内容需使用校园网或 VPN 访问知行网获取
+有些内容需使用校园网或 VPN 访问知行网获取
 :::
 
 | 通知公告 | 新闻动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
@@ -55,8 +55,8 @@ async function handler(ctx) {
             item = $(item);
             const link = item
                 .attr('href')
-                .replace(/^\.\./, rootUrl)
-                .replace(/^(info)/, rootUrl + 'info');
+                .replace(/^\.\./, () => rootUrl)
+                .replace(/^(info)/, () => rootUrl + 'info');
             return {
                 title: item.find('em').text(),
                 link,

@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer, { getPuppeteerPage } from '@/utils/puppeteer';
+import playwright, { getPlaywrightPage } from '@/utils/playwright';
 
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
@@ -58,16 +58,16 @@ const getUser = (url, cache) =>
                 userPageData = userPageData._rawValue || userPageData;
                 notes = notes._rawValue || notes;
 
-                // Cannot get collect data without puppeteer
+                // Cannot get collect data without Playwright
                 return { userPageData, notes, collect: '' };
             }
 
-            // Use puppeteer
-            const { page, destroy } = await getPuppeteerPage(url, {
+            // Use Playwright
+            const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? route.continue() : route.abort();
                     });
                 },
             });
@@ -127,13 +127,13 @@ const getBoard = (url, cache) =>
                 return state.Main;
             }
 
-            // Use puppeteer
-            const browser = await puppeteer();
+            // Use Playwright
+            const context = await playwright();
             try {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url);
@@ -141,7 +141,7 @@ const getBoard = (url, cache) =>
                 const initialSsrState = await page.evaluate(() => (window as any).__INITIAL_SSR_STATE__);
                 return initialSsrState.Main;
             } finally {
-                await browser.close();
+                await context.close();
             }
         },
         config.cache.routeExpire,
@@ -151,9 +151,9 @@ const getBoard = (url, cache) =>
 const formatText = (text) => text.replaceAll(/(\r\n|\r|\n)/g, '<br>').replaceAll('\t', '&emsp;');
 
 // tag_list.id has nothing to do with its url
-const formatTagList = (tagList) => tagList.reduce((acc, item) => acc + `#${item.name} `, '');
+const formatTagList = (tagList) => tagList.map((item) => `#${item.name} `).join('');
 
-const formatImageList = (imageList) => imageList.reduce((acc, item) => acc + `<img src="${item.url}"><br>`, '');
+const formatImageList = (imageList) => imageList.map((item) => `<img src="${item.url}"><br>`).join('');
 
 const formatNote = (url, note) => ({
     title: note.title,

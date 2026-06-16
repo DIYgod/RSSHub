@@ -264,7 +264,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
-                    isFilter = isFilter && !category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter = isFilter && category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;
@@ -296,9 +296,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     const encodedlink = encodeURIComponent(item.link);
                     item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.req.query('tgiv')}`;
                     return item;
-                } else {
-                    return item;
                 }
+                return item;
             });
         }
 
@@ -407,9 +406,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (num.test(ctx.req.query('brief')!)) {
                 const brief: number = Number.parseInt(ctx.req.query('brief')!);
                 for (const item of data.item) {
-                    let text;
                     if (item.description) {
-                        text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
+                        const text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
                         item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
                     }
                 }

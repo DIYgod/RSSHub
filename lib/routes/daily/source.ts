@@ -147,7 +147,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const sourceId = ctx.req.param('sourceId');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
     const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
 
     const link = `${baseUrl}/sources/${sourceId}`;

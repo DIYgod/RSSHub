@@ -14,10 +14,8 @@ export const route: Route = {
     path: '*',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-Pass in the parameters (e.g. \`city=Wien&state[]=sofort\`) and/or the path
-leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)
-`,
+    description: `Pass in the parameters (e.g. \`city=Wien&state[]=sofort\`) and/or the path
+leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)`,
 
     async handler(ctx) {
         // ['', 'wohnen', 'sofort-verfuegbar', 'city=Wien']

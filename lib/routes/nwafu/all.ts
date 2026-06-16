@@ -39,7 +39,7 @@ async function handler(ctx) {
         .map((ele) => {
             const itemTitle = $(ele).find(nwafuMap.get(type)[2]).text();
             const itemPubDate = parseDate($(ele).find('span').text(), 'YYYY/MM/DD');
-            const itemLink = new URL($(ele).find(nwafuMap.get(type)[2]).attr('href'), nwafuMap.get(type)[0]).toString();
+            const itemLink = new URL($(ele).find(nwafuMap.get(type)[2]).attr('href'), nwafuMap.get(type)[0]).href;
             return {
                 title: itemTitle,
                 pubDate: itemPubDate,

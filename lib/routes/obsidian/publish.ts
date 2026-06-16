@@ -72,7 +72,7 @@ async function fetchPage(id: string) {
             }
             const item: DataItem = {
                 title: post.frontmatter?.title || getTitle(postKey),
-                link: `${baseUrl}/${postKey.replaceAll(' ', '+').split('.md')[0]}`,
+                link: `${baseUrl}/${postKey.replaceAll(' ', '+').split('.md', 1)[0]}`,
                 pubDate: post.frontmatter?.['date created'] ? parseDate(post.frontmatter['date created']) : undefined,
                 ...post.frontmatter,
             };

@@ -8,8 +8,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
-import { setCookies } from '@/utils/puppeteer-utils';
+import playwright from '@/utils/playwright';
+import { setCookies } from '@/utils/playwright-utils';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',
@@ -53,16 +53,16 @@ async function handler(ctx) {
             };
         });
 
-    const browser = await puppeteer();
+    const context = await playwright();
 
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
+                const page = await context.newPage();
                 await setCookies(page, await cookieJar.getCookieString(item.link), '.pnas.org');
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
@@ -112,7 +112,7 @@ async function handler(ctx) {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,

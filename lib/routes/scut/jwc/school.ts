@@ -40,7 +40,7 @@ const generateArticlePubDate = (createDateStr) => {
 
 const isRedirectPage = (data) => !!data.link;
 
-const resolveRelativeUrl = (html) => html.replaceAll('src="/', `src="${new URL('.', baseUrl).href}`).replaceAll('href="/', `href="${new URL('.', baseUrl).href}`);
+const resolveRelativeUrl = (html) => html.replaceAll('src="/', () => `src="${new URL('.', baseUrl).href}`).replaceAll('href="/', () => `href="${new URL('.', baseUrl).href}`);
 
 const apiSuccessAssert = (data) => {
     if (!data.success) {

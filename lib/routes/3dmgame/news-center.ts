@@ -31,7 +31,7 @@ export const route: Route = {
     handler,
     description: `| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点    |
 | -------- | -------- | -------- | -------- | ----------- |
-|          | game     | acg      | next     | news_36_1 |`,
+|          | game     | acg      | next     | news\\_36\\_1 |`,
 };
 
 async function handler(ctx) {
@@ -64,7 +64,7 @@ async function handler(ctx) {
     const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: '3DM - ' + $('title').text().split('_')[0],
+        title: '3DM - ' + $('title').text().split('_', 1)[0],
         description: $('meta[name="Description"]').attr('content'),
         link: url,
         item: out,

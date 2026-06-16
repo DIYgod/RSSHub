@@ -16,7 +16,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { region = 'cn-en', category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.kantarworldpanel.com/';
     const currentUrl = new URL(`${region}/${category}`, rootUrl).href;
@@ -67,7 +67,8 @@ async function handler(ctx) {
                 // eg. https://www.kantarworldpanel.com/dwl.php?sn=publications&id=1632.
                 if (item.link === currentUrl || !item.link.startsWith(rootUrl)) {
                     return item;
-                } else if (/dwl\.php/.test(item.link)) {
+                }
+                if (/dwl\.php/.test(item.link)) {
                     item.enclosure_url = item.link;
                     item.enclosure_type = 'application/pdf';
 

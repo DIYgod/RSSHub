@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/sh/wgj/:page?', '/shanghai/wgj/:page?'],
+    path: '/wgj/:page?',
     categories: ['government'],
     example: '/gov/sh/wgj',
     parameters: { page: '页数，默认第 1 页' },
@@ -22,10 +22,10 @@ export const route: Route = {
     radar: [
         {
             source: ['wsbs.wgj.sh.gov.cn/'],
-            target: '/sh/wgj',
+            target: '/wgj',
         },
     ],
-    name: '上海市文旅局审批公告',
+    name: '文旅局审批公告',
     maintainers: ['gideonsenku'],
     handler,
     url: 'wsbs.wgj.sh.gov.cn/',

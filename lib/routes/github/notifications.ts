@@ -48,6 +48,8 @@ async function handler(ctx) {
         let originUrl = item.subject.url ? item.subject.url.replace('https://api.github.com/repos/', 'https://github.com/') : 'https://github.com/notifications';
         if (originUrl.includes('/releases/')) {
             originUrl = originUrl.replace(/\/releases\/\d+$/, '/releases');
+        } else if (originUrl.includes('/pulls/')) {
+            originUrl = originUrl.replace(/\/pulls\/(\d+)$/, '/pull/$1');
         }
         return {
             title: item.subject.title,

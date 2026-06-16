@@ -26,18 +26,18 @@ export const route: Route = {
     handler,
     description: `| 热门话题 | 科技动态 | 医疗产业 | 财经快讯           |
 | -------- | -------- | -------- | ------------------ |
-|          | news     | medical  | financial_express |`,
+|          | news     | medical  | financial\\_express |`,
 };
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const currentUrl = new URL(category ?? '', rootUrl).href;
 
     const { data: currentResponse } = await got(currentUrl);
 
-    const type = currentResponse.match(/\[\\"type\\",\\"(\d+)\\",\\"d\\"]/)?.[1] ?? '1';
+    const type = currentResponse.match(/\[\\"type\\",\\"(\d+)\\",\\"d\\"\]/)?.[1] ?? '1';
 
     const { data: response } = await got(apiTopicUrl, {
         searchParams: {

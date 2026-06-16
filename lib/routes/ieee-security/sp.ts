@@ -38,7 +38,7 @@ async function handler() {
                 const link = urlList[i];
                 return {
                     title,
-                    author: item.html().trim().split('<br>')[1].trim(),
+                    author: item.html().trim().split('<br>', 2)[1].trim(),
                     link: `${link}#${title}`,
                     pubDate: parseDate(link.match(/SP(\d{4})/)[1], 'YYYY'),
                 };

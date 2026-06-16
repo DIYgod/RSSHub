@@ -28,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const name = ctx.req.param('name');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const apiUrl = new URL('v2/content/tag/tagList', apiRootUrl).href;
     const currentUrl = new URL(`label/${name}`, rootUrl).href;

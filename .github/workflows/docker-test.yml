@@ -27,23 +27,23 @@ jobs:
         timeout-minutes: 10
         steps:
             - name: Checkout
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
             - name: Set up Docker Buildx # needed by `cache-from`
-              uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+              uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
 
             - name: Extract Docker metadata
               id: meta
-              uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
+              uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
               with:
                   images: rsshub
                   flavor: latest=true
 
             - name: Build Docker image
-              uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
+              uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
               with:
                   context: .
-                  build-args: PUPPETEER_SKIP_DOWNLOAD=0 # also test bundling Chromium
+                  build-args: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0 # also test bundling Chromium
                   load: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
@@ -55,12 +55,16 @@ jobs:
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               with:
-                  actions: 'add-labels'
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ github.event.pull_request.number }}
-                  labels: 'auto: DO NOT merge'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ github.event.pull_request.number }},
+                          labels: ['auto: DO NOT merge'],
+                      })
 
             - name: Test Docker image
               run: bash scripts/docker/test-docker.sh
@@ -71,6 +75,6 @@ jobs:
             - name: Upload Docker image
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
               with:
-                  name: docker-image
+                  archive: false
                   path: rsshub.tar.zst
                   retention-days: 1

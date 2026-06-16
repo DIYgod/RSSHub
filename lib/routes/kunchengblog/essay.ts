@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://www.kunchengblog.com';
     const currentUrl = new URL('essay', rootUrl).href;
@@ -53,7 +53,7 @@ async function handler(ctx) {
             .map((item) => {
                 const source = consumer.sourceContentFor(item).replaceAll(/\s\n/g, '');
 
-                const processedSource = source.replaceAll(/(\w+)={+([^{}]+)}+/g, (match, key, value) => {
+                const processedSource = source.replaceAll(/(\w+)=\{+([^{}]+)\}+/g, (match, key, value) => {
                     const processedValue = value.slice(1, -1).replaceAll('"', "'").trim();
                     return `${key}="${processedValue}"`;
                 });

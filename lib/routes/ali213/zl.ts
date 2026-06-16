@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '1', 10);
+    const limit = Number(ctx.req.query('limit') ?? '1');
 
     const rootUrl = 'https://www.ali213.net';
     const apiRootUrl = 'https://mp.ali213.net';
@@ -173,8 +173,7 @@ export const route: Route = {
 
 | 首页                                     | 游戏                                         | 动漫                                           | 影视                                           | 娱乐                                           |
 | ---------------------------------------- | -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
-| [index](https://www.ali213.net/news/zl/) | [game](https://www.ali213.net/news/zl/game/) | [comic](https://www.ali213.net/news/zl/comic/) | [movie](https://www.ali213.net/news/zl/movie/) | [amuse](https://www.ali213.net/news/zl/amuse/) |
-`,
+| [index](https://www.ali213.net/news/zl/) | [game](https://www.ali213.net/news/zl/game/) | [comic](https://www.ali213.net/news/zl/comic/) | [movie](https://www.ali213.net/news/zl/movie/) | [amuse](https://www.ali213.net/news/zl/amuse/) |`,
     categories: ['game'],
     features: {
         requireConfig: false,

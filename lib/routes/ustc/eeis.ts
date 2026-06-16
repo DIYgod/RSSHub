@@ -71,10 +71,9 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let desc: string;
                 try {
                     const response = await got(item.link);
-                    desc = load(response.data)('div.wp_articlecontent').html();
+                    const desc: string = load(response.data)('div.wp_articlecontent').html();
                     item.description = desc;
                 } catch {
                     // intranet only contents

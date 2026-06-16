@@ -60,7 +60,7 @@ export function processWork(work: Work): DataItem | null {
         return null;
     }
 
-    const imageUrl = work.thumbnail_image_urls?.srcset?.split(',').pop()?.trim().split(' ')[0] || '';
+    const imageUrl = work.thumbnail_image_urls?.srcset?.split(',').pop()?.trim().split(' ', 1)[0] || '';
     const body = work.body || '';
 
     const audioUrl = work.genre === 'music' || work.genre === 'voice' ? work.preview_url : null;

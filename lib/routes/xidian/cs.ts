@@ -76,15 +76,15 @@ export const route: Route = {
     url: 'cs.xidian.edu.cn',
     maintainers: ['ZiHao256'],
     handler,
-    description: `| 文章来源                   | 参数          |
-| ---------------------- | ----------- |
-| ✅主页-学院新闻                | xyxw        |
-| ✅主页-通知公告                | tzgg        |
-| ✅主页-交流合作                | jlhz1       |
-| ✅主页-人事人才                | rsrc        |
-| ✅主页-本科生教育 / 本科教育-教学新闻   | bkjy_jxxw   |
-| ✅主页-研究生教育 / 研究生教育-研究生通知 | yjsjy_yjstz |
-| ✅主页-就业招聘                | jyzhaop     |`,
+    description: `| 文章来源                                      | 参数         |
+| --------------------------------------------- | ------------ |
+| ✅主页 - 学院新闻                             | xyxw         |
+| ✅主页 - 通知公告                             | tzgg         |
+| ✅主页 - 交流合作                             | jlhz1        |
+| ✅主页 - 人事人才                             | rsrc         |
+| ✅主页 - 本科生教育 / 本科教育 - 教学新闻     | bkjy\\_jxxw   |
+| ✅主页 - 研究生教育 / 研究生教育 - 研究生通知 | yjsjy\\_yjstz |
+| ✅主页 - 就业招聘                             | jyzhaop      |`,
     radar: [
         {
             source: ['cs.xidian.edu.cn/'],

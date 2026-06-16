@@ -7,7 +7,7 @@ import type { PostsResponse } from './types';
 import { customFetch, parseUserData } from './utils';
 
 export const route: Route = {
-    path: ['/timeline/:user'],
+    path: '/timeline/:user',
     categories: ['social-media'],
     example: '/cara/timeline/fengz',
     parameters: { user: 'username' },
@@ -24,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const user = ctx.req.param('user');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
     const userInfo = await parseUserData(user);
 
     const api = `${API_HOST}/posts/getAllByUser?slug=${userInfo.slug}&take=${limit}`;

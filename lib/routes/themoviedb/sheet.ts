@@ -52,7 +52,7 @@ export const route: Route = {
 | ------------ | ---------- | --------- |
 | airing-today | on-the-air | top-rated |
 
-  When \`mediaType\` is \`movie\`, \`sheet\` should be:
+When \`mediaType\` is \`movie\`, \`sheet\` should be:
 
 | Now Playing | Upcoming | Top Rated |
 | ----------- | -------- | --------- |

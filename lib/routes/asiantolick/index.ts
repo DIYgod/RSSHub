@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 24;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 24;
 
     const rootUrl = 'https://asiantolick.com';
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;
@@ -64,7 +64,7 @@ async function handler(ctx) {
                     images: image
                         ? [
                               {
-                                  src: image.prop('data-src').split(/\?/)[0],
+                                  src: image.prop('data-src').split(/\?/, 1)[0],
                                   alt: image.prop('alt'),
                               },
                           ]
@@ -115,7 +115,7 @@ async function handler(ctx) {
 
     $ = load(currentResponse);
 
-    const title = $('title').text().split(/-/)[0].trim();
+    const title = $('title').text().split(/-/, 1)[0].trim();
     const icon = $('link[rel="icon"]').first().prop('href');
 
     return {

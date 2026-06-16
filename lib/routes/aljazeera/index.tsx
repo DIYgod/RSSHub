@@ -71,8 +71,9 @@ async function handler(ctx) {
                   };
               });
 
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
     items = await Promise.all(
-        items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) =>
+        items.slice(0, limit).map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
 

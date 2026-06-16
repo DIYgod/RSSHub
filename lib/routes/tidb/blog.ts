@@ -33,7 +33,8 @@ const parseParagraphChildren = (children: any[]): string =>
         .map((child: any) => {
             if (child.text !== undefined) {
                 return escapeHtml(child.text);
-            } else if (child.type === 'image') {
+            }
+            if (child.type === 'image') {
                 return parseImageNode(child);
             }
             return '';
@@ -64,7 +65,7 @@ const parseContentToHtml = (content: any[]): string =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
@@ -251,9 +252,7 @@ export const route: Route = {
 | [架构选型](https://tidb.net/blog/c/architecture-selection)     | [architecture-selection](https://rsshub.app/tidb/blog/c/architecture-selection)     |
 | [原理解读](https://tidb.net/blog/c/principle-interpretation)   | [principle-interpretation](https://rsshub.app/tidb/blog/c/principle-interpretation) |
 | [应用开发](https://tidb.net/blog/c/application-development)    | [application-development](https://rsshub.app/tidb/blog/c/application-development)   |
-| [社区动态](https://tidb.net/blog/c/community-feeds)            | [community-feeds](https://rsshub.app/tidb/blog/c/community-feeds)                   |
-
-`,
+| [社区动态](https://tidb.net/blog/c/community-feeds)            | [community-feeds](https://rsshub.app/tidb/blog/c/community-feeds)                   |`,
     categories: ['programming'],
     features: {
         requireConfig: false,

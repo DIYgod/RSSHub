@@ -10,7 +10,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news/All' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'http://www.a9vg.com';
     const currentUrl = new URL(`list/${category}`, rootUrl).href;
@@ -128,7 +128,7 @@ export const route: Route = {
     example: '/a9vg/news',
     parameters: { category: '分类，默认为 ，可在对应分类页 URL 中找到, Category, by default' },
     description: `::: tip
-  若订阅 [PS4](http://www.a9vg.com/list/news/PS4)，网址为 \`http://www.a9vg.com/list/news/PS4\`。截取 \`http://www.a9vg.com/list\` 到末尾的部分 \`news/PS4\` 作为参数填入，此时路由为 [\`/a9vg/news/PS4\`](https://rsshub.app/a9vg/news/PS4)。
+若订阅 [PS4](http://www.a9vg.com/list/news/PS4)，网址为 \`http://www.a9vg.com/list/news/PS4\`。截取 \`http://www.a9vg.com/list\` 到末尾的部分 \`news/PS4\` 作为参数填入，此时路由为 [\`/a9vg/news/PS4\`](https://rsshub.app/a9vg/news/PS4)。
 :::
 
 | 分类                                               | ID                                                     |
@@ -141,8 +141,7 @@ export const route: Route = {
 | [XSX](https://www.a9vg.com/list/news/XSX)          | [news/XSX](https://rsshub.app/a9vg/news/XSX)           |
 | [PC](https://www.a9vg.com/list/news/PC)            | [news/PC](https://rsshub.app/a9vg/news/PC)             |
 | [业界](https://www.a9vg.com/list/news/Industry)    | [news/Industry](https://rsshub.app/a9vg/news/Industry) |
-| [厂商](https://www.a9vg.com/list/news/Factory)     | [news/Factory](https://rsshub.app/a9vg/news/Factory)   |
-  `,
+| [厂商](https://www.a9vg.com/list/news/Factory)     | [news/Factory](https://rsshub.app/a9vg/news/Factory)   |`,
     categories: ['game'],
 
     features: {

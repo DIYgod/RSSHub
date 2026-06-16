@@ -46,7 +46,7 @@ async function handler(ctx) {
                 acontent = contentData.imgs.split(',');
                 type = 'imgs';
             } else {
-                acontent = { img: contentData.video.split('|')[0], bvid: contentData.video.split('|')[1].replace('https://www.bilibili.com/video/', '') };
+                acontent = { img: contentData.video.split('|', 1)[0], bvid: contentData.video.split('|', 2)[1].replace('https://www.bilibili.com/video/', '') };
                 type = 'bilibili';
             }
         } else {

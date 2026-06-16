@@ -19,7 +19,7 @@ export const route: Route = {
 | ----------- | --------- | ---------------- | -------------- |
 | TopArtists  | TopSongs  | TopVideos        | TrendingVideos |
 
-  Country Code
+Country Code
 
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
 | --------- | --------- | ------- | ------- | ------- | ------ | ------ |

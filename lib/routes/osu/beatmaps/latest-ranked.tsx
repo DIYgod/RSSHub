@@ -232,9 +232,9 @@ async function handler(ctx): Promise<Data> {
     if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
-                upperLimit = Number.parseFloat(dfLimit.slice(1));
+                upperLimit = Number(dfLimit.slice(1));
             } else if (dfLimit.startsWith('L')) {
-                lowerLimit = Number.parseFloat(dfLimit.slice(1));
+                lowerLimit = Number(dfLimit.slice(1));
             }
         }
 

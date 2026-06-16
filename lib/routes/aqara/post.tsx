@@ -14,7 +14,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://aqara.com';
     const apiSlug = 'wp-json/wp/v2';
@@ -52,13 +52,13 @@ async function handler(ctx) {
 
         // To handle lazy-loaded images.
 
-        content('figure').each(function () {
-            const image = content(this).find('img');
+        content('figure').each((_, el) => {
+            const image = content(el).find('img');
             const src = (image.prop('data-actualsrc') ?? image.prop('data-original') ?? image.prop('src')).replace(/(-\d+x\d+)/, '');
             const width = image.prop('data-rawwidth') ?? image.prop('width');
             const height = image.prop('data-rawheight') ?? image.prop('height');
 
-            content(this).replaceWith(
+            content(el).replaceWith(
                 renderToString(
                     <figure>
                         <img src={src} width={width} height={height} />

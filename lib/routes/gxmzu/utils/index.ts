@@ -46,8 +46,8 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
                         item.description = '该通知无法直接预览，请点击原文链接↑查看';
                     } else {
                         const $content = load($(contentSelector.content).html());
-                        $content('a').each(function () {
-                            const a = $(this);
+                        $content('a').each((_, el) => {
+                            const a = $(el);
                             const href = a.attr('href');
                             if (href && !href.startsWith('http')) {
                                 a.attr('href', new URL(href, host).href);

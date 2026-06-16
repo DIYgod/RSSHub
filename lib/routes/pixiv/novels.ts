@@ -56,17 +56,17 @@ refresh_token after Pixiv login, required for accessing R18 novels
     name: 'User Novels',
     maintainers: ['TonyRL', 'SnowAgar25'],
     handler,
-    description: `
-| 小說類型 Novel Type | full_content | PIXIV_REFRESHTOKEN | 返回內容 Content |
-|-------------------|--------------|-------------------|-----------------|
-| Non R18           | false        | 不需要 Not Required  | 簡介 Basic info |
-| Non R18           | true         | 不需要 Not Required  | 全文 Full text  |
-| R18               | false        | 需要 Required       | 簡介 Basic info |
-| R18               | true         | 需要 Required       | 全文 Full text  |
+    description: `| 小說類型 Novel Type | full\\_content | PIXIV\\_REFRESHTOKEN | 返回內容 Content |
+| ------------------- | ------------- | ------------------- | ---------------- |
+| Non R18             | false         | 不需要 Not Required | 簡介 Basic info  |
+| Non R18             | true          | 不需要 Not Required | 全文 Full text   |
+| R18                 | false         | 需要 Required       | 簡介 Basic info  |
+| R18                 | true          | 需要 Required       | 全文 Full text   |
 
 Default value for \`full_content\` is \`false\` if not specified.
 
 Example:
+
 - \`/pixiv/user/novels/79603797\` → 簡介 Basic info
 - \`/pixiv/user/novels/79603797/true\` → 全文 Full text`,
 };
@@ -82,12 +82,15 @@ async function handler(ctx): Promise<Data> {
         return await getNSFWUserNovels(id, fullContent, limit);
     }
 
-    const nonR18Result = await getSFWUserNovels(id, fullContent, limit).catch((error) => {
-        if (error.name === 'Error') {
-            return null;
+    let nonR18Result;
+    try {
+        nonR18Result = await getSFWUserNovels(id, fullContent, limit);
+    } catch (error: any) {
+        if (error.name !== 'Error') {
+            throw error;
         }
-        throw error;
-    });
+        nonR18Result = null;
+    }
 
     if (nonR18Result) {
         return nonR18Result;
