@@ -44,9 +44,7 @@ async function handler(ctx) {
         const { data: home } = await got(rootURL);
         const varName = home.match(/search2="\s*\+\s*(\w+)/)?.[1];
         const token = varName ? home.match(new RegExp(String.raw`(?<!/)\bvar\s+${varName}\s*=\s*"([^"]+)"`))?.[1] : undefined;
-        currentURL = token
-            ? `${rootURL}/?search2=${token}&search=${encodeURIComponent(keyword)}`
-            : `${rootURL}/?search=${encodeURIComponent(keyword)}`;
+        currentURL = token ? `${rootURL}/?search2=${token}&search=${encodeURIComponent(keyword)}` : `${rootURL}/?search=${encodeURIComponent(keyword)}`;
         title = `search ${keyword} - u3c3`;
     } else if (type === undefined) {
         currentURL = rootURL;
