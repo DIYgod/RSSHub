@@ -33,17 +33,15 @@ const renderDesc = (desc) => {
     const matchEmoji = desc.match(/assets\/images\/emoji\/\w*.(jpg|png|gif|jpeg)/g);
 
     if (matchYouTube) {
-        desc = desc.replaceAll(
-            youTube,
+        desc = desc.replaceAll(youTube, (_match, p1) =>
             renderMedia({
-                youTube: '$1',
+                youTube: p1,
             })
         );
     }
     if (matchImgur) {
         for (const img of matchImgur) {
-            desc = desc.replace(
-                img,
+            desc = desc.replace(img, () =>
                 renderMedia({
                     img,
                 })
@@ -52,8 +50,7 @@ const renderDesc = (desc) => {
     }
     if (matchVideo) {
         for (const video of matchVideo) {
-            desc = desc.replace(
-                video,
+            desc = desc.replace(video, () =>
                 renderMedia({
                     video,
                 })
@@ -62,8 +59,7 @@ const renderDesc = (desc) => {
     }
     if (matchSticker) {
         for (const sticker of matchSticker) {
-            desc = desc.replace(
-                sticker,
+            desc = desc.replace(sticker, () =>
                 renderMedia({
                     img: sticker,
                 })
@@ -72,8 +68,7 @@ const renderDesc = (desc) => {
     }
     if (matchEmoji) {
         for (const emoji of matchEmoji) {
-            desc = desc.replace(
-                emoji,
+            desc = desc.replace(emoji, () =>
                 renderMedia({
                     img: emoji,
                 })

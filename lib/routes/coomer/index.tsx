@@ -122,7 +122,7 @@ async function handler(ctx) {
                 }
 
                 enclosureInfo = {
-                    enclosure_url: new URL(src, rootUrl).toString(),
+                    enclosure_url: new URL(src, rootUrl).href,
                     enclosure_type: mimeType,
                 };
             });

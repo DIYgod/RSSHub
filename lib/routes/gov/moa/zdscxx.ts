@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const domain = 'moa.gov.cn';
     const rootFrameUrl = `http://www.${domain}`;
@@ -36,8 +36,8 @@ export const handler = async (ctx) => {
 
         const categories = category.split(/\//);
         for (const c of categories) {
-            for (const key of Object.keys(filters)) {
-                if (filters[key].includes(c)) {
+            for (const [key, value] of Object.entries(filters)) {
+                if (value.includes(c)) {
                     filterForm[key] = c;
                 }
             }

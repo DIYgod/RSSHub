@@ -189,38 +189,38 @@ const gdgov = async (info, ctx) => {
                         author: /本/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };
                 });
-            } else if (idlink.host === 'mp.weixin.qq.com') {
-                return finishArticleItem({ link });
-            } else {
-                return cache.tryGet(link, async () => {
-                    // 获取网页
-                    const { data: res } = await got(link);
-                    const content = load(res);
-
-                    // 获取来源
-                    const author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)[1].trim().replaceAll(/(-*$)/g, '');
-
-                    // 获取发布时间
-                    const pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)[1].trim().replaceAll(/(-*$)/g, '');
-
-                    // 获取标题
-                    const title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)[1];
-                    // 获取正文
-                    const description_content = description_element.split(',').filter((item) => item !== '');
-                    for (let index = 0; index < description_content.length; index++) {
-                        description_content[index] = content(description_content[index].trim()).html();
-                    }
-                    const description = description_content.join('');
-
-                    return {
-                        link,
-                        title,
-                        description,
-                        pubDate: timezone(parseDate(pubDate, pubDate_format), +8),
-                        author: /本/.test(author) ? authorisme : author,
-                    };
-                });
             }
+            if (idlink.host === 'mp.weixin.qq.com') {
+                return finishArticleItem({ link });
+            }
+            return cache.tryGet(link, async () => {
+                // 获取网页
+                const { data: res } = await got(link);
+                const content = load(res);
+
+                // 获取来源
+                const author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)[1].trim().replaceAll(/(-*$)/g, '');
+
+                // 获取发布时间
+                const pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)[1].trim().replaceAll(/(-*$)/g, '');
+
+                // 获取标题
+                const title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)[1];
+                // 获取正文
+                const description_content = description_element.split(',').filter((item) => item !== '');
+                for (let index = 0; index < description_content.length; index++) {
+                    description_content[index] = content(description_content[index].trim()).html();
+                }
+                const description = description_content.join('');
+
+                return {
+                    link,
+                    title,
+                    description,
+                    pubDate: timezone(parseDate(pubDate, pubDate_format), +8),
+                    author: /本/.test(author) ? authorisme : author,
+                };
+            });
         })
     );
 

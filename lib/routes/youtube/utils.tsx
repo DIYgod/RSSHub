@@ -143,7 +143,8 @@ export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): st
         if (id.startsWith('UC')) {
             // For channel IDs (UC...), convert to playlist format without shorts (UULF...)
             return 'UULF' + id.slice(2);
-        } else if (id.startsWith('UU')) {
+        }
+        if (id.startsWith('UU')) {
             // For playlist IDs (UU...), convert to playlist format without shorts (UULF...)
             return 'UULF' + id.slice(2);
         }

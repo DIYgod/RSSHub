@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { language = 'zh' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Z-]/gi, '')}.zhonglun.com`;
     const currentUrl = new URL('research/articles', rootUrl).href;

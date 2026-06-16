@@ -7,24 +7,23 @@ import { renderArticle } from './templates/article';
 const parseArticle = async (item) => {
     if (new URL(item.link).hostname.endsWith('.blog.caixin.com')) {
         return parseBlogArticle(item);
-    } else {
-        const { data: response } = await got(item.link);
-
-        const $ = load(response);
-
-        item.description = renderArticle({
-            item,
-            $,
-        });
-
-        if (item.audio) {
-            item.itunes_item_image = item.audio_image_url;
-            item.enclosure_url = item.audio;
-            item.enclosure_type = 'audio/mpeg';
-        }
-
-        return item;
     }
+    const { data: response } = await got(item.link);
+
+    const $ = load(response);
+
+    item.description = renderArticle({
+        item,
+        $,
+    });
+
+    if (item.audio) {
+        item.itunes_item_image = item.audio_image_url;
+        item.enclosure_url = item.audio;
+        item.enclosure_type = 'audio/mpeg';
+    }
+
+    return item;
 };
 
 const parseBlogArticle = async (item) => {

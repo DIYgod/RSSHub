@@ -54,25 +54,25 @@ const token2Cookie = async (token) => {
 const lockPrefix = 'twitter:lock-token1:';
 
 const getAuth = async (retry: number) => {
-    if (config.twitter.authToken && retry > 0) {
-        const index = authTokenIndex++ % config.twitter.authToken.length;
-        const token = config.twitter.authToken[index];
-        const lock = await cache.get(`${lockPrefix}${token}`, false);
-        if (lock) {
-            logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
-            await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
-            return await getAuth(retry - 1);
-        } else {
-            logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
-            await cache.set(`${lockPrefix}${token}`, '1', 20);
-            return {
-                token,
-                username: config.twitter.username?.[index],
-                password: config.twitter.password?.[index],
-                authenticationSecret: config.twitter.authenticationSecret?.[index],
-            };
-        }
+    if (!config.twitter.authToken || retry <= 0) {
+        return;
     }
+    const index = authTokenIndex++ % config.twitter.authToken.length;
+    const token = config.twitter.authToken[index];
+    const lock = await cache.get(`${lockPrefix}${token}`, false);
+    if (lock) {
+        logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
+        await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
+        return await getAuth(retry - 1);
+    }
+    logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+    await cache.set(`${lockPrefix}${token}`, '1', 20);
+    return {
+        token,
+        username: config.twitter.username?.[index],
+        password: config.twitter.password?.[index],
+        authenticationSecret: config.twitter.authenticationSecret?.[index],
+    };
 };
 
 export const twitterGot = async (
@@ -99,11 +99,10 @@ export const twitterGot = async (
         });
     }
     let dispatchers:
-        | {
+        undefined | {
               jar: CookieJar;
               agent: CookieAgent | ProxyAgent;
-          }
-        | undefined;
+          };
     if (cookie) {
         logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
         if (typeof cookie === 'string') {

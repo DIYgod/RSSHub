@@ -16,7 +16,7 @@ const baseUrl = `https://${domain}`;
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gndy/dyzz' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '25', 10);
+    const limit = Number(ctx.req.query('limit') ?? '25');
 
     const targetUrl: string = new URL(`html/${category.replace(/^html\//, '')}`, baseUrl).href;
 

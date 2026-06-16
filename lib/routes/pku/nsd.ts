@@ -15,11 +15,11 @@ const pageType = (href) => {
     const url = new URL(href);
     if (url.hostname === 'mp.weixin.qq.com') {
         return 'wechat-mp';
-    } else if (url.hostname === 'news.pku.edu.cn') {
-        return 'pku-news';
-    } else {
-        return 'unknown';
     }
+    if (url.hostname === 'news.pku.edu.cn') {
+        return 'pku-news';
+    }
+    return 'unknown';
 };
 
 export const route: Route = {

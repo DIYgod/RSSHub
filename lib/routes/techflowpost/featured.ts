@@ -57,7 +57,7 @@ async function handler(ctx) {
         limit,
     });
 
-    const categoryName = category && categoryMap[category] ? `（${categoryMap[category]}）` : '';
+    const categoryName = category && Object.hasOwn(categoryMap, category) ? `（${categoryMap[category]}）` : '';
 
     return {
         title: `深潮TechFlow - 精选文章${categoryName}`,

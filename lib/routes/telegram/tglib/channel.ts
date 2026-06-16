@@ -40,7 +40,7 @@ export function withSearchParams(src: string, params: Record<string, string>) {
     for (const [key, value] of Object.entries(params)) {
         url.searchParams.set(key, value);
     }
-    return url.toString();
+    return url.href;
 }
 
 export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number) {
@@ -52,7 +52,7 @@ export function getMessageMediaUrl(requestUrl: string, username: string, message
             url.searchParams.set(key, value);
         }
     }
-    return url.toString();
+    return url.href;
 }
 
 export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
@@ -128,11 +128,11 @@ export function humanDuration(seconds: number) {
     // Construct the time string conditionally
     if (hours > 0) {
         return `${hours}:${paddedMinutes}:${paddedSeconds}`; // Show hours, minutes, and seconds
-    } else if (minutes > 0) {
-        return `${minutes}:${paddedSeconds}`; // Show minutes and seconds
-    } else {
-        return `0:${paddedSeconds}`; // Show only seconds
     }
+    if (minutes > 0) {
+        return `${minutes}:${paddedSeconds}`; // Show minutes and seconds
+    }
+    return `0:${paddedSeconds}`; // Show only seconds
 }
 
 export default async function handler(ctx: Context) {

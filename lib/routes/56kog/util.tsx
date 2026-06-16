@@ -121,7 +121,7 @@ const renderDescription = ({ images, details }: { images?: Array<{ src?: string;
                         {details.map((detail, index) => (
                             <tr key={`${detail.label}-${index}`}>
                                 <th>{detail.label}</th>
-                                <td>{detail.value?.href && detail.value?.text ? <a href={detail.value.href}>{detail.value.text}</a> : detail.value}</td>
+                                <td>{detail.value?.href && detail.value.text ? <a href={detail.value.href}>{detail.value.text}</a> : detail.value}</td>
                             </tr>
                         ))}
                     </tbody>

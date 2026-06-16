@@ -45,8 +45,8 @@ async function handler(ctx) {
             queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll("'", '"').replaceAll('|', '"')),
         }))[0];
 
-    const dataUrl = `${dataRequestUrl.url}?${Object.keys(dataRequestUrl.queryData)
-        .map((key) => `${key}=${dataRequestUrl.queryData[key]}`)
+    const dataUrl = `${dataRequestUrl.url}?${Object.entries(dataRequestUrl.queryData)
+        .map(([key, value]) => `${key}=${value}`)
         .join('&')}`;
     const response = await got({
         method: 'get',
@@ -72,7 +72,7 @@ async function handler(ctx) {
 
                 item.description = content('#con_con')
                     .html()
-                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, '$1' + rootUrl + '$2$3');
+                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, (_match, p1, p2, p3) => p1 + rootUrl + p2 + p3);
 
                 return item;
             })

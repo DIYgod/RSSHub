@@ -166,11 +166,11 @@ async function handler(ctx) {
         if (isNotionClientError(error)) {
             if (error.statusCode === APIErrorCode.ObjectNotFound) {
                 throw new InvalidParameterError('The database is not exist');
-            } else if (error.statusCode === APIErrorCode.Unauthorized) {
-                throw new ConfigNotFoundError('Please check the config of NOTION_TOKEN');
-            } else {
-                ctx.throw(error.statusCode, 'Notion API Error');
             }
+            if (error.statusCode === APIErrorCode.Unauthorized) {
+                throw new ConfigNotFoundError('Please check the config of NOTION_TOKEN');
+            }
+            ctx.throw(error.statusCode, 'Notion API Error');
         } else {
             ctx.throw(error);
         }

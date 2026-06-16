@@ -10,7 +10,7 @@ const rootUrl = 'https://www.1lou.me';
 
 export const handler = async (ctx) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const queryString = Object.entries(ctx.req.query())
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)

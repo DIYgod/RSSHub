@@ -77,7 +77,7 @@ async function handler(ctx) {
         )
     );
     return {
-        title: category in categories ? categories[category] : '其他',
+        title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
         language: 'zh-cn',

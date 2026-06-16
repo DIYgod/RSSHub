@@ -56,7 +56,7 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
 
     if (response.code === 0 && response.data && Array.isArray(response.data)) {
         const items = response.data.map((item) => {
-            const content = item.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
+            const content = item.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, () => src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
 
             return {
                 author: item.author,
@@ -117,7 +117,7 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
 
         if (forumData.code === 0 && forumData.data && forumData.data.list && Array.isArray(forumData.data.list)) {
             const items = forumData.data.list.map((post) => {
-                const content = post.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
+                const content = post.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, () => src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
 
                 return {
                     author: post.author_name,
@@ -201,7 +201,7 @@ export const handleCommentSection = async (rootUrl: string, category: string): P
 
         if (commentsData.code === 0 && commentsData.data && commentsData.data.list && Array.isArray(commentsData.data.list)) {
             const items = commentsData.data.list.map((comment) => {
-                const content = comment.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
+                const content = comment.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, () => src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
 
                 return {
                     author: comment.author,

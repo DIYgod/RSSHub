@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 6;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 6;
 
     const rootUrl = 'http://www.moa.gov.cn';
     const currentUrl = new URL('ztzl/szcpxx/zyzc/index.htm', rootUrl).href;

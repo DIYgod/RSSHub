@@ -79,7 +79,7 @@ async function handler(ctx: Context) {
     const $ = cheerio.load(response);
 
     const list = $('.card-body > a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 30)
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 30)
         .toArray()
         .map((item) => {
             const $item = $(item);

@@ -13,7 +13,8 @@ export const hdGallery = (gallery) =>
     gallery.map((item) => {
         if (item.startsWith('https://pics.dmm.co.jp/')) {
             return item.replace(/-(\d+)\.jpg$/, 'jp-$1.jpg');
-        } else if (item.startsWith('https://image.mgstage.com/')) {
+        }
+        if (item.startsWith('https://image.mgstage.com/')) {
             return item.replace(/cap_t1_/, 'cap_e_');
         }
         return item;

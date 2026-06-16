@@ -164,28 +164,27 @@ export default {
                     message: '顺丰查询需要手机号后四位！',
                     company,
                 };
-            } else if (company.checkReg) {
+            }
+            if (company.checkReg) {
                 return {
                     status: true,
                     regex: new RegExp(company.checkReg).test(id),
                     company,
                 };
-            } else {
-                return {
-                    status: true,
-                    regex: undefined,
-                    company,
-                };
             }
-        } else {
             return {
-                status: false,
-                message: '快递公司编号不受支持！',
-                company: {
-                    name: '未知',
-                },
+                status: true,
+                regex: undefined,
+                company,
             };
         }
+        return {
+            status: false,
+            message: '快递公司编号不受支持！',
+            company: {
+                name: '未知',
+            },
+        };
     },
 
     /*
@@ -254,7 +253,8 @@ export default {
                     // 查无结果 appears when cookie is invaild, force update cookie.
                     clearCookie();
                     throw new Error('暂时无法获取快递信息，请稍后重试...');
-                } else if (query.ischeck === '0') {
+                }
+                if (query.ischeck === '0') {
                     // Not yet complete, don't cache for now.
                     // To avoid frquent link test when add source, add 180s cache
                     cache.set(query_key, query, 180);

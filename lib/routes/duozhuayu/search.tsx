@@ -76,7 +76,8 @@ async function handler(ctx) {
 
     const item = response.data.data
         .filter((item) => item.type === type)
-        .map(({ [type]: item }) => ({
+        .map((entry) => entry[type])
+        .map((item) => ({
             title: item.title,
             link: `${baseUrl}/books/${item.id}`,
             pubDate: parseDate(item.updated), // 2023-05-07T13:33:09+08:00

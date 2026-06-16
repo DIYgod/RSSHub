@@ -22,7 +22,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.atptour.com';
     const favIcon = `${baseUrl}/assets/atptour/assets/favicon.ico`;
     const { lang = 'en' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const link = `${baseUrl}/${lang}/-/tour/news/latest-filtered-results/0/${limit}`;
     const { data } = await got(link, {

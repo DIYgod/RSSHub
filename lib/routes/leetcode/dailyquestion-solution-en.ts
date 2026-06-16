@@ -159,7 +159,7 @@ async function handler() {
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
         for (let i = 0; i < matched.length; i++) {
-            s = s.replace(matched[i], strs[i]);
+            s = s.replace(matched[i], () => strs[i]);
         }
         return s;
     };
@@ -205,7 +205,7 @@ async function handler() {
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
         for (let i = 0; i < matched.length; i++) {
-            s = s.replace(matched[i], strs[i]);
+            s = s.replace(matched[i], () => strs[i]);
         }
         return s;
     };

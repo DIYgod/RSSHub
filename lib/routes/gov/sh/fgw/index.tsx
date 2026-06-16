@@ -25,7 +25,7 @@ const renderDescription = ({ images, description }) =>
     );
 export const handler = async (ctx) => {
     const { category = 'fgw_zxxxgk' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://fgw.sh.gov.cn';
     const currentUrl = new URL(`${category}/index.html`, rootUrl).href;

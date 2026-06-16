@@ -51,7 +51,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const { id, sub = 'hot', sort = 'created' } = ctx.req.param();
 
-    if (sort in sortMap === false) {
+    if (!Object.hasOwn(sortMap, sort)) {
         throw new InvalidParameterError('invalid sort parameter, should be `hot`, `created`, or `replied`');
     }
     const sortType = sortMap[sort];

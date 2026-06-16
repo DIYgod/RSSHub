@@ -42,7 +42,7 @@ export async function registerRoute(namespace: string, route: Route, namespaceCo
 
     const { namespaces } = await import('./registry');
 
-    if (!namespaces[namespace]) {
+    if (!Object.hasOwn(namespaces, namespace)) {
         namespaces[namespace] = {
             ...namespaceConfig,
             name: namespaceConfig?.name || namespace,
@@ -55,13 +55,14 @@ export async function registerRoute(namespace: string, route: Route, namespaceCo
     const subApp = app.basePath(`/${namespace}`);
 
     const wrappedHandler: Handler = async (ctx) => {
-        if (!ctx.get('data')) {
-            const response = await route.handler(ctx);
-            if (response instanceof Response) {
-                return response;
-            }
-            ctx.set('data', response);
+        if (ctx.get('data')) {
+            return;
         }
+        const response = await route.handler(ctx);
+        if (response instanceof Response) {
+            return response;
+        }
+        ctx.set('data', response);
     };
 
     for (const path of paths) {

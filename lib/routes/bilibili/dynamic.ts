@@ -346,7 +346,7 @@ async function handler(ctx) {
                             const emoji = node.emoji;
                             description = description.replaceAll(
                                 emoji.text,
-                                `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                () => `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
                             );
                         }
                         // 处理转发带图评论的情况
@@ -354,12 +354,13 @@ async function handler(ctx) {
                             const { pics, text } = node;
                             description = description.replaceAll(
                                 text,
-                                pics
-                                    .map(
-                                        (pic) =>
-                                            `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
-                                    )
-                                    .join('<br>')
+                                () =>
+                                    pics
+                                        .map(
+                                            (pic) =>
+                                                `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                        )
+                                        .join('<br>')
                             );
                         }
                         if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {

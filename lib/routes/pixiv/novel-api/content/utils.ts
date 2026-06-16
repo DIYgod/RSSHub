@@ -6,18 +6,11 @@ import getIllustDetail from '../../api/get-illust-detail';
 import pixivUtils from '../../utils';
 
 export function convertPixivProtocolExtended(caption: string): string {
-    const protocolMap = new Map([
-        [/pixiv:\/\/novels\/(\d+)/g, 'https://www.pixiv.net/novel/show.php?id=$1'],
-        [/pixiv:\/\/illusts\/(\d+)/g, 'https://www.pixiv.net/artworks/$1'],
-        [/pixiv:\/\/users\/(\d+)/g, 'https://www.pixiv.net/users/$1'],
-        [/pixiv:\/\/novel\/series\/(\d+)/g, 'https://www.pixiv.net/novel/series/$1'],
-    ]);
-
-    let convertedText = caption;
-    for (const [pattern, replacement] of protocolMap) {
-        convertedText = convertedText.replace(pattern, replacement);
-    }
-    return convertedText;
+    return caption
+        .replaceAll(/pixiv:\/\/novels\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/novel/show.php?id=${p1}`)
+        .replaceAll(/pixiv:\/\/illusts\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/artworks/${p1}`)
+        .replaceAll(/pixiv:\/\/users\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/users/${p1}`)
+        .replaceAll(/pixiv:\/\/novel\/series\/(\d+)/g, (_match, p1) => `https://www.pixiv.net/novel/series/${p1}`);
 }
 
 // docs: https://www.pixiv.help/hc/ja/articles/235584168-小説作品の本文内に使える特殊タグとは
@@ -26,7 +19,7 @@ export async function parseNovelContent(content: string, images: Record<string, 
         // 如果有 token，處理 pixiv 圖片引用
         // If token exists, process pixiv image references
         if (token) {
-            const imageMatches = [...content.matchAll(/\[pixivimage:(\d+)(?:-(\d+))?\]/g)];
+            const imageMatches = content.matchAll(/\[pixivimage:(\d+)(?:-(\d+))?\]/g).toArray();
             const imageIdToUrl = new Map<string, string>();
 
             // 批量獲取圖片資訊
@@ -76,8 +69,9 @@ export async function parseNovelContent(content: string, images: Record<string, 
         // 處理作者上傳的圖片
         // Process author uploaded images
         content = content.replaceAll(/\[uploadedimage:(\d+)\]/g, (match, imageId) => {
-            if (images[imageId]) {
-                return `<img src="${pixivUtils.getProxiedImageUrl(images[imageId])}" alt="novel illustration ${imageId}">`;
+            const imageUrl = images[imageId];
+            if (imageUrl) {
+                return `<img src="${pixivUtils.getProxiedImageUrl(imageUrl)}" alt="novel illustration ${imageId}">`;
             }
             return match;
         });

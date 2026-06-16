@@ -97,7 +97,7 @@ const detailParsers = {
 };
 
 function getList(category, $) {
-    return parsers[category] ? parsers[category]($) : [];
+    return Object.hasOwn(parsers, category) ? parsers[category]($) : [];
 }
 
 async function fetchDetail(item, category) {
@@ -113,7 +113,7 @@ async function fetchDetail(item, category) {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'ow';
-    if (!categoryNames[category]) {
+    if (!Object.hasOwn(categoryNames, category)) {
         throw new Error('Invalid category');
     }
 

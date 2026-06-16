@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export function removeDuplicateByKey(items, key: string) {
-    return [...new Map(items.map((x) => [x[key], x])).values()];
+    return new Map(items.map((x) => [x[key], x])).values().toArray();
 }
 
 export function fetchArticle(item) {
@@ -25,9 +25,8 @@ export function fetchArticle(item) {
                     author: gtmParsed.author,
                     ...item,
                 };
-            } else {
-                return item;
             }
+            return item;
         }
         const rawLdjson = JSON.parse($('#link-ld-json').text());
         let ldjson;
@@ -47,21 +46,20 @@ export function fetchArticle(item) {
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
                 author: ldjson.author,
             };
-        } else {
-            // Live
-            ldjson = rawLdjson;
-
-            const url = new URL(item.link);
-            const description = url.hash ? $(url.hash).parent().find('.LiveBlogPost-body').html() : ldjson.description;
-            const pubDate = url.hash ? parseDate(Number.parseInt($(url.hash).parent().attr('data-posted-date-timestamp'), 10)) : parseDate(ldjson.coverageStartTime);
-
-            return {
-                ...item,
-                category: ldjson.keywords,
-                pubDate,
-                description,
-                guid: $("meta[name='brightspot.contentId']").attr('content'),
-            };
         }
+        // Live
+        ldjson = rawLdjson;
+
+        const url = new URL(item.link);
+        const description = url.hash ? $(url.hash).parent().find('.LiveBlogPost-body').html() : ldjson.description;
+        const pubDate = url.hash ? parseDate(Number($(url.hash).parent().attr('data-posted-date-timestamp'))) : parseDate(ldjson.coverageStartTime);
+
+        return {
+            ...item,
+            category: ldjson.keywords,
+            pubDate,
+            description,
+            guid: $("meta[name='brightspot.contentId']").attr('content'),
+        };
     });
 }

@@ -101,7 +101,7 @@ async function getUserFeeds(url: string, category: string) {
         notes.flatMap((n) =>
             n.map(({ id, noteCard }) => ({
                 title: noteCard.displayTitle,
-                link: new URL(noteCard.noteId || id, url).toString(),
+                link: new URL(noteCard.noteId || id, url).href,
                 guid: noteCard.displayTitle,
                 description: `<img src="${noteCard.cover.infoList.pop().url}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,

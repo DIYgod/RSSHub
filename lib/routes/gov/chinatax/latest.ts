@@ -44,7 +44,7 @@ async function handler() {
             const a = item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), 'http://www.chinatax.gov.cn').toString(),
+                link: new URL(a.attr('href'), 'http://www.chinatax.gov.cn').href,
             };
         });
     const items = await Promise.all(

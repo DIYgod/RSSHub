@@ -181,7 +181,7 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
 
         if (mimeType) {
             enclosureInfo = {
-                enclosure_url: new URL(src, KEMONO_ROOT_URL).toString(),
+                enclosure_url: new URL(src, KEMONO_ROOT_URL).href,
                 enclosure_type: mimeType,
             };
             return false;

@@ -65,7 +65,7 @@ async function handler(ctx) {
     const timestamp = Date.now();
     const params = {
         page: 1,
-        page_size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50,
+        page_size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50,
         limit_time: 0,
         name_en: '',
     };

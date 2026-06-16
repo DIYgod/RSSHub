@@ -48,7 +48,7 @@ function parseParamsToSearchParams(params, map) {
         return '';
     } // Handle undefined params
 
-    const validParamValues = params.split('-').filter((v) => v in map);
+    const validParamValues = params.split('-').filter((v) => Object.hasOwn(map, v));
     return validParamValues.join(',');
 }
 
@@ -68,7 +68,7 @@ function parseParamsToString(params, map) {
 
     const validParamValues = params
         .split('-')
-        .filter((v) => v in map)
+        .filter((v) => Object.hasOwn(map, v))
         .map((v) => map[v]);
     return validParamValues.join(',');
 }

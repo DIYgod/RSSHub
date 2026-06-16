@@ -141,7 +141,7 @@ async function handleSisRequest(ctx: { req: { param: (arg0: string) => string } 
 
     // Validate the requested category type
     if (!categoryInfo) {
-        const validTypes = [...categoryMap.keys()].join(', ');
+        const validTypes = categoryMap.keys().toArray().join(', ');
         throw new Error(`Invalid type: ${requestedType}. Valid types are: ${validTypes}`);
     }
 

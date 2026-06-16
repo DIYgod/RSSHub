@@ -298,9 +298,10 @@ describe('getPlaywrightPage (mocked)', () => {
         const getPlaywrightPage = await loadPlaywright();
         await getPlaywrightPage('https://example.com');
 
+        const userAgentArg = expect.stringContaining('--user-agent=');
         expect(launch).toHaveBeenCalledWith(
             expect.objectContaining({
-                args: expect.not.arrayContaining([expect.stringContaining('--user-agent=')]),
+                args: expect.not.arrayContaining([userAgentArg]),
             })
         );
         expect(mockBrowser.newContext).toHaveBeenCalledWith(

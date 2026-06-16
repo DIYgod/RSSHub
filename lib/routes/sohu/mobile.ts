@@ -85,9 +85,8 @@ async function handler() {
 
 function extractPlateBlockNewsLists(jsonData: any) {
     const result: any[] = [];
-    for (const key of Object.keys(jsonData)) {
+    for (const [key, plateBlock] of Object.entries(jsonData)) {
         if (key.startsWith('PlateBlock')) {
-            const plateBlock = jsonData[key];
             // 处理新闻列表
             if (plateBlock?.param?.newsData?.list) {
                 result.push(...plateBlock.param.newsData.list);

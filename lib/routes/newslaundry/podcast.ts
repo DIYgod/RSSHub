@@ -59,5 +59,5 @@ async function handler(ctx): Promise<Data> {
     // For main podcast route, skip the first item
     const skipFirstItem = !category;
 
-    return category && categoryMap[category] ? await fetchCollection(categoryMap[category].slug, categoryMap[category].url) : await fetchCollection('podcast', undefined, skipFirstItem);
+    return category && Object.hasOwn(categoryMap, category) ? await fetchCollection(categoryMap[category].slug, categoryMap[category].url) : await fetchCollection('podcast', undefined, skipFirstItem);
 }

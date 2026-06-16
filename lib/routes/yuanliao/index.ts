@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { tag } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://yuanliao.info';
     const apiUrl: string = new URL('api/discussions', baseUrl).href;
@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const firstPostData = relationships?.firstPost?.data;
 
-        const description: string | undefined = firstPostData?.type && firstPostData?.id ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
+        const description: string | undefined = firstPostData?.type && firstPostData.id ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
         const pubDate: number | string = attributes.createdAt;
         const linkUrl: string | undefined = item.id ? `d/${item.id}` : undefined;
         const categories: string[] = [...new Set(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean);

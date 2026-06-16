@@ -66,7 +66,8 @@ async function handler(ctx) {
                             description: c.text,
                             author: c.author.name,
                         };
-                    } else if (c.replies.length > 0) {
+                    }
+                    if (c.replies.length > 0) {
                         comments.push(...c.replies);
                     }
                 }

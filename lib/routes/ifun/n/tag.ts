@@ -8,7 +8,7 @@ import { author, language, processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { name } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`article-list/1?tagName=${name}`, rootUrl).href;
     const apiUrl: string = new URL('api/articles/tagId', rootUrl).href;

@@ -16,7 +16,7 @@ const createSearchParams = (queryString: string, limit: number = 30): URLSearchP
 
 const searchParamsToObject = (searchParams: URLSearchParams): Record<string, string> => {
     const obj: Record<string, string> = {};
-    for (const [key, value] of searchParams.entries()) {
+    for (const [key, value] of searchParams) {
         obj[key] = value;
     }
     return obj;
@@ -24,7 +24,7 @@ const searchParamsToObject = (searchParams: URLSearchParams): Record<string, str
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filters } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
     const params: URLSearchParams = createSearchParams(filters, limit);
 
     const baseUrl = 'https://digitalpolicyalert.org';

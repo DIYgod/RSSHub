@@ -1,8 +1,16 @@
-// oxlint-disable unicorn/prefer-math-trunc unicorn-js/no-this-outside-of-class unicorn-js/no-array-from-fill
+// oxlint-disable unicorn/prefer-math-trunc
+// oxlint-disable unicorn-js/no-this-outside-of-class
+// oxlint-disable unicorn-js/no-array-from-fill
+// oxlint-disable unicorn-js/no-global-object-property-assignment
+// oxlint-disable unicorn-js/no-unnecessary-global-this
+// oxlint-disable unicorn-js/no-undeclared-class-members
+// oxlint-disable unicorn-js/prefer-array-from-map
+// oxlint-disable unicorn-js/require-array-sort-compare
+// oxlint-disable unicorn-js/prefer-short-arrow-method
 // oxlint-disable no-unused-vars
+// oxlint-disable unicorn/consistent-function-scoping
 /* eslint-disable prefer-rest-params */
 /* eslint-disable default-case */
-// oxlint-disable unicorn/consistent-function-scoping
 /* eslint-disable no-console */
 // Copyright 2018 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style

@@ -29,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'note' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://dsj.nrta.gov.cn';
     const currentUrl = new URL(`tims/site/views/applications.shanty?appName=${category}`, rootUrl).href;

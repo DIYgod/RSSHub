@@ -10,7 +10,7 @@ import ofetch from '@/utils/ofetch';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter = 'order=sell_desc' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '24', 10);
+    const limit = Number(ctx.req.query('limit') ?? '24');
 
     const baseUrl = 'https://www.bookwalker.com.tw';
     const targetUrl: string = new URL(`search?${filter}`, baseUrl).href;

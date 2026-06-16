@@ -29,7 +29,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
 
     // Handle lottie-player animations
     // Multiple lottie-players might exist (desktop/mobile versions) - replace all with placeholders first
-    const lottieMatches = [...processed.matchAll(/<lottie-player[^>]*src="([^"]+)"[^>]*><\/lottie-player>/g)];
+    const lottieMatches = processed.matchAll(/<lottie-player[^>]*src="([^"]+)"[^>]*><\/lottie-player>/g).toArray();
     const uniqueAnimations = new Set();
 
     // Replace each lottie-player, but track unique animations by filename
@@ -51,7 +51,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
             const linkUrl = articleLink || rootUrl;
             const badgeImg = 'https://img.shields.io/badge/🎬-View_Interactive_Animation-0066CC?style=for-the-badge';
             const replacement = `<p style="text-align: center; margin: 20px 0;"><a href="${linkUrl}" target="_blank"><img src="${badgeImg}" alt="View Interactive Animation" /></a></p>`;
-            processed = processed.replace(match[0], replacement);
+            processed = processed.replace(match[0], () => replacement);
         }
     }
 
@@ -59,7 +59,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
 };
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts`;
     const posts = await ofetch(apiUrl, {

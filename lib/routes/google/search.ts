@@ -30,7 +30,7 @@ async function handler(ctx) {
     });
     const tempUrl = new URL('https://www.google.com/search');
     tempUrl.search = searchParams.toString();
-    const url = tempUrl.toString();
+    const url = tempUrl.href;
     const key = `google:search:${language}:${url}`;
     const items = await cache.tryGet(
         key,

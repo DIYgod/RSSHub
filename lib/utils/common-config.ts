@@ -25,7 +25,7 @@ function replaceParams(data, prop, $) {
     let group = regex.exec(prop);
     while (group) {
         // FIXME Multi vars
-        result = result.replace(group[0], transElemText($, data.params[group[1]]));
+        result = result.replace(group[0], () => transElemText($, data.params[group[1]]));
         group = regex.exec(prop);
     }
     return result;

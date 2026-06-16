@@ -22,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { site = 'beijing' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 3;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 3;
 
     return await processZxfkItems(site, 'ywzx', limit);
 }

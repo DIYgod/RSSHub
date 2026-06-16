@@ -22,7 +22,7 @@ async function handler(ctx) {
     let { category = site === 'www' ? '59476' : '' } = ctx.req.param();
     category = site === 'cpc' && category === '24h' ? '87228' : category;
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     if (!isValidHost(site)) {
         throw new InvalidParameterError('Invalid site');

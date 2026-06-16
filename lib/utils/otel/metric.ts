@@ -55,14 +55,11 @@ export const requestMetric = {
     },
 };
 
-export const getContext = () =>
-    new Promise<string>((resolve, reject) => {
-        exporter
-            .collect()
-            .then((value) => {
-                resolve(serializer.serialize(value.resourceMetrics));
-            })
-            .finally(() => {
-                reject('');
-            });
-    });
+export const getContext = async (): Promise<string> => {
+    try {
+        const value = await exporter.collect();
+        return serializer.serialize(value.resourceMetrics);
+    } catch {
+        throw '';
+    }
+};

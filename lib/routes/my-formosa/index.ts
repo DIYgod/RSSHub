@@ -30,11 +30,10 @@ export const route: Route = {
     url: 'my-formosa.com',
 };
 
-function fetch(url) {
-    return ofetch(url, { responseType: 'arrayBuffer' }).then((raw) => {
-        const decoder = new TextDecoder('big5');
-        return decoder.decode(raw);
-    });
+async function fetch(url) {
+    const raw = await ofetch(url, { responseType: 'arrayBuffer' });
+    const decoder = new TextDecoder('big5');
+    return decoder.decode(raw);
 }
 
 async function handler() {

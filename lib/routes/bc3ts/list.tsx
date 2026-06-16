@@ -47,7 +47,7 @@ const MediaList = ({ media }: { media: Media[] }) => (
 
 async function handler(ctx) {
     const { sort = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const response = await ofetch<PostResponse>('https://app.bc3ts.net/post/list/v2', {
         headers: {

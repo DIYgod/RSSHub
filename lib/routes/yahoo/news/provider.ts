@@ -46,7 +46,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Unknown region: ${region}`);
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const providerList = await getProviderList(region);
     const provider = providerList.find((p) => p.key === providerId);
 

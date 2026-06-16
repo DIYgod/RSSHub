@@ -11,7 +11,8 @@ const getOriginalImg = (url) => {
             format = 'jpg';
         }
         return `${m[1]}?format=${format}&name=orig`;
-    } else if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/[^?]+)(\?.+)$/i))) {
+    }
+    if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/[^?]+)(\?.+)$/i))) {
         const pars = getQueryParams(url);
         if (!pars.format || !pars.name) {
             return url;
@@ -20,9 +21,8 @@ const getOriginalImg = (url) => {
             return url;
         }
         return m[1] + '?format=' + pars.format + '&name=orig';
-    } else {
-        return url;
     }
+    return url;
 };
 const replaceBreak = (text) => text.replaceAll(/<br><br>|<br>/g, ' ');
 const quoteSeparator = "<hr style='border:0;border-top:1px solid #80808030;margin:12px 0;'>";
@@ -33,7 +33,7 @@ const formatText = (item) => {
     const urls = item.entities.urls || [];
     for (const url of urls) {
         // trim link pointing to the tweet itself (usually appears when the tweet is truncated)
-        text = text.replaceAll(url.url, url.expanded_url?.endsWith(id_str) ? '' : url.expanded_url);
+        text = text.replaceAll(url.url, () => (url.expanded_url?.endsWith(id_str) ? '' : url.expanded_url));
     }
     const media = item.extended_entities?.media || [];
     for (const m of media) {

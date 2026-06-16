@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.mem.gov.cn';
     const currentUrl = new URL('gk/zfxxgkpt/fdzdgknr/', rootUrl).href;
@@ -58,9 +58,8 @@ async function handler(ctx) {
                     link,
                     pubDate: parseDate($(item).find('.fbsj').text()),
                 };
-            } else {
-                return null;
             }
+            return null;
         })
         .filter(Boolean);
 

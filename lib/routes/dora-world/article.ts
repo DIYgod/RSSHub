@@ -70,7 +70,7 @@ async function handler(ctx): Promise<Data> {
                         return item;
                     })
             )
-        ).then((items) => items.filter((item) => item !== null))) as DataItem[],
+        )) as DataItem[],
     };
 }
 

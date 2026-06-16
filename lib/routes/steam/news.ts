@@ -108,7 +108,7 @@ const langMap = {
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
     const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number.parseInt(limitQuery, 10) : 100;
+    const limit = limitQuery ? Number(limitQuery) : 100;
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -130,7 +130,7 @@ async function handler(ctx: Context): Promise<Data> {
         const title = item.event_name;
         const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
-                .replaceAll('{STEAM_CLAN_IMAGE}', `${clanRootUrl}/images`)
+                .replaceAll('{STEAM_CLAN_IMAGE}', () => `${clanRootUrl}/images`)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/(\[\/h\d\])\n/g, '$1')

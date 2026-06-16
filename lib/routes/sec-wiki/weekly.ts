@@ -22,7 +22,7 @@ export const route: Route = {
 
 async function handler() {
     const { data } = await got('https://www.sec-wiki.com/weekly/index');
-    const items = [...data.matchAll(/\/weekly\/(\d+)">(.+?)<\/a><\/h5>\s*<p>(.+?)<\/p>/g)].map((item) => ({
+    const items = data.matchAll(/\/weekly\/(\d+)">(.+?)<\/a><\/h5>\s*<p>(.+?)<\/p>/g).toArray().map((item) => ({
         title: item[2],
         link: `https://www.sec-wiki.com/weekly/${item[1]}`,
         description: item[3],

@@ -17,13 +17,14 @@ const formatTime = (s) => {
 
     if (days > 0) {
         return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    } else if (hours > 0) {
-        return `${hours}h ${minutes}m ${seconds}s`;
-    } else if (minutes > 0) {
-        return `${minutes}m ${seconds}s`;
-    } else {
-        return `${seconds}s`;
     }
+    if (hours > 0) {
+        return `${hours}h ${minutes}m ${seconds}s`;
+    }
+    if (minutes > 0) {
+        return `${minutes}m ${seconds}s`;
+    }
+    return `${seconds}s`;
 };
 
 class Monitor {

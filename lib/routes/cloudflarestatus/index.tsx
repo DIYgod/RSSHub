@@ -11,7 +11,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
+    const limit = Number(ctx.req.query('limit') ?? '100');
 
     const baseUrl = 'https://www.cloudflarestatus.com';
 
@@ -40,7 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 </>
             );
             const pubDateStr: string | undefined = $el.find('span.ago').attr('data-datetime-unix');
-            const linkUrl: string | undefined = $actualTitleEl.attr('href') ? new URL($actualTitleEl.attr('href') as string, baseUrl).toString() : undefined;
+            const linkUrl: string | undefined = $actualTitleEl.attr('href') ? new URL($actualTitleEl.attr('href') as string, baseUrl).href : undefined;
             const categories: string[] = [type].filter(Boolean);
             const guid: string = linkUrl ? `${linkUrl}#${pubDateStr}` : '';
             const upDatedStr: string | undefined = pubDateStr;

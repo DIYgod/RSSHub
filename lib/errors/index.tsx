@@ -27,12 +27,14 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     }
     debug.error++;
 
-    if (!debug.errorPaths[requestPath]) {
+    const errorPathCount = debug.errorPaths[requestPath];
+    if (!errorPathCount) {
         debug.errorPaths[requestPath] = 0;
     }
     debug.errorPaths[requestPath]++;
 
-    if (!debug.errorRoutes[matchedRoute] && hasMatchedRoute) {
+    const errorRouteCount = debug.errorRoutes[matchedRoute];
+    if (!errorRouteCount && hasMatchedRoute) {
         debug.errorRoutes[matchedRoute] = 0;
     }
     hasMatchedRoute && debug.errorRoutes[matchedRoute]++;

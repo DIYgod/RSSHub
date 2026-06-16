@@ -39,7 +39,7 @@ async function handler(ctx) {
             query: 'channel',
             slug: name,
             offset: 0,
-            size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20,
+            size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
             mode: 'scrollLoad',
         },
     });

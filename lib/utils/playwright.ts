@@ -105,7 +105,7 @@ const launchBrowser = async (currentProxy?: ProxyState | null) => {
 const getBrowserlessEndpoint = (endpoint: string, launchOptions: BrowserlessLaunchOptions) => {
     const endpointURL = new URL(endpoint);
     endpointURL.searchParams.set('launch', JSON.stringify(launchOptions));
-    return endpointURL.toString();
+    return endpointURL.href;
 };
 
 const scheduleClose = (browser: Browser, timeout = 30000) => {

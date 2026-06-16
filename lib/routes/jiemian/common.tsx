@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx): Promise<Data> => {
     const { category, id } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.jiemian.com';
     // Reason: lists.ts uses :id param, other routes use :category or hardcoded paths
@@ -83,8 +83,8 @@ export const handler = async (ctx): Promise<Data> => {
                         .toArray()
                         .map((c) => content(c).text());
                     item.pubDate = parseDate(content('div.article-info span[data-article-publish-time]').prop('data-article-publish-time'), 'X');
-                    item.upvotes = content('span.opt-praise__count').text() ? Number.parseInt(content('span.opt-praise__count').text(), 10) : 0;
-                    item.comments = content('span.opt-comment__count').text() ? Number.parseInt(content('span.opt-comment__count').text(), 10) : 0;
+                    item.upvotes = content('span.opt-praise__count').text() ? Number(content('span.opt-praise__count').text()) : 0;
+                    item.comments = content('span.opt-comment__count').text() ? Number(content('span.opt-comment__count').text()) : 0;
 
                     return item;
                 })

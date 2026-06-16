@@ -39,11 +39,11 @@ export const route: Route = {
             target: (params) => {
                 if (params.category && params.type) {
                     return `/nikkei/cn/cn/${params.category}/${params.type.replace('.html', '')}`;
-                } else if (params.category && !params.type) {
-                    return `/nikkei/cn/cn/${params.category.replace('.html', '')}`;
-                } else {
-                    return '/nikkei/cn/cn';
                 }
+                if (params.category && !params.type) {
+                    return `/nikkei/cn/cn/${params.category.replace('.html', '')}`;
+                }
+                return '/nikkei/cn/cn';
             },
         },
         {
@@ -52,11 +52,11 @@ export const route: Route = {
             target: (params) => {
                 if (params.category && params.type) {
                     return `/nikkei/cn/zh/${params.category}/${params.type.replace('.html', '')}`;
-                } else if (params.category && !params.type) {
-                    return `/nikkei/cn/zh/${params.category.replace('.html', '')}`;
-                } else {
-                    return '/nikkei/cn/zh';
                 }
+                if (params.category && !params.type) {
+                    return `/nikkei/cn/zh/${params.category.replace('.html', '')}`;
+                }
+                return '/nikkei/cn/zh';
             },
         },
     ],

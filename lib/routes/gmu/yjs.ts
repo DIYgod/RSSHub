@@ -89,7 +89,7 @@ export const route: Route = {
 export async function handler(ctx: Context) {
     const { type, subtype } = ctx.req.param();
 
-    if (!sections[type] || !sections[type][subtype]) {
+    if (!Object.hasOwn(sections, type) || !Object.hasOwn(sections[type], subtype)) {
         throw new Error('Invalid type or subtype');
     }
 

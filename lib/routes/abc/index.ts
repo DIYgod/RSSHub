@@ -34,7 +34,7 @@ The supported channels are all listed in the table below. For other channels, pl
 
 async function handler(ctx) {
     const { category = 'news/justin' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.abc.net.au';
     const apiUrl = new URL('news-web/api/loader/channelrefetch', rootUrl).href;
@@ -131,7 +131,7 @@ async function handler(ctx) {
                     if (enclosureMatches) {
                         const enclosureMatch = enclosureMatches
                             .map((e) => e.match(new RegExp(enclosurePattern)))
-                            .toSorted((a, b) => Number.parseInt(a[2], 10) - Number.parseInt(b[2], 10))
+                            .toSorted((a, b) => Number(a[2]) - Number(b[2]))
                             .pop();
 
                         item.enclosure_url = enclosureMatch[3];

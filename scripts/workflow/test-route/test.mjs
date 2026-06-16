@@ -86,52 +86,55 @@ ${detail.slice(0, 65300 - routeFeedback.length)}
         const resultLabel = failCount === links.length || successCount <= failCount ? routeTestFailed : readyToReview;
 
         if (resultLabel === routeTestFailed) {
-            const { data: issue } = await github.rest.issues
-                .get({
+            let issue;
+            try {
+                const response = await github.rest.issues.get({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: number,
-                })
-                .catch((error) => {
-                    core.warning(error);
                 });
+                issue = response.data;
+            } catch (error) {
+                core.warning(error);
+                throw error;
+            }
             if (issue.labels.some((l) => l.name === readyToReview)) {
-                await github.rest.issues
-                    .removeLabel({
+                try {
+                    await github.rest.issues.removeLabel({
                         issue_number: number,
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         name: readyToReview,
-                    })
-                    .catch((error) => {
-                        core.warning(error);
                     });
+                } catch (error) {
+                    core.warning(error);
+                }
             }
         }
 
-        await github.rest.issues
-            .addLabels({
+        try {
+            await github.rest.issues.addLabels({
                 issue_number: number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 labels: [resultLabel],
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
     }
 
     for await (const comment of commentList) {
         // Intended, one at a time
-        await github.rest.issues
-            .createComment({
+        try {
+            await github.rest.issues.createComment({
                 issue_number: number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 body: comment,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
     }
 }

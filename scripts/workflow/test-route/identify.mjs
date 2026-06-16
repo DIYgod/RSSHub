@@ -33,55 +33,62 @@ export default async function identify({ github, context, core }, body, number, 
         repo: context.repo.repo,
         pull_number: number,
     };
-    /** @type {Awaited<ReturnType<typeof github.rest.issues.get>>} */
-    const { data: issue } = await github.rest.issues
-        .get({
+    let issue;
+    try {
+        /** @type {Awaited<ReturnType<typeof github.rest.issues.get>>} */
+        const response = await github.rest.issues.get({
             ...issueFacts,
-        })
-        .catch((error) => {
-            core.warning(error);
         });
+        issue = response.data;
+    } catch (error) {
+        core.warning(error);
+        throw error;
+    }
 
     /** @param {string[]} labels */
-    const addLabels = (labels) =>
-        github.rest.issues
-            .addLabels({
+    const addLabels = (labels) => {
+        try {
+            return github.rest.issues.addLabels({
                 ...issueFacts,
                 labels,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
+    };
     /** @param {string} labelName */
-    const removeLabel = (labelName = noFound) =>
-        github.rest.issues
-            .removeLabel({
+    const removeLabel = (labelName = noFound) => {
+        try {
+            return github.rest.issues.removeLabel({
                 ...issueFacts,
                 name: labelName,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
+    };
     /** @param {'open' | 'closed'} state */
-    const updatePrState = (state) =>
-        github.rest.pulls
-            .update({
+    const updatePrState = (state) => {
+        try {
+            return github.rest.pulls.update({
                 ...prFacts,
                 state,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
+    };
     /** @param {string} body */
-    const createComment = (body) =>
-        github.rest.issues
-            .createComment({
+    const createComment = (body) => {
+        try {
+            return github.rest.issues.createComment({
                 ...issueFacts,
                 body,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
+    };
     const createFailedComment = () => {
         const logUrl = `${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
@@ -98,7 +105,7 @@ export default async function identify({ github, context, core }, body, number, 
         if (issue.state === 'closed') {
             await updatePrState('open');
         }
-        if (issue.labels.some((e) => e.name === criticalFailure) || issue.labels.some((e) => e.name === routeTestFailed)) {
+        if (issue.labels.some((e) => e.name === criticalFailure || e.name === routeTestFailed)) {
             await removeLabel(criticalFailure);
             await removeLabel(routeTestFailed);
         }
@@ -109,21 +116,21 @@ export default async function identify({ github, context, core }, body, number, 
         await removeLabel();
         await addLabels(['auto: ready to merge']);
         return;
-    } else {
-        core.debug('PR created by ' + sender);
     }
+    core.debug('PR created by ' + sender);
 
-    const hasWriteAccess = await github.rest.repos
-        .getCollaboratorPermissionLevel({
+    let hasWriteAccess;
+    try {
+        const { data } = await github.rest.repos.getCollaboratorPermissionLevel({
             owner: context.repo.owner,
             repo: context.repo.repo,
             username: sender,
-        })
-        .then(({ data }) => ['admin', 'maintain', 'write'].includes(data.permission))
-        .catch((error) => {
-            core.warning(error);
-            return false;
         });
+        hasWriteAccess = ['admin', 'maintain', 'write'].includes(data.permission);
+    } catch (error) {
+        core.warning(error);
+        hasWriteAccess = false;
+    }
     core.debug(`hasWriteAccess: ${hasWriteAccess}`);
 
     /** @type {string[] | undefined} */

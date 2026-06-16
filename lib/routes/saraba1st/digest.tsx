@@ -85,20 +85,21 @@ async function fetchContent(url) {
     subind('#postlist')
         .find('div[id*="post_"] ')
         .each((_, el) => {
-            if (subind(el).find('td[id*="postmessage_"]').length > 0) {
-                const section = renderToString(
-                    <DigestSection
-                        author={{
-                            link: subind(el).find('.pls.favatar div.authi a').attr('href'),
-                            name: subind(el).find('.pls.favatar div.authi').text(),
-                            postinfo: subind(el).find('div.authi em[id*=authorposton]').text(),
-                        }}
-                        msg={subind(el).find('td[id*="postmessage_"]').html()}
-                        host={config.saraba1st.host}
-                    />
-                );
-                stubS.append(section);
+            if (!subind(el).find('td[id*="postmessage_"]').length) {
+                return;
             }
+            const section = renderToString(
+                <DigestSection
+                    author={{
+                        link: subind(el).find('.pls.favatar div.authi a').attr('href'),
+                        name: subind(el).find('.pls.favatar div.authi').text(),
+                        postinfo: subind(el).find('div.authi em[id*=authorposton]').text(),
+                    }}
+                    msg={subind(el).find('td[id*="postmessage_"]').html()}
+                    host={config.saraba1st.host}
+                />
+            );
+            stubS.append(section);
         });
 
     stubS.find('img').each((_, el) => {

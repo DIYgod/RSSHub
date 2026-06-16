@@ -139,7 +139,7 @@ if (Object.keys(modules).length) {
                 content.namespace
             );
         } else if ('route' in content) {
-            if (!namespaces[namespace]) {
+            if (!Object.hasOwn(namespaces, namespace)) {
                 namespaces[namespace] = {
                     name: namespace,
                     routes: {},
@@ -160,7 +160,7 @@ if (Object.keys(modules).length) {
                 };
             }
         } else if ('apiRoute' in content) {
-            if (!namespaces[namespace]) {
+            if (!Object.hasOwn(namespaces, namespace)) {
                 namespaces[namespace] = {
                     name: namespace,
                     routes: {},
@@ -278,19 +278,20 @@ for (const namespace of namespacesByDepth) {
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
-            if (!ctx.get('apiData')) {
-                if (typeof routeData.handler !== 'function') {
-                    if (process.env.NODE_ENV === 'test') {
-                        const { apiRoute } = await import(`./routes/${namespace}/${routeData.location}`);
-                        routeData.handler = apiRoute.handler;
-                    } else if (routeData.module) {
-                        const { apiRoute } = await routeData.module();
-                        routeData.handler = apiRoute.handler;
-                    }
-                }
-                const data = await routeData.handler(ctx);
-                ctx.set('apiData', data);
+            if (ctx.get('apiData')) {
+                return;
             }
+            if (typeof routeData.handler !== 'function') {
+                if (process.env.NODE_ENV === 'test') {
+                    const { apiRoute } = await import(`./routes/${namespace}/${routeData.location}`);
+                    routeData.handler = apiRoute.handler;
+                } else if (routeData.module) {
+                    const { apiRoute } = await routeData.module();
+                    routeData.handler = apiRoute.handler;
+                }
+            }
+            const data = await routeData.handler(ctx);
+            ctx.set('apiData', data);
         };
         subApp.get(path, wrappedHandler);
     }

@@ -103,7 +103,7 @@ function extractVideoItem(segment: string) {
     const title = htmlMatch ? cleanText(htmlMatch[1]) : '';
     const authorMatch = segment.match(/"authorHtml":"((?:[^"\\]|\\.)*)"/);
     const author = authorMatch ? cleanText(authorMatch[1]) : '';
-    const hrefMatches = [...segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g)];
+    const hrefMatches = segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g).toArray();
     const links = hrefMatches.map((m) => m[1]);
     const mediaDomains = /^(?:https?:\/\/)?(?:m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
     const link = links.find((l) => mediaDomains.test(l)) || links[0] || '';
@@ -149,7 +149,7 @@ function extractLink(segment: string, templateId: string): string {
         const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
         return hrefMatch?.[1] || '';
     }
-    const hrefMatches = [...segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g)];
+    const hrefMatches = segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g).toArray();
     if (hrefMatches.length > 0) {
         return hrefMatches.at(-1)![1];
     }
@@ -158,7 +158,7 @@ function extractLink(segment: string, templateId: string): string {
 }
 
 function extractGenericItem(segment: string, templateId: string) {
-    const titleMatches = [...segment.matchAll(/"title":"((?:[^"\\]|\\.)*)"/g)];
+    const titleMatches = segment.matchAll(/"title":"((?:[^"\\]|\\.)*)"/g).toArray();
     const titles = titleMatches.map((m) => cleanText(m[1]));
     const title = titles.at(-1) || '';
     const sourceName = titles.at(-2) || '';
@@ -260,7 +260,7 @@ function parseKoreanRelativeTime(timeText: string): Date | undefined {
         return;
     }
 
-    const num = Number.parseInt(match[1] || match[3] || match[4] || '0', 10);
+    const num = Number(match[1] || match[3] || match[4] || '0');
     const unit = match[2] || '';
 
     if (unit.includes('분')) {

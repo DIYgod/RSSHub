@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.tradingview.com';
     const currentUrl = new URL('/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/', rootUrl).href;

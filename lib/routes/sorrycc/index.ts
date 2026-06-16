@@ -40,7 +40,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const host = 'https://sorrycc.com';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 100;
     const cookie = config.sorrycc.cookie;
 
     const data = await ofetch<Post[]>(`${host}/wp-json/wp/v2/posts?per_page=${limit}`);

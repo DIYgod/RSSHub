@@ -21,8 +21,8 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
         return undefined;
     }
 
-    const month = Number.parseInt(match[1], 10);
-    const day = Number.parseInt(match[2], 10);
+    const month = Number(match[1]);
+    const day = Number(match[2]);
 
     // 检测跨年：如果当前日期比上一个日期大，说明跨年了
     if (ctx.prevMonth > 0 && (month > ctx.prevMonth || (month === ctx.prevMonth && day > ctx.prevDay))) {

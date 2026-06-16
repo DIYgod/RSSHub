@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
     const DEFAULT_ORDERBY = 'hot';
 
     const { category = DEFAULT_CATEGORY } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     // If `category` is in Chinese, it should come from the tab titles,
     // because each `recipe-type` has an English ID.

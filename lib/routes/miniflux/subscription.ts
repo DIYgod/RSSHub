@@ -57,10 +57,9 @@ async function handler(ctx) {
         }
         if (filter.search('feed') === -1) {
             return '';
-        } else {
-            feeds.push(...option.split(',').map((item) => item.toString().toLowerCase()));
-            return filter;
         }
+        feeds.push(...option.split(',').map((item) => item.toString().toLowerCase()));
+        return filter;
     }
 
     function addFeed(item) {

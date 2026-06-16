@@ -64,7 +64,7 @@ const getProperty = (object, key) => {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '24';
 
-    if (!categories[category]) {
+    if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError('This category does not exist. Please refer to the documentation for the correct usage.');
     }
 

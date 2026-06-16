@@ -46,27 +46,26 @@ const parsePage = async (items, type) => {
                         <a href="${url}">点击进入下载地址传送门～</a>
                     `;
                 return resultItem;
-            } else {
-                return await cache.tryGet(url, async () => {
-                    const result = await got(url);
-                    const $ = load(result.data);
-                    const description = cleanEntryContent($);
-                    resultItem.description = description;
-                    if (type !== DOWNLOAD_ID) {
-                        const dateText = $('.arti_update')
-                            .text()
-                            .match(/(\d{4}-\d{2}-\d{2})/);
-                        const date = dateText ? dateText[1] : '';
-                        const authorText = $('.arti_publisher')
-                            .text()
-                            .match(/[:：]?\s*(.+)/);
-                        const author = authorText ? authorText[1].trim() : '';
-                        resultItem.pubDate = timezone(parseDate(date), +8);
-                        resultItem.author = author;
-                    }
-                    return resultItem;
-                });
             }
+            return await cache.tryGet(url, async () => {
+                const result = await got(url);
+                const $ = load(result.data);
+                const description = cleanEntryContent($);
+                resultItem.description = description;
+                if (type !== DOWNLOAD_ID) {
+                    const dateText = $('.arti_update')
+                        .text()
+                        .match(/(\d{4}-\d{2}-\d{2})/);
+                    const date = dateText ? dateText[1] : '';
+                    const authorText = $('.arti_publisher')
+                        .text()
+                        .match(/[:：]?\s*(.+)/);
+                    const author = authorText ? authorText[1].trim() : '';
+                    resultItem.pubDate = timezone(parseDate(date), +8);
+                    resultItem.author = author;
+                }
+                return resultItem;
+            });
         })
     );
     return results;
@@ -74,7 +73,7 @@ const parsePage = async (items, type) => {
 
 const handler = async (ctx) => {
     let type = ctx.req.param('type');
-    if (idMp[type]) {
+    if (Object.hasOwn(idMp, type)) {
         type = idMp[type];
     }
     const newsUrl = `${BASE_URL}/${type}/list.htm`;

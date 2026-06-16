@@ -40,54 +40,55 @@ const extractTokens = async (user): Promise<{ lsd: string }> => {
     return { lsd };
 };
 
-const getUserId = (user: string): Promise<string> =>
-    cache
-        .tryGet(`threads:userId:${user}`, async () => {
-            const response = await ofetch(profileUrl(user), {
-                headers: {
-                    'User-Agent': USER_AGENT,
-                    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                    'Accept-Encoding': 'gzip, br',
-                    'Accept-Language': 'zh-CN,zh;q=0.9',
-                    'Cache-Control': 'no-cache',
-                    Pragma: 'no-cache',
-                    'Sec-Fetch-Dest': 'document',
-                    'Sec-Fetch-Mode': 'navigate',
-                    'Sec-Fetch-Site': 'none',
-                    'Sec-Fetch-User': '?1',
-                    'Upgrade-Insecure-Requests': '1',
-                },
-            });
-
-            const dom = new JSDOM(response);
-
-            for (const el of dom.window.document.querySelectorAll('script[data-sjs]')) {
-                try {
-                    const data = JSONPath({
-                        path: '$..user_id',
-                        json: JSON.parse(el.textContent || ''),
-                    });
-
-                    if (data?.[0]) {
-                        return data[0];
-                    }
-                } catch {
-                    // Skip invalid JSON
-                }
-            }
-
-            throw new NotFoundError('User ID not found');
-        })
-        .then((result): string => {
-            if (result) {
-                if (typeof result === 'string') {
-                    return result;
-                } else if (typeof result === 'number') {
-                    return result.toString();
-                }
-            }
-            throw new TypeError('Invalid user ID type');
+const getUserId = async (user: string): Promise<string> => {
+    const result = await cache.tryGet(`threads:userId:${user}`, async () => {
+        const response = await ofetch(profileUrl(user), {
+            headers: {
+                'User-Agent': USER_AGENT,
+                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'Accept-Encoding': 'gzip, br',
+                'Accept-Language': 'zh-CN,zh;q=0.9',
+                'Cache-Control': 'no-cache',
+                Pragma: 'no-cache',
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'none',
+                'Sec-Fetch-User': '?1',
+                'Upgrade-Insecure-Requests': '1',
+            },
         });
+
+        const dom = new JSDOM(response);
+        const { document } = dom.window;
+
+        for (const el of document.querySelectorAll('script[data-sjs]')) {
+            try {
+                const data = JSONPath({
+                    path: '$..user_id',
+                    json: JSON.parse(el.textContent || ''),
+                });
+
+                if (data?.[0]) {
+                    return data[0];
+                }
+            } catch {
+                // Skip invalid JSON
+            }
+        }
+
+        throw new NotFoundError('User ID not found');
+    });
+
+    if (result) {
+        if (typeof result === 'string') {
+            return result;
+        }
+        if (typeof result === 'number') {
+            return result.toString();
+        }
+    }
+    throw new TypeError('Invalid user ID type');
+};
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
 

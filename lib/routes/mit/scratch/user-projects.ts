@@ -27,7 +27,7 @@ export const route: Route = {
         const { username } = ctx.req.param();
 
         const limitQuery = ctx.req.query('limit') ?? '40';
-        const limit = Math.min(Number.parseInt(limitQuery, 10) || 40, 40);
+        const limit = Math.min(Number(limitQuery) || 40, 40);
 
         const apiUrl = `https://api.scratch.mit.edu/users/${username}/projects/?limit=${limit}`;
 

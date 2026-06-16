@@ -179,7 +179,7 @@ function updateBittorrent_url(cache, items) {
     // 下种子文件需要动态密码，密码每几次请求就更新一次
     for (const item of items) {
         if (item.enclosure_url) {
-            item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, `torrent?p=${p}`);
+            item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, () => `torrent?p=${p}`);
             cache.set(item.bittorrent_page_url, item.enclosure_url);
         }
     }
@@ -193,13 +193,12 @@ async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb
 }
 
 async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false) {
-    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
     if (page) {
         return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb);
-    } else {
-        const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
-        return updateBittorrent_url(cache, items);
     }
+    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
+    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
+    return updateBittorrent_url(cache, items);
 }
 
 function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {

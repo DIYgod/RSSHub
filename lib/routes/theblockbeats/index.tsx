@@ -40,7 +40,7 @@ const buildSignedHeaders = (path: string, query: Record<string, number | string>
     const timestamp = Date.now().toString();
     const nonce = createNonce();
     const canonicalQuery = Object.keys(query)
-        .toSorted()
+        .toSorted((a, b) => a.localeCompare(b))
         .map((key) => `${key}=${query[key] ?? ''}`)
         .join('&');
     const signature = CryptoJS.HmacSHA256(`GET|${path}|${timestamp}|${nonce}|${canonicalQuery}`, appSecret).toString();

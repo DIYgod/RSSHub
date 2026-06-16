@@ -287,8 +287,8 @@ const fetchItem = async (item) => {
             author: buildBriefAuthor(data) ?? item.author,
             category: buildBriefCategories({ brief, brief_column: briefColumn, club_info: clubInfo }),
             pubDate: parseDate(brief.publish_time, 'X'),
-            upvotes: Number.parseInt(brief.agree_num ?? item.upvotes ?? 0, 10),
-            comments: Number.parseInt(brief.total_comment_num ?? brief.comment_num ?? item.comments ?? 0, 10),
+            upvotes: Number(brief.agree_num ?? item.upvotes ?? 0),
+            comments: Number(brief.total_comment_num ?? brief.comment_num ?? item.comments ?? 0),
         };
     }
 
@@ -321,8 +321,8 @@ const fetchItem = async (item) => {
         author: data.user_info?.username ?? item.author,
         category: buildCategories(data),
         pubDate: parseDate(data.dateline ?? data.publish_time, 'X'),
-        upvotes: Number.parseInt(data.agreenum ?? item.upvotes ?? 0, 10),
-        comments: Number.parseInt(data.commentnum ?? data.total_comment_num ?? item.comments ?? 0, 10),
+        upvotes: Number(data.agreenum ?? item.upvotes ?? 0),
+        comments: Number(data.commentnum ?? data.total_comment_num ?? item.comments ?? 0),
     };
 };
 
@@ -353,6 +353,8 @@ const generateSignature = () => {
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();
+    // server-validated signature relies on JS default codepoint sort; localeCompare reorders mixed-case nonce vs lowercase appSecret
+    // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const r = [appSecret, timestamp, nonce].toSorted();
     return {
         nonce,
@@ -408,7 +410,7 @@ const processAudioInfo = (info) => {
  * @param {Object} item - The item to resolve identifiers for.
  * @returns {Object|null} - Object with guid and link, or null if invalid item.
  */
-const resolveItemIdentifiers = (item): { guid: string; link: string } | null => {
+const resolveItemIdentifiers = (item): null | { guid: string; link: string } => {
     if (item.object_type === 8) {
         return {
             guid: `huxiu-moment-${item.object_id}`,
@@ -441,9 +443,9 @@ const resolveItemIdentifiers = (item): { guid: string; link: string } | null => 
  * @returns {Object} - Object with upvotes, downvotes, and comments.
  */
 const extractCounts = (item) => ({
-    upvotes: Number.parseInt(item.count_info?.agree ?? item.count_info?.favtimes ?? item.agree_num ?? 0, 10),
-    downvotes: Number.parseInt(item.count_info?.disagree ?? 0, 10),
-    comments: Number.parseInt(item.count_info?.total_comment_num ?? item.count_info?.commentnum ?? item.total_comment_num ?? item.commentnum ?? 0, 10),
+    upvotes: Number(item.count_info?.agree ?? item.count_info?.favtimes ?? item.agree_num ?? 0),
+    downvotes: Number(item.count_info?.disagree ?? 0),
+    comments: Number(item.count_info?.total_comment_num ?? item.count_info?.commentnum ?? item.total_comment_num ?? item.commentnum ?? 0),
 });
 
 /**

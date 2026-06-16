@@ -62,9 +62,10 @@ async function handler(ctx) {
         item: items,
     };
 
+    const pubDate = parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true);
     ctx.set('json', {
         ...ret,
-        pubDate: timezone(parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true), 0),
+        pubDate: timezone(pubDate, 0),
     });
     return ret;
 }

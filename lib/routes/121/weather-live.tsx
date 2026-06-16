@@ -25,7 +25,7 @@ const renderDescription = (description, images) =>
     );
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
+    const limit = Number(ctx.req.query('limit') ?? '100');
 
     const baseUrl = 'https://tf.121.com.cn';
     const imgBaseUrl = 'https://wx.121.com.cn';

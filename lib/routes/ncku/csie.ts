@@ -57,7 +57,7 @@ export const route: Route = {
 
         const item = (
             await Promise.allSettled(
-                Array.from({ length: limit }).map(async (_, i) => {
+                Array.from({ length: limit }, async (_, i) => {
                     const $ = await ofetch<CheerioAPI>(currentURL(catagory, base + i), {
                         parseResponse: load,
                     });

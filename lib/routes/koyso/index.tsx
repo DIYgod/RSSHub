@@ -29,7 +29,7 @@ const renderDescription = (images?: DescriptionImage[]) =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '0', sort = 'latest' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://koyso.to';
     const targetUrl: string = new URL(`?${category === '0' ? '' : `category=${category}&`}sort=${sort}`, baseUrl).href;

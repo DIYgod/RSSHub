@@ -11,7 +11,7 @@ import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchDat
 
 async function handler(ctx) {
     const { url = 'https://wordpress.org/news', filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     if (!config.feature.allow_user_supply_unsafe_domain) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);

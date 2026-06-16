@@ -87,7 +87,7 @@ async function handler(ctx) {
     const feedTitle = channel.children('title').text();
     const feedLink = channel.children('link').text() || ROOT_URL;
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const items = $('item')
         .toArray()

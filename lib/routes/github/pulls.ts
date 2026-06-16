@@ -69,13 +69,14 @@ async function handler(ctx) {
     if (config.github && config.github.access_token) {
         headers.Authorization = `token ${config.github.access_token}`;
     }
+    const limit = ctx.req.query('limit');
     const response = await ofetch(url, {
         query: {
             state,
             labels,
             sort: 'created',
             direction: 'desc',
-            per_page: ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 100) : 100,
+            per_page: limit ? Math.min(Number.parseInt(limit), 100) : 100,
         },
         headers,
     });

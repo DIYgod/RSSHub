@@ -20,7 +20,7 @@ import { NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, Rankin
 
 const getParameters = () => {
     // Generate options for sub parameter
-    const subOptions = Object.entries(SyosetuSub).map(([, value]) => ({
+    const subOptions = Object.values(SyosetuSub).map((value) => ({
         value,
         label: syosetuSubToJapanese[value],
     }));
@@ -163,7 +163,7 @@ async function handler(ctx: Context): Promise<Data> {
         searchParams.type = novelType;
     }
 
-    if (!(sub in syosetuSubToNocgenre)) {
+    if (!Object.hasOwn(syosetuSubToNocgenre, sub)) {
         throw new InvalidParameterError(`Invalid subsite: ${sub}`);
     }
     const nocgenre = syosetuSubToNocgenre[sub];

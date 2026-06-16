@@ -179,7 +179,7 @@ async function handler(ctx) {
                 for (const item of emoji) {
                     data_content = data_content.replaceAll(
                         new RegExp(`\\${item.text}`, 'g'),
-                        `<img alt="${item.text}" src="${item.url}"style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                        () => `<img alt="${item.text}" src="${item.url}"style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
                     );
                 }
             }

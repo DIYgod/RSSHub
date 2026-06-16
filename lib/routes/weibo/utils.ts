@@ -65,9 +65,8 @@ const weiboUtils = {
                     if (renew?.message) {
                         logger.warn(coolingDownMessage);
                         throw renew;
-                    } else {
-                        throw new Error(coolingDownMessage);
                     }
+                    throw new Error(coolingDownMessage);
                 }
                 coolingDown = true;
                 setTimeout(() => {
@@ -576,7 +575,7 @@ const weiboUtils = {
                                         const imgSrc = decodeURIComponent(hrefMatch[1]);
                                         const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
                                         // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        replyText = replyText.replaceAll(match, imgTag);
+                                        replyText = replyText.replaceAll(match, () => imgTag);
                                     }
                                 }
                             }
@@ -611,8 +610,9 @@ const weiboUtils = {
         const replace = (html) => html.replaceAll(regex, 'tvax'); // enforce `tvax` as `tva` has a strict WAF
         const replaceKV = (obj, keys) => {
             for (const key of keys) {
-                if (obj[key]) {
-                    obj[key] = replace(obj[key]);
+                const value = obj[key];
+                if (value) {
+                    obj[key] = replace(value);
                 }
             }
         };

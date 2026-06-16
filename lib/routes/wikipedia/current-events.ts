@@ -427,7 +427,7 @@ function determineDates(includeToday: any) {
         default:
             if (/^\d+$/.test(includeToday)) {
                 // Include after specific hour (0-23)
-                const targetHour = Number.parseInt(includeToday, 10);
+                const targetHour = Number(includeToday);
                 if (targetHour >= 0 && targetHour <= 23) {
                     shouldIncludeToday = currentHourUTC >= targetHour;
                 }

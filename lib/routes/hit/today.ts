@@ -73,8 +73,8 @@ async function handler(ctx) {
                         $('.article-content').html() &&
                         $('.article-content')
                             .html()
-                            .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', `href="${new URL('.', host).href}`)
+                            .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                            .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                             .trim();
                 } catch {
                     // intranet

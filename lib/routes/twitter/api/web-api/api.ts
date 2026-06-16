@@ -167,7 +167,8 @@ const getUser = async (id: string) => {
 
     if (!userData.data.user) {
         throw new InvalidParameterError("This account doesn't exist");
-    } else if (userData.data.user.result.__typename === 'UserUnavailable') {
+    }
+    if (userData.data.user.result.__typename === 'UserUnavailable') {
         throw new InvalidParameterError(userData.data.user.result.message || 'User is unavailable');
     }
 

@@ -68,14 +68,14 @@ export const route: Route = {
             }) || [];
         const res = {};
         for (const current of items) {
-            if (!res[current.link]) {
+            if (!Object.hasOwn(res, current.link)) {
                 res[current.link] = current;
             }
         }
         return {
             title: '浙江省人民政府-全省政府网站统一搜索',
             link: 'https://search.zj.gov.cn/jsearchfront/search.do',
-            item: Object.entries(res).map(([, value]) => value) as DataItem[],
+            item: Object.values(res).map((value) => value) as DataItem[],
         };
     },
 };
