@@ -61,27 +61,22 @@ async function handler(ctx) {
 
     const list = $('body > div.container > div.table-responsive > table > tbody > tr')
         .toArray()
-        .flatMap((el) => {
+        // Skip u3c3's sticky promo rows that appear on every page (home AND search):
+        // category-nav rows (href="/?type=…") and external ad rows (href="http://…",
+        // e.g. the "國產原创" entries). Real torrent rows always link to /view.
+        .filter((el) => $(el).find('td:nth-of-type(2) > a').attr('href')?.startsWith('/view'))
+        .map((el) => {
             const item = $(el);
             const a = item.find('td:nth-of-type(2) > a');
-            const href = a.attr('href');
-            // Skip u3c3's sticky promo rows that appear on every page (home AND search):
-            // category-nav rows (href="/?type=…") and external ad rows (href="http://…",
-            // e.g. the "國產原创" entries). Real torrent rows always link to /view.
-            if (!href || !href.startsWith('/view')) {
-                return [];
-            }
-            const guid = rootURL + href;
-            return [
-                {
-                    title: a.attr('title'),
-                    guid,
-                    link: guid,
-                    pubDate: item.find('td:nth-of-type(5)').text(),
-                    enclosure_url: item.find('td:nth-of-type(3) > a:nth-of-type(2)').attr('href'),
-                    enclosure_type: 'application/x-bittorrent',
-                },
-            ];
+            const guid = rootURL + a.attr('href');
+            return {
+                title: a.attr('title'),
+                guid,
+                link: guid,
+                pubDate: item.find('td:nth-of-type(5)').text(),
+                enclosure_url: item.find('td:nth-of-type(3) > a:nth-of-type(2)').attr('href'),
+                enclosure_type: 'application/x-bittorrent',
+            };
         });
 
     const items = preview
