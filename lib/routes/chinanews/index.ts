@@ -36,7 +36,7 @@ async function handler(ctx) {
             link: rootUrl + $(item).attr('href'),
             title: $(item).text(),
         }))
-        .slice(0, limit ? Math.min(Number.parseInt(limit), 125) : 50);
+        .slice(0, limit ? Number.parseInt(limit) : 50);
 
     const items = await Promise.all(
         list.map((item) =>

@@ -76,7 +76,7 @@ async function handler(ctx) {
             labels,
             sort: 'created',
             direction: 'desc',
-            per_page: limit ? Math.min(Number.parseInt(limit), 100) : 100,
+            per_page: limit ? Number.parseInt(limit) : 100,
         },
         headers,
     });
