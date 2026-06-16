@@ -46,9 +46,9 @@ export default async function identify({ github, context, core }, body, number, 
     }
 
     /** @param {string[]} labels */
-    const addLabels = (labels) => {
+    const addLabels = async (labels) => {
         try {
-            return github.rest.issues.addLabels({
+            return await github.rest.issues.addLabels({
                 ...issueFacts,
                 labels,
             });
@@ -57,9 +57,9 @@ export default async function identify({ github, context, core }, body, number, 
         }
     };
     /** @param {string} labelName */
-    const removeLabel = (labelName = noFound) => {
+    const removeLabel = async (labelName = noFound) => {
         try {
-            return github.rest.issues.removeLabel({
+            return await github.rest.issues.removeLabel({
                 ...issueFacts,
                 name: labelName,
             });
@@ -68,9 +68,9 @@ export default async function identify({ github, context, core }, body, number, 
         }
     };
     /** @param {'open' | 'closed'} state */
-    const updatePrState = (state) => {
+    const updatePrState = async (state) => {
         try {
-            return github.rest.pulls.update({
+            return await github.rest.pulls.update({
                 ...prFacts,
                 state,
             });
@@ -79,9 +79,9 @@ export default async function identify({ github, context, core }, body, number, 
         }
     };
     /** @param {string} body */
-    const createComment = (body) => {
+    const createComment = async (body) => {
         try {
-            return github.rest.issues.createComment({
+            return await github.rest.issues.createComment({
                 ...issueFacts,
                 body,
             });
