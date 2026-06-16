@@ -1,9 +1,8 @@
 import { load } from 'cheerio';
+import type { BrowserContext } from 'patchright';
 
-import { config } from '@/config';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getCookies, setCookies } from '@/utils/playwright-utils';
 
@@ -50,7 +49,7 @@ const getCookie = async (context, tryGet) => {
     return cookie;
 };
 
-const parsePage = async (path, context, ctx) => {
+const parsePage = async (path, context: BrowserContext, ctx) => {
     const pageUrl = `${baseUrl}${pathMap[path].pageUrl(ctx.req.param('channel'))}`;
 
     const cookie = await getCookie(context, cache.tryGet);
@@ -89,19 +88,19 @@ const parseList = ($, limit) =>
         })
         .slice(0, limit);
 
-const parseItems = (list, context, tryGet) =>
+const parseItems = (list, context: BrowserContext, tryGet) =>
     Promise.all(
         list.map((item) =>
             tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
-                    headers: {
-                        Cookie: await getCookie(context, tryGet),
-                        'User-Agent': config.ua,
-                    },
+                const page = await context.newPage();
+                await page.goto(item.link, {
+                    waitUntil: 'domcontentloaded',
                 });
+                const response = await page.evaluate(() => document.documentElement.innerHTML);
+                await page.close();
                 const $ = load(response);
 
-                const meta = JSON.parse($('head script[type="application/ld+json"]').eq(0).text());
+                const meta = JSON.parse($('head script[type="application/ld+json"]').eq(1).text());
                 $('.article__head .breadcrumb, .article__head h1, .article__provideViews, .ad').remove();
                 $('img.lazyload').each((_, img) => {
                     if (img.attribs['data-src']) {
@@ -113,7 +112,7 @@ const parseItems = (list, context, tryGet) =>
                 item.title = $('head title').text();
                 item.category = $('meta[name=keywords]').attr('content').split(',');
                 item.pubDate = parseDate(meta.datePublished);
-                item.author = meta.author.name.replace(',', ' ') || meta.publisher.name;
+                item.author = meta.author;
                 item.description = $('.article__head .container').html() + $('.article__content').html();
 
                 return item;
