@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-code-point */
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -62,7 +61,7 @@ function getUrlType(url) {
  */
 function decodeCipherText(p, a, c, k, e, d) {
     e = function (c) {
-        return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
+        return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCodePoint(c + 29) : c.toString(36));
     };
     if (!''.replace(/^/, () => '')) {
         while (c--) {
