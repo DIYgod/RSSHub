@@ -176,19 +176,24 @@ export default async function callMaintainer({ github, context, core }) {
     // Write labels (status, affected route count)
     await addLabels(labels);
 
-    // Reply to the issue and notify the maintainers (if any)
-    try {
-        await github.rest.issues.createComment({
-            ...issueFacts,
-            body: `${comments}
-
-
+    const commentBody = `${comments}
 > To maintainers: if you are not willing to be disturbed, list your username in \`scripts/workflow/test-issue/call-maintainer.js\`. In this way, your username will be wrapped in an inline code block when tagged so you will not be notified.
 
 If all routes can not be found, the issue will be closed automatically. Please use \`NOROUTE\` for a route-irrelevant issue or leave a comment if it is a mistake.
 如果所有路由都无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
-`,
-        });
+`;
+
+    // Reply to the issue and notify the maintainers (if any), reusing the existing comment if the issue was edited
+    try {
+        const existing = await github.paginate(github.rest.issues.listComments, issueFacts);
+        const comment = existing.find((c) => c.user.type === 'Bot' && c.body.startsWith('##### Searching for maintainers:'));
+        if (comment) {
+            if (comment.body !== commentBody) {
+                await github.rest.issues.updateComment({ ...issueFacts, comment_id: comment.id, body: commentBody });
+            }
+        } else {
+            await github.rest.issues.createComment({ ...issueFacts, body: commentBody });
+        }
     } catch (error) {
         core.warning(error);
     }
