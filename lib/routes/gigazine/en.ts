@@ -22,7 +22,7 @@ const getAbsoluteUrl = (path: string | undefined) => (path ? new URL(path, ROOT_
 const getArticleAuthor = ($: ReturnType<typeof load>) =>
     $('#article .items p')
         .text()
-        .match(/Posted by\s+(.+)$/)?.[1]
+        .match(/Posted by\s+(\S.*)$/)?.[1]
         ?.trim();
 const getArticleCategories = ($: ReturnType<typeof load>) => [
     ...new Set(
@@ -91,7 +91,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || DEFAULT_LIMIT;
+    const limit = Number(ctx.req.query('limit')) || DEFAULT_LIMIT;
 
     const html = await ofetch(LIST_URL, getRequestOptions(ROOT_URL));
     const $ = load(html);

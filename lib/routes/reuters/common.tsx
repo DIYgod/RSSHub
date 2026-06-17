@@ -244,6 +244,31 @@ async function handler(ctx) {
                     response,
                 };
             }
+            const rootUrl = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-section-alias-or-id-v1';
+            const response = await ofetch(rootUrl, {
+                query: {
+                    query: JSON.stringify({
+                        offset: 0,
+                        size: limit,
+                        section_id,
+                        website: 'reuters',
+                        ...(useSophi
+                            ? {
+                                  fetch_type: 'sophi',
+                                  sophi_page: '*',
+                                  sophi_widget: 'topic',
+                              }
+                            : {}),
+                    }),
+                },
+                headers: browserHeaders,
+            });
+            return {
+                title: response.result.section.title,
+                description: response.result.section.section_about,
+                rootUrl,
+                response,
+            };
         })();
 
         let items = response.result.articles.map((e) => ({
@@ -283,7 +308,7 @@ async function handler(ctx) {
 
                           const matches = content('script#fusion-metadata')
                               .text()
-                              .match(/Fusion.globalContent=({[\S\s]*?});/);
+                              .match(/Fusion.globalContent=(\{[\s\S]*?\});/);
 
                           if (matches) {
                               const data = JSON.parse(matches[1]);
@@ -305,7 +330,7 @@ async function handler(ctx) {
                           item.title = content('meta[property="og:title"]').attr('content');
                           item.pubDate = parseDate(detailResponse.data.match(/"datePublished":"(.*?)","dateModified/)[1]);
                           item.author = detailResponse.data
-                              .match(/{"@type":"Person","name":"(.*?)"}/g)
+                              .match(/\{"@type":"Person","name":"(.*?)"\}/g)
                               .map((p) => p.match(/"name":"(.*?)"/)[1])
                               .join(', ');
                           item.description = content('article').html();

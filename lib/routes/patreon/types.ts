@@ -63,14 +63,14 @@ interface Attributes {
     post_type: string;
     preview_asset_type: string | null;
     published_at: string;
-    teaser_text: string | null;
+    teaser_text_json_string?: string | null;
     title: string;
     upgrade_url: string;
     url: string;
     video_preview: VideoPreview | null;
     was_posted_by_campaign_owner: boolean;
     thumbnail?: Thumbnail;
-    content?: string;
+    content_json_string?: string | null;
     embed?: null;
     post_file?: PostFile;
 }

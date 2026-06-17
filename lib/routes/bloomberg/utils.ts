@@ -55,7 +55,7 @@ const apiEndpoints = {
     },
 };
 
-const pageTypeRegex1 = /\/(?<page>[\w-]*?)\/(?<link>\d{4}-\d{2}-\d{2}\/.*)/;
+const pageTypeRegex1 = /\/(?<page>[\w-]*)\/(?<link>\d{4}-\d{2}-\d{2}\/.*)/;
 const pageTypeRegex2 = /(?<!news|politics)\/(?<page>features\/|graphics\/)(?<link>.*)/;
 const regex = [pageTypeRegex1, pageTypeRegex2];
 
@@ -101,7 +101,7 @@ const parseArticle = (item) =>
             .map((a) => a && a.groups)[0];
         if (group) {
             const { page, link } = group;
-            if (apiEndpoints[page]) {
+            if (Object.hasOwn(apiEndpoints, page)) {
                 const api = { ...apiEndpoints[page] };
                 let res;
 
@@ -110,7 +110,7 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+                    if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -224,7 +224,7 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             return {
                 title: item.title,
                 link: item.link,
@@ -271,7 +271,8 @@ const processLedeMedia = async (story_json) => {
             video: kind === 'video' && (await processVideo(story_json.ledeAttachment.bmmrId)),
         };
         return renderLedeMedia(media);
-    } else if (story_json.lede) {
+    }
+    if (story_json.lede) {
         const lede = story_json.lede;
         const image = {
             src: lede.url,
@@ -280,7 +281,8 @@ const processLedeMedia = async (story_json) => {
             credit: lede.credit?.replaceAll(capRegex, '') ?? '',
         };
         return renderImageFigure(image);
-    } else if (story_json.imageAttachments) {
+    }
+    if (story_json.imageAttachments) {
         const attachment = Object.values(story_json.imageAttachments)[0];
         if (attachment) {
             const image = {
@@ -292,7 +294,8 @@ const processLedeMedia = async (story_json) => {
             return renderImageFigure(image);
         }
         return '';
-    } else if (story_json.type === 'Lede') {
+    }
+    if (story_json.type === 'Lede') {
         const props = story_json.props;
 
         const media = {
@@ -372,7 +375,7 @@ const processBody = async (body_html, story_json) => {
     return $.html();
 };
 
-const processVideo = async (bmmrId, summary) => {
+const processVideo = async (bmmrId, summary?) => {
     const api = `https://www.bloomberg.com/multimedia/api/embed?id=${bmmrId}`;
     const res = await redirectGot(api);
 
@@ -407,15 +410,16 @@ const nodeRenderers = {
     paragraph: async (node, nextNode) => `<p>${await nextNode(node.content)}</p>`,
     text: (node) => {
         const { attributes: attr, value: val } = node;
-        if (attr?.emphasis && attr?.strong) {
+        if (attr?.emphasis && attr.strong) {
             return `<strong><em>${val}</em></strong>`;
-        } else if (attr?.emphasis) {
-            return `<em>${val}</em>`;
-        } else if (attr?.strong) {
-            return `<strong>${val}</strong>`;
-        } else {
-            return val;
         }
+        if (attr?.emphasis) {
+            return `<em>${val}</em>`;
+        }
+        if (attr?.strong) {
+            return `<strong>${val}</strong>`;
+        }
+        return val;
     },
     'inline-newsletter': async (node, nextNode) => `<div>${await nextNode(node.content)}</div>`,
     'inline-recirc': async (node, nextNode) => `<div>${await nextNode(node.content)}</div>`,
@@ -578,7 +582,7 @@ const nextNode = async (nodes) => {
 };
 
 const nodeToHtmlString = async (node, obj) => {
-    if (!node.type || !nodeRenderers[node.type]) {
+    if (!node.type || !Object.hasOwn(nodeRenderers, node.type)) {
         return `<node>${node.type}</node>`;
     }
     const str = await nodeRenderers[node.type](node, nextNode, obj);

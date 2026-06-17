@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'Industry/Comment' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
+    const limit = Number(ctx.req.query('limit') ?? '15');
 
     const baseUrl = 'https://www.chinaratings.com.cn';
     const targetUrl: string = new URL(`CreditResearch/${category.endsWith('/') ? category : `${category}/`}`, baseUrl).href;
@@ -59,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const metaStr: string = $$('div.newshead p span, div.title p span').text();
                     const pubDateStr: string | undefined = metaStr?.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
-                    const authors: DataItem['author'] = metaStr?.match(/来源：(.*?)/)?.[1];
+                    const authors: DataItem['author'] = metaStr?.match(/来源：(.*)/)?.[1];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     let processedItem: DataItem = {

@@ -34,27 +34,27 @@ async function getCookie() {
                 // eslint-disable-next-line unicorn/prefer-switch
                 switch (0) {
                     case e.indexOf('WWWID'):
-                        wwwid = e.split(';')[0];
+                        wwwid = e.split(';', 1)[0];
 
                         break;
 
                     case e.indexOf('csrftoken'):
-                        csrf = e.split(';')[0];
+                        csrf = e.split(';', 1)[0];
 
                         break;
 
                     case e.indexOf('globacsrftoken'):
-                        globacsrftoken = e.split(';')[0];
+                        globacsrftoken = e.split(';', 1)[0];
 
                         break;
 
                     default:
                         if (e.includes('dasddocTitle')) {
-                            dasddocTitl = e.split(';')[0];
+                            dasddocTitl = e.split(';', 1)[0];
                         } else if (e.includes('dasddocReferrer')) {
-                            dasddocReferrer = e.split(';')[0];
+                            dasddocReferrer = e.split(';', 1)[0];
                         } else if (e.includes('dasddocHref')) {
-                            dasddocHref = e.split(';')[0];
+                            dasddocHref = e.split(';', 1)[0];
                         }
                 }
             }
@@ -102,7 +102,7 @@ async function getCookie() {
 */
 function getCompanyList() {
     // Using date as cache key and it will automatically expired by 1d
-    const key = `kuaidi100-company-name-${new Date().toISOString().split('T')[0]}`;
+    const key = `kuaidi100-company-name-${new Date().toISOString().split('T', 1)[0]}`;
     return cache.tryGet(key, async () => {
         const cookie = await getCookie();
         const wwwid = cookie.wwwid;
@@ -164,28 +164,27 @@ export default {
                     message: '顺丰查询需要手机号后四位！',
                     company,
                 };
-            } else if (company.checkReg) {
+            }
+            if (company.checkReg) {
                 return {
                     status: true,
                     regex: new RegExp(company.checkReg).test(id),
                     company,
                 };
-            } else {
-                return {
-                    status: true,
-                    regex: undefined,
-                    company,
-                };
             }
-        } else {
             return {
-                status: false,
-                message: '快递公司编号不受支持！',
-                company: {
-                    name: '未知',
-                },
+                status: true,
+                regex: undefined,
+                company,
             };
         }
+        return {
+            status: false,
+            message: '快递公司编号不受支持！',
+            company: {
+                name: '未知',
+            },
+        };
     },
 
     /*
@@ -254,7 +253,8 @@ export default {
                     // 查无结果 appears when cookie is invaild, force update cookie.
                     clearCookie();
                     throw new Error('暂时无法获取快递信息，请稍后重试...');
-                } else if (query.ischeck === '0') {
+                }
+                if (query.ischeck === '0') {
                     // Not yet complete, don't cache for now.
                     // To avoid frquent link test when add source, add 180s cache
                     cache.set(query_key, query, 180);

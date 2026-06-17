@@ -18,7 +18,7 @@ function parseItems(tid: string, $: cheerio.CheerioAPI) {
             const pid = footer.find('.tipad a[title]').attr('id')?.slice(2);
 
             return {
-                title: content?.split('<br>')[0],
+                title: content?.split('<br>', 1)[0],
                 description: content,
                 author: $item
                     .find('b')
@@ -71,7 +71,7 @@ async function handler(ctx) {
 
     const firstPage = parseItems(tid, $);
 
-    const pageSize = $('.w70 input').eq(0).attr('value')?.split('/')[1];
+    const pageSize = $('.w70 input').eq(0).attr('value')?.split('/', 2)[1];
     let pageUrls: string[] = [];
     if (pageSize) {
         const length = Number.parseInt(pageSize);

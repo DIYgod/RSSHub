@@ -54,7 +54,7 @@ async function handler(ctx) {
         $('.c-lazy-image__img').each((_, img) => {
             img = $(img);
             if (img.attr('data-lazy-src')) {
-                img.attr('src', img.attr('data-lazy-src').split('?')[0]);
+                img.attr('src', img.attr('data-lazy-src').split('?', 1)[0]);
                 img.removeAttr('data-lazy-src');
                 img.removeAttr('data-lazy-srcset');
             }

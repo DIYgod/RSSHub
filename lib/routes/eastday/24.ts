@@ -92,7 +92,7 @@ async function handler(ctx) {
                     const links = [];
 
                     for (let i = 2; i <= pageNumber; i++) {
-                        links.push(item.link.replace(/\.html/, `-${i}.html`));
+                        links.push(item.link.replace(/\.html/, () => `-${i}.html`));
                     }
 
                     for (const link of links) {

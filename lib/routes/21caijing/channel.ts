@@ -43,7 +43,7 @@ const processMenu = (data: any[]) => {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { name = '热点' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const domain = 'm.21jingji.com';
     const baseUrl = `https://${domain}`;

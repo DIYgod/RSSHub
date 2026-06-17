@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/jiangsu/wlt/:page?',
+    path: '/wlt/:page?',
     categories: ['government'],
     example: '/gov/jiangsu/wlt',
     parameters: { page: '页数，默认第 1 页' },
@@ -22,10 +22,10 @@ export const route: Route = {
     radar: [
         {
             source: ['wlt.jiangsu.gov.cn/'],
-            target: '/jiangsu/wlt',
+            target: '/wlt',
         },
     ],
-    name: '江苏文旅局审批公告',
+    name: '文旅局审批公告',
     maintainers: ['GideonSenku'],
     handler,
     url: 'wlt.jiangsu.gov.cn/',

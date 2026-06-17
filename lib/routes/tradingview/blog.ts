@@ -17,7 +17,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'en' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 22;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 22;
 
     const rootUrl = 'https://www.tradingview.com';
     const currentUrl = new URL(`blog/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;

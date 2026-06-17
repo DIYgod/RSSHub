@@ -24,9 +24,8 @@ export default {
                 value = value + '';
             }
             return value;
-        } else {
-            return null;
         }
+        return null;
     },
     has: (key: string) => {
         if (key && status.available && clients.memoryCache) {

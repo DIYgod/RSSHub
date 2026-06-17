@@ -30,7 +30,7 @@ async function fetchTwitterPage(): Promise<string> {
 
 function extractQueryIds(scriptContent: string): Record<string, string> {
     const ids: Record<string, string> = {};
-    const matches = scriptContent.matchAll(/queryId:"([^"]+?)".+?operationName:"([^"]+?)"/g);
+    const matches = scriptContent.matchAll(/queryId:"([^"]+)".+?operationName:"([^"]+)"/g);
     for (const match of matches) {
         const [, queryId, operationName] = match;
         if (operationNames.includes(operationName)) {
@@ -86,7 +86,7 @@ export async function resolveQueryIds(): Promise<Record<string, string>> {
                 if (Object.keys(ids).length > 0) {
                     await cache.set(CACHE_KEY, JSON.stringify(ids), config.cache.contentExpire);
                     const found = operationNames.filter((name) => ids[name]);
-                    const missing = operationNames.filter((name) => !ids[name]);
+                    const missing = operationNames.filter((name) => !Object.hasOwn(ids, name));
                     logger.debug(`twitter gql-id-resolver: resolved ${found.length}/${operationNames.length} query IDs. Missing: ${missing.join(', ') || 'none'}`);
                 } else {
                     logger.warn('twitter gql-id-resolver: failed to extract any query IDs, using fallback');

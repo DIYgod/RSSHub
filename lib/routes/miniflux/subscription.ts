@@ -52,15 +52,14 @@ async function handler(ctx) {
         const filter = item.slice(0, item.indexOf('='));
         const option = item.slice(item.lastIndexOf('=') + 1);
         if (filter.search('categor') !== -1) {
-            option.split(',').map((item) => categories.push(item.toString().toLowerCase()));
+            categories.push(...option.split(',').map((item) => item.toString().toLowerCase()));
             return filter;
         }
         if (filter.search('feed') === -1) {
             return '';
-        } else {
-            option.split(',').map((item) => feeds.push(item.toString().toLowerCase()));
-            return filter;
         }
+        feeds.push(...option.split(',').map((item) => item.toString().toLowerCase()));
+        return filter;
     }
 
     function addFeed(item) {

@@ -67,7 +67,7 @@ async function handler(ctx) {
             .filter((item) => !item.link.endsWith('.zip'))
             .map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const youTube = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w-]+)&?/g;
+                    const youTube = /(?:https?:\/\/)?(?:www\.)?youtu\.?be.*(?:v=|v\/|\/)([\w-]+)&?/g;
                     const matchYoutube = item.link.match(youTube);
 
                     if (matchYoutube) {

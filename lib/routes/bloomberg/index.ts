@@ -28,7 +28,7 @@ export const route: Route = {
     parameters: {
         site: {
             description: 'Site ID, can be found below',
-            options: Object.keys(siteTitleMapping).map((key) => ({ value: key, label: siteTitleMapping[key] })),
+            options: Object.entries(siteTitleMapping).map(([key, value]) => ({ value: key, label: value })),
         },
     },
     features: {

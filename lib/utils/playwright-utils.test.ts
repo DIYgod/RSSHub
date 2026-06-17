@@ -1,15 +1,15 @@
+import type { BrowserContext } from 'patchright';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { Browser } from '@/utils/playwright';
 import playwright from '@/utils/playwright';
 import { constructCookieArray, getCookies, parseCookieArray, setCookies } from '@/utils/playwright-utils';
 
-let browser: Browser | null = null;
+let context: BrowserContext | null = null;
 
 afterEach(async () => {
-    if (browser) {
-        await browser.close();
-        browser = null;
+    if (context) {
+        await context.close();
+        context = null;
     }
 
     vi.resetModules();
@@ -17,19 +17,19 @@ afterEach(async () => {
 
 describe('browser cookie utils', () => {
     const cookieArrayExampleCom = [
-        { name: 'foobar', value: '', domain: 'example.com' },
-        { name: 'foo', value: 'bar', domain: 'example.com' },
-        { name: 'baz', value: 'qux', domain: 'example.com' },
+        { name: 'foobar', value: '', domain: 'example.com', path: '/' },
+        { name: 'foo', value: 'bar', domain: 'example.com', path: '/' },
+        { name: 'baz', value: 'qux', domain: 'example.com', path: '/' },
     ];
     const cookieArraySubExampleCom = [
-        { name: 'barfoo', value: '', domain: 'sub.example.com' },
-        { name: 'bar', value: 'foo', domain: 'sub.example.com' },
-        { name: 'qux', value: 'baz', domain: 'sub.example.com' },
+        { name: 'barfoo', value: '', domain: 'sub.example.com', path: '/' },
+        { name: 'bar', value: 'foo', domain: 'sub.example.com', path: '/' },
+        { name: 'qux', value: 'baz', domain: 'sub.example.com', path: '/' },
     ];
     const cookieArrayRsshubTest = [
-        { name: '', value: 'rsshub', domain: 'rsshub.test' },
-        { name: 'rsshub', value: '', domain: 'rsshub.test' },
-        { name: 'test', value: 'rsshub', domain: 'rsshub.test' },
+        { name: '', value: 'rsshub', domain: 'rsshub.test', path: '/' },
+        { name: 'rsshub', value: '', domain: 'rsshub.test', path: '/' },
+        { name: 'test', value: 'rsshub', domain: 'rsshub.test', path: '/' },
     ];
     const cookieArrayAll = [...cookieArrayExampleCom, ...cookieArraySubExampleCom, ...cookieArrayRsshubTest];
 
@@ -69,17 +69,17 @@ describe('browser cookie utils', () => {
     });
 
     it('getCookies httpbingo', async () => {
-        browser = await playwright();
-        const page = await browser.newPage();
+        context = await playwright();
+        const page = await context.newPage();
         await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'httpbingo.org')).split('; ').toSorted()).toEqual(['foo=bar', 'baz=qux'].toSorted());
+        expect((await getCookies(page, 'httpbingo.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(['foo=bar', 'baz=qux'].toSorted((a, b) => a.localeCompare(b)));
     }, 45000);
 
     it('setCookies httpbingo', async () => {
-        browser = await playwright();
-        const page = await browser.newPage();
+        context = await playwright();
+        const page = await context.newPage();
         // httpbingo.org cannot recognize cookies with empty name properly, so we cannot use cookieStrAll here
         await setCookies(page, cookieStrExampleCom, 'httpbingo.org');
         await page.goto('https://httpbingo.org/cookies', {
@@ -90,13 +90,13 @@ describe('browser cookie utils', () => {
     }, 45000);
 
     it('setCookies & getCookies example.org', async () => {
-        browser = await playwright();
-        const page = await browser.newPage();
+        context = await playwright();
+        const page = await context.newPage();
         // we can use cookieStrAll here!
         await setCookies(page, cookieStrAll, 'example.org');
         await page.goto('https://example.org', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'example.org')).split('; ').toSorted()).toEqual(cookieStrAll.split('; ').toSorted());
+        expect((await getCookies(page, 'example.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(cookieStrAll.split('; ').toSorted((a, b) => a.localeCompare(b)));
     }, 45000);
 });

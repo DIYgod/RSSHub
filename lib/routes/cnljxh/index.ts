@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news', id = '10' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'https://www.cnljxh.org.cn';
     const targetUrl: string = new URL(`${category}/?classid=${id}`, baseUrl).href;
@@ -55,7 +55,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('div.content_title h2').text();
                 const description: string | undefined = $$('div.content_div').html() ?? '';
-                const authors: DataItem['author'] = $$('div.content_title p').text().split(/\s/)[0]?.split(/：/).pop();
+                const authors: DataItem['author'] = $$('div.content_title p').text().split(/\s/, 1)[0]?.split(/：/).pop();
 
                 let processedItem: DataItem = {
                     title,

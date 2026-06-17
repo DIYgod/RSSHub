@@ -44,7 +44,7 @@ async function handler(ctx) {
 
     const { query, username } = ctx.req.param();
 
-    const rootURL = ctx.req.path.split('/')[2] === 'sukebei' ? 'https://sukebei.nyaa.si' : 'https://nyaa.si';
+    const rootURL = ctx.req.path.split('/', 3)[2] === 'sukebei' ? 'https://sukebei.nyaa.si' : 'https://nyaa.si';
 
     let currentRSSURL = `${rootURL}/?page=rss`;
     let currentLink = `${rootURL}/`;
@@ -93,19 +93,18 @@ async function handler(ctx) {
             description: feed.description,
             item: items,
         };
-    } else {
-        feed.items.map((item) => {
-            item.description = item.content;
-            item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
-            item.enclosure_type = 'application/x-bittorrent';
-            return item;
-        });
-
-        return {
-            title: feed.title,
-            link: currentLink,
-            description: feed.description,
-            item: feed.items,
-        };
     }
+    feed.items.map((item) => {
+        item.description = item.content;
+        item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
+        item.enclosure_type = 'application/x-bittorrent';
+        return item;
+    });
+
+    return {
+        title: feed.title,
+        link: currentLink,
+        description: feed.description,
+        item: feed.items,
+    };
 }

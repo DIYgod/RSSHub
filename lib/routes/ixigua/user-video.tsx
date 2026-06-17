@@ -44,7 +44,7 @@ async function handler(ctx) {
         throw new Error('Failed to find SSR_HYDRATED_DATA');
     }
 
-    const jsonData = JSON.parse(jsData.match(/var\s+data\s*=\s*({.*?});/s)?.[1].replaceAll('undefined', 'null') || '{}');
+    const jsonData = JSON.parse(jsData.match(/var\s+data\s*=\s*(\{.*?\});/s)?.[1].replaceAll('undefined', 'null') || '{}');
 
     const {
         AuthorVideoList: { videoList: videoInfos },

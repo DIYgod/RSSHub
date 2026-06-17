@@ -10,7 +10,7 @@ import { baseUrl, fetchItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { time = '24h', country = 'us' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL('mostwanted/', baseUrl).href;
 

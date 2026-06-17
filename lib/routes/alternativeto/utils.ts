@@ -4,17 +4,17 @@ const baseURL = 'https://alternativeto.net';
 
 const playwrightGet = (url, cache) =>
     cache.tryGet(url, async () => {
-        const browser = await playwright();
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
+        const context = await playwright();
+        const page = await context.newPage();
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' ? route.continue() : route.abort();
         });
         await page.goto(url, {
             waitUntil: 'domcontentloaded',
         });
         const html = await page.evaluate(() => document.documentElement.innerHTML);
-        await browser.close();
+        await context.close();
         return html;
     });
 

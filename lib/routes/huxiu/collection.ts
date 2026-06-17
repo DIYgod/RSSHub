@@ -25,7 +25,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const apiUrl = new URL('web/collection/articleList', apiArticleRootUrl).href;
     const currentUrl = new URL(`collection/${id}.html`, rootUrl).href;

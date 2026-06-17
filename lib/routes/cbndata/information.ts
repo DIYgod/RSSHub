@@ -12,7 +12,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'all' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const baseUrl = 'https://www.cbndata.com';
     const targetUrl: string = new URL(`information?tag_id=${id}`, baseUrl).href;

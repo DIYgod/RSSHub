@@ -45,7 +45,7 @@ const renderItems = (items) =>
         // Metadata
         const url = `https://www.instagram.com/p/${item.code}/`;
         const pubDate = parseDate(item.caption?.created_at_utc || item.taken_at, 'X');
-        const title = summary.split('\n')[0];
+        const title = summary.split('\n', 1)[0];
 
         return {
             title,

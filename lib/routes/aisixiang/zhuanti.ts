@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const currentUrl = new URL(`zhuanti/${id}.html`, rootUrl).href;
 
@@ -52,7 +52,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
-                author: a.text().split('：')[0],
+                author: a.text().split('：', 1)[0],
                 pubDate: timezone(parseDate(item.find('span').text()), +8),
             };
         });

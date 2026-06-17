@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = '60847' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 12;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
 
     const rootUrl = 'https://cfhd.cf.qq.com';
     const rootImageUrl = 'https://game.gtimg.cn';
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
     const image = new URL('images/cfhd/web202305/logo.png', rootImageUrl).href;
 
     return {
-        title: `${$('title').text().split(/-/)[0]} - ${$('li.cur').text()}`,
+        title: `${$('title').text().split(/-/, 1)[0]} - ${$('li.cur').text()}`,
         description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,

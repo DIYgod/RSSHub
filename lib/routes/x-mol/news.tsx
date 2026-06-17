@@ -57,7 +57,7 @@ async function handler(ctx) {
                     <>
                         {element.find('img').attr('src') ? (
                             <>
-                                <img src={element.find('img').attr('src').split('?')[0]} />
+                                <img src={element.find('img').attr('src').split('?', 1)[0]} />
                                 <br />
                             </>
                         ) : null}

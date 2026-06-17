@@ -9,7 +9,7 @@ const PERMUTAION_MAP = [24, 13, 4, 19, 6, 0, 8, 21, 25, 7, 28, 1, 15, 31, 10, 9,
 const getNonce = (params: Record<string, any>) => {
     const m = new Date().toISOString().slice(0, 10).replaceAll('-', '');
 
-    const sortedKeys = Object.keys(params).toSorted();
+    const sortedKeys = Object.keys(params).toSorted((a, b) => a.localeCompare(b));
     const queryParts = sortedKeys.map((k) => `${k}=${params[k]}`);
     const queryStr = queryParts.join('&');
 
@@ -50,7 +50,7 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
     maintainers: ['ananyatimalsina'],
     handler: async (ctx) => {
         const { channel } = ctx.req.param();
-        const cid = channel.split('-id')[1];
+        const cid = channel.split('-id', 2)[1];
 
         if (!cid) {
             throw new Error('Invalid channel format. Missing -id');
@@ -66,7 +66,7 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
         }
 
         const chData = channelData.data;
-        const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit') as string, 10) : 50;
+        const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit') as string) : 50;
 
         const epParams = { cid, limit, r: 1, raw: 1, web: 1 };
         const { m: em, n: en, queryStr: eQuery } = getNonce(epParams);

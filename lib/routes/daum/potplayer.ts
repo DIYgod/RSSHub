@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
+    const limit = Number(ctx.req.query('limit') ?? '500');
 
     const baseUrl = 'https://t1.daumcdn.net';
     const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${lang ?? ''}.html`, baseUrl).href;
@@ -20,14 +20,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     // Group 3: Trailing hyphens (unused, but for context)
     // Group 4: Update content
     // Uses global and multiline flags for all matches and line start/end anchors
-    const updateRegex = /^(-+)\s*\n(.*?)\s*\n(-+)\s*\n([\s\S]*?)(?=\n-{2,}|<\/p>)/gm;
+    const updateRegex = /^-+[^\S\n]*\n(.*)\r?\n-+[^\S\n]*\n([\s\S]*?)(?=\n-{2}|<\/p>)/gm;
 
     const items: DataItem[] = [];
     let match: RegExpExecArray | null;
 
     while ((match = updateRegex.exec(response)) !== null && items.length < limit) {
-        const headerLine: string | undefined = match[2].trim();
-        const description: string | undefined = match[4].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
+        const headerLine: string | undefined = match[1].trim();
+        const description: string | undefined = match[2].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
 
         let version = 'N/A';
         let pubDateStr: string | undefined = undefined;
@@ -48,9 +48,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         } else if (numericDateMatch && numericDateMatch[1]) {
             const rawDate = numericDateMatch[1];
             if (rawDate.length === 6 && (version === rawDate || !specificDateMatch)) {
-                const year = Number.parseInt(rawDate.slice(0, 2), 10);
-                const month = Number.parseInt(rawDate.slice(2, 4), 10);
-                const day = Number.parseInt(rawDate.slice(4, 6), 10);
+                const year = Number(rawDate.slice(0, 2));
+                const month = Number(rawDate.slice(2, 4));
+                const day = Number(rawDate.slice(4, 6));
                 const fullYear = year < 70 ? 2000 + year : 1900 + year;
                 pubDateStr = `${fullYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
             }

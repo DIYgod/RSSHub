@@ -160,7 +160,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const userId = ctx.req.param('userId');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 7;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 7;
     const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const buildId = await getBuildId();
 

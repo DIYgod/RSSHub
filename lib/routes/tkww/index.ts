@@ -41,7 +41,10 @@ async function handler(ctx) {
 
     let metadata;
     let scope = columns.data.data;
-    for (const segment of column.split('/').filter((item) => typeof item === 'string')) {
+    for (const segment of column.split('/')) {
+        if (typeof segment !== 'string') {
+            continue;
+        }
         metadata = scope.find((item) => item.name === segment || item.dirname === segment);
         scope = metadata?.children ?? [];
     }

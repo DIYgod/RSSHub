@@ -54,7 +54,7 @@ async function handler(ctx) {
                     url: item.link,
                 });
 
-                const content = load(detailResponse.data.match(/"content":"(.*)"}},"secondaryList":/)[1]);
+                const content = load(detailResponse.data.match(/"content":"(.*)"\}\},"secondaryList":/)[1]);
 
                 content('img').each((_, el) => {
                     content(el).attr(

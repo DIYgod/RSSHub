@@ -10,7 +10,7 @@ import { baseUrl, ProcessItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = '0' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL('news', baseUrl).href;
     const apiUrl: string = new URL(`news/getNewsIndexList/${id}`, baseUrl).href;
@@ -26,12 +26,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const title: string | undefined = $(`div.whale_news_index-content-tab li[data_id="${id}"]`).text();
 
     return {
-        title: `${$('title').text().trim().split(/\s/)[0]}${title ? ` - ${title}` : id}`,
+        title: `${$('title').text().trim().split(/\s/, 1)[0]}${title ? ` - ${title}` : id}`,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0] ?? undefined,
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined,
         language,
         id: targetUrl,
     };

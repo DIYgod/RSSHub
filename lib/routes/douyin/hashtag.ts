@@ -47,12 +47,12 @@ async function handler(ctx) {
     const tagData = await cache.tryGet(
         `douyin:hashtag:${cid}`,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
+            const context = await playwright();
+            const page = await context.newPage();
             let awemeList = '';
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -61,11 +61,11 @@ async function handler(ctx) {
                 }
             });
             await page.goto(tagUrl, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle',
             });
             await page.waitForSelector('#RENDER_DATA');
             const html = await page.evaluate(() => document.querySelector('#RENDER_DATA').textContent);
-            await browser.close();
+            await context.close();
 
             const renderData = JSON.parse(decodeURIComponent(html));
             const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail);

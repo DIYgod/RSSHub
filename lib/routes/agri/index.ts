@@ -10,7 +10,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'zx/zxfb/' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'http://www.agri.cn';
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;

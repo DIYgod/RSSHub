@@ -12,7 +12,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'yw' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://www.stcn.com';
     const targetUrl: string = new URL(`article/list/${id}.html`, baseUrl).href;
@@ -107,7 +107,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('img.stcn-logo').attr('src'),
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0],
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0],
         language,
         id: targetUrl,
     };

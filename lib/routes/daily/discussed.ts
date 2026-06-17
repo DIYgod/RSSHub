@@ -93,10 +93,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
-    const period = ctx.req.param('period') ? Number.parseInt(ctx.req.param('period'), 10) : 7;
+    const period = ctx.req.param('period') ? Number(ctx.req.param('period')) : 7;
 
     const link = `${baseUrl}/posts/discussed`;
 

@@ -28,9 +28,8 @@ async function getFinalContentAndUrl(url: string, redirects: number = 0, maxRedi
         const newRedirects = redirects + 1;
 
         return getFinalContentAndUrl(nextUrl, newRedirects, maxRedirects);
-    } else {
-        return [responseContent, url];
     }
+    return [responseContent, url];
 }
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -51,9 +50,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         id = defaultId;
     }
 
-    category = category.replaceAll(/[^a-zA-Z0-9-]/g, '');
+    category = category.replaceAll(/[^a-z0-9-]/gi, '');
 
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = `https://${category ? `${category}.` : ''}ynet.com`;
     const targetUrl: string = new URL(`list/${id}.html`, baseUrl).href;

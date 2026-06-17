@@ -21,18 +21,20 @@ const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
 });
 
 const getConfiguredCookie = () => {
-    if (Object.keys(config.bilibili.cookies).length > 0) {
-        // Update b_lsid in cookies
-        for (const key of Object.keys(config.bilibili.cookies)) {
-            const cookie = config.bilibili.cookies[key];
-            if (cookie) {
-                const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                config.bilibili.cookies[key] = updatedCookie;
-            }
-        }
-
-        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
+    if (Object.keys(config.bilibili.cookies).length === 0) {
+        return;
     }
+
+    // Update b_lsid in cookies
+    for (const key of Object.keys(config.bilibili.cookies)) {
+        const cookie = config.bilibili.cookies[key];
+        if (cookie) {
+            const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
+            config.bilibili.cookies[key] = updatedCookie;
+        }
+    }
+
+    return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
 };
 
 const getCookie = (disableConfig = false) => {
@@ -50,12 +52,13 @@ const getCookie = (disableConfig = false) => {
             onBeforeLoad: (page) => {
                 waitForRequest = new Promise<string>((resolve) => {
                     page.on('requestfinished', async (request) => {
-                        if (request.url() === 'https://api.bilibili.com/x/web-interface/nav') {
-                            const cookies = await page.cookies();
-                            let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                            resolve(cookieString);
+                        if (request.url() !== 'https://api.bilibili.com/x/web-interface/nav') {
+                            return;
                         }
+                        const cookies = await page.context().cookies();
+                        let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                        cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
+                        resolve(cookieString);
                     });
                 });
             },
@@ -99,7 +102,7 @@ const getWbiVerifyString = () => {
         });
         const imgUrl = navResponse.data.wbi_img.img_url;
         const subUrl = navResponse.data.wbi_img.sub_url;
-        const r = imgUrl.slice(imgUrl.lastIndexOf('/') + 1).split('.')[0] + subUrl.slice(subUrl.lastIndexOf('/') + 1).split('.')[0];
+        const r = imgUrl.slice(imgUrl.lastIndexOf('/') + 1).split('.', 1)[0] + subUrl.slice(subUrl.lastIndexOf('/') + 1).split('.', 1)[0];
         // const { body: spaceResponse } = await got('https://space.bilibili.com/1', {
         //     headers: {
         //         Referer: 'https://www.bilibili.com/',
@@ -117,7 +120,7 @@ const getWbiVerifyString = () => {
         //     46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63, 57,
         //     62, 11, 36, 20, 34, 44, 52,
         // ];
-        const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+]/));
+        const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+\]/));
         const o = [];
         for (const t of array) {
             r.charAt(t) && o.push(r.charAt(t));
@@ -350,7 +353,7 @@ const getArticleDataFromCvid = async (cvid, uid) => {
             const newFormatData = JSON.parse(
                 $('script:contains("window.__INITIAL_STATE__")')
                     .text()
-                    .match(/window\.__INITIAL_STATE__\s*=\s*(.*?);\(/)[1]
+                    .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*?)?;\(/)[1]
             );
 
             if (newFormatData?.readInfo?.opus?.content?.paragraphs) {

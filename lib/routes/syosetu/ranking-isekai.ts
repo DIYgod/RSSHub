@@ -64,7 +64,7 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
     const [tenseiResult, tenniResult] = await Promise.all([new SearchBuilder({ ...searchParams, istensei: 1 }, api).execute(), new SearchBuilder({ ...searchParams, istenni: 1 }, api).execute()]);
 
     const combinedNovels = [...tenseiResult.values, ...tenniResult.values];
-    const uniqueNovels = [...new Map(combinedNovels.map((novel) => [novel.ncode, novel])).values()];
+    const uniqueNovels = new Map(combinedNovels.map((novel) => [novel.ncode, novel])).values().toArray();
 
     const pointField = periodToPointField[period];
     if (!pointField) {

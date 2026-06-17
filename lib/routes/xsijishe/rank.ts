@@ -60,10 +60,10 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid rank type');
     }
 
-    const browser = await playwright();
+    const context = await playwright();
     const url = `${baseUrl}/portal.php`;
     try {
-        const data = await playwrightGet(url, browser, '.nex_recon_lists', {
+        const data = await playwrightGet(url, context, '.nex_recon_lists', {
             cookie: config.xsijishe.cookie,
             userAgent: config.xsijishe.userAgent,
         });
@@ -84,7 +84,7 @@ async function handler(ctx) {
 
                 return {
                     title,
-                    link: new URL(link, `${baseUrl}/`).toString(),
+                    link: new URL(link, `${baseUrl}/`).href,
                     description,
                 };
             })
@@ -97,6 +97,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await browser.close();
+        await context.close();
     }
 }

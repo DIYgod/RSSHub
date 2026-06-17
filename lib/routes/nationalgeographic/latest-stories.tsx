@@ -11,7 +11,7 @@ const findNatgeo = ($) =>
     JSON.parse(
         $('script')
             .text()
-            .match(/\['__natgeo__']=({.*?});/)[1]
+            .match(/\['__natgeo__'\]=(\{.*?\});/)[1]
     );
 
 type StoryMedia = {
@@ -40,10 +40,10 @@ type StoryInlineContent = {
 
 type StoryBlock = {
     type?: string;
-    cntnt?: {
+    cntnt?: StoryInlineContent & {
         mrkup?: string;
         cmsType?: string;
-    } & StoryInlineContent;
+    };
 };
 
 type StoryData = {

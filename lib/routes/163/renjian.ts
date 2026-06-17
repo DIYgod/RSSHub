@@ -91,7 +91,7 @@ async function handler(ctx) {
                     .text()
                     .match(/renjian_author = '(.*)'/)[1];
                 item.description = content('#endText').html() ?? content('#content').html();
-                item.pubDate = timezone(parseDate(content('.pub_time').text() ?? content('.post_info').text().split('来源:')[0].trim()), 8);
+                item.pubDate = timezone(parseDate(content('.pub_time').text() ?? content('.post_info').text().split('来源:', 1)[0].trim()), 8);
 
                 return item;
             })

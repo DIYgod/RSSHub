@@ -42,11 +42,11 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
         const url = `https://wx.zsxq.com/topic/${topic.topic_id}`;
         switch (topic.type) {
             case 'talk':
-                title = topic.talk?.text?.split('\n')[0] ?? '文章';
+                title = topic.talk?.text?.split('\n', 1)[0] ?? '文章';
                 description = parseTopicContent(topic.talk?.text, topic.talk?.images);
                 break;
             case 'q&a':
-                title = topic.question?.text?.split('\n')[0] ?? '问答';
+                title = topic.question?.text?.split('\n', 1)[0] ?? '问答';
                 description = parseTopicContent(topic.question?.text, topic.question?.images);
                 description = `<blockquote>${String(topic.question?.owner?.name ?? '匿名用户')} 提问：${description}</blockquote>`;
                 if (topic.answered) {
@@ -55,11 +55,11 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
                 }
                 break;
             case 'task':
-                title = topic.task?.text?.split('\n')[0] ?? '作业';
+                title = topic.task?.text?.split('\n', 1)[0] ?? '作业';
                 description = parseTopicContent(topic.task?.text, topic.task?.images);
                 break;
             case 'solution':
-                title = topic.solution?.text?.split('\n')[0] ?? '写作业';
+                title = topic.solution?.text?.split('\n', 1)[0] ?? '写作业';
                 description = parseTopicContent(topic.solution?.text, topic.solution?.images);
                 break;
             default:

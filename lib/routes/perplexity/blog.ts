@@ -35,14 +35,14 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
     const rootUrl = 'https://www.perplexity.ai/hub';
 
-    const { page, destroy, browser } = await getPlaywrightPage(rootUrl, {
+    const { page, destroy, context } = await getPlaywrightPage(rootUrl, {
         onBeforeLoad: async (page) => {
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
             });
         },
     });
@@ -112,11 +112,11 @@ async function handler(ctx: Context) {
             }
 
             return (await cache.tryGet(item.link, async () => {
-                const contentPage = await browser.newPage();
+                const contentPage = await context.newPage();
 
-                await contentPage.setRequestInterception(true);
-                contentPage.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                await contentPage.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
 
                 await contentPage.goto(item.link!, {

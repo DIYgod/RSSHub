@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'newslists', id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://info.10000link.com';
     const targetUrl: string = new URL(`${category}.aspx${id ? `?chid=${id}` : ''}`, baseUrl).href;

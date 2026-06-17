@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { id = 'RPJQWQYZ' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const ids = id?.split(/\//) ?? [];
     const titles = [];

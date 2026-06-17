@@ -13,23 +13,23 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
     }
 
     // Handle LaTeX formulas
-    let processed = html.replaceAll(/\$latex([\S\s]+?)\$/g, '<img align="center" src="https://latex.codecogs.com/png.latex?$1"/>');
+    let processed = html.replaceAll(/\$latex([\s\S]+?)\$/g, '<img align="center" src="https://latex.codecogs.com/png.latex?$1"/>');
 
     // Handle embedded images with captions
-    processed = processed.replaceAll(/<div id=[\S\s]+?"src":"(https?:?[\S\s]+?)",[\S\s]+?"caption":"([\S\s]*?)",[\S\s]+?<\/div>?/g, (_match, src, cap) => {
+    processed = processed.replaceAll(/<div id=[\s\S]+?"src":"(https?:?[\s\S]+?)",[\s\S]+?"caption":"([\s\S]*?)",[\s\S]+?<\/div>?/g, (_match, src, cap) => {
         const imgUrl = src.replaceAll(/\\([^nu])/g, '$1');
         const img = `<img src="${imgUrl}" />`;
 
         const noBS = cap.replaceAll(/\\([^nu])/g, '$1');
         const removeNL = noBS.replaceAll(String.raw`\n`, '');
-        const caption = removeNL.replaceAll(/\\u(\d{1,3}[a-z]\d?|\d{4}?)/g, (_omit, s) => String.fromCodePoint(Number.parseInt(s, 16)));
+        const caption = removeNL.replaceAll(/\\u(\d{1,3}[a-z]\d?|\d{4})/g, (_omit, s) => String.fromCodePoint(Number.parseInt(s, 16)));
 
         return `<figure>${img}<figcaption>${caption}</figcaption></figure>`;
     });
 
     // Handle lottie-player animations
     // Multiple lottie-players might exist (desktop/mobile versions) - replace all with placeholders first
-    const lottieMatches = [...processed.matchAll(/<lottie-player[^>]*src="([^"]+)"[^>]*><\/lottie-player>/g)];
+    const lottieMatches = processed.matchAll(/<lottie-player[^>]*src="([^"]+)"[^>]*><\/lottie-player>/g).toArray();
     const uniqueAnimations = new Set();
 
     // Replace each lottie-player, but track unique animations by filename
@@ -51,7 +51,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
             const linkUrl = articleLink || rootUrl;
             const badgeImg = 'https://img.shields.io/badge/🎬-View_Interactive_Animation-0066CC?style=for-the-badge';
             const replacement = `<p style="text-align: center; margin: 20px 0;"><a href="${linkUrl}" target="_blank"><img src="${badgeImg}" alt="View Interactive Animation" /></a></p>`;
-            processed = processed.replace(match[0], replacement);
+            processed = processed.replace(match[0], () => replacement);
         }
     }
 
@@ -59,7 +59,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
 };
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts`;
     const posts = await ofetch(apiUrl, {

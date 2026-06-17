@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { id = '9' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const domain = 'www.cisia.org';
     const rootUrl = `http://${domain}`;
@@ -35,7 +35,7 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (!/^https?:\/\/www\.cisia\.org(\/[^\s]*)?$/.test(item.link)) {
+                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link)) {
                     return item;
                 }
 

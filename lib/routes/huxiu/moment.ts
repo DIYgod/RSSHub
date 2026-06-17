@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const apiUrl = new URL('web-v3/moment/feed', apiMomentRootUrl).href;
     const currentUrl = new URL('moment', rootUrl).href;

@@ -81,7 +81,7 @@ function renderRichText(json: any): string {
                 case 'heading-4':
                 case 'heading-5':
                 case 'heading-6': {
-                    const level: string = node.nodeType.split('-')[1];
+                    const level: string = node.nodeType.split('-', 2)[1];
                     return `<h${level}>${renderNodeContent(node)}</h${level}>`;
                 }
                 case 'quote':
@@ -191,7 +191,7 @@ async function handler(ctx: any) {
     const game: string = ctx.req.param('game');
     const locale: string = ctx.req.param('locale') || '';
 
-    if (!GAME_NAMES[game]) {
+    if (!Object.hasOwn(GAME_NAMES, game)) {
         throw new Error(`Unsupported game: ${game}. Supported games: ${Object.keys(GAME_NAMES).join(', ')}`);
     }
 

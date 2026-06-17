@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'http://banshujiang.cn';
     const targetUrl: string = new URL(`${category ? 'e_books' : `category/${category}`}/page/1`, baseUrl).href;

@@ -40,7 +40,7 @@ async function handler() {
             e = $(e);
             const title = e.find('h3');
             const img = e.find('.pub__image').each((_, e) => {
-                e.attribs.src = e.attribs.src.split('?')[0];
+                e.attribs.src = e.attribs.src.split('?', 1)[0];
                 delete e.attribs.srcset;
             });
             const link = new URL(e.find('pub-hide-empty-link a').attr('href'));
@@ -66,7 +66,7 @@ async function handler() {
             const title = e.find('h2');
             const next = title.next();
             const img = e.find('.pub__image').each((_, e) => {
-                e.attribs.src = e.attribs.src.split('?')[0];
+                e.attribs.src = e.attribs.src.split('?', 1)[0];
                 delete e.attribs.srcset;
             });
 

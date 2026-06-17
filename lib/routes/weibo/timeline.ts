@@ -163,7 +163,8 @@ async function handler(ctx) {
             image: profileImageUrl,
             item: resultItem,
         });
-    } else if (uid === '0' || ctx.req.query()) {
+    }
+    if (uid === '0' || ctx.req.query()) {
         const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0', app_secret = '' } = config.weibo;
 
         const code = ctx.req.query('code');

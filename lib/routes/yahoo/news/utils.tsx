@@ -184,7 +184,7 @@ const parseItem = (item) =>
                         <iframe
                             width="560"
                             height="315"
-                            src={`https://www.youtube-nocookie.com/embed/${blockquoteSrc.split('/').pop()?.split('?')?.[0]}`}
+                            src={`https://www.youtube-nocookie.com/embed/${blockquoteSrc.split('/').pop()?.split('?', 1)?.[0]}`}
                             frameborder="0"
                             allow="encrypted-media; picture-in-picture; web-share"
                             allowfullscreen

@@ -53,7 +53,7 @@ const unblurImages = ($: CheerioAPI) => {
 };
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://luolei.org';
 
@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
     const { data: themeResponse } = await got(themeUrl);
 
     let items = themeResponse
-        .match(/{"title":".*?"string":".*?"}}/g)
+        .match(/\{"title":".*?"string":".*?"\}\}/g)
         .slice(0, limit)
         .map((item) => {
             item = JSON.parse(

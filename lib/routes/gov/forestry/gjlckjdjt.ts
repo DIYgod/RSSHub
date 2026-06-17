@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/forestry/gjlckjdjt/:category?',
+    path: '/gjlckjdjt/:category?',
     categories: ['government'],
     example: '/gov/forestry/gjlckjdjt',
     parameters: { category: '分类，见下表，默认为全部' },
@@ -35,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'gjlckjdjt' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.forestry.gov.cn';
     const currentUrl = new URL(`${category}.jhtml`, rootUrl).href;

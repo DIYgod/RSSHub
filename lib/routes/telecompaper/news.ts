@@ -66,7 +66,7 @@ async function handler(ctx) {
             'ctl00$MainPlaceHolder$ddlYears',
             year && year !== 'all'
                 ? ($('select[name="ctl00$MainPlaceHolder$ddlYears"] option')
-                      .filter((index, element) => $(element).text().split(' (')[0] === ctx.req.param('year'))
+                      .filter((index, element) => $(element).text().split(' (', 1)[0] === ctx.req.param('year'))
                       .attr('value') ?? '0')
                 : '0'
         );
@@ -74,7 +74,7 @@ async function handler(ctx) {
             'ctl00$MainPlaceHolder$ddlCountries',
             country && country !== 'all'
                 ? ($('select[name="ctl00$MainPlaceHolder$ddlCountries"] option')
-                      .filter((index, element) => $(element).text().split(' (')[0] === country)
+                      .filter((index, element) => $(element).text().split(' (', 1)[0] === country)
                       .attr('value') ?? '0')
                 : '0'
         );
@@ -83,7 +83,7 @@ async function handler(ctx) {
         'ctl00$MainPlaceHolder$ddlContentType',
         type && type !== 'all'
             ? ($('select[name="ctl00$MainPlaceHolder$ddlContentType"] option')
-                  .filter((index, element) => $(element).text().split(' (')[0] === type)
+                  .filter((index, element) => $(element).text().split(' (', 1)[0] === type)
                   .attr('value') ?? '')
             : ''
     );
@@ -108,7 +108,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: new Date(item.find('span.source').text().replace('Published ', '').split(' CET | ')[0] + ' GMT+1').toUTCString(),
+                pubDate: new Date(item.find('span.source').text().replace('Published ', '').split(' CET | ', 1)[0] + ' GMT+1').toUTCString(),
             };
         });
 

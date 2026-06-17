@@ -87,7 +87,7 @@ async function handler(ctx) {
 
                     const data = detailResponse.data;
 
-                    item.link = `${rootUrl}/#/detailsPage/${id}/${data.id}/1/${data.publishTime.split(' ')[0]}`;
+                    item.link = `${rootUrl}/#/detailsPage/${id}/${data.id}/1/${data.publishTime.split(' ', 1)[0]}`;
                     item.description = data.txt;
                 }
 

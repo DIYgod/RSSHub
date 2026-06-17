@@ -54,25 +54,25 @@ const token2Cookie = async (token) => {
 const lockPrefix = 'twitter:lock-token1:';
 
 const getAuth = async (retry: number) => {
-    if (config.twitter.authToken && retry > 0) {
-        const index = authTokenIndex++ % config.twitter.authToken.length;
-        const token = config.twitter.authToken[index];
-        const lock = await cache.get(`${lockPrefix}${token}`, false);
-        if (lock) {
-            logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
-            await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
-            return await getAuth(retry - 1);
-        } else {
-            logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
-            await cache.set(`${lockPrefix}${token}`, '1', 20);
-            return {
-                token,
-                username: config.twitter.username?.[index],
-                password: config.twitter.password?.[index],
-                authenticationSecret: config.twitter.authenticationSecret?.[index],
-            };
-        }
+    if (!config.twitter.authToken || retry <= 0) {
+        return;
     }
+    const index = authTokenIndex++ % config.twitter.authToken.length;
+    const token = config.twitter.authToken[index];
+    const lock = await cache.get(`${lockPrefix}${token}`, false);
+    if (lock) {
+        logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
+        await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
+        return await getAuth(retry - 1);
+    }
+    logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+    await cache.set(`${lockPrefix}${token}`, '1', 20);
+    return {
+        token,
+        username: config.twitter.username?.[index],
+        password: config.twitter.password?.[index],
+        authenticationSecret: config.twitter.authenticationSecret?.[index],
+    };
 };
 
 export const twitterGot = async (
@@ -99,11 +99,11 @@ export const twitterGot = async (
         });
     }
     let dispatchers:
+        | undefined
         | {
               jar: CookieJar;
               agent: CookieAgent | ProxyAgent;
-          }
-        | undefined;
+          };
     if (cookie) {
         logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
         if (typeof cookie === 'string') {
@@ -338,6 +338,28 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         if (entry.entryId) {
             const content = entry.content || entry.item;
             let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
+            if (tweet?.__typename === 'TweetPreviewDisplay') {
+                const preview = tweet.tweet;
+                if (preview?.rest_id) {
+                    const userResult = preview.core?.user_results?.result;
+                    const fakeLegacy: any = {
+                        id_str: preview.rest_id,
+                        full_text: `[Subscribers Only] ${preview.text ?? ''}`,
+                        created_at: preview.created_at ?? '',
+                        entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
+                        user_id_str: userResult?.rest_id ?? '',
+                        favorite_count: preview.favorite_count ?? 0,
+                        reply_count: preview.reply_count ?? 0,
+                        retweet_count: preview.retweet_count ?? 0,
+                    };
+                    hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
+                    if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
+                        tweets.push(fakeLegacy);
+                    }
+                }
+                continue;
+            }
             if (tweet && tweet.tweet) {
                 tweet = tweet.tweet;
             }

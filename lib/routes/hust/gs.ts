@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'xwdt' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 16;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 16;
 
     const rootUrl = 'https://gs.hust.edu.cn';
     const currentUrl = new URL(`${category}.htm`, rootUrl).href;

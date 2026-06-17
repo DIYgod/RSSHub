@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || undefined;
+    const limit = Number(ctx.req.query('limit')) || undefined;
     const baseUrl = 'https://www.bossdesign.cn';
 
     const currentCategory = await cache.tryGet(`bossdesign:categories:${category}`, async () => {

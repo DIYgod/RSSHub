@@ -16,7 +16,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     let filterName;
 
@@ -63,7 +63,7 @@ async function handler(ctx) {
 
         content('p img').each((_, el) => {
             const image = content(el);
-            const src = image.prop('src').split('!')[0];
+            const src = image.prop('src').split('!', 1)[0];
             const width = image.prop('width');
             const height = image.prop('height');
 

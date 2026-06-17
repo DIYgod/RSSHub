@@ -21,7 +21,7 @@ function parseRocDate(rocDate: string | undefined): Date | undefined {
         return undefined;
     }
     const [rocYearStr, monthStr, dayStr] = parts;
-    const rocYear = Number.parseInt(rocYearStr, 10);
+    const rocYear = Number(rocYearStr);
 
     const year = rocYear + 1911;
     return parseDate(`${year}-${monthStr}-${dayStr}`, 'YYYY-MM-DD');

@@ -82,7 +82,7 @@ async function handler(ctx) {
 
     // 'review', 'story' and 'fengwen' come from homepage.
 
-    if (category === 'review' || category === 'story' || category === 'fengwen' || category === 'all' || category === 'home') {
+    if (['review', 'story', 'fengwen', 'all', 'home'].includes(category)) {
         const response = await got({
             method: 'get',
             url: rootUrl,
@@ -117,7 +117,7 @@ async function handler(ctx) {
 
     // 'redian' and 'gundong' come from api.
 
-    if (category === 'redian' || category === 'all' || category === 'others') {
+    if (['redian', 'all', 'others'].includes(category)) {
         const response = await got({
             method: 'get',
             url: `${rootUrl}/api/redian.htm`,
@@ -131,7 +131,7 @@ async function handler(ctx) {
             .slice(0, category === 'all' ? total / 3 : total);
     }
 
-    if (category === 'gundong' || category === 'all' || category === 'others') {
+    if (['gundong', 'all', 'others'].includes(category)) {
         const response = await got({
             method: 'get',
             url: `${rootUrl}/api/gundong.htm`,

@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const rssUrl = 'https://blockworks.co/feed';
     const feed = await parser.parseURL(rssUrl);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     // Limit to 20 items
     const limitedItems = feed.items.slice(0, limit);
 
@@ -46,7 +46,7 @@ async function handler(ctx): Promise<Data> {
         limitedItems
             .map((item) => ({
                 ...item,
-                link: item.link?.split('?')[0],
+                link: item.link?.split('?', 1)[0],
             }))
             .map((item) =>
                 cache.tryGet(item.link!, async () => {

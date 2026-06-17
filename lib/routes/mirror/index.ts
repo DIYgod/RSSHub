@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     const response = await got(currentUrl);
 
-    const data = JSON.parse(response.data.match(/"__NEXT_DATA__" type="application\/json">({"props":.*})<\/script>/)[1]);
+    const data = JSON.parse(response.data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/)[1]);
 
     const items = Object.keys(data.props.pageProps.__APOLLO_STATE__)
         .filter((key) => key.startsWith('entry:'))

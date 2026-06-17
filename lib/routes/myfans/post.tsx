@@ -52,7 +52,7 @@ async function handler(ctx) {
     const posts = await getPostByAccountId(account.id);
 
     const items = posts.map((p) => ({
-        title: p.body?.replaceAll('\r\n', ' ').trim().split(' ')[0],
+        title: p.body?.replaceAll('\r\n', ' ').trim().split(' ', 1)[0],
         description: renderDescription(p.post_images, p.body?.replaceAll('\r\n', '<br>')),
         pubDate: parseDate(p.published_at),
         link: `${baseUrl}/posts/${p.id}`,

@@ -63,7 +63,7 @@ const renderDescription = ({ description, thumbnailUrl, sampleVideoId, imageUrls
 
 async function handler(ctx) {
     const { identifier } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') || 18, 10);
+    const limit = Number(ctx.req.query('limit') || 18);
 
     const creatorInfo = await getCreatorFragment(identifier);
     const posts = await getCreatorPostReelList(identifier, limit);

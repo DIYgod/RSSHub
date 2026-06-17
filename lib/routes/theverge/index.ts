@@ -58,13 +58,13 @@ const renderBlock = (b) => {
         case 'CoreEmbedBlockType':
             return b.embedHtml;
         case 'CoreGalleryBlockType':
-            return b.images.map((i) => `<figure><img src="${i.image.thumbnails.horizontal.url.split('?')[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
+            return b.images.map((i) => `<figure><img src="${i.image.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
         case 'CoreHeadingBlockType':
             return `<h${b.level}>${b.contents.html}</h${b.level}>`;
         case 'CoreHTMLBlockType':
             return b.markup;
         case 'CoreImageBlockType':
-            return `<figure><img src="${b.thumbnail.url.split('?')[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
+            return `<figure><img src="${b.thumbnail.url.split('?', 1)[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
         case 'CoreListBlockType':
             return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
         case 'CoreParagraphBlockType':
@@ -78,14 +78,14 @@ const renderBlock = (b) => {
         case 'HighlightBlockType':
             return b.children.map((c) => renderBlock(c)).join('');
         case 'ImageCompareBlockType':
-            return `<figure><img src="${b.leftImage.thumbnails.horizontal.url.split('?')[0]}" alt="${b.leftImage.alt}" /><img src="${b.rightImage.thumbnails.horizontal.url.split('?')[0]}" alt="${b.rightImage.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
+            return `<figure><img src="${b.leftImage.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${b.leftImage.alt}" /><img src="${b.rightImage.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${b.rightImage.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
         case 'ImageSliderBlockType':
-            return b.images.map((i) => `<figure><img src="${i.image.originalUrl.split('?')[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
+            return b.images.map((i) => `<figure><img src="${i.image.originalUrl.split('?', 1)[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
         case 'MethodologyAccordionBlockType':
             return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
         case 'ProductBlockType': {
             const product = b.product;
-            return `<div><figure><img src="${product.image.thumbnails.horizontal.url.split('?')[0]}" alt="${product.image.alt}" /><figcaption>${product.image.alt}</figcaption></figure><br><a href="${product.bestRetailLink.url}">${product.title} $${product.bestRetailLink.price}</a><br>${product.description.html}${product.pros.html ? `<br>The Good${product.pros.html}The Bad${product.cons.html}` : ''}</div>`;
+            return `<div><figure><img src="${product.image.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${product.image.alt}" /><figcaption>${product.image.alt}</figcaption></figure><br><a href="${product.bestRetailLink.url}">${product.title} $${product.bestRetailLink.price}</a><br>${product.description.html}${product.pros.html ? `<br>The Good${product.pros.html}The Bad${product.cons.html}` : ''}</div>`;
         }
         case 'TableBlockType':
             return `<table><tr>${b.header.map((cell) => `<th>${cell}</th>`).join('')}</tr>${b.rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;

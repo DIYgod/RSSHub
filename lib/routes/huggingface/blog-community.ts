@@ -88,7 +88,7 @@ async function handler(ctx) {
         pubDate: parseDate(item.publishedAt),
         author: item.authorsData?.[0]?.fullname || item.authorsData?.[0]?.name || 'Unknown',
         upvotes: item.upvotes,
-        image: item.thumbnail ? new URL(item.thumbnail, 'https://huggingface.co').toString() : undefined,
+        image: item.thumbnail ? new URL(item.thumbnail, 'https://huggingface.co').href : undefined,
     }));
 
     const items: DataItem[] = await Promise.all(

@@ -109,7 +109,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${channels[channelId] ? channels[channelId].title + ' - ' : ''}中国货币网`,
+        title: `${Object.hasOwn(channels, channelId) ? channels[channelId].title + ' - ' : ''}中国货币网`,
         link: `${baseUrl}${channels[channelId]?.urlPath ?? ''}`,
         item: items,
     };

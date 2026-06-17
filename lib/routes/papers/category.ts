@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const baseUrl = 'https://papers.cool';
     const targetUrl: string = new URL(`${id}?show=${limit}`, baseUrl).href;
@@ -81,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const description: string = renderDescription({
                 pdfUrl: enclosureUrl,
-                kimiUrl: `${targetUrl.replace(/[a-zA-Z0-9.]+$/, 'kimi')}?paper=${doi}`,
+                kimiUrl: `${targetUrl.replace(/[a-z0-9.]+$/i, 'kimi')}?paper=${doi}`,
                 authors,
                 summary: $el.find('p.summary').text(),
             });

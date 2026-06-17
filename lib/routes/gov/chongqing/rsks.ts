@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rsksUrl = 'https://rlsbj.cq.gov.cn/ywzl/rsks/tzgg_109374/';
 export const route: Route = {
-    path: '/chongqing/rsks',
+    path: '/rsks',
     categories: ['government'],
     example: '/gov/chongqing/rsks',
     radar: [
@@ -15,7 +15,7 @@ export const route: Route = {
             source: ['rlsbj.cq.gov.cn/'],
         },
     ],
-    name: '重庆市人民政府 人力社保局 - 人事考试通知',
+    name: '人力社保局 - 人事考试通知',
     maintainers: ['Mai19930513'],
     handler,
     url: 'rlsbj.cq.gov.cn/',

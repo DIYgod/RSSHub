@@ -25,7 +25,7 @@ describe('httperror', () => {
 describe('RequestInProgressError', () => {
     it('RequestInProgressError with retry', async () => {
         const responses = await Promise.all([app.request('/test/slow'), app.request('/test/slow')]);
-        expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 200]));
+        expect(responses.map((r) => r.status)).toEqual([200, 200]);
     });
     it('RequestInProgressError', async () => {
         const responses = await Promise.all([app.request('/test/slow4'), app.request('/test/slow4')]);

@@ -48,7 +48,7 @@ const handler = async (ctx) => {
                         const scriptContent = $('body script').first().html();
                         let dataObj = null;
                         if (scriptContent) {
-                            const match = scriptContent.match(/data\s*:\s*function\s*\(\)\s*{\s*return\s*{[^}]*data\s*:\s*({[\s\S]*?})/);
+                            const match = scriptContent.match(/data\s*:\s*function\s*\(\)\s*\{\s*return\s*\{[^}]*data\s*:\s*(\{[\s\S]*?\})/);
                             if (match && match[1]) {
                                 const dataStr = match[1];
                                 dataObj = JSON.parse(dataStr);

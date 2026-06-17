@@ -10,7 +10,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { id = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://fashionnetwork.cn';
     const currentUrl = new URL(`lists/${id}`, rootUrl).href;
@@ -88,7 +88,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/)?.[0]?.trim() ?? '';
+    const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/, 1)?.[0]?.trim() ?? '';
     const image = new URL($('div.header__fnw-logo img').prop('src'), rootUrl).href;
 
     return {

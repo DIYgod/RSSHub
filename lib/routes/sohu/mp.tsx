@@ -117,7 +117,7 @@ async function handler(ctx) {
     const suv = pageResponse.headers
         ?.getSetCookie()
         .find((e) => e.startsWith('SUV'))
-        ?.split(';')[0];
+        ?.split(';', 1)[0];
     const $ = cheerio.load(pageResponse._data);
 
     const CBDRenderConst = JSON.parse(
@@ -140,7 +140,7 @@ async function handler(ctx) {
     const blockRenderData = JSON.parse(
         $('script:contains("column_2_text")')
             .text()
-            .match(/({.*})/)?.[1]
+            .match(/(\{.*\})/)?.[1]
     );
     const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
     const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))].param.data.list[0];

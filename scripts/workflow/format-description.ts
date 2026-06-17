@@ -18,7 +18,7 @@ function remarkDirectiveSpace() {
 
 function walkDirectiveAst(node: any): void {
     if (node.type === 'text' && typeof node.value === 'string') {
-        node.value = node.value.replaceAll(/^:::([A-Za-z][\w-]*)/gm, '::: $1');
+        node.value = node.value.replaceAll(/^:::([A-Z][\w-]*)/gim, '::: $1');
     }
     if (Array.isArray(node.children)) {
         for (const child of node.children) {
@@ -175,7 +175,7 @@ function collectDescriptionEdits(sourceFile: typescript.SourceFile): Description
                         raw: init.text,
                     });
                 }
-            } else if ((name === 'ja' || name === 'zh' || name === 'zh-TW') && typescript.isObjectLiteralExpression(prop.initializer)) {
+            } else if (['ja', 'zh', 'zh-TW'].includes(name) && typescript.isObjectLiteralExpression(prop.initializer)) {
                 visitObject(prop.initializer);
             }
         }
@@ -190,10 +190,7 @@ function collectDescriptionEdits(sourceFile: typescript.SourceFile): Description
             continue;
         }
         for (const decl of stmt.declarationList.declarations) {
-            if (!isTargetTypedDeclaration(decl)) {
-                continue;
-            }
-            if (decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
+            if (isTargetTypedDeclaration(decl) && decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
                 visitObject(decl.initializer);
             }
         }

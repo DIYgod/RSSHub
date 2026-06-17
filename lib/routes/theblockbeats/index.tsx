@@ -40,7 +40,7 @@ const buildSignedHeaders = (path: string, query: Record<string, number | string>
     const timestamp = Date.now().toString();
     const nonce = createNonce();
     const canonicalQuery = Object.keys(query)
-        .toSorted()
+        .toSorted((a, b) => a.localeCompare(b))
         .map((key) => `${key}=${query[key] ?? ''}`)
         .join('&');
     const signature = CryptoJS.HmacSHA256(`GET|${path}|${timestamp}|${nonce}|${canonicalQuery}`, appSecret).toString();
@@ -70,7 +70,7 @@ const render = (data: { image?: string; description?: string }) => {
     $('img').each((_, e) => {
         const $e = $(e);
         const src = $e.attr('src');
-        $e.attr('src', src?.split('?')[0]);
+        $e.attr('src', src?.split('?', 1)[0]);
     });
 
     return $.html();

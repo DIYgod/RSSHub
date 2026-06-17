@@ -21,7 +21,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageSize = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const pageSize = Number(ctx.req.query('limit') ?? '10');
 
     const response = await ofetch('https://www.bestblogs.dev/api/proxy/newsletters', {
         method: 'GET',

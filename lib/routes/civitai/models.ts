@@ -38,7 +38,7 @@ async function handler() {
     const items = data.items.map((item) => ({
         title: item.name,
         link: `https://civitai.com/models/${item.id}`,
-        description: `${item.modelVersions?.[0]?.images?.map((image) => `<image src="${image.url.replace(/width=\d+\//, `width=${image.width}/`)}">`).join('\n')}${item.description}`,
+        description: `${item.modelVersions?.[0]?.images?.map((image) => `<image src="${image.url.replace(/width=\d+\//, () => `width=${image.width}/`)}">`).join('\n')}${item.description}`,
         pubDate: parseDate(item.lastVersionAt),
         author: item.creator?.username,
         category: item.tags,

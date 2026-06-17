@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'hourly-temperature/html' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const baseUrl = 'https://www.nmc.cn';
     const pathSegment: string = id.split(/\//).pop() === 'htm' ? 'htm' : 'html';

@@ -59,7 +59,7 @@ async function handler(ctx) {
         feed.items
             .filter((item) => item && item.link)
             .map((item) => {
-                const link = item.link.split('?')[0];
+                const link = item.link.split('?', 1)[0];
                 return {
                     ...item,
                     // https://www.bbc.co.uk/zhongwen/simp/index.xml returns trad regardless of lang parameter

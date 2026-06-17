@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { bigId = '2', smallId = '11' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://www.cbpanet.com';
     const currentUrl = new URL(`dzp_news.aspx?bigid=${bigId}&smallid=${smallId}`, rootUrl).href;
@@ -73,7 +73,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         image,
-        author: title.split(/-/)[0],
+        author: title.split(/-/, 1)[0],
         language,
     };
 };

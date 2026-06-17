@@ -72,7 +72,7 @@ async function handler(ctx) {
         authorNameMap = [];
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
@@ -93,7 +93,7 @@ async function handler(ctx) {
 
             return {
                 title: item.find('a.xst').text(),
-                link: new URL(item.find(' a.xst').prop('href').split('&extra=')[0], rootUrl).href,
+                link: new URL(item.find(' a.xst').prop('href').split('&extra=', 1)[0], rootUrl).href,
                 author: item.find('td.by-author cite').text(),
                 pubDate: parseRelativeDate(item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };
@@ -162,7 +162,7 @@ async function handler(ctx) {
                     item.updated = timezone(parseDate(updatedMatches[1], 'YYYY-M-D HH:mm:ss'), +8);
                 }
 
-                item.comments = content('div.subforum_right_title_left_down').text() ? Number.parseInt(content('div.subforum_right_title_left_down').text(), 10) : 0;
+                item.comments = content('div.subforum_right_title_left_down').text() ? Number(content('div.subforum_right_title_left_down').text()) : 0;
 
                 return item;
             })

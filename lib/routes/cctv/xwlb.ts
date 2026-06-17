@@ -76,15 +76,15 @@ const getXWLB = async () => {
                 description: await cache.tryGet(url, async () => {
                     const res = await got(url);
                     const content = load(res.data);
-                    const list: string[] = [];
-                    content('body li').map((i, elem) => {
-                        const e = content(elem);
-                        const href = e.find('a').attr('href');
-                        const title = e.find('a').attr('title');
-                        const dur = e.find('span').text();
-                        list.push(`<a href="${href}">${title} ⏱${dur}</a>`);
-                        return i;
-                    });
+                    const list = content('body li')
+                        .toArray()
+                        .map((elem) => {
+                            const e = content(elem);
+                            const href = e.find('a').attr('href');
+                            const title = e.find('a').attr('title');
+                            const dur = e.find('span').text();
+                            return `<a href="${href}">${title} ⏱${dur}</a>`;
+                        });
                     return list.join('<br/>\n');
                 }),
             };

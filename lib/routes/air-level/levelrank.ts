@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 
 export const route: Route = {
-    path: ['/rank/:status?'],
+    path: '/rank/:status?',
     radar: [
         {
             source: ['m.air-level.com/rank/:status', 'm.air-level.com/rank'],

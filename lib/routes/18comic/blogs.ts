@@ -91,7 +91,7 @@ async function handler(ctx) {
     return {
         title: $('title')
             .text()
-            .replace(/最新的/, $('.article-nav .active').text()),
+            .replace(/最新的/, () => $('.article-nav .active').text()),
         link: currentUrl,
         item: items,
         description: $('meta[property="og:description"]').attr('content'),

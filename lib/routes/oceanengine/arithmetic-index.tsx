@@ -24,7 +24,7 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
         data: JSON.stringify({ keyword_list: [keyword], start_date, end_date, app_name }),
     };
 
-    const res = await page.evaluate((e) => {
+    const res = await page.evaluate(async (e) => {
         function queryData() {
             const p = new Promise((resolve) => {
                 const req = new XMLHttpRequest();
@@ -43,7 +43,7 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
             });
             return p;
         }
-        return Promise.resolve(queryData()).then((result) => result);
+        return await queryData();
     }, e);
     return res[0];
 };
@@ -111,15 +111,15 @@ async function handler(ctx) {
     const item = await cache.tryGet(
         link,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
             const res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
-            await browser.close();
+            await context.close();
 
             const rawData = JSON.parse(res).data;
             const data = decrypt(rawData).hot_list[0];

@@ -171,12 +171,12 @@ async function handler(ctx) {
 
     const items = response.data.sheetSearch.list.map((item) => {
         let finalPrice = 'Unknown';
-        const price = Number.parseFloat(item.price);
+        const price = Number(item.price);
 
         if (item.price === 0) {
             finalPrice = 'Free';
         } else if (!Number.isNaN(price) && Number.isFinite(price)) {
-            const rate = Number.parseFloat(rates[iso]);
+            const rate = Number(rates[iso]);
             if (rate) {
                 finalPrice = `${(price * rate).toFixed(2)} ${iso}`;
             }

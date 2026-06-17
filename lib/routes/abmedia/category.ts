@@ -6,7 +6,10 @@ const rootUrl = 'https://www.abmedia.io';
 const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
 const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
-const getCategoryId = (category) => got.get(`${cateAPIUrl}?slug=${category}`).then((res) => res.data[0].id);
+const getCategoryId = async (category) => {
+    const res = await got.get(`${cateAPIUrl}?slug=${category}`);
+    return res.data[0].id;
+};
 
 export const route: Route = {
     path: '/:category?',

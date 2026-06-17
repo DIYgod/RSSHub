@@ -86,7 +86,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '751' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.8264.com';
     const currentUrl = new URL(`list/${id}`, rootUrl).href;

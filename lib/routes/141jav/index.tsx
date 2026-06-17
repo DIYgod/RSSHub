@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:type/:keyword{.*}?',
+    path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
     name: '通用',
     maintainers: ['cgkings', 'nczitzk'],
@@ -104,7 +104,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `141JAV - ${$('title').text().split('-')[0].trim()}`,
+        title: `141JAV - ${$('title').text().split('-', 1)[0].trim()}`,
         link: currentUrl,
         item: items,
     };

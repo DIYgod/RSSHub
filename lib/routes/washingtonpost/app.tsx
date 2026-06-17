@@ -42,7 +42,8 @@ For example, the category for <https://www.washingtonpost.com/national/investiga
 function handleDuplicates(array) {
     const objects = {};
     for (const obj of array) {
-        objects[obj.id] = objects[obj.id] ? Object.assign(objects[obj.id], obj) : obj;
+        const existing = objects[obj.id];
+        objects[obj.id] = existing ? Object.assign(existing, obj) : obj;
     }
     return Object.values(objects);
 }
@@ -91,9 +92,8 @@ async function handler(ctx) {
                     if (error instanceof FetchError && error.statusCode === 415) {
                         // Interactive or podcast contents will return 415 Unsupported Media Type. Keep calm and carry on.
                         return item;
-                    } else {
-                        throw error;
                     }
+                    throw error;
                 }
                 item.title = response.data.title ?? item.title;
                 item.author =

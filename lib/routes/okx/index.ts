@@ -104,10 +104,9 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         itemsTemp.map((item) =>
             cache.tryGet(item.link, async () => {
-                const content = await got(item.link).then((response) => {
-                    const $ = load(response.data);
-                    return $('div[class^="index_richTextContent"]').html();
-                });
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const content = $('div[class^="index_richTextContent"]').html();
 
                 return {
                     ...item,

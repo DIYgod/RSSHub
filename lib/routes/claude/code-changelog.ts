@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '25', 10);
+    const limit = Number(ctx.req.query('limit') ?? '25');
 
     const baseUrl = 'https://code.claude.com';
     const targetUrl = `${baseUrl}/docs/en/changelog`;

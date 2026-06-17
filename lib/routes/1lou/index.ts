@@ -10,7 +10,7 @@ const rootUrl = 'https://www.1lou.me';
 
 export const handler = async (ctx) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const queryString = Object.entries(ctx.req.query())
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -95,7 +95,7 @@ export const handler = async (ctx) => {
     const image = new URL($('img.logo-2').prop('src'), rootUrl).href;
 
     return {
-        title: `${$('title').text().split(/-/)[0]} - ${author}`,
+        title: `${$('title').text().split(/-/, 1)[0]} - ${author}`,
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,

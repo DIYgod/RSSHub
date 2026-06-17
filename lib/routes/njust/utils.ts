@@ -3,9 +3,9 @@ import playwright from '@/utils/playwright';
 
 async function getContent(url, pptr = false) {
     if (pptr) {
-        const browser = await playwright();
+        const context = await playwright();
         try {
-            const page = await browser.newPage();
+            const page = await context.newPage();
             // 更改 window.navigator.webdriver 值以避开反爬
             // await page.evaluateOnNewDocument(() => {
             //     // eslint-disable-next-line no-undef
@@ -13,17 +13,17 @@ async function getContent(url, pptr = false) {
             //         get: () => undefined,
             //     });
             // });
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
             await page.goto(url, {
-                waitUntil: 'networkidle0',
+                waitUntil: 'networkidle',
             });
             const content = await page.content();
             return content;
         } finally {
-            await browser.close();
+            await context.close();
         }
     } else {
         const response = await got(url);

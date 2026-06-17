@@ -323,7 +323,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.thoughtco.com';
     const currentUrl = new URL(category, rootUrl).href;

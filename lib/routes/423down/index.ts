@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 18;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 18;
 
     const domain = '423down.com';
     const rootUrl = `https://www.${domain}`;
@@ -83,7 +83,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('p.meta-info').contents().first().text().trim().split(/\s/)[0], 'YYYY-MM-DD');
+                item.pubDate = parseDate($$('p.meta-info').contents().first().text().trim().split(/\s/, 1)[0], 'YYYY-MM-DD');
                 item.category = $$('p.meta-info a[rel="category tag"]')
                     .toArray()
                     .map((c) => $$(c).text());

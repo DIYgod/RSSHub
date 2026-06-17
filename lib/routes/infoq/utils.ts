@@ -55,17 +55,15 @@ const parseToSimpleTexts = (content) =>
                     const level = i.attrs.level;
                     const text = parseToSimpleText(i.content);
                     return `<h${level}>${text}</h${level}>`;
-                } else {
-                    return '';
                 }
+                return '';
             },
             blockquote: () => {
                 if (i.content) {
                     const text = parseToSimpleText(i.content);
                     return `<blockquote>${text}</blockquote>`;
-                } else {
-                    return '';
                 }
+                return '';
             },
             image: () => {
                 const img = i.attrs.src;
@@ -76,9 +74,8 @@ const parseToSimpleTexts = (content) =>
                     const lang = i.attrs.lang;
                     const code = parseToSimpleText(i.content);
                     return `<code lang="${lang}">${code}</code>`;
-                } else {
-                    return '';
                 }
+                return '';
             },
             link: () => {
                 const href = i.attrs.href;
@@ -87,7 +84,7 @@ const parseToSimpleTexts = (content) =>
             },
         };
 
-        if (i.type in funcMaps) {
+        if (Object.hasOwn(funcMaps, i.type)) {
             return funcMaps[i.type]();
         }
 

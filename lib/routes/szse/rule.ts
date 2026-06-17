@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { channel = 'allrules/bussiness' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.szse.cn';
     const apiUrl = new URL('api/search/content', rootUrl).href;

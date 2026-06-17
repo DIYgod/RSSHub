@@ -117,7 +117,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/college/csse/2435',
+    example: '/nwnu/college/csse/2435',
     radar: [
         {
             source: ['jsj.nwnu.edu.cn/:column/list'],

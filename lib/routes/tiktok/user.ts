@@ -43,12 +43,12 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `tiktok:user:${user}`,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
+            const context = await playwright();
+            const page = await context.newPage();
             let itemList = { itemList: [] };
-            page.on('request', (request) => {
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -57,11 +57,11 @@ async function handler(ctx) {
                 }
             });
             await page.goto(`${baseUrl}/${user}`, {
-                waitUntil: 'networkidle0',
+                waitUntil: 'networkidle',
             });
 
             const pageHtml = await page.content();
-            await browser.close();
+            await context.close();
 
             const $ = load(pageHtml);
             const rehydrationData = JSON.parse($('script#__UNIVERSAL_DATA_FOR_REHYDRATION__').text());

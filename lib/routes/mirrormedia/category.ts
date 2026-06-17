@@ -29,7 +29,7 @@ async function handler(ctx) {
         method: 'POST',
         body: {
             variables: {
-                take: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 24,
+                take: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 24,
                 skip: 0,
                 orderBy: { publishedDate: 'desc' },
                 filter: {

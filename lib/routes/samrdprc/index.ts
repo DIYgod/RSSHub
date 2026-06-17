@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'xwdt/gzdt' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '17', 10);
+    const limit = Number(ctx.req.query('limit') ?? '17');
 
     const baseUrl = 'https://www.samrdprc.org.cn';
     const targetUrl: string = new URL(id.endsWith('/') ? id : `${id}/`, baseUrl).href;
@@ -87,7 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: new URL('images/logo_DPRC.png', baseUrl).href,
-        author: $('meta[name="keyword"]').attr('content')?.split(/,/)[0],
+        author: $('meta[name="keyword"]').attr('content')?.split(/,/, 1)[0],
         language,
         id: $('meta[property="og:url"]').attr('content'),
     };

@@ -54,10 +54,10 @@ async function handler(ctx) {
 
     const ThreadList = info.forum_threadlist
         .map((item) => {
-            if (!info.threadtypes.types[item.typeid]) {
+            const type = info.threadtypes.types[item.typeid];
+            if (!type) {
                 return;
             }
-            const type = info.threadtypes.types[item.typeid];
 
             return {
                 tid: item.tid,
@@ -101,9 +101,9 @@ async function handler(ctx) {
                     category: item.category,
                     pubDate: item.pubDate,
                     guid: item.tid,
-                    upvotes: Number.parseInt(threadInfo.thread.recommend_add, 10),
-                    downvotes: Number.parseInt(threadInfo.thread.recommend_sub, 10),
-                    comments: Number.parseInt(threadInfo.thread.replies, 10),
+                    upvotes: Number(threadInfo.thread.recommend_add),
+                    downvotes: Number(threadInfo.thread.recommend_sub),
+                    comments: Number(threadInfo.thread.replies),
                 };
             })
         )

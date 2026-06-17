@@ -37,7 +37,7 @@ const ProcessFeed = (list, caches) => {
             const $ = load(item);
             const $title = $('.title');
             // 还原相对链接为绝对链接
-            const itemUrl = new URL($title.attr('href'), host).toString();
+            const itemUrl = new URL($title.attr('href'), host).href;
             // 使用tryGet方法从缓存获取内容。
             // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容
             return caches.tryGet(itemUrl, async () => {

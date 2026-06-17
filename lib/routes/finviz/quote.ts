@@ -34,7 +34,7 @@ async function handler(ctx) {
         data.toArray().map((e) => {
             let date = $(e).find('td').first().text().trim();
             if (date.includes('-')) {
-                dateRow = date.split(' ')[0];
+                dateRow = date.split(' ', 1)[0];
             } else {
                 date = `${dateRow} ${date}`;
             }

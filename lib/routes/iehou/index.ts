@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://iehou.com';
     const currentUrl = new URL(category ? `page-${category}.htm` : '', rootUrl).href;

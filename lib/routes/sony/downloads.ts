@@ -42,7 +42,7 @@ async function handler(ctx) {
     const $ = load(data);
     const contents = $('script:contains("window.__PRELOADED_STATE__.downloads")').text();
 
-    const regex = /window\.__PRELOADED_STATE__\.downloads\s*=\s*({.*?});\s*window\.__PRELOADED_STATE__/s;
+    const regex = /window\.__PRELOADED_STATE__\.downloads\s*=\s*(\{.*?\});\s*window\.__PRELOADED_STATE__/s;
 
     const match = contents.match(regex);
     let results = {};

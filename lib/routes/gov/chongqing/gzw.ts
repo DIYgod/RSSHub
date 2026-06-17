@@ -7,18 +7,18 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/chongqing/gzw/:category{.+}?',
+    path: '/gzw/:category{.+}?',
     parameters: {
         category: '分类，见下表，默认为通知公告',
     },
-    name: '重庆市人民政府 国有资产监督管理委员会',
+    name: '国有资产监督管理委员会',
     url: 'gzw.cq.gov.cn',
     maintainers: ['nczitzk'],
     handler,
     radar: [
         {
             source: 'gzw.cq.gov.cn/*category',
-            target: '/chongqing/gzw/*category',
+            target: '/gzw/*category',
         },
     ],
     description: `| 通知公告  | 国企资讯 | 国企简介 | 国企招聘 |
@@ -28,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'tzgg_191' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://gzw.cq.gov.cn';
     const currentUrl = new URL(category, rootUrl).href;
@@ -47,7 +47,10 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href').replace(/^\./, category), rootUrl).href,
+                link: new URL(
+                    a.prop('href').replace(/^\./, () => category),
+                    rootUrl
+                ).href,
                 pubDate: parseDate(item.find('span').text()),
             };
         });

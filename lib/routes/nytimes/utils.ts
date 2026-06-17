@@ -15,12 +15,12 @@ const ProcessImage = ($, e) => {
     return cover;
 };
 
-const PuppeterGetter = async (ctx, browser, link) => {
+const PuppeterGetter = async (ctx, context, link) => {
     const result = await cache.tryGet(`nyt: ${link}`, async () => {
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
+        const page = await context.newPage();
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' ? route.continue() : route.abort();
         });
         await page.goto(link, {
             waitUntil: 'domcontentloaded',

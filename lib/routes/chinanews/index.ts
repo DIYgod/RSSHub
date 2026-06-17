@@ -29,13 +29,14 @@ async function handler(ctx) {
         url: currentUrl,
     });
     const $ = load(response.data);
+    const limit = ctx.req.query('limit');
     const list = $('a', '.dd_bt')
         .toArray()
         .map((item) => ({
             link: rootUrl + $(item).attr('href'),
             title: $(item).text(),
         }))
-        .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 125) : 50);
+        .slice(0, limit ? Number.parseInt(limit) : 50);
 
     const items = await Promise.all(
         list.map((item) =>

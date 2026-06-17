@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '1', 10);
+    const limit = Number(ctx.req.query('limit') ?? '1');
 
     const rootUrl = 'https://www.ali213.net';
     const apiRootUrl = 'https://mp.ali213.net';

@@ -47,7 +47,7 @@ async function handler(ctx) {
     };
 
     const { type = 'index' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const link = `https://apii.web.mittrchina.com${typeMap[type].apiPath}`;
     const { data: response } =

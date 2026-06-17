@@ -66,7 +66,7 @@ Language Parameter:
                 // const script_tag = item.next('script');
                 // console.log(`script_tag:${script_tag.text()}`);
                 const hoverContent = item.next('script').text();
-                const regex = /SharedFileBindMouseHover\(\s*"sharedfile_\d+",\s*(?:true|false),\s*({.*?})\s*\);/;
+                const regex = /SharedFileBindMouseHover\(\s*"sharedfile_\d+",\s*(?:true|false),\s*(\{.*?\})\s*\);/;
                 const match = hoverContent.match(regex);
 
                 let entryDescription = '';

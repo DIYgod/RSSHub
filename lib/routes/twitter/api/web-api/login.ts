@@ -29,8 +29,8 @@ async function login({ username, password, authenticationSecret }) {
         await loginLimiterQueue.removeTokens(1);
 
         const cookieJar = new CookieJar();
-        const browser = await playwright();
-        const page = await browser.newPage();
+        const context = await playwright();
+        const page = await context.newPage();
         await page.goto('https://x.com/i/flow/login');
         await page.waitForSelector('input[autocomplete="username"]');
         await page.type('input[autocomplete="username"]', username);
@@ -47,24 +47,25 @@ async function login({ username, password, authenticationSecret }) {
         }
         const waitForRequest = new Promise<string>((resolve) => {
             page.on('response', async (response) => {
-                if (response.url().includes('/HomeTimeline')) {
-                    const data = await response.json();
-                    const message = data?.data?.home?.home_timeline_urt?.instructions?.[0]?.entries?.[0]?.entryId;
-                    if (message === 'messageprompt-suspended-prompt') {
-                        logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
-                        resolve('');
-                    }
-                    const cookies = await page.cookies();
-                    for (const cookie of cookies) {
-                        cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
-                    }
-                    logger.debug(`twitter debug: twitter username ${username} login success`);
-                    resolve(JSON.stringify(cookieJar.serializeSync()));
+                if (!response.url().includes('/HomeTimeline')) {
+                    return;
                 }
+                const data = await response.json();
+                const message = data?.data?.home?.home_timeline_urt?.instructions?.[0]?.entries?.[0]?.entryId;
+                if (message === 'messageprompt-suspended-prompt') {
+                    logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
+                    resolve('');
+                }
+                const cookies = await page.context().cookies();
+                for (const cookie of cookies) {
+                    cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
+                }
+                logger.debug(`twitter debug: twitter username ${username} login success`);
+                resolve(JSON.stringify(cookieJar.serializeSync()));
             });
         });
         const cookieString = await waitForRequest;
-        await browser.close();
+        await context.close();
         return cookieString;
     } catch (error) {
         logger.error(`twitter debug: twitter username ${username} login failed:`, error);

@@ -102,7 +102,7 @@ async function handler(ctx) {
     const url = `https://3g.163.com/touch/reconstruct/article/list/${type}/0-20.html`;
     const response = await got(url);
     const data = response.data;
-    const matches = data.replaceAll(/\s/g, '').match(/artiList\((.*?)]}\)/);
+    const matches = data.replaceAll(/\s/g, '').match(/artiList\((.*?)\]\}\)/);
     const articlelist0 = matches[1].replace(/".*?wangning/, '"articles') + ']}';
     const articlelist = JSON.parse(articlelist0);
     const articles = articlelist.articles;
@@ -112,7 +112,7 @@ async function handler(ctx) {
             let url = article.url;
             if (url === null || article.skipType === 'video') {
                 const skipurl = article.skipURL;
-                const vid = skipurl.match(/vid=(.*?)$/);
+                const vid = skipurl.match(/vid=(.*)$/);
                 if (vid !== null) {
                     url = `https://3g.163.com/exclusive/video/${vid[1]}.html`;
                 }

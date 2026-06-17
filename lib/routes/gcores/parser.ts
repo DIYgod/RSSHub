@@ -145,15 +145,11 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
         length: number;
         styles: Style[];
         entity: Entity | null;
-    }> = [];
-
-    for (const range of inlineStyleRanges) {
-        combinedRanges.push({
-            ...range,
-            styles: [STYLES[range.style]],
-            entity: null,
-        });
-    }
+    }> = Array.from(inlineStyleRanges, (range) => ({
+        ...range,
+        styles: [STYLES[range.style]],
+        entity: null,
+    }));
 
     for (const range of entityRanges) {
         combinedRanges.push({

@@ -18,10 +18,26 @@ const { fileList: fileSet } = await nodeFileTrace(files, {
 let fileList = [...fileSet];
 console.log('Total touchable files:', fileList.length);
 fileList = fileList.filter((file) => file.startsWith('node_modules/')); // only need node_modules
+
+// playwright-core uses path.join to load browsers.json in v1.60+ instead of ../.., which prevents @vercel/nft from tracing it.
+// https://github.com/microsoft/playwright/blob/v1.60.0/packages/playwright-core/src/server/registry/index.ts#L1544 vs
+// https://github.com/microsoft/playwright/blob/v1.59.1/packages/playwright-core/src/server/registry/index.ts#L1520
+// also, nft's special case for `playwright-core` no longer works for `patchright-core` https://github.com/vercel/nft/blob/1.10.2/src/utils/special-cases.ts#L336
+const patchrightCoreFile = fileList.find((file) => file.includes('/patchright-core/'));
+if (patchrightCoreFile) {
+    const packageRoot = patchrightCoreFile.slice(0, patchrightCoreFile.indexOf('/patchright-core/') + '/patchright-core'.length);
+    const browsersJson = `${packageRoot}/browsers.json`;
+    if (!fileList.includes(browsersJson) && (await fs.pathExists(path.join(projectRoot, browsersJson)))) {
+        fileList.push(browsersJson);
+        console.log('Manually included patchright-core asset:', browsersJson);
+    }
+}
 console.log('Total files need to be copied (touchable files in node_modules/):', fileList.length);
 console.log('Start copying files, destination:', resultFolder);
-await Promise.all(fileList.map((e) => fs.copy(path.join(projectRoot, e), path.join(resultFolder, e)))).catch((error) => {
+try {
+    await Promise.all(fileList.map((e) => fs.copy(path.join(projectRoot, e), path.join(resultFolder, e))));
+} catch (error) {
     // fix unhandled promise rejections
     console.error(error, error.stack);
     process.exit(1);
-});
+}

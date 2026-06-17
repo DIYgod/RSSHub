@@ -43,11 +43,11 @@ async function handler(ctx) {
 
     const response = await ofetch(link);
     const $ = load(response);
-    const browser = await playwright();
+    const context = await playwright();
 
     const list = $('.articlebox-compact')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20)
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.title a');
@@ -66,10 +66,10 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
@@ -98,7 +98,7 @@ async function handler(ctx) {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: $('head title').text(),
