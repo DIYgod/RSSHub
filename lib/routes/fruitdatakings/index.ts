@@ -23,25 +23,27 @@ interface GalleryItem {
 const baseUrl = 'https://www.fruitdatakings.com';
 
 const handler = async (ctx) => {
-    const { region = 'China', product = 'cherry' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    // Use ctx.params and ctx.query which are standard in RSSHub route handlers
+    const region = ctx.params.region || 'China';
+    const product = ctx.params.product || 'cherry';
+    const limit = ctx.query.limit ? Number.parseInt(ctx.query.limit, 10) : 15;
 
     const cacheKey = `fruitdatakings:${region}:${product}`;
-    const apiUrl = `${baseUrl}/ajax/gallery-proxy/?location=${encodeURIComponent(region)}&product=${encodeURIComponent(product)}`;
+    const apiUrl = `${baseUrl}/ajax/gallery-proxy/?location=${encodeURIComponent(
+        region,
+    )}&product=${encodeURIComponent(product)}`;
 
-    const data = (await cache.tryGet(
-        cacheKey,
-        () =>
-            ofetch(apiUrl, {
-                headers: {
-                    'User-Agent': config.trueUA,
-                },
-            }),
-        2 * 60 * 60
-    )) as GalleryItem[];
+    const data = (await cache.tryGet(cacheKey, async () => {
+        return await ofetch(apiUrl, {
+            headers: {
+                'User-Agent': config.trueUA,
+            },
+        });
+    }, 2 * 60 * 60)) as GalleryItem[];
 
     if (!Array.isArray(data) || data.length === 0) {
-        throw ctx.error('No data found for the given region and product', 404);
+        // Throwing via ctx.throw is consistent with RSSHub error handling
+        ctx.throw(404, 'No data found for the given region and product');
     }
 
     const items: DataItem[] = data.slice(0, limit).map((item) => {
@@ -64,7 +66,7 @@ ${details.isBio ? '<p>Organic (Bio)</p>' : ''}
         };
     });
 
-    return {
+    ctx.state.data = {
         title: `Fruit Data Kings - ${product} - ${region}`,
         description: `Weekly ${product} market price data for ${region} from Fruit Data Kings`,
         link: `${baseUrl}/${region.toLowerCase()}/${product.toLowerCase()}/`,
@@ -85,12 +87,12 @@ export const route: Route = {
         region: 'Region name, e.g. China, EU, US',
         product: 'Product slug, e.g. cherry, kiwi',
     },
-    description: `\`\`\`
+    description: `
     | Region | Product | RSSHub Route |
     | --- | --- | --- |
     | China | Cherry | [/fruitdatakings/China/cherry](https://rsshub.app/fruitdatakings/China/cherry) |
     | EU | Kiwi | [/fruitdatakings/EU/kiwi](https://rsshub.app/fruitdatakings/EU/kiwi) |
-\`\`\``,
+`,
     categories: ['other'],
     features: {
         requireConfig: false,
