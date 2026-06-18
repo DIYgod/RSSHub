@@ -106,7 +106,7 @@ export const route: Route = {
     radar: [
         {
             source: ['fruitdatakings.com/:region/:product/'],
-            target: '/:region/:product',
+            target: '/fruitdatakings/:region/:product',
         },
     ],
 };
