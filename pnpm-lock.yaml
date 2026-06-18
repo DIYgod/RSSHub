@@ -50,8 +50,8 @@ importers:
         specifier: 1.4.0
         version: 1.4.0(hono@4.12.25)(zod@4.4.3)
       '@jocmp/mercury-parser':
-        specifier: 3.0.8
-        version: 3.0.8
+        specifier: 3.0.9
+        version: 3.0.9
       '@notionhq/client':
         specifier: 5.22.0
         version: 5.22.0
@@ -545,8 +545,8 @@ packages:
     engines: {node: ^22.18.0 || >=24.11.0}
     hasBin: true
 
-  '@babel/runtime-corejs2@7.29.2':
-    resolution: {integrity: sha512-+FqVkbqWaDleqS9fgzFypApKoPvmGFgk5X2lGXbL9wgz6tf88qt2HEUuEn9E3yBeLt7p8pIgODbJ5icVRALKhQ==}
+  '@babel/runtime-corejs2@7.29.7':
+    resolution: {integrity: sha512-5GidEBf/rOQlv4sUknPRgboZEvzt/je7CpbkCZ2o7ojs9JbldxdXJinGLYE0sYR9mfPpRz3Q3D7rP+oSCal70g==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.29.7':
@@ -1543,8 +1543,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jocmp/mercury-parser@3.0.8':
-    resolution: {integrity: sha512-q3o1OFgrIY7gs/YtMdtzKjpQqk3838zh/+giNeE3gQCWAdUyYH+bhJ2yu36uoa9Xe1Jht6RS5enbs1dujApuvQ==}
+  '@jocmp/mercury-parser@3.0.9':
+    resolution: {integrity: sha512-DoGbAarmvEzGBh+CThPD+cKFiXBugH0M//v8HM8EczqITyLSdijRgTyS8pnWszB9wINeAn1EuBeuIpL/HFXTPA==}
     engines: {node: '>=22'}
     hasBin: true
     bundledDependencies:
@@ -6166,7 +6166,7 @@ snapshots:
     dependencies:
       '@babel/types': 8.0.0
 
-  '@babel/runtime-corejs2@7.29.2':
+  '@babel/runtime-corejs2@7.29.7':
     dependencies:
       core-js: 2.6.12
 
@@ -6852,9 +6852,9 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
-  '@jocmp/mercury-parser@3.0.8':
+  '@jocmp/mercury-parser@3.0.9':
     dependencies:
-      '@babel/runtime-corejs2': 7.29.2
+      '@babel/runtime-corejs2': 7.29.7
       cheerio: 1.2.0
       dayjs: 1.11.21
       difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
