@@ -1,5 +1,6 @@
-import config from '@/config';
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -26,13 +27,19 @@ const handler = async (ctx) => {
     const { region = 'China', product = 'cherry' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
+    const cacheKey = `fruitdatakings:${region}:${product}`;
     const apiUrl = `${baseUrl}/ajax/gallery-proxy/?location=${encodeURIComponent(region)}&product=${encodeURIComponent(product)}`;
 
-    const data = (await ofetch(apiUrl, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    })) as GalleryItem[];
+    const data = (await cache.tryGet(
+        cacheKey,
+        () =>
+            ofetch(apiUrl, {
+                headers: {
+                    'User-Agent': config.trueUA,
+                },
+            }),
+        2 * 60 * 60
+    )) as GalleryItem[];
 
     if (!Array.isArray(data) || data.length === 0) {
         throw ctx.error('No data found for the given region and product', 404);
