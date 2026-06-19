@@ -56,7 +56,7 @@ function parseDataItem(item: FeedPatternData, texts: string[], images: { [id: st
 
 function parseArticle(feed: Feed, texts: string[], images: { [id: string]: FeedImage }): string {
     let result = '';
-    if (feed.patternInfo === undefined || feed.patternInfo === null || feed.patternInfo === '') {
+    if ([undefined, null, ''].includes(feed.patternInfo)) {
         feed.patternInfo = '[]';
     }
     const patterns: FeedPattern[] = JSON.parse(feed.patternInfo);
@@ -111,7 +111,8 @@ export function parseFeed(feed: Feed): string {
     if (feed.feed_type === 1) {
         // post: text and attachments
         return parsePost(feed, texts, images);
-    } else if (feed.feed_type === 2) {
+    }
+    if (feed.feed_type === 2) {
         // article: pattern info
         return parseArticle(feed, texts, images);
     }

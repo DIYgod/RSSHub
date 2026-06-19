@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://rawkuma.com';
     const currentUrl = new URL(`/manga/${id}`, rootUrl).href;
@@ -70,7 +70,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                const imageMatches = detailResponse.match(/"images":(\[.*?])}],"lazyload"/);
+                const imageMatches = detailResponse.match(/"images":(\[.*?\])\}\],"lazyload"/);
 
                 const images = imageMatches ? JSON.parse(imageMatches[1]) : [];
 

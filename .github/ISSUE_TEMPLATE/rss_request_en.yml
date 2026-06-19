@@ -39,6 +39,7 @@ body:
               - Study
               - Scientific Journal
               - Finance
+              - Sport
               - Uncategorized
       validations:
           required: true
@@ -48,14 +49,6 @@ body:
       attributes:
           label: Website URL
           placeholder: https://example.com
-      validations:
-          required: true
-
-    - type: textarea
-      id: description
-      attributes:
-          label: Website description
-          placeholder: A short description of the website
       validations:
           required: true
 

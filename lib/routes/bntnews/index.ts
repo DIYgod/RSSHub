@@ -32,8 +32,8 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['iamsnn'],
     handler,
-    description: `| Beauty | Fashion | Star | Style+ | Photo | Life | Now |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+    description: `| Beauty       | Fashion      | Star         | Style+       | Photo        | Life         | Now          |
+| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
 | bnt003000000 | bnt002000000 | bnt004000000 | bnt007000000 | bnt009000000 | bnt005000000 | bnt008000000 |`,
 };
 

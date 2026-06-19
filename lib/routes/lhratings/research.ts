@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '1' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'https://www.lhratings.com';
     const targetUrl: string = new URL(`research.html?type=${type}`, baseUrl).href;
@@ -90,8 +90,7 @@ export const route: Route = {
 
 | 宏观经济 | 债券市场 | 行业研究 | 评级理论与方法 | 国际债券市场与评级 | 评级表现 |
 | -------- | -------- | -------- | -------------- | ------------------ | -------- |
-| 1        | 2        | 3        | 4              | 5                  | 6        |
-`,
+| 1        | 2        | 3        | 4              | 5                  | 6        |`,
     categories: ['finance'],
     features: {
         requireConfig: false,

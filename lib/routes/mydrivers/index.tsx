@@ -21,8 +21,7 @@ export const route: Route = {
             target: '/zhibo',
         },
     ],
-    description: `
-#### 板块
+    description: `#### 板块
 
 | 电脑     | 手机     | 汽车     | 业界     | 游戏     |
 | -------- | -------- | -------- | -------- | -------- |
@@ -46,8 +45,7 @@ export const route: Route = {
 
 | 蔚来      | 理想       | 奔驰     | 宝马     | 大众     |
 | --------- | ---------- | -------- | -------- | -------- |
-| icid/7318 | icid/12947 | icid/429 | icid/461 | icid/481 |
-`,
+| icid/7318 | icid/12947 | icid/429 | icid/461 | icid/481 |`,
 };
 
 async function handler(ctx) {
@@ -55,12 +53,12 @@ async function handler(ctx) {
 
     let newTitle = '';
 
-    if (!/^(\w+\/\w+)$/.test(category)) {
+    if (!/^\w+\/\w+$/.test(category)) {
         newTitle = `${title} - ${Object.hasOwn(categories, category) ? categories[category] : categories[Object.keys(categories)[0]]}`;
         category = `ac/${category}`;
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const queryString = convertToQueryString(category);
     const currentUrl = new URL(`newsclass.aspx${queryString}`, rootUrl).href;
@@ -92,7 +90,7 @@ async function handler(ctx) {
                 author: item.find('p.tname').text(),
                 guid: item.prop('data-id'),
                 pubDate: timezone(parseDate(item.find('p.ttime').text()), +8),
-                comments: item.find('a.tpinglun').text() ? Number.parseInt(item.find('a.tpinglun').text(), 10) : 0,
+                comments: item.find('a.tpinglun').text() ? Number(item.find('a.tpinglun').text()) : 0,
             };
         });
 

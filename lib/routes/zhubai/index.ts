@@ -21,7 +21,7 @@ export const route: Route = {
     maintainers: ['naixy28'],
     handler,
     description: `::: tip
-  在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，默认值为\`20\`
+在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，默认值为\`20\`
 :::`,
 };
 

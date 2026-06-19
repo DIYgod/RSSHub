@@ -56,7 +56,7 @@ export const route: Route = {
     name: '教務處公告',
     categories: ['university'],
     maintainers: ['simbafs'],
-    description: `|           名稱           | :id  |
+    description: `|           名稱           |  :id |
 | :----------------------: | :--: |
 |           全部           | 2652 |
 |          註冊組          | 2462 |

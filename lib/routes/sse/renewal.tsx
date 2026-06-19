@@ -38,7 +38,7 @@ export const route: Route = {
 
 async function handler() {
     const pageUrl = 'https://kcb.sse.com.cn/renewal/';
-    const host = `https://kcb.sse.com.cn`;
+    const host = 'https://kcb.sse.com.cn';
 
     const response = await got('https://query.sse.com.cn/statusAction.do', {
         searchParams: {

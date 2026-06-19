@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.kadokawa.com.tw';
     const currentUrl = new URL('blog/posts', rootUrl).href;
@@ -25,7 +25,7 @@ export const handler = async (ctx) => {
         .map((item) => {
             item = $(item);
 
-            const image = item.find('div.List-item-excerpt img').prop('src')?.split(/\?/)[0] ?? undefined;
+            const image = item.find('div.List-item-excerpt img').prop('src')?.split(/\?/, 1)[0] ?? undefined;
             const title = item.find('h2.List-item-title').text();
             const description = renderDescription({
                 images: image
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
                 const description = renderDescription({
                     description: $$('div.Post-content').html(),
                 });
-                const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/)[0] ?? undefined;
+                const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/, 1)[0] ?? undefined;
 
                 item.title = title;
                 item.description = description;

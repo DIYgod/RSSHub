@@ -28,13 +28,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? 10, 10);
+    const limit = Number(ctx.req.query('limit') ?? 10);
     const tag = ctx.req.param('tag');
     const tagInfo = await getTagInfo(tag);
     const items = await getPosts(limit, { tags: tagInfo.id });
 
     return {
-        title: `${tagInfo.title}`,
+        title: tagInfo.title,
         link: `${SUB_URL}/tag/${tag}/`,
         item: items,
     };

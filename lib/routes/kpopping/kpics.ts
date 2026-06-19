@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://kpopping.com';
     const targetUrl: string = new URL(`kpics${filter ? `/${filter}` : ''}`, baseUrl).href;
@@ -207,7 +207,6 @@ If you subscribe to [All male photo albums](https://kpopping.com/kpics/gender-ma
         },
         description: `::: tip
 若订阅 [All male photo albums](https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order)，网址为 \`https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order\`，请截取 \`https://kpopping.com/kpics/\` 到末尾的部分 \`gender-male/category-all/idol-any/group-any/order\` 作为 \`filter\` 参数填入，此时目标路由为 [\`/kpopping/kpics/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/kpics/gender-male/category-all/idol-any/group-any/order)。
-:::
-`,
+:::`,
     },
 };

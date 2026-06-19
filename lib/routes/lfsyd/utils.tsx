@@ -36,7 +36,7 @@ const ProcessFeed = async (cache, articleList) => {
     return items;
 };
 
-const ProcessForm = (form, type) => {
+const ProcessForm = (form, type?) => {
     const key = type ? '8a11ed3712b699e749185674f1dc20b4' : 'b8d5b38577b8bb382b0c783b474b95f9';
     form.key = key;
     form.timestamp = Math.floor(Date.now() / 1000);
@@ -46,7 +46,7 @@ const ProcessForm = (form, type) => {
 };
 
 const cleanHtml = (htmlString) => {
-    const regex = /(<p>|<div>)(.*?)?<strong>(标准|狂野)日报投稿.*?<\/strong>(.*?)?(<\/p>|<\/div>)(.|\n)*$/;
+    const regex = /(<p>|<div>)(.*?)<strong>(标准|狂野)日报投稿.*?<\/strong>(.*?)(<\/p>|<\/div>)(.|\n)*$/;
     const $ = load(htmlString.replace(regex, ''));
 
     $('.yingdi-car,.bbspost,.deck-set').each((i, e) => {

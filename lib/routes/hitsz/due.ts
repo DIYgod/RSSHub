@@ -134,7 +134,9 @@ export const route: Route = {
     description: `哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总。
 
 #### 栏目分组说明
+
 支持按业务类型筛选，使用路径参数指定分组：
+
 - \`type=teaching\` - 教务核心业务：教务管理、考务管理、注册管理、选课管理、成绩管理
 - \`type=studentStatus\` - 学籍相关：本科生学籍管理、研究生学籍管理
 - \`type=teachingSupport\` - 教学支持：教学信息化、奖助学金
@@ -142,6 +144,7 @@ export const route: Route = {
 - \`type=all\` 或省略 - 所有栏目（默认）
 
 #### 包含栏目：
+
 - [教务管理](http://due.hitsz.edu.cn/jwxw/jwgl.htm)
 - [考务管理](http://due.hitsz.edu.cn/jwxw/kwgl.htm)
 - [注册管理](http://due.hitsz.edu.cn/jwxw/zcgl.htm)

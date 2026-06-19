@@ -58,9 +58,8 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let response;
                 try {
-                    response = await got(item.link);
+                    const response = await got(item.link);
                     const $ = load(response.data);
 
                     const authorMatch = $('.zzxx')

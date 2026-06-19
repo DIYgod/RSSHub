@@ -20,7 +20,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'ieee-security.org/TC/SP-Index.html',
-    description: `Return results from 2020`,
+    description: 'Return results from 2020',
 };
 
 async function handler() {
@@ -38,7 +38,7 @@ async function handler() {
                 const link = urlList[i];
                 return {
                     title,
-                    author: item.html().trim().split('<br>')[1].trim(),
+                    author: item.html().trim().split('<br>', 2)[1].trim(),
                     link: `${link}#${title}`,
                     pubDate: parseDate(link.match(/SP(\d{4})/)[1], 'YYYY'),
                 };

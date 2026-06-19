@@ -48,12 +48,13 @@ const getItemDetail = async (item, rootUrl) => {
         // Missing the `src` properties for the images.
         // The `src` property should be replaced with the value of `orisrc` to show the image.
         // Replace images in the content with custom JSX template.
-        content('p.vsbcontent_img').each(function () {
-            const image = content(this).find('img');
-            content(this).replaceWith(
+        content('p.vsbcontent_img').each((_, el) => {
+            const image = content(el).find('img');
+            const imageSrc = new URL(image.prop('orisrc'), rootUrl).href;
+            content(el).replaceWith(
                 renderDescription({
                     image: {
-                        src: new URL(image.prop('orisrc'), rootUrl).href,
+                        src: imageSrc,
                         width: image.prop('width'),
                     },
                 })
@@ -63,12 +64,13 @@ const getItemDetail = async (item, rootUrl) => {
         // Missing the `src` properties for the videos.
         // The `src` property should be replaced with the value of `vurl` to play the video.
         // Replace videos in the content with custom JSX template.
-        content('script[name="_videourl"]').each(function () {
-            const video = content(this);
+        content('script[name="_videourl"]').each((_, el) => {
+            const video = content(el);
+            const videoSrc = new URL(video.prop('vurl').split('?', 1)[0], rootUrl).href;
             video.replaceWith(
                 renderDescription({
                     video: {
-                        src: new URL(video.prop('vurl').split('?')[0], rootUrl).href,
+                        src: videoSrc,
                         width: content(video).prop('vwidth'),
                         height: content(video).prop('vheight'),
                     },

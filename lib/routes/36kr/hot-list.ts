@@ -64,7 +64,7 @@ const getProperty = (object, key) => {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '24';
 
-    if (!categories[category]) {
+    if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError('This category does not exist. Please refer to the documentation for the correct usage.');
     }
 
@@ -79,7 +79,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = getProperty(JSON.parse(response.data.match(/window.initialState=({.*})/)[1]), categories[category].key);
+    const data = getProperty(JSON.parse(response.data.match(/window.initialState=(\{.*\})/)[1]), categories[category].key);
 
     let items = data
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)

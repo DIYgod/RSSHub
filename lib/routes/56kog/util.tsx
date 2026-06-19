@@ -46,7 +46,7 @@ const fetchItems = async (limit, currentUrl, tryGet) => {
                             const as = detail.find('a');
 
                             return {
-                                label: detail.find('span.c-l-depths').text().split(/：/)[0],
+                                label: detail.find('span.c-l-depths').text().split(/：/, 1)[0],
                                 value:
                                     as.length === 0
                                         ? content(
@@ -121,7 +121,7 @@ const renderDescription = ({ images, details }: { images?: Array<{ src?: string;
                         {details.map((detail, index) => (
                             <tr key={`${detail.label}-${index}`}>
                                 <th>{detail.label}</th>
-                                <td>{detail.value?.href && detail.value?.text ? <a href={detail.value.href}>{detail.value.text}</a> : detail.value}</td>
+                                <td>{detail.value?.href && detail.value.text ? <a href={detail.value.href}>{detail.value.text}</a> : detail.value}</td>
                             </tr>
                         ))}
                     </tbody>

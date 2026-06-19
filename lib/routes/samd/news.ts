@@ -22,8 +22,8 @@ export const route: Route = {
         supportScihub: false,
     },
     description: `| 行业资讯 | 协会动态 | 重要通知 | 政策法规 |
-| --- | --- | --- | --- |
-| 434 | 436 | 438 | 440 |`,
+| -------- | -------- | -------- | -------- |
+| 434      | 436      | 438      | 440      |`,
     name: '资讯信息',
     maintainers: ['hualiong'],
     handler: async (ctx) => {

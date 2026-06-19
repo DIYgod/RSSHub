@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  全部主题词见 [此处](https://www.yicai.com/feed/alltheme)
+全部主题词见 [此处](https://www.yicai.com/feed/alltheme)
 :::`,
 };
 

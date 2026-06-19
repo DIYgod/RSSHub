@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const locale = ctx.req.param('locale');
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
+    const limit = Number(ctx.req.query('limit') ?? '100');
 
     const baseUrl = 'https://cursor.com';
     const localeSegment = locale ? `/${locale}` : '';

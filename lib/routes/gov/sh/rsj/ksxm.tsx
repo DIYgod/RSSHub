@@ -21,7 +21,7 @@ const renderDescription = ({ name, type, date, registrationDeadline }) =>
     );
 
 export const route: Route = {
-    path: ['/sh/rsj/ksxm', '/shanghai/rsj/ksxm'],
+    path: '/rsj/ksxm',
     categories: ['government'],
     example: '/gov/sh/rsj/ksxm',
     parameters: {},
@@ -38,7 +38,7 @@ export const route: Route = {
             source: ['rsj.sh.gov.cn/'],
         },
     ],
-    name: '上海市职业能力考试院 考试项目',
+    name: '职业能力考试院 考试项目',
     maintainers: ['Fatpandac'],
     handler,
     url: 'rsj.sh.gov.cn/',
@@ -59,7 +59,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('kaosxmmc').text(),
-            link: `http://www.rsj.sh.gov.cn/ksyzc/index801.jsp`,
+            link: 'http://www.rsj.sh.gov.cn/ksyzc/index801.jsp',
             description: renderDescription({
                 name: $(item).find('kaosxmmc').text(),
                 type: $(item).find('kaoslb_dmfy').text(),

@@ -45,7 +45,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type, id, locale = 'zh-CN' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const searchParams = {
         locale,
@@ -95,7 +95,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: `${$('title').text().split(/-/)[0].trim()} - ${subtitle}`,
+        title: `${$('title').text().split(/-/, 1)[0].trim()} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang'),

@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'tzgg' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const limit = Number(ctx.req.query('limit') ?? '10');
 
     const baseUrl = 'https://hitgs.hit.edu.cn';
     const targetUrl: string = new URL(`${id}/list.htm`, baseUrl).href;
@@ -180,19 +180,18 @@ export const route: Route = {
 <details>
   <summary>更多栏目</summary>
 
-| 栏目 | ID |
-| - | - |
-| [通知公告](https://hitgs.hit.edu.cn/tzgg/list.htm) | [tzgg](https://rsshub.app/hit/hitgs/tzgg) |
-| [综合新闻](https://hitgs.hit.edu.cn/zhxw/list.htm) | [zhxw](https://rsshub.app/hit/hitgs/zhxw) |
+| 栏目                                                                 | ID                                                    |
+| -------------------------------------------------------------------- | ----------------------------------------------------- |
+| [通知公告](https://hitgs.hit.edu.cn/tzgg/list.htm)                   | [tzgg](https://rsshub.app/hit/hitgs/tzgg)             |
+| [综合新闻](https://hitgs.hit.edu.cn/zhxw/list.htm)                   | [zhxw](https://rsshub.app/hit/hitgs/zhxw)             |
 | [高水平课程与学术交流](https://hitgs.hit.edu.cn/gspkcyxsjl/list.htm) | [gspkcyxsjl](https://rsshub.app/hit/hitgs/gspkcyxsjl) |
-| [国家政策](https://hitgs.hit.edu.cn/gjzc/list.htm) | [gjzc](https://rsshub.app/hit/hitgs/gjzc) |
-| [规章制度](https://hitgs.hit.edu.cn/17546/list.htm) | [17546](https://rsshub.app/hit/hitgs/17546) |
-| [办事流程](https://hitgs.hit.edu.cn/17547/list.htm) | [17547](https://rsshub.app/hit/hitgs/17547) |
-| [常见问题](https://hitgs.hit.edu.cn/17548/list.htm) | [17548](https://rsshub.app/hit/hitgs/17548) |
-| [常见下载](https://hitgs.hit.edu.cn/17549/list.htm) | [17549](https://rsshub.app/hit/hitgs/17549) |
+| [国家政策](https://hitgs.hit.edu.cn/gjzc/list.htm)                   | [gjzc](https://rsshub.app/hit/hitgs/gjzc)             |
+| [规章制度](https://hitgs.hit.edu.cn/17546/list.htm)                  | [17546](https://rsshub.app/hit/hitgs/17546)           |
+| [办事流程](https://hitgs.hit.edu.cn/17547/list.htm)                  | [17547](https://rsshub.app/hit/hitgs/17547)           |
+| [常见问题](https://hitgs.hit.edu.cn/17548/list.htm)                  | [17548](https://rsshub.app/hit/hitgs/17548)           |
+| [常见下载](https://hitgs.hit.edu.cn/17549/list.htm)                  | [17549](https://rsshub.app/hit/hitgs/17549)           |
 
-</details>
-`,
+</details>`,
     categories: ['university'],
     features: {
         requireConfig: false,

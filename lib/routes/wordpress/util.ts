@@ -98,7 +98,7 @@ const bakeFiltersWithPair = async (filters: Record<string, string[]>, rootUrl: s
         const filter = await getFilterByKeyAndKeyword(key, keyword, rootUrl);
 
         return [
-            ...(filter?.id && filter?.slug
+            ...(filter?.id && filter.slug
                 ? [
                       {
                           id: filter.id,

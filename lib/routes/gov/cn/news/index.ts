@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/cn/news/:uid',
+    path: '/news/:uid',
     categories: ['government'],
     example: '/gov/cn/news/bm',
     parameters: { uid: '分类名' },
@@ -88,13 +88,13 @@ async function handler(ctx) {
                     let pubDate;
                     let author;
                     let category;
-                    if (/dysMiddleResultConItemTitle/g.test(item.html())) {
+                    if (/dysMiddleResultConItemTitle/.test(item.html())) {
                         if (contentUrl.includes('content')) {
                             fullTextGet = await got.get(contentUrl);
                             fullTextData = load(fullTextGet.data);
                             fullTextData('.shuzi').remove(); // 移除videobg的图片
                             fullTextData('#myFlash').remove(); // 移除flash
-                            description = /pages_content/g.test(fullTextData.html()) ? fullTextData('.pages_content').html() : fullTextData('#UCAP-CONTENT').html();
+                            description = /pages_content/.test(fullTextData.html()) ? fullTextData('.pages_content').html() : fullTextData('#UCAP-CONTENT').html();
                         } else {
                             description = item.find('a').text(); // 忽略获取吹风会的全文
                         }
@@ -105,13 +105,13 @@ async function handler(ctx) {
                         pubDate = timezone(parseDate(fullTextData('meta[name="firstpublishedtime"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);
                         author = fullTextData('meta[name="author"]').attr('content');
                         category = fullTextData('meta[name="keywords"]').attr('content').split(/[,;]/);
-                        if (/zhengceku/g.test(contentUrl)) {
+                        if (/zhengceku/.test(contentUrl)) {
                             // 政策文件库
                             description = fullTextData('.pages_content').html();
                         } else {
                             fullTextData('.shuzi').remove(); // 移除videobg的图片
                             fullTextData('#myFlash').remove(); // 移除flash
-                            description = /UCAP-CONTENT/g.test($1) ? fullTextData('#UCAP-CONTENT').html() : fullTextData('body').html();
+                            description = /UCAP-CONTENT/.test($1) ? fullTextData('#UCAP-CONTENT').html() : fullTextData('body').html();
                         }
                     } else {
                         description = item.find('a').text(); // 忽略获取吹风会的全文

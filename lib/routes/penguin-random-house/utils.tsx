@@ -45,13 +45,11 @@ const parsePubDate = (data) => {
 const parseBooks = (element) => {
     const $ = load(element);
     const description = $('h2.read-down-text').first().html();
-    let mainBlock = '';
 
-    $('.awesome-list>li').map((i, element) => {
-        const appending = parseBookInList(element);
-        mainBlock += appending;
-        return appending;
-    });
+    const mainBlock = $('.awesome-list>li')
+        .toArray()
+        .map((element) => parseBookInList(element))
+        .join('');
 
     return {
         description,
@@ -65,15 +63,12 @@ const parseArticle = (element) => {
     const description = $('h2.hdr-smalltxt').first().html();
     const imageSrc = $('div.img-block>img').first().attr('src');
     const imageAlt = $('div.img-block>img').first().attr('alt');
-    let mainBlock = '';
-
     const descriptionBlock = renderArticleHeader(imageSrc, imageAlt, description);
 
-    $('div.main-content>p,div.main-content>ul').map((i, element) => {
-        const appending = load(element);
-        mainBlock += appending.html();
-        return appending;
-    });
+    const mainBlock = $('div.main-content>p,div.main-content>ul')
+        .toArray()
+        .map((element) => load(element).html())
+        .join('');
 
     return {
         description: descriptionBlock,

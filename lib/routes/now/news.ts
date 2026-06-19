@@ -44,9 +44,9 @@ export const route: Route = {
     handler,
     url: 'news.now.com/',
     description: `::: tip
-  **编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
+**编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
 
-  对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为 \`https://news.now.com/home/tracker/detail?catCode=123&topicId=1056\`，其中 \`topicId\` 为 1056，则对应路由为 [\`/now/news/tracker/1056\`](https://rsshub.app/now/news/tracker/1056)
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123\\&topicId=1056) 话题，其网址为 \`https://news.now.com/home/tracker/detail?catCode=123&topicId=1056\`，其中 \`topicId\` 为 1056，则对应路由为 [\`/now/news/tracker/1056\`](https://rsshub.app/now/news/tracker/1056)
 :::
 
 | 首頁 | 港聞  | 兩岸國際      | 娛樂          |
@@ -64,7 +64,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '', id = '' } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') || '20', 10);
+    const limit = Number(ctx.req.query('limit') || '20');
     const hasTopicId = id && Object.hasOwn(categories, category);
 
     const rootUrl = 'https://news.now.com';

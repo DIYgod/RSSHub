@@ -23,14 +23,16 @@ export const route: Route = {
     maintainers: ['DIYgod', 'pseudoyu'],
     handler,
     description: `::: tip Parameter
-| Name       | Description                                                                         | Default |
-| ---------- | ----------------------------------------------------------------------------------- | ------- |
-| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
+
+| Name         | Description                                                                        | Default |
+| ------------ | ---------------------------------------------------------------------------------- | ------- |
+| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |
 | filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
+
 :::
 
 ::: tip
-YouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).
+YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.
 :::`,
     features: {
         requireConfig: [
@@ -60,10 +62,10 @@ async function handler(ctx) {
 
     // Get filterShorts parameter (default to true if not specified)
     const filterShortsStr = params.get('filterShorts');
-    const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
+    const filterShorts = [null, '', 'true'].includes(filterShortsStr);
 
     if (!utils.isYouTubeChannelId(id)) {
-        throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
+        throw new InvalidParameterError('Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.');
     }
 
     const isJsonFeed = ctx.req.query('format') === 'json';

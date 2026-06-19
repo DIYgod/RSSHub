@@ -39,7 +39,7 @@ const getAritlces = async (category, url, cache) => {
 };
 
 const getItemsFromURLs = async (URLs, cache) => {
-    let items = Object.keys(URLs).map((key) => getAritlces(key, URLs[key], cache));
+    let items = Object.entries(URLs).map(([key, value]) => getAritlces(key, value, cache));
     items = await Promise.all(items);
     items = items.flat();
     return items;

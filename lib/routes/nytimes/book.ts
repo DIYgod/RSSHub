@@ -26,9 +26,9 @@ export const route: Route = {
     parameters: {
         category: {
             description: 'Category, can be found on the [official page](https://www.nytimes.com/books/best-sellers/)',
-            options: Object.keys(categoryList).map((key) => ({
+            options: Object.entries(categoryList).map(([key, value]) => ({
                 value: key,
-                label: categoryList[key],
+                label: value,
             })),
             default: 'combined-print-and-e-book-nonfiction',
         },
@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     let items = [];
     let dataTitle = '';
-    if (categoryList[category]) {
+    if (Object.hasOwn(categoryList, category)) {
         const response = await got({
             method: 'get',
             url,

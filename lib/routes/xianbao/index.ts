@@ -10,8 +10,7 @@ export const route: Route = {
     handler,
     example: '/xianbao',
     parameters: { category: '类别id，默认为：latest' },
-    description: `
-| 分类         | id             |
+    description: `| 分类         | id             |
 | ------------ | -------------- |
 | 最新         | latest         |
 | 赚客吧       | zuankeba       |
@@ -26,8 +25,8 @@ export const route: Route = {
 | 小嘀咕       | xiaodigu       |
 | 葫芦侠       | huluxia        |
 | 小刀娱乐网   | xiadao         |
-| 技术QQ网     | qqjishu        |
-| YYOK大全     | yyok           |
+| 技术 QQ 网   | qqjishu        |
+| YYOK 大全    | yyok           |
 | 活动资讯网   | huodong        |
 | 免费赚钱中心 | mianfei        |
 | 一小时       | yixiaoshi      |

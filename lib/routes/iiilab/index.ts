@@ -22,8 +22,8 @@ async function handler() {
     return await buildData({
         link,
         url: link,
-        title: `%title%`,
-        description: `%description%`,
+        title: '%title%',
+        description: '%description%',
         params: {
             title: '发现',
             description: '人人都是自媒体-发现',

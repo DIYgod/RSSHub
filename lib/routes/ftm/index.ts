@@ -30,7 +30,7 @@ async function handler(ctx) {
     const list = $('.article-card')
         .toArray()
         .map((e) => ({ link: $(e).attr('href'), title: $(e).find('h2').text() }))
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : Infinity);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : Infinity);
 
     const items = await Promise.all(
         list.map((item) =>

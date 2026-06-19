@@ -103,7 +103,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     let { category = '0' } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? 30, 10);
+    const limit = Number(ctx.req.query('limit') ?? 30);
 
     switch (category) {
         case 'all':

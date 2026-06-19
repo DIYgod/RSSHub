@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'newslists', id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://info.10000link.com';
     const targetUrl: string = new URL(`${category}.aspx${id ? `?chid=${id}` : ''}`, baseUrl).href;
@@ -214,8 +214,7 @@ export const route: Route = {
 
 | 政策          | 规划          | 案例           | 职场         | 供应链票据 |
 | ------------- | ------------- | -------------- | ------------ | ---------- |
-| newslists/A03 | newslists/A04 | newslists/GL03 | newslists/ZC | newsBill   |
-`,
+| newslists/A03 | newslists/A04 | newslists/GL03 | newslists/ZC | newsBill   |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

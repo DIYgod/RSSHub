@@ -102,18 +102,22 @@ const getPostContent = async (row, default_gid = '2') => {
     });
 };
 
-const getPostContents = (list, default_gid = '2') =>
-    Promise.all(
-        list.map((item) =>
-            getPostContent(item, default_gid).catch((error) => {
+const getPostContents = async (list, default_gid = '2') => {
+    const items = await Promise.all(
+        list.map((item) => {
+            try {
+                return getPostContent(item, default_gid);
+            } catch (error) {
                 if (error instanceof MiHoYoOfficialError) {
                     logger.error(error.message);
                     return null; // skip it now and pray that it will be available next time
                 }
                 throw error;
-            })
-        )
-    ).then((items) => items.filter(Boolean));
+            }
+        })
+    );
+    return items.filter(Boolean);
+};
 
 export const route: Route = {
     path: '/bbs/official/:gids/:type?/:page_size?/:last_id?',
@@ -137,7 +141,7 @@ export const route: Route = {
 | ------ | ---- | ------ | ---------- | -------- | ------ |
 | 1      | 2    | 3      | 4          | 6        | 8      |
 
-  公告类型
+公告类型
 
 | 公告 | 活动 | 资讯 |
 | ---- | ---- | ---- |

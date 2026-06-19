@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www3.nhk.or.jp';
@@ -64,25 +64,26 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { lang = 'en' } = ctx.req.param();
-    const { data } = await got(`${apiUrl}/nwapi/rdnewsweb/v7b/${lang}/outline/list.json`);
-    const meta = await got(`${baseUrl}/nhkworld/common/assets/news/config/${lang}.json`);
+    const data = await ofetch(`${apiUrl}/nwapi/rdnewsweb/v7b/${lang}/outline/list.json`);
+    const meta = await ofetch(`${baseUrl}/nhkworld/common/assets/news/config/${lang}.json`);
 
     let items = data.data.map((item) => ({
         title: item.title,
         description: item.description,
         link: `${baseUrl}${item.page_url}`,
-        pubDate: parseDate(item.updated_at, 'x'),
+        pubDate: parseDate(item.public_at, 'x'),
+        updated: parseDate(item.updated_at, 'x'),
+        category: item.categories.name,
         id: item.id,
     }));
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data } = await got(`${apiUrl}/nwapi/rdnewsweb/v6b/${lang}/detail/${item.id}.json`);
-                item.category = Object.values(data.data.categories);
-                const img = data.data.thumbnails;
+                const { data } = await ofetch(`${apiUrl}/nwapi/rdnewsweb/v6b/${lang}/detail/${item.id}.json`);
+                const img = data.thumbnails;
                 const imageSrc = img?.large || img?.middle || img?.small || img?.min;
-                const description = data.data.detail.replaceAll('\n\n', '<br><br>');
+                const description = data.detail.replaceAll('\n', '<br>');
                 item.description = renderToString(
                     <>
                         {imageSrc ? (
@@ -101,7 +102,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${Object.values(meta.data.config.navigation.header).find((h) => h.keyname === 'topstories')?.name} | NHK WORLD-JAPAN News`,
+        title: `${Object.values(meta.config.navigation.header).find((h) => h.keyname === 'topstories')?.name} | NHK WORLD-JAPAN News`,
         link: `${baseUrl}/nhkworld/${lang}/news/list/`,
         item: items,
     };

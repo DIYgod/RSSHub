@@ -29,7 +29,7 @@ const renderDescription = (images?: DescriptionImage[]) =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '0', sort = 'latest' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://koyso.to';
     const targetUrl: string = new URL(`?${category === '0' ? '' : `category=${category}&`}sort=${sort}`, baseUrl).href;
@@ -217,7 +217,7 @@ export const route: Route = {
         },
     },
     description: `::: tip
-订阅 [最新动作游戏](https://koyso.to/?category=3&sort=latest)，其源网址为 \`https://koyso.to/?category=3&sort=latest\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/koyso/3/latest\`](https://koyso.to/?category=3&sort=latest)。
+订阅 [最新动作游戏](https://koyso.to/?category=3\\&sort=latest)，其源网址为 \`https://koyso.to/?category=3&sort=latest\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/koyso/3/latest\`](https://koyso.to/?category=3\\&sort=latest)。
 :::
 
 #### 分类
@@ -246,8 +246,7 @@ export const route: Route = {
 | 排序                                  | ID                                          |
 | ------------------------------------- | ------------------------------------------- |
 | [热度](https://koyso.to/?sort=views)  | [views](https://rsshub.app/koyso/0/views)   |
-| [最新](https://koyso.to/?sort=latest) | [latest](https://rsshub.app/koyso/0/latest) |
-`,
+| [最新](https://koyso.to/?sort=latest) | [latest](https://rsshub.app/koyso/0/latest) |`,
     categories: ['game'],
     features: {
         requireConfig: false,

@@ -61,7 +61,7 @@ async function handler(ctx) {
                     .find(String.raw`news\:publication_date`)
                     .text()
             );
-            const lastmod = timezone(parseDate($(e).find(`lastmod`).text()), -4);
+            const lastmod = timezone(parseDate($(e).find('lastmod').text()), -4);
             const language = LANGUAGE_MAP.get(
                 $(e)
                     .find(String.raw`news\:language`)
@@ -84,7 +84,7 @@ async function handler(ctx) {
         })
         .filter((e) => Boolean(e.link) && !new URL(e.link).pathname.split('/').includes('hub'))
         .toSorted((a, b) => (a.pubDate && b.pubDate ? b.pubDate - a.pubDate : b.lastmod - a.lastmod))
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 20 }) : list;
 

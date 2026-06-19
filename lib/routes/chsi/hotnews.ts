@@ -67,7 +67,7 @@ async function handler() {
     );
 
     return {
-        title: `中国研究生招生信息网 - 热点`,
+        title: '中国研究生招生信息网 - 热点',
         link: host,
         description: '中国研究生招生信息网 - 热点',
         item: items,

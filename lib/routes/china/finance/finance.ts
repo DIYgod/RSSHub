@@ -42,9 +42,9 @@ export const route: Route = {
 | ------- | --- | ------- | ------ | ------- | ----- | ---- | -------- |
 | tuijian | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO      |
 
-  > Note: The default news num is \`30\`.
+> Note: The default news num is \`30\`.
 
-  > 注意：默认新闻条数是 \`30\`。`,
+> 注意：默认新闻条数是 \`30\`。`,
 };
 
 async function handler(ctx) {
@@ -56,7 +56,7 @@ async function handler(ctx) {
     const $ = load(data);
     const categoryTitle = $('.list-hd strong').text();
     const listCategory = `中华网-财经-${categoryTitle}新闻`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
     const detailsUrls = $('.item-con-inner')
         .toArray()
         .map((item) => {

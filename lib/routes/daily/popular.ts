@@ -3,124 +3,110 @@ import { ViewType } from '@/types';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
 
-const query = `
-  query AnonymousFeed(
-    $loggedIn: Boolean! = false
-    $first: Int
-    $after: String
-    $ranking: Ranking
-    $version: Int
-    $supportedTypes: [String!] = ["article","share","freeform","video:youtube","collection"]
-  ) {
-    page: anonymousFeed(
-      first: $first
-      after: $after
-      ranking: $ranking
-      version: $version
-      supportedTypes: $supportedTypes
-    ) {
-      ...FeedPostConnection
+const query = /* GraphQL */ `
+    query AnonymousFeed($loggedIn: Boolean! = false, $first: Int, $after: String, $ranking: Ranking, $version: Int, $supportedTypes: [String!] = ["article", "share", "freeform", "video:youtube", "collection"]) {
+        page: anonymousFeed(first: $first, after: $after, ranking: $ranking, version: $version, supportedTypes: $supportedTypes) {
+            ...FeedPostConnection
+        }
     }
-  }
-  
-  fragment FeedPostConnection on PostConnection {
-    pageInfo {
-      hasNextPage
-      endCursor
+
+    fragment FeedPostConnection on PostConnection {
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+        edges {
+            node {
+                ...FeedPost
+                contentHtml
+                ...UserPost @include(if: $loggedIn)
+            }
+        }
     }
-    edges {
-      node {
-        ...FeedPost
-        contentHtml
-        ...UserPost @include(if: $loggedIn)
-      }
+
+    fragment FeedPost on Post {
+        ...FeedPostInfo
+        sharedPost {
+            id
+            title
+            image
+            readTime
+            permalink
+            commentsPermalink
+            createdAt
+            type
+            tags
+            source {
+                id
+                handle
+                permalink
+                image
+            }
+            slug
+            clickbaitTitleDetected
+        }
+        trending
+        feedMeta
+        collectionSources {
+            handle
+            image
+        }
+        numCollectionSources
+        updatedAt
+        slug
     }
-  }
-  
-  fragment FeedPost on Post {
-    ...FeedPostInfo
-    sharedPost {
-      id
-      title
-      image
-      readTime
-      permalink
-      commentsPermalink
-      createdAt
-      type
-      tags
-      source {
+
+    fragment FeedPostInfo on Post {
         id
-        handle
-        permalink
+        title
         image
-      }
-      slug
-      clickbaitTitleDetected
+        readTime
+        permalink
+        commentsPermalink
+        createdAt
+        commented
+        bookmarked
+        views
+        numUpvotes
+        numComments
+        summary
+        bookmark {
+            remindAt
+        }
+        author {
+            id
+            name
+            image
+            username
+            permalink
+        }
+        type
+        tags
+        source {
+            id
+            handle
+            name
+            permalink
+            image
+            type
+        }
+        userState {
+            vote
+            flags {
+                feedbackDismiss
+            }
+        }
+        slug
+        clickbaitTitleDetected
     }
-    trending
-    feedMeta
-    collectionSources {
-      handle
-      image
+
+    fragment UserPost on Post {
+        read
+        upvoted
+        commented
+        bookmarked
+        downvoted
     }
-    numCollectionSources
-    updatedAt
-    slug
-  }
-  
-  
-  fragment FeedPostInfo on Post {
-    id
-    title
-    image
-    readTime
-    permalink
-    commentsPermalink
-    createdAt
-    commented
-    bookmarked
-    views
-    numUpvotes
-    numComments
-    summary
-    bookmark {
-      remindAt
-    }
-    author {
-      id
-      name
-      image
-      username
-      permalink
-    }
-    type
-    tags
-    source {
-      id
-      handle
-      name
-      permalink
-      image
-      type
-    }
-    userState {
-      vote
-      flags {
-        feedbackDismiss
-      }
-    }
-    slug
-    clickbaitTitleDetected
-  }
-  
-  fragment UserPost on Post {
-    read
-    upvoted
-    commented
-    bookmarked
-    downvoted
-  }
 `;
 
 export const route: Route = {
@@ -158,7 +144,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const link = `${baseUrl}/posts`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
     const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
 

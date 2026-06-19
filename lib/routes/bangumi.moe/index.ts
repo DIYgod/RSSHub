@@ -1,30 +1,33 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/*',
+    path: '/:tags{.+}?',
     categories: ['anime'],
+    example: '/bangumi.moe',
+    parameters: {
+        tags: 'Tags, empty by default, multiple tags separated by `/`',
+    },
     radar: [
         {
             source: ['bangumi.moe/'],
         },
     ],
     name: 'Latest',
-    example: '/bangumi.moe',
     maintainers: ['nczitzk'],
     handler,
     url: 'bangumi.moe/',
 };
 
 async function handler(ctx) {
-    const isLatest = getSubPath(ctx) === '/';
+    const { tags } = ctx.req.param();
+    const isLatest = !tags;
     const rootUrl = 'https://bangumi.moe';
 
     let response;
-    let tag_id = [];
+    let searchLink = rootUrl;
 
     if (isLatest) {
         const apiUrl = `${rootUrl}/api/torrent/latest`;
@@ -34,28 +37,10 @@ async function handler(ctx) {
             url: apiUrl,
         });
     } else {
-        const tagUrl = `${rootUrl}/api/tag/search`;
         const torrentUrl = `${rootUrl}/api/torrent/search`;
 
-        const params = getSubPath(ctx).split('/').slice(2);
-
-        tag_id = await Promise.all(
-            params.map((param) =>
-                cache.tryGet(param, async () => {
-                    const paramResponse = await got({
-                        method: 'post',
-                        url: tagUrl,
-                        json: {
-                            name: decodeURIComponent(param),
-                            keywords: true,
-                            multi: true,
-                        },
-                    });
-
-                    return paramResponse.data.found ? paramResponse.data.tag.map((tag) => tag._id)[0] : '';
-                })
-            )
-        );
+        const tag_id = await searchTagIds(tags, rootUrl);
+        searchLink = `${rootUrl}/search/${tag_id.join('+')}`;
 
         response = await got({
             method: 'post',
@@ -103,8 +88,32 @@ async function handler(ctx) {
 
     return {
         title: '萌番组 Bangumi Moe',
-        link: isLatest || items.length === 0 ? rootUrl : `${rootUrl}/search/${tag_id.join('+')}`,
+        link: isLatest || items.length === 0 ? rootUrl : searchLink,
         item: items,
         allowEmpty: true,
     };
+}
+
+async function searchTagIds(tags, rootUrl): Promise<string[]> {
+    const tagUrl = `${rootUrl}/api/tag/search`;
+
+    const tagIds = await Promise.all(
+        tags.split('/').map((param) =>
+            cache.tryGet(`bangumi.moe:tag:${param}`, async () => {
+                const paramResponse = await got({
+                    method: 'post',
+                    url: tagUrl,
+                    json: {
+                        name: decodeURIComponent(param),
+                        keywords: true,
+                        multi: true,
+                    },
+                });
+
+                return paramResponse.data.found ? (paramResponse.data.tag.map((tag) => tag._id)[0] as string) : '';
+            })
+        )
+    );
+
+    return tagIds.toSorted((a, b) => a.localeCompare(b));
 }

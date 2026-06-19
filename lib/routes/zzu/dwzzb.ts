@@ -23,8 +23,8 @@ export const route: Route = {
     maintainers: ['amandus1990'],
     handler,
     description: `| 党建工作 | 干部工作 | 人才工作 | 乡村振兴工作 |
-| -------- | -------- | -------- | -------- |
-| djgz     | gbgz     | rcgz     | fpgz     |`,
+| -------- | -------- | -------- | ------------ |
+| djgz     | gbgz     | rcgz     | fpgz         |`,
 };
 
 async function handler(ctx) {

@@ -27,7 +27,7 @@ export const route: Route = {
     name: 'Latest Magazine',
     maintainers: ['EthanWng97'],
     handler,
-    description: `For instance, when doing search at [https://magazinelib.com](https://magazinelib.com) and you get url \`https://magazinelib.com/?s=new+yorker\`, the query is \`new+yorker\``,
+    description: 'For instance, when doing search at <https://magazinelib.com> and you get url `https://magazinelib.com/?s=new+yorker`, the query is `new+yorker`',
 };
 
 async function handler(ctx) {
@@ -42,12 +42,12 @@ async function handler(ctx) {
             _embed: 1,
         },
     });
-    let subTitle = query;
-    if (subTitle === undefined) {
-        subTitle = '';
+    let subtitle = query;
+    if (subtitle === undefined) {
+        subtitle = '';
     } else {
-        subTitle = subTitle.replaceAll(/[^\dA-Za-z]+/g, ' ').toUpperCase();
-        subTitle = ` - ${subTitle}`;
+        subtitle = subtitle.replaceAll(/[^\dA-Z]+/gi, ' ').toUpperCase();
+        subtitle = ` - ${subtitle}`;
     }
 
     const items = response.data.map((obj) => {
@@ -68,9 +68,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: `MagazineLib - Latest Magazines${subTitle}`,
-        link: `{host}/?s=${query}`,
-        description: `MagazineLib - Latest Magazines${subTitle}`,
+        title: `MagazineLib - Latest Magazines${subtitle}`,
+        link: `${host}/?s=${query}`,
+        description: `MagazineLib - Latest Magazines${subtitle}`,
         item: items.map((item) => ({
             title: item.title,
             link: item.link,

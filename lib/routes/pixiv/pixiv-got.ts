@@ -19,9 +19,8 @@ async function dohResolve(name, jsonDohEndpoint) {
         });
         if (response.data.Status === 0) {
             return response.data.Answer.map((item) => item.data);
-        } else {
-            logger.error(`Error ${response.data.Status} when querying DoH endpoint ${jsonDohEndpoint}`);
         }
+        logger.error(`Error ${response.data.Status} when querying DoH endpoint ${jsonDohEndpoint}`);
     } catch (error) {
         logger.error(`Failed to resolve ${name}`);
         logger.debug(error);

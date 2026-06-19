@@ -88,7 +88,7 @@ async function handler(ctx) {
         }
 
         return {
-            title: content.split('\n')[0] || '无标题',
+            title: content.split('\n', 1)[0] || '无标题',
             link: `https://www.codefather.cn/post/${item.id}`,
             description,
             pubDate: parseDate(item.createTime as number),

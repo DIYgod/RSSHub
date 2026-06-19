@@ -105,7 +105,7 @@ interface Blog {
 
 async function handler(ctx) {
     const { uid } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? 10, 10);
+    const limit = Number(ctx.req.query('limit') ?? 10);
     const isNumericId = /^\d+$/.test(uid);
     let userId = uid;
 

@@ -13,7 +13,7 @@ import { renderDescription } from './templates/security-releases';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = 'en-us' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://support.apple.com';
     const targetUrl: string = new URL(`${language}/100100`, baseUrl).href;
@@ -134,8 +134,7 @@ export const route: Route = {
     },
     description: `::: tip
 To subscribe to [Apple security releases](https://support.apple.com/en-us/100100), where the source URL is \`https://support.apple.com/en-us/100100\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/apple/security-releases/en-us\`](https://rsshub.app/apple/security-releases/en-us).
-:::
-`,
+:::`,
     categories: ['program-update'],
     features: {
         requireConfig: false,
@@ -172,7 +171,6 @@ To subscribe to [Apple security releases](https://support.apple.com/en-us/100100
         },
         description: `::: tip
 若订阅 [Apple 安全性发布](https://support.apple.com/zh-cn/100100)，网址为 \`https://support.apple.com/zh-cn/100100\`，请截取 \`https://support.apple.com/\` 到末尾 \`/100100\` 的部分 \`zh-cn\` 作为 \`language\` 参数填入，此时目标路由为 [\`/apple/security-releases/zh-cn\`](https://rsshub.app/apple/security-releases/zh-cn)。
-:::
-`,
+:::`,
     },
 };

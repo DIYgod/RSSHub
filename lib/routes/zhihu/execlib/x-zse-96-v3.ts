@@ -1,9 +1,9 @@
-/* eslint-disable unicorn/prefer-code-point */
+// oxlint-disable unicorn/prefer-code-point unicorn/prefer-single-call unicorn-js/prefer-array-from-map unicorn/prefer-spread
 // Credit:
 // https://blog.csdn.net/zjq592767809/article/details/126512798
 // https://blog.csdn.net/zhoumi_/article/details/126659351
 
-/* eslint-disable @typescript-eslint/no-unused-expressions */
+// oxlint-disable @typescript-eslint/no-unused-expressions
 
 function i(e, t, n) {
     ((t[n] = 255 & (e >>> 24)), (t[n + 1] = 255 & (e >>> 16)), (t[n + 2] = 255 & (e >>> 8)), (t[n + 3] = 255 & e));
@@ -29,7 +29,6 @@ const __g = {
             for (let o = e.slice(16 * i, 16 * (i + 1)), c = 0; c < 16; c++) {
                 a[c] = o[c] ^ t[c];
             }
-            // eslint-disable-next-line unicorn/prefer-spread
             ((t = __g.r(a)), (n = n.concat(t)), i++);
         }
         return n;
@@ -95,7 +94,6 @@ const preProcess = (md5Str) => {
     const __g_r = __g.r(new_md5_charCodeAt_arr);
     const md5CharCodeAtBackArr = md5CharCodeAtArr.slice(16, 48);
     const __g_x = __g.x(md5CharCodeAtBackArr, __g_r);
-    // eslint-disable-next-line unicorn/prefer-spread
     return __g_r.concat(__g_x);
 };
 

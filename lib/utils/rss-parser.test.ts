@@ -7,6 +7,8 @@ import parser from '@/utils/rss-parser';
 
 const rssXml = '<rss version="2.0"><channel><title>Test</title><item><title>Item</title></item></channel></rss>';
 
+const toArrayBuffer = (buf: Buffer): ArrayBuffer => buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
+
 describe('rss-parser', () => {
     it('rss', async () => {
         const result = await parser.parseURL('http://rsshub.test/rss');
@@ -18,7 +20,7 @@ describe('rss-parser', () => {
         const compressed = zlib.gzipSync(Buffer.from(rssXml));
         server.use(
             http.get('http://rsshub.test/rss-gzip', () =>
-                HttpResponse.arrayBuffer(compressed.buffer as ArrayBuffer, {
+                HttpResponse.arrayBuffer(toArrayBuffer(compressed), {
                     headers: {
                         'content-type': 'application/xml',
                         'content-encoding': 'gzip',
@@ -36,7 +38,7 @@ describe('rss-parser', () => {
         const compressed = zlib.deflateSync(Buffer.from(rssXml));
         server.use(
             http.get('http://rsshub.test/rss-deflate', () =>
-                HttpResponse.arrayBuffer(compressed.buffer as ArrayBuffer, {
+                HttpResponse.arrayBuffer(toArrayBuffer(compressed), {
                     headers: {
                         'content-type': 'application/xml',
                         'content-encoding': 'deflate',
@@ -54,7 +56,7 @@ describe('rss-parser', () => {
         const compressed = zlib.brotliCompressSync(Buffer.from(rssXml));
         server.use(
             http.get('http://rsshub.test/rss-br', () =>
-                HttpResponse.arrayBuffer(compressed.buffer as ArrayBuffer, {
+                HttpResponse.arrayBuffer(toArrayBuffer(compressed), {
                     headers: {
                         'content-type': 'application/xml',
                         'content-encoding': 'br',
@@ -73,7 +75,7 @@ describe('rss-parser', () => {
             const compressed = zlib.zstdCompressSync(Buffer.from(rssXml));
             server.use(
                 http.get('http://rsshub.test/rss-zstd', () =>
-                    HttpResponse.arrayBuffer(compressed.buffer as ArrayBuffer, {
+                    HttpResponse.arrayBuffer(toArrayBuffer(compressed), {
                         headers: {
                             'content-type': 'application/xml',
                             'content-encoding': 'zstd',

@@ -30,7 +30,7 @@ const pickFromSrcset = (v?: string) =>
     v
         ? v
               .split(',')
-              .map((s) => s.trim().split(' ')[0])
+              .map((s) => s.trim().split(' ', 1)[0])
               .find(Boolean)
         : undefined;
 

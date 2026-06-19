@@ -32,11 +32,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://ask.imiker.com';
     const apiUrl = new URL('explore/main/list/', rootUrl).href;
-    const currentUrl = new URL(``, rootUrl).href;
+    const currentUrl = new URL('', rootUrl).href;
 
     const { data: response } = await got(apiUrl, {
         searchParams: {

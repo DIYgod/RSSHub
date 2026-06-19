@@ -33,7 +33,7 @@ export const route: Route = {
     maintainers: ['hoilc', 'nczitzk', 'LucunJi'],
     handler,
     description: `::: warning
-  搜索标签下的最新内容需要 Lofter 登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+搜索标签下的最新内容需要 Lofter 登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::
 
 | new  | date | week | month | total |
@@ -117,7 +117,9 @@ async function handler(ctx) {
         }
 
         const images = post.photoLinks
-            ? JSON.parse(post.photoLinks).reduce((accumulator, currentValue) => accumulator + `<img src="${currentValue.orign}"/>`, '') // small | middle | orign
+            ? JSON.parse(post.photoLinks)
+                  .map((currentValue) => `<img src="${currentValue.orign}"/>`) // small | middle | orign
+                  .join('')
             : '';
 
         const digest = load(post.digest);

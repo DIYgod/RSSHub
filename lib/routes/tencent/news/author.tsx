@@ -68,7 +68,7 @@ async function handler(ctx): Promise<Data> {
                 const data = JSON.parse(
                     $('script:contains("window.DATA")')
                         .text()
-                        .match(/window\.DATA = ({.+});/)[1]
+                        .match(/window\.DATA = (\{.+\});/)[1]
                 );
                 const $data = load(data.originContent?.text || '', null, false);
                 if ($data) {

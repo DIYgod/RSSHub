@@ -18,7 +18,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.globallawreview.org';
 
@@ -45,12 +45,12 @@ async function handler(ctx) {
                 title: a.text(),
                 link,
                 description: item.find('p.p2').html(),
-                author: item.find('p.p3 span').text() || a.text().split('：')[0],
+                author: item.find('p.p3 span').text() || a.text().split('：', 1)[0],
                 category: [
                     item
                         .find('p.p4')
                         .text()
-                        .match(/] (\d+\.\d+);/)[1],
+                        .match(/\] (\d+\.\d+);/)[1],
                 ],
                 enclosure_url: link,
                 enclosure_length:

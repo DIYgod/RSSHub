@@ -17,7 +17,7 @@ afterAll(() => {
 });
 
 describe('header', () => {
-    it(`header`, async () => {
+    it('header', async () => {
         const app = (await import('@/app')).default;
         const { config } = await import('@/config');
         const response = await app.request('/test/1');
@@ -32,7 +32,7 @@ describe('header', () => {
         expect(response.headers.get('x-rsshub-route')).toBe('/test/:id/:params?');
     });
 
-    it(`etag`, async () => {
+    it('etag', async () => {
         const app = (await import('@/app')).default;
         const response = await app.request('/test/1', {
             headers: {

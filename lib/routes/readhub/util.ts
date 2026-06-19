@@ -26,7 +26,7 @@ const processItems = async (items, tryGet) =>
 
                     const { data: detailResponse } = await got(item.link);
 
-                    const data = JSON.parse(detailResponse.match(/{\\"topic\\":(.*?)}]\\n"]\)<\/script>/)[1].replaceAll(String.raw`\"`, '"'));
+                    const data = JSON.parse(detailResponse.match(/\{\\"topic\\":(.*?)\}\]\\n"\]\)<\/script>/)[1].replaceAll(String.raw`\"`, '"'));
 
                     item.title = data.title;
                     item.link = data.url ?? new URL(`topic/${data.uid}`, rootUrl).href;

@@ -26,7 +26,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['nczitzk'],
     handler,
-    description: `Official RSS Source: https://nodejs.org/en/feed/blog.xml
+    description: `Official RSS Source: <https://nodejs.org/en/feed/blog.xml>
 
 | العربية | Catalan | Deutsch | Español | زبان فارسی |
 | ------- | ------- | ------- | ------- | ---------- |

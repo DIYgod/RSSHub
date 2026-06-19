@@ -1,6 +1,6 @@
 services:
     rsshub:
-        # two ways to enable puppeteer:
+        # two ways to enable Playwright:
         # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
         # * (consumes more disk space and memory) leave everything unchanged
         image: diygod/rsshub # or ghcr.io/diygod/rsshub
@@ -11,7 +11,7 @@ services:
             NODE_ENV: production
             CACHE_TYPE: redis
             REDIS_URL: 'redis://redis:6379/'
-            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000' # marked
+            PLAYWRIGHT_WS_ENDPOINT: 'ws://browserless:3000' # marked
         healthcheck:
             test: ['CMD', 'curl', '-f', 'http://localhost:1200/healthz']
             interval: 30s

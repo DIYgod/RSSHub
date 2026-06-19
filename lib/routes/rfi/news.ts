@@ -19,15 +19,16 @@ export const route: Route = {
     url: 'rfi.fr',
     example: '/rfi',
     description: `::: tip
--   To subscribe to [English News](https://www.rfi.fr/en/), which URL is \`https://www.rfi.fr/en\`, you can get the route as [\`/rfi/en\`](https://rsshub.app/rfi/en).
--   To subscribe to [English Europe News](https://www.rfi.fr/en/europe/), which URL is \`https://www.rfi.fr/en/europe\`, you can get the route as [\`/rfi/en/europe\`](https://rsshub.app/rfi/en/europe).
--   To subscribe to topic [Paris Olympics 2024](https://www.rfi.fr/en/tag/paris-olympics-2024/), which URL is \`https://www.rfi.fr/en/tag/paris-olympics-2024\`, you can get the route as [\`/rfi/en/tag/paris-olympics-2024\`](https://rsshub.app/rfi/en/tag/paris-olympics-2024).
+
+- To subscribe to [English News](https://www.rfi.fr/en/), which URL is \`https://www.rfi.fr/en\`, you can get the route as [\`/rfi/en\`](https://rsshub.app/rfi/en).
+- To subscribe to [English Europe News](https://www.rfi.fr/en/europe/), which URL is \`https://www.rfi.fr/en/europe\`, you can get the route as [\`/rfi/en/europe\`](https://rsshub.app/rfi/en/europe).
+- To subscribe to topic [Paris Olympics 2024](https://www.rfi.fr/en/tag/paris-olympics-2024/), which URL is \`https://www.rfi.fr/en/tag/paris-olympics-2024\`, you can get the route as [\`/rfi/en/tag/paris-olympics-2024\`](https://rsshub.app/rfi/en/tag/paris-olympics-2024).
+
 :::
 
 ::: warning
 This route does not support podcasts, please use the Offical RSS feed instead.
-:::
-`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -86,10 +87,11 @@ async function handler(ctx) {
                     // TODO: Use Temporal.Duration when https://tc39.es/proposal-temporal/ is GA
                     const durationMatch = ldJson.audio.duration?.match(/P0DT(\d+)H(\d+)M(\d+)S/);
                     if (durationMatch) {
-                        item.itunes_duration = durationMatch
-                            .slice(1)
-                            .map((x) => Number.parseInt(x))
-                            .reduce((a, b) => a * 60 + b);
+                        let seconds = 0;
+                        for (const part of durationMatch.slice(1)) {
+                            seconds = seconds * 60 + Number.parseInt(part);
+                        }
+                        item.itunes_duration = seconds;
                     }
                     item.enclosure_url = ldJson.audio.contentUrl;
                     item.enclosure_type = 'audio/mpeg';

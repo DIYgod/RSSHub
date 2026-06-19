@@ -79,7 +79,7 @@ async function handler(ctx) {
     }
 
     const messages = searchResult.messages.flat().map((message) => ({
-        title: message.content.split('\n')[0] || '(no content)',
+        title: message.content.split('\n', 1)[0] || '(no content)',
         description: renderDescription({ message, guildInfo }),
         author: message.author.global_name ?? message.author.username,
         pubDate: parseDate(message.timestamp),

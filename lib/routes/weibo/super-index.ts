@@ -40,8 +40,8 @@ export const route: Route = {
 | soul       | 精华             |
 | video      | 视频（暂不支持） |
 | album      | 相册（暂不支持） |
-| hot_sort  | 热门             |
-| sort_time | 最新帖子         |
+| hot\\_sort  | 热门             |
+| sort\\_time | 最新帖子         |
 | feed       | 最新评论         |`,
 };
 
@@ -85,10 +85,11 @@ async function handler(ctx) {
     const resultItems = [];
 
     function handleCard(ctx, card, resultItems) {
-        if (card.card_type === '9' && 'mblog' in card) {
-            const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);
-            resultItems.push(formatExtended);
+        if (card.card_type !== '9' || !('mblog' in card)) {
+            return;
         }
+        const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);
+        resultItems.push(formatExtended);
     }
     for (const card of containerData?.cards ?? []) {
         handleCard(ctx, card, resultItems);
