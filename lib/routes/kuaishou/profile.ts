@@ -29,11 +29,8 @@ async function handler(ctx) {
     const page = await context.newPage();
 
     let retryCount = 0;
-    let resolve;
     let userInfo;
-    const promise = new Promise((res) => {
-        resolve = res;
-    });
+    const { promise, resolve } = Promise.withResolvers();
     await page.route('**/*', (route) => {
         const resourceType = route.request().resourceType();
         if (['image', 'media', 'font', 'stylesheet', 'ping'].includes(resourceType)) {
