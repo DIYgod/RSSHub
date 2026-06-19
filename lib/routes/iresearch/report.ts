@@ -220,11 +220,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(apiUrl, {
         query: {
-            ...(id
-                ? {
-                      [typeObj.idKey]: id,
-                  }
-                : {}),
+            ...(id && {
+                [typeObj.idKey]: id,
+            }),
             [typeObj.limitKey]: limit,
             ...typeObj.fixedQuery,
         },

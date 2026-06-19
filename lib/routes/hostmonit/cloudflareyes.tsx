@@ -89,11 +89,9 @@ async function handler(ctx) {
     const { data: response } = await got.post(apiUrl, {
         json: {
             key,
-            ...(type === 'v6'
-                ? {
-                      type: 'v6',
-                  }
-                : {}),
+            ...(type === 'v6' && {
+                type: 'v6',
+            }),
         },
     });
 

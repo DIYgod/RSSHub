@@ -47,17 +47,15 @@ async function handler() {
             pubDate,
             description,
             category: ['news', 'crypto', 'finance'],
-            ...(imageSrc
-                ? {
-                      media: {
-                          thumbnail: {
-                              url: imageSrc,
-                              width: 250,
-                              height: 250,
-                          },
-                      },
-                  }
-                : {}),
+            ...(imageSrc && {
+                media: {
+                    thumbnail: {
+                        url: imageSrc,
+                        width: 250,
+                        height: 250,
+                    },
+                },
+            }),
             extra: {
                 views,
             },

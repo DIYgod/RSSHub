@@ -98,7 +98,7 @@ async function handler(ctx) {
 
     return {
         ...(await getInfo(currentUrl)),
-        ...(newTitle ? { title: newTitle } : {}),
+        ...(newTitle && { title: newTitle }),
         item: items,
     };
 }
