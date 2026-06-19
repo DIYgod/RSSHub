@@ -1,11 +1,9 @@
-import { load } from 'cheerio';
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { getTiebaForumData } from './common';
 
 export const route: Route = {
     path: ['/tieba/forum/good/:kw/:cid?/:sortBy?', '/tieba/forum/:kw/:sortBy?'],
@@ -13,73 +11,99 @@ export const route: Route = {
     example: '/baidu/tieba/forum/good/女图',
     parameters: { kw: '吧名', cid: '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'BAIDU_COOKIE',
+                optional: false,
+                description: '百度 cookie 值，用于需要登录的贴吧页面',
+            },
+        ],
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     name: '精品帖子',
-    maintainers: ['u3u'],
+    maintainers: ['u3u', 'FlanChanXwO'],
     handler,
 };
 
+function extractContent(items: any[]): { text: string; images: string[] } {
+    let text = '';
+    const images: string[] = [];
+    if (!Array.isArray(items)) {
+        return { text, images };
+    }
+    for (const item of items) {
+        if (Number(item.type) === 0 && item.text) {
+            text += item.text;
+        } else if (Number(item.type) === 3) {
+            const src = item.origin_src || item.original_src || item.big_cdn_src || item.cdn_src || item.src;
+            if (src) {
+                images.push(src);
+            }
+        }
+    }
+    return { text, images };
+}
+
 async function handler(ctx) {
-    // sortBy: created, replied
     const { kw, cid = '0', sortBy = 'created' } = ctx.req.param();
+    const isGood = ctx.req.path.includes('good');
 
-    // PC端：https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}
-    // 移动端接口：https://tieba.baidu.com/mo/q/m?kw=${encodeURIComponent(kw)}&lp=5024&forum_recommend=1&lm=0&cid=0&has_url_param=1&pn=0&is_ajax=1
-    const params = { kw: encodeURIComponent(kw) };
-    ctx.req.path.includes('good') && (params.tab = 'good');
-    cid && (params.cid = cid);
-    const { data } = await got('https://tieba.baidu.com/f', {
-        headers: {
-            Referer: 'https://tieba.baidu.com/',
-        },
-        searchParams: params,
+    const data = await getTiebaForumData({ kw, cid, isGood, sortBy });
+
+    if (data?.error_code && data.error_code !== '0' && data.error_code !== 0) {
+        throw new Error(`Tieba API error: ${data.error_msg || data.error_code}`);
+    }
+
+    const threadList = data?.thread_list || [];
+
+    if (threadList.length === 0) {
+        throw new Error('No threads found. The cookie may be expired or invalid. Please check your BAIDU_COOKIE.');
+    }
+
+    // Build author map from user_list
+    const userList: any[] = data?.user_list || [];
+    const authorMap = new Map<number, string>();
+    for (const user of userList) {
+        if (user.id) {
+            authorMap.set(Number(user.id), user.name_show || user.name || '');
+        }
+    }
+
+    const list = threadList.map((thread) => {
+        // Prefer first_post_content (richer), fall back to abstract
+        const { text: content, images } = extractContent(thread.first_post_content || thread.abstract || []);
+
+        const timestamp = Number(thread.create_time || 0);
+        const pubDate = timestamp > 0 ? timezone(new Date(timestamp * 1000), +8) : undefined;
+
+        const authorName = authorMap.get(Number(thread.author_id)) || '';
+
+        return {
+            title: thread.title,
+            link: `https://tieba.baidu.com/p/${thread.id || thread.tid}`,
+            ...(pubDate ? { pubDate } : {}),
+            author: authorName,
+            description: renderToString(
+                <>
+                    {content ? <p>{content}</p> : null}
+                    {images.length > 0 ? (
+                        <div>
+                            {images.map((img) => (
+                                <img src={img} alt="" style={{ maxWidth: '100%', margin: '5px 0' }} />
+                            ))}
+                        </div>
+                    ) : null}
+                </>
+            ),
+        };
     });
-
-    const threadListHTML = load(data)('code[id="pagelet_html_frs-list/pagelet/thread_list"]')
-        .contents()
-        .filter((e) => e.nodeType === '8');
-
-    const $ = load(threadListHTML.prevObject[0].data);
-    const list = $('#thread_list > .j_thread_list[data-field]')
-        .toArray()
-        .map((element) => {
-            const item = $(element);
-            const { id, author_name } = item.data('field');
-            const time = sortBy === 'created' ? item.find('.is_show_create_time').text().trim() : item.find('.threadlist_reply_date').text().trim();
-            const title = item.find('a.j_th_tit').text().trim();
-            const details = item.find('.threadlist_abs').text().trim();
-            const medias = item
-                .find('.threadlist_media img')
-                .toArray()
-                .map((element) => {
-                    const item = $(element);
-                    return `<img src="${item.attr('bpic')}">`;
-                })
-                .join('');
-
-            return {
-                title,
-                description: renderToString(
-                    <>
-                        <p>{details}</p>
-                        <p>{raw(medias)}</p>
-                        <p>作者：{author_name}</p>
-                    </>
-                ),
-                pubDate: timezone(parseDate(time, ['HH:mm', 'M-D', 'YYYY-MM'], true), +8),
-                link: `https://tieba.baidu.com/p/${id}`,
-            };
-        });
 
     return {
         title: `${kw}吧`,
-        description: load(data)('meta[name="description"]').attr('content'),
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
         item: list,
     };
