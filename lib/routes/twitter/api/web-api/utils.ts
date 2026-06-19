@@ -324,9 +324,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     for (const entry of entries) {
         const entryId = entry.entryId;
         if (entryId) {
-            if (entryId.startsWith('tweet-')) {
-                filteredEntries.push(entry);
-            } else if (entryId.startsWith('profile-grid-0-tweet-')) {
+            if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
                 filteredEntries.push(entry);
             }
             if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
