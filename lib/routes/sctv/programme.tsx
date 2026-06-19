@@ -138,11 +138,13 @@ async function handler(ctx) {
 
     let name, cover;
     for (const p of response.data.data.programme_official) {
-        if (p.programmeId === id) {
-            name = p.programmeName;
-            cover = p.programmeCover;
-            break;
+        if (p.programmeId !== id) {
+            continue;
         }
+
+        name = p.programmeName;
+        cover = p.programmeCover;
+        break;
     }
 
     return {

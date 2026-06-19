@@ -74,13 +74,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
         for (const media of mediaResponse) {
-            if (media.parent) {
-                const existing = mediaMap.get(media.parent);
-                if (existing) {
-                    existing.push(media);
-                } else {
-                    mediaMap.set(media.parent, [media]);
-                }
+            if (!media.parent) {
+                continue;
+            }
+
+            const existing = mediaMap.get(media.parent);
+            if (existing) {
+                existing.push(media);
+            } else {
+                mediaMap.set(media.parent, [media]);
             }
         }
     }

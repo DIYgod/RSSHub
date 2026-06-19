@@ -34,11 +34,13 @@ async function handler() {
     let addtime = '';
 
     for (const album of data.data.album) {
-        if (Number.parseInt(album.ds) === 1) {
-            sort = album.sort;
-            addtime = album.addtime;
-            break;
+        if (Number.parseInt(album.ds) !== 1) {
+            continue;
         }
+
+        sort = album.sort;
+        addtime = album.addtime;
+        break;
     }
     const api = 'http://dili.bdatu.com/jiekou/albums/a' + sort + '.html';
     const response = await got(api);

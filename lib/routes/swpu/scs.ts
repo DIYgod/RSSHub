@@ -67,10 +67,12 @@ async function handler(ctx): Promise<Data> {
                         item.author = '计算机与软件学院';
                         item.description = $('.v_news_content').html()!;
                         for (const elem of $('.v_news_content p')) {
-                            if ($(elem).css('text-align') === 'right') {
-                                item.author = $(elem).text();
-                                break;
+                            if ($(elem).css('text-align') !== 'right') {
+                                continue;
                             }
+
+                            item.author = $(elem).text();
+                            break;
                         }
                     }
                     return item;

@@ -86,21 +86,23 @@ async function handler() {
 function extractPlateBlockNewsLists(jsonData: any) {
     const result: any[] = [];
     for (const [key, plateBlock] of Object.entries(jsonData)) {
-        if (key.startsWith('PlateBlock')) {
-            // 处理新闻列表
-            if (plateBlock?.param?.newsData?.list) {
-                result.push(...plateBlock.param.newsData.list);
-            }
-            // 处理焦点图数据
-            if (plateBlock?.param?.focusData?.list) {
-                result.push(...plateBlock.param.focusData.list);
-            }
-            if (plateBlock?.param?.feedData0?.list) {
-                result.push(...plateBlock.param.feedData0.list);
-            }
-            if (plateBlock?.param?.feedData1?.list) {
-                result.push(...plateBlock.param.feedData1.list);
-            }
+        if (!key.startsWith('PlateBlock')) {
+            continue;
+        }
+
+        // 处理新闻列表
+        if (plateBlock?.param?.newsData?.list) {
+            result.push(...plateBlock.param.newsData.list);
+        }
+        // 处理焦点图数据
+        if (plateBlock?.param?.focusData?.list) {
+            result.push(...plateBlock.param.focusData.list);
+        }
+        if (plateBlock?.param?.feedData0?.list) {
+            result.push(...plateBlock.param.feedData0.list);
+        }
+        if (plateBlock?.param?.feedData1?.list) {
+            result.push(...plateBlock.param.feedData1.list);
         }
     }
     return result;
