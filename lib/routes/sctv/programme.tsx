@@ -112,7 +112,7 @@ async function handler(ctx) {
                     guid: item.id,
                     title: item.programmeTitle,
                     link: item.programmeUrl,
-                    pubDate: timezone(parseDate(item.pubTime), +8),
+                    pubDate: timezone(parseDate(item.pubTime), 8),
                     description: renderToString(
                         <video poster={item.programmeImage} controls>
                             <source src={item.programmeUrl} type="video/mp4" />

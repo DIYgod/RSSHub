@@ -105,7 +105,7 @@ async function handler(ctx) {
                     item.pubDate = /\d+月\d+日/.test(pubDate) ? parseDate(pubDate, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm']) : parseRelativeDate(pubDate);
                 }
 
-                item.pubDate = timezone(item.pubDate, +8);
+                item.pubDate = timezone(item.pubDate, 8);
                 item.comments = commentResponse.data?.length() ?? 0;
 
                 return item;

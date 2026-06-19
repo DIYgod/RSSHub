@@ -56,7 +56,7 @@ async function handler() {
             return {
                 title: $elem.find('a').text(),
                 link: $elem.find('a').attr('href'),
-                pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim(), +8)),
+                pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim(), 8)),
             };
         });
 

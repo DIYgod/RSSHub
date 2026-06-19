@@ -26,7 +26,7 @@ const getNews = async (category) => {
                 const item = {
                     title,
                     link: url,
-                    pubDate: timezone(parseDate(focus_date), +8),
+                    pubDate: timezone(parseDate(focus_date), 8),
                 };
                 const id = path.parse(url).name;
                 const unknownTip = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';

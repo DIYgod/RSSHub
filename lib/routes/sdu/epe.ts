@@ -63,7 +63,7 @@ async function handler(ctx) {
                     item.title = $('#show_title').text().trim();
                     item.author = info[1].replace('编辑：', '') || '山东大学能源与动力工程学院';
                     item.description = $('#show_content').html();
-                    item.pubDate = timezone(parseDate(date), +8);
+                    item.pubDate = timezone(parseDate(date), 8);
 
                     return item;
                 });

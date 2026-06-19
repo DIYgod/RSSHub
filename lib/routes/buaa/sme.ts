@@ -79,7 +79,7 @@ async function getList(url) {
             return {
                 title: item.find('a').text(),
                 link: link?.startsWith('http') ? link : `${BASE_URL}/${link}`, // 有些链接是相对路径
-                pubDate: timezone(parseDate(item.find('span').text()), +8),
+                pubDate: timezone(parseDate(item.find('span').text()), 8),
             };
         });
     return {

@@ -107,7 +107,7 @@ const getItemDetail = async (item, rootUrl) => {
         item.author = getMeta(meta, 'ContentSource');
         item.category = getMeta(meta, 'Keywords')?.split(' ').filter(Boolean) ?? [];
         item.guid = getMeta(meta, 'Url') ?? item.link;
-        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), +8) : item.pubDate;
+        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), 8) : item.pubDate;
 
         // Set enclosure information if attachments exist.
         if (attachments.length > 0) {

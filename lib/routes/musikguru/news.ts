@@ -81,14 +81,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'DD.MM.YYYY HH:mm'), +1) : item.pubDate,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'DD.MM.YYYY HH:mm'), 1) : item.pubDate,
                     content: {
                         html: description,
                         text: description,
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr, 'DD.MM.YYYY HH:mm'), +1) : item.updated,
+                    updated: upDatedStr ? timezone(parseDate(upDatedStr, 'DD.MM.YYYY HH:mm'), 1) : item.updated,
                     language,
                 };
 

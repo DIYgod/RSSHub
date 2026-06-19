@@ -68,7 +68,7 @@ async function handler(ctx) {
         title: item.data.title,
         author: item.data.userName,
         category: item.data.channelName,
-        pubDate: timezone(parseDate(item.data.publishTime), +8),
+        pubDate: timezone(parseDate(item.data.publishTime), 8),
         link: item.data.moVideoPath ? item.data.sourceUrl : `${rootUrl}/json/content/${item.data.url.match(/\/pages\/(.*?)\.html/)[1]}.detailjson`,
         video: item.data.moVideoPath,
         cover: item.data.mCoverImg,

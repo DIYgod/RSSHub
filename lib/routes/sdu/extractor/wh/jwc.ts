@@ -18,7 +18,7 @@ const jwc = (link) =>
             exactDateElement.remove();
             content = form.html();
             const exactDateText = exactDateStr.match(/^创建时间：(?<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/).groups.date;
-            exactDate = timezone(parseDate(exactDateText, 'YYYY-MM-DD HH:mm:ss'), +8);
+            exactDate = timezone(parseDate(exactDateText, 'YYYY-MM-DD HH:mm:ss'), 8);
             return { description: content, exactDate };
         } catch {
             return { description: content, exactDate };

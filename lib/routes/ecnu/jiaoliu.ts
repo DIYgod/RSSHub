@@ -26,7 +26,7 @@ export const route: Route = {
         const links = $('#wp_news_w3 > table > tbody > tr')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('div[style="white-space:nowrap"]').text()), +8),
+                pubDate: timezone(parseDate($(el).find('div[style="white-space:nowrap"]').text()), 8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).href,
                 title: $(el).find('a').text(),
             }));

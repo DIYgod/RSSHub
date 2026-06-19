@@ -57,7 +57,7 @@ async function handler(ctx) {
             const info = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), 8),
             };
             return info;
         });
@@ -71,7 +71,7 @@ async function handler(ctx) {
                     const $ = load(response.data);
                     // www.teach ?? pms.cmet ?? news
                     item.description = $('main[class=single]').html() ?? $('.card-footer').html() ?? $('.v_news_content').html();
-                    item.pubDate = $('li[class=meta-date]').text() ? timezone(parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm'), +8) : item.pubDate;
+                    item.pubDate = $('li[class=meta-date]').text() ? timezone(parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
                     return item;
                 })
             )

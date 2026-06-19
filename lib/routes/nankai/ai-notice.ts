@@ -80,7 +80,7 @@ export const route: Route = {
 
                 // 提取日期
                 const dateStr = dateCell.text().trim();
-                const pubDate = dateStr.includes('/') ? timezone(parseDate(dateStr, 'YYYY/MM/DD'), +8) : timezone(parseDate(dateStr), +8);
+                const pubDate = dateStr.includes('/') ? timezone(parseDate(dateStr, 'YYYY/MM/DD'), 8) : timezone(parseDate(dateStr), 8);
 
                 // 提取来源
                 const source = sourceCell.text().trim();

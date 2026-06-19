@@ -16,7 +16,6 @@ const viewForum = (id) => ({
         '    ...threadComponent' +
         '  }' +
         '}' +
-        '' +
         'fragment threadComponent on Thread {' +
         '  tid' +
         '  title' +
@@ -35,7 +34,6 @@ const viewThread = (id, page) => ({
         '  }' +
         '  ...repliesComponent' +
         '}' +
-        '' +
         'fragment threadComponent on Thread {' +
         '  tid' +
         '  title' +
@@ -48,7 +46,6 @@ const viewThread = (id, page) => ({
         '    name' +
         '  }' +
         '}' +
-        '' +
         'fragment repliesComponent on Query {' +
         '  posts(tid: $tid, page: $page, pid: $pid, authorid: $authorid) {' +
         '    lou' +

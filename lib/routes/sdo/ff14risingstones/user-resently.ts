@@ -33,7 +33,7 @@ async function handler(ctx: Context) {
         image: userInfo.avatar,
         item: resently.map((i) => ({
             title: `${i.event_type} - ${i.detail}`,
-            pubDate: timezone(parseDate(i.log_time), +8),
+            pubDate: timezone(parseDate(i.log_time), 8),
             guid: `sdo/ff14risingstones/resently:${uid}-${i.detail}`,
         })),
     } as Data;

@@ -77,7 +77,7 @@ async function handler(ctx) {
                 const ret = {
                     title: item.title,
                     author: item.publisher,
-                    pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), +8),
+                    pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), 8),
                     link: item.url,
                 };
                 if (type === 'ggtz') {

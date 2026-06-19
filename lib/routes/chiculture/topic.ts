@@ -60,7 +60,7 @@ async function handler(ctx) {
                     for (const tag of item.pubDate) {
                         if (/^\d{4}年$/.test(tag.title)) {
                             const monthDayStr = item.title.split('- ', 2)[1] ?? item.title.split('-', 2)[1];
-                            item.pubDate = timezone(parseDate(monthDayStr, 'D/M'), +8);
+                            item.pubDate = timezone(parseDate(monthDayStr, 'D/M'), 8);
                             break;
                         }
                     }

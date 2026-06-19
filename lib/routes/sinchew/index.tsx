@@ -44,7 +44,7 @@ async function handler(ctx) {
             return {
                 title: item.attr('data-title'),
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
-                pubDate: timezone(parseDate(item.text()), +8),
+                pubDate: timezone(parseDate(item.text()), 8),
             };
         });
 
@@ -72,7 +72,7 @@ async function handler(ctx) {
                 });
 
                 item.description = content('.article-page-content').html();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
 
                 return item;
             })

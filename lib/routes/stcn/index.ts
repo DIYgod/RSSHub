@@ -42,7 +42,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), +8) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), +8) : undefined,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8) : undefined,
                 language,
             };
 
@@ -80,14 +80,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                         category: categories,
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : item.updated,
+                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                         language,
                     };
 

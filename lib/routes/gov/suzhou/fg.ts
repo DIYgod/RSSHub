@@ -60,7 +60,7 @@ async function handler(ctx) {
                 item.title = content('ucaptitle').text().trim();
                 item.description = content('ucapcontent').html();
                 item.author = content('span.ly b').text().trim();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
 
                 return item;
             })

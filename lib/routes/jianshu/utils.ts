@@ -9,7 +9,7 @@ const loadContent = async (link) => {
     const response = await got.get(link);
     const $ = load(response.data);
     // 解析日期
-    const pubDate = timezone(parseDate($('time').attr('datetime')), +8);
+    const pubDate = timezone(parseDate($('time').attr('datetime')), 8);
     // 去除样式
     $('.image-container, .image-container-fill').removeAttr('style');
     // 处理视频

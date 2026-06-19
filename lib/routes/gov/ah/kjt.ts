@@ -48,7 +48,7 @@ export const handler = async (ctx) => {
 
                 item.title = $$('meta[name="ArticleTitle"]').prop('content');
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), 8);
                 item.category = [
                     ...new Set([
                         $$('meta[name="ColumnName"]').prop('content'),
@@ -63,7 +63,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.wzcon').text(),
                 };
-                item.updated = timezone(parseDate($$('meta[name="HtmlGenerateTime"]').prop('content')), +8);
+                item.updated = timezone(parseDate($$('meta[name="HtmlGenerateTime"]').prop('content')), 8);
                 item.language = language;
 
                 return item;

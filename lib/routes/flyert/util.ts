@@ -122,7 +122,7 @@ const parseArticle = ($$: CheerioAPI, item) => {
 
     item.title = title;
     item.description = description;
-    item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
+    item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
     item.author = $$('p.xg1 a').first().text();
     item.guid = guid;
     item.id = guid;
@@ -171,7 +171,7 @@ const parsePost = ($$: CheerioAPI, item) => {
 
     item.title = title;
     item.description = description;
-    item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
+    item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
     item.author = $$('a.kmxi2').first().text();
     item.guid = guid;
     item.id = guid;

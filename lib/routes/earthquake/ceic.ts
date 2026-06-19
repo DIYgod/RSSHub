@@ -96,7 +96,7 @@ async function handler(ctx) {
             return {
                 title: `${LOCATION_C}发生${M}级地震`,
                 link: `${baseUrl}/${NEW_DID}.html`,
-                pubDate: timezone(parseDate(O_TIME, 'YYYY-MM-DD HH:mm:ss'), +8),
+                pubDate: timezone(parseDate(O_TIME, 'YYYY-MM-DD HH:mm:ss'), 8),
                 description: contentBuilder.join('<br>'),
                 guid: NEW_DID,
             };

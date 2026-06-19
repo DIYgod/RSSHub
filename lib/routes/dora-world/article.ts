@@ -51,7 +51,7 @@ async function handler(ctx): Promise<Data> {
         title: item.title,
         link: item.page_url.startsWith('http') ? item.page_url : `${baseUrl}${item.page_url}`,
         description: item.page_url.startsWith('/contents/') ? '' : `<p>${item.title}</p><img src="${item.image_url}" alt="">`,
-        pubDate: timezone(parseDate(item.publish_at), +9),
+        pubDate: timezone(parseDate(item.publish_at), 9),
         category: item.tags.map((tag) => tag.name),
         guid: item.id,
     }));

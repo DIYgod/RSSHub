@@ -43,7 +43,7 @@ const checkLogin = async (cookieJar) => {
     //     cache.set('instagram:wwwClaimV2', wwwClaimV2);
     // }
 
-    return Boolean(response.status === 'ok');
+    return response.status === 'ok';
 };
 
 const getUserInfo = async (username, cookieJar) => {

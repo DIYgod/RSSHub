@@ -170,7 +170,7 @@ async function handler(ctx) {
                             }[dateRegex[2].trim()],
                             Number.parseInt(dateRegex[1])
                         ),
-                        +7
+                        7
                     );
                 }
 

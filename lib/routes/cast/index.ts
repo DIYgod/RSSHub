@@ -27,7 +27,7 @@ async function parsePage(html: string) {
                 return cache.tryGet(articleUrl, async () => {
                     const res = await got.get<string>(articleUrl!);
                     const article = load(res.data);
-                    const pubDate = timezone(parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm'), +8);
+                    const pubDate = timezone(parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8);
 
                     return {
                         title: title.text(),

@@ -44,7 +44,7 @@ async function handler() {
             return {
                 title: `[震級:${degree}] [地點:${city}]`,
                 description: `${citystring}, ${latAndLon}`,
-                pubDate: timezone(parseDate(hktDate + hktTime, 'YYYYMMDDHHmm'), +8),
+                pubDate: timezone(parseDate(hktDate + hktTime, 'YYYYMMDDHHmm'), 8),
             };
         });
 

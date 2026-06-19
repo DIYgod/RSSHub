@@ -143,7 +143,7 @@ async function handler() {
                     title: data.SCS_WEB_BRIEFNAME,
                     link: link.href,
                     description: renderDescription(data),
-                    pubDate: timezone(parseDate(data.SJ_DATE_PC), +8),
+                    pubDate: timezone(parseDate(data.SJ_DATE_PC), 8),
                 };
             });
         })

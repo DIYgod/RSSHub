@@ -54,7 +54,7 @@ async function handler(ctx) {
                 return {
                     title: metadata.headline,
                     link: url,
-                    pubDate: timezone(parseDate(metadata.datePublished), +9),
+                    pubDate: timezone(parseDate(metadata.datePublished), 9),
                     author: metadata.author.name,
                     description: $('article.article-body').html(),
                 };

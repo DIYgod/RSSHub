@@ -19,7 +19,7 @@ const getMzzlbg = async () => {
                 title: video.t,
                 description: video.desc,
                 link: video.url,
-                pubDate: timezone(parseDate(video.ptime), +8),
+                pubDate: timezone(parseDate(video.ptime), 8),
             };
             const { data: videoDetail } = await got({
                 method: 'get',

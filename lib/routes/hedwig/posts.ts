@@ -47,7 +47,7 @@ export const route: Route = {
             return {
                 title: item.subject,
                 description,
-                pubDate: timezone(parseDate(item.publishAt, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]'), +0),
+                pubDate: timezone(parseDate(item.publishAt, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]'), 0),
                 link: `${baseUrl}/i/${item.urlFriendlyName}`,
             };
         });

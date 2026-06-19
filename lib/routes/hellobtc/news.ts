@@ -43,7 +43,7 @@ async function handler() {
             title: $(item).find('h2').text(),
             link: $(item).find('a').attr('href'),
             description: $(item).find('div.sub').text(),
-            pubDate: timezone(parseDate($(item).find('span.date').text(), 'MM-DD HH:mm'), +8),
+            pubDate: timezone(parseDate($(item).find('span.date').text(), 'MM-DD HH:mm'), 8),
         }))
         .filter(Boolean);
 

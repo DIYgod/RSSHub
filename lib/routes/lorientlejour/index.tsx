@@ -149,8 +149,8 @@ async function handler(ctx) {
     const items = response.data.data.map((item) => {
         item.link = item.url;
         item.author = item.authors.map((author) => author.name).join(', ');
-        item.pubDate = timezone(parseDate(item.firstPublished), +3);
-        item.updated = timezone(parseDate(item.lastUpdate), +3);
+        item.pubDate = timezone(parseDate(item.firstPublished), 3);
+        item.updated = timezone(parseDate(item.lastUpdate), 3);
         item.category = item.categories.map((itemCategory) => itemCategory.name);
         const contents = item.contents;
         const $ = load(contents);

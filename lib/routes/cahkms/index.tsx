@@ -68,7 +68,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: item.TITLE,
             description: `<p>${item.GJZ}</p>`,
-            pubDate: timezone(parseDate(item.JDRQ), +8),
+            pubDate: timezone(parseDate(item.JDRQ), 8),
             link: `${rootUrl}/HKMAC/indexMac/getWzxx?id=${item.ID}`,
         }));
 

@@ -77,7 +77,7 @@ async function handler(ctx) {
                 item.title = content('h1.maintitle_pc').text();
                 item.description = content('div.article_slice_pc').html();
                 item.author = content('div.source_author').text();
-                item.pubDate = timezone(parseDate(content('div.releaseTime').text()), +8);
+                item.pubDate = timezone(parseDate(content('div.releaseTime').text()), 8);
                 return item;
             })
         )

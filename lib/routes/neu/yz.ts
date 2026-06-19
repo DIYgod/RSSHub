@@ -35,7 +35,7 @@ const parsePage = async (items, type) => {
                 description: '',
                 pubDate: (() => {
                     const sTag = $('span.Article_PublishDate');
-                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), +8) : undefined;
+                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), 8) : undefined;
                     return pubDate;
                 })(),
                 author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
@@ -61,7 +61,7 @@ const parsePage = async (items, type) => {
                         .text()
                         .match(/[:：]?\s*(.+)/);
                     const author = authorText ? authorText[1].trim() : '';
-                    resultItem.pubDate = timezone(parseDate(date), +8);
+                    resultItem.pubDate = timezone(parseDate(date), 8);
                     resultItem.author = author;
                 }
                 return resultItem;

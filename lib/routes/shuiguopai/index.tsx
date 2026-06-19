@@ -51,7 +51,7 @@ async function handler(ctx) {
         title: item.title,
         guid: item.library_id,
         link: `${rootUrl}/play-details/${item.library_id}`,
-        pubDate: timezone(parseDate(item.show_time_origin, 'YYYY-MM-DD HH:mm:ss'), +8),
+        pubDate: timezone(parseDate(item.show_time_origin, 'YYYY-MM-DD HH:mm:ss'), 8),
         category: item.tags.map((t) => t.tag_title),
     }));
 

@@ -47,7 +47,7 @@ async function handler(ctx) {
         .toArray()
         .map((elem) => ({
             title: $('a[href]', elem).text().trim(),
-            pubDate: timezone(parseDate($('span', elem).text(), 'YYYY年MM月DD日'), +8),
+            pubDate: timezone(parseDate($('span', elem).text(), 'YYYY年MM月DD日'), 8),
             link: `https://www.swpu.edu.cn/nccjxy/${$('a[href]', elem).attr('href').split('../', 2)[1]}`,
         }));
 

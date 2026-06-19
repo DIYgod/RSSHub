@@ -101,7 +101,7 @@ export const route: Route = {
             image: each.vod_pic,
             link: `https://${domain}/vod/${each.vod_id}/`,
             guid: each.vod_play_url?.match(/https:\/\/.+?\.m3u8/g)?.at(-1),
-            pubDate: timezone(parseDate(each.vod_time, 'YYYY-MM-DD HH:mm:ss'), +8),
+            pubDate: timezone(parseDate(each.vod_time, 'YYYY-MM-DD HH:mm:ss'), 8),
             category: [each.type_name, ...each.vod_class!.split(',')],
             description: render(each, `https://${domain}/vod/${each.vod_id}/`) + each.vod_content,
         }));

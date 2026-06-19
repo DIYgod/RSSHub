@@ -262,7 +262,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         let processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
             link: item.id ? new URL(`report/detail?id=${item.id}`, baseUrl).href : (linkUrl ?? (item.Id ? new URL(`chart/detail?id=${item.id}`, baseUrl).href : undefined)),
             category: categories,
             author: authors,
@@ -274,7 +274,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            updated: updated ? timezone(parseDate(updated), +8) : undefined,
+            updated: updated ? timezone(parseDate(updated), 8) : undefined,
             detailId: item.id ?? (linkUrl ? item.NewsId : item.Id),
         };
 
@@ -362,7 +362,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                     category: categories,
                     content: {
                         html: description,
@@ -370,7 +370,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     },
                     image,
                     banner: image,
-                    updated: updated ? timezone(parseDate(updated), +8) : undefined,
+                    updated: updated ? timezone(parseDate(updated), 8) : undefined,
                 };
 
                 const medias: Record<string, Record<string, string>> = (() => {

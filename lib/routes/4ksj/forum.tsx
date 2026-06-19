@@ -237,7 +237,7 @@ async function handler(ctx) {
                     info: $$('div.nex_drama_sums').html(),
                     links,
                 });
-                item.pubDate = timezone(parseDate(pubDate, 'YYYY-M-D HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate(pubDate, 'YYYY-M-D HH:mm:ss'), 8);
                 item.category = Object.values(mergedDetails)
                     .flatMap((c) => c.split(/\s/))
                     .filter(Boolean);

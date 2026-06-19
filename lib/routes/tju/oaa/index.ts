@@ -97,7 +97,7 @@ async function handler(ctx) {
             return {
                 title: $('h2', item).text(),
                 link: type === 'in-site' ? oaa_base_url + href : href,
-                pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), +8),
+                pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), 8),
                 type,
             };
         });

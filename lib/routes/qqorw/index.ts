@@ -59,7 +59,7 @@ async function handler(ctx) {
                     .find('a.label')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), +8),
+                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), 8),
                 upvotes: item.find('span.count').text() ? Number(item.find('span.count').text()) : 0,
             };
         });

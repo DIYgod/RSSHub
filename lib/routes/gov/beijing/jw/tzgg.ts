@@ -68,7 +68,7 @@ async function handler() {
                 const pubDate = content('meta[name="PubDate"]').attr('content');
 
                 item.author = content('meta[name="ContentSource"]').attr('content');
-                item.pubDate = pubDate ? timezone(parseDate(content('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
+                item.pubDate = pubDate ? timezone(parseDate(content('meta[name="PubDate"]').attr('content')), 8) : item.pubDate;
                 item.description = content('.TRS_UEDITOR').html();
 
                 return item;

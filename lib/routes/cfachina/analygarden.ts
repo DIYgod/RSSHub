@@ -74,7 +74,7 @@ async function handler(ctx) {
             title: item.docTitle,
             author: item.docAuthor,
             link,
-            pubDate: timezone(parseDate(item.operTime), +8),
+            pubDate: timezone(parseDate(item.operTime), 8),
             enclosure_url: link,
             enclosure_type: `application/${link.split('.').pop()}`,
         };

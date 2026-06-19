@@ -74,7 +74,7 @@ async function handler(ctx) {
                 link: new URL(floorUrl, `${host}/2b/`).href,
                 description: contentHtml.html(),
                 author: each.find('.authi .xw1').text(),
-                pubDate: timezone(parseDate(each.find('.authi em').text()), +8),
+                pubDate: timezone(parseDate(each.find('.authi em').text()), 8),
             };
         });
 

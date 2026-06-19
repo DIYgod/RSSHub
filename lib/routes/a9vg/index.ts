@@ -43,7 +43,7 @@ export const handler = async (ctx) => {
                           ]
                         : undefined,
                 }),
-                pubDate: timezone(parseDate(item.find('div.a9-rich-card-list_infos').text()), +8),
+                pubDate: timezone(parseDate(item.find('div.a9-rich-card-list_infos').text()), 8),
                 language,
             };
         });
@@ -95,7 +95,7 @@ export const handler = async (ctx) => {
                             .match(/发表于 (\d+-\d+-\d+ \d+:\d+)/)?.[1] ?? $$('span.c-article-main_content-intro-item').first().text(),
                         ['YYYY-M-D HH:mm', 'YYYY-MM-DD HH:mm']
                     ),
-                    +8
+                    8
                 );
                 item.language = language;
 

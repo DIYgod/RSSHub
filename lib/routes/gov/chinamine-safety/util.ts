@@ -38,7 +38,7 @@ const processItems = async (items, tryGet) =>
                         ].filter(Boolean)
                     ),
                 ];
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
 
                 return item;
             })

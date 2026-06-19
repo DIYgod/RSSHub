@@ -38,7 +38,7 @@ async function handler() {
             const title = $(item).find('.news_title').text().trim();
             const link = new URL($(item).find('a').attr('href')!, baseUrl).href;
             const date = $(item).find('time').text().trim();
-            const pubDate = timezone(parseDate(date), +9);
+            const pubDate = timezone(parseDate(date), 9);
             return {
                 title,
                 link,

@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="publishdate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate($$('meta[name="publishdate"]').prop('content')), 8);
                 item.author = $$('meta[name="author"]').prop('content') || $$('meta[name="source"]').prop('content');
                 item.content = {
                     html: description,

@@ -56,7 +56,7 @@ async function handler(ctx) {
                 thumb: item.picMiddle,
                 description: item.summary === '详见内文' ? '' : item.summary,
             }),
-            pubDate: timezone(parseDate(item.updateTime), +8),
+            pubDate: timezone(parseDate(item.updateTime), 8),
             link: `http://pc.nfapp.southcn.com/${item.columnId}/${item.articleId}.html`,
             articleId: item.articleId,
             shareUrl: item.shareUrl,

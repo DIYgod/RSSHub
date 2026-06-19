@@ -141,7 +141,7 @@ async function handler(ctx) {
                     author: `巨量算数 - ${channelName}算数指数`,
                     description: content,
                     link,
-                    pubDate: timezone(parseDate(date), +8),
+                    pubDate: timezone(parseDate(date), 8),
                     guid: `巨量算数 - ${channelName}算数指数 | ${keyword} - ${date}`,
                 };
             });

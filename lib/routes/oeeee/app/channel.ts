@@ -28,7 +28,7 @@ async function handler(ctx) {
                 thumb: item.titleimg.replaceAll(/\?x-oss-process=.*/g, ''),
                 description: item.summary,
             }),
-            pubDate: timezone(parseDate(item.ptime * 1000), +8),
+            pubDate: timezone(parseDate(item.ptime * 1000), 8),
             link: item.url,
             channel: item.author,
         }));

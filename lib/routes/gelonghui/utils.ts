@@ -17,7 +17,7 @@ const parseItem = (item, tryGet) =>
             item.description = $('.article-summary').html() + $('article.article-with-html').html();
             if (!item.pubDate) {
                 const isRelativeDate = $('time.date').text().includes('前') || $('time.date').text().includes('天');
-                item.pubDate = isRelativeDate ? parseRelativeDate($('time.date').text()) : timezone(parseDate($('time.date').text(), 'MM-DD HH:mm'), +8);
+                item.pubDate = isRelativeDate ? parseRelativeDate($('time.date').text()) : timezone(parseDate($('time.date').text(), 'MM-DD HH:mm'), 8);
             }
         }
         return item;

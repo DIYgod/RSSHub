@@ -53,7 +53,7 @@ async function handler(ctx) {
 
     const list = contentData.map((item) => ({
         title: item.title,
-        pubDate: timezone(parseDate(item.newsTime), +8),
+        pubDate: timezone(parseDate(item.newsTime), 8),
         author: mediaName,
         link: `https:${item.url}`,
     }));

@@ -21,7 +21,7 @@ async function newsContent(link, department = '') {
 
         // 解析日期
         const extractDate = ($('.info').first().html()?.match(reg) || [])[0];
-        const pubDate = timezone(parseDate(extractDate, 'YYYY-MM-DD', 'zh-cn'), +8);
+        const pubDate = timezone(parseDate(extractDate, 'YYYY-MM-DD', 'zh-cn'), 8);
         // 解析文章
         const newsContent = $(element).first();
         newsContent.find('table').remove();

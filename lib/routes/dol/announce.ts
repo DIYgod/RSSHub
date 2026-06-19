@@ -95,7 +95,7 @@ async function handler(ctx) {
                         Number.parseInt(dateList[1]) - 1,
                         Number.parseInt(dateList[0])
                     ),
-                    +7
+                    7
                 ),
                 author: officeName.text(),
                 category: [reqType.text()],

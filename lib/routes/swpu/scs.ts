@@ -49,7 +49,7 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $('em', elem).text().trim(),
-            pubDate: timezone(parseDate($('span', elem).text()), +8),
+            pubDate: timezone(parseDate($('span', elem).text()), 8),
             link: joinUrl('https://www.swpu.edu.cn/scs/index/', $('a', elem).attr('href')),
         }));
 

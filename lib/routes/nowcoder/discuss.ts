@@ -67,7 +67,7 @@ async function handler(ctx) {
                     title,
                     link: itemUrl,
                     description,
-                    pubDate: timezone(parseDate(date_value), +8),
+                    pubDate: timezone(parseDate(date_value), 8),
                 };
             });
         })

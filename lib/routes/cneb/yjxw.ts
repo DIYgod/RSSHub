@@ -71,7 +71,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: timezone(parseDate(item.find('span').text()), +8),
+                pubDate: timezone(parseDate(item.find('span').text()), 8),
             };
         });
 

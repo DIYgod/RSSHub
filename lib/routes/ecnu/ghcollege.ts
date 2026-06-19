@@ -28,7 +28,7 @@ export const route: Route = {
         const links = $('ul.wp_article_list > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.Article_PublishDate').text()), +8),
+                pubDate: timezone(parseDate($(el).find('.Article_PublishDate').text()), 8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).href,
                 title: $(el).find('a').text(),
             }));

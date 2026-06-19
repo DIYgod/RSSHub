@@ -73,7 +73,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateStr), +8),
+                    pubDate: timezone(parseDate(dateStr), 8),
                     author: publisher,
                 };
             })

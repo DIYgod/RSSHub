@@ -44,7 +44,7 @@ async function handler() {
                     return {
                         title,
                         link,
-                        pubDate: timezone(parseDate($item.find('p span').first().text()), +9),
+                        pubDate: timezone(parseDate($item.find('p span').first().text()), 9),
                         category: [category],
                         description: await getDescription(link),
                     } as DataItem;

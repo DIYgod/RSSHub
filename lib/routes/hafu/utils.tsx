@@ -113,7 +113,7 @@ async function ggtzParse(ctx, $) {
                 return {
                     title,
                     description,
-                    pubDate: timezone(pubDate, +8),
+                    pubDate: timezone(pubDate, 8),
                     link,
                     author,
                 };
@@ -149,7 +149,7 @@ async function jwcParse(ctx, $) {
                 return {
                     title,
                     description,
-                    pubDate: timezone(pubDate, +8),
+                    pubDate: timezone(pubDate, 8),
                     link,
                     author: '供稿单位：' + author,
                 };
@@ -187,7 +187,7 @@ async function zsjycParse(ctx, $) {
                 return {
                     title,
                     description,
-                    pubDate: timezone(pubDate, +8),
+                    pubDate: timezone(pubDate, 8),
                     link,
                     author: '供稿单位：招生就业处',
                 };

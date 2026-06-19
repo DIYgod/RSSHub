@@ -42,7 +42,7 @@ export const route: Route = {
             link: item.url,
             author: item.author,
             img: item.icon,
-            pubDate: timezone(parseDate(item.publishTime), +8),
+            pubDate: timezone(parseDate(item.publishTime), 8),
         }));
         return {
             // 源标题

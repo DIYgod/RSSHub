@@ -52,7 +52,7 @@ export const parseList = async (
                     return {
                         title: isSingapore ? $item.text().trim() : ($item.attr('title')?.trim() as string),
                         link: $item.attr('href') as string,
-                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), +8),
+                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), 8),
                     };
                 }
                 const response = await ofetch.raw(new URL($item.attr('href') as string, origin).href);

@@ -92,7 +92,7 @@ async function handler(ctx) {
             return {
                 title: item.find('h3').text().trim(),
                 link: new URL(item.prop('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('em').text()), +8),
+                pubDate: timezone(parseDate(item.find('em').text()), 8),
             };
         });
 
@@ -113,7 +113,7 @@ async function handler(ctx) {
                         .slice(1)
                         .toArray()
                         .map((c) => content(c).prop('title') ?? content(c).text());
-                    item.pubDate = timezone(parseDate(content('.time').prop('datetime')), +8);
+                    item.pubDate = timezone(parseDate(content('.time').prop('datetime')), 8);
                 } catch {
                     // no-empty
                 }

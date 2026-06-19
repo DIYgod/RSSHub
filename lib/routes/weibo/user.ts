@@ -154,7 +154,7 @@ async function handler(ctx) {
                         retweeted_status.created_at = data.retweeted_status.created_at;
                     }
                 } else {
-                    item.mblog.created_at = timezone(created_at, +8);
+                    item.mblog.created_at = timezone(created_at, 8);
                 }
 
                 // 转发的长微博处理

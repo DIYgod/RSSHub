@@ -109,7 +109,7 @@ export async function handler(ctx) {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('time').text()), +8);
+                item.pubDate = timezone(parseDate($$('time').text()), 8);
                 item.category = $$('b.bq-wg')
                     .toArray()
                     .map((c) => $$(c).text());

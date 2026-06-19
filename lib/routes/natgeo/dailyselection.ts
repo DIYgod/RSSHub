@@ -50,7 +50,7 @@ async function handler() {
             title: item.title,
             link: item.url,
             description: `<img src="${item.url}"><br>` + item.content,
-            pubDate: timezone(parseDate(addtime), +0),
+            pubDate: timezone(parseDate(addtime), 0),
             guid: item.id,
         };
         out.push(info);

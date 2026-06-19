@@ -89,7 +89,7 @@ async function handler(ctx) {
                 ),
                 author: item.find('p.tname').text(),
                 guid: item.prop('data-id'),
-                pubDate: timezone(parseDate(item.find('p.ttime').text()), +8),
+                pubDate: timezone(parseDate(item.find('p.ttime').text()), 8),
                 comments: item.find('a.tpinglun').text() ? Number(item.find('a.tpinglun').text()) : 0,
             };
         });
