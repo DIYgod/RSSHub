@@ -387,8 +387,8 @@ importers:
         specifier: 13.0.0
         version: 13.0.0(eslint@10.5.0(jiti@2.6.1))
       eslint-plugin-unicorn:
-        specifier: 66.0.0
-        version: 66.0.0(eslint@10.5.0(jiti@2.6.1))
+        specifier: 68.0.0
+        version: 68.0.0(eslint@10.5.0(jiti@2.6.1))
       eslint-plugin-yml:
         specifier: 3.4.0
         version: 3.4.0(eslint@10.5.0(jiti@2.6.1))
@@ -531,8 +531,8 @@ packages:
     resolution: {integrity: sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-validator-identifier@8.0.0':
-    resolution: {integrity: sha512-kXxQVZHNOctSJJsqzmcbPSCEkM6oHNnDIkua7g9RCO9xRHj2eCiKvRx2KPdfWR9QxcGWnK/oArrtunmie3rL9g==}
+  '@babel/helper-validator-identifier@8.0.2':
+    resolution: {integrity: sha512-9Fr9QeyCAyi1BR1jKZ6uYQ24EIhQUx5ReHfQU7drOE+TPOb+w11/dsqLkMOT2U29OdCT71XajrOT8xDc1C7orA==}
     engines: {node: ^22.18.0 || >=24.11.0}
 
   '@babel/parser@7.29.7':
@@ -2815,8 +2815,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.10.37:
-    resolution: {integrity: sha512-girxaJ7WZssDOFhzCGZTDKoTa1gk6A1TbflaYTpykLJ4UU9Fz9kx1aREM8JCuoVHbL8X8T/mJg7w2oYSq72Oig==}
+  baseline-browser-mapping@2.10.38:
+    resolution: {integrity: sha512-31/02mVB4yuQU6adKk5SlY6m+mxDwUq5KZkyYgnLrrKl7TEm1+3PyDtDBz2kOv/wxZz41GHsvV1A/u6RmiyBvw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -3212,7 +3212,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.49:
@@ -3280,8 +3280,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  electron-to-chromium@1.5.372:
-    resolution: {integrity: sha512-M3yhbAlilnwqC8D21t28UCDGHyitShTmmLRU/H+b74P6Ski16Nb9HONYEaVpMj/pwC7BEo5B95FpjODLCWbtfA==}
+  electron-to-chromium@1.5.376:
+    resolution: {integrity: sha512-cUVA7/RvbFTEuw/i3obUwDTRIXojaxkResf+ibByPFxjc6XK3VNtcQXV0NSbAlJ0FMjcJGgftVVB4Qo184EXvA==}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==}
@@ -3432,8 +3432,8 @@ packages:
     peerDependencies:
       eslint: '>=5.0.0'
 
-  eslint-plugin-unicorn@66.0.0:
-    resolution: {integrity: sha512-+ywdy8T3foyZ2t3nRBujGa3vfOVMobHIi5iLB0L+fogdVO3EiUJ4BAyIacogWytnweLw3hgT70LQL9KoKTY/kA==}
+  eslint-plugin-unicorn@68.0.0:
+    resolution: {integrity: sha512-mHYWvX948Q4H3bGc39bsNMxD/leOuNI+Iws9NVsoSz5VA7EGP86wnz7mZ/SPSvRhefT8L4hd8DHfDuGC+lIoCQ==}
     engines: {node: '>=22'}
     peerDependencies:
       eslint: '>=10.4'
@@ -4531,8 +4531,8 @@ packages:
     peerDependencies:
       undici: ^6
 
-  node-releases@2.0.47:
-    resolution: {integrity: sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==}
+  node-releases@2.0.48:
+    resolution: {integrity: sha512-1uz8041X6LoI6ZSdZacM9lVY28vuzDlSKitnpbSNK0RfKoIJkX29NBPVEFXhnuSuEOA9Ww0xnPJ+ILWbGAv8DA==}
     engines: {node: '>=18'}
 
   nodemailer@9.0.0:
@@ -6003,7 +6003,7 @@ snapshots:
 
   '@babel/helper-validator-identifier@7.29.7': {}
 
-  '@babel/helper-validator-identifier@8.0.0': {}
+  '@babel/helper-validator-identifier@8.0.2': {}
 
   '@babel/parser@7.29.7':
     dependencies:
@@ -6025,7 +6025,7 @@ snapshots:
   '@babel/types@8.0.0':
     dependencies:
       '@babel/helper-string-parser': 8.0.0
-      '@babel/helper-validator-identifier': 8.0.0
+      '@babel/helper-validator-identifier': 8.0.2
 
   '@bbob/core@4.3.1':
     dependencies:
@@ -7836,7 +7836,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.10.37: {}
+  baseline-browser-mapping@2.10.38: {}
 
   basic-ftp@5.3.1: {}
 
@@ -7886,10 +7886,10 @@ snapshots:
 
   browserslist@4.28.2:
     dependencies:
-      baseline-browser-mapping: 2.10.37
+      baseline-browser-mapping: 2.10.38
       caniuse-lite: 1.0.30001799
-      electron-to-chromium: 1.5.372
-      node-releases: 2.0.47
+      electron-to-chromium: 1.5.376
+      node-releases: 2.0.48
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
 
   buffer-equal-constant-time@1.0.1: {}
@@ -8256,7 +8256,7 @@ snapshots:
       minimatch: 9.0.9
       semver: 7.8.4
 
-  electron-to-chromium@1.5.372: {}
+  electron-to-chromium@1.5.376: {}
 
   emoji-regex@10.6.0: {}
 
@@ -8458,7 +8458,7 @@ snapshots:
     dependencies:
       eslint: 10.5.0(jiti@2.6.1)
 
-  eslint-plugin-unicorn@66.0.0(eslint@10.5.0(jiti@2.6.1)):
+  eslint-plugin-unicorn@68.0.0(eslint@10.5.0(jiti@2.6.1)):
     dependencies:
       '@babel/helper-validator-identifier': 7.29.7
       '@eslint-community/eslint-utils': 4.9.1(eslint@10.5.0(jiti@2.6.1))
@@ -9864,7 +9864,7 @@ snapshots:
     transitivePeerDependencies:
       - utf-8-validate
 
-  node-releases@2.0.47: {}
+  node-releases@2.0.48: {}
 
   nodemailer@9.0.0: {}
 
@@ -10395,7 +10395,7 @@ snapshots:
   rolldown-plugin-dts@0.26.0(rolldown@1.1.1)(typescript@5.9.3):
     dependencies:
       '@babel/generator': 8.0.0
-      '@babel/helper-validator-identifier': 8.0.0
+      '@babel/helper-validator-identifier': 8.0.2
       '@babel/parser': 8.0.0
       ast-kit: 3.0.0
       birpc: 4.0.0
