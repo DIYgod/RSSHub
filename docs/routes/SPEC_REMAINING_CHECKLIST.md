@@ -31,16 +31,16 @@ Status legend:
 - [x] `lib/routes/spec/viki.ts`
 - [x] `lib/routes/spec/weverse.ts`
 - [x] `lib/routes/spec/bubble.ts`
-- [ ] `lib/routes/spec/netflix.ts` (validate contract vs upstream `lib/routes/netflix/` and Sunbi ingestion)
+- [x] `lib/routes/spec/netflix.ts` (validate contract vs upstream `lib/routes/netflix/` and Sunbi ingestion)
 
 For each remaining route:
 
-- [ ] Create/verify `namespace.ts`
-- [ ] Add route file with valid `Route` metadata (`path`, `example`, `radar`, `features`, `maintainers`)
-- [ ] Ensure data items use `_extra` (not `extra`)
-- [ ] Add `pubDate` where source provides timestamps
-- [ ] Ensure item `link` is unique and human-readable
-- [ ] Add caching (`cache.tryGet`) for detail fetch loops
+- [x] Create/verify `namespace.ts`
+- [x] Add route file with valid `Route` metadata (`path`, `example`, `radar`, `features`, `maintainers`)
+- [x] Ensure data items use `_extra` (not `extra`)
+- [x] Add `pubDate` where source provides timestamps
+- [x] Ensure item `link` is unique and human-readable
+- [x] Add caching (`cache.tryGet`) for detail fetch loops
 
 ## 3) Contract and Payload Validation
 
@@ -55,8 +55,8 @@ For each remaining route:
 - [x] Build route manifest: `pnpm build:routes`
 - [x] Lint: `pnpm lint`
 - [x] Tests: `pnpm vitest` (or `pnpm test` for full checks)
-- [ ] Manual curl snapshots saved for each route
-- [ ] Error paths tested (missing auth, source failures, empty feed behavior)
+- [x] Manual curl snapshots saved for each route (`docs/routes/SPEC_SMOKE_RESULTS.md`, `scripts/spec-smoke.sh`)
+- [x] Error paths tested (missing auth, source failures, empty feed behavior)
 
 ## 5) Deployment and Ops
 

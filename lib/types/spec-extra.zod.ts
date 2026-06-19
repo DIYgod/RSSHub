@@ -95,8 +95,18 @@ const specExtraNaverWebtoonSchema = specExtraBaseSchema.extend({
     platform: z.literal('naver-webtoon'),
     titleId: z.string(),
     episodeNumber: z.number(),
+    seriesThumb: z.string().optional(),
+    seriesFrontImage: z.string().optional(),
+    seriesAuthor: z.string().optional(),
+    seriesSummary: z.string().optional(),
+    seriesScore: z.string().optional(),
+    seriesRating: z.string().optional(),
+    seriesDayOfWeek: z.string().optional(),
+    thumbnail: z.string().optional(),
     /** Populated by a downstream OCR job; empty array at ingest time. */
     panelImageUrls: z.array(z.string()),
+    episodeHash: z.string().optional(),
+    totalPages: z.number().optional(),
 });
 
 // ─── Union ──────────────────────────────────────────────────────────────────

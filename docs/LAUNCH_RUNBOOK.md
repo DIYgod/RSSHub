@@ -66,23 +66,19 @@ curl -fsS "http://localhost:1200/robots.txt" && echo "OK"
 ## Phase 3 — SPEC route smoke
 
 ```bash
-ACCESS_KEY=$(grep ^ACCESS_KEY .env | cut -d= -f2)
-for r in \
-  "/spec/youtube/UCVSjwV8LXSoqxDKRcNGPrQg" \
-  "/spec/netflix/81249997" \
-  "/spec/naver/blog/webhackyo" \
-  "/spec/naver/webtoon/570503" \
-  "/spec/viki/<test-title-id>" \
-  "/spec/weverse/<test-artist-id>" \
-  "/spec/bubble/<test-artist-id>"
-do
-  echo "== $r =="
-  curl -fsS "http://localhost:1200${r}?format=json&key=${ACCESS_KEY}" \
-    | jq '.items[0] | {title, link, _extra}'
-done
-# At minimum the first four must return valid JSON with _extra populated.
-# Viki/Weverse/Bubble return 401/empty if env not set — that is expected.
+# Requires a running instance (Phase 2) and ACCESS_KEY in .env
+BASE_URL=http://localhost:1200 bash scripts/spec-smoke.sh
 ```
+
+The script checks public-tier routes (YouTube `@DidiKoreanPodcast`, Naver Blog/Webtoon, Netflix when `TMDB_API_KEY` is set, Viki when the API is reachable). Gated routes (Weverse, Bubble) SKIP on HTTP 503 when secrets are absent — expected on a fresh VM.
+
+Optional handler-level live tests (no HTTP middleware):
+
+```bash
+LIVE_TESTS=1 pnpm vitest:live
+```
+
+See [SPEC_SMOKE_RESULTS.md](routes/SPEC_SMOKE_RESULTS.md) for the latest recorded run.
 
 ## Phase 4 — Public TLS termination (Caddy)
 
