@@ -1,0 +1,18 @@
+# SPEC fork — keep our tree during `git merge upstream/master`.
+# Does not apply to `git rebase`; prefer merge for upstream sync (see scripts/upstream-sync.sh).
+
+lib/routes/spec/** merge=ours
+lib/types/spec-extra.ts merge=ours
+docs/spec-*.md merge=ours
+docs/LAUNCH_RUNBOOK.md merge=ours
+docs/impl/** merge=ours
+docs/naver-webtoon/** merge=ours
+docs/routes/SPEC_*.md merge=ours
+docs/routes/RSSHUB_SETUP.md merge=ours
+scripts/bootstrap-sunbi-env.sh merge=ours
+scripts/spec-smoke.sh merge=ours
+scripts/upstream-sync.sh merge=ours
+docker-compose.sunbi-rsshub.yml merge=ours
+tests/fixtures/spec-*.json merge=ours
+tests/routes/spec/** merge=ours
+.gitattributes merge=ours
