@@ -48,3 +48,12 @@ artifacts/naver-blog-webhackyo.json
 artifacts/naver-webtoon-758037.json
 artifacts/naver-webtoon-811721-v2.json
 artifacts/naver-webtoon-811721.json
+
+# galmuri — managed block (do not edit)
+.galmuri/
+knowledge-wiki/**/__pycache__/
+knowledge-wiki/**/*.py[cod]
+knowledge-wiki/**/.pytest_cache/
+knowledge-wiki/**/.mypy_cache/
+knowledge-wiki/**/.ruff_cache/
+# end galmuri — managed block
