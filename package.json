@@ -114,7 +114,7 @@
         "otplib": "13.4.1",
         "p-map": "7.0.4",
         "pac-proxy-agent": "9.1.0",
-        "patchright": "1.60.2",
+        "patchright": "1.61.0",
         "query-string": "9.4.0",
         "rate-limiter-flexible": "11.2.0",
         "re2js": "2.8.3",
