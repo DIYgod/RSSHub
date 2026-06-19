@@ -11,7 +11,7 @@ Custom SPEC routes live in `lib/routes/spec/` (plus other namespaces under `lib/
 
 RSSHub's Docker image bakes routes at build time — volume-mounting custom
 routes does not work. A fork lets you add routes under `lib/routes/` and build
-your own image. Upstream updates are pulled via `git merge upstream/main`.
+your own image. Upstream updates: `pnpm upstream:sync` (see `docs/spec-upstream-merge.md`).
 
 ## Initial Setup
 
@@ -171,7 +171,7 @@ docker compose logs -f rsshub
 
 # Update from upstream (monthly)
 git fetch upstream
-git merge upstream/main
+git merge upstream/master
 # resolve conflicts in lib/routes/ (isolated namespaces reduce collisions)
 docker compose build
 docker compose up -d

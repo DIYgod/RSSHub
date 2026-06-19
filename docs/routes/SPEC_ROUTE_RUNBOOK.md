@@ -127,7 +127,7 @@ Exit criteria:
 Monthly (or as needed):
 
 1. `git fetch upstream`
-2. `git merge upstream/main`
+2. `pnpm upstream:sync` (or `git merge upstream/master`)
 3. Resolve conflicts (prefer custom namespace isolation)
 4. Re-run:
     - `pnpm build:routes`
