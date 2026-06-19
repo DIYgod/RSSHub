@@ -1,0 +1,24 @@
+{
+    "_extras": [
+        {
+            "type": "naver/blog/post",
+            "platform": "naver-blog",
+            "sourceUrl": "https://blog.naver.com/PostView.naver?blogId=webhackyo&logNo=2234567890",
+            "externalId": "2234567890",
+            "seriesExternalId": "webhackyo",
+            "publishedAt": "2026-04-01T00:00:00.000Z",
+            "blogId": "webhackyo",
+            "authorId": "webhackyo"
+        },
+        {
+            "type": "naver/blog/post",
+            "platform": "naver-blog",
+            "sourceUrl": "https://blog.naver.com/PostView.naver?blogId=webhackyo&logNo=2234567891",
+            "externalId": "2234567891",
+            "seriesExternalId": "webhackyo",
+            "publishedAt": "2026-03-31T00:00:00.000Z",
+            "blogId": "webhackyo",
+            "authorId": "webhackyo"
+        }
+    ]
+}

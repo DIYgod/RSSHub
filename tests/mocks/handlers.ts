@@ -1,4 +1,12 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
 import { http, HttpResponse } from 'msw';
+
+const fixturesDir = path.join(import.meta.dirname, '../fixtures');
+const naverBlogRssXml = readFileSync(path.join(fixturesDir, 'naver-blog-webhackyo.xml'), 'utf-8');
+const naverWebtoonListHtml = readFileSync(path.join(fixturesDir, 'naver-webtoon-848000-list.html'), 'utf-8');
+const naverWebtoonDetailHtml = readFileSync(path.join(fixturesDir, 'naver-webtoon-848000-detail.html'), 'utf-8');
 
 /**
  * MSW handlers for the 5 SPEC route upstream APIs.
@@ -334,4 +342,14 @@ export const netflixHandlers = [
     }),
 ];
 
-export const handlers = [...youtubeHandlers, ...vikiHandlers, ...weverseHandlers, ...bubbleHandlers, ...netflixHandlers];
+// ── Naver Blog ──────────────────────────────────────────────────────────────
+export const naverBlogHandlers = [http.get('https://rss.blog.naver.com/:blogId.xml', () => HttpResponse.text(naverBlogRssXml, { headers: { 'Content-Type': 'application/xml' } }))];
+
+// ── Naver Webtoon ───────────────────────────────────────────────────────────
+export const naverWebtoonHandlers = [
+    http.get('https://m.comic.naver.com/webtoon/list', () => HttpResponse.text(naverWebtoonListHtml)),
+    http.get('https://comic.naver.com/webtoon/list', () => HttpResponse.text(naverWebtoonListHtml)),
+    http.get('https://m.comic.naver.com/webtoon/detail', () => HttpResponse.text(naverWebtoonDetailHtml)),
+];
+
+export const handlers = [...youtubeHandlers, ...vikiHandlers, ...weverseHandlers, ...bubbleHandlers, ...netflixHandlers, ...naverBlogHandlers, ...naverWebtoonHandlers];

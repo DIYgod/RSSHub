@@ -109,6 +109,10 @@ export interface SpecExtraNaverWebtoon extends SpecExtraBase {
     thumbnail?: string;
     /** Populated by a downstream OCR job; empty array at ingest time. */
     panelImageUrls: string[];
+    /** Panel image hash prefix from detail page scrape (for OCR pagination). */
+    episodeHash?: string;
+    /** Total panel pages detected on detail page (when available). */
+    totalPages?: number;
 }
 
 // ─── Union ───────────────────────────────────────────────────────────────────
