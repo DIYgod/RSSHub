@@ -38,7 +38,7 @@ async function handler(ctx) {
         pageUrl = `${baseUrl}/servicesupport/analygarden/`;
 
     if (program !== '分析师园地') {
-        pageUrl = `${pageUrl}${program}/`;
+        pageUrl += `${program}/`;
 
         const response = await got(pageUrl);
         const $ = load(response.data);

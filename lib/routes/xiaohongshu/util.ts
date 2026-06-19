@@ -291,9 +291,9 @@ async function getUserWithCookie(url: string) {
     for (const item of state.user.notes.flat()) {
         const path = paths[index];
         if (path && path.includes('?')) {
-            item.id = item.id + path?.slice(path.indexOf('?'));
+            item.id += path?.slice(path.indexOf('?'));
         }
-        index = index + 1;
+        index += 1;
     }
     return state.user;
 }

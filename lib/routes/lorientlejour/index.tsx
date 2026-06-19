@@ -143,7 +143,7 @@ async function handler(ctx) {
 
     let url = `https://www.lorientlejour.com/cmsapi/content.php?text=clean&key=${key}&action=search&category=${encodeURIComponent(JSON.stringify(categoriesParam))}&limit=${limit}&text=false&page=1`;
     if (token) {
-        url = url + `&token=${token}`;
+        url += `&token=${token}`;
     }
     const response = await got(url);
     const items = response.data.data.map((item) => {

@@ -84,7 +84,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
                 return script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1] || '';
             });
             if (zseCk) {
-                cookieStr = `${cookieStr}; __zse_ck=${zseCk}`;
+                cookieStr += `; __zse_ck=${zseCk}`;
             }
         }
 

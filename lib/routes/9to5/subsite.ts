@@ -41,10 +41,10 @@ async function handler(ctx) {
     }
 
     if (ctx.req.param('tag')) {
-        link = `${link}/guides/${ctx.req.param('tag')}/feed/`;
+        link += `/guides/${ctx.req.param('tag')}/feed/`;
         title = `${ctx.req.param('tag')} | ${title}`;
     } else {
-        link = `${link}/feed/`;
+        link += '/feed/';
     }
 
     const feed = await parser.parseURL(link);
