@@ -54,7 +54,7 @@ const fetchArticle = (item: Item & { link: string }) =>
     });
 
 async function handler(ctx) {
-    const limit = Math.max(Number.parseInt(ctx.req.query('limit') ?? '', 10) || defaultLimit, 1);
+    const limit = Number(ctx.req.query('limit')) || defaultLimit;
     const feedResponse = await ofetch(feedUrl, {
         parseResponse: (text) => text,
     });

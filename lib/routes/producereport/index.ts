@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'produce/fresh-fruits/apples' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const limit = Number(ctx.req.query('limit') ?? '10');
 
     const baseUrl = 'https://www.producereport.com';
     const targetUrl: string = new URL(category, baseUrl).href;
@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 .find('td.views-field-field-image a img')
                 .attr('src')
                 ?.replace(/styles\/thumbnail\/public/, '')
-                ?.split(/\?/)?.[0];
+                ?.split(/\?/, 1)?.[0];
 
             const description: string | undefined = renderDescription({
                 images: image
@@ -157,10 +157,9 @@ export const route: Route = {
             description: 'Category, `Fresh Fruits - Apple` by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Apples](https://www.producereport.com/produce/fresh-fruits/apples), where the source URL is \`https://www.producereport.com/produce/fresh-fruits/apples\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/producereport/produce/fresh-fruits/apples\`](https://rsshub.app/producereport/produce/fresh-fruits/apples).
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

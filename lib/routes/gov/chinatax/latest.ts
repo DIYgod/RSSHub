@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/chinatax/latest',
+    path: '/latest',
     categories: ['government'],
     example: '/gov/chinatax/latest',
     parameters: {},
@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = `http://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html`;
+    const link = 'http://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html';
 
     const response = await got({
         method: 'get',
@@ -44,7 +44,7 @@ async function handler() {
             const a = item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), `http://www.chinatax.gov.cn`).toString(),
+                link: new URL(a.attr('href'), 'http://www.chinatax.gov.cn').href,
             };
         });
     const items = await Promise.all(

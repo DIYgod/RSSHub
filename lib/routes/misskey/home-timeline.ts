@@ -59,7 +59,7 @@ Examples:
     maintainers: ['HanaokaYuzu'],
     handler,
     description: `::: warning
-    This route is only available for self-hosted instances.
+This route is only available for self-hosted instances.
 :::`,
 };
 

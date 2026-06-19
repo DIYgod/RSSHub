@@ -1,5 +1,5 @@
-/* eslint-disable unicorn/prefer-code-point */
-import aesjs from 'aes-js';
+import crypto from 'node:crypto';
+
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -29,6 +29,25 @@ export const route: Route = {
     handler,
 };
 
+const generateDeviceId = () => {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz234567';
+    let value = 0;
+    let bits = 0;
+    let id = 'b';
+    for (const byte of crypto.randomBytes(16)) {
+        value = (value << 8) | byte;
+        bits += 8;
+        while (bits >= 5) {
+            bits -= 5;
+            id += alphabet[(value >> bits) & 31];
+        }
+    }
+    if (bits > 0) {
+        id += alphabet[(value << (5 - bits)) & 31];
+    }
+    return id;
+};
+
 async function handler(ctx) {
     const wd = ctx.req.param('wd');
     const baseUrl = 'https://www.duozhuayu.com';
@@ -36,14 +55,9 @@ async function handler(ctx) {
     const link = `${baseUrl}/search/${type}/${wd}`;
 
     // token获取见 https://github.com/wong2/userscripts/blob/master/duozhuayu.user.js
-    const key = [...'DkOliWvFNR7C4WvR'].map((c) => c.charCodeAt());
-    const iv = [...'GQWKUE2CVGOOBKXU'].map((c) => c.charCodeAt());
-    const aesCfb = new aesjs.ModeOfOperation.cfb(key, iv);
-
     const encrypt = (text) => {
-        const textBytes = aesjs.utils.utf8.toBytes(text);
-        const encryptedBytes = aesCfb.encrypt(textBytes);
-        return aesjs.utils.hex.fromBytes(encryptedBytes);
+        const cipher = crypto.createCipheriv('aes-128-cfb8', 'DkOliWvFNR7C4WvR', 'GQWKUE2CVGOOBKXU');
+        return Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]).toString('hex');
     };
 
     const getCustomRequestHeaders = () => {
@@ -53,10 +67,13 @@ async function handler(ctx) {
         const token = encrypt([timestamp, userId, securityKey].join(':'));
         const requestId = [userId, timestamp, Math.round(1e5 * Math.random())].join('-');
         return {
-            'x-api-version': '0.0.48',
+            'x-api-version': '0.0.85',
+            'x-app-platform': 'na',
+            'x-app-version': 'na',
+            'x-device-id': generateDeviceId(),
             'x-refer-request-id': requestId,
             'x-request-id': requestId,
-            'x-request-misc': '{"platform":"browser","originSource":"search","originFrom":"normal","webVersion":"1.2.201774"}',
+            'x-request-misc': '{"platform":"browser","originSource":"search","originFrom":"normal","webVersion":"1.2.525412"}',
             'x-request-token': token,
             'x-security-key': securityKey,
             'x-timestamp': timestamp,
@@ -76,7 +93,8 @@ async function handler(ctx) {
 
     const item = response.data.data
         .filter((item) => item.type === type)
-        .map(({ [type]: item }) => ({
+        .map((entry) => entry[type])
+        .map((item) => ({
             title: item.title,
             link: `${baseUrl}/books/${item.id}`,
             pubDate: parseDate(item.updated), // 2023-05-07T13:33:09+08:00

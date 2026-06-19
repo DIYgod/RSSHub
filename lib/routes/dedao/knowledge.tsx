@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const mentionPattern = /<\u2267\u2746>{"name":"(.*?)","uid":"\d+","at":"1"}<\/\u2266\u2746>/g;
+const mentionPattern = /<\u2267\u2746>\{"name":"(.*?)","uid":"\d+","at":"1"\}<\/\u2266\u2746>/g;
 
 const formatNoteText = (text = '') => text.replaceAll('\n\n', '</p><p>').replaceAll(mentionPattern, ' @$1');
 

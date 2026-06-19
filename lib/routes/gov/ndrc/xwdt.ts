@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/ndrc/xwdt/:category{.+}?',
+    path: '/xwdt/:category{.+}?',
     name: '新闻动态',
     example: '/gov/ndrc/xwdt',
     parameters: { category: '分类，见下表，默认为新闻发布' },
@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'xwfb';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 25;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://www.ndrc.gov.cn';
     const currentUrl = category.includes('dt') ? `${rootUrl}/xwdt/dt/${category}` : `${rootUrl}/xwdt/${category}`;

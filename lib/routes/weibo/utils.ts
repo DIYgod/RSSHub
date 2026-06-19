@@ -6,8 +6,8 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { getPuppeteerPage } from '@/utils/puppeteer';
-import { getCookies } from '@/utils/puppeteer-utils';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { getCookies } from '@/utils/playwright-utils';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
 class RenewWeiboCookiesError extends Error {
@@ -26,11 +26,11 @@ const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDes
     let formattedHtml = html;
 
     if (!showEmojiInDescription) {
-        formattedHtml = formattedHtml.replaceAll(/<span class=["']?url-icon["']?><img\s[^>]*?alt=["']?([^>]+?)["']?\s[^>]*?\/><\/span>/g, '$1');
+        formattedHtml = formattedHtml.replaceAll(/<span class=["']?url-icon["']?><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/><\/span>/g, '$1');
     }
 
     if (!showLinkIconInDescription) {
-        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*?<span class=["']?surl-text["']?>([^<>]*?)<\/span><\/a>/g, '$1$2</a>');
+        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*<span class=["']?surl-text["']?>([^<>]*)<\/span><\/a>/g, '$1$2</a>');
     }
 
     return formattedHtml;
@@ -65,9 +65,8 @@ const weiboUtils = {
                     if (renew?.message) {
                         logger.warn(coolingDownMessage);
                         throw renew;
-                    } else {
-                        throw new Error(coolingDownMessage);
                     }
+                    throw new Error(coolingDownMessage);
                 }
                 coolingDown = true;
                 setTimeout(() => {
@@ -80,25 +79,24 @@ const weiboUtils = {
                     logger.info(`Fetching visitor Cookies from ${url}`);
                 }
                 let times = 0;
-                const { page, destroy } = await getPuppeteerPage(url, {
+                const { page, destroy } = await getPlaywrightPage(url, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.setUserAgent(weiboUtils.apiHeaders['User-Agent']);
-                        await page.setRequestInterception(true);
-                        page.on('request', (request) => {
+                        await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
+                        await page.route('**/*', (route) => {
+                            const request = route.request();
                             // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
                             if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
-                                request.abort();
+                                route.abort();
                                 return;
                             }
                             if (request.url().startsWith(url)) {
                                 times++;
                             }
-                            request.continue();
+                            route.continue();
                         });
                     },
-                    // networkidle2 returns too early if the connection is slow
-                    gotoConfig: { waitUntil: 'networkidle0' },
+                    gotoConfig: { waitUntil: 'networkidle' },
                 });
                 const cookies: string = await getCookies(page, 'weibo.cn');
                 await destroy();
@@ -141,7 +139,7 @@ const weiboUtils = {
     })(),
     formatTitle: (html) =>
         html
-            .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>]+?)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
+            .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
             .replaceAll(/<span class=["']url-icon["']>(<img\s[^>]*>)<\/span>/g, '') // 去掉所有图标
             .replaceAll(/<img\s[^<]*>/g, '[图片]')
             // impossible to have inline script in weibo posts, but CodeQL complains about it
@@ -198,27 +196,27 @@ const weiboUtils = {
 
         let retweeted = '';
         // 长文章的处理
-        let htmlNewLineUnreplaced = (status.longText && status.longText.longTextContent) || status.text || '';
-        htmlNewLineUnreplaced = formatDescriptionText(htmlNewLineUnreplaced, descriptionRenderParams);
+        let htmlNewlineUnreplaced = (status.longText && status.longText.longTextContent) || status.text || '';
+        htmlNewlineUnreplaced = formatDescriptionText(htmlNewlineUnreplaced, descriptionRenderParams);
 
         // 提取 话题作为 category
-        const category: string[] = htmlNewLineUnreplaced.match(/<span class=["']?surl-text["']?>#([^<>]*?)#<\/span>/g)?.map((e) => e?.match(/#([^#]+)#/)?.[1]);
+        const category: string[] = htmlNewlineUnreplaced.match(/<span class=["']?surl-text["']?>#([^<>]*?)#<\/span>/g)?.map((e) => e?.match(/#([^#]+)#/)?.[1]);
 
         // 去掉乱七八糟的图标  // 不需要，上述的替换应该已经把所有的图标都替换掉了，且这条 regex 会破坏上述替换不发生时的输出
-        // htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(/<span class=["']?url-icon["']?>(<img\s[^>]*?>)<\/span>/g, '');
+        // htmlNewlineUnreplaced = htmlNewlineUnreplaced.replace(/<span class=["']?url-icon["']?>(<img\s[^>]*?>)<\/span>/g, '');
         // 将行内图标的高度设置为一行，改善阅读体验。但有些阅读器删除了 style 属性，无法生效  // 不需要，微博已经作此设置
-        // htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(/(?<=<span class=["']?url-icon["']?>)<img/g, '<img style="height: 1em"');
+        // htmlNewlineUnreplaced = htmlNewlineUnreplaced.replace(/(?<=<span class=["']?url-icon["']?>)<img/g, '<img style="height: 1em"');
         // 去掉全文
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll('全文<br>', '<br>');
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a href="(.*?)">全文<\/a>/g, '');
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll('全文<br>', '<br>');
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll(/<a href="(.*?)">全文<\/a>/g, '');
 
         // 处理外部链接
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/"https:\/\/weibo\.cn\/sinaurl.*?[&?]u=(http.*?)"/g, (match, p1) => `"${decodeURIComponent(p1)}"`);
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll(/"https:\/\/weibo\.cn\/sinaurl.*?[&?]u=(http.*?)"/g, (match, p1) => `"${decodeURIComponent(p1)}"`);
 
         // 处理图片的链接
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
-        let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
+        let html = htmlNewlineUnreplaced.replaceAll('\n', '<br>');
 
         // 添加用户名和头像
         if (showAuthorInDesc) {
@@ -305,15 +303,15 @@ const weiboUtils = {
                     html += '</a>';
                 }
 
-                htmlNewLineUnreplaced += '<img src="" />';
+                htmlNewlineUnreplaced += '<img src="" />';
             }
         }
 
         // 处理转发的微博
         if (status.retweeted_status) {
             html += readable
-                ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`
-                : `<br><blockquote> - 转发 `;
+                ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">'
+                : '<br><blockquote> - 转发 ';
             if (!status.retweeted_status.user) {
                 // 当转发的微博被删除时user为null
                 status.retweeted_status.user = {
@@ -335,10 +333,10 @@ const weiboUtils = {
                 html += `<br><small>原博：<a href="https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}" target="_blank" rel="noopener noreferrer">https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}</a></small>`;
             }
             if (showTimestampInDescription) {
-                html += `<br><small>` + new Date(status.retweeted_status.created_at).toLocaleString() + `</small>`;
+                html += '<br><small>' + new Date(status.retweeted_status.created_at).toLocaleString() + '</small>';
             }
             if (readable) {
-                html += `<br clear="both" /><div style="clear: both"></div>`;
+                html += '<br clear="both" /><div style="clear: both"></div>';
             }
 
             html += '</blockquote>';
@@ -353,7 +351,7 @@ const weiboUtils = {
             title += status.user.screen_name + ': ';
         }
         if (!status.retweeted_status || showRetweetTextInTitle) {
-            title += weiboUtils.formatTitle(htmlNewLineUnreplaced);
+            title += weiboUtils.formatTitle(htmlNewlineUnreplaced);
         }
         if (status.retweeted_status) {
             title += showEmojiForRetweet ? '🔁 ' : ' - 转发 ';
@@ -548,7 +546,7 @@ const weiboUtils = {
             });
             if (response.data && response.data.data) {
                 const comments = response.data.data;
-                itemDesc += `<br clear="both" /><div style="clear: both"></div><div style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`;
+                itemDesc += '<br clear="both" /><div style="clear: both"></div><div style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">';
                 itemDesc += '<h3>热门评论</h3>';
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
@@ -577,7 +575,7 @@ const weiboUtils = {
                                         const imgSrc = decodeURIComponent(hrefMatch[1]);
                                         const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
                                         // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        replyText = replyText.replaceAll(match, imgTag);
+                                        replyText = replyText.replaceAll(match, () => imgTag);
                                     }
                                 }
                             }
@@ -612,8 +610,9 @@ const weiboUtils = {
         const replace = (html) => html.replaceAll(regex, 'tvax'); // enforce `tvax` as `tva` has a strict WAF
         const replaceKV = (obj, keys) => {
             for (const key of keys) {
-                if (obj[key]) {
-                    obj[key] = replace(obj[key]);
+                const value = obj[key];
+                if (value) {
+                    obj[key] = replace(value);
                 }
             }
         };

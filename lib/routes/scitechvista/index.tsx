@@ -21,7 +21,7 @@ function parseRocDate(rocDate: string | undefined): Date | undefined {
         return undefined;
     }
     const [rocYearStr, monthStr, dayStr] = parts;
-    const rocYear = Number.parseInt(rocYearStr, 10);
+    const rocYear = Number(rocYearStr);
 
     const year = rocYear + 1911;
     return parseDate(`${year}-${monthStr}-${dayStr}`, 'YYYY-MM-DD');
@@ -61,20 +61,20 @@ async function handler(): Promise<Data> {
     const items: DataItem[] = articleNodes
         .map((colEl) => {
             const node = $(colEl);
-            const anchor = node.find('a[href*="/Article/C000003/detail"]').first();
+            const anchor = node.find('a[href*="/Article/C000003/detail"]');
 
             const linkPath = anchor.attr('href');
             const link = linkPath ? new URL(linkPath, baseUrl).href : undefined;
 
-            const title = node.find('div.kf-title').first().text().trim();
+            const title = node.find('div.kf-title').text().trim();
 
-            const dateText = node.find('div.kf-date > span').first().text().trim() || undefined;
+            const dateText = node.find('div.kf-date > span').text().trim();
             const pubDate = dateText ? timezone(parseRocDate(dateText), +8) : undefined;
 
             const imagePath = node.find('img').attr('src');
             const image = imagePath ? new URL(imagePath, baseUrl).href : undefined;
 
-            const snippet = node.find('div.kf-txt').first().text().trim() || undefined;
+            const snippet = node.find('div.kf-txt').text().trim();
 
             const description = renderToString(
                 <>

@@ -10,7 +10,7 @@ export const parseItem = async (item) => {
 
     $('.article-ad, #strategy-rules-player-wrapper, [data-module-name="newsletter-article-sign-up-module"], div.flex.flex-col.gap-2').remove();
     const cover = $('.article-content-wrapper figure');
-    cover.find('img').attr('src', cover.find('img').attr('url')?.split('?')[0]);
+    cover.find('img').attr('src', cover.find('img').attr('url')?.split('?', 1)[0]);
     cover.find('img').removeAttr('style srcset url');
 
     item.description =
@@ -21,7 +21,7 @@ export const parseItem = async (item) => {
             .join('');
     item.pubDate = parseDate(ldJson.datePublished);
     item.author = ldJson.author.map((a) => ({ name: a.name }));
-    item.image = ldJson.image.url.split('?')[0];
+    item.image = ldJson.image.url.split('?', 1)[0];
 
     return item;
 };

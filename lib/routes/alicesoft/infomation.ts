@@ -36,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category, game } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     let url = `${baseUrl}/information`;
     if (category) {

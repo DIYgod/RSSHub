@@ -32,7 +32,7 @@ async function handler() {
     const response = await got(`${host}/wp-json/wp/v2/posts?per_page=30`);
     const list = response.data;
     return {
-        title: `ACG17 - 全部文章`,
+        title: 'ACG17 - 全部文章',
         link: `${host}/blog`,
         description: 'ACG17 - 全部文章',
         item: list.map((item) => ({

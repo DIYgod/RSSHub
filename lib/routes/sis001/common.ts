@@ -53,7 +53,7 @@ async function getThread(cookie: string, item: DataItem) {
             $('.postinfo')
                 .eq(0)
                 .text()
-                .match(/发表于 (.*)\s*只看该作者/)[1],
+                .match(/发表于 (.*)(?:[\n\r\u2028\u2029]\s*)?只看该作者/)[1],
             'YYYY-M-D HH:mm'
         ),
         8
@@ -65,7 +65,7 @@ async function getThread(cookie: string, item: DataItem) {
             .html()
             ?.replaceAll('\n', '')
             .replaceAll(/\u3000{2}.+?(((?:<br>){2})|(&nbsp;))/g, (str) => `<p>${str.replaceAll('<br>', '')}</p>`)
-            .replaceAll(/<p>\u3000{6,}(.+?)<\/p>/g, '<center><p style="text-align:center;">$1</p></center>')
+            .replaceAll(/<p>\u3000{6,}([^\u3000\n\r\u2028\u2029].*?|\u3000)<\/p>/g, '<center><p style="text-align:center;">$1</p></center>')
             .replaceAll('&nbsp;', '')
             .replace(/<br><br> +<br><br>/, '') + ($('.defaultpost .postattachlist').html() ?? '');
     return item;

@@ -265,7 +265,7 @@ async function handler(ctx): Promise<Data> {
     const siteResponse = await ofetch.raw(baseUrl);
     const cookies = siteResponse.headers
         .getSetCookie()
-        ?.map((c) => c.split(';')[0])
+        ?.map((c) => c.split(';', 1)[0])
         .join('; ');
     const csrfToken = siteResponse._data.match(/"csrfToken":"(.*?)","/)[1];
 

@@ -45,7 +45,7 @@ const getNews = async (category) => {
                     type = 'PHO';
                 } else if (id.startsWith('VIDE')) {
                     // 视频
-                    const vid = path.parse(image).name.split('-')[0];
+                    const vid = path.parse(image).name.split('-', 1)[0];
                     api = `https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=${vid}`;
                     type = 'VIDE';
                 } else {

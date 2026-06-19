@@ -72,7 +72,7 @@ For each remaining route:
 ## 6) Maintenance
 
 - [ ] Add upstream remote if missing
-- [ ] Monthly upstream sync (`git fetch upstream && git merge upstream/main`)
+- [ ] Monthly upstream sync (`pnpm upstream:sync`)
 - [ ] Re-run route smoke tests after each sync
 - [ ] Track expiring auth values (for example `WEVERSE_TOKEN`) and rotation schedule
 
@@ -90,5 +90,5 @@ For each remaining route:
 - [x] [docs/spec-cache.md](../../spec-cache.md) — TTL table + `cache.tryGet` worked example.
 - [x] [docs/spec-error-codes.md](../../spec-error-codes.md) — typed error code table + log triage.
 - [x] [docs/spec-secrets-runbook.md](../../spec-secrets-runbook.md) — acquisition + rotation for `WEVERSE_TOKEN`, `NETFLIX_COOKIE`, `NAVER_COOKIE`, `BUBBLE_COOKIE`, `ACCESS_KEY`.
-- [x] [docs/spec-upstream-merge.md](../../spec-upstream-merge.md) — monthly `git fetch upstream && git merge upstream/main` procedure.
+- [x] [docs/spec-upstream-merge.md](../../spec-upstream-merge.md) — `pnpm upstream:sync` procedure + `.gitattributes` merge=ours for SPEC paths.
 - [x] [scripts/bootstrap-sunbi-env.sh](../../scripts/bootstrap-sunbi-env.sh) — generates `ACCESS_KEY`, writes `.env`, sets `CACHE_TYPE`, prints Fly secrets commands.

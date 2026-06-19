@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://news.gamebase.com.tw';
     const targetUrl: string = new URL(`news${category === 'all' ? '' : `/newslist?type=${category}`}`, baseUrl).href;
@@ -148,8 +148,7 @@ export const route: Route = {
 :::
 
 | newslist | r18list |
-| -------- | ------- |
-`,
+| -------- | ------- |`,
     categories: ['game'],
     features: {
         requireConfig: false,
@@ -190,7 +189,6 @@ export const route: Route = {
 :::
 
 | newslist | r18list |
-| -------- | ------- |
-`,
+| -------- | ------- |`,
     },
 };

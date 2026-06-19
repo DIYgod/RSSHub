@@ -86,7 +86,7 @@ async function handler(ctx) {
             case 32: {
                 const enclosure = item.large_image_list?.pop();
                 return {
-                    title: item.content?.split('\n')[0],
+                    title: item.content?.split('\n', 1)[0],
                     description: item.rich_content,
                     link: `https://www.toutiao.com/w/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),

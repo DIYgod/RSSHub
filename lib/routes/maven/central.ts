@@ -45,7 +45,7 @@ export const route: Route = {
  * Handles cases without delimiters: 5.0.0beta2, 7.0.0canary
  * Handles secondary versions: 1.0.0-M6.1
  */
-const UNSTABLE_VERSION_REGEX = /[-_.]?(rc|m|snapshot|alpha|beta|preview|canary)[.\d]*$/i;
+const UNSTABLE_VERSION_REGEX = /[-_.]?(?:rc|m|snapshot|alpha|beta|preview|canary)[.\d]*$/i;
 
 /**
  * Regex to extract date in the format YYYY-MM-DD HH:mm (e.g., 2024-09-22 04:19)
@@ -55,16 +55,16 @@ const DATE_REGEX = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
 async function handler(ctx) {
     const group = ctx.req.param('group');
     const artifact = ctx.req.param('artifact');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     // (org.springframework, spring-core) -> org/springframework/spring-core
     const identifier = `${group.replaceAll('.', '/')}/${artifact}`;
 
     try {
         const metadataUrl = `https://repo1.maven.org/maven2/${identifier}/maven-metadata.xml`;
-        const metaDataResponse = await ofetch(metadataUrl);
+        const metadataResponse = await ofetch(metadataUrl);
 
-        const $meta = load(metaDataResponse, { xmlMode: true });
+        const $meta = load(metadataResponse, { xmlMode: true });
         const latestVersion = $meta('metadata > versioning > latest').text();
 
         if (!latestVersion) {

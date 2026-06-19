@@ -95,8 +95,8 @@ const legacyFetch = async (page, queryOrItem) => {
     }
 
     let response;
-    const webUrl = await cache.tryGet(`${redirectCacheKey}:${legacyUrl.toString()}`, async () => {
-        response = await got(legacyUrl.toString());
+    const webUrl = await cache.tryGet(`${redirectCacheKey}:${legacyUrl.href}`, async () => {
+        response = await got(legacyUrl.href);
         return response.url;
     });
     if (response) {

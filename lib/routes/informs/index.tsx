@@ -43,7 +43,7 @@ async function handler(ctx) {
             });
             const cookie = response.headers['set-cookie']
                 .slice(1)
-                .map((item) => item.split(';')[0])
+                .map((item) => item.split(';', 1)[0])
                 .join('; ');
 
             return cookie;

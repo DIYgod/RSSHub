@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/news',
     categories: ['anime'],
-    example: '/news',
+    example: '/acgvinyl/news',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -40,6 +40,7 @@ async function handler(ctx) {
     const newsIndexJsonText = $('script:contains("window.__INITIAL_STATE__")').text().replaceAll('window.__INITIAL_STATE__=', '');
     const newsIndexJson = JSON.parse(newsIndexJsonText);
 
+    const limit = ctx.req.query('limit');
     const newsListResponse = await ofetch(`${rootUrl}/rajax/news_h.jsp?cmd=getWafNotCk_getList`, {
         method: 'POST',
         headers: {
@@ -47,7 +48,7 @@ async function handler(ctx) {
         },
         body: new URLSearchParams({
             page: '1',
-            pageSize: String(ctx.req.query('limit') ?? 20),
+            pageSize: String(limit ?? 20),
             fromMid: newsIndexJson.modules.module366.id,
             idList: `[${newsIndexJson.modules.module366.prop3}]`,
             sortKey: newsIndexJson.modules.module366.blob0.sortKey,

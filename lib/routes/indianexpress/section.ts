@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'trending' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const apiSlug = 'wp-json/wp/v2';
     const baseUrl = 'https://indianexpress.com';
@@ -99,10 +99,9 @@ export const route: Route = {
             description: 'Section ID, `trending` as Trending by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Section](https://indianexpress.com/), where the source URL is \`https://indianexpress.com/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/indianexpress/section/explained\`](https://rsshub.app/indianexpress/section/explained).
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

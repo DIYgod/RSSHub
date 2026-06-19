@@ -32,7 +32,7 @@ export const route: Route = {
 const findLargestImgKey = (images) =>
     Object.keys(images)
         .filter((key) => key.startsWith('inline_free_') || key.startsWith('hero_landscape_'))
-        .toSorted((a, b) => Number.parseInt(b.split('_')[2]) - Number.parseInt(a.split('_')[2]))[0];
+        .toSorted((a, b) => Number.parseInt(b.split('_', 3)[2]) - Number.parseInt(a.split('_', 3)[2]))[0];
 
 const renderFigure = (url, caption) => `<figure><img src="${url}" alt="${caption}" /><figcaption>${caption}</figcaption></figure>`;
 
@@ -64,7 +64,7 @@ const render = (widgets) =>
         .join('');
 
 async function handler() {
-    const baseURL = `https://sustainabilitymag.com`;
+    const baseURL = 'https://sustainabilitymag.com';
     const feedURL = `${baseURL}/articles`;
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';

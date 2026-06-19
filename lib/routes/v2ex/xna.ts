@@ -52,9 +52,9 @@ async function handler(ctx) {
         });
 
     return {
-        title: `V2EX-xna`,
+        title: 'V2EX-xna',
         link: pageUrl,
-        description: `V2EX-xna`,
+        description: 'V2EX-xna',
         item: items,
     };
 }

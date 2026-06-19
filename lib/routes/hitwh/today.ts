@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((el) => ({
             pubDate: timezone(parseDate($(el).find('.news-time2').text()), 8),
-            link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+            link: new URL($(el).find('a').attr('href'), baseUrl).href,
             title: $(el).find('a').text(),
         }));
 
@@ -54,7 +54,13 @@ async function handler() {
                         try {
                             const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.wp_articlecontent').html() && $('div.wp_articlecontent').html().replaceAll('src="/', `src="${baseUrl}/`).replaceAll('href="/', `href="${baseUrl}/`).trim();
+                            item.description =
+                                $('div.wp_articlecontent').html() &&
+                                $('div.wp_articlecontent')
+                                    .html()
+                                    .replaceAll('src="/', () => `src="${baseUrl}/`)
+                                    .replaceAll('href="/', () => `href="${baseUrl}/`)
+                                    .trim();
                             return item;
                         } catch {
                             // intranet

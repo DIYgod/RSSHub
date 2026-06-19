@@ -46,7 +46,7 @@ async function handler(ctx) {
                 acontent = contentData.imgs.split(',');
                 type = 'imgs';
             } else {
-                acontent = { img: contentData.video.split('|')[0], bvid: contentData.video.split('|')[1].replace('https://www.bilibili.com/video/', '') };
+                acontent = { img: contentData.video.split('|', 1)[0], bvid: contentData.video.split('|', 2)[1].replace('https://www.bilibili.com/video/', '') };
                 type = 'bilibili';
             }
         } else {
@@ -69,9 +69,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: `二柄APP`,
-        link: `https://www.diershoubing.com`,
-        description: `二柄APP新闻`,
+        title: '二柄APP',
+        link: 'https://www.diershoubing.com',
+        description: '二柄APP新闻',
         item: items,
     };
 }

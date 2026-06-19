@@ -63,7 +63,7 @@ async function handler(ctx) {
 
     return {
         title: `完美世界电竞 - ${TYPE_MAP[type]} 资讯`,
-        link: `https://news.wmpvp.com/`,
+        link: 'https://news.wmpvp.com/',
         item: items,
     };
 }

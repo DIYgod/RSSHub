@@ -48,7 +48,7 @@ async function handler() {
         .filter(Boolean);
 
     return {
-        title: `白话区块链 - 快讯`,
+        title: '白话区块链 - 快讯',
         link: url,
         item: items,
     };

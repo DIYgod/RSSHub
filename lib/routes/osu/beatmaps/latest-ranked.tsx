@@ -232,9 +232,9 @@ async function handler(ctx): Promise<Data> {
     if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
-                upperLimit = Number.parseFloat(dfLimit.slice(1));
+                upperLimit = Number(dfLimit.slice(1));
             } else if (dfLimit.startsWith('L')) {
-                lowerLimit = Number.parseFloat(dfLimit.slice(1));
+                lowerLimit = Number(dfLimit.slice(1));
             }
         }
 
@@ -343,7 +343,7 @@ async function handler(ctx): Promise<Data> {
         );
 
         return {
-            title: `${modeInTitle === 'true' ? `[${modeLiteralToDisplayNameMap[beatmapset.beatmaps[0].mode]}] ` : ``}${beatmapset.title_unicode ?? beatmapset.title}`,
+            title: `${modeInTitle === 'true' ? `[${modeLiteralToDisplayNameMap[beatmapset.beatmaps[0].mode]}] ` : ''}${beatmapset.title_unicode ?? beatmapset.title}`,
             description,
             pubDate,
             link: `https://osu.ppy.sh/beatmapsets/${beatmapset.id}`,

@@ -91,7 +91,7 @@ function fetchBadge(item: BadgeItem) {
 }
 
 const handler: Route['handler'] = async (ctx) => {
-    const limit = Math.max(Number.parseInt(ctx.req.query('limit') ?? '', 10) || defaultLimit, 1);
+    const limit = Number(ctx.req.query('limit')) || defaultLimit;
 
     const { data: response } = await got(currentUrl);
     const $: CheerioAPI = load(response);

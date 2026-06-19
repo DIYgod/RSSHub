@@ -6,4 +6,8 @@ export const namespace: Namespace = {
     categories: ['new-media'],
     description: '',
     lang: 'en',
+    zh: {
+        name: '集邦咨询',
+        url: 'trendforce.cn',
+    },
 };

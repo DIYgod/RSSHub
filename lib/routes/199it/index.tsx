@@ -12,7 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'newly' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://www.199it.com';
     const targetUrl: string = new URL(category, baseUrl).href;
@@ -220,23 +220,22 @@ export const route: Route = {
 <details>
   <summary>更多分类</summary>
 
-| 分类                                                                              | ID                                                                                                      |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| [报告](http://www.199it.com/archives/category/report)                             | [archives/category/report](https://rsshub.app/199it/archives/category/report)                           |
-| [新兴产业](http://www.199it.com/archives/category/emerging)                       | [archives/category/emerging](https://rsshub.app/199it/archives/category/emerging)                       |
-| [金融科技](http://www.199it.com/archives/category/fintech)                        | [archives/category/fintech](https://rsshub.app/199it/archives/category/fintech)                         |
-| [共享经济](http://www.199it.com/archives/category/sharingeconomy)                 | [archives/category/sharingeconomy](https://rsshub.app/199it/archives/category/sharingeconomy)           |
-| [移动互联网](http://www.199it.com/archives/category/mobile-internet)              | [archives/category/mobile-internet](https://rsshub.app/199it/archives/category/mobile-internet)         |
-| [电子商务](http://www.199it.com/archives/category/electronic-commerce)            | [archives/category/electronic-commerce](https://rsshub.app/199it/archives/category/electronic-commerce) |
-| [社交网络](http://www.199it.com/archives/category/social-network)                 | [archives/category/social-network](https://rsshub.app/199it/archives/category/social-network)           |
-| [网络广告](http://www.199it.com/archives/category/advertising)                    | [archives/category/advertising](https://rsshub.app/199it/archives/category/advertising)                 |
-| [投资&amp;经济，互联网金融](http://www.199it.com/archives/category/economic-data) | [archives/category/economic-data](https://rsshub.app/199it/archives/category/economic-data)             |
-| [服务](http://www.199it.com/archives/category/service)                            | [archives/category/service](https://rsshub.app/199it/archives/category/service)                         |
-| [网络服务行业](http://www.199it.com/archives/category/dataindustry)               | [archives/category/dataindustry](https://rsshub.app/199it/archives/category/dataindustry)               |
-| [用户研究](http://www.199it.com/archives/category/internet-users)                 | [archives/category/internet-users](https://rsshub.app/199it/archives/category/internet-users)           |
+| 分类                                                                            | ID                                                                                                      |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [报告](http://www.199it.com/archives/category/report)                           | [archives/category/report](https://rsshub.app/199it/archives/category/report)                           |
+| [新兴产业](http://www.199it.com/archives/category/emerging)                     | [archives/category/emerging](https://rsshub.app/199it/archives/category/emerging)                       |
+| [金融科技](http://www.199it.com/archives/category/fintech)                      | [archives/category/fintech](https://rsshub.app/199it/archives/category/fintech)                         |
+| [共享经济](http://www.199it.com/archives/category/sharingeconomy)               | [archives/category/sharingeconomy](https://rsshub.app/199it/archives/category/sharingeconomy)           |
+| [移动互联网](http://www.199it.com/archives/category/mobile-internet)            | [archives/category/mobile-internet](https://rsshub.app/199it/archives/category/mobile-internet)         |
+| [电子商务](http://www.199it.com/archives/category/electronic-commerce)          | [archives/category/electronic-commerce](https://rsshub.app/199it/archives/category/electronic-commerce) |
+| [社交网络](http://www.199it.com/archives/category/social-network)               | [archives/category/social-network](https://rsshub.app/199it/archives/category/social-network)           |
+| [网络广告](http://www.199it.com/archives/category/advertising)                  | [archives/category/advertising](https://rsshub.app/199it/archives/category/advertising)                 |
+| [投资 & 经济，互联网金融](http://www.199it.com/archives/category/economic-data) | [archives/category/economic-data](https://rsshub.app/199it/archives/category/economic-data)             |
+| [服务](http://www.199it.com/archives/category/service)                          | [archives/category/service](https://rsshub.app/199it/archives/category/service)                         |
+| [网络服务行业](http://www.199it.com/archives/category/dataindustry)             | [archives/category/dataindustry](https://rsshub.app/199it/archives/category/dataindustry)               |
+| [用户研究](http://www.199it.com/archives/category/internet-users)               | [archives/category/internet-users](https://rsshub.app/199it/archives/category/internet-users)           |
 
-</details>
-`,
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

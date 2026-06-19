@@ -40,26 +40,25 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-| Category               | \`:category\`               |
-| ---------------------- | --------------------------- |
-| Singapore              | \`singapore\`               |
-| Asia                   | \`asia\`                    |
-| World                  | \`world\`                   |
-| Opinion                | \`opinion\`                 |
-| Life                   | \`life\`                    |
-| Business               | \`business\`                |
-| Jobs                   | \`jobs\`                    |
-| Parenting & Education  | \`parenting-and-education\` |
-| Food                   | \`food\`                    |
-| Tech                   | \`tech\`                    |
-| Sport                  | \`sport\`                   |
-| Podcasts               | \`podcasts\`                |,
+    description: `| Category              | \`:category\`               |   |
+| --------------------- | ------------------------- | - |
+| Singapore             | \`singapore\`               |   |
+| Asia                  | \`asia\`                    |   |
+| World                 | \`world\`                   |   |
+| Opinion               | \`opinion\`                 |   |
+| Life                  | \`life\`                    |   |
+| Business              | \`business\`                |   |
+| Jobs                  | \`jobs\`                    |   |
+| Parenting & Education | \`parenting-and-education\` |   |
+| Food                  | \`food\`                    |   |
+| Tech                  | \`tech\`                    |   |
+| Sport                 | \`sport\`                   |   |
+| Podcasts              | \`podcasts\`                | , |
 
-| Section                | \`:section\`                |
-| ---------------------- | --------------------------- |
-| Top Stories            | \`top-stories\`             |
-| Latest                 | \`latest\`                  |`,
+| Section     | \`:section\`    |
+| ----------- | ------------- |
+| Top Stories | \`top-stories\` |
+| Latest      | \`latest\`      |`,
     radar: [
         {
             source: ['www.straitstimes.com/:category'],

@@ -27,7 +27,6 @@ export async function extractNews(item, selector) {
         const mainGroup = content.find('div.flex > div.w-full');
 
         const shortArticles = mainGroup.find('[x-data^="{isShortArticleOpen"]');
-        const sections = mainGroup.find('[x-data^="{isSectionOpen"]');
         if (shortArticles.length !== 0) {
             const items = shortArticles.toArray().map((element) => {
                 const mainDiv = $$(element);
@@ -53,7 +52,9 @@ export async function extractNews(item, selector) {
                 } as DataItem;
             });
             return items;
-        } else if (sections.length === 0) {
+        }
+        const sections = mainGroup.find('[x-data^="{isSectionOpen"]');
+        if (sections.length === 0) {
             const htmlContent = extractArticle(mainGroup.html());
             const description = renderDescription({
                 heading,
@@ -68,31 +69,30 @@ export async function extractNews(item, selector) {
                 updated: updatedDate ? parseDate(updatedDate) : null,
                 author: 'Vision IAS',
             } as DataItem;
-        } else {
-            const items = sections.toArray().map((element) => {
-                const mainDiv = $$(element);
-                const title = mainDiv.find('a > div > h2').text().trim();
-                const htmlContent = extractArticle(mainDiv.html(), 'div.ck-content');
-                const description = renderDescriptionSub({
-                    heading: title,
-                    articleContent: htmlContent,
-                });
-                return { description };
-            });
-            const description = renderDescription({
-                heading,
-                subItems: items,
-            });
-            return {
-                title: heading,
-                pubDate: parseDate(postedDate),
-                category: tags,
-                description,
-                link: item.link,
-                updated: updatedDate ? parseDate(updatedDate) : null,
-                author: 'Vision IAS',
-            } as DataItem;
         }
+        const items = sections.toArray().map((element) => {
+            const mainDiv = $$(element);
+            const title = mainDiv.find('a > div > h2').text().trim();
+            const htmlContent = extractArticle(mainDiv.html(), 'div.ck-content');
+            const description = renderDescriptionSub({
+                heading: title,
+                articleContent: htmlContent,
+            });
+            return { description };
+        });
+        const description = renderDescription({
+            heading,
+            subItems: items,
+        });
+        return {
+            title: heading,
+            pubDate: parseDate(postedDate),
+            category: tags,
+            description,
+            link: item.link,
+            updated: updatedDate ? parseDate(updatedDate) : null,
+            author: 'Vision IAS',
+        } as DataItem;
     });
 }
 

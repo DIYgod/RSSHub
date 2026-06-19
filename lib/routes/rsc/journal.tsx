@@ -24,7 +24,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  All journals at [Current journals](https://pubs.rsc.org/en/journals)
+All journals at [Current journals](https://pubs.rsc.org/en/journals)
 :::
 
 | All Recent Articles | Advance Articles |
@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, category = 'allrecentarticles' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://pubs.rsc.org';
     const currentUrl = new URL(`en/journals/journalissues/${id}#!recentarticles`, rootUrl).href;
@@ -51,9 +51,9 @@ async function handler(ctx) {
 
     let $ = load(response);
 
-    $('div.capsule__article-image').each(function () {
-        const image = $(this).find('img').prop('data-original');
-        $(this).replaceWith(
+    $('div.capsule__article-image').each((_, el) => {
+        const image = $(el).find('img').prop('data-original');
+        $(el).replaceWith(
             renderToString(
                 image ? (
                     <figure>

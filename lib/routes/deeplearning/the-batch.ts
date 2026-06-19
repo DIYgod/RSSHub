@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { tag } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 1;
 
     const rootUrl = 'https://www.deeplearning.ai';
     const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}/`, rootUrl).href;
@@ -73,14 +73,15 @@ export const handler = async (ctx) => {
                 const $$ = load(post.html);
 
                 $$('a').each((_, ele) => {
-                    if (ele.attribs.href?.includes('utm_campaign')) {
-                        const url = new URL(ele.attribs.href);
-                        url.searchParams.delete('utm_campaign');
-                        url.searchParams.delete('utm_source');
-                        url.searchParams.delete('utm_medium');
-                        url.searchParams.delete('_hsenc');
-                        ele.attribs.href = url.href;
+                    if (!ele.attribs.href?.includes('utm_campaign')) {
+                        return;
                     }
+                    const url = new URL(ele.attribs.href);
+                    url.searchParams.delete('utm_campaign');
+                    url.searchParams.delete('utm_source');
+                    url.searchParams.delete('utm_medium');
+                    url.searchParams.delete('_hsenc');
+                    ele.attribs.href = url.href;
                 });
 
                 const title = post.title;
@@ -144,7 +145,7 @@ export const route: Route = {
     example: '/deeplearning/the-batch',
     parameters: { tag: 'Tag, Weekly Issues by default' },
     description: `::: tip
-  If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
+If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
 
 :::
 
@@ -173,8 +174,7 @@ export const route: Route = {
 | [DeepLearning.AI News](https://www.deeplearning.ai/the-batch/tag/deeplearning-ai-news/) | [deeplearning-ai-news](https://rsshub.app/deeplearning/the-batch/deeplearning-ai-news) |
 | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)                     | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)                     |
 | [Just For Fun](https://www.deeplearning.ai/the-batch/tag/just-for-fun/)                 | [just-for-fun](https://rsshub.app/deeplearning/the-batch/just-for-fun)                 |
-| [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |
-    `,
+| [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |`,
     categories: ['programming'],
 
     features: {

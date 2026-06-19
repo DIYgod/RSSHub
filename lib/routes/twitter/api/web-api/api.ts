@@ -3,7 +3,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { baseUrl, gqlFeatures, gqlMap } from './constants';
+import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
 const getUserData = (id) =>
@@ -164,6 +164,14 @@ const getList = async (id: string, params?: Record<string, any>) =>
 
 const getUser = async (id: string) => {
     const userData: any = await getUserData(id);
+
+    if (!userData.data.user) {
+        throw new InvalidParameterError("This account doesn't exist");
+    }
+    if (userData.data.user.result.__typename === 'UserUnavailable') {
+        throw new InvalidParameterError(userData.data.user.result.message || 'User is unavailable');
+    }
+
     return {
         profile_image_url: userData.data?.user?.result?.avatar?.image_url,
         ...userData.data?.user?.result?.core,
@@ -216,5 +224,5 @@ export default {
     getList,
     getHomeTimeline,
     getHomeLatestTimeline,
-    init: () => {},
+    init: initGqlMap,
 };

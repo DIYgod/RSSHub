@@ -54,7 +54,7 @@ export const route: Route = {
     ],
     handler: async (ctx): Promise<Data> => {
         const c = ctx.req.param('category') || '';
-        if (!(c in categories)) {
+        if (!Object.hasOwn(categories, c)) {
             throw new Error('Invalid category. Valid options are: ' + Object.keys(categories).filter(Boolean).join(', '));
         }
         const category = c as keyof typeof categories;
@@ -71,7 +71,7 @@ export const route: Route = {
         const { pageProps } = data.props;
 
         const dataKey = categories[category].data;
-        if (!(dataKey in pageProps)) {
+        if (!Object.hasOwn(pageProps, dataKey)) {
             throw new Error(`Expected '${dataKey}' property not found in pageProps for category: ${category || 'home'}`);
         }
 

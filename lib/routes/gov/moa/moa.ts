@@ -9,25 +9,26 @@ const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断 host
 
 export const route: Route = {
-    path: '/moa/suburl/:suburl{.+}',
+    path: '/suburl/:suburl{.+}',
     categories: ['government'],
     example: '/gov/moa/suburl/gk/zcjd/',
     radar: [
         {
             source: ['moa.gov.cn/'],
-            target: '/moa/suburl/:suburl',
+            target: '/suburl/:suburl',
         },
     ],
     parameters: { suburl: '下级目录，请使用最下级的目录' },
-    name: '中华人民共和国农业农村部 - 新闻',
+    name: '新闻',
     maintainers: ['Origami404', 'lyqluis'],
     handler,
     url: 'moa.gov.cn/',
     description: `更多例子：
-  -   \`农业农村部动态\`的网页链接是\`http://www.moa.gov.cn/xw/zwdt/\`, 对应的\`suburl\`是\`xw/zwdt\`
-  -   \`财务公开\`的网页链接是\`http://www.moa.gov.cn/gk/cwgk_1/\`, 对应的\`suburl\`是\`gk/cwgk_1\`
-  -   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面(\`http://www.moa.gov.cn/gk/zcfg/\`), 它**不是**一个合法的分类目录，它是\`法律\`, \`行政法规\`, \`部门规章\`等一堆栏目的集合，这时候请点开对应栏目的\`更多 >>\`进入栏目的最下级目录，再根据上面的规则提取\`suburl\`
-  -   特别地，\`图片新闻\`对应的\`suburl\`为\`xw/tpxw/\`, \`最新公开\`对应的\`suburl\`为\`govpublic\`, \`数据>最新发布\`对应的\`suburl\`为\`sj/zxfb\``,
+
+- \`农业农村部动态\`的网页链接是\`http://www.moa.gov.cn/xw/zwdt/\`, 对应的\`suburl\`是\`xw/zwdt\`
+- \`财务公开\`的网页链接是\`http://www.moa.gov.cn/gk/cwgk_1/\`, 对应的\`suburl\`是\`gk/cwgk_1\`
+- 像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面 (\`http://www.moa.gov.cn/gk/zcfg/\`), 它**不是**一个合法的分类目录，它是\`法律\`, \`行政法规\`, \`部门规章\`等一堆栏目的集合，这时候请点开对应栏目的\`更多 >>\`进入栏目的最下级目录，再根据上面的规则提取\`suburl\`
+- 特别地，\`图片新闻\`对应的\`suburl\`为\`xw/tpxw/\`, \`最新公开\`对应的\`suburl\`为\`govpublic\`, \`数据>最新发布\`对应的\`suburl\`为\`sj/zxfb\``,
 };
 
 async function handler(ctx) {
@@ -42,10 +43,12 @@ async function handler(ctx) {
             titleSelector: 'a[class="block w_fill ellipsis adc ahc"]',
             dateSelector: 'span',
         });
-    } else if (suburl.startsWith('sj/zxfb')) {
+    }
+    if (suburl.startsWith('sj/zxfb')) {
         // 数据 - 最新发布
         return await dealLatestDataChannel();
-    } else if (suburl.startsWith('gk')) {
+    }
+    if (suburl.startsWith('gk')) {
         // 公开
         return await dealChannel(suburl, {
             channelTitleSelector: 'title',
@@ -53,7 +56,8 @@ async function handler(ctx) {
             titleSelector: 'a',
             dateSelector: 'span',
         });
-    } else if (suburl.startsWith('govpublic')) {
+    }
+    if (suburl.startsWith('govpublic')) {
         // 最新公开
         return await dealChannel('govpublic/1/index.htm', {
             channelTitleText: '最新公开',
@@ -61,14 +65,13 @@ async function handler(ctx) {
             titleSelector: 'a',
             dateSelector: 'span',
         });
-    } else {
-        return await dealChannel(suburl, {
-            channelTitleSelector: '.pub-media1-head-title',
-            listSelector: '.ztlb',
-            titleSelector: 'a',
-            dateSelector: 'span',
-        });
     }
+    return await dealChannel(suburl, {
+        channelTitleSelector: '.pub-media1-head-title',
+        listSelector: '.ztlb',
+        titleSelector: 'a',
+        dateSelector: 'span',
+    });
 }
 
 // 处理文章列表，从那里获得一堆要爬取的页面，然后爬取
@@ -222,7 +225,7 @@ async function dealLatestDataChannel() {
         })
     );
     return {
-        title: `中华人民共和国农业农村部 - 数据 - 最新发布`,
+        title: '中华人民共和国农业农村部 - 数据 - 最新发布',
         link: 'http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp',
         item: items,
     };

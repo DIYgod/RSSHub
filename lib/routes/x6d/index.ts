@@ -51,7 +51,7 @@ export const route: Route = {
 
 export async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 22;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 22;
 
     const rootUrl = 'https://xd.x6d.com';
 
@@ -130,7 +130,7 @@ export async function handler(ctx) {
     const image = new URL($('div.header-logo img').prop('src'), rootUrl).href;
 
     return {
-        title: $('title').text().split(/\s-/)[0],
+        title: $('title').text().split(/\s-/, 1)[0],
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,

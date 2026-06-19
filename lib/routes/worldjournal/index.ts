@@ -36,7 +36,7 @@ async function handler(ctx) {
             return {
                 title: item.find('h3').text(),
                 description: item.find('p').html(),
-                link: url.includes('?from=') ? url.split('?from=')[0] : url,
+                link: url.includes('?from=') ? url.split('?from=', 1)[0] : url,
                 pubDate: timezone(parseDate(item.find('.subcate-list__time--roc').text(), 'YYYY-MM-DD HH:mm'), 8),
             };
         });
@@ -50,12 +50,13 @@ async function handler(ctx) {
                 $('[id^=div-gpt-ad], [class^=udn-ads-], .keywords, .next-page, .udn-ads, .article-content__ads--bd').remove();
 
                 $('img').each((_, img) => {
-                    if (img.attribs['data-src']) {
-                        const url = new URL(img.attribs['data-src']);
-                        if (url.pathname === '/gw/photo.php') {
-                            img.attribs.src = url.searchParams.get('u');
-                            delete img.attribs['data-src'];
-                        }
+                    if (!img.attribs['data-src']) {
+                        return;
+                    }
+                    const url = new URL(img.attribs['data-src']);
+                    if (url.pathname === '/gw/photo.php') {
+                        img.attribs.src = url.searchParams.get('u');
+                        delete img.attribs['data-src'];
                     }
                 });
 

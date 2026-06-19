@@ -36,9 +36,9 @@ async function handler() {
 
     const $ = load(response.data);
     return {
-        title: `北京大学生命科学学院近期讲座`,
+        title: '北京大学生命科学学院近期讲座',
         link: homeUrl,
-        description: `北京大学生命科学学院近期讲座`,
+        description: '北京大学生命科学学院近期讲座',
         item: $('a.clearfix')
             .toArray()
             .map((item) => ({

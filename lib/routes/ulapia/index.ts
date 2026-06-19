@@ -42,7 +42,7 @@ export const route: Route = {
     handler,
     description: `|     个股研报    |      行业研报      |      策略研报      |     宏观研报    |    新股研报   | 券商晨报（今日晨报） |
 | :-------------: | :----------------: | :----------------: | :-------------: | :-----------: | :------------------: |
-| stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news   |`,
+| stock\\_research | industry\\_research | strategy\\_research | macro\\_research | ipo\\_research |    brokerage\\_news   |`,
 };
 
 async function handler(ctx) {
@@ -58,8 +58,8 @@ async function handler(ctx) {
             title: `${$(item).find('strong').text()}  ${$(item).find('h5.mb-1').text()}`,
             author: $(item).find('div.col.p-8.d-flex.px-3.py-3.flex-column.position-static > div:nth-child(4) > span:nth-child(2)').text(),
             link: $(item).find('h5.mb-1 > a').attr('href'),
-            description: `<img src="${$(item).find('img').attr('src').split('!')[0]}">`,
-            pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':')[1], 'YYYY-MM-DD'),
+            description: `<img src="${$(item).find('img').attr('src').split('!', 1)[0]}">`,
+            pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':', 2)[1], 'YYYY-MM-DD'),
         }));
 
     return {

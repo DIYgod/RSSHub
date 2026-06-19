@@ -8,10 +8,23 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/csrc/news/:suffix{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/news/:suffix{.+}?',
+    name: '通用',
+    example: '/gov/csrc/news/c101975/zfxxgk_zdgk.shtml',
+    parameters: { suffix: '路径，预设为 `c100028/common_xq_list.shtml`' },
+    radar: [
+        {
+            source: ['www.csrc.gov.cn/csrc/*suffix'],
+            target: '/news/:suffix',
+        },
+    ],
+    maintainers: ['chinobing', 'LogicJake'],
     handler,
+    description: `::: tip
+路径处填写对应页面 URL 中 \`http://www.csrc.gov.cn/csrc/\` 后的字段。下面是一个例子。
+
+若订阅 [证监会要闻](http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml) 则将对应页面 URL <http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml> 中 \`http://www.csrc.gov.cn/csrc/\` 后的字段 \`c100028/common_xq_list.shtml\` 作为路径填入。此时路由为 [\`/gov/csrc/news/c100028/common_xq_list.shtml\`](https://rsshub.app/gov/csrc/news/c100028/common_xq_list.shtml)
+:::`,
 };
 
 async function handler(ctx) {

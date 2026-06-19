@@ -8,7 +8,12 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { assertSpecExtra } from '@/types/spec-extra.zod';
 import jsonView from '@/views/json';
 
-const fixture = JSON.parse(readFileSync(path.join(import.meta.dirname, '../../fixtures/spec-netflix.json'), 'utf-8')) as { _extras: unknown[] };
+const fixture = JSON.parse(
+    readFileSync(
+        path.join(import.meta.dirname, '../../fixtures/spec-netflix.json'),
+        'utf-8',
+    ),
+) as { _extras: unknown[] };
 
 const NETFLIX_TITLE_ID = '81249997';
 
@@ -54,7 +59,9 @@ describe('spec/netflix route', () => {
     it('sorts items by pubDate descending', async () => {
         const data = await callHandler(NETFLIX_TITLE_ID);
         const dates = data.item!.map((i) => i._extra?.publishedAt);
-        const sorted = [...dates].toSorted().toReversed();
+        const sorted = [...dates].toSorted((a, b) =>
+            (b ?? '').localeCompare(a ?? ''),
+        );
         expect(dates).toEqual(sorted);
     });
 
@@ -76,15 +83,25 @@ describe('spec/netflix route', () => {
         delete process.env.TMDB_API_KEY;
         const { route } = await import('@/routes/spec/netflix');
         const ctx = {
-            req: { param: (k: string) => ({ netflixTitleId: NETFLIX_TITLE_ID })[k] },
+            req: {
+                param: (k: string) => ({ netflixTitleId: NETFLIX_TITLE_ID })[k],
+            },
         } as any;
-        await expect(route.handler(ctx)).rejects.toMatchObject({ code: 'ERR_TMDB_API_KEY_MISSING' });
+        await expect(route.handler(ctx)).rejects.toMatchObject({
+            code: 'ERR_TMDB_API_KEY_MISSING',
+        });
     });
 
     it('Netflix title not found — returns empty item array', async () => {
         const { http, HttpResponse } = await import('msw');
         const { server } = await import('../../mocks/server');
-        server.use(http.get('https://www.netflix.com/title/:netflixTitleId', () => HttpResponse.text('<html><body>not found</body></html>', { status: 404 })));
+        server.use(
+            http.get('https://www.netflix.com/title/:netflixTitleId', () =>
+                HttpResponse.text('<html><body>not found</body></html>', {
+                    status: 404,
+                }),
+            ),
+        );
         const data = await callHandler(NETFLIX_TITLE_ID);
         expect(data.item).toEqual([]);
     });

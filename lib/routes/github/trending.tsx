@@ -98,7 +98,7 @@ async function handler(ctx) {
             Authorization: `bearer ${config.github.access_token}`,
         },
         json: {
-            query: `
+            query: /* GraphQL */ `
             query {
             ${trendingRepos
                 .map(

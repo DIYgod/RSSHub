@@ -59,7 +59,7 @@ async function handler() {
         });
 
     return {
-        title: `月幕 Galgame - 本月新作`,
+        title: '月幕 Galgame - 本月新作',
         link: `${host}/release-list/${year}/${month}`,
         description: '月幕 Galgame - 本月新作',
         item: items,

@@ -49,8 +49,8 @@ async function process(baseUrl: string, section: any) {
                 const $ = load(r);
                 j.description = $('.details-con')
                     .html()!
-                    .replaceAll(/<o:p>[\S\s]*?<\/o:p>/g, '')
-                    .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/gm, '<p>&nbsp;</p>');
+                    .replaceAll(/<o:p>[\s\S]*?<\/o:p>/g, '')
+                    .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/g, '<p>&nbsp;</p>');
                 return j;
             })
         )

@@ -161,7 +161,8 @@ const render = (node) => {
             const title = Object.values(node.data?.title)[0] || '';
             if (contentType.startsWith('image/')) {
                 return `<img src="${url}" alt="${title}">`;
-            } else if (contentType.startsWith('video/')) {
+            }
+            if (contentType.startsWith('video/')) {
                 return renderVideo({ url, contentType });
             }
             return '';
@@ -185,7 +186,7 @@ const render = (node) => {
         case 'embedded-entry-inline': {
             const embedLink = node.data.embedLink;
             if (embedLink.startsWith('https://www.youtube.com/') || embedLink.startsWith('https://youtu.be/')) {
-                const youtubeId = node.data.embedLink.split('youtube.com/watch?v=')[1]?.split('&')[0] || node.data.embedLink.split('youtu.be/')[1]?.split('?')[0];
+                const youtubeId = node.data.embedLink.split('youtube.com/watch?v=', 2)[1]?.split('&', 1)[0] || node.data.embedLink.split('youtu.be/', 2)[1]?.split('?', 1)[0];
                 return renderYoutube(youtubeId);
             }
             return `<a href="${embedLink}" target="_blank" rel="noopener noreferrer">${node.data.title ?? embedLink}</a>`;
@@ -250,7 +251,7 @@ async function handler(ctx) {
                         contentType: 'video/mp4',
                     });
                 } else if (slug.youtubeHero) {
-                    item.description += renderYoutube(slug.youtubeHero.videoLink.split('youtube.com/watch?v=')[1]);
+                    item.description += renderYoutube(slug.youtubeHero.videoLink.split('youtube.com/watch?v=', 2)[1]);
                 } else if (slug.heroGallery?.length) {
                     for (const image of slug.heroGallery) {
                         item.description += renderImage({

@@ -72,7 +72,7 @@ async function handler() {
     );
 
     return {
-        title: `Kong Inc(konghq.com) blog posts`,
+        title: 'Kong Inc(konghq.com) blog posts',
         link: BLOG_POSTS_URL,
         item: items,
     };

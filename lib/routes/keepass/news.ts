@@ -24,10 +24,10 @@ async function handler(ctx) {
             return {
                 title: elem.find('b').text(),
                 link: new URL(elem.attr('href'), baseUrl).href,
-                pubDate: parseDate(elem.next().next('small').text().split('.')[0]),
+                pubDate: parseDate(elem.next().next('small').text().split('.', 1)[0]),
             };
         })
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
 
     const items = await Promise.all(
         list.map((item) =>

@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? 10, 10);
+    const limit = Number(ctx.req.query('limit') ?? 10);
     const items = await getPosts(limit);
     return {
         title: `${SUB_NAME_PREFIX}-最新`,

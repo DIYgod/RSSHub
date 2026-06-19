@@ -11,6 +11,5 @@ export const route: Route = {
     handler,
     description: `| [财经号](https://www.jiemian.com/account/main/1.html) | [城市号](https://www.jiemian.com/account/main/2.html) | [媒体号](https://www.jiemian.com/account/main/3.html) |
 | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| 1                                                     | 2                                                     | 3                                                     |
-`,
+| 1                                                     | 2                                                     | 3                                                     |`,
 };

@@ -25,7 +25,7 @@ const getBoards = (tryGet) =>
     });
 
 const renderDesc = (desc) => {
-    const youTube = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w-]+)&?/g;
+    const youTube = /(?:https?:\/\/)?(?:www\.)?youtu\.?be.*(?:v=|v\/|\/)([\w-]+)&?/g;
     const matchYouTube = desc.match(youTube);
     const matchImgur = desc.match(/https:\/\/i.imgur.com\/\w*.(jpg|png|gif|jpeg)/g);
     const matchVideo = desc.match(/(https:\/\/storage\.meteor\.today\/video\/[\da-f]{24}\.)(mp4|mov|avi|flv|wmv|mpeg|mkv)/gi);
@@ -33,17 +33,15 @@ const renderDesc = (desc) => {
     const matchEmoji = desc.match(/assets\/images\/emoji\/\w*.(jpg|png|gif|jpeg)/g);
 
     if (matchYouTube) {
-        desc = desc.replaceAll(
-            youTube,
+        desc = desc.replaceAll(youTube, (_match, p1) =>
             renderMedia({
-                youTube: '$1',
+                youTube: p1,
             })
         );
     }
     if (matchImgur) {
         for (const img of matchImgur) {
-            desc = desc.replace(
-                img,
+            desc = desc.replace(img, () =>
                 renderMedia({
                     img,
                 })
@@ -52,8 +50,7 @@ const renderDesc = (desc) => {
     }
     if (matchVideo) {
         for (const video of matchVideo) {
-            desc = desc.replace(
-                video,
+            desc = desc.replace(video, () =>
                 renderMedia({
                     video,
                 })
@@ -62,8 +59,7 @@ const renderDesc = (desc) => {
     }
     if (matchSticker) {
         for (const sticker of matchSticker) {
-            desc = desc.replace(
-                sticker,
+            desc = desc.replace(sticker, () =>
                 renderMedia({
                     img: sticker,
                 })
@@ -72,8 +68,7 @@ const renderDesc = (desc) => {
     }
     if (matchEmoji) {
         for (const emoji of matchEmoji) {
-            desc = desc.replace(
-                emoji,
+            desc = desc.replace(emoji, () =>
                 renderMedia({
                     img: emoji,
                 })

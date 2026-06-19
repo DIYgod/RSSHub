@@ -34,7 +34,7 @@ async function fetchWithAntiBot(url: string, header: Record<string, string>) {
 
     if (initialHtml.includes('document.location.reload()')) {
         const setCookies = response.headers.getSetCookie?.() ?? [];
-        const cookieStr = setCookies.map((c) => c.split(';')[0]).join('; ');
+        const cookieStr = setCookies.map((c) => c.split(';', 1)[0]).join('; ');
         if (cookieStr) {
             response = await ofetch.raw(url, {
                 method: 'get',
@@ -104,7 +104,7 @@ async function handler(ctx) {
     // 若没有指定编码，则默认utf-8
     const contentType = response.headers['content-type'] || '';
     let $ = load(iconv.decode(responseData, 'utf-8'));
-    const charset = contentType.match(/charset=([^;]*)/)?.[1] ?? $('meta[charset]').attr('charset') ?? $('meta[http-equiv="Content-Type"]').attr('content')?.split('charset=')?.[1];
+    const charset = contentType.match(/charset=([^;]*)/)?.[1] ?? $('meta[charset]').attr('charset') ?? $('meta[http-equiv="Content-Type"]').attr('content')?.split('charset=', 2)?.[1];
     if (charset?.toLowerCase() !== 'utf-8') {
         $ = load(iconv.decode(responseData, charset ?? 'utf-8'));
     }
@@ -120,7 +120,7 @@ async function handler(ctx) {
         // discuz 7.x 系列
         // 支持全文抓取，限制抓取页面5个
         const list = $('tbody[id^="normalthread"] > tr')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5)
+            .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
             .map((item) => {
                 item = $(item);
@@ -147,7 +147,7 @@ async function handler(ctx) {
         // discuz X 系列
         // 支持全文抓取，限制抓取页面5个
         const list = $('tbody[id^="normalthread"] > tr')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5)
+            .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
             .map((item) => {
                 item = $(item);

@@ -22,7 +22,7 @@ export const route: Route = {
             target: '/text-search/:keyword',
         },
     ],
-    description: '匹配asianfanfics搜索关键词',
+    description: '匹配 asianfanfics 搜索关键词',
     handler,
 };
 

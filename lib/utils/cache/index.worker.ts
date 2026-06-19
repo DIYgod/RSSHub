@@ -69,11 +69,10 @@ export default {
                     v = parsed;
                 }
                 return v as T;
-            } else {
-                const value = await getValueFunc();
-                kv.set(key, value, maxAge);
-                return value;
             }
+            const value = await getValueFunc();
+            kv.set(key, value, maxAge);
+            return value;
         }
         // Fallback: always call getValueFunc if KV is not available
         const value = await getValueFunc();

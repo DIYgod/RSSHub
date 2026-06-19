@@ -52,8 +52,8 @@ async function handler() {
 
                 content('d-contents').remove();
 
-                content('img').each(function () {
-                    content(this).attr('src', `${item.link}/${content(this).attr('src')}`);
+                content('img').each((_, el) => {
+                    content(el).attr('src', `${item.link}/${content(el).attr('src')}`);
                 });
 
                 item.doi = content('meta[name="citation_doi"]').attr('content');

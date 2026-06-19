@@ -1,19 +1,14 @@
+import { buildGqlMap, fallbackIds, resolveQueryIds } from './gql-id-resolver';
+
 const baseUrl = 'https://x.com/i/api';
 
-const graphQLEndpointsPlain = [
-    '/graphql/E3opETHurmVJflFsUBVuUQ/UserTweets',
-    '/graphql/Yka-W8dz7RaEuQNkroPkYw/UserByScreenName',
-    '/graphql/HJFjzBgCs16TqxewQOeLNg/HomeTimeline',
-    '/graphql/DiTkXJgLqBBxCs7zaYsbtA/HomeLatestTimeline',
-    '/graphql/bt4TKuFz4T7Ckk-VvQVSow/UserTweetsAndReplies',
-    '/graphql/dexO_2tohK86JDudXXG3Yw/UserMedia',
-    '/graphql/Qw77dDjp9xCpUY-AXwt-yQ/UserByRestId',
-    '/graphql/UN1i3zUiCWa-6r-Uaho4fw/SearchTimeline',
-    '/graphql/Pa45JvqZuKcW1plybfgBlQ/ListLatestTweetsTimeline',
-    '/graphql/QuBlQ6SxNAQCt6-kBiCXCQ/TweetDetail',
-];
+// Initial gqlMap from fallback IDs, updated dynamically via initGqlMap()
+let gqlMap: Record<string, string> = buildGqlMap(fallbackIds);
 
-const gqlMap = Object.fromEntries(graphQLEndpointsPlain.map((endpoint) => [endpoint.split('/')[3].replace(/V2$|Query$|QueryV2$/, ''), endpoint]));
+const initGqlMap = async () => {
+    const queryIds = await resolveQueryIds();
+    gqlMap = buildGqlMap(queryIds);
+};
 
 const thirdPartySupportedAPI = ['UserByScreenName', 'UserByRestId', 'UserTweets', 'UserTweetsAndReplies', 'ListLatestTweetsTimeline', 'SearchTimeline', 'UserMedia'];
 
@@ -114,4 +109,4 @@ const timelineParams = {
 
 const bearerToken = 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 
-export { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI, timelineParams };
+export { baseUrl, bearerToken, gqlFeatures, gqlMap, initGqlMap, thirdPartySupportedAPI, timelineParams };

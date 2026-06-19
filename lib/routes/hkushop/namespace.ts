@@ -5,5 +5,5 @@ export const namespace: Namespace = {
     url: 'hkushop.com',
     lang: 'zh-HK',
     categories: ['shopping'],
-    description: '環球唱片(香港)官方網上商店',
+    description: '環球唱片 (香港) 官方網上商店',
 };

@@ -34,7 +34,7 @@ async function handler(ctx) {
             item.sites.push({ site: 'dmhy', id: item.titleTranslate['zh-Hans']?.[0] ?? item.title });
             const mappedSites = item.sites.map((site) => ({
                 title: sites[site.site].title,
-                url: sites[site.site].urlTemplate.replaceAll('{{id}}', site.id),
+                url: sites[site.site].urlTemplate.replaceAll('{{id}}', () => site.id),
                 begin: site.begin,
             }));
             return {

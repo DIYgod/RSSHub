@@ -40,7 +40,7 @@ const getData = (url, tryGet) =>
 
         return {
             data: {
-                title: $('span.bg-clip-text').text() || `${author}·${$('meta[property="og:title"]').prop('content').split('-')[0]}`,
+                title: $('span.bg-clip-text').text() || `${author}·${$('meta[property="og:title"]').prop('content').split('-', 1)[0]}`,
                 link: url,
                 description: $('meta[property="og:description"]').prop('content'),
                 language: $('html').prop('lang'),

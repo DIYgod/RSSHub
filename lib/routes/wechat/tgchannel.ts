@@ -27,11 +27,11 @@ export const route: Route = {
 |      \`2\`     |     #公众号全名    | 已启用 efb-patch-middleware |
 
 ::: tip
-  启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。
+启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。
 :::
 
 ::: warning
-  该方法需要通过 efb 进行频道绑定，具体操作见 [https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
+该方法需要通过 efb 进行频道绑定，具体操作见 <https://github.com/DIYgod/RSSHub/issues/2172>
 :::`,
 };
 
@@ -142,7 +142,8 @@ async function handler(ctx) {
             if (mpName && author !== mpName) {
                 // 指定了要筛选的公众号名，且该文章不是该公众号发的
                 return; // 丢弃
-            } else if (!mpName && author) {
+            }
+            if (!mpName && author) {
                 // 没有指定要筛选的公众号名，且匹配到了作者
                 title = author + ': ' + title; // 给标题里加上获取到的作者
             }

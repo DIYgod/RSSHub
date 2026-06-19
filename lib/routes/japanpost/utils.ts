@@ -11,38 +11,8 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const utils = {
-    expandOdd: (c) => {
-        c.prototype.odd = function () {
-            const odds = [];
-            this.each((index, item) => {
-                if (index % 2 === 1) {
-                    odds.push(item);
-                }
-            });
-            return c(odds);
-        };
-    },
-    expandEven: (c) => {
-        c.prototype.even = function () {
-            const evens = [];
-            this.each((index, item) => {
-                if (index % 2 === 0) {
-                    evens.push(item);
-                }
-            });
-            return c(evens);
-        };
-    },
-    expandReverse: (c) => {
-        c.prototype.reverse = function () {
-            const reverses = [];
-            this.each((index, item) => {
-                reverses.push(item);
-            });
-            reverses.reverse();
-            return c(reverses);
-        };
-    },
+    even: (collection) => collection.filter((index) => index % 2 === 0),
+    odd: (collection) => collection.filter((index) => index % 2 === 1),
     generateGuid: (t) => {
         const hash = crypto.createHash('sha512');
         hash.update(t);

@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'zx' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://005.tv';
     const currentUrl = new URL(category ? `${category}/` : '', rootUrl).href;
@@ -85,7 +85,7 @@ export const handler = async (ctx) => {
 
     return {
         title,
-        description: title.split(/_/)[0],
+        description: title.split(/_/, 1)[0],
         link: currentUrl,
         item: items,
         allowEmpty: true,
@@ -103,11 +103,9 @@ export const route: Route = {
     handler,
     example: '/005/zx',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为二次元资讯' },
-    description: `
-| 二次元资讯 | 慢慢说 | 道听途说 | 展会资讯 |
+    description: `| 二次元资讯 | 慢慢说 | 道听途说 | 展会资讯 |
 | ---------- | ------ | -------- | -------- |
-| zx         | zwh    | dtts     | zh       |
-    `,
+| zx         | zwh    | dtts     | zh       |`,
     categories: ['anime'],
 
     features: {

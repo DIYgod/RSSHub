@@ -47,6 +47,25 @@ describe('sentry middleware', () => {
         return { middleware, sentry, logger, scope, getRouteNameFromPath };
     };
 
+    it('does not load sentry when dsn is not configured', async () => {
+        const sentryFactory = vi.fn(() => ({ init: vi.fn() }));
+        vi.doMock('@sentry/node', sentryFactory);
+        vi.doMock('@/config', () => ({
+            config: {
+                sentry: {
+                    dsn: '',
+                },
+                errorTrackingRouteTimeout: 50,
+                nodeName: 'node-a',
+            },
+        }));
+
+        const { default: middleware } = await import('@/middleware/sentry');
+        await middleware({ req: { path: '/test/slow' } } as any, async () => {});
+
+        expect(sentryFactory).not.toHaveBeenCalled();
+    });
+
     it('initializes sentry and captures slow routes', async () => {
         const { middleware, sentry, logger, scope, getRouteNameFromPath } = await loadMiddleware();
 

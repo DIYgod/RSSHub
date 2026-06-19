@@ -8,6 +8,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+import { renderContentJson } from './render-content-json';
 import type { CreatorData, MediaRelation, PostData } from './types';
 
 const renderDescription = ({ attributes, relationships, included }) => {
@@ -16,6 +17,7 @@ const renderDescription = ({ attributes, relationships, included }) => {
     const previewImage = attributes.image?.url ?? attributes.meta_image_url;
     const audioUrl = relationships.audio?.attributes?.download_url || relationships.audio_preview?.attributes?.download_url;
     const imageItems = imageOrder.map((mediaIdStr) => included.find((item) => item.id === mediaIdStr)).filter(Boolean);
+    const textContent = renderContentJson(attributes.content_json_string) || renderContentJson(attributes.teaser_text_json_string);
 
     return renderToString(
         <>
@@ -68,7 +70,7 @@ const renderDescription = ({ attributes, relationships, included }) => {
                 </>
             )}
 
-            {attributes.content || attributes.teaser_text ? raw(attributes.content || attributes.teaser_text) : null}
+            {textContent ? raw(textContent) : null}
 
             {relationships.attachments_media?.length
                 ? relationships.attachments_media.map((media) => (
@@ -121,7 +123,7 @@ async function handler(ctx) {
         const ogUrl = $('meta[property="og:url"]').attr('content');
         if (ogUrl?.startsWith(`${baseUrl}/cw/`)) {
             const ogImage = $('meta[property="og:image"]').attr('content');
-            const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+?)\?/)?.[1];
+            const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+)/)?.[1];
             if (creatorId) {
                 const creator = await ofetch(`${baseUrl}/api/campaigns/${creatorId}`);
                 return {
@@ -159,7 +161,7 @@ async function handler(ctx) {
                 'campaign,access_rules,access_rules.tier.null,attachments_media,audio,audio_preview.null,drop,images,media,native_video_insights,poll.choices,poll.current_user_responses.user,poll.current_user_responses.choice,poll.current_user_responses.poll,user,user_defined_tags,ti_checks,video.null,content_unlock_options.product_variant.null',
             'fields[campaign]': 'currency,show_audio_post_download_links,avatar_photo_url,avatar_photo_image_urls,earnings_visibility,is_nsfw,is_monthly,name,url',
             'fields[post]':
-                'change_visibility_at,comment_count,commenter_count,content,created_at,current_user_can_comment,current_user_can_delete,current_user_can_report,current_user_can_view,current_user_comment_disallowed_reason,current_user_has_liked,embed,image,insights_last_updated_at,is_paid,like_count,meta_image_url,min_cents_pledged_to_view,monetization_ineligibility_reason,post_file,post_metadata,published_at,patreon_url,post_type,pledge_url,preview_asset_type,thumbnail,thumbnail_url,teaser_text,title,upgrade_url,url,was_posted_by_campaign_owner,has_ti_violation,moderation_status,post_level_suspension_removal_date,pls_one_liners_by_category,video,video_preview,view_count,content_unlock_options,is_new_to_current_user,watch_state',
+                'change_visibility_at,comment_count,commenter_count,content_json_string,created_at,current_user_can_comment,current_user_can_delete,current_user_can_report,current_user_can_view,current_user_comment_disallowed_reason,current_user_has_liked,embed,image,insights_last_updated_at,is_paid,like_count,meta_image_url,min_cents_pledged_to_view,monetization_ineligibility_reason,post_file,post_metadata,published_at,patreon_url,post_type,pledge_url,preview_asset_type,thumbnail,thumbnail_url,teaser_text_json_string,title,upgrade_url,url,was_posted_by_campaign_owner,has_ti_violation,moderation_status,post_level_suspension_removal_date,pls_one_liners_by_category,video,video_preview,view_count,content_unlock_options,is_new_to_current_user,watch_state',
             'fields[post_tag]': 'tag_type,value',
             'fields[user]': 'image_url,full_name,url',
             'fields[access_rule]': 'access_rule_type,amount_cents',

@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/chongqing/sydwgkzp/:year?',
+    path: '/sydwgkzp/:year?',
     url: 'rlsbj.cq.gov.cn/',
     categories: ['government'],
     example: '/gov/chongqing/sydwgkzp',
@@ -19,7 +19,7 @@ export const route: Route = {
             source: ['rlsbj.cq.gov.cn/'],
         },
     ],
-    name: '重庆市人民政府 人力社保局 - 事业单位公开招聘',
+    name: '人力社保局 - 事业单位公开招聘',
     maintainers: ['MajexH'],
     handler,
 };
@@ -44,7 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     // 如果存在的话就使用 meta 提供的链接, 然后重新获取一次页面的内容
     if (metaRefresh) {
-        const redirectPath = metaRefresh.split('URL=')[1];
+        const redirectPath = metaRefresh.split('URL=', 2)[1];
         sydwgkzpUrl = new URL(redirectPath, sydwgkzpUrl).href;
 
         const { data: newResponse } = await got(sydwgkzpUrl);

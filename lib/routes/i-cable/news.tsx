@@ -34,9 +34,8 @@ export const route: Route = {
     maintainers: ['quiniapiezoelectricity'],
     handler,
     url: 'www.i-cable.com/',
-    description: `
-::: tip
-分類只可用分類名稱，如：新聞資訊/港聞
+    description: `::: tip
+分類只可用分類名稱，如：新聞資訊 / 港聞
 :::`,
 };
 

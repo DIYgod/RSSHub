@@ -9,9 +9,9 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { language = 'zh' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Za-z-]/g, '')}.zhonglun.com`;
+    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Z-]/gi, '')}.zhonglun.com`;
     const currentUrl = new URL('research/articles', rootUrl).href;
 
     const { data: response } = await got(currentUrl);
@@ -91,11 +91,9 @@ export const route: Route = {
     handler,
     example: '/zhonglun/research/article/zh',
     parameters: { category: '语言，默认为 zh，即简体中文，可在对应分类页 URL 中找到' },
-    description: `
-| ENG | 简体中文 | 日本語 | 한국어 |
+    description: `| ENG | 简体中文 | 日本語 | 한국어 |
 | --- | -------- | ------ | ------ |
-| en  | zh       | ja     | kr     |
-    `,
+| en  | zh       | ja     | kr     |`,
     categories: ['new-media'],
 
     features: {

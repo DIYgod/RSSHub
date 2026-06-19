@@ -7,7 +7,7 @@ import got from '@/utils/got';
 
 export const handler = async (ctx) => {
     const { category = 'latest/awarded' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://1x.com';
     const currentUrl = new URL(`gallery/${category}`, rootUrl).href;

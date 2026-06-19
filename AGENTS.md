@@ -3,6 +3,7 @@
 - Environment sample: `.env.example` (copy to `.env`, or run `bash scripts/bootstrap-sunbi-env.sh` for a generated `ACCESS_KEY`).
 - Runbook and checklist: `docs/routes/SPEC_ROUTE_RUNBOOK.md`, `docs/routes/SPEC_REMAINING_CHECKLIST.md`.
 - Self-hosted stack: `docker compose -f docker-compose.sunbi-rsshub.yml up -d --build` (requires `ACCESS_KEY` in `.env`).
+- **Upstream sync**: `pnpm upstream:status` · `pnpm upstream:sync` — see [`docs/spec-upstream-merge.md`](docs/spec-upstream-merge.md).
 - Route namespace: public paths are under **`/spec/`** (see `docs/impl/README.md` and `docs/SPEC-sunbi-rsshub.md`).
 - Production launch reference: [`docs/LAUNCH_RUNBOOK.md`](docs/LAUNCH_RUNBOOK.md) (VM Docker Compose phases 0–6).
 

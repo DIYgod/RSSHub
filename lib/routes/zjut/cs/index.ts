@@ -33,8 +33,8 @@ export const route: Route = {
         },
     ],
     description: `| 新闻资讯 | 学术动态 | 通知公告 |
-| ------- | ------- | ------- |
-| 54      | 55      | 53      |`,
+| -------- | -------- | -------- |
+| 54       | 55       | 53       |`,
 };
 
 async function handler(ctx) {

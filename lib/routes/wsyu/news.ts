@@ -88,15 +88,14 @@ async function handler(ctx) {
                 };
                 cache.set(itemUrl, JSON.stringify(single));
                 return single;
-            } else {
-                const single = {
-                    title: titleList[index],
-                    link: itemUrl,
-                    description: '此链接为文件，请点击下载',
-                    pubDate: dateList[index],
-                };
-                return single;
             }
+            const single = {
+                title: titleList[index],
+                link: itemUrl,
+                description: '此链接为文件，请点击下载',
+                pubDate: dateList[index],
+            };
+            return single;
         })
     );
 

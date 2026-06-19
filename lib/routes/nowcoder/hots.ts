@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '1';
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
     const size = Number.isFinite(limit) && limit > 0 ? limit : 20;
 
     let link: string;
@@ -51,7 +51,8 @@ async function handler(ctx) {
                 link: `https://www.nowcoder.com/creation/subject/${item.uuid}`,
             })),
         };
-    } else if (type === '2') {
+    }
+    if (type === '2') {
         link = `https://gw-c.nowcoder.com/api/sparta/hot-search/top-hot-pc?size=${size}&_=${Date.now()}&t=`;
         const responseBody = (await got.get(link)).data;
         if (responseBody.code !== 0) {
@@ -67,7 +68,6 @@ async function handler(ctx) {
                 link: `https://www.nowcoder.com/feed/main/detail/${item.uuid}`,
             })),
         };
-    } else {
-        throw new Error('Invalid type parameter');
     }
+    throw new Error('Invalid type parameter');
 }

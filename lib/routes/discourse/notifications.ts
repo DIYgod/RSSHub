@@ -53,9 +53,8 @@ async function handler(ctx) {
                         const { cooked } = await ofetch(post_link, { headers: { 'User-Api-Key': key } });
                         return { ...e, description: cooked };
                     });
-                } else {
-                    return e;
                 }
+                return e;
             })
         );
     }

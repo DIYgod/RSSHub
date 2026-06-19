@@ -50,14 +50,16 @@ function processStory(story: any): DataItem {
                                 type: 'text',
                                 text: element.text,
                             };
-                        } else if (element.type === 'image' && element['image-s3-key']) {
+                        }
+                        if (element.type === 'image' && element['image-s3-key']) {
                             return {
                                 type: 'image',
                                 url: `https://media.assettype.com/${element['image-s3-key']}?auto=format%2Ccompress&format=webp`,
                                 alt: element['alt-text'] || '',
                                 title: element.title || '',
                             };
-                        } else if (element.type === 'jsembed' && element['embed-js']) {
+                        }
+                        if (element.type === 'jsembed' && element['embed-js']) {
                             try {
                                 return {
                                     type: 'jsembed',

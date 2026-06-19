@@ -88,8 +88,8 @@ async function handler() {
 
                     if (content) {
                         const $content = load(content);
-                        $content('a').each(function () {
-                            const a = $(this);
+                        $content('a').each((_, el) => {
+                            const a = $(el);
                             const href = a.attr('href');
                             if (href && !href.startsWith('http')) {
                                 a.attr('href', new URL(href, baseUrl).href);

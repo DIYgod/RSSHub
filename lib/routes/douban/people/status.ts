@@ -16,11 +16,12 @@ export const route: Route = {
     name: '用户广播',
     maintainers: ['alfredcai'],
     handler,
-    description: `
-::: tip
--   **目前只支持整数型 id**
--   字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则\`ul[userid]-*.jpg\`或\`u[userid]-*.jpg\`，即取文件名中间的数字
--   例如：用户 id: \`MovieL\`他的头像图片链接：\`https://img1.doubanio.com/icon/ul1128221-98.jpg\`他的整数型 id: \`1128221\`
+    description: `::: tip
+
+- **目前只支持整数型 id**
+- 字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则\`ul[userid]-*.jpg\`或\`u[userid]-*.jpg\`，即取文件名中间的数字
+- 例如：用户 id: \`MovieL\`他的头像图片链接：\`https://img1.doubanio.com/icon/ul1128221-98.jpg\`他的整数型 id: \`1128221\`
+
 :::
 
 对于豆瓣用户广播内容，在 \`routeParams\` 参数中以 query string 格式设置如下选项可以控制输出的样式
@@ -41,16 +42,16 @@ export const route: Route = {
 | heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
 | sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
 
-  指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
-  [https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100](https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100)
+<https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100>
 
-  的效果为
+的效果为
 
   <img loading="lazy" src="/img/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS" />`,
 };
 
-const headers = { Referer: `https://m.douban.com/` };
+const headers = { Referer: 'https://m.douban.com/' };
 
 function tryFixStatus(status) {
     let result = { isFixSuccess: true, why: '' };
@@ -100,7 +101,7 @@ function tryFixStatus(status) {
     }
 
     if (status.sharing_url) {
-        status.sharing_url = status.sharing_url.split('&')[0];
+        status.sharing_url = status.sharing_url.split('&', 1)[0];
     }
 
     if (!result.isFixSuccess) {
@@ -222,20 +223,20 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
                 activityInDesc += `<a href="${status.reshared_status.author.url}" target="_blank" rel="noopener noreferrer">`;
             }
             if (authorNameBold) {
-                activityInDesc += `<strong>`;
+                activityInDesc += '<strong>';
             }
             activityInDesc += status.reshared_status.author.name;
             if (authorNameBold) {
-                activityInDesc += `</strong>`;
+                activityInDesc += '</strong>';
             }
             if (readable) {
-                activityInDesc += `</a>`;
+                activityInDesc += '</a>';
             }
-            activityInDesc += ` 的广播`;
+            activityInDesc += ' 的广播';
             activityInTitle = `转发 ${status.reshared_status.author.name} 的广播`;
         } else {
-            activityInDesc = `转发广播`;
-            activityInTitle = `转发广播`;
+            activityInDesc = '转发广播';
+            activityInTitle = '转发广播';
         }
     } else {
         activityInDesc = status.activity;
@@ -251,16 +252,16 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
             usernameAndAvatar += `<img width="${sizeOfAuthorAvatar}" height="${sizeOfAuthorAvatar}" src="${status.author.avatar}" ${readable ? 'hspace="8" vspace="8" align="left"' : ''} />`;
         }
         if (authorNameBold) {
-            usernameAndAvatar += `<strong>`;
+            usernameAndAvatar += '<strong>';
         }
         usernameAndAvatar += status.author.name;
         if (authorNameBold) {
-            usernameAndAvatar += `</strong>`;
+            usernameAndAvatar += '</strong>';
         }
         if (readable) {
-            usernameAndAvatar += `</a>`;
+            usernameAndAvatar += '</a>';
         }
-        usernameAndAvatar += `&ensp;`;
+        usernameAndAvatar += '&ensp;';
         description += usernameAndAvatar + activityInDesc + (showColonInDesc ? ': ' : '');
     }
 
@@ -299,7 +300,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
     }
 
     if (status.images && status.images.length) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div>` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div>' : '<br>';
 
         // 一些RSS Reader会识别所有<img>标签作为内含图片显示，我们不想要头像也作为内含图片之一
         // 让所有配图在description的最前面再次出现一次，但宽高设为0
@@ -312,15 +313,12 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         }
         picsPrefixes.push(picsPrefix);
 
-        const imageUrls: Array<string | undefined> = [];
-        for (const image of status.images) {
-            imageUrls.push(image?.large?.url);
-        }
+        const imageUrls: Array<string | undefined> = Array.from(status.images, (image) => image?.large?.url);
         description += prepareImages(imageUrls);
     }
 
     if (status.video_info) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div>` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div>' : '<br>';
         const videoCover = status.video_info.cover_url;
         const videoSrc = status.video_info.video_url;
         if (videoSrc) {
@@ -350,16 +348,16 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
                 usernameAndAvatar += `<a href="${status.parent_status.author.url}">`;
             }
             if (authorNameBold) {
-                usernameAndAvatar += `<strong>`;
+                usernameAndAvatar += '<strong>';
             }
             usernameAndAvatar += status.parent_status.author.name;
             if (authorNameBold) {
-                usernameAndAvatar += `</strong>`;
+                usernameAndAvatar += '</strong>';
             }
             if (readable) {
-                usernameAndAvatar += `</a>`;
+                usernameAndAvatar += '</a>';
             }
-            usernameAndAvatar += `:&ensp;`;
+            usernameAndAvatar += ':&ensp;';
             description += usernameAndAvatar + status.parent_status.text;
             if (showRetweetTextInTitle) {
                 title += status.parent_status.author.name + ': ' + status.parent_status.text;
@@ -376,8 +374,8 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
     if (status.card) {
         if (description) {
             description += readable
-                ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`
-                : `<br>`;
+                ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">'
+                : '<br>';
         }
         if (!status.card.images_block && status.card.image) {
             description += `<img src="${status.card.image.large.url}" ${readable ? 'vspace="0" hspace="12" align="left" height="75" style="height: 75px;"' : ''} />`;
@@ -408,20 +406,17 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         }
         description += cardContents.join('<br>');
         if (readable) {
-            description += `<br clear="both" /><div style="clear: both"></div></blockquote>`;
+            description += '<br clear="both" /><div style="clear: both"></div></blockquote>';
         }
         if (status.card.images_block) {
-            const imageUrls: Array<string | undefined> = [];
-            for (const image of status.card.images_block.images) {
-                imageUrls.push(image.image?.large?.url);
-            }
+            const imageUrls: Array<string | undefined> = Array.from(status.card.images_block.images, (image) => image.image?.large?.url);
             description += prepareImages(imageUrls);
         }
     }
 
     // video_card
     if (status.video_card) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">' : '<br>';
         const videoCover = status.video_card.video_info && status.video_card.video_info.cover_url;
         const videoSrc = status.video_card.video_info && status.video_card.video_info.video_url;
 
@@ -431,13 +426,13 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
 
         description += `${videoSrc ? `<video src="${videoSrc}" ${videoCover ? `poster="${videoCover}"` : ''}></video>` : ''}<br>${status.video_card.title ? `<a href="${status.video_card.url}">${status.video_card.title}</a>` : ''}`;
         if (readable) {
-            description += `</blockquote>`;
+            description += '</blockquote>';
         }
     }
 
     // reshared_status
     if (status.reshared_status) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">' : '<br>';
 
         if (showRetweetTextInTitle) {
             title += ' | ';

@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 
 function isValidDate(dateString: string): boolean {
     // 正则表达式检查格式：YYYY-MM-DD
-    const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+    const regex = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
     if (!regex.test(dateString)) {
         return false;
     }
@@ -25,7 +25,7 @@ function isValidDate(dateString: string): boolean {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
     const query: string = ctx.req.param('query') ?? '';
     const queries: Record<string, string> = {
         stock: '',

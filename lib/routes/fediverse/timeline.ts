@@ -31,8 +31,8 @@ const activityPubTypes = new Set(['application/activity+json', 'application/ld+j
 
 async function handler(ctx) {
     const account = ctx.req.param('account');
-    const domain = account.split('@')[1];
-    const username = account.split('@')[0];
+    const domain = account.split('@', 2)[1];
+    const username = account.split('@', 1)[0];
 
     if (!domain || !username) {
         throw new InvalidParameterError('Invalid account');

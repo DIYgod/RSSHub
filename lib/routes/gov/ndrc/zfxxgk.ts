@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://zfxxgk.ndrc.gov.cn';
     const currentUrl = new URL('web/dirlist.jsp', rootUrl).href;
@@ -77,9 +77,8 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: ['/ndrc/zfxxgk'],
-    // path: ['/ndrc/zfxxgk', '/ndrc/zfxxgk/iteminfo'],
-    name: '中华人民共和国国家发展和改革委员会政府信息公开',
+    path: '/zfxxgk',
+    name: '政府信息公开',
     url: 'zfxxgk.ndrc.gov.cn',
     maintainers: ['howfool', 'nczitzk'],
     handler,
@@ -100,7 +99,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zfxxgk.ndrc.gov.cn/web/dirlist.jsp'],
-            target: '/ndrc/zfxxgk',
+            target: '/zfxxgk',
         },
     ],
 };

@@ -17,10 +17,12 @@ describe('directory-import', () => {
     let tempDir = '';
 
     afterEach(() => {
-        if (tempDir) {
-            fs.rmSync(tempDir, { recursive: true, force: true });
-            tempDir = '';
+        if (!tempDir) {
+            return;
         }
+
+        fs.rmSync(tempDir, { recursive: true, force: true });
+        tempDir = '';
     });
 
     it('imports valid files and skips invalid ones', async () => {

@@ -3,8 +3,6 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { appstoreBearerToken } from './utils';
-
 const platformIds = {
     osx: 'macOS',
     ios: 'iOS',
@@ -64,9 +62,8 @@ export const route: Route = {
     name: 'App Update',
     maintainers: ['EkkoG', 'nczitzk'],
     handler,
-    description: `
-::: tip
-  For example, the URL of [GarageBand](https://apps.apple.com/us/app/garageband/id408709785) in the App Store is \`https://apps.apple.com/us/app/garageband/id408709785\`. In this case, the \`App Store Country\` parameter for the route is \`us\`, and the \`App id\` parameter is \`id408709785\`. So the route should be [\`/apple/apps/update/us/id408709785\`](https://rsshub.app/apple/apps/update/us/id408709785).
+    description: `::: tip
+For example, the URL of [GarageBand](https://apps.apple.com/us/app/garageband/id408709785) in the App Store is \`https://apps.apple.com/us/app/garageband/id408709785\`. In this case, the \`App Store Country\` parameter for the route is \`us\`, and the \`App id\` parameter is \`id408709785\`. So the route should be [\`/apple/apps/update/us/id408709785\`](https://rsshub.app/apple/apps/update/us/id408709785).
 :::`,
 };
 
@@ -82,25 +79,25 @@ async function handler(ctx) {
     }
     platform = undefined;
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://apps.apple.com';
     const currentUrl = new URL(`${country}/app/${id}`, rootUrl).href;
 
-    const bearer = await appstoreBearerToken();
-
-    const response = await ofetch(`https://amp-api-edge.apps.apple.com/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
+    const response = await ofetch(`https://apps.apple.com/api/apps/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
         headers: {
-            authorization: `Bearer ${bearer}`,
+            authorization: 'Bearer',
             origin: 'https://apps.apple.com',
         },
         query: {
             platform: 'iphone',
             additionalPlatforms: 'appletv,ipad,iphone,mac,realityDevice,watch',
-            extend: 'accessibility,accessibilityDetails,ageRating,backgroundAssetsInfo,backgroundAssetsInfoWithOptional,customArtwork,customDeepLink,customIconArtwork,customPromotionalText,customScreenshotsByType,customVideoPreviewsByType,description,expectedReleaseDateDisplayFormat,fileSizeByDevice,gameDisplayName,iconArtwork,installSizeByDeviceInBytes,messagesScreenshots,miniGamesDeepLink,minimumOSVersion,privacy,privacyDetails,privacyPolicyUrl,remoteControllerRequirement,requirementsByDeviceFamily,supportURLForLanguage,supportedGameCenterFeatures,supportsFunCamera,supportsSharePlay,versionHistory,websiteUrl',
+            extend: 'accessibility,accessibilityDetails,ageRating,backgroundAssetsInfo,backgroundAssetsInfoWithOptional,customArtwork,customDeepLink,customIconArtwork,customPromotionalText,customScreenshotsByType,customVideoPreviewsByType,description,expectedReleaseDateDisplayFormat,fileSizeByDevice,gameDisplayName,iconArtwork,installSizeByDeviceInBytes,macRequiredCapabilities,medicalDeviceInfo,messagesScreenshots,miniGamesDeepLink,minimumOSVersion,privacy,privacyDetails,privacyPolicyUrl,remoteControllerRequirement,requirementsByDeviceFamily,supportURLForLanguage,supportedGameCenterFeatures,supportsFunCamera,supportsSharePlay,versionHistory,websiteUrl',
+            'extend[apps]': 'distributionKind,isVerifiedForAppleSiliconMac',
             'extend[app-events]': 'description,productArtwork,productVideo',
-            include: 'alternate-apps,app-bundles,customers-also-bought-apps,developer,developer-other-apps,merchandised-in-apps,related-editorial-items,reviews,top-in-apps',
+            include: 'alternate-apps,app-bundles,customers-also-bought-apps,developer,developer-other-apps,merchandised-in-apps,related-editorial-items,reviews',
             'include[apps]': 'app-events',
+            views: 'top-in-app-purchasables',
             'availableIn[app-events]': 'future',
             'sparseLimit[apps:customers-also-bought-apps]': 40,
             'sparseLimit[apps:developer-other-apps]': 40,
@@ -132,8 +129,7 @@ async function handler(ctx) {
         image = platformAttribute.iconArtwork?.url?.replace('{w}x{h}{c}.{f}', '3000x3000bb.webp');
     } else {
         title = appName;
-        for (const pid of Object.keys(platformAttributes)) {
-            const platformAttribute = platformAttributes[pid];
+        for (const [pid, platformAttribute] of Object.entries(platformAttributes)) {
             items = [
                 ...items,
                 ...platformAttribute.versionHistory.map((v) => ({

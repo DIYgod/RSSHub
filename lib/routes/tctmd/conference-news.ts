@@ -44,7 +44,7 @@ async function handler() {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const $link = $el.find('h2.algolia-search--title a').first();
+            const $link = $el.find('h2.algolia-search--title a');
             const href = $link.attr('href');
             if (!href) {
                 return null;
@@ -54,8 +54,8 @@ async function handler() {
                 title: $link.text().trim(),
                 link: href.startsWith('http') ? href : `${rootUrl}${href}`,
                 pubDate: $el.find('time.datetime').attr('datetime') ? parseDate($el.find('time.datetime').attr('datetime')!) : undefined,
-                author: $el.find('.author__container--name').text().trim() || undefined,
-                image: $el.find('.field--name-field-teaser-image img').attr('src') || undefined,
+                author: $el.find('.author__container--name').text().trim(),
+                image: $el.find('.field--name-field-teaser-image img').attr('src'),
             };
         })
         .filter(Boolean);

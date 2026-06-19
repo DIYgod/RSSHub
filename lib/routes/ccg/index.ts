@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '7', 10);
+    const limit = Number(ctx.req.query('limit') ?? '7');
 
     const baseUrl = 'http://www.ccg.org.cn';
     const targetUrl: string = new URL(category, baseUrl).href;
@@ -148,8 +148,7 @@ export const route: Route = {
 | 分类                                   | ID                                  |
 | -------------------------------------- | ----------------------------------- |
 | [新闻动态](http://www.ccg.org.cn/news) | [news](https://rsshub.app/ccg/news) |
-| [媒体报道](http://www.ccg.org.cn/mtbd) | [mtbd](https://rsshub.app/ccg/mtbd) |
-`,
+| [媒体报道](http://www.ccg.org.cn/mtbd) | [mtbd](https://rsshub.app/ccg/mtbd) |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

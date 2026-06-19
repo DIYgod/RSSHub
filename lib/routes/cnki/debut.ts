@@ -36,7 +36,8 @@ async function handler(ctx) {
     const name = ctx.req.param('name');
 
     const journalUrl = `${rootUrl}/knavi/JournalDetail?pcode=CjFD&pykm=${name}`;
-    const title = await got.get(journalUrl).then((res) => load(res.data)('head > title').text());
+    const res = await got.get(journalUrl);
+    const title = load(res.data)('head > title').text();
 
     const outlineUrl = `${rootUrl}/knavi/JournalDetail/GetnfAllOutline`;
     const response = await got({
