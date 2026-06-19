@@ -146,9 +146,7 @@ const renderDescription = (content): string =>
                             </SubheadTag>
                         );
                     }
-                }
-
-                if (entry.type === 'deck') {
+                } else if (entry.type === 'deck') {
                     return (
                         <blockquote key={`deck-${index}`}>
                             <p>{entry.mime === 'text/html' ? raw(entry.content) : entry.content}</p>
@@ -180,9 +178,7 @@ const renderDescription = (content): string =>
                             </figure>
                         );
                     }
-                }
-
-                if (entry.type === 'list') {
+                } else if (entry.type === 'list') {
                     const ListTag = entry.subtype === 'ordered' ? 'ol' : 'ul';
                     return (
                         <ListTag key={`list-${index}`}>

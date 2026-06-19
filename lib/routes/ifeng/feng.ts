@@ -71,8 +71,7 @@ async function handler(ctx) {
                 );
                 if (type === 'doc') {
                     item.description = extractDoc(_allData.docData.contentData.contentList);
-                }
-                if (type === 'video') {
+                } else if (type === 'video') {
                     item.description = renderVideo(_allData.videoInfo);
                 }
 

@@ -367,13 +367,11 @@ const getArticleDataFromCvid = async (cvid, uid) => {
                                 description += `<p>${text.word.words}</p>`;
                             }
                         }
-                    }
-                    if (element.para_type === 2) {
+                    } else if (element.para_type === 2) {
                         for (const image of element.pic.pics) {
                             description += `<p ><img src="${image.url}@progressive.webp"></p>`;
                         }
-                    }
-                    if (element.para_type === 3 && element.line?.pic?.url) {
+                    } else if (element.para_type === 3 && element.line?.pic?.url) {
                         description += `<figure><img src="${element.line.pic.url}"></figure>`;
                     }
                 }
