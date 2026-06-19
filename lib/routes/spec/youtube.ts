@@ -1,78 +1,61 @@
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
-import type { SpecExtraYoutube } from '@/types/spec-extra';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
-import { buildCacheKey } from './utils';
-
-const YT_FEED_BASE = 'https://www.youtube.com/feeds/videos.xml';
+import {
+    channelPlaylistId,
+    discoverPodcastPlaylistIds,
+    fetchAtomFeedEntries,
+    fetchChannelAvatarUrl,
+    fetchCommunityPostItems,
+    fetchLiveNowVideoIds,
+    fetchPodcastPlaylistItems,
+    mapAtomEntryToItem,
+    mergeYoutubeItems,
+    parseYoutubeTypesParam,
+} from './youtube-sources';
 
 /** Same rule as `@/routes/youtube/utils` `isYouTubeChannelId` — https://webapps.stackexchange.com/a/101153 */
 function isYoutubeChannelId(id: string): boolean {
     return /^UC[\w-]{21}[AQgw]$/.test(id);
 }
 
-interface YtAtomEntry {
-    'yt:videoId': string;
-    title: string;
-    link:
-        | string
-        | {
-              $?: { href?: string };
-              '@_href'?: string;
-          };
-    published?: string;
-    updated?: string;
-    author?: { name?: string } | Array<{ name?: string }>;
-    'media:group'?: {
-        'media:thumbnail'?: { $?: { url?: string }; '@_url'?: string } | Array<{ $?: { url?: string }; '@_url'?: string }>;
-        'media:description'?: string | { '#text'?: string };
-    };
-}
-
-interface YtAtomFeed {
-    feed?: {
-        title?: string;
-        'yt:channelId'?: string;
-        entry?: YtAtomEntry | YtAtomEntry[];
-    };
-}
-
-function entryLinkHref(entry: YtAtomEntry): string {
-    const link = entry.link;
-    if (typeof link === 'string') {
-        return link;
+function youtubeHandleFromParam(channelId: string): string | null {
+    const trimmed = channelId.trim();
+    if (trimmed.startsWith('@')) {
+        return trimmed.slice(1);
     }
-    return link?.$?.href ?? link?.['@_href'] ?? '';
+    if (!isYoutubeChannelId(trimmed) && /^[A-Za-z0-9._-]+$/.test(trimmed)) {
+        return trimmed;
+    }
+    return null;
 }
 
-function thumbnailUrl(group: YtAtomEntry['media:group']): string {
-    const thumb = group?.['media:thumbnail'];
-    if (!thumb) {
-        return '';
+async function resolveYoutubeChannelId(channelIdOrHandle: string): Promise<{ channelId: string; handle: string | null }> {
+    if (isYoutubeChannelId(channelIdOrHandle)) {
+        return { channelId: channelIdOrHandle, handle: null };
     }
-    const node = Array.isArray(thumb) ? thumb[0] : thumb;
-    return node?.$?.url ?? node?.['@_url'] ?? '';
-}
-
-function descriptionText(group: YtAtomEntry['media:group']): string {
-    const raw = group?.['media:description'];
-    if (typeof raw === 'string') {
-        return raw;
+    const handle = youtubeHandleFromParam(channelIdOrHandle);
+    if (!handle) {
+        throw new InvalidParameterError('Invalid YouTube channel ID. Use UC… from youtube.com/channel/UC… or an @handle.');
     }
-    return raw?.['#text'] ?? '';
-}
-
-function normalizeEntries(feed: YtAtomFeed['feed']): YtAtomEntry[] {
-    const raw = feed?.entry;
-    if (!raw) {
-        return [];
+    const html = await cache.tryGet(
+        `spec-youtube-handle:${handle}`,
+        () =>
+            ofetch<string>(`https://www.youtube.com/@${handle}`, {
+                parseResponse: (txt) => txt,
+            }),
+        24 * 60 * 60
+    );
+    const match = (html as string).match(/"channelId":"(UC[^"]+)"/) ?? (html as string).match(/"externalId":"(UC[^"]+)"/) ?? (html as string).match(/youtube\.com\/channel\/(UC[\w-]{22})/);
+    const resolved = match?.[1];
+    if (!resolved || !isYoutubeChannelId(resolved)) {
+        throw new InvalidParameterError(`Could not resolve YouTube handle @${handle} to a channel ID.`);
     }
-    return Array.isArray(raw) ? raw : [raw];
+    return { channelId: resolved, handle };
 }
 
 export const route: Route = {
@@ -80,23 +63,36 @@ export const route: Route = {
     categories: ['multimedia'],
     example: '/spec/youtube/UCxxxxxxxxxxxxxxxxxxxxxx',
     parameters: {
-        channelId: 'YouTube channel ID (starts with UC…). Find it in the channel URL.',
+        channelId: 'YouTube channel ID (UC…) or @handle (e.g. @DidiKoreanPodcast).',
     },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
         supportRadar: true,
     },
     url: 'youtube.com',
-    name: 'Channel Videos',
+    name: 'Channel (videos, shorts, live, posts)',
     maintainers: ['koreanpatch'],
+    description: `::: tip Query parameter — \`types\`
+| Value | Source | Notes |
+| ----- | ------ | ----- |
+| \`video\` | Atom \`playlist_id=UULF…\` | Long-form uploads (no Shorts) |
+| \`short\` | Atom \`playlist_id=UUSH…\` | Shorts only |
+| \`live\` | Atom \`playlist_id=UULV…\` | Past live streams; \`isLiveNow\` when \`YOUTUBE_KEY\` is set |
+| \`post\` | Scrape \`/posts\` tab | Community posts (no RSS) |
+| \`podcast\` | Atom on creator podcast playlist(s) | Only when the channel exposes a Podcasts tab |
+
+Default: \`types=video,short,live,post\`. Example: \`?types=video,short\`.
+
+Podcast episodes also appear as regular \`video\` items when published to the main uploads feed. There is no YouTube-native podcast-only RSS prefix (UULP is *popular videos*, not podcasts).
+:::`,
     radar: [
         {
-            source: ['www.youtube.com/channel/:channelId', 'www.youtube.com/channel/:channelId/videos'],
+            source: ['www.youtube.com/channel/:channelId', 'www.youtube.com/channel/:channelId/videos', 'www.youtube.com/@:handle'],
             target: '/youtube/:channelId',
         },
     ],
@@ -104,68 +100,58 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const channelId = ctx.req.param('channelId');
+    const channelIdParam = ctx.req.param('channelId');
+    const { channelId, handle } = await resolveYoutubeChannelId(channelIdParam);
+    const types = parseYoutubeTypesParam(ctx.req.query('types'));
+    const channelAvatarUrl = await fetchChannelAvatarUrl(channelId);
 
-    if (!isYoutubeChannelId(channelId)) {
-        throw new InvalidParameterError('Invalid YouTube channel ID. Use the UC… id from youtube.com/channel/UC… (@handles are not accepted on this route).');
+    const liveNowVideoIds = types.has('live') ? await fetchLiveNowVideoIds(channelId) : new Set<string>();
+
+    const collected: Array<Awaited<ReturnType<typeof mapAtomEntryToItem>>> = [];
+    let channelTitle = channelId;
+
+    if (types.has('video')) {
+        const { channelTitle: title, entries } = await fetchAtomFeedEntries(channelId, { playlistId: channelPlaylistId(channelId, 'UULF') });
+        channelTitle = title;
+        for (const entry of entries) {
+            collected.push(mapAtomEntryToItem(entry, channelId, channelTitle, 'video', liveNowVideoIds, channelAvatarUrl));
+        }
     }
 
-    const feedXml = await cache.tryGet(
-        buildCacheKey('youtube', channelId),
-        () =>
-            ofetch<string>(YT_FEED_BASE, {
-                query: { channel_id: channelId },
-                parseResponse: (txt) => txt,
-            }),
-        30 * 60
-    );
-
-    const { XMLParser } = await import('fast-xml-parser');
-    const parser = new XMLParser({
-        ignoreAttributes: false,
-        attributeNamePrefix: '$',
-    });
-    const parsed = parser.parse(feedXml as string) as YtAtomFeed;
-
-    const feed = parsed.feed;
-    if (!feed) {
-        throw new InvalidParameterError('YouTube returned an empty or unrecognised Atom feed for this channel.');
+    if (types.has('short')) {
+        const { channelTitle: title, entries } = await fetchAtomFeedEntries(channelId, { playlistId: channelPlaylistId(channelId, 'UUSH') });
+        channelTitle = title;
+        for (const entry of entries) {
+            collected.push(mapAtomEntryToItem(entry, channelId, channelTitle, 'short', liveNowVideoIds, channelAvatarUrl));
+        }
     }
 
-    const channelTitle = String(feed.title ?? channelId);
-    const entries = normalizeEntries(feed);
+    if (types.has('live')) {
+        const { channelTitle: title, entries } = await fetchAtomFeedEntries(channelId, { playlistId: channelPlaylistId(channelId, 'UULV') });
+        channelTitle = title;
+        for (const entry of entries) {
+            collected.push(mapAtomEntryToItem(entry, channelId, channelTitle, 'live', liveNowVideoIds, channelAvatarUrl));
+        }
+    }
 
-    const items: DataItem[] = entries.map((entry) => {
-        const videoId = String(entry['yt:videoId'] ?? '');
-        const linkFromFeed = entryLinkHref(entry);
-        const link = linkFromFeed || (videoId ? `https://www.youtube.com/watch?v=${videoId}` : '');
-        const thumb = entry['media:group'] ? thumbnailUrl(entry['media:group']) : '';
-        const descText = entry['media:group'] ? descriptionText(entry['media:group']) : '';
-        const pubDate = parseDate(entry.published ?? entry.updated ?? '');
+    if (types.has('podcast')) {
+        const playlistIds = await discoverPodcastPlaylistIds(channelId, handle);
+        const podcastBatches = await Promise.all(playlistIds.map((playlistId) => fetchPodcastPlaylistItems(channelId, channelTitle, playlistId, liveNowVideoIds, channelAvatarUrl)));
+        for (const podcastItems of podcastBatches) {
+            collected.push(...podcastItems);
+        }
+    }
 
-        const extra: SpecExtraYoutube = {
-            type: 'youtube/video',
-            platform: 'youtube',
-            sourceUrl: link,
-            externalId: videoId,
-            seriesExternalId: channelId,
-            publishedAt: pubDate ? pubDate.toISOString() : undefined,
-            channelId,
-            channelTitle,
-            isMembershipOnly: false,
-        };
+    let postItems: Awaited<ReturnType<typeof fetchCommunityPostItems>> = [];
+    if (types.has('post')) {
+        postItems = await fetchCommunityPostItems(channelId, handle);
+        if (postItems.length > 0) {
+            const postTitle = (postItems[0]._extra as { channelTitle?: string } | undefined)?.channelTitle ?? channelTitle;
+            channelTitle = postTitle;
+        }
+    }
 
-        return {
-            title: String(entry.title ?? videoId),
-            link,
-            guid: `spec-youtube-${channelId}-${videoId}`,
-            pubDate,
-            author: channelTitle,
-            image: thumb,
-            description: [thumb ? `<img src="${thumb}" />` : '', descText ? `<p>${descText}</p>` : ''].filter(Boolean).join('\n'),
-            _extra: extra,
-        };
-    });
+    const items = mergeYoutubeItems([...collected, ...postItems]);
 
     return {
         title: `${channelTitle} — YouTube`,

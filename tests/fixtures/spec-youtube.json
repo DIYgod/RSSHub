@@ -1,6 +1,51 @@
 {
     "_extras": [
         {
+            "type": "youtube/post",
+            "platform": "youtube",
+            "sourceUrl": "https://www.youtube.com/post/post001",
+            "externalId": "post001",
+            "seriesExternalId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "channelTitle": "Test Channel",
+            "isMembershipOnly": false,
+            "contentKind": "post",
+            "thumbnail": "",
+            "thumbnailFallback": "",
+            "isLiveNow": false,
+            "bodyText": "Hello community!"
+        },
+        {
+            "type": "youtube/live",
+            "platform": "youtube",
+            "sourceUrl": "https://www.youtube.com/watch?v=live001",
+            "externalId": "live001",
+            "seriesExternalId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "publishedAt": "2026-04-03T00:00:00.000Z",
+            "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "channelTitle": "Test Channel",
+            "isMembershipOnly": false,
+            "contentKind": "live",
+            "thumbnail": "https://i.ytimg.com/vi/live001/maxresdefault.jpg",
+            "thumbnailFallback": "https://i.ytimg.com/vi/live001/hqdefault.jpg",
+            "isLiveNow": false
+        },
+        {
+            "type": "youtube/short",
+            "platform": "youtube",
+            "sourceUrl": "https://www.youtube.com/shorts/short001",
+            "externalId": "short001",
+            "seriesExternalId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "publishedAt": "2026-04-02T00:00:00.000Z",
+            "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "channelTitle": "Test Channel",
+            "isMembershipOnly": false,
+            "contentKind": "short",
+            "thumbnail": "https://i.ytimg.com/vi/short001/maxresdefault.jpg",
+            "thumbnailFallback": "https://i.ytimg.com/vi/short001/hqdefault.jpg",
+            "isLiveNow": false
+        },
+        {
             "type": "youtube/video",
             "platform": "youtube",
             "sourceUrl": "https://www.youtube.com/watch?v=vid001",
@@ -9,7 +54,11 @@
             "publishedAt": "2026-04-01T00:00:00.000Z",
             "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
             "channelTitle": "Test Channel",
-            "isMembershipOnly": false
+            "isMembershipOnly": false,
+            "contentKind": "video",
+            "thumbnail": "https://i.ytimg.com/vi/vid001/maxresdefault.jpg",
+            "thumbnailFallback": "https://i.ytimg.com/vi/vid001/hqdefault.jpg",
+            "isLiveNow": false
         },
         {
             "type": "youtube/video",
@@ -20,7 +69,11 @@
             "publishedAt": "2026-03-30T00:00:00.000Z",
             "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
             "channelTitle": "Test Channel",
-            "isMembershipOnly": false
+            "isMembershipOnly": false,
+            "contentKind": "video",
+            "thumbnail": "https://i.ytimg.com/vi/vid002/maxresdefault.jpg",
+            "thumbnailFallback": "https://i.ytimg.com/vi/vid002/hqdefault.jpg",
+            "isLiveNow": false
         }
     ]
 }

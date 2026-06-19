@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <title>범죄도시0 :: 네이버 웹툰</title>
+
+        <meta property="og:title" content="범죄도시0" />
+
+        <meta property="og:image" content="https://shared-comic.pstatic.net/thumb/webtoon/848000/thumbnail/thumbnail_IMAG19_0137368c-36b1-410a-a200-973d2b9c33ff.jpg" />
+
+        <meta property="og:description" content="통쾌하게 싹 쓸어버린다!괴물형사 마석도의 초보 시절!최악,최강의 조폭을 소탕하기 위한 은밀한 작전이 시작된다. 영화 &lt;범죄도시&gt; 시리즈의 공식 프리퀄 웹툰" />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="" />
+        <meta property="og:article:author" content="네이버 웹툰" />
+        <meta property="og:article:author:url" content="http://m.comic.naver.com" />
+
+        <meta name="csrf-token" content="ec005971-5237-4355-bd4b-1054de3266d6" />
+        <link rel="canonical" href="https://m.comic.naver.com/webtoon/list?titleId=848000" />
+        <link rel="alternate" media="only screen and (min-width: 640px)" href="https://comic.naver.com/webtoon/list?titleId=848000" />
+        <link rel="stylesheet" type="text/css" href="/f3a3d63c2773141be894.css" />
+        <script type="text/javascript">
+            var g_ssc = 'Mcomic.episode';
+        </script>
+    </head>
+    <body>
+        <div id="u_skip" class="u_skip">
+            <a href="#ct">본문 바로가기</a>
+        </div>
+
+        <header class="fixed">
+            <h1 class="header_gnb">
+                <a href="http://m.naver.com" onclick="nclk_v2(event, 'gnb.naver')" class="gnb_logo"><span class="blind">네이버</span></a>
+                <a href="/index" onclick="nclk_v2(event, 'gnb.comic')" class="title_header_toon">웹툰</a>
+                <a href="https://m.novel.naver.com" onclick="nclk_v2(event, 'gnb.novel')" class="title_header_sub">웹소설</a>
+                <a href="https://m.series.naver.com" onclick="nclk_v2(event, 'gnb.series')" class="title_header_sub">시리즈</a>
+            </h1>
+            <a href="/search/main" onclick="nclk_v2(event, 'gnb.search')" class="btn_search_header"><span class="blind">검색페이지 이동</span></a>
+            <a href="/mypage/favorite" onclick="nclk_v2(event, 'gnb.my')" class="btn_mypage_header"><span class="blind">MY</span></a>
+
+            <!-- 그 외 기본 lnb -->
+            <div class="lnb">
+                <ul class="list_lnb">
+                    <li class="item">
+                        <a href="/index" onclick="nclk_v2(event, 'lnb.home')" class="link"><span class="text">홈</span></a>
+                    </li>
+                    <li class="item on">
+                        <a href="/webtoon/weekday" onclick="nclk_v2(event, 'lnb.weekday')" class="link"><span class="text">요일별</span></a>
+                    </li>
+                    <li class="item">
+                        <a href="/webtoon/finish" onclick="nclk_v2(event, 'lnb.finish')" class="link"><span class="text">완결작</span></a>
+                    </li>
+                    <li class="item">
+                        <a href="/bestChallenge/genre" onclick="nclk_v2(event, 'lnb.best')" class="link"><span class="text">베스트도전</span></a>
+                    </li>
+                    <li class="item">
+                        <a href="/cuts/v" class="link" id="cuts_lnb" target="_blank">
+                            <span class="text"
+                                >컷츠
+                                <i class="icon_new"><span class="blind">NEW</span></i>
+                            </span>
+                        </a>
+                        <!-- [D] 컷츠 툴팁 활성화 시 is_active 클래스 추가 -->
+                        <span class="cuts_tooltip" id="cuts_tooltip"><span class="blind">웹툰 숏폼 출시!</span></span>
+                    </li>
+                </ul>
+                <h2 class="blind">요일별</h2>
+            </div>
+
+            <script type="text/javascript">
+                const isHomePage = '';
+            </script>
+            <script type="text/javascript" src="/lnb-basic-dc3585ffce64cac97c8f.js"></script>
+
+            <div class="area_sublnb lnb_weekday">
+                <ul class="daylist">
+                    <li class="day"><a href="/webtoon/weekday?week=mon" onclick="nclk_v2(event, 'dow.mon')" class="link">월</a></li>
+                    <li class="day"><a href="/webtoon/weekday?week=tue" onclick="nclk_v2(event, 'dow.tue')" class="link">화</a></li>
+                    <li class="day"><a href="/webtoon/weekday?week=wed" onclick="nclk_v2(event, 'dow.wed')" class="link">수</a></li>
+                    <li class="day"><a href="/webtoon/weekday?week=thu" onclick="nclk_v2(event, 'dow.thu')" class="link">목</a></li>
+                    <li class="day"><a href="/webtoon/weekday?week=fri" onclick="nclk_v2(event, 'dow.fri')" class="link">금</a></li>
+                    <li class="day"><a href="/webtoon/weekday?week=sat" onclick="nclk_v2(event, 'dow.sat')" class="link">토</a></li>
+                    <li class="day on"><a href="/webtoon/weekday?week=sun" onclick="nclk_v2(event, 'dow.sun')" class="link">일</a></li>
+                    <li class="day"><a href="/webtoon/weekday?week=dailyPlus" onclick="nclk_v2(event, 'dow.daily')" class="link">매일+</a></li>
+                </ul>
+                <h3 class="blind">일요일</h3>
+            </div>
+        </header>
+        <!-- ct  -->
+
+        <div id="ct" style="padding-top: 124px">
+            <div class="band_banner v2">
+                <a
+                    href="#"
+                    onclick="
+                        callWebAdBannerClick('/api/stat/gameBanner?type=CLICK&target=ARTICLE_LIST&bannerId=1535', 'https://studiolico.go.link/7WFdZ');
+                        nclk_v2(event, 'lst.adbanner');
+                        return false;
+                    "
+                    class="banner_lnk"
+                >
+                    <span
+                        class="bg_lft"
+                        style="
+                            background: url(https://naverwebtoon-phinf.pstatic.net/20260424_149/1777028050979ALYs5_JPEG/upload_18429700842994346348.JPEG?type=c2l) repeat-x;
+                            -webkit-background-size: 1px 60px;
+                            background-size: 1px 60px;
+                        "
+                    ></span>
+                    <img src="https://naverwebtoon-phinf.pstatic.net/20260424_149/1777028050979ALYs5_JPEG/upload_18429700842994346348.JPEG?type=p100" width="320" height="60" alt="AD 배너" />
+                    <span
+                        class="bg_rgt"
+                        style="
+                            background: url(https://naverwebtoon-phinf.pstatic.net/20260424_149/1777028050979ALYs5_JPEG/upload_18429700842994346348.JPEG?type=c2r) repeat-x;
+                            -webkit-background-size: 1px 60px;
+                            background-size: 1px 60px;
+                        "
+                    ></span>
+                </a>
+            </div>
+
+            <hr class="da_border" />
+
+            <div class="section_toon_info" style="background-color: #d9f0ff">
+                <div class="info_front is_active">
+                    <h2 class="blind">작품 기본 정보</h2>
+
+                    <div class="area_info">
+                        <span class="summary">통쾌하게 쓸어버린다!</span>
+                        <strong class="title">범죄도시0</strong>
+                        <span class="author"> 박태준 / 정종택 </span>
+                        <span class="detail">
+                            <span class="ico_comic ico_score"><span class="blind">별점</span></span>
+                            <span class="score">9.82</span>
+
+                            <span class="favcount"
+                                >관심 <span class="count_num">10만</span>
+                                <span class="count_plus">+</span>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="area_thumbnail">
+                        <img src="https://image-comic.pstatic.net/webtoon/848000/thumbnail/titledescimage/backImage_5e8b8405-d34d-44fa-a519-e9a811c26602.png" alt="범죄도시0" width="218" height="174" />
+                        <img src="https://image-comic.pstatic.net/webtoon/848000/thumbnail/titledescimage/frontImage_b3287ee3-ee5a-4528-8454-add75e613fc9.png" alt="범죄도시0" width="218" height="174" />
+
+                        <div class="thumb_bg">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/thumbnail/titledescimage/objectImage_32a1dc80-12eb-4c61-b7ef-3cb244332b31.png" alt="범죄도시0" width="250" height="174" />
+                        </div>
+                    </div>
+
+                    <div class="area_etc">
+                        <a href="#" id="spiButton" class="btn naver-splugin spi_sns_share sns_share" onclick="nclk_v2(event, 'LIC.expo')" data-oninitialize="getInitialParams();"
+                            ><span class="btn_share"><span class="blind">공유하기</span></span></a
+                        >
+                    </div>
+                </div>
+                <div class="info_back">
+                    <h2 class="blind">작품 상세 정보</h2>
+                    <dl class="detail">
+                        <div class="author_list">
+                            <dt>작가</dt>
+                            <dd>
+                                <a href="#" class="link_author yes_community_author">
+                                    <span class="author">
+                                        <span class="ellipsis">박태준</span>
+
+                                        <span class="badge_author"><span class="blind">작가페이지</span></span>
+
+                                        <span class="author_bar">/</span>
+                                    </span>
+
+                                    <span class="author">
+                                        <span class="ellipsis">정종택</span>
+
+                                        <span class="badge_author"><span class="blind">작가페이지</span></span>
+                                    </span>
+                                </a>
+                            </dd>
+                        </div>
+                        <div class="genre">
+                            <dt>장르</dt>
+                            <dd>
+                                <span class="length">스토리</span>
+
+                                <ul class="property list_detail">
+                                    <li>액션</li>
+                                </ul>
+                            </dd>
+                        </div>
+
+                        <div class="week_day">
+                            <dt>연재</dt>
+                            <dd>
+                                <ul class="list_detail">
+                                    <li>일</li>
+                                </ul>
+
+                                <ul class="property list_detail age">
+                                    <li>15세 이용가</li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </dl>
+                    <div class="summary"><p>통쾌하게 싹 쓸어버린다! 괴물형사 마석도의 초보 시절! 최악,최강의 조폭을 소탕하기 위한 은밀한 작전이 시작된다. 영화 &lt;범죄도시&gt; 시리즈의 공식 프리퀄 웹툰</p></div>
+                </div>
+                <div class="paging"></div>
+            </div>
+
+            <ul class="section_toon_btn">
+                <li class="item">
+                    <input type="checkbox" id="prefer1" /><label for="prefer1"><span class="ico_comic ico_plus"></span><em class="favorite">관심</em></label>
+                </li>
+                <li class="item">
+                    <a href="#" data-article-no="1" data-inspection-status="NORMAL" onclick="nclk_v2(event, 'LIC.first')" class="link _first_article_link"><em class="first_epi">첫화보기</em></a>
+                </li>
+            </ul>
+
+            <div class="section_episode_count">
+                <h3 class="title_count">총 <span class="count_num">22</span>화</h3>
+                <div class="tablist" role="tablist">
+                    <button type="button" class="tab" role="tab" aria-selected="true" data-sort-order="DESC">최신화부터</button>
+                    <button type="button" class="tab" role="tab" aria-selected="false" data-sort-order="ASC"><span class="count_num">1</span>화부터</button>
+                </div>
+            </div>
+
+            <div class="toon_preview">
+                <a href="#" class="detail_more">
+                    <span class="txt"><em>5개</em>의 미리보기가 있습니다</span>
+
+                    <ul class="preview_thumb_lst">
+                        <li>
+                            <span class="icon_new"><span class="blind">new</span></span>
+                            <span class="thumb" style="background-image: url(https://image-comic.pstatic.net/webtoon/848000/18/thumbnail_202x120_177ecd7a-289f-4af5-9155-4987edfa3a2a.jpg)"></span>
+                        </li>
+
+                        <li>
+                            <span class="thumb" style="background-image: url(https://image-comic.pstatic.net/webtoon/848000/19/thumbnail_202x120_e249d88f-4815-4a70-9682-7d873c6d5248.jpg)"></span>
+                        </li>
+
+                        <li>
+                            <span class="thumb" style="background-image: url(https://image-comic.pstatic.net/webtoon/848000/20/thumbnail_202x120_9f264e25-ff7e-4c8c-b076-12ba5d8e2aa1.jpg)"></span>
+                        </li>
+                    </ul>
+                    <span class="ico_comic"><span class="blind">펼치기</span></span>
+                </a>
+                <ul class="section_episode_list">
+                    <li class="item lock" data-title-id="848000" data-no="22" data-contents-no="687410" data-volume-no="22" data-free-convert-date="2026-07-11T22:50">
+                        <a href="#" class="link">
+                            <div class="thumbnail">
+                                <img src="https://image-comic.pstatic.net/webtoon/848000/22/thumbnail_202x120_24739f95-6ec8-4cbf-a57f-cb792b43d12d.jpg" width="76" height="45" alt="22화. 의심받는 마석도" />
+                                <span class="ico_comic"><span class="blind">유료만화</span></span>
+                            </div>
+                            <div class="info">
+                                <strong class="title">
+                                    <span class="name"><strong>22화. 의심받는 마석도</strong></span>
+                                </strong>
+                                <div class="detail">
+                                    <span class="free_txt"></span>
+
+                                    <em class="free_time"></em>
+                                </div>
+                            </div>
+                            <em class="cookie_txt"></em>
+                        </a>
+                    </li>
+
+                    <li class="item lock" data-title-id="848000" data-no="21" data-contents-no="687410" data-volume-no="21" data-free-convert-date="2026-07-04T22:50">
+                        <a href="#" class="link">
+                            <div class="thumbnail">
+                                <img src="https://image-comic.pstatic.net/webtoon/848000/21/thumbnail_202x120_d4368544-4f82-4f74-95c0-721598bdcbeb.jpg" width="76" height="45" alt="21화. 하극상의 최후" />
+                                <span class="ico_comic"><span class="blind">유료만화</span></span>
+                            </div>
+                            <div class="info">
+                                <strong class="title">
+                                    <span class="name"><strong>21화. 하극상의 최후</strong></span>
+                                </strong>
+                                <div class="detail">
+                                    <span class="free_txt"></span>
+
+                                    <em class="free_time"></em>
+                                </div>
+                            </div>
+                            <em class="cookie_txt"></em>
+                        </a>
+                    </li>
+
+                    <li class="item lock" data-title-id="848000" data-no="20" data-contents-no="687410" data-volume-no="20" data-free-convert-date="2026-06-27T22:50">
+                        <a href="#" class="link">
+                            <div class="thumbnail">
+                                <img src="https://image-comic.pstatic.net/webtoon/848000/20/thumbnail_202x120_9f264e25-ff7e-4c8c-b076-12ba5d8e2aa1.jpg" width="76" height="45" alt="20화. 청계천 빨간비디오" />
+                                <span class="ico_comic"><span class="blind">유료만화</span></span>
+                            </div>
+                            <div class="info">
+                                <strong class="title">
+                                    <span class="name"><strong>20화. 청계천 빨간비디오</strong></span>
+                                </strong>
+                                <div class="detail">
+                                    <span class="free_txt"></span>
+
+                                    <em class="free_time"></em>
+                                </div>
+                            </div>
+                            <em class="cookie_txt"></em>
+                        </a>
+                    </li>
+
+                    <li class="item lock" data-title-id="848000" data-no="19" data-contents-no="687410" data-volume-no="19" data-free-convert-date="2026-06-20T22:50">
+                        <a href="#" class="link">
+                            <div class="thumbnail">
+                                <img src="https://image-comic.pstatic.net/webtoon/848000/19/thumbnail_202x120_e249d88f-4815-4a70-9682-7d873c6d5248.jpg" width="76" height="45" alt="19화. 마석도 VS 목진혁" />
+                                <span class="ico_comic"><span class="blind">유료만화</span></span>
+                            </div>
+                            <div class="info">
+                                <strong class="title">
+                                    <span class="name"><strong>19화. 마석도 VS 목진혁</strong></span>
+                                </strong>
+                                <div class="detail">
+                                    <span class="free_txt"></span>
+
+                                    <em class="free_time"></em>
+                                </div>
+                            </div>
+                            <em class="cookie_txt"></em>
+                        </a>
+                    </li>
+
+                    <li class="item lock" data-title-id="848000" data-no="18" data-contents-no="687410" data-volume-no="18" data-free-convert-date="2026-06-13T22:50">
+                        <a href="#" class="link">
+                            <div class="thumbnail">
+                                <img src="https://image-comic.pstatic.net/webtoon/848000/18/thumbnail_202x120_177ecd7a-289f-4af5-9155-4987edfa3a2a.jpg" width="76" height="45" alt="18화. 맞습니다 경찰" />
+                                <span class="ico_comic"><span class="blind">유료만화</span></span>
+                            </div>
+                            <div class="info">
+                                <strong class="title">
+                                    <span class="name"><strong>18화. 맞습니다 경찰</strong></span>
+                                </strong>
+                                <div class="detail">
+                                    <span class="free_txt"></span>
+
+                                    <em class="free_time"></em>
+                                </div>
+                            </div>
+                            <em class="cookie_txt"></em>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <ul class="section_episode_list preview">
+                <li class="item" data-title-id="848000" data-no="17">
+                    <a href="/webtoon/detail?titleId=848000&no=17&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '17')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/17/thumbnail_202x120_47a35a6b-1572-4ae3-85b7-3bf8439e3f7b.jpg" width="76" height="45" alt="17화. 간통남 마석도" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>17화. 간통남 마석도</strong></span>
+                                <span class="bullet up"><span class="blind">up</span></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.91</span>
+
+                                <span class="date">26.06.06</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="16">
+                    <a href="/webtoon/detail?titleId=848000&no=16&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '16')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/16/thumbnail_202x120_8893af9c-2321-49d9-a724-a76a9ee79a03.jpg" width="76" height="45" alt="16화. XX비디오" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>16화. XX비디오</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.87</span>
+
+                                <span class="date">26.05.30</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="15">
+                    <a href="/webtoon/detail?titleId=848000&no=15&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '15')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/15/thumbnail_202x120_1ccb4a7d-bcad-4b5e-8dc5-37eca737a38a.jpg" width="76" height="45" alt="15화. 정규대원 마석도" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>15화. 정규대원 마석도</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.91</span>
+
+                                <span class="date">26.05.23</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="14">
+                    <a href="/webtoon/detail?titleId=848000&no=14&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '14')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/14/thumbnail_202x120_f53548a3-e7a4-4478-9542-3a75f6aa1f7c.jpg" width="76" height="45" alt="14화. 이 구역 에이스" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>14화. 이 구역 에이스</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.91</span>
+
+                                <span class="date">26.05.16</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="13">
+                    <a href="/webtoon/detail?titleId=848000&no=13&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '13')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/13/thumbnail_202x120_22276f7c-4617-4d72-b53b-acf303e9fbfc.jpg" width="76" height="45" alt="13화. 비밀의 방" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>13화. 비밀의 방</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.90</span>
+
+                                <span class="date">26.05.09</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="12">
+                    <a href="/webtoon/detail?titleId=848000&no=12&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '12')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/12/thumbnail_202x120_2748fd6f-1f2e-4d7e-9f38-de9bc42b42bf.jpg" width="76" height="45" alt="12화. 위기의 마석도" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>12화. 위기의 마석도</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.91</span>
+
+                                <span class="date">26.05.02</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="11">
+                    <a href="/webtoon/detail?titleId=848000&no=11&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '11')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/11/thumbnail_202x120_a3fbe6c9-a286-48c2-997b-1ede04809a42.jpg" width="76" height="45" alt="11화. 재회" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>11화. 재회</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.92</span>
+
+                                <span class="date">26.04.25</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="10">
+                    <a href="/webtoon/detail?titleId=848000&no=10&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '10')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/10/thumbnail_202x120_2efdf5d8-9f4c-4888-b1f9-888bc099b0b6.jpg" width="76" height="45" alt="10화. 새로운 행동대장!" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>10화. 새로운 행동대장!</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.88</span>
+
+                                <span class="date">26.04.18</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="9">
+                    <a href="/webtoon/detail?titleId=848000&no=9&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '9')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/9/thumbnail_202x120_a90d1065-e5a3-4a57-8451-01030f250cf8.jpg" width="76" height="45" alt="9화. 마석도의 은밀한 취향" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>9화. 마석도의 은밀한 취향</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.88</span>
+
+                                <span class="date">26.04.11</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="8">
+                    <a href="/webtoon/detail?titleId=848000&no=8&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '8')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/8/thumbnail_202x120_d0e0fee7-c81b-4111-8251-9aaf454924ef.jpg" width="76" height="45" alt="8화. 마석도 VS 도원필" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>8화. 마석도 VS 도원필</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.80</span>
+
+                                <span class="date">26.04.04</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="7">
+                    <a href="/webtoon/detail?titleId=848000&no=7&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '7')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/7/thumbnail_202x120_c21c741c-640a-419a-b9d5-086af49c0aa1.jpg" width="76" height="45" alt="7화. 운수 좋은 날" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>7화. 운수 좋은 날</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.86</span>
+
+                                <span class="date">26.03.28</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="6">
+                    <a href="/webtoon/detail?titleId=848000&no=6&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '6')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/6/thumbnail_202x120_f28ef317-9a32-4c4f-9a7c-98918fb976c7.jpg" width="76" height="45" alt="6화. 열받은 마석도" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>6화. 열받은 마석도</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.89</span>
+
+                                <span class="date">26.03.21</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="5">
+                    <a href="/webtoon/detail?titleId=848000&no=5&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '5')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/5/thumbnail_202x120_e4256211-ebe1-402f-8550-288ef479e6ff.jpg" width="76" height="45" alt="5화. 달마야 놀자" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>5화. 달마야 놀자</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.87</span>
+
+                                <span class="date">26.03.14</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="4">
+                    <a href="/webtoon/detail?titleId=848000&no=4&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '4')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/4/thumbnail_202x120_87a6fd10-b95d-4152-96cd-f736ea3986d3.jpg" width="76" height="45" alt="4화. 행동대장 마석도" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>4화. 행동대장 마석도</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.88</span>
+
+                                <span class="date">26.03.07</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="3">
+                    <a href="/webtoon/detail?titleId=848000&no=3&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '3')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/3/thumbnail_202x120_8bf59aea-ddb1-4f33-96f3-f3af9a7a121c.jpg" width="76" height="45" alt="3화. 참... 참... 참!" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>3화. 참... 참... 참!</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.86</span>
+
+                                <span class="date">26.02.28</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="2">
+                    <a href="/webtoon/detail?titleId=848000&no=2&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '2')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/2/thumbnail_202x120_285fa9f3-420a-4be3-9e95-b68ed9f38c9c.jpg" width="76" height="45" alt="2화. 마석도의 유일한 약점" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>2화. 마석도의 유일한 약점</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.78</span>
+
+                                <span class="date">26.02.21</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="item" data-title-id="848000" data-no="1">
+                    <a href="/webtoon/detail?titleId=848000&no=1&week=sun&listSortOrder=DESC&listPage=1" onclick="nclk_v2(event, 'lst.episode', '848000', '1')" class="link">
+                        <div class="thumbnail">
+                            <img src="https://image-comic.pstatic.net/webtoon/848000/1/thumbnail_202x120_8be7d808-7b1a-4556-a6b8-d352745eb765.jpg" width="76" height="45" alt="1화. 범죄도시 마석도" />
+                        </div>
+                        <div class="info">
+                            <strong class="title">
+                                <span class="name"><strong>1화. 범죄도시 마석도</strong></span>
+                            </strong>
+                            <div class="detail">
+                                <span class="ico_comic ico_score"></span>
+                                <span class="score">9.39</span>
+
+                                <span class="date">26.02.14</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="service_info">
+                <div class="service_info_tit">
+                    <strong>유료이용안내</strong>
+                    <a href="#" data-nbooks-id="687410" class="service_more">자세히보기</a>
+                </div>
+                <div class="service_info_detail"></div>
+            </div>
+        </div>
+
+        <div id="favoriteLayer" class="ly_wrap" style="display: none">
+            <div class="ly_cont favorite_add" style="display: none">
+                <p class="tit">관심 웹툰에 등록되었습니다.</p>
+                <div class="download">
+                    <span class="logo"><img src="https://ssl.pstatic.net/static/m/comic/im/ico_favorite_170602.png" alt="" /></span>
+                    <span class="app">
+                        <em>업데이트 소식을 놓치고 싶지 않다면?</em>
+                        <a href="/external/appLaunchBridge?type=ARTICLE_LIST&titleId=848000">웹툰앱으로 보기</a>
+                    </span>
+                </div>
+                <div class="btn_area">
+                    <a href="#">확인</a>
+                </div>
+            </div>
+
+            <div class="ly_cont favorite_cancle" style="display: none">
+                <p class="tit">관심 웹툰이 취소되었습니다.</p>
+                <div class="btn_area">
+                    <a href="#">확인</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="dimmed_layer" style="display: none"></div>
+
+        <div class="ly_wrap ly_author" id="communityAuthorPopup" style="display: none">
+            <div class="ly_cont">
+                <ul class="author_list">
+                    <li class="item">
+                        <a href="https://m.comic.naver.com/community/u/_8dull9?lastPage=EpisodeList" onclick="nclk_v2(event, 'LIC' + '.artistsh')" class="link">
+                            <div class="profile">
+                                <span class="blind">작가이미지 없음</span>
+                            </div>
+                            <div class="info_area">
+                                <span class="author_info_area">
+                                    <span class="ellipsis">박태준</span>
+
+                                    <span class="badge_author"><span class="blind">작가페이지</span></span>
+
+                                    <span class="author_info"> 글 </span>
+                                </span>
+                            </div>
+                            <div class="author_go">
+                                <span class="blind">작가페이지 이동</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="item">
+                        <a href="https://m.comic.naver.com/community/u/cymhteak?lastPage=EpisodeList" onclick="nclk_v2(event, 'LIC' + '.artistsh')" class="link">
+                            <div class="profile">
+                                <img src="https://kw-wcommunity-phinf.pstatic.net/20241001_256/1727709408701uxaO9_PNG/%C7%C1%B7%CE%C7%CA.png" width="50" height="50" alt="정종택" />
+                            </div>
+                            <div class="info_area">
+                                <span class="author_info_area">
+                                    <span class="ellipsis">정종택</span>
+
+                                    <span class="badge_author"><span class="blind">작가페이지</span></span>
+
+                                    <span class="author_info"> 그림 </span>
+                                </span>
+                            </div>
+                            <div class="author_go">
+                                <span class="blind">작가페이지 이동</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <button type="button" class="button_close" id="communityAuthorPopupCloseBtn">
+                    <span class="blind">닫기</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- footer -->
+
+        <div class="info_bottom">
+            <div class="desc_bottom"></div>
+
+            <footer class="footer">
+                <a
+                    href="#"
+                    data-android-scheme-prefix="webtoonkr"
+                    data-android-scheme-query="contentList?version=2&titleId=848000&league=WEBTOON"
+                    data-android-package="com.nhn.android.webtoon"
+                    data-ios-scheme-prefix="webtoonkr"
+                    data-ios-scheme-query="contentList?version=2&titleId=848000&league=WEBTOON"
+                    data-ios-install-id="315795555"
+                    data-ios-universal="https://apps.comic.naver.com/launchApp/"
+                    data-unknown-url="https://comic.naver.com/webtoon/list?titleId=848000"
+                    data-nclick="fot.appbansave"
+                    class="cont_app_banner"
+                >
+                    <img class="app_banner" src="https://ssl.pstatic.net/static/m/comic/im/app_banner_list.jpg" alt="데이터 걱정 없이 감상하려면 임시저장 해보세요~ 웹툰앱 바로가기" />
+                </a>
+
+                <ul class="list_link">
+                    <li class="link_site"><a href="/index" onclick="nclk_v2(event, 'fot.webtoonweb')">웹툰</a></li>
+                    <li class="link_site"><a href="https://m.novel.naver.com" onclick="nclk_v2(event, 'fot.novel')">웹소설</a></li>
+                    <li class="link_site"><a href="https://m.series.naver.com" onclick="nclk_v2(event, 'fot.series')">시리즈</a></li>
+                </ul>
+
+                <div class="foot_info">
+                    <div class="list_relative">
+                        <ul>
+                            <li class="link_relative">
+                                <a href="#" id="link_footer_login" onclick="nclk_v2(event, 'fot.login')">로그인</a>
+                            </li>
+                            <li class="link_relative"><a onclick="nclk_v2(event, 'fot.gopc')" href="https://comic.naver.com/webtoon/list?titleId=848000&mobile=y" class="link_rel">PC버전</a></li>
+                            <li class="link_relative"><a onclick="nclk_v2(event, 'fot.sitemap')" href="http://m.naver.com/services.html?f=svc.comic" class="link_rel">전체서비스</a></li>
+                        </ul>
+                    </div>
+                    <!-- [D] 활성화시 on클래스 추가-->
+                    <div class="biz_info">
+                        <button type="button" class="btn_biz_info">네이버웹툰(유) 사업자 정보</button>
+                        <div class="biz_info_detail">
+                            <ul>
+                                <li>대표이사 : 김준구</li>
+                                <li>사업자 등록번호 : 669-86-01888</li>
+                                <li>통신판매업 신고번호 : 2020-성남분당B-0719</li>
+                                <li>주소 : 경기도 성남시 분당구 불정로 6 그린팩토리, 6-10층</li>
+                                <li>고객센터 : 1588-3820</li>
+                                <li>이메일 : ccnaver@naver.com</li>
+                                <li>호스팅 서비스 제공 : NAVER Cloud</li>
+                            </ul>
+
+                            <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=6698601888" class="lnk_biz_info">사업자 등록정보</a>
+                        </div>
+                    </div>
+
+                    <p class="txt_footer">
+                        모든 콘텐츠의 저작권은 저작권자 또는 제공처에 있으며,<br />
+                        이를 무단으로 이용하는 경우 관련 법령에 따라 법적 책임을 질 수 있습니다.
+                    </p>
+
+                    <div class="info_relative">
+                        <ul>
+                            <li><a href="https://member.webtoon.naver.com/mobile/policies/terms/" onclick="nclk_v2(event, 'fot.wagreement')">네이버웹툰 이용약관</a></li>
+                            <li><a href="https://m.comic.naver.com/store/comic/common/passJoinAgreeContract" onclick="nclk_v2(event, 'fot.cooterms')">전용상품권 이용약관</a></li>
+                            <li><a href="https://member.webtoon.naver.com/mobile/policies/privacy/" class="privacy" onclick="nclk_v2(event, 'fot.wprivacy')">개인정보처리방침</a></li>
+                            <li><a href="https://member.webtoon.naver.com/mobile/policies/youthpolicy/" onclick="nclk_v2(event, 'fot.youthpolicy')">청소년보호정책</a></li>
+                            <li><a href="https://member.webtoon.naver.com/mobile/policies/principle/" onclick="nclk_v2(event, 'fot.wrule')">게시물 및 커뮤니티 가이드라인</a></li>
+                            <li class="break"></li>
+                            <li><a href="https://help.naver.com/alias/contents2/comic/comic_1.naver" onclick="nclk_v2(event, 'fot.whelp')">웹툰 고객센터</a></li>
+                            <li><a href="https://help.naver.com/alias/contents2/comic/webtoon_1.naver" onclick="nclk_v2(event, 'fot.wclaim')">오류신고</a></li>
+                        </ul>
+                        <address>
+                            <a href="https://webtoonscorp.com" onclick="nclk_v2(event, 'fot.wtcorp')" class="webtoon_corp_link"><span class="blind">© NAVER WEBTOON Limited</span></a>
+                        </address>
+                    </div>
+
+                    <div class="info_relative v2">
+                        <ul>
+                            <li><a href="http://policy.naver.com/policy-mobile/term.html" onclick="nclk_v2(event, 'fot.agreement')">이용약관</a></li>
+                            <li><a href="http://m.policy.naver.com/privacy.html" class="privacy" onclick="nclk_v2(event, 'fot.privacy')">개인정보처리방침</a></li>
+                            <li><a href="https://help.naver.com/index.help" onclick="nclk_v2(event, 'fot.help')">고객센터</a></li>
+                            <li><a href="https://m.help.pay.naver.com/mailform.help?alias=embezzlement" onclick="nclk_v2(event, 'fot.claim')">결제도용신고</a></li>
+                            <li><a href="https://right.naver.com" onclick="nclk_v2(event, 'fot.cpchelp')">저작권침해신고</a></li>
+                        </ul>
+                        <address>
+                            <a href="http://www.navercorp.com" onclick="nclk_v2(event, 'fot.navercorp')"
+                                ><span class="naver_corp_link"><span class="blind">© NAVER CORP.</span></span></a
+                            >
+                        </address>
+                    </div>
+                    <a href="#" class="btn_top" onclick="nclk_v2(event, 'fot.top')" id="goTopBtn"><span class="blind">TOP</span></a>
+                </div>
+            </footer>
+        </div>
+
+        <script>
+            var ageRate = '';
+        </script>
+
+        <script type="text/javascript">
+            (function () {
+                window.__state__ = {
+                    login: false,
+                    idNo: '',
+                    title: {
+                        titleId: 848000,
+                        webtoonLevelCode: 'WEBTOON',
+                        titleName: '범죄도시0',
+                        painterName: '정종택',
+                        finished: false,
+                        dailyPass: false,
+                        webtoonType: 'DEFAULT',
+                    },
+                    readArticles: '',
+                    recentlyNo: 0,
+                    weekdayTabQueryParam: 'sun',
+                    sortOrder: 'DESC',
+                    serviceDomain: location.protocol + '//' + location.hostname,
+                    snsShare: {
+                        socialPluginJsDomain: 'https://ssl.pstatic.net/spi',
+                    },
+                    ad: {
+                        webtoonAdBanner: {
+                            imageUrl: 'https://naverwebtoon-phinf.pstatic.net/20260424_149/1777028050979ALYs5_JPEG/upload_18429700842994346348.JPEG',
+                            statViewUrl: '/api/stat/gameBanner?type=VIEW&target=ARTICLE_LIST&bannerId=1535',
+                        },
+                    },
+                    hid: '',
+                    levelPath: 'webtoon',
+                };
+            })();
+        </script>
+        <script type="text/javascript" src="/vendor-common-f49a1509cf43992afbdb.js"></script>
+        <script type="text/javascript" src="/vendor-9859743823de2a88c224.js"></script>
+        <script type="text/javascript" src="/article-list-c348eae79bca9d0e8153.js"></script>
+    </body>
+</html>

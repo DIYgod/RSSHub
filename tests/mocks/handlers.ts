@@ -15,41 +15,134 @@ import { http, HttpResponse } from 'msw';
  * identifiers stable — fixtures in `tests/fixtures/` mirror this output.
  */
 
+/** 22-char tail after `UC` — matches `/^UC[\w-]{21}[AQgw]$/` test channels. */
+const TEST_CHANNEL_SUFFIX = 'aaaaaaaaaaaaaaaaaaaaaA';
+const TEST_CHANNEL_ID = `UC${TEST_CHANNEL_SUFFIX}`;
+
+function testPlaylistId(prefix: 'UULF' | 'UUSH' | 'UULV'): string {
+    return `${prefix}${TEST_CHANNEL_SUFFIX}`;
+}
+
+function atomEntry(videoId: string, title: string, published: string, link?: string): string {
+    const href = link ?? `https://www.youtube.com/watch?v=${videoId}`;
+    return `
+  <entry>
+    <yt:videoId>${videoId}</yt:videoId>
+    <title>${title}</title>
+    <link rel="alternate" href="${href}"/>
+    <published>${published}</published>
+    <updated>${published}</updated>
+    <author><name>Test Channel</name></author>
+    <media:group>
+      <media:thumbnail url="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg"/>
+      <media:description>A test entry.</media:description>
+    </media:group>
+  </entry>`;
+}
+
+function atomFeed(channelId: string, entries: string): string {
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/">
+  <title>Test Channel</title>
+  <yt:channelId>${channelId}</yt:channelId>
+  ${entries}
+</feed>`;
+}
+
 // ── YouTube ─────────────────────────────────────────────────────────────────
 export const youtubeHandlers = [
     http.get('https://www.youtube.com/feeds/videos.xml', ({ request }) => {
         const url = new URL(request.url);
-        const channelId = url.searchParams.get('channel_id') ?? 'UCtest';
-        return HttpResponse.xml(`<?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/">
-  <title>Test Channel</title>
-  <yt:channelId>${channelId}</yt:channelId>
-  <entry>
-    <yt:videoId>vid001</yt:videoId>
-    <title>Test Video One</title>
-    <link rel="alternate" href="https://www.youtube.com/watch?v=vid001"/>
-    <published>2026-04-01T00:00:00Z</published>
-    <updated>2026-04-01T00:00:00Z</updated>
-    <author><name>Test Channel</name></author>
-    <media:group>
-      <media:thumbnail url="https://i.ytimg.com/vi/vid001/hqdefault.jpg"/>
-      <media:description>A test video.</media:description>
-    </media:group>
-  </entry>
-  <entry>
-    <yt:videoId>vid002</yt:videoId>
-    <title>Test Video Two</title>
-    <link rel="alternate" href="https://www.youtube.com/watch?v=vid002"/>
-    <published>2026-03-30T00:00:00Z</published>
-    <updated>2026-03-30T00:00:00Z</updated>
-    <author><name>Test Channel</name></author>
-    <media:group>
-      <media:thumbnail url="https://i.ytimg.com/vi/vid002/hqdefault.jpg"/>
-      <media:description>Another test video.</media:description>
-    </media:group>
-  </entry>
-</feed>`);
+        const channelId = url.searchParams.get('channel_id') ?? TEST_CHANNEL_ID;
+        const playlistId = url.searchParams.get('playlist_id');
+
+        if (playlistId === testPlaylistId('UULF')) {
+            return HttpResponse.xml(atomFeed(channelId, [atomEntry('vid001', 'Test Video One', '2026-04-01T00:00:00Z'), atomEntry('vid002', 'Test Video Two', '2026-03-30T00:00:00Z')].join('')));
+        }
+
+        if (playlistId === testPlaylistId('UUSH')) {
+            return HttpResponse.xml(atomFeed(channelId, atomEntry('short001', 'Test Short', '2026-04-02T00:00:00Z', 'https://www.youtube.com/shorts/short001')));
+        }
+
+        if (playlistId === testPlaylistId('UULV')) {
+            return HttpResponse.xml(atomFeed(channelId, atomEntry('live001', 'Test Live Replay', '2026-04-03T00:00:00Z')));
+        }
+
+        // Legacy channel_id requests (empty — route uses playlist feeds now).
+        return HttpResponse.xml(atomFeed(channelId, ''));
     }),
+    http.get('https://www.youtube.com/channel/:channelId/posts', () =>
+        HttpResponse.text(
+            `<html><script>ytInitialData = ${JSON.stringify({
+                metadata: {
+                    channelMetadataRenderer: {
+                        title: 'Test Channel',
+                        channelUrl: `https://www.youtube.com/channel/${TEST_CHANNEL_ID}`,
+                    },
+                },
+                contents: {
+                    twoColumnBrowseResultsRenderer: {
+                        tabs: [
+                            {
+                                tabRenderer: {
+                                    endpoint: {
+                                        commandMetadata: {
+                                            webCommandMetadata: {
+                                                url: '/channel/posts',
+                                            },
+                                        },
+                                    },
+                                    content: {
+                                        sectionListRenderer: {
+                                            contents: [
+                                                {
+                                                    itemSectionRenderer: {
+                                                        contents: [
+                                                            {
+                                                                backstagePostThreadRenderer: {
+                                                                    post: {
+                                                                        backstagePostRenderer: {
+                                                                            postId: 'post001',
+                                                                            contentText: {
+                                                                                runs: [
+                                                                                    {
+                                                                                        text: 'Hello community!',
+                                                                                    },
+                                                                                ],
+                                                                            },
+                                                                            authorText: {
+                                                                                runs: [
+                                                                                    {
+                                                                                        text: 'Test Channel',
+                                                                                    },
+                                                                                ],
+                                                                            },
+                                                                            publishedTimeText: {
+                                                                                runs: [
+                                                                                    {
+                                                                                        text: '2 days ago',
+                                                                                    },
+                                                                                ],
+                                                                            },
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        ],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            })};</script></html>`,
+            { headers: { 'Content-Type': 'text/html' } }
+        )
+    ),
 ];
 
 // ── Viki ────────────────────────────────────────────────────────────────────
@@ -58,7 +151,9 @@ export const vikiHandlers = [
         HttpResponse.json({
             id: params.titleId,
             titles: { en: 'Test Drama' },
-            images: { poster: { main: { url: 'https://example.com/poster.jpg' } } },
+            images: {
+                poster: { main: { url: 'https://example.com/poster.jpg' } },
+            },
             genres: [{ title: 'Drama' }, { title: 'Romance' }],
         })
     ),
@@ -136,7 +231,10 @@ export const bubbleHandlers = [
                     messageType: 'TEXT',
                     body: 'Good morning!',
                     createdAt: '2026-04-10T08:00:00Z',
-                    artist: { name: 'Test Artist', profileImageUrl: 'https://example.com/avatar.jpg' },
+                    artist: {
+                        name: 'Test Artist',
+                        profileImageUrl: 'https://example.com/avatar.jpg',
+                    },
                 },
                 {
                     messageId: 'msg002',
@@ -146,7 +244,10 @@ export const bubbleHandlers = [
                     body: 'A new photo',
                     thumbnailUrl: 'https://example.com/thumb.jpg',
                     createdAt: '2026-04-09T08:00:00Z',
-                    artist: { name: 'Test Artist', profileImageUrl: 'https://example.com/avatar.jpg' },
+                    artist: {
+                        name: 'Test Artist',
+                        profileImageUrl: 'https://example.com/avatar.jpg',
+                    },
                 },
             ],
         });

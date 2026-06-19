@@ -44,3 +44,7 @@ yarn-error.log
 dist-container
 .tldr/daemon.pid
 .tldr/status
+artifacts/naver-blog-webhackyo.json
+artifacts/naver-webtoon-758037.json
+artifacts/naver-webtoon-811721-v2.json
+artifacts/naver-webtoon-811721.json
