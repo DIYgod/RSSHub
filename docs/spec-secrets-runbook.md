@@ -8,17 +8,33 @@
 
 ## Quick matrix
 
-| Secret           | Used by route                  | Typical lifetime         | Default on expiry                           | Re-obtain by…                                               |
-| ---------------- | ------------------------------ | ------------------------ | ------------------------------------------- | ----------------------------------------------------------- |
-| `WEVERSE_TOKEN`  | `/spec/weverse/*`              | ~30 days                 | 401 → `ERR_WEVERSE_TOKEN_EXPIRED`           | Re-login + copy new `Authorization: Bearer …` from DevTools |
-| `NETFLIX_COOKIE` | `/spec/netflix/*`              | weeks – months           | 401/redirect → `ERR_NETFLIX_COOKIE_EXPIRED` | Re-login + copy full `Cookie` header                        |
-| `NAVER_COOKIE`   | `/spec/naver/*` (paid content) | weeks – months           | 401 → `ERR_NAVER_COOKIE_EXPIRED`            | Re-login + copy full `Cookie` header                        |
-| `BUBBLE_COOKIE`  | `/spec/bubble/*`               | days – weeks             | 401 → `ERR_BUBBLE_COOKIE_EXPIRED`           | Re-login + copy full `Cookie` header                        |
-| `ACCESS_KEY`     | every `/spec/*`                | never (rotated manually) | 401 from key middleware                     | Regenerate with `openssl rand -hex 32`                      |
+| Secret          | Used by route                  | Typical lifetime            | Default on expiry                    | Re-obtain by…                                               |
+| --------------- | ------------------------------ | --------------------------- | ------------------------------------ | ----------------------------------------------------------- |
+| `TMDB_API_KEY`  | `/spec/netflix/*`              | indefinite (rotate on leak) | missing → `ERR_TMDB_API_KEY_MISSING` | Create at themoviedb.org/settings/api                       |
+| `WEVERSE_TOKEN` | `/spec/weverse/*`              | ~30 days                    | 401 → `ERR_WEVERSE_TOKEN_EXPIRED`    | Re-login + copy new `Authorization: Bearer …` from DevTools |
+| `NAVER_COOKIE`  | `/spec/naver/*` (paid content) | weeks – months              | 401 → `ERR_NAVER_COOKIE_EXPIRED`     | Re-login + copy full `Cookie` header                        |
+| `BUBBLE_COOKIE` | `/spec/bubble/*`               | days – weeks                | 401 → `ERR_BUBBLE_COOKIE_EXPIRED`    | Re-login + copy full `Cookie` header                        |
+| `ACCESS_KEY`    | every `/spec/*`                | never (rotated manually)    | 401 from key middleware              | Regenerate with `openssl rand -hex 32`                      |
 
 Set the rotation trigger in your monitoring to fire on the corresponding `ERR_*_EXPIRED` log line. See [spec-error-codes.md](spec-error-codes.md) for the grep patterns.
 
 ---
+
+## `TMDB_API_KEY`
+
+The `/spec/netflix/:netflixTitleId` route resolves Netflix titles via an IMDb id scraped from `netflix.com/title/:id` (`imdb:pageConst` meta tag), then fetches episode metadata from [The Movie Database API](https://www.themoviedb.org/). No Netflix login cookie is required for this route.
+
+- **How to obtain** — create a free account at [themoviedb.org](https://www.themoviedb.org/), open **Settings → API**, request an API key (Developer / Personal use), copy the **API Key (v3 auth)** value.
+- **When to rotate** — only on suspected leak. TMDB keys do not expire automatically.
+- **How to redeploy**
+    - **Docker Compose**: add `TMDB_API_KEY=<key>` to `.env`, then `docker compose -f docker-compose.sunbi-rsshub.yml up -d rsshub`.
+    - **Fly.io**: `fly secrets set TMDB_API_KEY=<key> --app rsshub`, then `fly deploy`.
+    - **Cloudflare Worker**: `echo "<key>" | wrangler secret put TMDB_API_KEY`, then `pnpm worker-deploy`.
+- **Verify**:
+    ```bash
+    docker compose -f docker-compose.sunbi-rsshub.yml logs rsshub --since 1m | grep -E 'ERR_TMDB' || echo "no TMDB errors"
+    curl -fsS "https://rsshub.yourdomain.com/spec/netflix/81249997?format=json&key=$ACCESS_KEY" | jq '.items[0] | {title, _extra}'
+    ```
 
 ## `WEVERSE_TOKEN`
 
@@ -48,20 +64,6 @@ Set the rotation trigger in your monitoring to fire on the corresponding `ERR_*_
     curl -fsS "https://rsshub.yourdomain.com/spec/weverse/3-EXID?format=json&key=$ACCESS_KEY" | jq '.items[0]._extra'
     ```
 
-## `NETFLIX_COOKIE`
-
-- **How to obtain** — see [RSSHUB_SETUP.md § `NETFLIX_COOKIE`](routes/RSSHUB_SETUP.md#environment-variables). Plan: log in at `netflix.com`, open DevTools → Application → Cookies → `netflix.com`, copy the **full `Cookie` header** as a single string (every `name=value;` pair).
-- **When to rotate** — Netflix sessions can last weeks to months. Rotate on `ERR_NETFLIX_COOKIE_EXPIRED` (Netflix returns 401 or redirects to the login page). Some anti-bot flows also silently redirect without a clear error, so watch the `lastBuildDate` and item count for that route.
-- **How to redeploy** — same shape as `WEVERSE_TOKEN`:
-    - **Docker Compose**: edit `.env`, `docker compose -f docker-compose.sunbi-rsshub.yml up -d rsshub`.
-    - **Fly.io**: `fly secrets set NETFLIX_COOKIE="NID=…; SecureNetflixId=…; …" --app rsshub`, then `fly deploy`.
-    - **Cloudflare Worker**: `echo "NID=…; …" | wrangler secret put NETFLIX_COOKIE`, then `pnpm worker-deploy`.
-- **Verify**:
-    ```bash
-    docker compose -f docker-compose.sunbi-rsshub.yml logs rsshub --since 1m | grep -E 'ERR_NETFLIX' || echo "no cookie errors"
-    curl -fsS "https://rsshub.yourdomain.com/spec/netflix/81249997?format=json&key=$ACCESS_KEY" | jq '.items[0] | {title, _extra}'
-    ```
-
 ## `NAVER_COOKIE`
 
 - **How to obtain** — see [RSSHUB_SETUP.md § `NAVER_COOKIE`](routes/RSSHUB_SETUP.md#environment-variables). Plan: log in at `comic.naver.com` (or whichever Naver property you target — `cafe.naver.com`, `blog.naver.com`, etc.), DevTools → Application → Cookies → copy the full `Cookie` header.
@@ -77,7 +79,7 @@ Set the rotation trigger in your monitoring to fire on the corresponding `ERR_*_
 
 - **How to obtain** — log in at `bubble.us`, open DevTools → Network → click any feed/poll request → Headers → copy the full `Cookie` request header. (Pattern matches the upstream `lib/routes/bubble/` module.)
 - **When to rotate** — Bubble sessions are short (days to a few weeks). Rotate on `ERR_BUBBLE_COOKIE_EXPIRED` or when the upstream starts returning empty feeds.
-- **How to redeploy** — same shape as `NETFLIX_COOKIE`:
+- **How to redeploy** — same shape as `WEVERSE_TOKEN`:
     - **Docker Compose**: edit `.env`, `docker compose -f docker-compose.sunbi-rsshub.yml up -d rsshub`.
     - **Fly.io**: `fly secrets set BUBBLE_COOKIE="…" --app rsshub`, then `fly deploy`.
     - **Cloudflare Worker**: `echo "…" | wrangler secret put BUBBLE_COOKIE`, then `pnpm worker-deploy`.
@@ -130,7 +132,7 @@ The shared-secret key that all SPEC route clients must pass as `?key=...` (valid
 ## Operational tips
 
 - **One secret per command, not many at once.** If you bundle `fly secrets set WEVERSE_TOKEN=… NETFLIX_COOKIE=…` into a single command and one of them is malformed, the whole call fails silently and you have to bisect. Run them one at a time when you're rotating a stack.
-- **Quoting matters for cookies.** `NETFLIX_COOKIE="SecureNetflixId=…; …"` — the value contains `;` and `=`, both of which are fine inside double quotes, but if you `eval` or pass through `sh -c` you must single-quote the whole value.
+- **Quoting matters for cookies.** `BUBBLE_COOKIE="…"` — if you `eval` or pass through `sh -c` you must single-quote the whole value.
 - **Don't bake secrets into the image.** The compose file reads them from `.env` at container start; the Fly and Worker configs read them from secret stores at deploy time. None of these should land inside the built image.
 - **Audit trail.** `fly secrets list` and `wrangler secret list` show which secrets are set; pair these with the grep in [spec-error-codes.md](spec-error-codes.md) to confirm a rotation actually propagated.
 - **Triage order on `ERR_*_EXPIRED`.** Always:

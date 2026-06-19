@@ -182,6 +182,8 @@ async function handler(ctx: Context): Promise<Data> {
                         seriesRating,
                         seriesDayOfWeek,
                         thumbnail: episodeThumb,
+                        episodeHash: episodeHash ?? undefined,
+                        totalPages: totalPages > 0 ? totalPages : undefined,
                     };
 
                     return {
@@ -192,11 +194,7 @@ async function handler(ctx: Context): Promise<Data> {
                         author: seriesTitle,
                         image: episodeThumb,
                         description: panelImageUrls.length ? `<img src="${panelImageUrls[0]}" />` : episodeThumb ? `<img src="${episodeThumb}" />` : '',
-                        _extra: {
-                            ...extra,
-                            episodeHash,
-                            totalPages,
-                        } as SpecExtraNaverWebtoon,
+                        _extra: extra,
                     } satisfies DataItem;
                 },
                 EPISODE_CACHE_TTL
