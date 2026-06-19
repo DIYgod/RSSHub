@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>웹해킹요 Test Blog</title>
+        <link>https://blog.naver.com/webhackyo</link>
+        <item>
+            <title>테스트 포스트</title>
+            <link>https://blog.naver.com/PostView.naver?blogId=webhackyo&amp;logNo=2234567890</link>
+            <description><![CDATA[<p>테스트 본문</p>]]></description>
+            <pubDate>Mon, 01 Apr 2026 09:00:00 +0900</pubDate>
+            <dc:creator>webhackyo</dc:creator>
+            <guid>https://blog.naver.com/PostView.naver?blogId=webhackyo&amp;logNo=2234567890</guid>
+        </item>
+        <item>
+            <title>두 번째 포스트</title>
+            <link>https://blog.naver.com/PostView.naver?blogId=webhackyo&amp;logNo=2234567891</link>
+            <description><![CDATA[<p>두 번째 본문</p>]]></description>
+            <pubDate>Sun, 31 Mar 2026 09:00:00 +0900</pubDate>
+            <dc:creator>webhackyo</dc:creator>
+            <guid>https://blog.naver.com/PostView.naver?blogId=webhackyo&amp;logNo=2234567891</guid>
+        </item>
+    </channel>
+</rss>

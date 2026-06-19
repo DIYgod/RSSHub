@@ -32,6 +32,13 @@ export function channelPlaylistId(channelId: string, prefix: 'UULF' | 'UUSH' | '
     return `${prefix}${channelId.slice(2)}`;
 }
 
+function isoOrUndefined(date: Date | undefined): string | undefined {
+    if (!date || Number.isNaN(date.getTime())) {
+        return undefined;
+    }
+    return date.toISOString();
+}
+
 interface YtAtomEntry {
     'yt:videoId': string;
     title: string;
@@ -219,7 +226,7 @@ export function mapAtomEntryToItem(entry: YtAtomEntry, channelId: string, channe
         sourceUrl: link,
         externalId: videoId,
         seriesExternalId: channelId,
-        publishedAt: pubDate ? pubDate.toISOString() : undefined,
+        publishedAt: isoOrUndefined(pubDate),
         channelId,
         channelTitle,
         isMembershipOnly: false,
@@ -386,7 +393,7 @@ export async function fetchCommunityPostItems(channelId: string, handle: string 
                 sourceUrl: link,
                 externalId: postId,
                 seriesExternalId: channelId,
-                publishedAt: pubDate ? pubDate.toISOString() : undefined,
+                publishedAt: isoOrUndefined(pubDate),
                 channelId,
                 channelTitle,
                 isMembershipOnly: false,

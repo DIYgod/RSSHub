@@ -18,6 +18,8 @@ services:
             ALLOW_LOCALHOST: 'true'
             # Channel avatars on SPEC YouTube routes (server-side only — never VITE_*)
             YOUTUBE_API_v3_KEY: '${YOUTUBE_API_v3_KEY}'
+            # Netflix SPEC route uses TMDB bridge (imdb:pageConst + api.themoviedb.org)
+            TMDB_API_KEY: '${TMDB_API_KEY}'
         # Naver auth (for cafe, etc.)
         # NAVER_COOKIE: "NID_AUT=...; NID_SES=..."
         depends_on:
