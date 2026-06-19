@@ -122,7 +122,7 @@ export const parseList = async (
 };
 
 export const orderContent = (parent) => {
-    for (const [i, e] of parent
+    const sortedChildren = parent
         .children()
         .toArray()
         .toSorted((a, b) => {
@@ -144,8 +144,8 @@ export const orderContent = (parent) => {
                 )
             ).toString();
             return a - b;
-        })
-        .entries()) {
+        });
+    for (const [i, e] of sortedChildren.entries()) {
         parent.find((element) => e(element)).attr('s', i);
         parent.append(e);
     }

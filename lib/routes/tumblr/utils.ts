@@ -47,11 +47,13 @@ const processPost: (post: any) => DataItem = (post) => {
             description += `<p><a href="${post.blog.url}">${post.blog_name}</a> answers:</p>`;
             description += post.answer;
             break;
-        case 'photo':
-            for (const photo of post.photos ?? []) {
+        case 'photo': {
+            const photos = post.photos ?? [];
+            for (const photo of photos) {
                 description += `<img src="${photo.original_size.url}"/><br/>`;
             }
             break;
+        }
         case 'link':
             description = post.url;
             break;

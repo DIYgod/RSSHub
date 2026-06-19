@@ -70,7 +70,8 @@ const parseObject = (reg: RegExp, str: string): Record<string, string> => {
     const obj = {};
     const match = reg.exec(str);
     if (match) {
-        for (const line of match[0].matchAll(/(\w+):\s?["']?([\s\S]+?)["']?[\n,}]/g)) {
+        const matchedLines = match[0].matchAll(/(\w+):\s?["']?([\s\S]+?)["']?[\n,}]/g);
+        for (const line of matchedLines) {
             obj[line[1]] = line[2];
         }
     }
