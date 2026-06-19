@@ -103,17 +103,9 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             item = $(item);
-            let aLabelNode;
-            let tag;
-            // a label with div
-            if (item.find('h1').length === 0) {
-                // a label without div
-                aLabelNode = item.find('a');
-                tag = item.find('div.platform-tag_list').text();
-            } else {
-                aLabelNode = item.find('h1').find('a');
-                tag = item.find('div.platform-tag_list').text();
-            }
+            // a label with div / a label without div
+            const aLabelNode = item.find('h1').length === 0 ? item.find('a') : item.find('h1').find('a');
+            const tag = item.find('div.platform-tag_list').text();
 
             return {
                 title: '[' + tag + ']' + aLabelNode.text(),
