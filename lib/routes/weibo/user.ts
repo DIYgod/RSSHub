@@ -126,10 +126,7 @@ async function handler(ctx) {
                 if (item.mblog === undefined) {
                     return false;
                 }
-                if (showRetweeted === '0' && item.mblog.retweeted_status) {
-                    return false;
-                }
-                return true;
+                return !(showRetweeted === '0' && item.mblog.retweeted_status);
             })
             .map(async (item) => {
                 // TODO: unify cache key and let weiboUtils.getShowData() handle the cache? It seems safe to do so.
