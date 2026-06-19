@@ -67,11 +67,10 @@ print_status() {
     require_git
     fetch_upstream
     local counts base
-    counts="$(count_divergence)"
+    counts="$(count_divergence | tr '\t' ' ')"
     base="$(merge_base)"
     local ahead behind
-    ahead="${counts%% *}"
-    behind="${counts##* }"
+    read -r ahead behind <<< "$counts"
     log ""
     log "integration : $INTEGRATION_BRANCH ($(git rev-parse --short "$(integration_ref)"))"
     log "upstream    : $UPSTREAM_REMOTE/$UPSTREAM_BRANCH ($(git rev-parse --short "$(upstream_ref)"))"
