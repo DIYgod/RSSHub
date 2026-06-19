@@ -12,7 +12,7 @@ const renderImages = (images?: string[]) =>
                 <>
                     <br />
                     {images.map((image) => (
-                        <img src={image.split('?')[0]} alt="" />
+                        <img src={image.split('?', 1)[0]} alt="" />
                     ))}
                 </>
             ) : null}

@@ -20,9 +20,9 @@ export const route: Route = {
     name: 'Navigation',
     maintainers: ['SnowAgar25'],
     handler,
-    description: `| 殿堂 | 動畫 | VR | 漫畫 | 音聲 | CG・イラスト |
-| ---- | ----- | -- | ----- | ----- | -- |
-| best | video | vr | comic | voice | cg |`,
+    description: `| 殿堂 | 動畫  | VR | 漫畫  | 音聲  | CG・イラスト |
+| ---- | ----- | -- | ----- | ----- | ------------ |
+| best | video | vr | comic | voice | cg           |`,
 };
 
 const navigationItems = {
@@ -46,23 +46,22 @@ async function handler(ctx): Promise<Data> {
             link: `${baseUrl}/best-nipple-article`,
             item: items,
         };
-    } else {
-        const { url, title } = navigationItems[keyword];
-
-        const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
-
-        const list = feed.items.map((item) => ({
-            title: item.title,
-            link: item.link,
-        }));
-
-        // 獲取內文
-        const items = await processItems(list);
-
-        return {
-            title: `${title} - chikubi.jp`,
-            link: `${baseUrl}${url}`,
-            item: items,
-        };
     }
+    const { url, title } = navigationItems[keyword];
+
+    const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
+
+    const list = feed.items.map((item) => ({
+        title: item.title,
+        link: item.link,
+    }));
+
+    // 獲取內文
+    const items = await processItems(list);
+
+    return {
+        title: `${title} - chikubi.jp`,
+        link: `${baseUrl}${url}`,
+        item: items,
+    };
 }

@@ -62,23 +62,22 @@ async function handler() {
                     pubDate: parseDate(dateList[index]),
                 };
                 return single;
-            } else {
-                return cache.tryGet(itemUrl, async () => {
-                    const response = await got(itemUrl);
-                    const $ = load(response.body);
-                    const single = {
-                        title: $('title').text(),
-                        link: itemUrl,
-                        description: $('.v_news_content')
-                            .html()
-                            .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', `href="${new URL('.', host).href}`)
-                            .trim(),
-                        pubDate: parseDate($('.link_1').text().slice(6, 16)),
-                    };
-                    return single;
-                });
             }
+            return cache.tryGet(itemUrl, async () => {
+                const response = await got(itemUrl);
+                const $ = load(response.body);
+                const single = {
+                    title: $('title').text(),
+                    link: itemUrl,
+                    description: $('.v_news_content')
+                        .html()
+                        .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                        .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
+                        .trim(),
+                    pubDate: parseDate($('.link_1').text().slice(6, 16)),
+                };
+                return single;
+            });
         })
     );
     return {

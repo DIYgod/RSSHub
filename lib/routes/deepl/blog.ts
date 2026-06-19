@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang = 'en' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://www.deepl.com';
     const targetUrl: string = new URL(`${lang}/blog`, baseUrl).href;
@@ -252,8 +252,7 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
 | [Українська](https://www.deepl.com/uk/blog)            | [uk](https://rsshub.app/deepl/blog/uk)       |
 | [العربية](https://www.deepl.com/ar/blog)               | [ar](https://rsshub.app/deepl/blog/ar)       |
 
-</details>
-`,
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -414,7 +413,6 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
 | [Українська](https://www.deepl.com/uk/blog)            | [uk](https://rsshub.app/deepl/blog/uk)       |
 | [العربية](https://www.deepl.com/ar/blog)               | [ar](https://rsshub.app/deepl/blog/ar)       |
 
-</details>
-`,
+</details>`,
     },
 };

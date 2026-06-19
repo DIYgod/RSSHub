@@ -35,9 +35,8 @@ async function handler() {
         const text = $e.text();
         const match = regexp.exec(text);
         if (match) {
-            let data;
             try {
-                data = JSON.parse(match[1]);
+                const data = JSON.parse(match[1]);
                 if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
                     textList.push(data[1]);
                 }
@@ -47,7 +46,7 @@ async function handler() {
         }
     }
 
-    const partRegex = /^([0-9a-zA-Z]+):([0-9a-zA-Z]+)?(\[.*)$/;
+    const partRegex = /^([0-9a-z]+):([0-9a-z]+)?(\[.*)$/i;
     const fd = textList
         .join('')
         .split('\n')

@@ -36,16 +36,16 @@ export const route: Route = {
     name: '技术博客',
     maintainers: ['zhenlohuang'],
     handler,
-    description: `| 分类 | ID |
-| --- | --- |
-| 大前端 | 1 |
-| Java | 2 |
-| 音视频 | 3 |
-| 测试 | 4 |
-| Golang | 5 |
-| AI&数据 | 6 |
-| 运维&稳定生产 | 7 |
-| 技术思考 | 8 |`,
+    description: `| 分类            | ID |
+| --------------- | -- |
+| 大前端          | 1  |
+| Java            | 2  |
+| 音视频          | 3  |
+| 测试            | 4  |
+| Golang          | 5  |
+| AI & 数据       | 6  |
+| 运维 & 稳定生产 | 7  |
+| 技术思考        | 8  |`,
 };
 
 async function handler(ctx) {

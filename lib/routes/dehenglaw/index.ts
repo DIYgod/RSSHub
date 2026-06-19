@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { language = 'CN', category = 'paper' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 6;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 6;
 
     const rootUrl = 'https://www.dehenglaw.com';
     const currentUrl = new URL(`${language}/${category}/0008/000901.aspx`, rootUrl).href;
@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
     return {
         title: $('title')
             .text()
-            .replace(/\|.*?$/, `| ${$('li.onthis').text()}`),
+            .replace(/\|.*$/, () => `| ${$('li.onthis').text()}`),
         description: $('meta[name="Description"]').prop('content'),
         link: currentUrl,
         item: items,
@@ -89,11 +89,12 @@ export const route: Route = {
     example: '/dehenglaw/CN/paper',
     parameters: { language: '语言，默认为中文，即 CN，可在对应分类页 URL 中找到，可选 CN 和 EN', category: '分类，默认为专业文章，即 paper，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [专业文章](https://dehenglaw.com/)，网址为 \`https://www.dehenglaw.com/CN/paper/0008/000902.aspx\`。截取 \`https://dehenglaw.com/\` 到末尾 \`/0008/000902.aspx\` 的部分 \`CN/paper\` 作为参数填入，此时路由为 [\`/dehenglaw/CN/paper\`](https://rsshub.app/dehenglaw/CN/paper)。
+若订阅 [专业文章](https://dehenglaw.com/)，网址为 \`https://www.dehenglaw.com/CN/paper/0008/000902.aspx\`。截取 \`https://dehenglaw.com/\` 到末尾 \`/0008/000902.aspx\` 的部分 \`CN/paper\` 作为参数填入，此时路由为 [\`/dehenglaw/CN/paper\`](https://rsshub.app/dehenglaw/CN/paper)。
 
 | 专业文章 | 出版物  | 德恒论坛 |
 | -------- | ------- | -------- |
 | paper    | publish | luntan   |
+
 :::`,
     categories: ['new-media'],
 

@@ -21,7 +21,7 @@ export const route: Route = {
 
 function replaceurl(e) {
     e = e.replace("';", '');
-    e = e.replace("window.location = '/", host);
+    e = e.replace("window.location = '/", () => host);
     return e;
 }
 

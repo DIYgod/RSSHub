@@ -37,7 +37,7 @@ async function handler(ctx: Context): Promise<Data> {
 }
 
 function markdownFrom(instances: Map<string, string>, separator: string = ', '): string {
-    return [...instances.entries()].map(([k, v]) => `[\`${k}\`](https://${v})`).join(separator);
+    return [...instances].map(([k, v]) => `[\`${k}\`](https://${v})`).join(separator);
 }
 
 export const route: Route = {

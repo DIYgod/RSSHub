@@ -32,8 +32,8 @@ export const route: Route = {
     name: '我的消息',
     maintainers: ['pilgrimlyieu'],
     handler,
-    description: `:::warning
-  用户消息需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+    description: `::: warning
+用户消息需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 
@@ -50,7 +50,7 @@ interface SessionItem {
     ack_ts: number;
     session_ts: number;
     unread_count: number;
-    last_msg: {
+    last_msg: null | {
         sender_uid: number;
         receiver_type: number;
         receiver_id: number;
@@ -63,7 +63,7 @@ interface SessionItem {
         msg_status: number;
         notify_code: string;
         msg_source: number;
-    } | null;
+    };
     group_type: number;
     can_fold: number;
     status: number;

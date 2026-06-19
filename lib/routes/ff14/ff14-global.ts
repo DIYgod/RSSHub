@@ -28,7 +28,7 @@ export const route: Route = {
 | ------------ | ------ | ------ | ------- | ----- |
 | na           | eu     | fr     | de      | jp    |
 
-  Category
+Category
 
 | all | topics | notices | maintenance | updates | status | developers |
 | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,

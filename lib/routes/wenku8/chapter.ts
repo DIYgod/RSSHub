@@ -40,10 +40,10 @@ async function handler(ctx) {
 
     const chapter_item = [];
 
-    $('.ccss>a').each(function () {
+    $('.ccss>a').each((_, el) => {
         chapter_item.push({
-            title: $(this).text(),
-            link: `https://www.wenku8.net/novel/${index}/${id}/` + $(this).attr('href'),
+            title: $(el).text(),
+            link: `https://www.wenku8.net/novel/${index}/${id}/` + $(el).attr('href'),
         });
     });
 

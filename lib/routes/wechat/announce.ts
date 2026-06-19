@@ -37,8 +37,8 @@ async function handler() {
     const $ = load(htmlString);
     const announceList = [];
 
-    $('.mp_news_list > .mp_news_item').each(function () {
-        const $item = $(this);
+    $('.mp_news_list > .mp_news_item').each((_, el) => {
+        const $item = $(el);
         const $link = $item.find('a');
         const time = $item.find('.read_more').text();
         const title = $item.find('strong').text();

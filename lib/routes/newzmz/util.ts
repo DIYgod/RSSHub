@@ -26,7 +26,7 @@ const getItems = async (tryGet, homeUrl, id, modSelector, itemSelector) => {
     const $ = load(response);
 
     return $(modSelector)
-        .eq(Number.parseInt(id, 10))
+        .eq(Number(id))
         .find(itemSelector)
         .toArray()
         .map((item) => {

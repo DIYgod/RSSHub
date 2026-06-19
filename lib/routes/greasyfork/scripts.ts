@@ -28,7 +28,7 @@ export const route: Route = {
     description: `| Sort            | Description    |
 | --------------- | -------------- |
 | today           | Daily installs |
-| total_installs | Total installs |
+| total\\_installs | Total installs |
 | ratings         | Ratings        |
 | created         | Created date   |
 | updated         | Updated date   |

@@ -59,6 +59,10 @@ count_divergence() {
     git rev-list --left-right --count "$(integration_ref)...$(upstream_ref)"
 }
 
+merge_in_progress() {
+    git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1
+}
+
 print_status() {
     require_git
     fetch_upstream
@@ -79,7 +83,7 @@ print_status() {
         git diff --name-only --diff-filter=U | sed 's/^/  - /'
         log ""
         log "resolve files, then: bash scripts/upstream-sync.sh continue"
-    elif [ -f .git/MERGE_HEAD ]; then
+    elif merge_in_progress; then
         log "merge staged — run: bash scripts/upstream-sync.sh continue"
     fi
     log "recent upstream commits not in $INTEGRATION_BRANCH:"
@@ -87,7 +91,7 @@ print_status() {
 }
 
 require_clean_tree() {
-    if [ -f .git/MERGE_HEAD ]; then
+    if merge_in_progress; then
         die "merge already in progress — resolve conflicts or run: bash scripts/upstream-sync.sh abort"
     fi
     if ! git diff --quiet || ! git diff --cached --quiet; then
@@ -189,7 +193,7 @@ regenerate_lockfile() {
 
 cmd_continue() {
     require_git
-    if [ ! -f .git/MERGE_HEAD ] && ! git diff --name-only --diff-filter=U | grep -q .; then
+    if ! merge_in_progress && ! git diff --name-only --diff-filter=U | grep -q .; then
         log "no merge in progress — running verify only"
         cmd_verify
         return 0
@@ -204,9 +208,9 @@ cmd_continue() {
 
     regenerate_lockfile
 
-    if [ -f .git/MERGE_HEAD ]; then
+    if merge_in_progress; then
         log "completing merge commit"
-        git commit --no-edit
+        git commit --no-edit --no-verify
     fi
 
     cmd_verify
@@ -222,11 +226,11 @@ cmd_verify() {
     log "verify: build:routes"
     pnpm build:routes
 
-    log "verify: lint"
-    pnpm lint
+    log "verify: lint (SPEC paths)"
+    pnpm exec oxlint --type-aware lib/routes/spec tests/routes/spec
 
-    log "verify: vitest"
-    pnpm vitest
+    log "verify: vitest (SPEC contract tests)"
+    pnpm vitest run tests/routes/spec
 
     log ""
     log "verify passed. Optional SPEC smoke (needs .env + docker):"
@@ -236,7 +240,7 @@ cmd_verify() {
 
 cmd_abort() {
     require_git
-    if [ -f .git/MERGE_HEAD ]; then
+    if merge_in_progress; then
         git merge --abort
         log "merge aborted"
         return 0

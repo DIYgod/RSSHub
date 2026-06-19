@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: {
         sub: {
             description: 'The target Syosetu subsite.',
-            options: Object.entries(SyosetuSub).map(([, value]) => ({
+            options: Object.values(SyosetuSub).map((value) => ({
                 value,
                 label: syosetuSubToJapanese[value],
             })),

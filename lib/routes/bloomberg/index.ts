@@ -28,7 +28,7 @@ export const route: Route = {
     parameters: {
         site: {
             description: 'Site ID, can be found below',
-            options: Object.keys(siteTitleMapping).map((key) => ({ value: key, label: siteTitleMapping[key] })),
+            options: Object.entries(siteTitleMapping).map(([key, value]) => ({ value: key, label: value })),
         },
     },
     features: {
@@ -41,8 +41,7 @@ export const route: Route = {
     },
     name: 'Bloomberg Site',
     maintainers: ['bigfei'],
-    description: `
-| Site ID      | Title        |
+    description: `| Site ID      | Title        |
 | ------------ | ------------ |
 | /            | News         |
 | bpol         | Politics     |
@@ -55,8 +54,7 @@ export const route: Route = {
 | bview        | Opinion      |
 | equality     | Equality     |
 | businessweek | Businessweek |
-| citylab      | CityLab      |
-  `,
+| citylab      | CityLab      |`,
     handler,
 };
 

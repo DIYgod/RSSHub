@@ -111,7 +111,7 @@ const renderDescription = (item) =>
     );
 
 const getDiscountNum = async (platform) => {
-    const response = await got.get(`https://switch.jumpvg.com/jump/platform/order/v2?needCount=1&needFilter=1&version=3`);
+    const response = await got.get('https://switch.jumpvg.com/jump/platform/order/v2?needCount=1&needFilter=1&version=3');
     const data = response.data.data;
     let totalNum = 0;
     for (const index in data) {
@@ -177,11 +177,11 @@ export const route: Route = {
 
 | filter | switch | ps4 | ps5 | steam |
 | ------ | ------ | --- | --- | ----- |
-| all    | ✔     | ✔  | ✔  | ✔    |
-| jx     | ✔     | ✔  | ❌  | ✔    |
-| sd     | ✔     | ✔  | ✔  | ✔    |
-| dl     | ❌     | ✔  | ❌  | ✔    |
-| vip    | ❌     | ❌  | ✔  | ❌    |
+| all    | ✔      | ✔   | ✔   | ✔     |
+| jx     | ✔      | ✔   | ❌  | ✔     |
+| sd     | ✔      | ✔   | ✔   | ✔     |
+| dl     | ❌     | ✔   | ❌  | ✔     |
+| vip    | ❌     | ❌  | ✔   | ❌    |
 
 | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
 | ---- | ------------ | ---- | ---- | ---- |

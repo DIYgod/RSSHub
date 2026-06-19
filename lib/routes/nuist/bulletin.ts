@@ -50,19 +50,18 @@ export const route: Route = {
     name: '南信大信息公告栏',
     maintainers: ['gylidian', 'QianYu-u'],
     handler,
-    description: `
-| 参数 | 含义 |
-| :--- | :--- |
-| default | 全部 |
-| wjgg | 文件公告 |
-| kyxx | 科研信息 |
-| zbxx | 招标信息 |
-| jxks | 教学考试 |
-| dzsw | 党政事务 |
-| ... | (支持官网对应栏目的拼音简写) |
+    description: `| 参数    | 含义                         |
+| :------ | :--------------------------- |
+| default | 全部                         |
+| wjgg    | 文件公告                     |
+| kyxx    | 科研信息                     |
+| zbxx    | 招标信息                     |
+| jxks    | 教学考试                     |
+| dzsw    | 党政事务                     |
+| ...     | (支持官网对应栏目的拼音简写) |
 
 ::: warning
-  全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
+全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
 :::`,
 };
 

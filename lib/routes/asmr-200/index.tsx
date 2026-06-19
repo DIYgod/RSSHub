@@ -69,9 +69,9 @@ export const route: Route = {
     name: '最新收录',
     maintainers: ['hualiong'],
     url: 'asmr-200.com',
-    description: `| 发售日期 | 收录日期 | 销量 | 价格 | 评价 | 随机 | RJ号 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| release | create_date | dl_count | price | rate_average_2dp | random | id |`,
+    description: `| 发售日期 | 收录日期     | 销量      | 价格  | 评价               | 随机   | RJ 号 |
+| -------- | ------------ | --------- | ----- | ------------------ | ------ | ----- |
+| release  | create\\_date | dl\\_count | price | rate\\_average\\_2dp | random | id    |`,
     handler: async (ctx) => {
         const { order = 'create_date', sort = 'desc', subtitle = '0' } = ctx.req.param();
         const res = await ofetch<Result>('https://api.asmr-200.com/api/works', { query: { order, sort, page: 1, subtitle } });

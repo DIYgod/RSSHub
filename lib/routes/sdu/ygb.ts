@@ -39,9 +39,9 @@ export const route: Route = {
     name: '研工部',
     maintainers: ['kukeya'],
     handler,
-    description: `| 重要通知 | 管理服务 | 创新实践 | 
-| -------- | -------- |-------- |
-| zytz     | glfw     | cxsj    | `,
+    description: `| 重要通知 | 管理服务 | 创新实践 |
+| -------- | -------- | -------- |
+| zytz     | glfw     | cxsj     |`,
 };
 
 async function handler(ctx) {

@@ -6,12 +6,28 @@ import path from 'node:path';
 import { load } from 'cheerio';
 import { describe, expect, it } from 'vitest';
 
-import { parseDesktopSeriesListHtml, parseEpisodesFromRawHtml, parseMobileSectionToonInfo, parseMobileSeriesListHtml } from '@/routes/spec/naver-webtoon-list';
+import {
+    parseDesktopSeriesListHtml,
+    parseEpisodesFromRawHtml,
+    parseMobileSectionToonInfo,
+    parseMobileSeriesListHtml,
+} from '@/routes/spec/naver-webtoon-list';
 import { assertSpecExtra } from '@/types/spec-extra.zod';
 import jsonView from '@/views/json';
 
-const fixturePath = path.join(import.meta.dirname, '../../fixtures/naver-webtoon-848000-list.html');
-const webtoonFixture = JSON.parse(readFileSync(path.join(import.meta.dirname, '../../fixtures/spec-naver-webtoon.json'), 'utf-8')) as { _extras: unknown[] };
+const fixturePath = path.join(
+    import.meta.dirname,
+    '../../fixtures/naver-webtoon-848000-list.html',
+);
+const webtoonFixture = JSON.parse(
+    readFileSync(
+        path.join(
+            import.meta.dirname,
+            '../../fixtures/spec-naver-webtoon.json',
+        ),
+        'utf-8',
+    ),
+) as { _extras: unknown[] };
 
 const TITLE_ID = '848000';
 
@@ -46,12 +62,15 @@ describe('naver-webtoon-list parsers', () => {
         const html = readFileSync(fixturePath, 'utf-8');
         const parsed = parseMobileSectionToonInfo(load(html));
 
-        expect(parsed.seriesFrontImage).toBe('https://image-comic.pstatic.net/webtoon/848000/thumbnail/titledescimage/frontImage_b3287ee3-ee5a-4528-8454-add75e613fc9.png');
+        expect(parsed.seriesFrontImage).toBe(
+            'https://image-comic.pstatic.net/webtoon/848000/thumbnail/titledescimage/frontImage_b3287ee3-ee5a-4528-8454-add75e613fc9.png',
+        );
         expect(parsed.seriesScore).toBe('9.82');
     });
 
     it('returns no episodes for desktop SPA shell', () => {
-        const spaShell = `<!DOCTYPE html><html><head><meta property="og:title" content="범죄도시0"><meta property="og:image" content="https://shared-comic.pstatic.net/thumb/webtoon/848000/thumbnail/thumbnail_IMAG21_x.jpg"></head><body><div id="root"></div></body></html>`;
+        const spaShell =
+            '<!DOCTYPE html><html><head><meta property="og:title" content="범죄도시0"><meta property="og:image" content="https://shared-comic.pstatic.net/thumb/webtoon/848000/thumbnail/thumbnail_IMAG21_x.jpg"></head><body><div id="root"></div></body></html>';
         const parsed = parseDesktopSeriesListHtml(spaShell, '848000');
         expect(parsed.episodes).toEqual([]);
         expect(parsed.seriesTitle).toBe('범죄도시0');
@@ -101,9 +120,15 @@ describe('spec/naver-webtoon route handler', () => {
         const { http, HttpResponse } = await import('msw');
         const { server } = await import('../../mocks/server');
         server.use(
-            http.get('https://m.comic.naver.com/webtoon/list', () => HttpResponse.text('<html><body></body></html>')),
-            http.get('https://comic.naver.com/webtoon/list', () => HttpResponse.text('<html><body></body></html>'))
+            http.get('https://m.comic.naver.com/webtoon/list', () =>
+                HttpResponse.text('<html><body></body></html>'),
+            ),
+            http.get('https://comic.naver.com/webtoon/list', () =>
+                HttpResponse.text('<html><body></body></html>'),
+            ),
         );
-        await expect(callHandler(TITLE_ID)).rejects.toThrow(/No episodes found/);
+        await expect(callHandler(TITLE_ID)).rejects.toThrow(
+            /No episodes found/,
+        );
     });
 });

@@ -73,9 +73,9 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
                 const content = load(detailResponse.data);
 
                 content('.icn_edit, .btn_videoplayer, a[rel="bookmark"]').remove();
-                content('span').each(function () {
-                    if (content(this).attr('class')?.startsWith('icn_')) {
-                        content(this).remove();
+                content('span').each((_, el) => {
+                    if (content(el).attr('class')?.startsWith('icn_')) {
+                        content(el).remove();
                     }
                 });
 

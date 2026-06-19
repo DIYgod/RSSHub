@@ -43,7 +43,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') === 'week' ? 1 : 0;
-    const baseUrl = `https://www.gelonghui.com`;
+    const baseUrl = 'https://www.gelonghui.com';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
 

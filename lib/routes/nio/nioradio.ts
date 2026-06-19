@@ -5,19 +5,20 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/nioradio/:albumid',
     categories: ['multimedia'],
-    description: `
-::: tip
+    description: `::: tip
 **如何获取电台 ID？**
-打开蔚来 APP 后，点击“此地”→“NIO Radio”，找到自己想要转换为播客的专辑，分享后在生成的链接中找到\`container_id=\`后方的数字即可。
+打开蔚来 APP 后，点击 “此地”→“NIO Radio”，找到自己想要转换为播客的专辑，分享后在生成的链接中找到\`container_id=\`后方的数字即可。
 常见电台 ID：
-| 电台名称          | 电台 ID |
-| :------------ | :---- |
-| 资讯充电站（早间版）    | 5     |
-| 资讯充电站（晚间版）    | 23    |
-| E 次元财经报       | 148   |
-| 塞萌不塞车         | 661   |
-| 乐行记           | 11    |
-| Weekend Dance | 547   |
+
+| 电台名称             | 电台 ID |
+| :------------------- | :------ |
+| 资讯充电站（早间版） | 5       |
+| 资讯充电站（晚间版） | 23      |
+| E 次元财经报         | 148     |
+| 塞萌不塞车           | 661     |
+| 乐行记               | 11      |
+| Weekend Dance        | 547     |
+
 :::`,
     example: '/nio/nioradio/5',
     parameters: { albumid: '电台专辑 ID' },

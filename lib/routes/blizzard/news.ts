@@ -41,7 +41,7 @@ export const route: Route = {
 | BlizzCon               | blizzcon            |
 | Inside Blizzard        | blizzard            |
 
-  Language codes
+Language codes
 
 | Language           | Code  |
 | ------------------ | ----- |
@@ -156,10 +156,9 @@ async function handler(ctx) {
     let rssTitle = '';
 
     const {
-        data: {
-            feed: { contentItems: response },
-        },
+        data: { feed },
     } = await got(`${apiUrl}?${getSearchParams(category)}`);
+    const { contentItems: response } = feed;
 
     const list = response.map((item) => {
         const content = item.properties;

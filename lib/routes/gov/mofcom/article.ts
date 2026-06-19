@@ -9,9 +9,11 @@ import timezone from '@/utils/timezone';
 const host = 'http://www.mofcom.gov.cn';
 
 export const route: Route = {
-    path: '/mofcom/article/:suffix{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/article/:suffix{.+}',
+    name: '政务公开',
+    example: '/gov/mofcom/article/b',
+    parameters: { suffix: '支持形如 `http://www.mofcom.gov.cn/article/*` 的网站，传入 article 之后的后缀' },
+    maintainers: ['LogicJake'],
     handler,
 };
 
@@ -42,12 +44,12 @@ async function handler(ctx) {
             };
         });
 
-    await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 let responses = await got(item.link);
                 // xwfb/xwlxfbh || xwfb/xwztfbh
-                const redirect = responses.data.match(/_cofing1={href:"(.*)",type/) || responses.data.match(/window\.location\.href='(.*)'/);
+                const redirect = responses.data.match(/_cofing1=\{href:"(.*)",type/) || responses.data.match(/window\.location\.href='(.*)'/);
                 if (redirect) {
                     responses = await got(redirect[1], {
                         headers: {
@@ -73,6 +75,6 @@ async function handler(ctx) {
         title: $('head > title').text(),
         description: $('meta[name=description]').attr('content'),
         link: url,
-        item: list,
+        item: items,
     };
 }

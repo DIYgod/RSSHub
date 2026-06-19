@@ -26,8 +26,10 @@ export const route: Route = {
 此路由僅支援 \`jp.mercari.com\`，不支援 \`tw.mercari.com\` 和 \`hk.mercari.com\`。
 
 **注意：** 不同站點的查詢參數格式不同
+
 - 日本: \`keyword=シャツ&order=desc&sort=created_time&status=on_sale\`
 - 台灣: \`keyword=シャツ&sort=new&status=in-stock&availability=1\`
+
 :::`,
 };
 
@@ -87,7 +89,7 @@ async function handler(ctx) {
     const { keyword, sort, order, status, options } = parseSearchQuery(queryString);
     const searchItems = (await fetchSearchItems(sort, order, status, keyword, options)).items;
 
-    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
+    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => formatItemDetail(await fetchItemDetail(item.id, item.itemType)))));
 
     return {
         title: `${keyword} の検索結果`,

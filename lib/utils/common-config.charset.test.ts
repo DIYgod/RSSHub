@@ -30,7 +30,7 @@ describe('common-config charset', () => {
         const data = await buildData({
             link: 'http://rsshub.test/buildData',
             url: 'http://rsshub.test/buildData',
-            title: `%title%`,
+            title: '%title%',
             params: {
                 title: 'buildData',
             },

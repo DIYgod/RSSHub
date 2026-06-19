@@ -53,9 +53,9 @@ async function handler(ctx) {
 
     const channelIds = (await utils.getSubscriptions('snippet', cache)).data.items.map((item) => item.snippet.resourceId.channelId);
 
-    const playlistIds = await pMap(channelIds, async (channelId) => (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads, { concurrency: 30 });
+    const playlistIds = await pMap(channelIds, async (channelId) => (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items?.[0].contentDetails.relatedPlaylists.uploads, { concurrency: 30 });
 
-    let items = await pMap(playlistIds, async (playlistId) => (await utils.getPlaylistItems(playlistId, 'snippet', cache))?.data.items, { concurrency: 30 });
+    let items = await pMap(playlistIds.filter(Boolean), async (playlistId) => (await utils.getPlaylistItems(playlistId, 'snippet', cache))?.data.items, { concurrency: 30 });
 
     items = items.flat();
 

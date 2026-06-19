@@ -19,8 +19,7 @@ export const route: Route = {
             source: ['www.cccfna.org.cn/:category/:type?'],
         },
     ],
-    description: `
-::: tip
+    description: `::: tip
 存在**二级分类**的**一级分类**不能单独当作参数，如：\`/cccfna/hangyezixun\`
 :::
 

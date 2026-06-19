@@ -17,11 +17,11 @@ type VideoEmbed = {
     playlist?: string;
 };
 
-type Embed = {
+type Embed = VideoEmbed & {
     $type?: string;
     images?: ImageEmbed[];
     external?: ExternalEmbed;
-} & VideoEmbed;
+};
 
 type PostProps = {
     text?: string;

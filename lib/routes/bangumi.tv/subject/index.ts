@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['JimenezLi'],
     handler,
     description: `::: warning
-  此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
+此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
 :::`,
 };
 

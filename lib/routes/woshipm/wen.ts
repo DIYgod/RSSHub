@@ -41,7 +41,7 @@ async function handler() {
             return {
                 title: item.find('.went-head-text').text(),
                 link: `${baseUrl}${item.find('.went-head').attr('href')}`,
-                pubDate: parseRelativeDate(item.find('.list-text').text().split('|')[1]),
+                pubDate: parseRelativeDate(item.find('.list-text').text().split('|', 2)[1]),
             };
         });
 

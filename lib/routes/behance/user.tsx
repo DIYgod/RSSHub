@@ -38,7 +38,7 @@ export const route: Route = {
     name: 'User Works',
     maintainers: ['MisteryMonster'],
     handler,
-    description: `Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://www.behance.net/mishapetrick) the username will be \`mishapetrick\`。`,
+    description: `Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be \`mishapetrick\`。`,
 };
 
 const getUserProfile = async (nodes, user) =>

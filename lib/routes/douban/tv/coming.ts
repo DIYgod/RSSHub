@@ -55,27 +55,27 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
         return undefined;
     }
 
-    const datePart = pubDateText.split('(')[0];
+    const datePart = pubDateText.split('(', 1)[0];
     return parseDate(datePart);
 };
 
 const getSortTimestamp = (pubdate?: string[]): number => {
     const pubDateText = getPubDateText(pubdate);
     if (!pubDateText) {
-        return Number.POSITIVE_INFINITY;
+        return Infinity;
     }
 
-    const datePart = pubDateText.split('(')[0].trim();
+    const datePart = pubDateText.split('(', 1)[0].trim();
     const match = /^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?/.exec(datePart);
     if (!match) {
-        return Number.POSITIVE_INFINITY;
+        return Infinity;
     }
 
-    const year = Number.parseInt(match[1], 10);
-    const month = match[2] ? Number.parseInt(match[2], 10) : 1;
-    const day = match[3] ? Number.parseInt(match[3], 10) : 1;
+    const year = Number(match[1]);
+    const month = match[2] ? Number(match[2]) : 1;
+    const day = match[3] ? Number(match[3]) : 1;
     const timestamp = Date.UTC(year, month - 1, day);
-    return Number.isNaN(timestamp) ? Number.POSITIVE_INFINITY : timestamp;
+    return Number.isNaN(timestamp) ? Infinity : timestamp;
 };
 
 const getWishCount = (wishCount?: number | string): number => {
@@ -83,7 +83,7 @@ const getWishCount = (wishCount?: number | string): number => {
         return wishCount;
     }
     if (typeof wishCount === 'string') {
-        const parsed = Number.parseInt(wishCount, 10);
+        const parsed = Number(wishCount);
         return Number.isNaN(parsed) ? 0 : parsed;
     }
     return 0;
@@ -134,10 +134,10 @@ export const route: Route = {
 | sortBy   | 排序方式         | hot/time | hot    |
 | count    | 请求上游返回数量 | 正整数   | 10     |
 
-  用例：\`/douban/tv/coming/hot/10\`
+用例：\`/douban/tv/coming/hot/10\`
 
 ::: tip
-  服务端请求固定使用 \`sortby=hot\` 拉取数据，再按 \`sortBy\` 参数在本地重排；条目数量可通过 \`count\` 调整，仍可叠加 RSSHub 通用参数 \`limit\`。
+服务端请求固定使用 \`sortby=hot\` 拉取数据，再按 \`sortBy\` 参数在本地重排；条目数量可通过 \`count\` 调整，仍可叠加 RSSHub 通用参数 \`limit\`。
 :::`,
 };
 
@@ -146,7 +146,7 @@ async function handler(ctx) {
     const countParam = ctx.req.param('count');
 
     const sortBy = sortByParam === 'time' ? 'time' : 'hot';
-    const rawCount = Number.parseInt(countParam || '', 10);
+    const rawCount = Number(countParam || '');
     const requestCount = Number.isNaN(rawCount) || rawCount <= 0 ? 10 : rawCount;
 
     const ts = new Date().toISOString().slice(0, 10).replaceAll('-', '');

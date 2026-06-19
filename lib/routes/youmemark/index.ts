@@ -28,7 +28,7 @@ export const route: Route = {
     ],
     description: `Get user's public bookmarks from YouMeMark
 ::: tip
-  Add \`?limit=<number>\` to the end of the route to limit the number of items. Default is 10.
+Add \`?limit=<number>\` to the end of the route to limit the number of items. Default is 10.
 :::`,
 };
 

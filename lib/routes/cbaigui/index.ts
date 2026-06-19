@@ -16,7 +16,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     let filterName;
 
@@ -44,13 +44,13 @@ async function handler(ctx) {
 
         // To handle lazy-loaded images from external sites.
 
-        content('figure').each(function () {
-            const image = content(this).find('img');
+        content('figure').each((_, el) => {
+            const image = content(el).find('img');
             const src = image.prop('data-actualsrc') ?? image.prop('data-original');
             const width = image.prop('data-rawwidth');
             const height = image.prop('data-rawheight');
 
-            content(this).replaceWith(
+            content(el).replaceWith(
                 renderFigure({
                     src,
                     width,
@@ -61,13 +61,13 @@ async function handler(ctx) {
 
         // To remove watermarks on images.
 
-        content('p img').each(function () {
-            const image = content(this);
-            const src = image.prop('src').split('!')[0];
+        content('p img').each((_, el) => {
+            const image = content(el);
+            const src = image.prop('src').split('!', 1)[0];
             const width = image.prop('width');
             const height = image.prop('height');
 
-            content(this).replaceWith(
+            content(el).replaceWith(
                 renderFigure({
                     src,
                     width,

@@ -45,7 +45,7 @@ async function handler() {
             return ret;
         });
     return {
-        title: `极品性感美女 - 本周热门推荐`,
+        title: '极品性感美女 - 本周热门推荐',
         link: response.url,
         item: await Promise.all(
             items.map((item) =>

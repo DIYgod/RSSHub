@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: item.find('.title a').attr('title'),
                 link: `${baseUrl}${item.find('.title a').attr('href')}`,
-                author: item.find('.author a').text().split('作者 : ')[1],
+                author: item.find('.author a').text().split('作者 : ', 2)[1],
             };
         });
 
@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                item.author = item.author ?? $('.author-info .name a').text().split('作者 : ')[1];
+                item.author = item.author ?? $('.author-info .name a').text().split('作者 : ', 2)[1];
                 item.pubDate = timezone(
                     parseDate(
                         $('.publish-time')

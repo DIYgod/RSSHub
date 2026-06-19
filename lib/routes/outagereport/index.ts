@@ -19,7 +19,7 @@ export const route: Route = {
     name: 'Report',
     maintainers: ['cxumol', 'nczitzk'],
     handler,
-    description: `Please skip the local service area code for \`name\`, for example \`https://outage.report/us/verizon-wireless\` to \`verizon-wireless\`.`,
+    description: 'Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.',
 };
 
 async function handler(ctx) {
@@ -35,8 +35,8 @@ async function handler(ctx) {
 
     // use RegExp because of irregular class name
     const gaugeRegexp = /class="Gauge__Count.*?>(\d+)<\/text>/; // Core Pattern
-    const gaugeTextRegexp = /class="Gauge__MessageWrapper.*?class="Gauge__Message.*?>(.*?)<\/span>/; // Core Pattern
-    const rssDescribeRegexp = /<p class="PageSubheader.*?>(.*?)<\/p>/;
+    const gaugeTextRegexp = /class="Gauge__MessageWrapper.*?class="Gauge__Message[^>]*>(.*?)<\/span>/; // Core Pattern
+    const rssDescribeRegexp = /<p class="PageSubheader[^>]*>(.*?)<\/p>/;
 
     // data to be shown on RSS feed and RSS items
     const gaugeCount = Number(html.match(gaugeRegexp)[1]);

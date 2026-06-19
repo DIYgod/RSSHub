@@ -48,8 +48,6 @@ async function handler(ctx) {
         title: `微信公众号 - ${$('span.name').text()}`,
         link: url,
         description: $('div.Profile-sideColumnItemValue').text(),
-        item: await Promise.all(items.map((item) => finishArticleItem(item))).catch((error) => {
-            throw error;
-        }),
+        item: await Promise.all(items.map((item) => finishArticleItem(item))),
     };
 }

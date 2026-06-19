@@ -151,7 +151,7 @@ async function handler(ctx) {
                         );
                     } else {
                         item.link = $('.pdf-link').attr('href');
-                        item.description = $('.ctx-content').text();
+                        item.description = $('.ctx-content').html();
                     }
                     return item;
                 } catch {

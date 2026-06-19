@@ -59,7 +59,7 @@ async function handler(ctx) {
         },
         searchParams: {
             pageNo: 1,
-            pageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20,
+            pageSize: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
             keyword: '',
             startTime: '',
             endTime: '',

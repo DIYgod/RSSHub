@@ -35,13 +35,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.transcriptforest.com';
 
     const { data: firstResponse } = await got(rootUrl);
 
-    const data = JSON.parse(firstResponse.match(/({"props".*"scriptLoader":\[]})<\/script>/)?.[1]);
+    const data = JSON.parse(firstResponse.match(/(\{"props".*"scriptLoader":\[\]\})<\/script>/)?.[1]);
 
     const buildId = data.buildId;
     const defaultLocale = data.defaultLocale;
@@ -71,7 +71,7 @@ async function handler(ctx) {
         guid: item.id,
         pubDate: parseDate(item.published_at),
         updated: parseDate(item.updated_at),
-        itunes_item_image: item.episode_cover.split(/\?/)[0],
+        itunes_item_image: item.episode_cover.split(/\?/, 1)[0],
         itunes_duration: item.episode_duration,
         enclosure_url: item.source_media,
         enclosure_type: 'audio/mpeg',
@@ -115,7 +115,7 @@ async function handler(ctx) {
     const title = $('title').text();
     const image = $('meta[property="og:image"]').prop('content');
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
-    const author = title.split(/\|/)[0].trim();
+    const author = title.split(/\|/, 1)[0].trim();
 
     return {
         item: items,

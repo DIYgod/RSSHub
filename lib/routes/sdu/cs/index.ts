@@ -60,8 +60,8 @@ export const route: Route = {
     name: '计算机科学与技术学院通知',
     maintainers: ['Ji4n1ng', 'wiketool'],
     handler,
-    description: `| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 |
-| -------- | -------- | -------- | -------- | -------- |
+    description: `| 学院公告     | 学术报告 | 科技简讯   | 本科教育      | 研究生教育   |
+| ------------ | -------- | ---------- | ------------- | ------------ |
 | announcement | academic | technology | undergraduate | postgraduate |`,
 };
 
@@ -90,7 +90,8 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'www.cs.sdu.edu.cn') {
+                }
+                if (new URL(item.link).hostname !== 'www.cs.sdu.edu.cn') {
                     return item;
                 }
                 const response = await got(item.link);

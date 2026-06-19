@@ -109,7 +109,7 @@ export const getData = async (list) => {
                         item.enclosure_type = 'audio/mpeg';
                     } else if (data.image?.url) {
                         const imageUrl = data.image.url;
-                        const cleanImageUrl = imageUrl.split('?')[0].toLowerCase();
+                        const cleanImageUrl = imageUrl.split('?', 1)[0].toLowerCase();
 
                         item.enclosure_url = imageUrl;
                         if (cleanImageUrl.endsWith('.jpg') || cleanImageUrl.endsWith('.jpeg')) {

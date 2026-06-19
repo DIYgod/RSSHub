@@ -41,7 +41,7 @@ async function handler() {
             const text = $el.text().trim();
 
             // Extract date from link text (e.g., "2nd October, 2025 Redis 101 : From a Beginners POV")
-            const dateMatch = text.match(/^(\d{1,2}(?:st|nd|rd|th)\s+\w+,\s+\d{4})\s+(.+)$/);
+            const dateMatch = text.match(/^(\d{1,2}(?:st|nd|rd|th)\s+\w+,\s+\d{4})\s+(\S.*)$/);
 
             let date: string | undefined;
             let title: string;

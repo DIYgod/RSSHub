@@ -12,15 +12,19 @@ export const getUserInfo = async (uid: string) => await requestAPI<UserInfo>(`${
 
 // 获取用户帖子
 export const getUserPosts = async (uid: string, type: 1 | 2) =>
-    await requestAPI<{
-        rows: UserPost[];
-    }>(`${API_URL}/home/userInfo/getUserPosts?uuid=${uid}&type=${type}`).then((res) => res.rows);
+    (
+        await requestAPI<{
+            rows: UserPost[];
+        }>(`${API_URL}/home/userInfo/getUserPosts?uuid=${uid}&type=${type}`)
+    ).rows;
 
 // 获取用户动态
 export const getUserDynamic = async (uid: string) =>
-    await requestAPI<{
-        rows: UserDynamic[];
-    }>(`${API_URL}/home/userInfo/getUserDynamic?uuid=${uid}`).then((res) => res.rows);
+    (
+        await requestAPI<{
+            rows: UserDynamic[];
+        }>(`${API_URL}/home/userInfo/getUserDynamic?uuid=${uid}`)
+    ).rows;
 
 // 获取帖子详情
 export async function getPostsDetail(postID: string) {
@@ -67,13 +71,17 @@ export async function getPosts(params: { type: 1 | 2; is_top?: 0 | 1; is_refine?
         }
     }
 
-    return await requestAPI<{
-        rows: UserPost[];
-    }>(`${API_URL}/home/posts/postsList?${searchParams.toString()}`).then((res) => res.rows);
+    return (
+        await requestAPI<{
+            rows: UserPost[];
+        }>(`${API_URL}/home/posts/postsList?${searchParams.toString()}`)
+    ).rows;
 }
 
 // 获取用户关注动态
 export const getFollowDynamicList = async (limit: number | string) =>
-    await requestAPI<{
-        rows: UserDynamic[];
-    }>(`${API_URL}/home/dynamic/getFollowDynamicList?limit=${limit}`).then((res) => res.rows);
+    (
+        await requestAPI<{
+            rows: UserDynamic[];
+        }>(`${API_URL}/home/dynamic/getFollowDynamicList?limit=${limit}`)
+    ).rows;

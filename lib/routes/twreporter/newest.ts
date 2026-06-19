@@ -29,8 +29,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const base = `https://www.twreporter.org`;
-    const url = `https://go-api.twreporter.org/v2/index_page`;
+    const base = 'https://www.twreporter.org';
+    const url = 'https://go-api.twreporter.org/v2/index_page';
     const res = await ofetch(url);
     const list = res.data.latest_section;
     const out = await Promise.all(
@@ -45,7 +45,7 @@ async function handler() {
     );
 
     return {
-        title: `報導者 | 最新`,
+        title: '報導者 | 最新',
         link: base,
         item: out,
     };

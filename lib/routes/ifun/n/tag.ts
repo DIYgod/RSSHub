@@ -8,7 +8,7 @@ import { author, language, processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { name } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`article-list/1?tagName=${name}`, rootUrl).href;
     const apiUrl: string = new URL('api/articles/tagId', rootUrl).href;
@@ -49,8 +49,7 @@ export const route: Route = {
 若订阅 [zhihu](https://n.ifun.cool/article-list/2?tagName=zhihu)，网址为 \`https://n.ifun.cool/article-list/2?tagName=zhihu\`，请截取 \`tagName\` 的值 \`zhihu\` 作为 \`name\` 参数填入，此时目标路由为 [\`/ifun/n/tag/zhihu\`](https://rsshub.app/ifun/n/tag/zhihu)。
 
 更多专栏请见 [盐选故事专栏](https://n.ifun.cool/tags)。
-:::
-    `,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

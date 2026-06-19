@@ -49,7 +49,7 @@ async function handler(ctx) {
     const { name: guildName, icon: guidIcon } = guildInfo;
 
     const messages = messagesRaw.map((message) => ({
-        title: message.content.split('\n')[0],
+        title: message.content.split('\n', 1)[0],
         description: renderDescription({ message, guildInfo }),
         author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
         pubDate: parseDate(message.timestamp),

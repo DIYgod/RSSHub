@@ -6,7 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-const titleRegex = /(.+)\s+is\s+([A-Z]+)\s+\((.+)\)/;
+const titleRegex = /(.*\S)\s+is\s+([A-Z]+)\s+\((.+)\)/;
 
 const formatTime = (s) => {
     const duration = dayjs.duration(s - 0, 'seconds');
@@ -17,13 +17,14 @@ const formatTime = (s) => {
 
     if (days > 0) {
         return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    } else if (hours > 0) {
-        return `${hours}h ${minutes}m ${seconds}s`;
-    } else if (minutes > 0) {
-        return `${minutes}m ${seconds}s`;
-    } else {
-        return `${seconds}s`;
     }
+    if (hours > 0) {
+        return `${hours}h ${minutes}m ${seconds}s`;
+    }
+    if (minutes > 0) {
+        return `${minutes}m ${seconds}s`;
+    }
+    return `${seconds}s`;
 };
 
 class Monitor {

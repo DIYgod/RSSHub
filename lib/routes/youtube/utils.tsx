@@ -118,17 +118,22 @@ export async function getSubscriptionsRecusive(part, nextPageToken?) {
 // taken from https://webapps.stackexchange.com/a/101153
 export const isYouTubeChannelId = (id) => /^UC[\w-]{21}[AQgw]$/.test(id);
 export const getLive = (id, cache) =>
-    cache.tryGet(`youtube:getLive:${id}`, async () => {
-        const res = await exec((youtube) =>
-            youtube.search.list({
-                part: 'snippet',
-                channelId: id,
-                eventType: 'live',
-                type: 'video',
-            })
-        );
-        return res;
-    });
+    cache.tryGet(
+        `youtube:getLive:${id}`,
+        async () => {
+            const res = await exec((youtube) =>
+                youtube.search.list({
+                    part: 'snippet',
+                    channelId: id,
+                    eventType: 'live',
+                    type: 'video',
+                })
+            );
+            return res;
+        },
+        config.cache.routeExpire,
+        false
+    );
 export const getVideoUrl = (id: string) => `https://www.youtube-nocookie.com/embed/${id}?controls=1&autoplay=1&mute=0`;
 
 // Get the appropriate playlist ID with or without shorts
@@ -138,7 +143,8 @@ export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): st
         if (id.startsWith('UC')) {
             // For channel IDs (UC...), convert to playlist format without shorts (UULF...)
             return 'UULF' + id.slice(2);
-        } else if (id.startsWith('UU')) {
+        }
+        if (id.startsWith('UU')) {
             // For playlist IDs (UU...), convert to playlist format without shorts (UULF...)
             return 'UULF' + id.slice(2);
         }

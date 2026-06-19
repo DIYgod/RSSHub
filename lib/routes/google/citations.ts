@@ -21,12 +21,12 @@ export const route: Route = {
     handler,
     description: `The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ\` to \`mlmE4JMAAAAJ\`.
 
-  Query parameters are also supported here, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ&sortby=pubdate\` to \`mlmE4JMAAAAJ&sortby=pubdate\`. Please make sure that the user id (\`mlmE4JMAAAAJ\` in this case) should be the first parameter in the query string.`,
+Query parameters are also supported here, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ&sortby=pubdate\` to \`mlmE4JMAAAAJ&sortby=pubdate\`. Please make sure that the user id (\`mlmE4JMAAAAJ\` in this case) should be the first parameter in the query string.`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const BASE_URL = `https://scholar.google.com`;
+    const BASE_URL = 'https://scholar.google.com';
     const url = `https://scholar.google.com/citations?user=${id}`;
 
     const response = await got({

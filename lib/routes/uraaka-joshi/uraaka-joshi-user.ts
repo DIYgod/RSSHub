@@ -4,7 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/:id',
@@ -38,14 +38,18 @@ async function handler(ctx) {
     const response = await cache.tryGet(
         link,
         async () => {
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
             });
             page.on('requestfinished', async (request) => {
-                if (request.url() === link && request.response().status() === 403) {
+                if (request.url() !== link) {
+                    return;
+                }
+                const response = await request.response();
+                if (response?.status() === 403) {
                     await page.close();
                 }
             });
@@ -63,7 +67,7 @@ async function handler(ctx) {
             } catch {
                 throw new Error('Access denied (403)');
             }
-            await browser.close();
+            await context.close();
             return html;
         },
         config.cache.routeExpire,
@@ -98,7 +102,7 @@ async function handler(ctx) {
             // correct src of img tags
             item.find('img').each((_, i) => {
                 i = $(i);
-                i.attr('src', 'https:' + i.attr('data-src').split('?resize')[0]);
+                i.attr('src', 'https:' + i.attr('data-src').split('?resize', 1)[0]);
                 i.removeAttr('data-src');
             });
 

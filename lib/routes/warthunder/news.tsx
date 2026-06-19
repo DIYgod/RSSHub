@@ -38,8 +38,8 @@ export const route: Route = {
     maintainers: ['axojhf'],
     handler,
     url: 'warthunder.com/en/news',
-    description: `News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
-  The \`pubDate\` provided under UTC time zone, so please ignore the specific time!!!`,
+    description: `News data from <https://warthunder.com/en/news/>
+The \`pubDate\` provided under UTC time zone, so please ignore the specific time!!!`,
 };
 
 async function handler() {

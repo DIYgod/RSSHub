@@ -71,7 +71,7 @@ export const route: Route = {
 | ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
 | focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
 
-  语言
+语言
 
 | 繁 | 简 |
 | -- | -- |

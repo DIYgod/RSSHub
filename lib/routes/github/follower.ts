@@ -42,7 +42,7 @@ async function handler(ctx) {
             Authorization: `bearer ${config.github.access_token}`,
         },
         json: {
-            query: `
+            query: /* GraphQL */ `
             {
                 user(login: "${user}") {
                   followers(first: 10) {

@@ -55,7 +55,10 @@ async function handler(ctx) {
         description: `网易云音乐歌单 - ${data.name}`,
         item: data.trackIds.slice(0, 201).map((item) => {
             const thisSong = songs.find((element) => element.id === item.id);
-            const singer = thisSong.artists.length === 1 ? thisSong.artists[0].name : thisSong.artists.reduce((prev, cur) => (prev.name || prev) + '/' + cur.name);
+            let singer = thisSong.artists[0].name;
+            for (const artist of thisSong.artists.slice(1)) {
+                singer += '/' + artist.name;
+            }
             return {
                 title: `${thisSong.name} - ${singer}`,
                 description: renderPlaylistDescription({

@@ -23,7 +23,7 @@ export const route: Route = {
     maintainers: ['xtexChooser'],
     handler,
     url: 'minecraft.net/',
-    description: `Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列`,
+    description: 'Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列',
     zh: {
         name: 'Java版被阻止的服务器域名散列',
     },
@@ -37,7 +37,7 @@ async function handler() {
 
     const data = (response.data.toString() as string).split('\n').filter((str) => str !== '');
 
-    const title = `Minecraft Java版被阻止的服务器域名散列`;
+    const title = 'Minecraft Java版被阻止的服务器域名散列';
 
     return {
         title,

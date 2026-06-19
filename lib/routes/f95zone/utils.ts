@@ -38,11 +38,13 @@ export const processContent = (html: string): string => {
     while (changed) {
         changed = false;
         $('*').each((_, el) => {
-            if (el.type === 'tag' && !ALLOWED_TAGS.has(el.name)) {
-                $(el).replaceWith($(el).html() || '');
-                changed = true;
-                return false;
+            if (!(el.type === 'tag' && !ALLOWED_TAGS.has(el.name))) {
+                return;
             }
+
+            $(el).replaceWith($(el).html() || '');
+            changed = true;
+            return false;
         });
     }
 

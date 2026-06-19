@@ -1,8 +1,10 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Naver Webtoon',
-    url: 'comic.naver.com',
-    description: 'Naver Webtoon — Korean webcomic series and episode feeds.',
+    name: '네이버',
+    url: 'naver.com',
     lang: 'ko',
+    zh: {
+        name: 'Naver',
+    },
 };

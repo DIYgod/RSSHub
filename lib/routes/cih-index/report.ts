@@ -40,7 +40,7 @@ async function handler(ctx) {
     const initialState = JSON.parse(
         $('script:contains("window.__INITIAL_STATE__")')
             .text()
-            .match(/window\.__INITIAL_STATE__\s*=\s*({.*?});/)?.[1] || '{}'
+            .match(/window\.__INITIAL_STATE__\s*=\s*(\{.*?\});/)?.[1] || '{}'
     );
     const { dataResult, indNavLists, secondNameFilter, tagList, param } = initialState.data;
 

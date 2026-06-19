@@ -70,8 +70,8 @@ async function handler(ctx) {
 
                 content('.article-title').remove();
 
-                content('.file-player-image').each(function () {
-                    content(this).replaceWith(`<img src="${content(this).attr('data-actual')}">`);
+                content('.file-player-image').each((_, el) => {
+                    content(el).replaceWith(`<img src="${content(el).attr('data-actual')}">`);
                 });
 
                 item.description = content('article').html();

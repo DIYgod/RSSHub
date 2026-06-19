@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const rootUrl = `https://www.ssm.gov.mo`;
+const rootUrl = 'https://www.ssm.gov.mo';
 const newsUrl = `${rootUrl}/apps1/content/ch/973/itemlist.aspx?defaultcss=false&dlimit=20&showdate=true&dorder=cridate%20desc,displaydate%20desc&withattach=true`;
 
 export const route: Route = {
@@ -40,7 +40,7 @@ async function handler() {
     const item = list.toArray().map((item) => {
         const title = $(item).find('a').text();
         const link = $(item).find('a').attr('href');
-        const pubDate = parseDate($(item).find('small').text().split(':')[1].trim(), 'DD/MM/YYYY');
+        const pubDate = parseDate($(item).find('small').text().split(':', 2)[1].trim(), 'DD/MM/YYYY');
         const desc = renderToString(<SsmNewsDescription link={link} />);
 
         return {

@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywgg/tzgg' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
+    const limit = Number(ctx.req.query('limit') ?? '15');
 
     const baseUrl = 'https://www.cccmc.org.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
@@ -95,7 +95,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     return {
         title,
-        description: title.split(/-/)[0].trim(),
+        description: title.split(/-/, 1)[0].trim(),
         link: targetUrl,
         item: items,
         allowEmpty: true,
@@ -152,8 +152,8 @@ export const route: Route = {
 | [党群动态](https://www.cccmc.org.cn/shdj/dqdt/) | [党内法规](https://www.cccmc.org.cn/shdj/dnfg/) | [青年工作](https://www.cccmc.org.cn/shdj/qngz/) |
 | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
 | [shdj/dqdt](https://rsshub.app/cccmc/shdj/dqdt) | [shdj/dnfg](https://rsshub.app/cccmc/shdj/dnfg) | [shdj/qngz](https://rsshub.app/cccmc/shdj/qngz) |
-</details>
-`,
+
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

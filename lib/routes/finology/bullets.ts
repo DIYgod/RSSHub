@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const time = $item.find('div.timeline-info span').text().split(', ')[1];
+            const time = $item.find('div.timeline-info span').text().split(', ', 2)[1];
             const a = $item.find('a.timeline-title');
             const description = $item.find('div.bullet-desc').html();
             return {

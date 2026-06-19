@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
     url: 'jmcomic.group/',
     description: `::: tip
-  专辑 id 不包括 URL 中标题的部分。
+专辑 id 不包括 URL 中标题的部分。
 :::`,
 };
 

@@ -70,8 +70,8 @@ async function handler(ctx) {
     $('#pdfsrc').remove();
     $('.bigImg, .smallImg').remove();
 
-    $('a img').each(function () {
-        $(this).parent().remove();
+    $('a img').each((_, el) => {
+        $(el).parent().remove();
     });
 
     let items = $('.br1, .br2, .titss')

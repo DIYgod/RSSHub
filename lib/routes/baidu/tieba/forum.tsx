@@ -34,7 +34,7 @@ async function handler(ctx) {
     const params = { kw: encodeURIComponent(kw) };
     ctx.req.path.includes('good') && (params.tab = 'good');
     cid && (params.cid = cid);
-    const { data } = await got(`https://tieba.baidu.com/f`, {
+    const { data } = await got('https://tieba.baidu.com/f', {
         headers: {
             Referer: 'https://tieba.baidu.com/',
         },

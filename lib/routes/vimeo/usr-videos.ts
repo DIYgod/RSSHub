@@ -26,7 +26,7 @@ export const route: Route = {
     maintainers: ['MisteryMonster'],
     handler,
     description: `::: tip Special category name attention
-  Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\` to the vertical bar\`|\`.
+Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\` to the vertical bar\`|\`.
 :::`,
 };
 

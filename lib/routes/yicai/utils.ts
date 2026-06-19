@@ -16,7 +16,7 @@ const ProcessItems = async (apiUrl, tryGet) => {
 
     const items = response.data.map((item) => ({
         title: item.NewsTitle,
-        link: item.url.startsWith('http') ? item.url : `${rootUrl}${item.AppID === 0 ? `/vip` : ''}${item.url}`,
+        link: item.url.startsWith('http') ? item.url : `${rootUrl}${item.AppID === 0 ? '/vip' : ''}${item.url}`,
         author: item.NewsAuthor || item.NewsSource || item.CreaterName,
         pubDate: timezone(parseDate(item.CreateDate), +8),
         category: [item.ChannelName],
@@ -47,7 +47,7 @@ function fetchFullArticles(items, tryGet) {
 
             if (!item.pubDate) {
                 const dataScript = content("script[src='/js/alert.min.js']").next().text() || content('title').next().text();
-                const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?]);/)[1].replaceAll("'", '"')));
+                const pb = new Map(JSON.parse(dataScript.match(/_pb = (\[.*?\]);/)[1].replaceAll("'", '"')));
                 item.pubDate = parseDate(`${pb.get('actime')}:00`);
             }
 

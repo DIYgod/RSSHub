@@ -13,7 +13,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
+    const limit = Number(ctx.req.query('limit') ?? '12');
 
     const baseUrl = 'https://www.scientificamerican.com';
     const targetUrl: string = new URL(`podcast${id ? `/${id}` : 's'}/`, baseUrl).href;
@@ -209,8 +209,7 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
 
 | All | Science Quickly | Uncertain    |
 | --- | --------------- | ------------ |
-|     | science-quickly | science-talk |
-`,
+|     | science-quickly | science-talk |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -259,7 +258,6 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
 
 | 全部 | Science Quickly | Uncertain    |
 | ---- | --------------- | ------------ |
-|      | science-quickly | science-talk |
-`,
+|      | science-quickly | science-talk |`,
     },
 };

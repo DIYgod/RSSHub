@@ -1,4 +1,4 @@
-// oxlint-disable no-useless-concat
+// oxlint-disable no-useless-concat unicorn-js/no-useless-concat
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -74,63 +74,43 @@ describe('wechat-mp', () => {
     it('ExtractMetadata.common', () => {
         expect(ExtractMetadata.common(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const fakeWindowVarsHtml = genScriptHtmlStr(`
             window.fake_item_show_type = '5' || '';
             window.fake_real_item_show_type = '5' || '';
             window.fake_ct = '1713009660' || '';
-        `)
-                )
-            )
-        ).toMatchObject({});
+        `);
+        expect(ExtractMetadata.common(load(fakeWindowVarsHtml))).toMatchObject({});
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const windowVarsHtml = genScriptHtmlStr(`
             window.item_show_type = '5' || '';
             window.real_item_show_type = '5' || '';
             window.ct = '1713009660' || '';
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.common(load(windowVarsHtml))).toMatchObject({
             showType: showTypeMapReverse['5'],
             realShowType: showTypeMapReverse['5'],
             createTime: '1713009660',
         });
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const varDeclsHtml = genScriptHtmlStr(`
             var item_show_type = "5";
             var real_item_show_type = "5";
             var ct = "1713009660";
             var msg_source_url = 'https://mp.weixin.qq.com/rsshub_test/fake';
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.common(load(varDeclsHtml))).toMatchObject({
             showType: showTypeMapReverse['5'],
             realShowType: showTypeMapReverse['5'],
             createTime: '1713009660',
             sourceUrl: 'https://mp.weixin.qq.com/rsshub_test/fake',
         });
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const longShowTypeHtml = genScriptHtmlStr(`
             var item_show_type = "998877665544332211";
             var real_item_show_type = "112233445566778899";
             var ct = "1713009660";
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.common(load(longShowTypeHtml))).toMatchObject({
             showType: '998877665544332211',
             realShowType: '112233445566778899',
             createTime: '1713009660',
@@ -166,10 +146,7 @@ describe('wechat-mp', () => {
     it('ExtractMetadata.img', () => {
         expect(ExtractMetadata.img(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.img(
-                load(
-                    genScriptHtmlStr(`
+        const imgHtml = genScriptHtmlStr(`
             window.picture_page_info_list = [
             {
               cdn_url: 'https://mmbiz.qpic.cn/rsshub_test/fake_img_1/0?wx_fmt=jpeg',
@@ -178,20 +155,15 @@ describe('wechat-mp', () => {
               cdn_url: 'https://mmbiz.qpic.cn/rsshub_test/fake_img_2/0?wx_fmt=jpeg',
             },
             ].slice(0, 20);
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.img(load(imgHtml))).toMatchObject({
             imgUrls: ['https://mmbiz.qpic.cn/rsshub_test/fake_img_1/0?wx_fmt=jpeg', 'https://mmbiz.qpic.cn/rsshub_test/fake_img_2/0?wx_fmt=jpeg'],
         });
     });
     it('ExtractMetadata.audio', () => {
         expect(ExtractMetadata.audio(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const reportOptHtml = genScriptHtmlStr(`
             reportOpt = {
               voiceid: "",
               uin: "",
@@ -199,46 +171,31 @@ describe('wechat-mp', () => {
               mid: "",
               idx: ""
             };
-        `)
-                )
-            )
-        ).toMatchObject({});
+        `);
+        expect(ExtractMetadata.audio(load(reportOptHtml))).toMatchObject({});
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const cgiDataWithDurationHtml = genScriptHtmlStr(`
             window.cgiData = {
               voiceid: "rsshub_test_voiceid_1",
               duration: "6567" * 1,
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.audio(load(cgiDataWithDurationHtml))).toMatchObject({
             voiceId: 'rsshub_test_voiceid_1',
             duration: '6567',
         });
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const cgiDataNoDurationHtml = genScriptHtmlStr(`
             window.cgiData = {
               voiceid: "rsshub_test_voiceid_1",
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.audio(load(cgiDataNoDurationHtml))).toMatchObject({
             voiceId: 'rsshub_test_voiceid_1',
             duration: null,
         });
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const reportOptAndCgiDataHtml = genScriptHtmlStr(`
             reportOpt = {
               voiceid: "",
               uin: "",
@@ -250,10 +207,8 @@ describe('wechat-mp', () => {
               voiceid: "rsshub_test_voiceid_1",
               duration: "6567" * 1,
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.audio(load(reportOptAndCgiDataHtml))).toMatchObject({
             voiceId: 'rsshub_test_voiceid_1',
             duration: '6567',
         });
@@ -261,10 +216,7 @@ describe('wechat-mp', () => {
     it('ExtractMetadata.location', () => {
         expect(ExtractMetadata.location(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.location(
-                load(
-                    genScriptHtmlStr(`
+        const ipWordingHtml = genScriptHtmlStr(`
             window.ip_wording = {
               countryName: '中国',
               countryId: '156',
@@ -273,10 +225,8 @@ describe('wechat-mp', () => {
               cityName: '',
               cityId: ''
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.location(load(ipWordingHtml))).toMatchObject({
             countryName: '中国',
             provinceName: '广东',
             cityName: '',

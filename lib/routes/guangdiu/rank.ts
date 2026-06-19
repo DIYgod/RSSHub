@@ -58,7 +58,7 @@ async function handler() {
     );
 
     return {
-        title: `逛丢 - 一小时风云榜`,
+        title: '逛丢 - 一小时风云榜',
         link: url,
         item: items,
     };

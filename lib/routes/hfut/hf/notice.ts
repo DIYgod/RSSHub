@@ -24,9 +24,9 @@ export const route: Route = {
     name: '合肥校区通知',
     maintainers: ['batemax'],
     handler,
-    description: `| 通知公告(https://news.hfut.edu.cn/tzgg2.htm) | 教学科研(https://news.hfut.edu.cn/tzgg2/jxky.htm) | 其他通知(https://news.hfut.edu.cn/tzgg2/qttz.htm) |
-| ------------ | -------------- | ------------------ |
-| tzgg         | jxky            | qttz              |`,
+    description: `| 通知公告 (<https://news.hfut.edu.cn/tzgg2.htm>) | 教学科研 (<https://news.hfut.edu.cn/tzgg2/jxky.htm>) | 其他通知 (<https://news.hfut.edu.cn/tzgg2/qttz.htm>) |
+| ----------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| tzgg                                            | jxky                                                 | qttz                                                 |`,
 };
 
 async function handler(ctx) {

@@ -20,7 +20,7 @@ export const route: Route = {
     maintainers: ['lyling'],
     handler: async (ctx) => {
         const categoryId = ctx.req.param('categoryId') ?? 0;
-        const link = `https://cloud.tencent.com/developer/api/home/article-list`;
+        const link = 'https://cloud.tencent.com/developer/api/home/article-list';
         const response = await ofetch(link, {
             method: 'POST',
             headers: {

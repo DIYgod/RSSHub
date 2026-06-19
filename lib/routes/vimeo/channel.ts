@@ -42,7 +42,7 @@ async function handler(ctx) {
         },
     });
     const page2 =
-        channel === `bestoftheyear`
+        channel === 'bestoftheyear'
             ? await got({
                   method: 'get',
                   url: `${url}/page:2/sort:date/format:detail`,

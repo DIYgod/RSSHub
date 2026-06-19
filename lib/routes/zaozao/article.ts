@@ -35,7 +35,7 @@ async function handler(ctx) {
         method: 'put',
         url: `https://e.zaozao.run/article/page/${type}`,
         headers: {
-            Referer: `https://www.zaozao.run/`,
+            Referer: 'https://www.zaozao.run/',
         },
         body: JSON.stringify({
             pageNo: 1,
@@ -51,9 +51,9 @@ async function handler(ctx) {
     const { data } = response.data;
 
     return {
-        title: `前端早早聊 - 文章`,
+        title: '前端早早聊 - 文章',
         link: `https://www.zaozao.run/article/${type}`,
-        description: `前端早早聊 - 文章`,
+        description: '前端早早聊 - 文章',
         item: data.map((item) => ({
             title: item.title,
             link: item.url,

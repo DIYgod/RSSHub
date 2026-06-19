@@ -31,12 +31,12 @@ async function handler() {
         .toArray()
         .map((el) => {
             const article = $(el);
-            const h2 = article.find('h2').first();
+            const h2 = article.find('h2');
             const id = h2.attr('id') || article.attr('id');
             const title = h2.text().trim();
             const anchor = id ? `${url}#${id}` : url;
-            // Date appears as a bold text node after h2 (no <time> tag)
-            const pubDateText = h2.nextAll('b').first().text().trim();
+            // Date appears as a span text node after h2 (no <time> tag)
+            const pubDateText = h2.next('span').text().trim();
 
             // First image if exists
             const imgEl = article.find('img').first();
@@ -44,13 +44,12 @@ async function handler() {
             const image = imgSrc ? new URL(imgSrc, url).href : undefined;
 
             // Full HTML for the item content
-            article.find('h2').first().remove(); // remove title
-            article.find('b').first().remove(); // remove date
+            article.find('header').remove(); // remove title and date
             article.find('.sr-only').remove(); // remove sr-only elements
 
             return {
                 title,
-                description: article.html() || undefined,
+                description: article.html(),
                 link: anchor,
                 pubDate: pubDateText ? parseDate(pubDateText) : undefined,
                 image,

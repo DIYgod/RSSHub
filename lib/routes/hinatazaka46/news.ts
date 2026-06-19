@@ -48,7 +48,7 @@ async function handler(ctx) {
 
             return {
                 title: item.find('.c-news__text').text(),
-                link: `${rootUrl}${item.attr('href').split('?')[0]}`,
+                link: `${rootUrl}${item.attr('href').split('?', 1)[0]}`,
                 pubDate: parseDate(item.find('.c-news__date').text()),
             };
         });

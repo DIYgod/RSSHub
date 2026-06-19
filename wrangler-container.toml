@@ -15,7 +15,7 @@ class_name = "RSSHubContainer"
 image = "./Dockerfile"
 max_instances = 20
 instance_type = "standard-1"
-image_vars = { PUPPETEER_SKIP_DOWNLOAD = "0" }
+image_vars = { PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "0" }
 
 # Durable Object binding for the container
 [[durable_objects.bindings]]

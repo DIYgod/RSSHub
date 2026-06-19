@@ -34,11 +34,9 @@ export const route: Route = {
     ],
     name: '暴雪游戏国服新闻',
     maintainers: ['zhangpeng2k'],
-    description: `
-| 守望先锋 | 炉石传说 | 魔兽世界 |
-|----------|----------|---------|
-| ow       | hs       | wow     |
-`,
+    description: `| 守望先锋 | 炉石传说 | 魔兽世界 |
+| -------- | -------- | -------- |
+| ow       | hs       | wow      |`,
     handler,
 };
 
@@ -99,7 +97,7 @@ const detailParsers = {
 };
 
 function getList(category, $) {
-    return parsers[category] ? parsers[category]($) : [];
+    return Object.hasOwn(parsers, category) ? parsers[category]($) : [];
 }
 
 async function fetchDetail(item, category) {
@@ -115,7 +113,7 @@ async function fetchDetail(item, category) {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'ow';
-    if (!categoryNames[category]) {
+    if (!Object.hasOwn(categoryNames, category)) {
         throw new Error('Invalid category');
     }
 

@@ -34,9 +34,9 @@ export const route: Route = {
 | ------- | ----- |
 | article | state |
 
-  参数
+参数
 
-  -   \`fulltext\`，全文输出，例如：\`/pingwest/user/7781550877/article/fulltext\``,
+- \`fulltext\`，全文输出，例如：\`/pingwest/user/7781550877/article/fulltext\``,
 };
 
 async function handler(ctx) {
