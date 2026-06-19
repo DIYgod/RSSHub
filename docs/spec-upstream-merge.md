@@ -18,9 +18,32 @@ The fork's only first-party additions live in two **isolated namespaces** that t
 
 The fork also touches a small number of **shared** files (`.env.example`, `docker-compose.sunbi-rsshub.yml`, `fly.toml`, `wrangler.toml`, `tsdown-worker.config.ts`, `package.json`). Conflicts there are normal merge conflicts, not design conflicts — resolve them in favor of keeping the SPEC working, then push upstream-style fixes back as separate PRs.
 
+Fork-owned paths auto-resolve to **ours** during merges via [`.gitattributes`](../.gitattributes) (`merge=ours` on `lib/routes/spec/**`, `docs/spec-*`, etc.). Shared files still need manual resolution.
+
 ---
 
-## Merge procedure
+## Quick sync (recommended)
+
+```bash
+# Check how far behind upstream/master you are
+pnpm upstream:status
+
+# Clean tree required — then fetch + merge on a dated branch
+pnpm upstream:sync
+
+# If conflicts: fix files (script prints hints), then:
+git add -A
+pnpm upstream:continue
+
+# Abort a bad merge
+bash scripts/upstream-sync.sh abort
+```
+
+Underlying script: [`scripts/upstream-sync.sh`](../scripts/upstream-sync.sh). Deploy branch is **`master`** (upstream uses `master`, not `main`).
+
+---
+
+## Merge procedure (manual)
 
 Run from the repo root, on a clean working tree:
 
@@ -34,11 +57,9 @@ git status
 git fetch upstream
 git fetch --tags upstream
 
-# 2. Decide on a branch
-#    - If 'main' is your deploy branch, merge there directly.
-#    - If you prefer, branch off and merge via PR:
-git switch -c chore/upstream-merge-$(date -u +%Y%m%d) main
-git merge --no-ff upstream/main
+# 2. Branch + merge (deploy branch: master)
+git switch -c chore/upstream-merge-$(date -u +%Y%m%d) master
+git merge --no-ff upstream/master
 ```
 
 If `git merge` stops with conflicts, the most likely culprits are the shared files above. Resolve them, then continue:
@@ -96,7 +117,7 @@ If after the smoke loop something is broken and you want to bail:
 # Revert the merge commit
 git revert -m 1 HEAD
 # Or, if you have not pushed yet:
-git reset --hard origin/main
+git reset --hard origin/master
 ```
 
 ---
@@ -110,7 +131,7 @@ pnpm install
 pnpm build:routes && pnpm lint && pnpm vitest
 ```
 
-If any of these fail **before** the merge, the breakage is yours — fix it first, then merge. Otherwise a broken `main` post-merge will be impossible to triage.
+If any of these fail **before** the merge, the breakage is yours — fix it first, then merge. Otherwise a broken `master` post-merge will be impossible to triage.
 
 ---
 
@@ -140,8 +161,8 @@ The fixture files in `tests/fixtures/spec-*.json` are recorded JSON responses fr
 
 | When               | What                                                    | Owner                 |
 | ------------------ | ------------------------------------------------------- | --------------------- |
-| Weekly (Monday)    | `git fetch upstream` and skim the diff for security/cve | Whoever is on-call    |
-| Weekly or biweekly | Run the full merge procedure above into a branch + PR   | Same person           |
+| Weekly (Monday)    | `pnpm upstream:status` — skim for security/cve          | Whoever is on-call    |
+| Weekly or biweekly | `pnpm upstream:sync` → PR                               | Same person           |
 | Monthly            | Verify the merge is conflict-free, fixtures are stable  | Spec route maintainer |
 
 If the merge has been skipped for >4 weeks, prefer **two smaller merges** (one per week of skipped upstream) over one big merge — cherry-pick the upstream merge-base upward and resolve incrementally.
