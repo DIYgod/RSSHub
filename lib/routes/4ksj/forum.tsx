@@ -182,9 +182,9 @@ async function handler(ctx) {
                                   const title = l.contents().first().text();
                                   const link = l.next().prop('href') ?? l.nextUntil('a').next().prop('href');
 
-                                  item.enclosure_url = item.enclosure_url ?? link;
-                                  item.enclosure_type = item.enclosure_type ?? 'application/x-bittorrent';
-                                  item.enclosure_title = item.enclosure_title ?? title;
+                                  item.enclosure_url ??= link;
+                                  item.enclosure_type ??= 'application/x-bittorrent';
+                                  item.enclosure_title ??= title;
 
                                   return {
                                       title,

@@ -36,8 +36,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (data) {
         data.title = collapseWhitespace(data.title) || '';
-        data.description && (data.description = collapseWhitespace(data.description) || '');
-        data.author && (data.author = collapseWhitespace(data.author) || '');
+        data.description &&= collapseWhitespace(data.description) || '';
+        data.author &&= collapseWhitespace(data.author) || '';
 
         if (data.item) {
             for (const item of data.item) {
@@ -81,12 +81,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (outputType !== 'rss') {
                     try {
-                        item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
+                        item.pubDate &&= convertDateToISO8601(item.pubDate) || '';
                     } catch {
                         item.pubDate = '';
                     }
                     try {
-                        item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
+                        item.updated &&= convertDateToISO8601(item.updated) || '';
                     } catch {
                         item.updated = '';
                     }

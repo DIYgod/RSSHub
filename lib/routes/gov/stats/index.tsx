@@ -130,7 +130,7 @@ async function handler(ctx) {
                         item.author = info.pop();
                     }
 
-                    item.title = item.title || content('h1').first().text() || content('h2').first().text();
+                    item.title ||= content('h1').first().text() || content('h2').first().text();
                     item.description = content('#detail, .xlcontent, .pages_content').html();
 
                     return item;
@@ -140,7 +140,7 @@ async function handler(ctx) {
 
                 content('.pchide').remove();
 
-                item.title = item.title || content('div.detail-title h1').text();
+                item.title ||= content('div.detail-title h1').text();
                 item.pubDate = timezone(parseDate(content('div.detail-title-des h2 p, .info').first().text().trim()), 8);
                 item.description = renderDescription({
                     description: content('.TRS_Editor').html() || content('.TRS_UEDITOR').html(),

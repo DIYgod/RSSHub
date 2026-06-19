@@ -82,7 +82,7 @@ async function handler(ctx) {
                     .slice(1)
                     .toArray()
                     .map((c) => content(c).text().replace(/#/, ''));
-                item.pubDate = item.pubDate ?? timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8);
+                item.pubDate ??= timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8);
                 item.upvotes = content('#like_count').text() ? Number(content('#like_count').text()) : 0;
                 item.comments = Number(content('div.right-infos a').first().text()) || 0;
 

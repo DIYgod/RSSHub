@@ -81,7 +81,7 @@ async function handler(ctx) {
                     });
 
                     item.author = content('.bbs-user-wrapper-content-name-span').first().text();
-                    item.pubDate = item.pubDate ?? timezone(parseRelativeDate(content('.second-line-user-info').first().text()), 8);
+                    item.pubDate ??= timezone(parseRelativeDate(content('.second-line-user-info').first().text()), 8);
                     const description = content('.bbs-content').first().html();
                     item.description = renderToString(
                         <>

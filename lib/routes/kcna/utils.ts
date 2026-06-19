@@ -54,7 +54,7 @@ const fetchVideo = (ctx, url) =>
         const $ = load(res.data);
         const js = $('script[type="text/javascript"]:not([src])').html();
         let sources = js.match(/<[^>]*source[^>]+src[^>]+>/g);
-        sources = sources && sources.map((item) => item.replaceAll("'", '"').replaceAll(/src="([^"]+)"/g, (_match, p1) => `src="${rootUrl}${p1}"`));
+        sources &&= sources.map((item) => item.replaceAll("'", '"').replaceAll(/src="([^"]+)"/g, (_match, p1) => `src="${rootUrl}${p1}"`));
         return `<video controls preload="metadata">${sources.join('\n')}</video>`;
     });
 

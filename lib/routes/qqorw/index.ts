@@ -79,7 +79,7 @@ async function handler(ctx) {
                 item.category = content('#mute-category')
                     .toArray()
                     .map((c) => content(c).text().trim());
-                item.pubDate = item.pubDate ?? parseDate(content('i.fa-clock-o').parent().text().trim());
+                item.pubDate ??= parseDate(content('i.fa-clock-o').parent().text().trim());
                 item.upvotes = content('#Addlike span.count').text() ? Number(content('#Addlike span.count').text()) : item.upvotes;
 
                 return item;

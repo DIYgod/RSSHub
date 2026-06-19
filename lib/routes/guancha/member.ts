@@ -85,7 +85,7 @@ async function handler(ctx) {
         default:
             items = response.data.data[category].map((item) => {
                 let timeArray = item.media_time && item.media_time.trim().split(/\D+/, 3);
-                timeArray = timeArray && timeArray.filter((item) => item !== '');
+                timeArray &&= timeArray.filter((item) => item !== '');
                 let itunes_duration;
                 if (timeArray) {
                     itunes_duration = 0;

@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     let type = Number(ctx.req.param('type'));
-    type = type ?? 1;
+    type ??= 1;
     const baseUrl = 'http://www.ceic.ac.cn';
     const api = `${baseUrl}/ajax/speedsearch?num=${type}`;
     const mappings = {

@@ -23,8 +23,8 @@ async function fetchActivityList(
         tag: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/activity/list', accessToken, params);
     return resp.result.result.map((item) => formatActivity(item));
@@ -52,8 +52,8 @@ async function fetchPerformerList(
         styleId: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/performer/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -97,8 +97,8 @@ async function fetchSiteList(
         searchKeyword: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/site/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -127,8 +127,8 @@ async function fetchBrandList(
         searchKeyword: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/brand/list', accessToken, params);
     return resp.result.result.map((item) => ({
