@@ -1,4 +1,4 @@
-// oxlint-disable no-undef unicorn-js/no-this-outside-of-class
+// oxlint-disable no-undef unicorn-js/no-this-outside-of-class unicorn-js/no-return-array-push
 // oxlint-disable unicorn/prefer-spread
 // oxlint-disable unicorn/prefer-math-trunc
 // @ts-nocheck

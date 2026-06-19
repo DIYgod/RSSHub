@@ -123,7 +123,9 @@ const getWbiVerifyString = () => {
         const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+\]/));
         const o = [];
         for (const t of array) {
-            r.charAt(t) && o.push(r.charAt(t));
+            if (r.charAt(t)) {
+                o.push(r.charAt(t));
+            }
         }
         return o.join('').slice(0, 32);
     });
