@@ -59,7 +59,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     // remove unicode control characters
                     // see #14940 #14943 #15262
                     // oxlint-disable-next-line no-control-regex
-                    item.description = item.description.replaceAll(/[\u0000-\u0009\v\f\u000E-\u001F\u007F\u200B\uFFFF]/g, '');
+                    item.description = item.description.replaceAll(/[\u{0000}-\u{0009}\v\f\u{000E}-\u{001F}\u{007F}\u{200B}\u{FFFF}]/gu, '');
                 }
 
                 if (typeof item.author === 'string') {

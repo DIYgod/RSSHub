@@ -85,6 +85,6 @@ async function getContent(nextBuildId: string, contentId: string) {
         content
             .html()
             ?.replaceAll(rubyRegex, '$1（$2）')
-            ?.replaceAll(/[^\t\n\r\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/g, '') ?? '';
+            ?.replaceAll(/[^\t\n\r\u{0020}-\u{D7FF}\u{E000}-\u{FDCF}\u{FDE0}-\u{FFFD}]/gu, '') ?? '';
     return description;
 }

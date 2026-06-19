@@ -203,7 +203,6 @@
         "unicorn-js/no-exports-in-scripts": "error",
         // "unicorn/no-for-loop": "error", // won't be implemented
         "unicorn-js/no-global-object-property-assignment": "error",
-        // "unicorn/no-hex-escape": "error",
         "unicorn/no-immediate-mutation": "error",
         "unicorn-js/no-incorrect-query-selector": "error",
         // "unicorn-js/no-incorrect-template-string-interpolation": "error", too many false positives
@@ -600,7 +599,6 @@
         "unicorn/no-await-expression-member": "off",
         "unicorn/no-empty-file": "warn",
         // "unicorn/no-for-loop": "off", // won't be implemented
-        "unicorn/no-hex-escape": "warn",
         "unicorn/no-nested-ternary": "off",
         "unicorn/no-null": "off",
         "unicorn/no-object-as-default-parameter": "warn",
