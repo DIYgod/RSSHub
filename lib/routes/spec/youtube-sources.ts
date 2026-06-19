@@ -1,29 +1,29 @@
-import { load } from "cheerio";
+import { load } from 'cheerio';
 
-import { config } from "@/config";
-import type { DataItem } from "@/types";
-import type { SpecExtraYoutube } from "@/types/spec-extra";
-import cache from "@/utils/cache";
-import ofetch from "@/utils/ofetch";
-import { parseDate, parseRelativeDate } from "@/utils/parse-date";
+import { config } from '@/config';
+import type { DataItem } from '@/types';
+import type { SpecExtraYoutube } from '@/types/spec-extra';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-import { buildCacheKey } from "./utils";
+import { buildCacheKey } from './utils';
 
-const YT_FEED_BASE = "https://www.youtube.com/feeds/videos.xml";
+const YT_FEED_BASE = 'https://www.youtube.com/feeds/videos.xml';
 
 /** Playlist prefixes derived from UC channel id (see IvyReader / Stack Overflow). */
 export type YoutubeContentKind =
-    | "video"
-    | "short"
-    | "live"
-    | "post"
-    | "podcast";
+    | 'video'
+    | 'short'
+    | 'live'
+    | 'post'
+    | 'podcast';
 
 export const DEFAULT_YOUTUBE_TYPES: YoutubeContentKind[] = [
-    "video",
-    "short",
-    "live",
-    "post",
+    'video',
+    'short',
+    'live',
+    'post',
 ];
 
 export function parseYoutubeTypesParam(
@@ -33,14 +33,14 @@ export function parseYoutubeTypesParam(
         return new Set(DEFAULT_YOUTUBE_TYPES);
     }
     const allowed = new Set<YoutubeContentKind>([
-        "video",
-        "short",
-        "live",
-        "post",
-        "podcast",
+        'video',
+        'short',
+        'live',
+        'post',
+        'podcast',
     ]);
     const picked = raw
-        .split(",")
+        .split(',')
         .map((s) => s.trim().toLowerCase())
         .filter((s): s is YoutubeContentKind =>
             allowed.has(s as YoutubeContentKind),
@@ -50,7 +50,7 @@ export function parseYoutubeTypesParam(
 
 export function channelPlaylistId(
     channelId: string,
-    prefix: "UULF" | "UUSH" | "UULV",
+    prefix: 'UULF' | 'UUSH' | 'UULV',
 ): string {
     return `${prefix}${channelId.slice(2)}`;
 }
@@ -63,59 +63,59 @@ function isoOrUndefined(date: Date | undefined): string | undefined {
 }
 
 interface YtAtomEntry {
-    "yt:videoId": string;
+    'yt:videoId': string;
     title: string;
     link:
         | string
         | {
               $?: { href?: string };
-              "@_href"?: string;
+              '@_href'?: string;
           };
     published?: string;
     updated?: string;
     author?: Array<{ name?: string }> | { name?: string };
-    "media:group"?: {
-        "media:thumbnail"?:
-            | Array<{ $?: { url?: string }; "@_url"?: string }>
-            | { $?: { url?: string }; "@_url"?: string };
-        "media:description"?: string | { "#text"?: string };
+    'media:group'?: {
+        'media:thumbnail'?:
+            | Array<{ $?: { url?: string }; '@_url'?: string }>
+            | { $?: { url?: string }; '@_url'?: string };
+        'media:description'?: string | { '#text'?: string };
     };
 }
 
 interface YtAtomFeed {
     feed?: {
         title?: string;
-        "yt:channelId"?: string;
+        'yt:channelId'?: string;
         entry?: YtAtomEntry | YtAtomEntry[];
     };
 }
 
 function entryLinkHref(entry: YtAtomEntry): string {
     const link = entry.link;
-    if (typeof link === "string") {
+    if (typeof link === 'string') {
         return link;
     }
-    return link?.$?.href ?? link?.["@_href"] ?? "";
+    return link?.$?.href ?? link?.['@_href'] ?? '';
 }
 
-function thumbnailUrl(group: YtAtomEntry["media:group"]): string {
-    const thumb = group?.["media:thumbnail"];
+function thumbnailUrl(group: YtAtomEntry['media:group']): string {
+    const thumb = group?.['media:thumbnail'];
     if (!thumb) {
-        return "";
+        return '';
     }
     const node = Array.isArray(thumb) ? thumb[0] : thumb;
-    return node?.$?.url ?? node?.["@_url"] ?? "";
+    return node?.$?.url ?? node?.['@_url'] ?? '';
 }
 
-function descriptionText(group: YtAtomEntry["media:group"]): string {
-    const raw = group?.["media:description"];
-    if (typeof raw === "string") {
+function descriptionText(group: YtAtomEntry['media:group']): string {
+    const raw = group?.['media:description'];
+    if (typeof raw === 'string') {
         return raw;
     }
-    return raw?.["#text"] ?? "";
+    return raw?.['#text'] ?? '';
 }
 
-function normalizeEntries(feed: YtAtomFeed["feed"]): YtAtomEntry[] {
+function normalizeEntries(feed: YtAtomFeed['feed']): YtAtomEntry[] {
     const raw = feed?.entry;
     if (!raw) {
         return [];
@@ -157,7 +157,7 @@ export async function fetchChannelAvatarUrl(
 
     try {
         const payload = await cache.tryGet(
-            buildCacheKey("youtube", "avatar", channelId),
+            buildCacheKey('youtube', 'avatar', channelId),
             () =>
                 ofetch<{
                     items?: Array<{
@@ -168,9 +168,9 @@ export async function fetchChannelAvatarUrl(
                             };
                         };
                     }>;
-                }>("https://www.googleapis.com/youtube/v3/channels", {
+                }>('https://www.googleapis.com/youtube/v3/channels', {
                     query: {
-                        part: "snippet",
+                        part: 'snippet',
                         id: channelId,
                         key: apiKey,
                     },
@@ -184,29 +184,29 @@ export async function fetchChannelAvatarUrl(
     }
 }
 
-function specTypeForKind(kind: YoutubeContentKind): SpecExtraYoutube["type"] {
+function specTypeForKind(kind: YoutubeContentKind): SpecExtraYoutube['type'] {
     switch (kind) {
-        case "short":
-            return "youtube/short";
-        case "live":
-            return "youtube/live";
-        case "post":
-            return "youtube/post";
-        case "podcast":
-            return "youtube/podcast";
+        case 'short':
+            return 'youtube/short';
+        case 'live':
+            return 'youtube/live';
+        case 'post':
+            return 'youtube/post';
+        case 'podcast':
+            return 'youtube/podcast';
         default:
-            return "youtube/video";
+            return 'youtube/video';
     }
 }
 
 function watchLink(videoId: string, kind: YoutubeContentKind): string {
-    if (kind === "short" && videoId) {
+    if (kind === 'short' && videoId) {
         return `https://www.youtube.com/shorts/${videoId}`;
     }
     if (videoId) {
         return `https://www.youtube.com/watch?v=${videoId}`;
     }
-    return "";
+    return '';
 }
 
 export async function fetchAtomFeedEntries(
@@ -218,8 +218,8 @@ export async function fetchAtomFeedEntries(
         : { channel_id: channelId };
 
     const cacheKey = opts.playlistId
-        ? buildCacheKey("youtube", "pl", opts.playlistId)
-        : buildCacheKey("youtube", channelId);
+        ? buildCacheKey('youtube', 'pl', opts.playlistId)
+        : buildCacheKey('youtube', channelId);
 
     const feedXml = await cache.tryGet(
         cacheKey,
@@ -231,10 +231,10 @@ export async function fetchAtomFeedEntries(
         30 * 60,
     );
 
-    const { XMLParser } = await import("fast-xml-parser");
+    const { XMLParser } = await import('fast-xml-parser');
     const parser = new XMLParser({
         ignoreAttributes: false,
-        attributeNamePrefix: "$",
+        attributeNamePrefix: '$',
     });
     const parsed = parser.parse(feedXml as string) as YtAtomFeed;
     const feed = parsed.feed;
@@ -256,28 +256,28 @@ export function mapAtomEntryToItem(
     liveNowVideoIds: ReadonlySet<string>,
     channelAvatarUrl?: string | null,
 ): DataItem {
-    const videoId = String(entry["yt:videoId"] ?? "");
+    const videoId = String(entry['yt:videoId'] ?? '');
     const linkFromFeed = entryLinkHref(entry);
     const link =
         linkFromFeed ||
         watchLink(videoId, kind) ||
-        (videoId ? `https://www.youtube.com/watch?v=${videoId}` : "");
-    const feedThumb = entry["media:group"]
-        ? thumbnailUrl(entry["media:group"])
-        : "";
+        (videoId ? `https://www.youtube.com/watch?v=${videoId}` : '');
+    const feedThumb = entry['media:group']
+        ? thumbnailUrl(entry['media:group'])
+        : '';
     const { thumbnail, thumbnailFallback } = youtubeThumbnails(
         videoId,
         feedThumb,
     );
-    const descText = entry["media:group"]
-        ? descriptionText(entry["media:group"])
-        : "";
-    const pubDate = parseDate(entry.published ?? entry.updated ?? "");
-    const isLiveNow = kind === "live" && liveNowVideoIds.has(videoId);
+    const descText = entry['media:group']
+        ? descriptionText(entry['media:group'])
+        : '';
+    const pubDate = parseDate(entry.published ?? entry.updated ?? '');
+    const isLiveNow = kind === 'live' && liveNowVideoIds.has(videoId);
 
     const extra: SpecExtraYoutube = {
         type: specTypeForKind(kind),
-        platform: "youtube",
+        platform: 'youtube',
         sourceUrl: link,
         externalId: videoId,
         seriesExternalId: channelId,
@@ -300,11 +300,11 @@ export function mapAtomEntryToItem(
         author: channelTitle,
         image: thumbnail,
         description: [
-            thumbnail ? `<img src="${thumbnail}" />` : "",
-            descText ? `<p>${descText}</p>` : "",
+            thumbnail ? `<img src="${thumbnail}" />` : '',
+            descText ? `<p>${descText}</p>` : '',
         ]
             .filter(Boolean)
-            .join("\n"),
+            .join('\n'),
         _extra: extra,
     };
 }
@@ -320,7 +320,7 @@ export async function fetchCommunityPostItems(
     let response: string;
     try {
         response = await cache.tryGet(
-            buildCacheKey("youtube", "posts", channelId),
+            buildCacheKey('youtube', 'posts', channelId),
             () =>
                 ofetch<string>(url, {
                     parseResponse: (txt) => txt,
@@ -332,7 +332,7 @@ export async function fetchCommunityPostItems(
     }
 
     const $ = load(response as string);
-    const match = $("script")
+    const match = $('script')
         .text()
         .match(/ytInitialData\s*=\s*(\{.*?\});/s);
     if (!match?.[1]) {
@@ -381,8 +381,8 @@ export async function fetchCommunityPostItems(
     const communityTab = tabs.find((tab) => {
         const tabUrl =
             tab.tabRenderer?.endpoint?.commandMetadata?.webCommandMetadata
-                ?.url ?? "";
-        return tabUrl.endsWith("/posts") || tabUrl.endsWith("/community");
+                ?.url ?? '';
+        return tabUrl.endsWith('/posts') || tabUrl.endsWith('/community');
     });
 
     const list =
@@ -425,13 +425,13 @@ export async function fetchCommunityPostItems(
                 return null;
             }
 
-            const postId = String(post.postId ?? "");
+            const postId = String(post.postId ?? '');
             const runs = (
                 post.contentText as
                     | undefined
                     | { runs?: Array<{ text?: string }> }
             )?.runs;
-            const title = runs?.[0]?.text?.trim() || "Community post";
+            const title = runs?.[0]?.text?.trim() || 'Community post';
             const authorRuns = (
                 post.authorText as
                     | undefined
@@ -444,7 +444,7 @@ export async function fetchCommunityPostItems(
                     | { runs?: Array<{ text?: string }> }
             )?.runs?.[0]?.text;
             const pubDate = publishedRaw
-                ? parseRelativeDate(publishedRaw.split("(", 1)[0])
+                ? parseRelativeDate(publishedRaw.split('(', 1)[0])
                 : undefined;
 
             const mediaImages = (
@@ -482,13 +482,13 @@ export async function fetchCommunityPostItems(
             ];
 
             const thumb = mediaImages.find(
-                (u): u is string => typeof u === "string" && u.length > 0,
+                (u): u is string => typeof u === 'string' && u.length > 0,
             );
             const link = `https://www.youtube.com/post/${postId}`;
 
             const extra: SpecExtraYoutube = {
-                type: "youtube/post",
-                platform: "youtube",
+                type: 'youtube/post',
+                platform: 'youtube',
                 sourceUrl: link,
                 externalId: postId,
                 seriesExternalId: channelId,
@@ -496,13 +496,13 @@ export async function fetchCommunityPostItems(
                 channelId,
                 channelTitle,
                 isMembershipOnly: false,
-                contentKind: "post",
-                thumbnail: thumb ?? "",
-                thumbnailFallback: thumb ?? "",
+                contentKind: 'post',
+                thumbnail: thumb ?? '',
+                thumbnailFallback: thumb ?? '',
                 isLiveNow: false,
                 bodyText: runs
-                    ?.map((r) => r.text ?? "")
-                    .join("")
+                    ?.map((r) => r.text ?? '')
+                    .join('')
                     .trim(),
             };
 
@@ -528,12 +528,12 @@ export async function fetchLiveNowVideoIds(
         return new Set();
     }
     try {
-        const { default: utils } = await import("@/routes/youtube/utils");
+        const { default: utils } = await import('@/routes/youtube/utils');
         const res = await utils.getLive(channelId, cache);
         const ids = (res.data.items ?? [])
             .map((item: { id?: { videoId?: string } }) => item.id?.videoId)
             .filter(
-                (id): id is string => typeof id === "string" && id.length > 0,
+                (id): id is string => typeof id === 'string' && id.length > 0,
             );
         return new Set(ids);
     } catch {
@@ -552,7 +552,7 @@ export async function discoverPodcastPlaylistIds(
     let html: string;
     try {
         html = await cache.tryGet(
-            buildCacheKey("youtube", "podcast-discover", channelId),
+            buildCacheKey('youtube', 'podcast-discover', channelId),
             () =>
                 ofetch<string>(url, {
                     parseResponse: (txt) => txt,
@@ -599,7 +599,7 @@ export async function fetchPodcastPlaylistItems(
             entry,
             channelId,
             channelTitle,
-            "podcast",
+            'podcast',
             liveNowVideoIds,
             channelAvatarUrl,
         ),
@@ -609,15 +609,15 @@ export async function fetchPodcastPlaylistItems(
 export function mergeYoutubeItems(items: DataItem[]): DataItem[] {
     const byGuid = new Map<string, DataItem>();
     for (const item of items) {
-        const existing = byGuid.get(item.guid ?? "");
+        const existing = byGuid.get(item.guid ?? '');
         if (!existing) {
-            byGuid.set(item.guid ?? "", item);
+            byGuid.set(item.guid ?? '', item);
             continue;
         }
         const existingDate = existing.pubDate?.getTime() ?? 0;
         const nextDate = item.pubDate?.getTime() ?? 0;
         if (nextDate >= existingDate) {
-            byGuid.set(item.guid ?? "", item);
+            byGuid.set(item.guid ?? '', item);
         }
     }
     return byGuid

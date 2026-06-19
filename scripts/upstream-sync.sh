@@ -226,7 +226,8 @@ cmd_verify() {
     log "verify: build:routes"
     pnpm build:routes
 
-    log "verify: lint (SPEC paths)"
+    log "verify: format + lint (SPEC paths)"
+    pnpm exec oxlint --type-aware --fix lib/routes/spec tests/routes/spec
     pnpm exec oxlint --type-aware lib/routes/spec tests/routes/spec
 
     log "verify: vitest (SPEC contract tests)"
