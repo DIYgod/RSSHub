@@ -42,8 +42,6 @@ const forumIdMaps = {
     hrxazp: '98', //  华人性爱自拍
 };
 
-const imageProxyList = ['https://cdn.cdnjson.com/pic.html?url=', 'https://image.baidu.com/search/down?url='];
-
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
     example: '/sehuatang/103',
@@ -99,16 +97,6 @@ export const route: Route = {
 
   **query 参数说明**
 - 'domain' ：可选，指定论坛域名，默认为 'www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' 选项。
-- 'imageProxy' ：可选，指定图片代理前缀，默认为 '-1'。可以设置为具体的 URL 前缀，或者使用内置的图片代理索引（0 或 1）。设置为 '-1' 则不使用图片代理。
-
-    内置图片代理列表：
-
-    0 = https://cdn.cdnjson.com/pic.html?url=
-    
-    1 = https://image.baidu.com/search/down?url=
-
-    也可以直接使用自建的代理 URL 前缀。
-
   `,
 };
 
@@ -134,7 +122,6 @@ async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
-    const imageProxy = (ctx.req.query('imageProxy') ?? '-1').toString();
     const host = `https://${domain}/`;
     const { subforumName = '103', type } = ctx.req.param();
     const subforumId = Object.hasOwn(forumIdMaps, subforumName) ? forumIdMaps[subforumName] : subforumName;
@@ -183,15 +170,6 @@ async function handler(ctx) {
                         $(image).replaceWith('');
                     } else {
                         let imageURL = file;
-                        try {
-                            new URL(imageProxy);
-                            imageURL = `${imageProxy}${encodeURIComponent(file)}`;
-                        } catch {
-                            const proxyIndex = Number.parseInt(imageProxy, 10);
-                            if (proxyIndex !== -1 && imageProxyList[proxyIndex]) {
-                                imageURL = `${imageProxyList[proxyIndex]}${encodeURIComponent(file)}`;
-                            }
-                        }
                         $(image).replaceWith($(`<img src="${imageURL}">`));
                     }
                 }
