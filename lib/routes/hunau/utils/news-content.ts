@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-async function newsContent(link, department = '') {
+export const newsContent = async (link, department = '') => {
     try {
         // 异步请求文章
         const { data: response } = await got(link);
@@ -39,6 +39,4 @@ async function newsContent(link, department = '') {
         // console.error(`There was an error fetching the link ${link}: ${error.message}`);
         return { description: '', pubDate: null };
     }
-}
-
-export default newsContent;
+};

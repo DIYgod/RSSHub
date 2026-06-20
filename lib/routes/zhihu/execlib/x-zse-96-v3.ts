@@ -97,7 +97,7 @@ const preProcess = (md5Str) => {
     return __g_r.concat(__g_x);
 };
 
-const encrypt = (md5Str) => {
+export const encrypt = (md5Str) => {
     const processed = preProcess(md5Str);
 
     let current = 0;
@@ -122,5 +122,3 @@ const encrypt = (md5Str) => {
     }
     return resultStr;
 };
-
-export default encrypt;

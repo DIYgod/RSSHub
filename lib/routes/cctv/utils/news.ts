@@ -6,7 +6,7 @@ import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const getNews = async (category) => {
+export const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
 
     const response = await got({
@@ -103,4 +103,3 @@ const getNews = async (category) => {
         item: resultItem,
     };
 };
-export default getNews;

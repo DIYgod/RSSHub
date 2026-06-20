@@ -1,4 +1,4 @@
-const indexPage = (page) => {
+export const indexPage = (page) => {
     const fileName = 'index';
     const fileType = 'html';
 
@@ -6,5 +6,3 @@ const indexPage = (page) => {
 
     return `${fileName}${filePage}.${fileType}`;
 };
-
-export default indexPage;

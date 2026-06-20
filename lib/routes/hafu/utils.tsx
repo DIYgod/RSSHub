@@ -15,7 +15,7 @@ const typeMap = {
 // Number of get articles
 let limit = 10;
 
-const parseList = async (ctx, type) => {
+export const parseList = async (ctx, type) => {
     const link = typeMap[type].url;
     const title = typeMap[type].title;
 
@@ -31,7 +31,6 @@ const parseList = async (ctx, type) => {
         resultList,
     };
 };
-export default parseList;
 
 async function tryGetFullText(href, link, type) {
     let articleData = '';

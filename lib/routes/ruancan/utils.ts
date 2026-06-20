@@ -4,7 +4,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const fetchFeed = async (ctx, currentUrl) => {
+export const fetchFeed = async (ctx, currentUrl) => {
     const rootUrl = 'https://www.ruancan.com';
     currentUrl = `${rootUrl}${currentUrl}`;
 
@@ -66,4 +66,3 @@ const fetchFeed = async (ctx, currentUrl) => {
         item: items,
     };
 };
-export default fetchFeed;

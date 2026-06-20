@@ -4,7 +4,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const utils = async (ctx, currentUrl) => {
+export const utils = async (ctx, currentUrl) => {
     const rootUrl = 'https://www.sobooks.net';
     currentUrl = `${rootUrl}/${currentUrl}`;
     const response = await got({
@@ -50,4 +50,3 @@ const utils = async (ctx, currentUrl) => {
         item: items,
     };
 };
-export default utils;

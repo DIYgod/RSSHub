@@ -5,8 +5,8 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const jwc = (link) =>
-    cache.tryGet(link, async () => {
+export const jwc = (link) => {
+    return cache.tryGet(link, async () => {
         let content, exactDate;
         try {
             const result = await got(link);
@@ -24,4 +24,4 @@ const jwc = (link) =>
             return { description: content, exactDate };
         }
     });
-export default jwc;
+};
