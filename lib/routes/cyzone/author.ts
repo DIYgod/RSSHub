@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { apiRootUrl, getInfo, processItems, rootUrl } from './util';
 
@@ -33,12 +32,12 @@ async function handler(ctx) {
     const apiUrl = new URL('v2/author/author/detail', apiRootUrl).href;
     const currentUrl = new URL(`author/${id}`, rootUrl).href;
 
-    const items = await processItems(apiUrl, limit, cache.tryGet, {
+    const items = await processItems(apiUrl, limit, {
         author_id: id,
     });
 
     return {
         item: items,
-        ...(await getInfo(currentUrl, cache.tryGet)),
+        ...(await getInfo(currentUrl)),
     };
 }

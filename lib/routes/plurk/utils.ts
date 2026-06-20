@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -25,11 +26,10 @@ const fetchFriends = async (userIds) => {
  * @param {string} plurkGuid plurk guid, should start with 'plurk:'
  * @param {object} item plurk object
  * @param {string} author author name, can be `null`
- * @param {function} tryGet cache get function
  * @returns {object} item object
  */
-const getPlurk = (plurkGuid, item, author, tryGet) =>
-    tryGet(plurkGuid, () => {
+const getPlurk = (plurkGuid, item, author) =>
+    cache.tryGet(plurkGuid, () => {
         const $ = load(item.content || item.rendered, null, false);
         $('img').each((_, e) => {
             e = $(e);

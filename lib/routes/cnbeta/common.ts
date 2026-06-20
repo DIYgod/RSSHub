@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -39,6 +38,6 @@ export async function handler(ctx) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: await ProcessItems(items, ctx.req.query('limit'), cache.tryGet),
+        item: await ProcessItems(items, ctx.req.query('limit')),
     };
 }

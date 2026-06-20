@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -35,7 +34,7 @@ async function handler(ctx) {
 
     const channel = list[1] ? list[1].channel : '';
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `南方都市报客户端 - ${channel}`,

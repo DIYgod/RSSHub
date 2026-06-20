@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -9,15 +10,14 @@ const rootUrl = 'https://nzmz.xyz';
 
 /**
  * Retrieve all movies and TV shows under a specified category on the homepage and obtain their detail links.
- * @param {function} tryGet     - cache.tryGet
  * @param {string} homeUrl      - Homepage URL
  * @param {string} id           - Category id
  * @param {string} modSelector  - Selector for mods
  * @param {string} itemSelector - Selector for items
  * @returns {Array} An array containing the links in the map.
  */
-const getItems = async (tryGet, homeUrl, id, modSelector, itemSelector) => {
-    const response = await tryGet(homeUrl, async () => {
+const getItems = async (homeUrl, id, modSelector, itemSelector) => {
+    const response = await cache.tryGet(homeUrl, async () => {
         const { data: response } = await got(homeUrl);
 
         return response;
@@ -40,12 +40,11 @@ const getItems = async (tryGet, homeUrl, id, modSelector, itemSelector) => {
 
 /**
  * Obtain the information corresponding to a given movie or TV show item based on the provided URL.
- * @param {function} tryGet - cache.tryGet
  * @param {string} itemUrl  - Item URL
  * @returns {Object} An object containing information of the item.
  */
-const getItemInfo = (tryGet, itemUrl) =>
-    tryGet(`newzmz#${itemUrl.match(/details-(.*?)\.html/)[1]}`, async () => {
+const getItemInfo = (itemUrl) =>
+    cache.tryGet(`newzmz#${itemUrl.match(/details-(.*?)\.html/)[1]}`, async () => {
         const { data: detailResponse } = await got(itemUrl);
 
         const content = load(detailResponse);

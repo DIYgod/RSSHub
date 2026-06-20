@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -31,8 +32,8 @@ const parseRollNewsList = (data) =>
         updated: parseDate(item.mtime, 'X'),
     }));
 
-const parseArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const detailResponse = await got(item.link);
         const $ = load(detailResponse.data);
         $('#left_hzh_ad, .appendQr_wrap, .app-kaihu-qr, .tech-quotation').remove();

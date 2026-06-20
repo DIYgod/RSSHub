@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderPost } from './templates/post';
@@ -32,10 +31,10 @@ async function handler(ctx) {
     const handle = ctx.req.param('handle');
     const space = ctx.req.param('space');
 
-    const DID = await resolveHandle(handle, cache.tryGet);
+    const DID = await resolveHandle(handle);
     const uri = `at://${DID}/app.bsky.feed.generator/${space}`;
-    const profile = await getFeedGenerator(uri, cache.tryGet);
-    const feeds = await getFeed(uri, cache.tryGet);
+    const profile = await getFeedGenerator(uri);
+    const feeds = await getFeed(uri);
 
     const items = feeds.feed.map(({ post }) => ({
         title: post.record.text.split('\n', 1)[0],

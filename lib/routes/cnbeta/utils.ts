@@ -1,15 +1,16 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.cnbeta.com.tw';
 
-const ProcessItems = (items, limit, tryGet) =>
+const ProcessItems = (items, limit) =>
     Promise.all(
         items.slice(0, limit ? Number.parseInt(limit) : 60).map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);

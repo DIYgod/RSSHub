@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const parseItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseItem = (item) =>
+    cache.tryGet(item.link, async () => {
         const { data: res } = await got(item.link);
         const $ = load(res);
         if (item.link.startsWith('https://www.gelonghui.com/live/')) {

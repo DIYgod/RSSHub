@@ -3,6 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -44,8 +45,8 @@ const getBParam = (lang) => ({
     i: 'official',
 });
 
-const getBuildId = (tryGet) =>
-    tryGet(
+const getBuildId = () =>
+    cache.tryGet(
         'followin:buildId',
         async () => {
             const { data: pageResponse } = await got(baseUrl);
@@ -57,8 +58,8 @@ const getBuildId = (tryGet) =>
         false
     );
 
-const getGToken = (tryGet) =>
-    tryGet('followin:gtoken', async () => {
+const getGToken = () =>
+    cache.tryGet('followin:gtoken', async () => {
         const { data } = await got.post(`${apiUrl}/user/gtoken`);
         return data.data.gtoken;
     });
@@ -74,8 +75,8 @@ const parseList = (list, lang, buildId) =>
         nextData: `${baseUrl}/_next/data/${buildId}/${lang}/feed/${item.id}.json`,
     }));
 
-const parseItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseItem = (item) =>
+    cache.tryGet(item.link, async () => {
         const { data } = await got(item.nextData);
 
         const { queries } = data.pageProps.dehydratedState;

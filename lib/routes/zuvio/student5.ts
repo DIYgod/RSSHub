@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { board = '' } = ctx.req.param();
-    const title = board ? (await getBoards(cache.tryGet)).find((i) => i.boardId === board).title : '全部';
+    const title = board ? (await getBoards()).find((i) => i.boardId === board).title : '全部';
 
     const { data } = await got(`${apiUrl}/article`, {
         searchParams: {
