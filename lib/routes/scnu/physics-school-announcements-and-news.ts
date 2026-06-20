@@ -19,7 +19,7 @@ const getAritlces = async (category, url, cache) => {
             return {
                 title: a.text(),
                 link,
-                pubDate: timezone(parseDate(item.find('span.time').text()), +8),
+                pubDate: timezone(parseDate(item.find('span.time').text()), 8),
                 category,
             };
         })

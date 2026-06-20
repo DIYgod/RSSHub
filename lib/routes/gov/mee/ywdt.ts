@@ -79,7 +79,7 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 try {
-                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')), +8);
+                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')), 8);
                     // 视频新闻规则不一样
                     if (cate === 'spxw') {
                         item.title = content('meta[name=ArticleTitle]').attr('content');

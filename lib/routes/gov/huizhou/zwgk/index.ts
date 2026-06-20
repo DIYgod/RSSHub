@@ -55,7 +55,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('a').text().trim(),
             link: $(item).find('a').attr('href'),
-            pubDate: timezone(parseDate($(item).find('li.li_art_date').text().trim()), +8),
+            pubDate: timezone(parseDate($(item).find('li.li_art_date').text().trim()), 8),
         }));
 
     const items = await Promise.all(
@@ -77,7 +77,7 @@ async function handler(ctx) {
                                 .text()
                                 .match(/时间：(.*)/)[1]
                         ),
-                        +8
+                        8
                     );
                 } catch {
                     item.description = '';

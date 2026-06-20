@@ -39,7 +39,7 @@ export const handler = async (ctx) => {
                             .text()
                             .match(/'(.*?)'/)
                     ),
-                    +8
+                    8
                 ),
                 link: item.find('a').first().prop('href'),
                 author: item.find('div.editor').contents().first().text(),
@@ -75,7 +75,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('span#pubtime_baidu').text()), +8);
+                item.pubDate = timezone(parseDate($$('span#pubtime_baidu').text()), 8);
                 item.category = $$('div.cv a')
                     .toArray()
                     .map((c) => $$(c).text())

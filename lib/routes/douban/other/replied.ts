@@ -69,7 +69,8 @@ async function handler(ctx) {
                             pubDate,
                             author;
 
-                        for (const c of comments) {
+                        while (comments.length > 0) {
+                            const c = comments.shift();
                             if (c.author.uid === ctx.req.param('uid') && new Date(c.create_time) > new Date(latest)) {
                                 latest = new Date(c.create_time + ' GMT+8');
                                 pubDate = latest.toUTCString();

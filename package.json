@@ -177,7 +177,7 @@
         "eslint-plugin-n": "18.1.0",
         "eslint-plugin-regexp": "3.1.0",
         "eslint-plugin-simple-import-sort": "13.0.0",
-        "eslint-plugin-unicorn": "66.0.0",
+        "eslint-plugin-unicorn": "68.0.0",
         "eslint-plugin-yml": "3.4.0",
         "fast-string-width": "3.0.2",
         "fs-extra": "11.3.5",
@@ -224,7 +224,7 @@
     "engines": {
         "node": "^22.20.0 || ^24"
     },
-    "packageManager": "pnpm@10.33.4+sha512.1c67b3b359b2d408119ba1ed289f34b8fc3c6873412bec6fd264fbdc82489e510fcbecb9ce9d22dae7f3b76269d8441046014bdca53b9979cd7a561ad631b800",
+    "packageManager": "pnpm@10.34.4+sha512.8768be55200ae3f2226b6527fcca2687e14bc4e5f12d7721a0f25da3df47915177058648db4177baf348120fa0ba2752d8d8d93f6beaf1fe64ae18da8de961af",
     "pnpm": {
         "onlyBuiltDependencies": [
             "bufferutil",

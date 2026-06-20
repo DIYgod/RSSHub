@@ -147,20 +147,24 @@ export default eslintCompatPlugin({
 
                         // 查找 features 属性
                         for (const prop of routeObject.properties) {
-                            if (prop.type === 'Property' && prop.key && prop.key.name === 'features') {
-                                featuresProperty = prop;
-
-                                // 在 features 中查找 nsfw 属性
-                                if (prop.value && prop.value.type === 'ObjectExpression') {
-                                    for (const featureProp of prop.value.properties) {
-                                        if (featureProp.type === 'Property' && featureProp.key && featureProp.key.name === 'nsfw') {
-                                            nsfwProperty = featureProp;
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
+                            if (!(prop.type === 'Property' && prop.key && prop.key.name === 'features')) {
+                                continue;
                             }
+
+                            featuresProperty = prop;
+
+                            // 在 features 中查找 nsfw 属性
+                            if (prop.value && prop.value.type === 'ObjectExpression') {
+                                for (const featureProp of prop.value.properties) {
+                                    if (!(featureProp.type === 'Property' && featureProp.key && featureProp.key.name === 'nsfw')) {
+                                        continue;
+                                    }
+
+                                    nsfwProperty = featureProp;
+                                    break;
+                                }
+                            }
+                            break;
                         }
 
                         // 检查是否需要添加或修复 nsfw 标志

@@ -47,7 +47,7 @@ export async function handler(ctx) {
                 const dateMatch = timeText.match(/Updated\s*:([\w\s,:]+)/);
                 let time = dateMatch ? dateMatch[1].trim() : '';
                 time = time.replace(/\s+IST$/, '');
-                const pubDate = timezone(parseDate(time), +5.5);
+                const pubDate = timezone(parseDate(time), 5.5);
                 // Get author information
                 const authorMeta = $('meta[name="author"]').attr('content');
                 const author = authorMeta || 'DNA Web Team';

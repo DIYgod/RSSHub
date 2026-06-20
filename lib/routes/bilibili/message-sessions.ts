@@ -50,7 +50,7 @@ interface SessionItem {
     ack_ts: number;
     session_ts: number;
     unread_count: number;
-    last_msg: null | {
+    last_msg: {
         sender_uid: number;
         receiver_type: number;
         receiver_id: number;
@@ -63,7 +63,7 @@ interface SessionItem {
         msg_status: number;
         notify_code: string;
         msg_source: number;
-    };
+    } | null;
     group_type: number;
     can_fold: number;
     status: number;

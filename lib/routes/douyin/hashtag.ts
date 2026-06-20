@@ -88,13 +88,13 @@ async function handler(ctx) {
             videoList = videoList.map((item) => proxyVideo(item, relay));
         }
         let duration = post.video && post.video.duration;
-        duration = duration && duration / 1000;
+        duration &&= duration / 1000;
         let img;
         // if (!embed) {
         //     img = post.video && post.video.dynamic_cover && post.video.dynamic_cover.url_list[post.video.dynamic_cover.url_list.length - 1]; // dynamic cover (webp)
         // }
-        img = img || (post.video && post.video.origin_cover && post.video.origin_cover.url_list.at(-1));
-        img = img && resolveUrl(img);
+        img ||= post.video && post.video.origin_cover && post.video.origin_cover.url_list.at(-1);
+        img &&= resolveUrl(img);
 
         // render description
         const desc = post.desc && post.desc.replaceAll('\n', '<br>');

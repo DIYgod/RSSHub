@@ -50,7 +50,7 @@ async function handler(ctx) {
             return {
                 title: item.text().trim(),
                 link: item.attr('href').startsWith('http') ? item.attr('href').replace(/^http:/, 'https:') : new URL(item.attr('href'), link).href,
-                pubDate: item.prev().length ? timezone(parseDate(item.prev().text().trim(), 'YYYY-MM-DD'), +8) : null,
+                pubDate: item.prev().length ? timezone(parseDate(item.prev().text().trim(), 'YYYY-MM-DD'), 8) : null,
             };
         });
 
@@ -64,7 +64,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 item.title = item.title.endsWith('...') ? $('.con-h h1').text().trim() : item.title;
-                item.pubDate = timezone(parseDate($('.con-h span').eq(0).text().trim(), 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate($('.con-h span').eq(0).text().trim(), 'YYYY-MM-DD HH:mm:ss'), 8);
                 item.author = $('.con-h span').eq(1).text().trim();
                 item.description = $('.content_font').html();
 

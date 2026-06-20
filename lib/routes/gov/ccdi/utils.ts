@@ -74,7 +74,7 @@ const parseArticle = async (item) => {
         const $ = load(data);
         const title = $('.daty, .source-box').text().trim();
         item.author = title.match(/来源：(.*)发布时间/s)?.[1].trim() ?? owner;
-        item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), +8);
+        item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), 8);
 
         // Change the img src from relative to absolute for a better compatibility
         $('.content, .bom-box')

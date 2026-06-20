@@ -47,7 +47,7 @@ async function handler(ctx) {
         const linkText = $(link).text();
         title = title ? `${title} - ${linkText}` : linkText;
     }
-    title = title || (category && topic ? `${category} - ${topic}` : category) || '首页';
+    title ||= (category && topic ? `${category} - ${topic}` : category) || '首页';
     let links = [
         // list page: http://rail.ally.net.cn/html/lujuzixun/
         $('.left .hynewsO h2 a').toArray(),
@@ -106,7 +106,7 @@ async function handler(ctx) {
                             let innerHtml;
                             if (child.name === 'div') {
                                 innerHtml = $child.html();
-                                innerHtml = innerHtml && innerHtml.trim();
+                                innerHtml &&= innerHtml.trim();
                                 description += !innerHtml || innerHtml === '&nbsp;' ? (description ? '<br>' : '') : innerHtml;
                             } else {
                                 // bare text node or something else

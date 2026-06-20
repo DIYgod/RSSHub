@@ -82,7 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
         (article): DataItem => ({
             title: article.title,
             link: article.url,
-            pubDate: timezone(parseDate(article.dspdate), +9),
+            pubDate: timezone(parseDate(article.dspdate), 9),
             category: article.categories.subcategory.map((cat) => cat.name),
         })
     );

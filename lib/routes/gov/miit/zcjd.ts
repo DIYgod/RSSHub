@@ -68,7 +68,7 @@ async function handler() {
                 item.author = $('.cinfo')
                     .text()
                     .match(/来源：(.*)/)[1];
-                item.pubDate = timezone(parseDate($('#con_time').text(), 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate($('#con_time').text(), 'YYYY-MM-DD HH:mm'), 8);
                 item.description = $('.ccontent').html();
 
                 return item;

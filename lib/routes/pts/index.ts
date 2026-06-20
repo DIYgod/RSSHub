@@ -52,8 +52,8 @@ async function handler(ctx) {
                 item.author = content('.reporter-container a')
                     .toArray()
                     .map((e) => ({ name: content(e).text() }));
-                item.pubDate = timezone(parseDate(content('.article-time .mr-2 time').text()), +8);
-                item.updated = timezone(parseDate(content('.article-time span:nth-child(2) time').text()), +8);
+                item.pubDate = timezone(parseDate(content('.article-time .mr-2 time').text()), 8);
+                item.updated = timezone(parseDate(content('.article-time span:nth-child(2) time').text()), 8);
                 item.category = content('.tag-list')
                     .first()
                     .find('.blue-tag')

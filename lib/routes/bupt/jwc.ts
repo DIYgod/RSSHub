@@ -116,7 +116,7 @@ async function handler(ctx: Context) {
 
                 // 提取并格式化发布时间
                 item.description = cleanedDescription;
-                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), +8);
+                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), 8);
 
                 return item;
             })

@@ -231,13 +231,11 @@ async function handler(ctx) {
                         size: limit,
                         section_id,
                         website: 'reuters',
-                        ...(useSophi
-                            ? {
-                                  fetch_type: 'sophi',
-                                  sophi_page: '*',
-                                  sophi_widget: 'topic',
-                              }
-                            : {}),
+                        ...(useSophi && {
+                            fetch_type: 'sophi',
+                            sophi_page: '*',
+                            sophi_widget: 'topic',
+                        }),
                     }),
                 },
                 headers: browserHeaders,

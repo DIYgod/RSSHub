@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
         data: { results: apiTagProcs },
     } = await ofetch(apiTagProcUrl, {
         query: {
-            ...(id ? { tag: id } : {}),
+            ...(id && { tag: id }),
             page: 1,
             pagesize: 20,
             f: filter,

@@ -30,7 +30,7 @@ export const route: Route = {
             title: item.title,
             guid: item.tid,
             link: `https://m.hupu.com/bbs/${item.tid}`,
-            pubDate: timezone(parseDate(item.publishTime), +8),
+            pubDate: timezone(parseDate(item.publishTime), 8),
         }));
 
         items = await Promise.all(items.map((item) => getEntryDetails(item)));

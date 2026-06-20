@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],
                 link: new URL(item.parent().prop('href'), rootUrl).href,
-                pubDate: timezone(parseDate(pubDate, 'YYYY/M/D H:mm:ss'), +8),
+                pubDate: timezone(parseDate(pubDate, 'YYYY/M/D H:mm:ss'), 8),
             };
         });
 

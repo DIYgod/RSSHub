@@ -60,7 +60,7 @@ async function handler() {
 
             const title = html('td[width="620"] a').attr('title');
             const link = html('td[width="620"] a').attr('href');
-            const date = timezone(parseDate(html('td[width="100"]').text()), +8);
+            const date = timezone(parseDate(html('td[width="100"]').text()), 8);
             return {
                 title,
                 description: title,

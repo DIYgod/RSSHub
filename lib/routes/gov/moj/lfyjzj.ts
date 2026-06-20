@@ -51,7 +51,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link,
-                pubDate: timezone(parseDate(pubDate), +8),
+                pubDate: timezone(parseDate(pubDate), 8),
             };
         });
 
@@ -63,7 +63,7 @@ async function handler() {
                 item.description = content('div.TRS_Editor').html();
                 item.author = content('div.sT_left span:first').text().split('：', 2)[1];
                 const pubDate = content('div.sT_left span:last').text().split('：', 2)[1];
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
                 return item;
             })
         )

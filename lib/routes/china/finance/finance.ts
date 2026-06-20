@@ -77,7 +77,7 @@ async function handler(ctx) {
                     title: $d('.article_title').text(),
                     link: item.link,
                     description: $d('#js_article_content').html(),
-                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), +8),
+                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), 8),
                     author: $d(' div.article_info > span.source').text(),
                     category: listCategory,
                 };

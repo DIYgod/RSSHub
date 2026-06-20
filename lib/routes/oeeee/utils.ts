@@ -23,7 +23,7 @@ const parseArticle = (item) =>
                     .html()
                     .replaceAll(/data:image\S*=="\s*original="/g, '') ?? '';
             if (!item.pubDate) {
-                item.pubDate = timezone(parseDate(content('.introduce').text().split()), +8);
+                item.pubDate = timezone(parseDate(content('.introduce').text().split()), 8);
             }
         }
         // oeeee news page:

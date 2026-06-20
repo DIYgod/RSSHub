@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.view span').first().text().split(/：/).pop()), +8);
+                item.pubDate = timezone(parseDate($$('div.view span').first().text().split(/：/).pop()), 8);
                 item.content = {
                     html: description,
                     text: $$('div.text').text(),

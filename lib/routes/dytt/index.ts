@@ -43,14 +43,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 doi: $el.find('meta[name="citation_doi"]').attr('content'),
                 content: {
                     html: description,
                     text: description,
                 },
-                updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : undefined,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
                 language,
             };
 

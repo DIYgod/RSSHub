@@ -134,7 +134,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             ...item,
                             title,
                             description,
-                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/, 1)[0]), +8),
+                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/, 1)[0]), 8),
                             content: {
                                 html: description,
                                 text: $$('div#Content').html() ?? '',

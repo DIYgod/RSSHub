@@ -83,7 +83,7 @@ async function handler(ctx) {
             title: item.name,
             link: `${rootUrl}/share/albumPlay?correlateId=${item.id}&columnId=${id}`,
             description: renderDescription({ enclosure_url, enclosure_type }),
-            pubDate: timezone(parseDate(item.createTime), +8),
+            pubDate: timezone(parseDate(item.createTime), 8),
             enclosure_url,
             enclosure_type,
             enclosure_length: item.fileSize,

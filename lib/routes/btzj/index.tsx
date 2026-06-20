@@ -145,7 +145,7 @@ async function handler(ctx) {
 
                 item.description = content('.post').html();
                 item.author = content('.purple, .grey').first().prev().text();
-                item.pubDate = timezone(parseDate(content('.bg2 b').first().text()), +8);
+                item.pubDate = timezone(parseDate(content('.bg2 b').first().text()), 8);
 
                 if (torrents.length > 0) {
                     item.description += renderTorrents(torrents.toArray().map((t) => content(t).parent().html()));

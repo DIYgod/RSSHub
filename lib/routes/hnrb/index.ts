@@ -111,7 +111,7 @@ async function handler(ctx) {
                     link: item,
                     title: content('.font01').text(),
                     description: content('#ozoom').html(),
-                    pubDate: timezone(parseDate(matches[1], 'YYYY-MM/DD'), +8),
+                    pubDate: timezone(parseDate(matches[1], 'YYYY-MM/DD'), 8),
                 };
             })
         )

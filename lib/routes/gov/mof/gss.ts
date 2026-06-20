@@ -28,7 +28,7 @@ const handler = async (ctx: Context): Promise<Data | null> => {
             return {
                 title: a.prop('title'),
                 link,
-                pubDate: timezone(parseDate(pubDate), +8),
+                pubDate: timezone(parseDate(pubDate), 8),
             };
         });
 

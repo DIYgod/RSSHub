@@ -20,7 +20,7 @@ async function loadContent(link) {
                 .text()
                 .match(/\d{4}(?:\/\d{2}){2}/)
         ),
-        +8
+        8
     );
 
     // 提取内容

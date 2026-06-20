@@ -48,7 +48,7 @@ async function handler(ctx) {
                 title: `${season} ${name}`,
                 link,
                 guid: `${link}#${season}`,
-                pubDate: timezone(parseDate(item.find('span.time').text()), +8),
+                pubDate: timezone(parseDate(item.find('span.time').text()), 8),
             };
         });
 

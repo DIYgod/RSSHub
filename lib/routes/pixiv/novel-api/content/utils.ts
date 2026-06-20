@@ -87,10 +87,10 @@ export async function parseNovelContent(content: string, images: Record<string, 
             .replaceAll(/(<br>){2,}/g, '</p><p>')
             // ruby 標籤（為日文漢字標註讀音）
             // ruby tags (for Japanese kanji readings)
-            .replaceAll(/\[\[rb:([^>\n\r\u2028\u2029]*)>(.*?)\]\]/g, '<ruby>$1<rt>$2</rt></ruby>')
+            .replaceAll(/\[\[rb:([^>\n\r\u{2028}\u{2029}]*)>(.*?)\]\]/gu, '<ruby>$1<rt>$2</rt></ruby>')
             // 外部連結
             // external links
-            .replaceAll(/\[\[jumpuri:([^>\n\r\u2028\u2029]*)>(.*?)\]\]/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+            .replaceAll(/\[\[jumpuri:([^>\n\r\u{2028}\u{2029}]*)>(.*?)\]\]/gu, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
             // 頁面跳轉，但由於 [newpage] 使用 hr 分隔，沒有頁數，沒必要跳轉，所以只顯示文字
             // Page jumps, but since [newpage] uses hr separators, without the page numbers, jumping isn't needed, so just display text
             .replaceAll(/\[jump:(\d+)\]/g, 'Jump to page $1')

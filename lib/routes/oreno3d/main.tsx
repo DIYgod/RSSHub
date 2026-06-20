@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import get_sec_page_data from './get-sec-page-data';
+import { sync_detail as get_sec_page_data } from './get-sec-page-data';
 
 const rootUrl = 'https://oreno3d.com';
 

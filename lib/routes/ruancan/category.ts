@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import fetchFeed from './utils';
+import { fetchFeed } from './utils';
 
 export const route: Route = {
     path: '/category/:category?',

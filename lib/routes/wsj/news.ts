@@ -50,7 +50,7 @@ async function handler(ctx) {
     let url = host;
     if (category.length > 0) {
         url = `${host}/news/${category}`;
-        subtitle = `${subtitle} - ${category}`;
+        subtitle += ` - ${category}`;
     }
     const response = await got({
         method: 'get',

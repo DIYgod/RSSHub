@@ -69,7 +69,7 @@ async function handler(ctx) {
                     const pubDate = content('meta[name="pubdate"]').attr('content') || content('meta[name="PubDate"]').attr('content');
 
                     item.description = content('#ivs_content').html();
-                    item.pubDate = timezone(parseDate(pubDate, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm']), +8);
+                    item.pubDate = timezone(parseDate(pubDate, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm']), 8);
                 } catch {
                     // no-empty
                 }

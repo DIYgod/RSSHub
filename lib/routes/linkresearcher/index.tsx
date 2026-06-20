@@ -76,12 +76,12 @@ async function handler(ctx: Context): Promise<Data> {
 
     if (subject) {
         data.filters.subject = subject;
-        title = `${title}「${subject}」`;
+        title += `「${subject}」`;
     }
 
     if (columns) {
         data.filters.columns = columns;
-        title = `${title}「${columns}」`;
+        title += `「${columns}」`;
     }
 
     const dataURL = `${baseURL}/api/${category === 'careers' ? 'articles' : category}/search`;

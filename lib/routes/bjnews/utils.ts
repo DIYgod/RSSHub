@@ -11,7 +11,7 @@ export function fetchArticle(item) {
         const $d = load(responses);
         // $d('img').each((i, e) => $(e).attr('referrerpolicy', 'no-referrer'));
 
-        item.pubDate = timezone(parseDate($d('.left-info .timer').text()), +8);
+        item.pubDate = timezone(parseDate($d('.left-info .timer').text()), 8);
         item.author = $d('.left-info .reporter').text();
         item.description = $d('#contentStr').html();
 

@@ -61,7 +61,7 @@ async function handler() {
                 description: item.find('.portal_news_content .row18').html(),
                 link: item.find('.maintitle p:nth-child(2) > a').attr('href'),
                 author: item.find('.postdetails a').text(),
-                pubDate: timezone(parseDate(dateraw.slice(3), 'YYYY-MM-DD, HH:mm'), +8),
+                pubDate: timezone(parseDate(dateraw.slice(3), 'YYYY-MM-DD, HH:mm'), 8),
             };
         }),
     };

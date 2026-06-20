@@ -43,7 +43,7 @@ function getProp(data, prop, $) {
     return replaceParams(data, result, $);
 }
 
-async function buildData(data) {
+export default async function buildData(data) {
     const response = await ofetch.raw(data.url);
     const contentType = response.headers.get('content-type') || '';
     // 若没有指定编码，则默认utf-8
@@ -76,5 +76,4 @@ async function buildData(data) {
     };
 }
 
-export default buildData;
 export { getProp, replaceParams, transElemText };

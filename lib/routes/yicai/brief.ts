@@ -42,7 +42,7 @@ async function handler(ctx) {
         title: item.indexTitle,
         link: `${rootUrl}${item.url}`,
         description: item.newcontent,
-        pubDate: timezone(parseDate(`${item.datekey} ${item.hm}`, 'YYYY.MM.DD HH:mm'), +8),
+        pubDate: timezone(parseDate(`${item.datekey} ${item.hm}`, 'YYYY.MM.DD HH:mm'), 8),
     }));
 
     return {

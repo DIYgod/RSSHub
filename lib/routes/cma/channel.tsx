@@ -110,7 +110,7 @@ async function handler(ctx) {
                           ?.split(/：/)
                           ?.pop() || author,
                   guid: `cma${data.link}#${data.releaseTime.replaceAll(/\s/g, '-')}`,
-                  pubDate: timezone(parseDate(data.releaseTime), +8),
+                  pubDate: timezone(parseDate(data.releaseTime), 8),
                   enclosure_url: new URL(data.image, rootUrl).href,
                   enclosure_type: data.image ? `image/${data.image.split(/\./).pop()}` : undefined,
               },

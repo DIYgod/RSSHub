@@ -43,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: item.find('a').attr('title'),
                 link: `${baseUrl}${item.find('a').attr('href').replace('ArticleDetail.do', 'InternalArticleDetail.do?')}`,
-                pubDate: timezone(parseDate(item.find('em').text()), +8),
+                pubDate: timezone(parseDate(item.find('em').text()), 8),
             };
         });
 

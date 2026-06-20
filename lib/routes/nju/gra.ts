@@ -57,7 +57,7 @@ async function handler() {
                 return {
                     title: item.find('a').attr('title'),
                     link: 'https://grawww.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(year + day, 'YYYYMM-DD'), +8),
+                    pubDate: timezone(parseDate(year + day, 'YYYYMM-DD'), 8),
                 };
             })
             .filter(Boolean),

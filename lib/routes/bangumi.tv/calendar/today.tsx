@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 
-import getData from './_base';
+import { getData } from './_base';
 
 export const route: Route = {
     path: '/calendar/today',

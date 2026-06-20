@@ -24,7 +24,7 @@ const handler = async (ctx: Context) => {
                 title: a.text(),
                 link: `https://www.chiphell.com/${a.attr('href')}`,
                 category: [$item.find('dd label').text()],
-                pubDate: timezone(parseDate($item.find('span.xg1').text()), +8),
+                pubDate: timezone(parseDate($item.find('span.xg1').text()), 8),
             };
         });
 

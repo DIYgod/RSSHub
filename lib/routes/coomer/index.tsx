@@ -103,7 +103,8 @@ async function handler(ctx) {
                 }
             });
             desc = (coomerFiles.length > 0 ? coomerFiles[0] : '') + $.html();
-            for (const coomerFile of coomerFiles.slice(count + 1)) {
+            const remainingCoomerFiles = coomerFiles.slice(count + 1);
+            for (const coomerFile of remainingCoomerFiles) {
                 desc += coomerFile;
             }
 

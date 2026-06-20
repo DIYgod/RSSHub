@@ -73,7 +73,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.neirong_body').html();
-                item.pubDate = timezone(parseDate(content('.neirong_head p span').eq(1).text()), +8);
+                item.pubDate = timezone(parseDate(content('.neirong_head p span').eq(1).text()), 8);
 
                 return item;
             })

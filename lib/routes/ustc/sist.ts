@@ -60,7 +60,7 @@ async function handler(ctx) {
             const title = item.find('.card-title > a').attr('title').trim();
             let link = item.find('.card-title > a').attr('href');
             link = link.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate(item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), +8);
+            const pubDate = timezone(parseDate(item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
                 title,
                 pubDate,

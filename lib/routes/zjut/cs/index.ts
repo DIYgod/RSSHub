@@ -56,7 +56,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = 'https://' + host + '/jsp/' + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.datetime').text().slice(1, -1)), +8);
+                const pubDate = timezone(parseDate(cheerioItem.find('.datetime').text().slice(1, -1)), 8);
 
                 return {
                     title,

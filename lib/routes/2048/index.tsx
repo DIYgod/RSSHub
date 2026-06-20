@@ -143,7 +143,7 @@ async function handler(ctx) {
                 });
 
                 item.author = content('.fl.black').first().text();
-                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')), +8);
+                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')), 8);
 
                 const readTpc = content('#read_tpc').first();
                 const copyLink = content('#copytext')?.first()?.text();

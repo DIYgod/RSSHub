@@ -80,7 +80,7 @@ async function handler(ctx) {
 
                         item.title = content('h2').text();
                         item.author = matches[1].trim();
-                        item.pubDate = timezone(parseDate(matches[2], 'YYYY-MM-DD h:m'), +8);
+                        item.pubDate = timezone(parseDate(matches[2], 'YYYY-MM-DD h:m'), 8);
                         item.description = content('#shownewsc').html().replaceAll('<p></p>', '');
                     } catch {
                         // no-empty

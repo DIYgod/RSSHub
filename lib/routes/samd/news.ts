@@ -56,7 +56,7 @@ export const route: Route = {
 
                     const content = $('.content');
                     item.author = content.find('.author span').text();
-                    item.pubDate = timezone(parseDate(content.find('.time').text(), '发布时间：YYYY-MM-DD HH:mm:ss'), +8);
+                    item.pubDate = timezone(parseDate(content.find('.time').text(), '发布时间：YYYY-MM-DD HH:mm:ss'), 8);
 
                     content.children('.titles').remove();
                     content.children('.auxi').remove();

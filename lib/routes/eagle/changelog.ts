@@ -38,8 +38,7 @@ async function handler(ctx) {
     }
     if (language === 'tw') {
         changelog = '更新日誌';
-    }
-    if (language === 'en') {
+    } else if (language === 'en') {
         changelog = 'Release Notes';
     }
 

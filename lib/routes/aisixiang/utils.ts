@@ -29,7 +29,7 @@ const ProcessFeed = (limit, items) =>
                     .find('u')
                     .toArray()
                     .map((c) => content(c).text());
-                item.pubDate = timezone(parseDate(content('div.info').text().split('时间：').pop()), +8);
+                item.pubDate = timezone(parseDate(content('div.info').text().split('时间：').pop()), 8);
                 item.upvotes = content('span.like-num').text() ? Number(content('span.like-num').text()) : 0;
                 item.comments = commentMatches ? Number(commentMatches[1]) : 0;
 

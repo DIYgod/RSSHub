@@ -61,7 +61,7 @@ async function handler(ctx) {
                     title,
                     link,
                     description,
-                    pubDate: timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), +8),
+                    pubDate: timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), 8),
                 };
             })
         )

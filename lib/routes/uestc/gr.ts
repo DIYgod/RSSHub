@@ -84,7 +84,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: newsTitle,
                 link: newsLink,
-                pubDate: match ? timezone(parseDate(match[1]), +8) : null,
+                pubDate: match ? timezone(parseDate(match[1]), 8) : null,
                 description: content('div.content').html(),
             };
         });

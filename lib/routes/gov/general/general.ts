@@ -185,7 +185,7 @@ const gdgov = async (info, ctx) => {
                         link,
                         title: data.art_title,
                         description: renderZcjdpt(data),
-                        pubDate: timezone(parseDate(data.pub_time), +8),
+                        pubDate: timezone(parseDate(data.pub_time), 8),
                         author: /本/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };
                 });
@@ -217,7 +217,7 @@ const gdgov = async (info, ctx) => {
                     link,
                     title,
                     description,
-                    pubDate: timezone(parseDate(pubDate, pubDate_format), +8),
+                    pubDate: timezone(parseDate(pubDate, pubDate_format), 8),
                     author: /本/.test(author) ? authorisme : author,
                 };
             });

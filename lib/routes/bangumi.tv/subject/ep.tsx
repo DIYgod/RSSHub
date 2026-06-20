@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { getLocalName } from './utils';
 
-const getEps = async (subjectID, showOriginalName) => {
+export const getEps = async (subjectID, showOriginalName) => {
     const url = `https://api.bgm.tv/subject/${subjectID}?responseGroup=large`;
     const epsInfo = await ofetch(url);
     const activeEps = epsInfo.eps.filter((e) => e.status === 'Air');
@@ -28,4 +28,3 @@ const getEps = async (subjectID, showOriginalName) => {
         })),
     };
 };
-export default getEps;

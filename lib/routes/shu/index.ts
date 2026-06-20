@@ -65,7 +65,7 @@ async function handler(ctx) {
             return {
                 title: item.find('p.bt').text().trim(),
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl,
-                pubDate: timezone(parseDate(item.find('p.sj').text().trim(), 'YYYY.MM.DD'), +8),
+                pubDate: timezone(parseDate(item.find('p.sj').text().trim(), 'YYYY.MM.DD'), 8),
                 description: item.find('p.zy').text().trim(),
             };
         });

@@ -56,8 +56,8 @@ async function handler() {
                 <text>发布时间：{item.datetime}</text>
             </>
         ),
-        pubDate: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), +8),
-        guid: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), +8) + item.cname + item.sigtypename,
+        pubDate: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), 8),
+        guid: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), 8) + item.cname + item.sigtypename,
     }));
 
     return {

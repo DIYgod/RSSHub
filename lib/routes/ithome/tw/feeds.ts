@@ -50,7 +50,7 @@ async function handler(ctx) {
                         title: $('.page-header').text(),
                         author: $('.author a').text(),
                         description: $('article').eq(0).html(),
-                        pubDate: timezone(parseDate($('.created').text(), 'YYYY-MM-DD'), +8),
+                        pubDate: timezone(parseDate($('.created').text(), 'YYYY-MM-DD'), 8),
                         category: name,
                         link,
                     };

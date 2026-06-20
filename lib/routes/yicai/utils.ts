@@ -19,7 +19,7 @@ const ProcessItems = async (apiUrl) => {
         title: item.NewsTitle,
         link: item.url.startsWith('http') ? item.url : `${rootUrl}${item.AppID === 0 ? '/vip' : ''}${item.url}`,
         author: item.NewsAuthor || item.NewsSource || item.CreaterName,
-        pubDate: timezone(parseDate(item.CreateDate), +8),
+        pubDate: timezone(parseDate(item.CreateDate), 8),
         category: [item.ChannelName],
         description: renderDescription({
             image: {
