@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'http://wlwz.changsha.gov.cn';
 
 export const route: Route = {
-    path: '/hunan/changsha/major-email',
+    path: '/changsha/major-email',
     categories: ['government'],
     example: '/gov/hunan/changsha/major-email',
     parameters: {},
@@ -26,14 +26,11 @@ export const route: Route = {
             source: ['wlwz.changsha.gov.cn/webapp/cs2020/email/*'],
         },
     ],
-    name: '长沙市人民政府',
+    name: '长沙市人民政府 市长信箱',
     maintainers: ['shansing'],
     handler,
     url: 'wlwz.changsha.gov.cn/webapp/cs2020/email/*',
-    description: `#### 市长信箱 {#hu-nan-sheng-ren-min-zheng-fu-chang-sha-shi-ren-min-zheng-fu-shi-zhang-xin-xiang}
-
-
-可能仅限中国大陆服务器访问，以实际情况为准。`,
+    description: '可能仅限中国大陆服务器访问，以实际情况为准。',
 };
 
 async function handler() {

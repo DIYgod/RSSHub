@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
     url: 'jwgl.ouc.edu.cn/cas/login.action',
     description: `::: warning
-  由于选课通知仅允许校园网访问，需自行部署。
+由于选课通知仅允许校园网访问，需自行部署。
 :::`,
 };
 

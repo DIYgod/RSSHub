@@ -19,12 +19,12 @@ for (const namespace in namespaces) {
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
                 if (domain) {
-                    if (!radar[domain]) {
+                    if (!Object.hasOwn(radar, domain)) {
                         radar[domain] = {
                             _name: namespaces[namespace].name,
                         } as RadarDomain;
                     }
-                    if (!radar[domain][subdomain]) {
+                    if (!Object.hasOwn(radar[domain], subdomain)) {
                         radar[domain][subdomain] = [];
                     }
                     radar[domain][subdomain].push({
@@ -45,10 +45,11 @@ for (const namespace in namespaces) {
 const route = createRoute({
     method: 'get',
     path: '/radar/rules',
+    description: 'All Radar rules grouped by domain',
     tags: ['Radar'],
     responses: {
         200: {
-            description: 'All Radar rules',
+            description: 'Radar rules grouped by domain',
         },
     },
 });

@@ -28,7 +28,7 @@ async function handler(ctx) {
 
     const real_url = response.request.options.url.href;
 
-    const info = JSON.parse(response.data.match(/AF_initDataCallback.*?data:(\[[\S\s]*])\s/m)[1]) || [];
+    const info = JSON.parse(response.data.match(/AF_initDataCallback.*?data:(\[[\s\S]*\])\s/)[1]) || [];
 
     const album_name = info[3][1];
     const owner_name = info[3][5][2];
@@ -47,7 +47,7 @@ async function handler(ctx) {
                 author: album_name,
                 description,
                 pubDate: time,
-                link: real_url.replace('?', `/photo/${item[0]}?`),
+                link: real_url.replace('?', () => `/photo/${item[0]}?`),
                 guid: item[0],
             };
         }),

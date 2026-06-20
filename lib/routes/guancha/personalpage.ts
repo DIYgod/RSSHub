@@ -38,7 +38,7 @@ async function handler(ctx) {
         const minuteRelativeTime = /(\d+)\s*分钟前/;
         const hourRelativeTime = /(\d+)\s*小时前/;
         const yesterdayRelativeTime = /昨天\s*(\d+):(\d+)/;
-        const shortDate = /(\d+)-(\d+)\s*(\d+):(\d+)/;
+        const shortDate = /(\d+)-(\d+)\s+(\d+):(\d+)/;
 
         // offset to ADD for transforming China time to UTC
         const chinaToUtcOffset = -8 * 3600 * 1000;

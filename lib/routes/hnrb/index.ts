@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     response = await got({
         method: 'get',
-        url: `${currentUrl}/${id ? response.data.match(/URL=(.*)"/)[1].replace(/node_\d+\.htm$/, `node_20${id}.htm`) : response.data.match(/URL=(.*)"/)[1]}`,
+        url: `${currentUrl}/${id ? response.data.match(/URL=(.*)"/)[1].replace(/node_\d+\.htm$/, () => `node_20${id}.htm`) : response.data.match(/URL=(.*)"/)[1]}`,
     });
 
     const $ = load(response.data);

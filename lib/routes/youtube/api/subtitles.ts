@@ -25,8 +25,8 @@ export type Subtitle = {
 function convertToSrt(segments: Subtitle[]): string {
     return segments
         .map((seg, index) => {
-            const start = Number.parseFloat(seg.start);
-            const end = start + Number.parseFloat(seg.dur);
+            const start = Number(seg.start);
+            const end = start + Number(seg.dur);
             return `${index + 1}
 ${toSrtTime(start)} --> ${toSrtTime(end)}
 ${seg.text}

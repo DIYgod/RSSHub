@@ -31,9 +31,9 @@ export const route: Route = {
     name: '国际事务部',
     maintainers: ['kukeya'],
     handler,
-    description: `| 通知公告 |  
-| -------- | 
-| tzgg     |      `,
+    description: `| 通知公告 |
+| -------- |
+| tzgg     |`,
 };
 
 async function handler(ctx) {

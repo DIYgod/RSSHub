@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const host = 'http://www.maonan.gov.cn';
 
 export const route: Route = {
-    path: '/maonan/:category',
+    path: '/:category',
     categories: ['government'],
     example: '/gov/maonan/zwgk',
     parameters: { category: '分类名' },
@@ -21,7 +21,44 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '茂名市茂南区人民政府',
+    radar: [
+        {
+            title: '政务公开',
+            source: ['www.maonan.gov.cn/zwgk/*path'],
+            target: '/zwgk',
+        },
+        {
+            title: '政务新闻',
+            source: ['www.maonan.gov.cn/zwxw/*path'],
+            target: '/zwxw',
+        },
+        {
+            title: '茂南动态',
+            source: ['www.maonan.gov.cn/zwxw/mndt/*path'],
+            target: '/mndt',
+        },
+        {
+            title: '重大会议',
+            source: ['www.maonan.gov.cn/zwxw/zdhy/*path'],
+            target: '/zdhy',
+        },
+        {
+            title: '公告公示',
+            source: ['www.maonan.gov.cn/zwgk/tzgg/*path'],
+            target: '/tzgg',
+        },
+        {
+            title: '招录信息',
+            source: ['www.maonan.gov.cn/zwgk/zlxx/*path'],
+            target: '/zlxx',
+        },
+        {
+            title: '政策解读',
+            source: ['www.maonan.gov.cn/zwgk/zcjd/*path'],
+            target: '/zcjd',
+        },
+    ],
+    name: '通用',
     maintainers: ['ShuiHuo'],
     handler,
     description: `| 政务公开 | 政务新闻 | 茂南动态 | 重大会议 | 公告公示 | 招录信息 | 政策解读 |
@@ -30,8 +67,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let id = '';
-    let name = '';
+    let id: string;
+    let name: string;
 
     switch (ctx.req.param('category')) {
         case 'zwgk':
@@ -62,6 +99,8 @@ async function handler(ctx) {
             id = 'zwgk/zcjd';
             name = '政策解读';
             break;
+        default:
+            throw new Error(`Unknown category: ${ctx.req.param('category')}`);
     }
 
     const res = await got(`${host}/${id}/`);
@@ -111,6 +150,8 @@ async function handler(ctx) {
                                     author: content('.author').text().trim() === '本网' ? '茂名市茂南区人民政府网' : content('.author').text().trim(),
                                 };
                         }
+                    default:
+                        throw new Error(`Unknown host: ${url.host}`);
                 }
             });
         })

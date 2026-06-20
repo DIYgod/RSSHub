@@ -71,5 +71,5 @@ export const calculate = (url, timestamp = 0, nonce = '') => {
     const query = `hkey=${key}${suffix}&_time=${timestamp}&nonce=${nonce}`;
     const urlObj = new URL(url);
     urlObj.search += urlObj.search ? '&' + query : query;
-    return urlObj.toString();
+    return urlObj.href;
 };

@@ -62,7 +62,7 @@ async function handler(ctx) {
             return {
                 title: item.find('title').text(),
                 description: item.find('description').text(),
-                link: item.find('link').text().split('?utm_source')[0],
+                link: item.find('link').text().split('?utm_source', 1)[0],
                 author: item.find('author').text(),
                 pubDate: parseDate(item.find('pubDate').text()),
                 enclosure_url: enclosure?.attr('url'),

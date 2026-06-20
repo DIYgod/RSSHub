@@ -46,7 +46,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const proma = ctx.req.param('proma');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const title = '晚点';
     const defaultTitle = '最新报道';
@@ -66,7 +66,7 @@ async function handler(ctx) {
         form: {
             page: 1,
             limit,
-            programa: Number.parseInt(proma, 10),
+            programa: Number(proma),
         },
     });
 

@@ -31,7 +31,7 @@ export const route: Route = {
     example: '/voronoiapp/popular/most-popular/MONTH',
     handler: async (ctx) => {
         const { tab = 'most-popular', time_range = 'MONTH', category = '' } = ctx.req.param();
-        if (!TabMap[tab.toLowerCase()]) {
+        if (!Object.hasOwn(TabMap, tab.toLowerCase())) {
             throw new Error(`Invalid tab: ${tab}`);
         }
         const items = await getPostItems({

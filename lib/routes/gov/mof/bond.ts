@@ -10,7 +10,7 @@ const domain = 'gks.mof.gov.cn';
 const theme = 'guozaiguanli';
 
 export const route: Route = {
-    path: '/mof/bond/:category?',
+    path: '/bond/:category?',
     categories: ['government'],
     example: '/gov/mof/bond',
     parameters: { category: '专题，见下表，默认为国债管理工作动态' },

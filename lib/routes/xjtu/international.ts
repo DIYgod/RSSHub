@@ -16,7 +16,7 @@ async function handler(ctx) {
     const subpath = ctx.req.param('subpath');
     const base = 'http://international.xjtu.edu.cn';
 
-    const url = `${base}/${subpath.split('.')[0]}.htm`;
+    const url = `${base}/${subpath.split('.', 1)[0]}.htm`;
     const resp = await got(url);
 
     const $ = load(resp.data);

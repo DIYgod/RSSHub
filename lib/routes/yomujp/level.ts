@@ -47,17 +47,19 @@ async function handler(ctx) {
             .map((el) => {
                 if (el.tagName === 'img') {
                     return `<img src=${el.attribs.src} />`;
-                } else if (el.firstChild.tagName === 'p') {
-                    return `<p>${$(el.firstChild).html()}</p>`;
-                } else {
-                    return `<p>${$(el).html()}</p>`;
                 }
+                if (el.firstChild.tagName === 'p') {
+                    return `<p>${$(el.firstChild).html()}</p>`;
+                }
+                return `<p>${$(el).html()}</p>`;
             })
             .join('');
 
         return {
             title: post.title.rendered,
-            author: $('section:last-of-type p:first-of-type').text().replace(/^.+：/, ''),
+            author: $('section:last-of-type p:first-of-type')
+                .text()
+                .replace(/^.+：/, ''),
             description,
             pubDate: parseDate(post.date_gmt),
             updated: parseDate(post.modified_gmt),

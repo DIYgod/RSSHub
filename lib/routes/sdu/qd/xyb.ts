@@ -31,9 +31,9 @@ export const route: Route = {
     name: '青岛校区学科建设与研究生教育办公室',
     maintainers: ['kukeya'],
     handler,
-    description: `| 工作通知 | 
+    description: `| 工作通知 |
 | -------- |
-| gztz     | `,
+| gztz     |`,
 };
 
 async function handler(ctx) {

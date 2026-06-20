@@ -31,8 +31,8 @@ export const route: Route = {
     description: `汉语拼音和中文不对应，猜测后三个为：教务工作、科研成果、学生工作的拼音。
 
 | 新闻动态 | 通知公告 | 综合办公 | 教务动态 | 科研动态 | 学工动态 |
-| :------: | :------: |:------: | :------: | :------: | :------: |
-|   xwdt   |   tzgg   |  zhbg   |   jxgz   |   kycg   |   xsgz   |`,
+| :------: | :------: | :------: | :------: | :------: | :------: |
+|   xwdt   |   tzgg   |   zhbg   |   jxgz   |   kycg   |   xsgz   |`,
 };
 
 async function handler(ctx) {
@@ -45,7 +45,11 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const bigTitle = $('div.column-news-box').find('h2.column-title').text().replaceAll(/[\s·]/g, '').trim();
+    const bigTitle = $('div.column-news-box')
+        .find('h2.column-title')
+        .text()
+        .replaceAll(/[\s·]/g, '')
+        .trim();
 
     const list = $('a.column-news-item')
         .toArray()

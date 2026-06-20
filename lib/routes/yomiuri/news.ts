@@ -101,7 +101,7 @@ async function handler(ctx) {
 
                 mainContent.find('[class^=ev-article], svg').remove();
                 mainContent.find('img').each((_, img) => {
-                    img.attribs.src = img.attribs.src.split('?')[0];
+                    img.attribs.src = img.attribs.src.split('?', 1)[0];
                 });
 
                 item.description = mainContent.html();

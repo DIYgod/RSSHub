@@ -20,7 +20,7 @@ const parseItems = (list) =>
     Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const edition = item.link.match(/today\.line\.me\/(\w+?)\/v[23]\/.*$/)[1];
+                const edition = item.link.match(/today\.line\.me\/(\w+)\/v[23]\/.*$/)[1];
                 let data;
                 try {
                     const response = await got(`${baseUrl}/webapi/portal/page/setting/article`, {

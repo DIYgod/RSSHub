@@ -38,8 +38,8 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    $('a[title="隐藏置顶帖"]').each(function () {
-        $(this).parents('tbody').remove();
+    $('a[title="隐藏置顶帖"]').each((_, el) => {
+        $(el).parents('tbody').remove();
     });
 
     let items = $('.s')

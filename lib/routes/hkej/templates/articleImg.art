@@ -1,3 +1,0 @@
-{{ each pics }}
-    <figure><img src="{{ $value.href }}" alt="{{ $value.title }}"><figcaption>{{ $value.title }}</figcaption></figure>
-{{ /each }}

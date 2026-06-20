@@ -70,7 +70,7 @@ async function handler(ctx): Promise<Data> {
                         return item;
                     })
             )
-        ).then((items) => items.filter((item) => item !== null))) as DataItem[],
+        )) as DataItem[],
     };
 }
 
@@ -85,6 +85,6 @@ async function getContent(nextBuildId: string, contentId: string) {
         content
             .html()
             ?.replaceAll(rubyRegex, '$1（$2）')
-            ?.replaceAll(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
+            ?.replaceAll(/[^\t\n\r\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/g, '') ?? '';
     return description;
 }

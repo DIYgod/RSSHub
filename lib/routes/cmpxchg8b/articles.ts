@@ -42,7 +42,7 @@ async function handler() {
             item = $(item);
             return {
                 title: item.find('li').text(),
-                link: new URL(item.find('li a').attr('href'), baseUrl).toString(),
+                link: new URL(item.find('li a').attr('href'), baseUrl).href,
                 author,
             };
         });
@@ -64,7 +64,7 @@ async function handler() {
 
     return {
         title,
-        link: new URL('#articles', baseUrl).toString(),
+        link: new URL('#articles', baseUrl).href,
         item: items,
     };
 }

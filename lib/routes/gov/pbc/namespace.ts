@@ -41,5 +41,6 @@ export const namespace: Namespace = {
 | 宁波市 | 厦门市 | 青岛市  | 深圳市   |
 | ------ | ------ | ------- | -------- |
 | ningbo | xiamen | qingdao | shenzhen |
+
 </details>`,
 };

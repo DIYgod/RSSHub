@@ -113,7 +113,7 @@ async function handler(ctx) {
 
                                 break;
                             case 'link_card':
-                                link = `<p><a href="${contentItem.url.split('?')[0]}" target="_blank"></a></p>`;
+                                link = `<p><a href="${contentItem.url.split('?', 1)[0]}" target="_blank"></a></p>`;
                                 break;
 
                             default:

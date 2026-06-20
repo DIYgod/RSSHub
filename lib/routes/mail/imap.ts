@@ -48,7 +48,7 @@ async function handler(ctx) {
     try {
         await client.connect();
     } catch (error) {
-        throw new Error(error.responseText);
+        throw new Error(error.responseText, { cause: error });
     }
 
     /**
@@ -103,7 +103,7 @@ async function handler(ctx) {
 
     return {
         title: `${email}'s Inbox${folder === 'INBOX' ? '' : ` - ${folder}`}`,
-        link: `https://${email.split('@')[1]}`,
+        link: `https://${email.split('@', 2)[1]}`,
         item: items,
         allowEmpty: true,
     };

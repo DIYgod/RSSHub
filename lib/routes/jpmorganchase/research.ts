@@ -69,7 +69,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
 
     return cache.tryGet(url, async () => {
         let authors: string[] = [];
-        let description: string = '';
+        let description = '';
         let category: string[] = [];
         let articleDate: string = entry.date;
         const pageContent: string = await ofetch(url);

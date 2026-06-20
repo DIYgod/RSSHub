@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -8,32 +7,35 @@ import timezone from '@/utils/timezone';
 const mapping = {
     '/project': {
         title: '项目介绍',
-        list: '/front/index/project/page',
+        list: '/front/index/project/page?size=10&current=1&simpleName=&areaId=',
         detail: '/front/index/project',
         link: '/#/communityDetail?id=',
     },
     '/announcement': {
         title: '通知公告',
-        list: '/front/announcement/page',
-        detail: '/front/announcement/',
+        list: '/front/announcement/page?current=1&size=10',
+        detail: '/front/announcement',
         link: '/#/announcementList/detail?id=',
     },
 };
 
 export const route: Route = {
-    path: '/beijing/bphc/*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/bphc/:caty',
+    name: '保障房中心 - 共有产权住房租赁服务平台',
+    example: '/gov/beijing/bphc/announcement',
+    parameters: { caty: '类别' },
+    maintainers: ['bigfei'],
     handler,
+    description: `|   通知公告   | 项目介绍 |
+| :----------: | :------: |
+| announcement |  project |`,
 };
 
 async function handler(ctx) {
     const rootUrl = 'https://gycpt.bphc.com.cn';
-    const defaultPath = 'announcement';
 
-    const pathname = getSubPath(ctx).replaceAll(/(^\/beijing\/bphc|\/$)/g, '');
-    const key = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
-    const obj = mapping[key];
+    const { caty = 'announcement' } = ctx.req.param();
+    const obj = mapping[`/${caty}`];
     const currentUrl = `${rootUrl}${obj.list}`;
 
     const listResp = await ofetch(currentUrl);

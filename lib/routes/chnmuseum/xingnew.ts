@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/zx/xingnew',
     categories: ['travel'],
-    example: '/zx/xingnew',
+    example: '/chnmuseum/zx/xingnew',
     parameters: {},
     features: {
         requireConfig: false,

@@ -36,11 +36,8 @@ const NBA_TEAM_NAMES: Record<string, string> = {
     鹈鹕: 'Pelicans',
 };
 
-export const NBA_TEAMS_ID_MAP = NBA_TEAMS.reduce(
-    (map, team) => {
-        const englishName = NBA_TEAM_NAMES[team.teamName];
-        map[englishName.toLowerCase()] = team;
-        return map;
-    },
-    {} as Record<string, (typeof NBA_TEAMS)[number] | undefined>
-);
+export const NBA_TEAMS_ID_MAP: Record<string, (typeof NBA_TEAMS)[number] | undefined> = {};
+for (const team of NBA_TEAMS) {
+    const englishName = NBA_TEAM_NAMES[team.teamName];
+    NBA_TEAMS_ID_MAP[englishName.toLowerCase()] = team;
+}

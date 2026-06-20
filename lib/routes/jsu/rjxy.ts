@@ -42,7 +42,7 @@ async function handler() {
             const link = new URL(item.find('a').attr('href'), baseUrl).href;
             return cache.tryGet(link, async () => {
                 const category = '通知公告';
-                const description = await getPageItemAndDate('#vsb_content', link, 'body > form > div > h1', 'body > form > div > div.label', (date) => date.split('  点击：')[0]);
+                const description = await getPageItemAndDate('#vsb_content', link, 'body > form > div > h1', 'body > form > div > div.label', (date) => date.split('  点击：', 1)[0]);
                 const pubDate = parseDate(description.date, 'YYYY年MM月DD日 HH:mm');
                 return {
                     title: description.title,

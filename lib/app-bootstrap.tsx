@@ -10,6 +10,7 @@ import antiHotlink from '@/middleware/anti-hotlink';
 import cache from '@/middleware/cache';
 import debug from '@/middleware/debug';
 import header from '@/middleware/header';
+import honeybadger from '@/middleware/honeybadger';
 import mLogger from '@/middleware/logger';
 import parameter from '@/middleware/parameter';
 import sentry from '@/middleware/sentry';
@@ -35,6 +36,7 @@ app.use(
 );
 app.use(mLogger);
 app.use(trace);
+app.use(honeybadger);
 app.use(sentry);
 app.use(accessControl);
 app.use(debug);

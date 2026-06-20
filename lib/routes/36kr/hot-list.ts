@@ -4,7 +4,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { ProcessItem, rootUrl } from './utils';
+import { getWafTokenId, ProcessItem, rootUrl } from './utils';
 
 const categories = {
     24: {
@@ -64,18 +64,22 @@ const getProperty = (object, key) => {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '24';
 
-    if (!categories[category]) {
+    if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError('This category does not exist. Please refer to the documentation for the correct usage.');
     }
 
     const currentUrl = category === '24' ? rootUrl : `${rootUrl}/hot-list/catalog`;
 
+    const wafTokenId = await getWafTokenId();
     const response = await got({
         method: 'get',
         url: currentUrl,
+        headers: {
+            Cookie: `_waftokenid=${wafTokenId}`,
+        },
     });
 
-    const data = getProperty(JSON.parse(response.data.match(/window.initialState=({.*})/)[1]), categories[category].key);
+    const data = getProperty(JSON.parse(response.data.match(/window.initialState=(\{.*\})/)[1]), categories[category].key);
 
     let items = data
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)

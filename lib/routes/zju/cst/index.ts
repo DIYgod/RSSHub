@@ -66,10 +66,7 @@ async function handler(ctx) {
     const link = host + map.get(type).id;
     let items = [];
     if (type === 0) {
-        const tasks = [];
-        for (const value of map.values()) {
-            tasks.push(getPage(value.id));
-        }
+        const tasks = Array.from(map.values(), (value) => getPage(value.id));
         const results = await Promise.all(tasks);
         for (const result of results) {
             items = [...items, ...result];

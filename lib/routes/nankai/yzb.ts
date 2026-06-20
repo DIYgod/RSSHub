@@ -28,8 +28,8 @@ export const route: Route = {
     name: '研究生招生网',
     maintainers: ['sddzhyc'],
     description: `| 硕士招生 | 博士招生 | 港澳台研究生最新信息 |
-| -------- | -------- | -------- |
-| 5509     | 2552    | 2562   |`,
+| -------- | -------- | -------------------- |
+| 5509     | 2552     | 2562                 |`,
     url: 'yzb.nankai.edu.cn',
     handler: async (ctx) => {
         // 从 URL 参数中获取通知分类

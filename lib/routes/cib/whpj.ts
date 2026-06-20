@@ -44,11 +44,11 @@ async function handler(ctx) {
     });
 
     const response = await got('https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do', { agent: { https: agent } });
-    const cookies = response.headers['set-cookie'].map((item) => item.split(';')[0]).join(';');
+    const cookies = response.headers['set-cookie'].map((item) => item.split(';', 1)[0]).join(';');
 
     const $ = load(response.data);
     let date = $('div.main-body').find('div.labe_text').text();
-    date = date.split('\n\t')[1].replace('日期：', '').trim();
+    date = date.split('\n\t', 2)[1].replace('日期：', '').trim();
     date = date.slice(0, 11) + date.slice(15);
 
     const link = 'https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery/list?_search=false&dataSet.rows=80&dataSet.page=1&dataSet.sidx=&dataSet.sord=asc';

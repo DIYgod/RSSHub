@@ -24,9 +24,9 @@ export const route: Route = {
     name: '宣城校区通知',
     maintainers: ['batemax'],
     handler,
-    description: `| 通知公告(https://xc.hfut.edu.cn/1955/list.htm) | 院系动态-工作通知(https://xc.hfut.edu.cn/gztz/list.htm) |
-| ------------ | -------------- |
-| tzgg         | gztz           |`,
+    description: `| 通知公告 (<https://xc.hfut.edu.cn/1955/list.htm>) | 院系动态 - 工作通知 (<https://xc.hfut.edu.cn/gztz/list.htm>) |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| tzgg                                              | gztz                                                         |`,
 };
 
 async function handler(ctx) {

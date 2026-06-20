@@ -19,6 +19,7 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     description: `::: info Category
+
 | Category              | Link               |
 | --------------------- | ------------------ |
 | **Business**          | business           |
@@ -36,6 +37,7 @@ export const route: Route = {
 | Financial Ratios      | stock-ratios       |
 | Investor's Psychology | behavioral-finance |
 | Mutual Funds          | mutual-fund        |
+
 :::`,
 };
 
@@ -44,7 +46,7 @@ async function handler(ctx: Context) {
     const extra = {
         description: (topic: string) => `Articles for your research and knowledge under ${topic}`,
         date: true,
-        selector: `div.card`,
+        selector: 'div.card',
     };
     return await commonHandler('https://insider.finology.in', `/${category}`, extra);
 }

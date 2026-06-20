@@ -50,7 +50,7 @@ const queryToFloat = (s) => {
         s = s[0];
     }
     s = s.toString();
-    return Number.parseFloat(s);
+    return Number(s);
 };
 
 export { fallback, queryToBoolean, queryToFloat, queryToInteger };

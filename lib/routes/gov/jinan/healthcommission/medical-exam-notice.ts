@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/jinan/healthcommission/medical_exam_notice',
+    path: '/healthcommission/medical_exam_notice',
     categories: ['government'],
     example: '/gov/jinan/healthcommission/medical_exam_notice',
     parameters: {},

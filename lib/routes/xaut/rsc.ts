@@ -22,7 +22,7 @@ export const route: Route = {
     maintainers: ['mocusez', 'light0926'],
     handler,
     description: `::: warning
-  有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
+有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
 :::
 
 | 通知公告 | 工作动态 |
@@ -69,7 +69,7 @@ async function handler(ctx) {
         // 源链接
         link: 'http://renshichu.xaut.edu.cn',
         // 源说明
-        description: `西安理工大学人事处-` + dic_title[category],
+        description: '西安理工大学人事处-' + dic_title[category],
         // 遍历此前获取的数据
         item: await Promise.all(
             list.map((item) =>

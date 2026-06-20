@@ -44,9 +44,8 @@ const getItem = (item, cache) => {
                     link,
                     description: '',
                 };
-            } else {
-                throw error;
             }
+            throw error;
         }
     });
 };

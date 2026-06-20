@@ -36,7 +36,7 @@ async function handler(ctx) {
     return {
         title: `Issue Hunt 的悬赏 -- ${username}/${repo}`,
         link: `https://issuehunt.io/r/${username}/${repo}`,
-        description: ``,
+        description: '',
         item: issues.map((item) => ({
             title: item.title,
             description: md.render(item.body),

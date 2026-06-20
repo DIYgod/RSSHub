@@ -36,7 +36,7 @@ async function handler() {
 
     const items = await Promise.all(
         Object.keys(category_dict).map(async () => {
-            const response = await got(`https://webplus.nju.edu.cn/_s25/zbcg/list.psp`);
+            const response = await got('https://webplus.nju.edu.cn/_s25/zbcg/list.psp');
 
             const data = response.data;
             const $ = load(data);

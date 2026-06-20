@@ -62,7 +62,7 @@ async function handler() {
     );
 
     return {
-        title: `Hpoi 手办维基 - 热门推荐`,
+        title: 'Hpoi 手办维基 - 热门推荐',
         link,
         item: items.filter((item) => !!item),
     };

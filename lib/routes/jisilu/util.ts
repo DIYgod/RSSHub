@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl: string = 'https://www.jisilu.cn';
+const rootUrl = 'https://www.jisilu.cn';
 
 const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) => Promise<DataItem[]> = async ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) => {
     const items: DataItem[] = targetEl

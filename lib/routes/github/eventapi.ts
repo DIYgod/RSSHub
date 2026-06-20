@@ -22,9 +22,9 @@ export const eventTypeMapping: Record<string, string> = {
 function formatEventItem(event: any) {
     const { id, type, actor, repo, payload, created_at } = event;
 
-    let title = '';
-    let description = '';
-    let link = '';
+    let title: string;
+    let description: string;
+    let link: string;
 
     switch (type) {
         case 'PushEvent': {
@@ -48,7 +48,7 @@ function formatEventItem(event: any) {
                 description = `PR: ${link}`;
             } else {
                 link = `https://github.com/${repo.name}`;
-                description = `PR: Unknown`;
+                description = 'PR: Unknown';
             }
             break;
         case 'PullRequestReviewCommentEvent':
@@ -117,7 +117,7 @@ function formatEventItem(event: any) {
             for (const page of payload.pages ?? []) {
                 description += `<li>Page <a href=${page.html_url}>${page.page_name}</a> ${page.action} ${page.summary ? `: ${page.summary}` : ''}</li>`;
             }
-            description += `</ul>`;
+            description += '</ul>';
             link = `https://github.com/${repo.name}`;
             break;
         case 'DiscussionEvent':

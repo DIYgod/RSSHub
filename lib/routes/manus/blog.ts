@@ -1,9 +1,14 @@
-import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
+const md = MarkdownIt({
+    html: true,
+    linkify: true,
+});
 
 export const route: Route = {
     path: '/blog',
@@ -35,43 +40,76 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://manus.im/blog';
 
-    const response = await ofetch(rootUrl);
-    const $ = load(response);
+    const renderData = await ofetch(rootUrl, {
+        headers: {
+            RSC: '1',
+        },
+        responseType: 'text',
+    });
 
-    const list: DataItem[] = $('div.mt-10.px-6 > a')
-        .toArray()
-        .map((item) => {
-            const element = $(item);
-            const link = new URL(String(element.attr('href')), rootUrl).href;
-            const title = String(element.find('h2').attr('title'));
+    let blogList;
+    const lines = renderData.split('\n');
+    for (const line of lines) {
+        if (line.includes('{"blogList":{"$typeName"')) {
+            const jsonStr = line.slice(Math.max(0, line.indexOf('{"blogList":{"$typeName"')));
+            const lastBrace = jsonStr.lastIndexOf('}');
+            try {
+                const parsed = JSON.parse(jsonStr.slice(0, Math.max(0, lastBrace + 1)));
+                blogList = parsed.blogList;
+                break;
+            } catch {
+                // Ignore parse errors and try next line if any
+            }
+        }
+    }
 
-            return {
-                link,
-                title,
-            };
-        });
+    if (!blogList || !blogList.groups) {
+        throw new Error('Failed to parse blogList from RSC data');
+    }
+
+    const list: Array<DataItem & { _contentUrl?: string }> = blogList.groups.flatMap(
+        (group) =>
+            group.blogs?.map((blog) => ({
+                title: blog.title,
+                link: `https://manus.im/blog/${blog.recordUid}`,
+                pubDate: new Date(blog.createdAt.seconds * 1000),
+                description: blog.desc,
+                category: [group.kindName],
+                _contentUrl: blog.contentUrl,
+            })) ?? []
+    );
 
     const items: DataItem[] = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(String(item.link), async () => {
-                const response = await ofetch(String(item.link));
-                const $ = load(response);
-                const description: string = $('div.relative:nth-child(3)').html() ?? '';
-                const pubDateText: string = $('div.gap-3:nth-child(1) > span:nth-child(2)').text().trim();
-                const currentYear: number = new Date().getFullYear();
-                const pubDate: Date = new Date(`${pubDateText} ${currentYear}`);
+        list.map(
+            (item) =>
+                cache.tryGet(String(item.link), async () => {
+                    const contentUrl = item._contentUrl;
+                    let description = String(item.description);
+                    if (contentUrl) {
+                        try {
+                            let contentText = await ofetch(contentUrl, { responseType: 'text' });
+                            // Fix video embeds: Manus uses ![type=manus_video](url) which markdown-it renders as <img>
+                            contentText = contentText.replaceAll(/!\[.*?\]\((.+?\.(mp4|mov|webm))\)/gi, '<video controls preload="metadata"><source src="$1"></video>');
+                            // Parse markdown to HTML
+                            description = md.render(contentText);
+                        } catch {
+                            // Fallback to description from list if fetch fails
+                        }
+                    }
 
-                return {
-                    ...item,
-                    description,
-                    pubDate,
-                };
-            })
+                    // Remove the temporary property to avoid pollution
+                    delete item._contentUrl;
+
+                    return {
+                        ...item,
+                        description,
+                    };
+                }) as Promise<DataItem>
         )
     );
 
     return {
-        title: 'Manus',
+        title: 'Manus Blog',
         link: rootUrl,
         item: items,
         language: 'en',

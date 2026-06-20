@@ -13,9 +13,8 @@ const getTrueHour = (rank_type, rank_id, hour) => {
     const flag = ['pinlei', 'dianshang'].includes(rank_type) && [...rank_two_hour, ...rank_four_hour].includes(rank_id) && hour === '3';
     if (flag) {
         return rank_two_hour.includes(rank_id) ? '2' : '4';
-    } else {
-        return hour;
     }
+    return hour;
 };
 
 const typeOptions = [
@@ -231,7 +230,7 @@ async function handler(ctx) {
     // When the hour is 3, some special rank_id require a special hour num
     const true_hour = getTrueHour(rank_type, rank_id, hour);
 
-    const response = await got(`https://www.smzdm.com/top/json_more`, {
+    const response = await got('https://www.smzdm.com/top/json_more', {
         headers: {
             Referer: 'https://www.smzdm.com/top',
             ...getHeaders(),
@@ -243,18 +242,8 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.data.list;
-    const list1 = [];
-    const list2 = [];
-    for (let i = 0; i < Math.min(6, data.length); i++) {
-        if (data[i][0].length !== 0) {
-            list1.push(data[i][0]);
-        }
-        if (data[i][1].length !== 0) {
-            list2.push(data[i][1]);
-        }
-    }
-    const list = [...list1, ...list2];
+    const data = response.data.data.list.slice(0, 6);
+    const list = [...data.map((row) => row[0]), ...data.map((row) => row[1])].filter((item) => item.length !== 0);
 
     return {
         title: `什么值得买${typeOptions.find((item) => item.value === rank_type)?.label}-${idOptions.find((item) => item.value === rank_id)?.label}-${hour}小时`,

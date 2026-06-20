@@ -30,7 +30,7 @@ export const route: Route = {
     handler,
     url: 'barronschina.com.cn/',
     description: `::: tip
-  栏目 id 留空则返回快讯，在对应页地址栏 \`columnId=\` 后可以看到。
+栏目 id 留空则返回快讯，在对应页地址栏 \`columnId=\` 后可以看到。
 :::`,
 };
 
@@ -94,7 +94,7 @@ async function handler(ctx) {
               });
 
     return {
-        title: $('title').text().split('，')[0],
+        title: $('title').text().split('，', 1)[0],
         link: currentUrl,
         item: items,
     };

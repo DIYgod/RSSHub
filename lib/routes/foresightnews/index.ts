@@ -19,9 +19,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    const apiUrl = new URL(`v2/feed`, apiRootUrl).href;
+    const apiUrl = new URL('v2/feed', apiRootUrl).href;
 
     const { items } = await processItems(apiUrl, limit);
 

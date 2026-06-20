@@ -35,6 +35,10 @@ export const route: Route = {
             source: ['web.okjike.com/topic/:id'],
             target: '/topic/:id',
         },
+        {
+            source: ['m.okjike.com/topics/:id'],
+            target: '/topic/:id',
+        },
     ],
     name: '圈子',
     maintainers: ['DIYgod', 'prnake'],
@@ -64,8 +68,8 @@ async function handler(ctx) {
                             const links = upper.find('a').map((_, ele) => $(ele).attr('href'));
                             const texts = upper.find('span.text').map((_, ele) => $(ele).text());
                             let description = '';
-                            for (const [i, link] of links.entries()) {
-                                description += `${i + 1}、<a href="${link}">${texts[i]}</a><br>`;
+                            for (let i = 0; i < links.length; i++) {
+                                description += `${i + 1}、<a href="${links[i]}">${texts[i]}</a><br>`;
                             }
                             description = description.replace(/<br>$/, '');
                             return description;

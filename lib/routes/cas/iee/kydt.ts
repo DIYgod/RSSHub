@@ -60,7 +60,7 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 item.description = content('.article-content').html();
-                item.pubDate = timezone(parseDate(content('time').text().split('：')[1]), 8);
+                item.pubDate = timezone(parseDate(content('time').text().split('：', 2)[1]), 8);
 
                 return item;
             })

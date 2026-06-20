@@ -35,20 +35,20 @@ export const route: Route = {
     name: '資訊學院公告',
     categories: ['university'],
     maintainers: ['simbafs'],
-    description: `|    名稱    |       Name       |    :category     |
-| :--------: | :--------------: | :--------------: |
-|  全部公告  |       All        |       all        |
-|   獎學金   |   Scholarships   |   scholarship    |
-| 課程/演講  |     Courses      |     courses      |
-|   研究所   |    Graduates     |     graduate     |
-|   學士班   |  Undergraduates  |  undergraduate   |
-|  入學公告  |    Admissions    |    candidate     |
-|  獲獎捷報  |      Awards      |      awards      |
-|  系內徵才  |   Internal Job   |      campus      |
-|  企業徵才  |   Industry Job   |   corporation    |
-|   系計中   | Computer Center  |       cscc       |
-|  活動競賽  |     activity     |     activity     |
-| 資訊人院刊 | NYC CCS MAGAZINE | NYC CCS MAGAZINE |`,
+    description: `|     名稱    |       Name       |     :category    |
+| :---------: | :--------------: | :--------------: |
+|   全部公告  |        All       |        all       |
+|    獎學金   |   Scholarships   |    scholarship   |
+| 課程 / 演講 |      Courses     |      courses     |
+|    研究所   |     Graduates    |     graduate     |
+|    學士班   |  Undergraduates  |   undergraduate  |
+|   入學公告  |    Admissions    |     candidate    |
+|   獲獎捷報  |      Awards      |      awards      |
+|   系內徵才  |   Internal Job   |      campus      |
+|   企業徵才  |   Industry Job   |    corporation   |
+|    系計中   |  Computer Center |       cscc       |
+|   活動競賽  |     activity     |     activity     |
+|  資訊人院刊 | NYC CCS MAGAZINE | NYC CCS MAGAZINE |`,
     path: '/cs/:category?',
     parameters: { category: 'categories, see below' },
     example: '/nycu/cs/all',

@@ -27,8 +27,8 @@ export const route: Route = {
     description: `栏目类型
 
 | 简讯专栏 | 本科生教育 | 研究生教育 | 科研学术 | 人事工作 | 学生思政 | 对外交流 | 就业指导 |
-| ------ | ------- | ------- | ------ | ------ | ------ | ------ | ------ |
-|   -    |  bksjy  |  yjsjy  |  kyxs  |  rsgz  |  xssz  |  dwjl  |  jyzd  |`,
+| -------- | ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| -        | bksjy      | yjsjy      | kyxs     | rsgz     | xssz     | dwjl     | jyzd     |`,
 };
 
 async function handler(ctx) {

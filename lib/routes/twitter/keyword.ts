@@ -12,14 +12,14 @@ export const route: Route = {
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {
         requireConfig: [
-            {
-                name: 'TWITTER_USERNAME',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_PASSWORD',
-                description: 'Please see above for details.',
-            },
+            // {
+            //     name: 'TWITTER_USERNAME',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_PASSWORD',
+            //     description: 'Please see above for details.',
+            // },
             {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',

@@ -31,7 +31,7 @@ export const route: Route = {
 | ----------- | -- | ----------- | -------- | ---- | ------ |
 | latest-news | pc | playstation | nintendo | xbox | moblie |
 
-  Or
+Or
 
 | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
 | ---------------- | ------------------ | --------------- | ----------------- |
@@ -86,8 +86,8 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('img').each(function () {
-                    content(this).attr('src', content(this).attr('data-src'));
+                content('img').each((_, el) => {
+                    content(el).attr('src', content(el).attr('data-src'));
                 });
 
                 item.author = content('.jeg_meta_author').text().replace(/by/, '');

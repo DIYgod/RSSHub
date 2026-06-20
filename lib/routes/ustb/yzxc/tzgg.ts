@@ -47,7 +47,7 @@ async function handler() {
             if (path.startsWith('http')) {
                 itemUrl = path;
             } else if (path.startsWith('..')) {
-                itemUrl = path.replaceAll('..', host);
+                itemUrl = path.replaceAll('..', () => host);
             } else {
                 itemUrl = host + path;
             }

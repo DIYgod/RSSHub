@@ -24,7 +24,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.jumeili.cn/', 'jumeili.cn/'],
+            source: ['www.jumeili.cn/'],
+            target: '/home/:column?',
+        },
+        {
+            source: ['jumeili.cn/'],
             target: '/home/:column?',
         },
     ],

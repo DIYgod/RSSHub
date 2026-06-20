@@ -29,7 +29,7 @@ export const route: Route = {
     description: `The URL of the journal [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) is \`https://www.annualreviews.org/journal/anchem\`, where \`anchem\` is the id of the journal, so the route for this journal is \`/annualreviews/anchem\`.
 
 ::: tip
-  More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
+More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
 :::`,
 };
 
@@ -37,7 +37,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.annualreviews.org';
-    const apiRootUrl = `https://api.crossref.org`;
+    const apiRootUrl = 'https://api.crossref.org';
     const feedUrl = `${rootUrl}/r/${id}_rss`;
     const currentUrl = `${rootUrl}/toc/${id}/current`;
 
@@ -59,7 +59,7 @@ async function handler(ctx) {
                 doi,
                 guid: doi,
                 title: item.find('title').text(),
-                link: item.find('link').attr('href').split('?')[0],
+                link: item.find('link').attr('href').split('?', 1)[0],
                 description: item.find('content').text(),
                 pubDate: parseDate(item.find('published').text()),
                 author: item

@@ -16,7 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '用户作品评论动态',
+    name: '全民K歌 - 用户作品评论动态',
     maintainers: ['zhangxiang012'],
     handler,
 };

@@ -30,14 +30,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['konachan.com/post', 'konachan.net/post'],
+            source: ['konachan.com/post'],
+        },
+        {
+            source: ['konachan.net/post'],
         },
     ],
     name: 'Popular Recent Posts',
     maintainers: ['magic-akari', 'NekoAria', 'sineeeee'],
-    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
-| ------- | -------- | ------- | -------- |
-| 1d | 1w | 1m | 1y |`,
+    description: `| 最近 24 小时 | 最近一周 | 最近一月 | 最近一年 |
+| ------------ | -------- | -------- | -------- |
+| 1d           | 1w       | 1m       | 1y       |`,
     handler,
     features: {
         nsfw: true,

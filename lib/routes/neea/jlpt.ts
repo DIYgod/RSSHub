@@ -10,18 +10,16 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const baseUrl: string = 'https://jlpt.neea.cn';
+    const baseUrl = 'https://jlpt.neea.cn';
     const targetUrl: string = new URL('index.do', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.indexcontent a')
+    let items: DataItem[] = $('div.indexcontent a')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -80,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('div.header img').attr('arc') ? new URL($('div.header img').attr('arc') as string, baseUrl).href : undefined,
-        author: title.split(/-/)[0],
+        author: title.split(/-/, 1)[0],
         language,
         id: targetUrl,
     };

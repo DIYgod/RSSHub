@@ -113,7 +113,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `中国智库网 —— ${$('title').text().split('_中国智库网')[0]}`,
+        title: `中国智库网 —— ${$('title').text().split('_中国智库网', 1)[0]}`,
         link,
         item: items,
     };

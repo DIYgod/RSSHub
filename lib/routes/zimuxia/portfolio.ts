@@ -39,13 +39,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.zimuxia.cn';
     const currentUrl = `${rootUrl}/portfolio/${id}`;
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(currentUrl);
 
     const $ = load(response.data);
 

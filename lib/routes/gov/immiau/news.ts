@@ -20,7 +20,7 @@ const reqBodyByYear = (year) => ({
 const getItemUrl = (id) => `https://immi.homeaffairs.gov.au/news-media/archive/article?itemId=${id}`;
 
 export const route: Route = {
-    path: '/immiau/news',
+    path: '/news',
     categories: ['government'],
     example: '/gov/immiau/news',
     parameters: {},

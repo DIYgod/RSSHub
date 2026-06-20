@@ -32,13 +32,13 @@ export const route: Route = {
     name: '通知公告',
     maintainers: ['Yeye-0426'], // github ID
     handler,
-    description: `| 分类                 | category_id |
-|----------------------|-------------|
-| 工作动态             | 33          |
-| 公务员考试           | 56          |
-| 专业技术人员资格考试 | 57          |
-| 事业单位考试         | 67          |
-| 其它                 | 72          |`,
+    description: `| 分类                 | category\\_id |
+| -------------------- | ------------ |
+| 工作动态             | 33           |
+| 公务员考试           | 56           |
+| 专业技术人员资格考试 | 57           |
+| 事业单位考试         | 67           |
+| 其它                 | 72           |`,
 };
 
 async function handler(ctx) {
@@ -68,7 +68,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let description = '';
+                let description: string;
                 try {
                     const contentResponse = await got(item.link);
                     const content = load(contentResponse.data);

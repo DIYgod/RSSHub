@@ -31,12 +31,12 @@ export const route: Route = {
 
 async function handler() {
     // 从仓库 Sekai-World/sekai-master-db-diff 获取最新公告
-    const response = await got.get(`https://cdn.jsdelivr.net/gh/Sekai-World/sekai-master-db-diff@master/userInformations.json`);
+    const response = await got.get('https://cdn.jsdelivr.net/gh/Sekai-World/sekai-master-db-diff@master/userInformations.json');
     const posts = response.data || [];
     const list = await Promise.all(
         posts.map(async (post) => {
-            let link = '';
-            let description = '';
+            let link: string;
+            let description: string;
             const guid = post.displayOrder.toString() + post.id.toString(); // 双ID
             if (post.path.startsWith('information/')) {
                 // information 公告

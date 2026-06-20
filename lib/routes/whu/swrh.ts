@@ -89,7 +89,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 // 首先检查是否是微信公众号
                 item.description = item.link.includes('weixin')
-                    ? await fetchArticle(item.link).then((article) => article.description)
+                    ? (await fetchArticle(item.link)).description
                     : await (async () => {
                           try {
                               const response = await got(item.link);

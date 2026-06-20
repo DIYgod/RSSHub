@@ -24,11 +24,11 @@ function renderHTML(json) {
             const handler = elementMap[element.type];
             if (handler) {
                 return handler(element);
-            } else if (Object.hasOwn(element, 'text')) {
-                return element.text;
-            } else {
-                throw new Error(`Unknown handled type: ${element.type}, ${JSON.stringify(element)}`);
             }
+            if (Object.hasOwn(element, 'text')) {
+                return element.text;
+            }
+            throw new Error(`Unknown handled type: ${element.type}, ${JSON.stringify(element)}`);
         })
         .join('');
 }

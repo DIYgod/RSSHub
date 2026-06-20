@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 // /iqiyi/user/video/:uid
 // http://localhost:1200/iqiyi/user/video/2289191062
@@ -36,15 +36,15 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const link = `https://www.iqiyi.com/u/${uid}/videos`;
 
-    // Use puppeteer because iqiyi page has a delay.
-    const browser = await puppeteer();
+    // Use Playwright because iqiyi page has a delay.
+    const context = await playwright();
     const data = await cache.tryGet(
         link,
         async () => {
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
             logger.http(`Requesting ${link}`);
             await page.goto(link, {
@@ -70,7 +70,7 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     );
-    await browser.close();
+    await context.close();
 
     return data;
 }

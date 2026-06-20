@@ -5,7 +5,8 @@ const uuid = (length = 20) => {
     const e = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + Date.now();
     const r: string[] = [];
     for (let i = 0; i < length; i++) {
-        r.push(e.charAt(Math.floor(Math.random() * e.length)));
+        const index = Math.floor(Math.random() * e.length);
+        r.push(e.charAt(index));
     }
     return r.join('');
 };
@@ -43,7 +44,7 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
         headers: {
             cdeviceinfo: encodeURIComponent(JSON.stringify(devioceInfo)),
             cdeviceno: cookieMap.get('token'),
-            cookie: [...cookieMap.entries()].map(([key, value]) => `${key}=${value}`).join('; '),
+            cookie: [...cookieMap].map(([key, value]) => `${key}=${value}`).join('; '),
             crpsign: md5(accessToken + /* sign/cusut (empty) + idToken (empty) + userInfo.userId (empty) + */ 'web' + cookieMap.get('token') + (payload ? JSON.stringify(payload) : '') + requestPath + '999web' + traceId),
             crtraceid: traceId,
             csappid: 'web',
@@ -62,15 +63,7 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
 };
 
 function sortBy(items: any[], key: string) {
-    return items.toSorted((a, b) => {
-        if (a[key] < b[key]) {
-            return -1;
-        }
-        if (a[key] > b[key]) {
-            return 1;
-        }
-        return 0;
-    });
+    return items.toSorted((a, b) => a[key].localeCompare(b[key]));
 }
 
 function uniqBy(items: any[], key: string) {

@@ -34,7 +34,7 @@ async function handler(ctx) {
         searchParams: {
             subject: '100990318;100990314;100990311',
             start: 0,
-            count: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20,
+            count: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
             type: '2',
             _: Date.now(),
         },

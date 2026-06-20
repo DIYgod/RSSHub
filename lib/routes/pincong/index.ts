@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, puppeteerGet } from './utils';
+import { baseUrl, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/category/:category?/:sort?',
@@ -39,8 +39,8 @@ async function handler(ctx) {
     url += (ctx.req.param('sort') && sortMap[ctx.req.param('sort')]) || 'recommend-1';
     url += ctx.req.param('category') ? '__category-' + ctx.req.param('category') : '';
 
-    // use Puppeteer due to the obstacle by cloudflare challenge
-    const html = await puppeteerGet(url, cache);
+    // use Playwright due to the obstacle by cloudflare challenge
+    const html = await playwrightGet(url, cache);
 
     const $ = load(html);
     const list = $('div.aw-item');

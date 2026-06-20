@@ -1,5 +1,5 @@
 function getRatingChangeStr(ratingChange) {
-    let ratingChangeName = '';
+    let ratingChangeName: string;
     switch (String(ratingChange)) {
         case '0':
             ratingChangeName = '调高';

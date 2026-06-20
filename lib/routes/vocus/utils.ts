@@ -33,7 +33,7 @@ const ProcessFeed = (list, tryGet) =>
                 $('div.draft--imgNormal').each((_, elem) => (elem.name = 'figure'));
                 $('.image-block-prerender').each((_, elem) => {
                     elem.name = 'img';
-                    elem.attribs.src = elem.attribs['data-src'].split('?')[0];
+                    elem.attribs.src = elem.attribs['data-src'].split('?', 1)[0];
                 });
 
                 item.description = $.html();

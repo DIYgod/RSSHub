@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, puppeteerGet } from './utils';
+import { baseUrl, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/hot/:category?',
@@ -29,8 +29,8 @@ async function handler(ctx) {
 
     const url = `${baseUrl}/hot/list/category-${category}`;
 
-    // use Puppeteer due to the obstacle by cloudflare challenge
-    const html = await puppeteerGet(url, cache);
+    // use Playwright due to the obstacle by cloudflare challenge
+    const html = await playwrightGet(url, cache);
 
     const $ = load(html);
     const list = $('div.aw-item');

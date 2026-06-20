@@ -26,7 +26,8 @@ export const route: Route = {
 async function handler(ctx) {
     const aid = Number.parseInt(ctx.req.param('id'));
     const link = `https://www.wenku8.net/novel/${Math.floor(aid / 1000)}/${aid}/index.htm`;
-    const $ = load(await get(link));
+    const html = await get(link);
+    const $ = load(html);
     const vid = $('.vcss').last().parent().next().find('a')[0].attribs.href.replace('.htm', '');
     const volumeUrl = `https://dl.wenku8.com/packtxt.php?aid=${aid}&vid=${vid}&charset=gbk`;
     const lastestChapters = $('.vcss')
@@ -41,7 +42,9 @@ async function handler(ctx) {
         title: `轻小说文库 ${$('#title').text()} 最新卷`,
         link,
         item: await cache.tryGet(volumeUrl, async () =>
-            [...(await get(volumeUrl)).matchAll(/\s{2}(\S.*)\r?\n([\S\s]+?)\r?\n\r?\n/g)]
+            (await get(volumeUrl))
+                .matchAll(/\s{2}(\S.*)\r?\n([\s\S]+?)\r?\n\r?\n/g)
+                .toArray()
                 .map((chapter, index) => ({
                     title: chapter[1],
                     description: chapter[2]

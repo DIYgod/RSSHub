@@ -1,8 +1,8 @@
 const card2Html = (elem, link) => {
     const name = elem.attr('name');
-    const data = elem.attr('value')?.split('data:')[1]?.replace('undefined', '');
+    const data = elem.attr('value')?.split('data:', 2)[1]?.replace('undefined', '');
     const value = JSON.parse(decodeURIComponent(data || '[]'));
-    let html = '';
+    let html: string;
     switch (name) {
         case 'board':
         case 'emoji':

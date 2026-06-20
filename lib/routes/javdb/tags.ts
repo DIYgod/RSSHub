@@ -33,12 +33,12 @@ export const route: Route = {
     handler,
     url: 'javdb.com/',
     description: `::: tip
-  在 [分類](https://javdb.com/tags) 中选定分类后，URL 中 \`tags?\` 后的字段即为筛选参数。
+在 [分類](https://javdb.com/tags) 中选定分类后，URL 中 \`tags?\` 后的字段即为筛选参数。
 
-  如 \`https://javdb.com/tags?c2=5&c10=1\` 中 \`c2=5&c10=1\` 为筛选参数。
+如 \`https://javdb.com/tags?c2=5&c10=1\` 中 \`c2=5&c10=1\` 为筛选参数。
 :::
 
-  分类
+分类
 
 | 有碼     | 無碼       | 歐美    |
 | -------- | ---------- | ------- |

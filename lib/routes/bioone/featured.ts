@@ -31,11 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://bioone.org';
-    const response = await got(rootUrl, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(rootUrl);
 
     const $ = load(response.data);
 
@@ -44,7 +40,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             item = $(item);
-            const link = item.attr('href').split('?')[0];
+            const link = item.attr('href').split('?', 1)[0];
 
             return {
                 title: item.text(),
@@ -55,11 +51,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link, {
-                    https: {
-                        rejectUnauthorized: false,
-                    },
-                });
+                const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
                 item.description = content('#divARTICLECONTENTTop').html();

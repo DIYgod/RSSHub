@@ -8,7 +8,7 @@ import { processItems } from './utils';
 const host = 'http://www.pbc.gov.cn';
 
 export const route: Route = {
-    path: '/pbc/gzlw',
+    path: '/gzlw',
     categories: ['finance'],
     example: '/gov/pbc/gzlw',
     parameters: {},

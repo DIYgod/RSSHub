@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
 export const baseUrl = 'https://www.capitalmind.in';
@@ -23,7 +24,7 @@ export async function fetchArticles(path) {
                     .text()
                     .trim();
                 const image = $element.find('img').attr('src');
-                const imageUrl = image?.startsWith('/_next/image') ? image.split('url=')[1].split('&')[0] : image;
+                const imageUrl = image?.startsWith('/_next/image') ? image.split('url=', 2)[1].split('&', 1)[0] : image;
                 const decodedImageUrl = imageUrl ? decodeURIComponent(imageUrl) : '';
 
                 // Fetch full article content

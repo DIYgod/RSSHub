@@ -33,10 +33,9 @@ export const route: Route = {
             target: '/manga/2',
         },
     ],
-    description: `
-| 新着 (Latest) | 人気 (Hot) |
-| ---- | ---- |
-| 1    | 2    |`,
+    description: `| 新着 (Latest) | 人気 (Hot) |
+| ------------- | ---------- |
+| 1             | 2          |`,
 };
 
 async function handler(ctx): Promise<Data> {

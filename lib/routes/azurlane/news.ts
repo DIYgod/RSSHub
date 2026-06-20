@@ -40,7 +40,7 @@ const handler: Route['handler'] = async (ctx) => {
 const ja: Route['handler'] = async (ctx) => {
     const { type = '0' } = ctx.req.param();
 
-    const response = await ofetch<{ data: { rows: { id: number; content: string; title: string; publishTime: number }[] } }>('https://www.azurlane.jp/api/news/list', {
+    const response = await ofetch<{ data: { rows: Array<{ id: number; content: string; title: string; publishTime: number }> } }>('https://www.azurlane.jp/api/news/list', {
         query: {
             type,
             index: 1,

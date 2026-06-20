@@ -1,10 +1,9 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const audio_types = {
     m3u8: 'x-mpegURL',
@@ -31,10 +30,10 @@ export const route: Route = {
     handler,
     description: `如果订阅 [中国相声榜](https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666)，其 URL 为 \`https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666\`，可以得到 \`columnId\` 为 \`15682090498666\`
 
-  所以对应路由为 [\`/radio/album/15682090498666\`](https://rsshub.app/radio/album/15682090498666)
+所以对应路由为 [\`/radio/album/15682090498666\`](https://rsshub.app/radio/album/15682090498666)
 
 ::: tip
-  部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
+部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
 :::`,
 };
 
@@ -74,7 +73,7 @@ async function handler(ctx) {
 
     const items = response.con.map((item) => {
         let enclosure_url = item.playUrlHigh ?? item.playUrlMedium ?? item.playUrlLow ?? item.playUrl;
-        enclosure_url = /\.m3u8$/.test(enclosure_url) ? item.downloadUrl : enclosure_url;
+        enclosure_url = enclosure_url.endsWith('.m3u8') ? item.downloadUrl : enclosure_url;
 
         const fileExt = new URL(enclosure_url).pathname.split('.').pop();
         const enclosure_type = fileExt ? `audio/${audio_types[fileExt]}` : '';
@@ -83,10 +82,7 @@ async function handler(ctx) {
             guid: item.id,
             title: item.name,
             link: `${rootUrl}/share/albumPlay?correlateId=${item.id}&columnId=${id}`,
-            description: art(path.join(__dirname, 'templates/description.art'), {
-                enclosure_url,
-                enclosure_type,
-            }),
+            description: renderDescription({ enclosure_url, enclosure_type }),
             pubDate: timezone(parseDate(item.createTime), +8),
             enclosure_url,
             enclosure_type,

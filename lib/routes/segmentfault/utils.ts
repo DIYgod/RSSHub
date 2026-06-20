@@ -36,9 +36,8 @@ const parseList = (data) =>
 
 const parseItems = (cookie, item, tryGet) =>
     tryGet(item.link, async () => {
-        let response;
         try {
-            response = await ofetch(item.link, {
+            const response = await ofetch(item.link, {
                 headers: {
                     cookie: `acw_sc__v2=${cookie};`,
                 },

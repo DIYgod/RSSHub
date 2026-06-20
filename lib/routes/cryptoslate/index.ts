@@ -46,7 +46,7 @@ async function handler(ctx): Promise<Data> {
 
             try {
                 // Clean URL by removing query parameters
-                const cleanUrl = item.link.split('?')[0];
+                const cleanUrl = item.link.split('?', 1)[0];
 
                 return {
                     title: item.title || 'Untitled',

@@ -48,8 +48,8 @@ async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleC
                 } else {
                     const contentHtml = $('.v_news_content').html();
                     const $content = load(contentHtml);
-                    $content('a').each(function () {
-                        const a = $(this);
+                    $content('a').each((_, el) => {
+                        const a = $(el);
                         const href = a.attr('href');
                         if (href && !href.startsWith('http')) {
                             a.attr('href', new URL(href, host).href);

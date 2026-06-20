@@ -49,9 +49,9 @@ async function handler() {
     }));
 
     return {
-        title: `GoCN社区-每日新闻`,
+        title: 'GoCN社区-每日新闻',
         link: base_url,
-        description: `获取GoCN站点每日新闻`,
+        description: '获取GoCN站点每日新闻',
         item: items,
     };
 }

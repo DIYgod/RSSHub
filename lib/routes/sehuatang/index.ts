@@ -12,6 +12,36 @@ import { puppeteerGet } from './utils';
 
 const allowDomain = new Set(['www.sehuatang.net', 'www.sehuatang.org']);
 
+const forumIdMaps = {
+    // 原创 BT 电影
+    gcyc: '2', //     国产原创
+    yzwmyc: '36', //  亚洲无码原创
+    yzymyc: '37', //  亚洲有码原创
+    gqzwzm: '103', // 高清中文字幕
+    sjxz: '107', //   三级写真
+    vr: '160', //     VR 视频
+    srym: '104', //   素人有码
+    omwm: '38', //    欧美无码
+    '4k': '151', //   4K 原版
+    hgzb: '152', //   韩国主播
+    dmyc: '39', //    动漫原创
+    // 色花图片
+    yczp: '155', //   原创自拍
+    ztzp: '125', //   转贴自拍
+    hrjp: '50', //    华人街拍
+    yzxa: '48', //    亚洲性爱
+    omxa: '49', //    欧美性爱
+    ktdm: '117', //   卡通动漫
+    ttxz: '165', //   套图下载
+
+    zhtl: '95', //    综合讨论
+    // no longer updated/available
+    mrhj: '106', //   每日合集
+    ai: '113', //     AI 换脸电影
+    ydsc: '111', //   原档收藏 WMV
+    hrxazp: '98', //  华人性爱自拍
+};
+
 const imageProxyList = ['https://cdn.cdnjson.com/pic.html?url=', 'https://image.baidu.com/search/down?url='];
 
 export const route: Route = {
@@ -61,7 +91,7 @@ export const route: Route = {
 | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
 | 2        | 36           | 37           | 103          | 107      | 160     | 104      | 38       | 152      | 39       | 95       |
 
-  **色花图片**
+**色花图片**
 
 | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -106,10 +136,10 @@ async function handler(ctx) {
     }
     const imageProxy = (ctx.req.query('imageProxy') ?? '-1').toString();
     const host = `https://${domain}/`;
-
-    const { subforumid = '103', type } = ctx.req.param();
-    const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
-    const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumid}${typefilter}`;
+    const { subforumName = '103', type } = ctx.req.param();
+    const subforumId = Object.hasOwn(forumIdMaps, subforumName) ? forumIdMaps[subforumName] : subforumName;
+    const typeFilter = type ? `&filter=typeid&typeid=${type}` : '';
+    const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumId}${typeFilter}`;
 
     const cookiesSafeId = `_safe=${await getSafeId(null, host)};`;
 

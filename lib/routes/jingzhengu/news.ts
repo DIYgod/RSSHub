@@ -25,7 +25,7 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://www.jingzhengu.com';
 
-    const payload: Map<string, any> = new Map([
+    const payload = new Map<string, any>([
         ['pageNo', 1],
         ['middleware', String(Date.now())],
     ]);
@@ -40,7 +40,7 @@ async function handler() {
     const list = response.data.articles.map((item) => ({
         title: item.title,
         description: item.summary,
-        link: `${baseUrl}/#/cn/Details_${item.addDate.split(' ')[0].replaceAll('-', '')}${item.id}.html`,
+        link: `${baseUrl}/#/cn/Details_${item.addDate.split(' ', 1)[0].replaceAll('-', '')}${item.id}.html`,
         pubDate: timezone(parseDate(item.addDate, 'YYYY-MM-DD HH:mm:ss'), 8),
         author: item.author,
         id: item.id,
@@ -49,7 +49,7 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const payload: Map<string, any> = new Map([
+                const payload = new Map<string, any>([
                     ['id', item.id],
                     ['middleware', String(Date.now())],
                 ]);

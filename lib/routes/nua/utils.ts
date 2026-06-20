@@ -13,11 +13,11 @@ const pageType = (href) => {
     const url = new URL(href);
     if (url.hostname === 'mp.weixin.qq.com') {
         return 'wechat-mp';
-    } else if (url.hostname === 'www.nua.edu.cn') {
-        return 'nua';
-    } else {
-        return 'unknown';
     }
+    if (url.hostname === 'www.nua.edu.cn') {
+        return 'nua';
+    }
+    return 'unknown';
 };
 
 function arti_link(text, href) {
@@ -25,7 +25,7 @@ function arti_link(text, href) {
 }
 
 async function ProcessList(newsUrl, baseUrl, listName, listDate, webPageName) {
-    const result = await got(newsUrl, { https: { rejectUnauthorized: false } });
+    const result = await got(newsUrl);
     const $ = load(result.data);
 
     const pageName = $(webPageName).text().trim();
@@ -54,7 +54,7 @@ const ProcessFeed = (items, artiContent) =>
                 switch (item.type) {
                     case 'in-nua':
                     case 'nua': {
-                        const result = await got(item.link, { https: { rejectUnauthorized: false } });
+                        const result = await got(item.link);
                         const $ = load(result.data);
                         item.author = $('.arti_publisher').text() + '  ' + $('.arti_views').text();
                         item.description = $(artiContent).html();

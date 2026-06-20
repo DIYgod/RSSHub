@@ -3,7 +3,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { getOriginAvatar } from './utils';
 
@@ -42,12 +42,11 @@ async function handler(ctx) {
         `douyin:live:${rid}`,
         async () => {
             let roomInfo;
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -57,9 +56,9 @@ async function handler(ctx) {
             });
             logger.http(`Requesting ${pageUrl}`);
             await page.goto(pageUrl, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle',
             });
-            await browser.close();
+            await context.close();
 
             return roomInfo;
         },

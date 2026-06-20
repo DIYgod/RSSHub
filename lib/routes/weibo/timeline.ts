@@ -35,9 +35,9 @@ export const route: Route = {
     maintainers: ['zytomorrow', 'DIYgod', 'Rongronggg9'],
     handler,
     description: `::: warning
-  需要对应用户打开页面进行授权生成 token 才能生成内容
+需要对应用户打开页面进行授权生成 token 才能生成内容
 
-  自部署需要申请并配置微博 key，具体见部署文档
+自部署需要申请并配置微博 key，具体见部署文档
 :::`,
 };
 
@@ -163,7 +163,8 @@ async function handler(ctx) {
             image: profileImageUrl,
             item: resultItem,
         });
-    } else if (uid === '0' || ctx.req.query()) {
+    }
+    if (uid === '0' || ctx.req.query()) {
         const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0', app_secret = '' } = config.weibo;
 
         const code = ctx.req.query('code');

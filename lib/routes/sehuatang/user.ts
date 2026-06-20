@@ -108,8 +108,8 @@ async function handler(ctx) {
                 info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
 
                 const dateString = $('.authi em').first().text();
-                const datestampString = dateString.split(' ')[1];
-                const timestampString = dateString.split(' ')[2];
+                const datestampString = dateString.split(' ', 2)[1];
+                const timestampString = dateString.split(' ', 3)[2];
                 const datetimeString = `${datestampString} ${timestampString}`;
                 const timestamp = new Date(datetimeString).getTime();
 

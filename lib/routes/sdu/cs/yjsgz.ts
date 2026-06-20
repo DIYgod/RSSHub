@@ -33,8 +33,8 @@ export const route: Route = {
     maintainers: ['kukeya', 'wiketool'],
     handler,
     description: `| 重要通知 | 公示栏 |
-| -------- | -------- |
-| zytz      | gsl       |`,
+| -------- | ------ |
+| zytz     | gsl    |`,
 };
 
 async function handler(ctx) {

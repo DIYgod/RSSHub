@@ -1,3 +1,0 @@
-{{ each slideData.images img }}
-    <img src="{{ img.download_img }}" alt="{{ img.intro }}">
-{{ /each }}

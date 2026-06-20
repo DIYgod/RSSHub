@@ -1,4 +1,0 @@
-{{if image}}
-<p><img src="{{ image }}"></p>
-{{/if}}
-<p>{{ intro }}</p>

@@ -48,7 +48,7 @@ function parseParamsToSearchParams(params, map) {
         return '';
     } // Handle undefined params
 
-    const validParamValues = params.split('-').filter((v) => v in map);
+    const validParamValues = params.split('-').filter((v) => Object.hasOwn(map, v));
     return validParamValues.join(',');
 }
 
@@ -68,7 +68,7 @@ function parseParamsToString(params, map) {
 
     const validParamValues = params
         .split('-')
-        .filter((v) => v in map)
+        .filter((v) => Object.hasOwn(map, v))
         .map((v) => map[v]);
     return validParamValues.join(',');
 }
@@ -92,7 +92,7 @@ function parseJobSearch(data) {
         .toArray()
         .map((elem) => {
             const elemHtml = $(elem);
-            const link = elemHtml.find('a.base-card__full-link, a.base-card--link')?.attr('href')?.split('?')[0];
+            const link = elemHtml.find('a.base-card__full-link, a.base-card--link')?.attr('href')?.split('?', 1)[0];
             const title = elemHtml.find('h3.base-search-card__title')?.text()?.trim();
             const company = elemHtml.find('h4.base-search-card__subtitle')?.text()?.trim();
             const location = elemHtml.find('span.job-search-card__location')?.text()?.trim();
@@ -114,7 +114,7 @@ function parseJobDetail(data) {
     const job = new Job();
     const $ = load(data);
 
-    job.recruiter = $('a.message-the-recruiter__cta').attr(`href`);
+    job.recruiter = $('a.message-the-recruiter__cta').attr('href');
     job.description = $('div.description__text description__text--rich').text();
 
     return job;
@@ -139,7 +139,16 @@ function parseCompanyPosts($) {
         .toArray() // Convert the Cheerio object to a plain array
         .map((elem) => {
             const elemHtml = $(elem);
-            const link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
+            let link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
+
+            // Reposts don't have an overlay link — construct URL from the activity URN
+            if (!link) {
+                const activityUrn = elemHtml.find('article[data-activity-urn]').attr('data-activity-urn');
+                if (activityUrn) {
+                    link = `https://www.linkedin.com/feed/update/${activityUrn}`;
+                }
+            }
+
             const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
             const date = parseRelativeShorthandDate(elemHtml.find('time').text().trim());
 

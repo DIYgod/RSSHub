@@ -7,7 +7,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/top_news/:id?',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/dongqiudi/top_news/1',
     parameters: { id: '类别 id，不填默认头条新闻' },
     features: {

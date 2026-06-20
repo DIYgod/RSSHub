@@ -23,19 +23,19 @@ const getTagId = (tid: string) =>
             .find(([key]) => key.startsWith('node'))
             ?.pop() as Tag;
 
-        return node?.id.split(':')[1];
+        return node?.id.split(':', 2)[1];
     });
 
 const handler = async (ctx) => {
     const { tid } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const tagId = await getTagId(tid);
 
     const gqlResponse = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: `{
+            query: /* GraphQL */ `{
                 node(input: {id: "${tagId}"}) {
                   ... on Tag {
                     content

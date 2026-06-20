@@ -21,7 +21,6 @@ export async function fetchTopTraders(): Promise<TraderData[]> {
     const traders: TraderData[] = await ofetch(apiUrl, {
         headers: {
             'x-api-key': 'hyperdash_public_7vN3mK8pQ4wX2cL9hF5tR1bY6gS0jD',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
         },
     });
 
@@ -34,7 +33,8 @@ export function formatCurrency(value: number | null): string {
     }
     if (Math.abs(value) >= 1e6) {
         return `$${(value / 1e6).toFixed(2)}M`;
-    } else if (Math.abs(value) >= 1e3) {
+    }
+    if (Math.abs(value) >= 1e3) {
         return `$${(value / 1e3).toFixed(2)}K`;
     }
     return `$${value.toFixed(2)}`;

@@ -28,7 +28,7 @@ export const route: Route = {
     maintainers: ['hualiong'],
     url: 'www.kelownacapnews.com',
     description: `\`type\` is as follows:
-  
+
 | News type     | Value         | News type    | Value        |
 | ------------- | ------------- | ------------ | ------------ |
 | News          | news          | Sports       | sports       |

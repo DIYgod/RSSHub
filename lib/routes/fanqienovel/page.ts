@@ -76,7 +76,7 @@ async function handler(ctx: Context): Promise<Data> {
     const initialState = JSON.parse(
         $('script:contains("window.__INITIAL_STATE__")')
             .text()
-            .match(/window\.__INITIAL_STATE__\s*=\s*(.*);/)?.[1] ?? '{}'
+            .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*);/)?.[1] ?? '{}'
     );
 
     const page = initialState.page as Page;

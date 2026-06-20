@@ -27,7 +27,7 @@ export const route: Route = {
     maintainers: ['xizeyoupan'],
     handler,
     description: `::: tip
-  仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
+仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
 :::`,
 };
 

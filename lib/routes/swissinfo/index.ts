@@ -78,8 +78,8 @@ async function handler(ctx) {
                 content('.si-detail__content .si-teaser').remove();
                 content('.show-for-sr, time, address, .si-detail__translation').remove();
 
-                content('picture').each(function () {
-                    content(this).html(`<img src="${content(this).find('source').first().attr('srcset')}">`);
+                content('picture').each((_, el) => {
+                    content(el).html(`<img src="${content(el).find('source').first().attr('srcset')}">`);
                 });
 
                 item.description = content('.si-detail__content').html();

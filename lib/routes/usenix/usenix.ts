@@ -22,7 +22,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'usenix.org/conferences/all',
-    description: `Return results from 2020`,
+    description: 'Return results from 2020',
 };
 
 async function handler() {

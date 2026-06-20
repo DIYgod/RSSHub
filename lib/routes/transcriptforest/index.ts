@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const bakeTimestamp = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -36,13 +35,13 @@ export const route: Route = {
 
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.transcriptforest.com';
 
     const { data: firstResponse } = await got(rootUrl);
 
-    const data = JSON.parse(firstResponse.match(/({"props".*"scriptLoader":\[]})<\/script>/)?.[1]);
+    const data = JSON.parse(firstResponse.match(/(\{"props".*"scriptLoader":\[\]\})<\/script>/)?.[1]);
 
     const buildId = data.buildId;
     const defaultLocale = data.defaultLocale;
@@ -63,7 +62,7 @@ async function handler(ctx) {
         title: item.episode_name,
         link: new URL(`${defaultLocale}/${item.channel_id}/${item.episode_id}`, rootUrl).href,
         detailUrl: new URL(`_next/data/${buildId}/${defaultLocale}/${item.channel_id}/${item.episode_id}.json`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             texts: item.episode_description.split(/\n\n/).map((text) => ({
                 text,
             })),
@@ -72,7 +71,7 @@ async function handler(ctx) {
         guid: item.id,
         pubDate: parseDate(item.published_at),
         updated: parseDate(item.updated_at),
-        itunes_item_image: item.episode_cover.split(/\?/)[0],
+        itunes_item_image: item.episode_cover.split(/\?/, 1)[0],
         itunes_duration: item.episode_duration,
         enclosure_url: item.source_media,
         enclosure_type: 'audio/mpeg',
@@ -85,7 +84,7 @@ async function handler(ctx) {
                 const { data: textResponse } = await got(detailResponse.pageProps.currentEpisode.ps4_url);
 
                 item.description =
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         audios: [
                             {
                                 src: detailResponse.pageProps.currentEpisode.media,
@@ -94,7 +93,7 @@ async function handler(ctx) {
                         ],
                     }) +
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         texts: textResponse.map((t) => ({
                             startTime: bakeTimestamp(t.startTime),
                             endTime: bakeTimestamp(t.endTime),
@@ -116,7 +115,7 @@ async function handler(ctx) {
     const title = $('title').text();
     const image = $('meta[property="og:image"]').prop('content');
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
-    const author = title.split(/\|/)[0].trim();
+    const author = title.split(/\|/, 1)[0].trim();
 
     return {
         item: items,

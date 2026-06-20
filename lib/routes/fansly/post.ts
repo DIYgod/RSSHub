@@ -34,7 +34,7 @@ async function handler(ctx) {
     const timeline = await getTimelineByAccountId(account.id);
 
     const items = timeline.posts.map((post) => ({
-        title: post.content.split('\n')[0],
+        title: post.content.split('\n', 1)[0],
         description: parseDescription(post, timeline),
         pubDate: parseDate(post.createdAt, 'X'),
         link: `${baseUrl}/post/${post.id}`,

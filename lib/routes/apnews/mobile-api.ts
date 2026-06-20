@@ -10,12 +10,12 @@ import { fetchArticle } from './utils';
 export const route: Route = {
     path: '/mobile/:path{.+}?',
     categories: ['traditional-media'],
-    example: '/apnews/mobile/ap-top-news',
+    example: '/apnews/mobile',
     view: ViewType.Articles,
     parameters: {
         path: {
             description: 'Corresponding path from AP News website',
-            default: 'ap-top-news',
+            default: '/',
         },
     },
     features: {
@@ -37,7 +37,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const path = ctx.req.param('path') ? `/${ctx.req.param('path')}` : '/hub/ap-top-news';
+    const path = ctx.req.param('path') ? `/${ctx.req.param('path')}` : '/';
     const apiRootUrl = 'https://apnews.com/graphql/delivery/ap/v1';
     const res = await ofetch(apiRootUrl, {
         query: {
@@ -72,20 +72,20 @@ async function handler(ctx) {
                     description: e.description,
                     guid: e.id,
                 };
-            } else if (e.__typename === 'VideoPlaylistItem') {
+            }
+            if (e.__typename === 'VideoPlaylistItem') {
                 return {
                     title: e.title,
                     link: e.url,
                     description: e.description,
                     guid: e.contentId,
                 };
-            } else {
-                return;
             }
+            return;
         })
         .filter(Boolean)
         .toSorted((a, b) => b.pubDate - a.pubDate)
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 

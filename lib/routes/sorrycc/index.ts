@@ -35,12 +35,12 @@ export const route: Route = {
             },
         ],
     },
-    description: '云谦的博客，部分内容存在权限校验，访问完整内容请部署RSSHub私有实例并配置授权信息',
+    description: '云谦的博客，部分内容存在权限校验，访问完整内容请部署 RSSHub 私有实例并配置授权信息',
 };
 
 async function handler(ctx: Context): Promise<Data> {
     const host = 'https://sorrycc.com';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 100;
     const cookie = config.sorrycc.cookie;
 
     const data = await ofetch<Post[]>(`${host}/wp-json/wp/v2/posts?per_page=${limit}`);

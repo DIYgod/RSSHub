@@ -29,21 +29,21 @@ export const route: Route = {
     description: `Refer to the URL format \`pubs.aip.org/:pub/:jrn\`
 
 ::: tip
-  More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
+More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
 :::`,
 };
 
 async function handler(ctx) {
     const pub = ctx.req.param('pub');
     const jrn = ctx.req.param('jrn');
-    const host = `https://pubs.aip.org`;
+    const host = 'https://pubs.aip.org';
     const jrnlUrl = `${host}/${pub}/${jrn}/issue`;
 
     const { data: response } = await got.get(jrnlUrl);
     const $ = load(response);
     const jrnlName = $('meta[property="og:title"]')
         .attr('content')
-        .match(/(?:[^=]*=)?\s*([^>]+)\s*/)[1];
+        .match(/(?:[^=]*=)?\s*([^>]+)/)[1];
     const publication = $('.al-article-item-wrap.al-normal');
 
     const list = publication.toArray().map((item) => {

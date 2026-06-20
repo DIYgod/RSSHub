@@ -16,7 +16,7 @@ const md = MarkdownIt({
 export const route: Route = {
     path: '/posts/:site',
     categories: ['blog'],
-    example: '/posts/walnut',
+    example: '/hedwig/posts/walnut',
     parameters: { site: '站点名，原则上只要是 `{site}.hedwig.pub` 都可以匹配' },
     features: {
         supportRadar: false,
@@ -43,7 +43,7 @@ export const route: Route = {
         const pageProps = json.props.pageProps;
 
         const list = pageProps.issuesByNewsletter.map((item) => {
-            const description = item.blocks.reduce((desc, block) => desc + md.render(block.markdown.text), '');
+            const description = item.blocks.map((block) => md.render(block.markdown.text)).join('');
             return {
                 title: item.subject,
                 description,

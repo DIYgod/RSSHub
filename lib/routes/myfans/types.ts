@@ -48,12 +48,12 @@ export interface Post {
     liked: boolean;
     likes_count: number;
     user: UserProfile;
-    post_images: {
+    post_images: Array<{
         file_url: string;
         square_thumbnail_url: string;
         raw_image_height: number;
         raw_image_width: number;
-    }[];
+    }>;
     visible: boolean;
     publish_end_at: null;
     published_at: string;
@@ -61,33 +61,33 @@ export interface Post {
     pinned_at: string | null;
     attachment: null;
     plan: null;
-    current_single_plan: {
+    current_single_plan: null | {
         id: string;
         amount: number;
         auto_message_body: string;
-    } | null;
-    plans: {
+    };
+    plans: Array<{
         id: string;
         product_name: string;
         monthly_price: number;
         status: null;
         is_limited_access: boolean;
         disallow_new_subscriber: boolean;
-        active_discount: {
+        active_discount: null | {
             id: string;
             discount_rate: number;
             start_at: string | null;
             end_at: string | null;
             limited_number: null;
             status: string;
-        } | null;
-    }[];
+        };
+    }>;
     video_processing: boolean | null;
-    video_duration: {
+    video_duration: null | {
         hours: string | null;
         minutes: string;
         seconds: string;
-    } | null;
+    };
     free: boolean;
     limited: boolean;
     available: boolean;

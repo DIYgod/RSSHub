@@ -14,7 +14,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.caam.org.cn';
     const currentUrl = new URL(`chn/1/cate_${category}/list_1.html`, rootUrl).href;

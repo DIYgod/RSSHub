@@ -24,7 +24,7 @@ export const route: Route = {
     name: 'Tag',
     maintainers: ['suhang-only'],
     handler,
-    description: `| JSON    | Javascript     | Java | Apache | AWS | SQL | React | Golang    |
+    description: `| JSON | Javascript | Java | Apache | AWS | SQL | React | Golang |
 | ---- | ---------- | ---- | ------ | --- | --- | ----- | ------ |
 | json | javascript | java | apache | aws | sql | react | golang |`,
 };

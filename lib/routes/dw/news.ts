@@ -24,12 +24,10 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-::: tip
+    description: `::: tip
 Parameters can be obtained from the official website, for instance:
-For the site https://www.dw.com/de/deutschland/s-12321 the language code would be \`de\` and the category ID would be \`s-1432\`.
-:::
-`,
+For the site <https://www.dw.com/de/deutschland/s-12321> the language code would be \`de\` and the category ID would be \`s-1432\`.
+:::`,
     radar: [
         {
             source: ['www.dw.com/:lang/:name/:id'],
@@ -38,7 +36,7 @@ For the site https://www.dw.com/de/deutschland/s-12321 the language code would b
     ],
 };
 
-const defaultUrl = `https://www.dw.com/graph-api/en/content/navigation/9097`;
+const defaultUrl = 'https://www.dw.com/graph-api/en/content/navigation/9097';
 const typenames = new Set(['Article', 'Liveblog', 'Video']);
 
 async function handler(ctx) {

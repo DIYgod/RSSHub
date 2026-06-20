@@ -14,8 +14,7 @@ export const route: Route = {
     path: '*',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-Note that all parameters are optional and many can be specified multiple times
+    description: `Note that all parameters are optional and many can be specified multiple times
 (e.g. \`district=wien-1-innere-stadt&district=wien-2-leopoldstadt\`).
 
 Only returns the first page of search results, allowing you to keep track of
@@ -23,7 +22,7 @@ newly added apartments. If you're looking for an apartment, make sure to also
 look through the other pages on the website.
 
 ::: tip
-To get your query URL, go to https://genossenschaften.immo and apply all
+To get your query URL, go to <https://genossenschaften.immo> and apply all
 desired filters. If you want to filter by (all districts of a) federal state
 (e.g. \`/immobilien/regionen/wien/\`), please open the district selector and
 de- and re-select any district, so that the region in the URL gets replaced

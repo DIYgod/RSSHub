@@ -58,7 +58,7 @@ export const route: Route = {
 | diyishengyin         | 第一声音                     |
 | sanliangboqianjin    | 财智双全                     |
 | weilaiyaoqinghan     | 未来邀请函                   |
-| zjdy                 | 主角 ▪ 大医                 |
+| zjdy                 | 主角 ▪ 大医                  |
 | leye                 | 乐业之城                     |
 | sanrenxing           | 价值三人行                   |
 | yuandongli           | 中国源动力                   |

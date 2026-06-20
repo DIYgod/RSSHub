@@ -42,11 +42,13 @@ async function handler(ctx) {
                 const $ = load(data);
 
                 $('.entry img').each((_, img) => {
-                    if (img.attribs['data-original'] || img.attribs['data-src']) {
-                        img.attribs.src = img.attribs['data-original'] || img.attribs['data-src'];
-                        delete img.attribs['data-original'];
-                        delete img.attribs['data-src'];
+                    if (!(img.attribs['data-original'] || img.attribs['data-src'])) {
+                        return;
                     }
+
+                    img.attribs.src = img.attribs['data-original'] || img.attribs['data-src'];
+                    delete img.attribs['data-original'];
+                    delete img.attribs['data-src'];
                 });
 
                 item.author = $('.author_name').text().trim();

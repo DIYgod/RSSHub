@@ -1,9 +1,8 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/post/:id',
@@ -59,7 +58,7 @@ async function handler(ctx) {
         title: `${item.nick_name}: ${item.content}`,
         link: `${currentUrl}#${item.comment_id}${item.sub_replies.length > 0 ? `+${item.sub_replies.map((r) => r.comment_id).join('+')}` : ''}`,
         pubDate: parseDate(item.created_ts * 1000),
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             content: item.content,
             images: item.imglist.map((i) => ({
                 size: i.size,

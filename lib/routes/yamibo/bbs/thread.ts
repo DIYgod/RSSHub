@@ -33,7 +33,7 @@ export const route: Route = {
         ],
     },
     description: `::: warning
-百合会BBS访问部分讨论串需要用户登录认证，请参考配置说明
+百合会 BBS 访问部分讨论串需要用户登录认证，请参考配置说明
 :::`,
 };
 

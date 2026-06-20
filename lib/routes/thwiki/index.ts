@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     return {
         title: 'Touhou events calendar (THBWiki)',
-        link: `https://calendar.thwiki.cc/`,
+        link: 'https://calendar.thwiki.cc/',
         description: 'A Touhou related events calendar api from THBWiki',
         item: data.map((item) => ({
             title: item.title,

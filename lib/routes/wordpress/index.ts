@@ -11,13 +11,13 @@ import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchDat
 
 async function handler(ctx) {
     const { url = 'https://wordpress.org/news', filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     if (!config.feature.allow_user_supply_unsafe_domain) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
-    if (!/^(https?):\/\/[^\s#$./?].\S*$/i.test(url)) {
+    if (!/^https?:\/\/[^\s#$./?].\S*$/i.test(url)) {
         throw new Error('Invalid URL');
     }
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
     try {
         const { data: response } = await got(apiUrl);
 
-        const items = (Array.isArray(response) ? response : JSON.parse(response.match(/(\[.*])$/)[1])).slice(0, limit).map((item) => {
+        const items = (Array.isArray(response) ? response : JSON.parse(response.match(/(\[.*\])$/)[1])).slice(0, limit).map((item) => {
             const terminologies = item._embedded['wp:term'];
             const guid = item.guid?.rendered ?? item.guid;
 
@@ -143,13 +143,13 @@ export const route: Route = {
     description: `If you subscribe to [WordPress News](https://wordpress.org/news/)，where the URL is \`https://wordpress.org/news/\`, Encode the URL using \`encodeURIComponent()\` and then use it as the parameter. Therefore, the route will be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews).
 
 ::: tip
-  If you wish to subscribe to specific categories or tags, you can fill in the "filter" parameter in the route. \`/category/Podcast\` to subscribe to the Podcast category. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast).
+If you wish to subscribe to specific categories or tags, you can fill in the "filter" parameter in the route. \`/category/Podcast\` to subscribe to the Podcast category. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast).
 
-  You can also subscribe to multiple categories. \`/category/Podcast,Community\` to subscribe to both the Podcast and Community categories. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community).
+You can also subscribe to multiple categories. \`/category/Podcast,Community\` to subscribe to both the Podcast and Community categories. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community).
 
-  Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` to subscribe to the Releases category and the tagging tag. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging).
-  
-  You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
+Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` to subscribe to the Releases category and the tagging tag. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging).
+
+You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
 :::`,
     categories: ['blog'],
 

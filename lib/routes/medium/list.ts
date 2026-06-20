@@ -22,10 +22,10 @@ export const route: Route = {
     name: 'List',
     maintainers: ['ImSingee'],
     handler,
-    description: `The List ID is the last part of the URL after \`-\`, for example, the username in [https://medium.com/@imsingee/list/collection-7e67004f23f9](https://medium.com/@imsingee/list/collection-7e67004f23f9) is \`imsingee\`, and the ID is \`7e67004f23f9\`.
+    description: `The List ID is the last part of the URL after \`-\`, for example, the username in <https://medium.com/@imsingee/list/collection-7e67004f23f9> is \`imsingee\`, and the ID is \`7e67004f23f9\`.
 
 ::: warning
-  To access private lists, only self-hosting is supported.
+To access private lists, only self-hosting is supported.
 :::`,
 };
 

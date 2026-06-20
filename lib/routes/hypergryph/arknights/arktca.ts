@@ -48,7 +48,7 @@ async function handler() {
         allUrlList.map(async (item) => {
             const { data: response } = await got(item);
             const $$ = load(response);
-            const regVol = /(?<=Vol. )(\w+)/;
+            const regVol = /(?<=Vol. )\w+/;
             const match = regVol.exec($$('div.vp-page-title').find('h1').text());
             const volume = match ? match[0] : '';
             const links = $$('div.theme-hope-content > ul a')

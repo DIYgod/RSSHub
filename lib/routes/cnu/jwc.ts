@@ -52,7 +52,7 @@ async function handler() {
             return {
                 title: item.find('span.title').text().trim(),
                 link: linkUrl,
-                pubDate: pubDate || undefined,
+                pubDate,
                 category: categoryName ? [categoryName] : undefined,
                 description: '',
             };

@@ -102,7 +102,7 @@ async function getCookie() {
         if (set_cookie) {
             for (const e of set_cookie) {
                 if (e.indexOf('token') === 0) {
-                    token = e.split(';')[0];
+                    token = e.split(';', 1)[0];
                 }
             }
         }

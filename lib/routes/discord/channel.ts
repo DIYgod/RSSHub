@@ -1,12 +1,10 @@
-import path from 'node:path';
-
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
 import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
+import { renderDescription } from './templates/message';
 
 export const route: Route = {
     path: '/channel/:channelId',
@@ -51,8 +49,8 @@ async function handler(ctx) {
     const { name: guildName, icon: guidIcon } = guildInfo;
 
     const messages = messagesRaw.map((message) => ({
-        title: message.content.split('\n')[0],
-        description: art(path.join(__dirname, 'templates/message.art'), { message, guildInfo }),
+        title: message.content.split('\n', 1)[0],
+        description: renderDescription({ message, guildInfo }),
         author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
         pubDate: parseDate(message.timestamp),
         updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,

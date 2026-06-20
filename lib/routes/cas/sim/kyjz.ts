@@ -55,7 +55,7 @@ async function handler() {
                 const $ = load(response.data);
 
                 const author = $('.qtinfo.hidden-lg.hidden-md.hidden-sm').text();
-                const reg = /文章来源：(.*?)\|/g;
+                const reg = /文章来源：(.*?)\|/;
 
                 item.title = $('p.wztitle').text().trim();
                 item.author = reg.exec(author)[1].toString().trim();

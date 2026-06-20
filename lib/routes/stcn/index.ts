@@ -12,18 +12,16 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'yw' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const baseUrl: string = 'https://www.stcn.com';
+    const baseUrl = 'https://www.stcn.com';
     const targetUrl: string = new URL(`article/list/${id}.html`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('ul.infinite-list li')
+    let items: DataItem[] = $('ul.infinite-list li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -109,7 +107,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('img.stcn-logo').attr('src'),
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0],
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0],
         language,
         id: targetUrl,
     };
@@ -183,8 +181,7 @@ export const route: Route = {
 
 | 产经 | 科创板 | 新三板 | ESG | 滚动 |
 | ---- | ------ | ------ | --- | ---- |
-| cj   | kcb    | xsb    | zk  | gd   |
-`,
+| cj   | kcb    | xsb    | zk  | gd   |`,
     categories: ['finance'],
     features: {
         requireConfig: false,

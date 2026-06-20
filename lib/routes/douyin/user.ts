@@ -4,9 +4,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { art } from '@/utils/render';
 
 import type { PostData } from './types';
 import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
@@ -51,12 +50,11 @@ async function handler(ctx) {
         `douyin:user:${uid}`,
         async () => {
             let postData;
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -67,10 +65,10 @@ async function handler(ctx) {
 
             logger.http(`Requesting ${pageUrl}`);
             await page.goto(pageUrl, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle',
             });
 
-            await browser.close();
+            await context.close();
 
             if (!postData) {
                 throw new Error('Empty post data. The request may be filtered by WAF.');
@@ -110,12 +108,12 @@ async function handler(ctx) {
 
         // render description
         const desc = post.desc?.replaceAll('\n', '<br>');
-        let media = art(embed && videoList ? templates.embed : templates.cover, { img, videoList, duration });
-        media = embed && videoList && iframe ? art(templates.iframe, { content: media }) : media; // warp in iframe
-        const description = art(templates.desc, { desc, media });
+        let media = (embed && videoList ? templates.embed : templates.cover)({ img, videoList, duration });
+        media = embed && videoList && iframe ? templates.iframe({ content: media }) : media; // warp in iframe
+        const description = templates.desc({ desc, media });
 
         return {
-            title: post.desc.split('\n')[0],
+            title: post.desc.split('\n', 1)[0],
             description,
             link: `https://www.douyin.com/video/${post.aweme_id}`,
             pubDate: parseDate(post.create_time * 1000),

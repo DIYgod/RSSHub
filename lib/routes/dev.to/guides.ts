@@ -64,7 +64,7 @@ async function handler() {
                 const authorAvatar = $article('.crayons-article__header__meta .radius-full').attr('src');
                 // Extract publication date
                 const dateElement = $article('time[datetime]').first();
-                const dateString = dateElement.attr('datetime') || undefined;
+                const dateString = dateElement.attr('datetime');
                 const pubDate = dateString ? parseDate(dateString) : undefined;
                 // Extract tags
                 const tags = $article('.spec__tags .crayons-tag')

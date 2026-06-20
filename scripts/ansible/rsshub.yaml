@@ -87,7 +87,7 @@
         args:
             chdir: /home/rsshub/app
         environment:
-            PUPPETEER_SKIP_DOWNLOAD: true
+            PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: true
       - name: Copy configuration
         copy:
             src: rsshub.env

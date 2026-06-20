@@ -48,25 +48,25 @@ async function handler(ctx) {
                 {
                     title: 'Filter Title1',
                     description: 'Description1',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/-1`,
-                    author: `DIYgod0`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/-1',
+                    author: 'DIYgod0',
                     category: ['Category0', 'Category1'],
                 },
                 {
                     title: 'Filter Title2',
                     description: 'Description2',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/0`,
-                    author: `DIYgod0`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/0',
+                    author: 'DIYgod0',
                     category: ['Category0', 'Category1', 'Category2'],
                 },
                 {
                     title: 'Filter Title3',
                     description: 'Description3',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/1`,
-                    author: `DIYgod0`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/1',
+                    author: 'DIYgod0',
                     category: 'Category3',
                 },
             ];
@@ -77,9 +77,9 @@ async function handler(ctx) {
             item.push({
                 title: 'TitleIllegal',
                 description: 'DescriptionIllegal',
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://github.com/DIYgod/RSSHub/issues/1`,
-                author: `DIYgod0`,
+                pubDate: new Date('2019-3-1').toUTCString(),
+                link: 'https://github.com/DIYgod/RSSHub/issues/1',
+                author: 'DIYgod0',
                 category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }],
             });
 
@@ -87,11 +87,11 @@ async function handler(ctx) {
 
         case 'long':
             item.push({
-                title: `Long Title `.repeat(50),
-                description: `Long Description `.repeat(10),
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://github.com/DIYgod/RSSHub/issues/0`,
-                author: `DIYgod0`,
+                title: 'Long Title '.repeat(50),
+                description: 'Long Description '.repeat(10),
+                pubDate: new Date('2019-3-1').toUTCString(),
+                link: 'https://github.com/DIYgod/RSSHub/issues/0',
+                author: 'DIYgod0',
             });
 
             break;
@@ -103,9 +103,9 @@ async function handler(ctx) {
             item.push({
                 title: 'Cache Title',
                 description: description.text,
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://github.com/DIYgod/RSSHub/issues/0`,
-                author: `DIYgod0`,
+                pubDate: new Date('2019-3-1').toUTCString(),
+                link: 'https://github.com/DIYgod/RSSHub/issues/0',
+                author: 'DIYgod0',
             });
 
             break;
@@ -124,9 +124,9 @@ async function handler(ctx) {
             item.push({
                 title: 'Cache Title',
                 description: refresh + ' ' + noRefresh,
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://github.com/DIYgod/RSSHub/issues/0`,
-                author: `DIYgod0`,
+                pubDate: new Date('2019-3-1').toUTCString(),
+                link: 'https://github.com/DIYgod/RSSHub/issues/0',
+                author: 'DIYgod0',
             });
 
             break;
@@ -142,9 +142,9 @@ async function handler(ctx) {
             item.push({
                 title: 'Cache Title',
                 description: description.text,
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://github.com/DIYgod/RSSHub/issues/0`,
-                author: `DIYgod0`,
+                pubDate: new Date('2019-3-1').toUTCString(),
+                link: 'https://github.com/DIYgod/RSSHub/issues/0',
+                author: 'DIYgod0',
             });
 
             break;
@@ -153,7 +153,7 @@ async function handler(ctx) {
             image = 'https://mock.com/DIYgod/RSSHub.png';
             item.push(
                 {
-                    title: `Complicated Title`,
+                    title: 'Complicated Title',
                     description: `<a href="/DIYgod/RSSHub"></a>
 <img src="/DIYgod/RSSHub.jpg">
 <script>alert(1);</script>
@@ -165,38 +165,38 @@ async function handler(ctx) {
 <img src="http://mock.com/DIYgod/DIYgod/RSSHub">
 <img src="/DIYgod/RSSHub.jpg" onclick="alert(1);" onerror="alert(1);" onload="alert(1);">
 <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `//mock.com/DIYgod/RSSHub`,
-                    author: `DIYgod`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: '//mock.com/DIYgod/RSSHub',
+                    author: 'DIYgod',
                 },
                 {
-                    title: `Complicated Title`,
+                    title: 'Complicated Title',
                     description: `<a href="/DIYgod/RSSHub"></a>
 <img src="/DIYgod/RSSHub.jpg">`,
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://mock.com/DIYgod/RSSHub`,
-                    author: `DIYgod`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://mock.com/DIYgod/RSSHub',
+                    author: 'DIYgod',
                 },
                 {
-                    title: `Complicated Title`,
+                    title: 'Complicated Title',
                     description: `<a href="/DIYgod/RSSHub"></a>
 <img src="/DIYgod/RSSHub.jpg">
 <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `//mock.com/DIYgod/RSSHub`,
-                    author: `DIYgod`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: '//mock.com/DIYgod/RSSHub',
+                    author: 'DIYgod',
                     enclosure_url: 'https://mock.com/DIYgod/RSSHub.png',
                     enclosure_type: 'image/png',
                     itunes_item_image: 'https://mock.com/DIYgod/RSSHub.gif',
                 },
                 {
-                    title: `Complicated Title`,
+                    title: 'Complicated Title',
                     description: `<a href="/DIYgod/RSSHub"></a>
 <img src="/DIYgod/RSSHub.jpg">
 <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `//mock.com/DIYgod/RSSHub`,
-                    author: `DIYgod`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: '//mock.com/DIYgod/RSSHub',
+                    author: 'DIYgod',
                     image: 'https://mock.com/DIYgod/RSSHub.jpg',
                 }
             );
@@ -206,7 +206,7 @@ async function handler(ctx) {
         case 'multimedia':
             item.push(
                 {
-                    title: `Multimedia Title`,
+                    title: 'Multimedia Title',
                     description: `<img src="/DIYgod/RSSHub.jpg">
 <video src="/DIYgod/RSSHub.mp4"></video>
 <video poster="/DIYgod/RSSHub.jpg">
@@ -215,17 +215,17 @@ async function handler(ctx) {
 </video>
 <audio src="/DIYgod/RSSHub.mp3"></audio>
 <iframe src="/DIYgod/RSSHub.html"></iframe>`,
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://mock.com/DIYgod/RSSHub`,
-                    author: `DIYgod`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://mock.com/DIYgod/RSSHub',
+                    author: 'DIYgod',
                 },
                 {
-                    title: `Multimedia Title`,
+                    title: 'Multimedia Title',
                     description: `<img src="/DIYgod/RSSHub.jpg">
 <video src="/DIYgod/RSSHub.mp4"></video>`,
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://mock.com/DIYgod/RSSHub`,
-                    author: `DIYgod`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://mock.com/DIYgod/RSSHub',
+                    author: 'DIYgod',
                     enclosure_url: 'https://mock.com/DIYgod/RSSHub.mp4',
                     enclosure_type: 'video/mp4',
                 }
@@ -236,26 +236,26 @@ async function handler(ctx) {
         case 'sort':
             item.push(
                 {
-                    title: `Sort Title 0`,
-                    link: `https://github.com/DIYgod/RSSHub/issues/s1`,
-                    author: `DIYgod0`,
+                    title: 'Sort Title 0',
+                    link: 'https://github.com/DIYgod/RSSHub/issues/s1',
+                    author: 'DIYgod0',
                 },
                 {
-                    title: `Sort Title 1`,
-                    link: `https://github.com/DIYgod/RSSHub/issues/s1`,
-                    author: `DIYgod0`,
+                    title: 'Sort Title 1',
+                    link: 'https://github.com/DIYgod/RSSHub/issues/s1',
+                    author: 'DIYgod0',
                 },
                 {
-                    title: `Sort Title 2`,
-                    link: `https://github.com/DIYgod/RSSHub/issues/s2`,
+                    title: 'Sort Title 2',
+                    link: 'https://github.com/DIYgod/RSSHub/issues/s2',
                     pubDate: new Date(1_546_272_000_000 - 10 * 10 * 1000).toUTCString(),
-                    author: `DIYgod0`,
+                    author: 'DIYgod0',
                 },
                 {
-                    title: `Sort Title 3`,
-                    link: `https://github.com/DIYgod/RSSHub/issues/s3`,
+                    title: 'Sort Title 3',
+                    link: 'https://github.com/DIYgod/RSSHub/issues/s3',
                     pubDate: new Date(1_546_272_000_000).toUTCString(),
-                    author: `DIYgod0`,
+                    author: 'DIYgod0',
                 }
             );
 
@@ -263,10 +263,10 @@ async function handler(ctx) {
 
         case 'mess':
             item.push({
-                title: `Mess Title`,
-                link: `/DIYgod/RSSHub/issues/0`,
+                title: 'Mess Title',
+                link: '/DIYgod/RSSHub/issues/0',
                 pubDate: 1_546_272_000_000,
-                author: `DIYgod0`,
+                author: 'DIYgod0',
             });
 
             break;
@@ -275,9 +275,9 @@ async function handler(ctx) {
             item.push({
                 title: '小可愛',
                 description: '宇宙無敵',
-                link: `/DIYgod/RSSHub/issues/0`,
+                link: '/DIYgod/RSSHub/issues/0',
                 pubDate: new Date(1_546_272_000_000).toUTCString(),
-                author: `DIYgod0`,
+                author: 'DIYgod0',
             });
 
             break;
@@ -286,9 +286,9 @@ async function handler(ctx) {
             item.push({
                 title: '小可愛',
                 description: '<p>宇宙無敵</p><br>'.repeat(1000),
-                link: `/DIYgod/RSSHub/issues/0`,
+                link: '/DIYgod/RSSHub/issues/0',
                 pubDate: new Date(1_546_272_000_000).toUTCString(),
-                author: `DIYgod0`,
+                author: 'DIYgod0',
             });
 
             break;
@@ -297,23 +297,23 @@ async function handler(ctx) {
             item.push(
                 {
                     title: 'Title0',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/-3`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/-3',
                 },
                 {
                     title: 'Title1',
                     description: 'Description1',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/-2`,
-                    author: `DIYgod0 `,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/-2',
+                    author: 'DIYgod0 ',
                     category: 'Category0',
                 },
                 {
                     title: 'Title2 HTML in description',
                     description: '<a href="https://github.com/DIYgod/RSSHub">RSSHub</a>',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    updated: new Date(`2019-3-2`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/-1`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    updated: new Date('2019-3-2').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/-1',
                     author: [{ name: ' DIYgod1' }, { name: 'DIYgod2 ' }],
                     category: ['Category0', 'Category1'],
                 },
@@ -322,9 +322,9 @@ async function handler(ctx) {
                     content: {
                         html: '<a href="https://github.com/DIYgod/RSSHub">DIYgod/RSSHub</a>',
                     },
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    updated: new Date(`2019-3-2`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/issues/0`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    updated: new Date('2019-3-2').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/issues/0',
                     author: [{ name: '   DIYgod3' }, { name: 'DIYgod4   ' }, { name: 'DIYgod5   ' }],
                     category: ['Category1'],
                     enclosure_url: 'https://github.com/DIYgod/RSSHub/issues/0',
@@ -334,8 +334,8 @@ async function handler(ctx) {
                 },
                 {
                     title: 'Title4 author is null',
-                    pubDate: new Date(`2019-3-1`).toUTCString(),
-                    link: `https://github.com/DIYgod/RSSHub/pull/11555`,
+                    pubDate: new Date('2019-3-1').toUTCString(),
+                    link: 'https://github.com/DIYgod/RSSHub/pull/11555',
                     author: null,
                 }
             );
@@ -346,7 +346,7 @@ async function handler(ctx) {
             item.push({
                 title: 'Title0',
                 description: 'Description0',
-                pubDate: new Date(`2019-3-1`).toUTCString(),
+                pubDate: new Date('2019-3-1').toUTCString(),
                 link: 'https://github.com/DIYgod/RSSHub/issues/0',
             });
 

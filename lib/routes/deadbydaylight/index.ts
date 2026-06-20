@@ -43,8 +43,8 @@ async function handler() {
     // { 0: node: { id, locale, slug, title, excerpt, image, published_at, article_category}}
 
     const items = await Promise.all(
-        Object.keys(articleMeta).map((id) => {
-            const content = articleMeta[id].node;
+        Object.values(articleMeta).map((edge) => {
+            const content = edge.node;
             const slug = content.slug;
             const dataUrl = `${baseUrl}/page-data/news/${slug}/page-data.json`;
 

@@ -1,7 +1,0 @@
-{{ if title }}
-<h1>{{@ title }}</h1>
-{{ /if }}
-{{ if image }}
-<img src="{{ image }}"/>
-{{ /if }}
-<br/>

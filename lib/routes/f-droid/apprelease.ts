@@ -43,7 +43,7 @@ async function handler(ctx) {
             return {
                 title: version,
                 guid: a.eq(1).attr('name'),
-                pubDate: parseDate($item.find('.package-version-header').text().split('Added on ')[1]),
+                pubDate: parseDate($item.find('.package-version-header').text().split('Added on ', 2)[1]),
                 description: [$item.find('.package-version-download').html(), $item.find('.package-version-requirement').html(), $item.find('.package-version-source').html()].join('<br>'),
                 link: `https://f-droid.org/en/packages/${app}/#${version}`,
             };

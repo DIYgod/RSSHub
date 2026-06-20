@@ -28,8 +28,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
-| ------- | ------- | -------- | -- | ----- |
-| initium | inmedia | matters  | pq | vocus |`,
+| ------- | ------- | ------- | -- | ----- |
+| initium | inmedia | matters | pq | vocus |`,
 };
 
 async function handler(ctx) {

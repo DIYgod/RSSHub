@@ -82,6 +82,6 @@ export function processContent($: CheerioAPI, lang: string): string {
     return (
         $('.am__body')
             .html()
-            ?.replaceAll('https://i.pximg.net', config.pixiv.imgProxy || '') || ''
+            ?.replaceAll('https://i.pximg.net', () => config.pixiv.imgProxy || '') || ''
     );
 }

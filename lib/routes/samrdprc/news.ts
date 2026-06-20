@@ -21,12 +21,10 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    description: `
-| 类型中文 | 召回类型ID1 | 召回类型ID2 |
-| --- | --- | --- |
-| 消费品召回 | xfpzh | xfpgnzh |
-| 汽车召回 | qczh | gnzhqc |
-`,
+    description: `| 类型中文   | 召回类型 ID1 | 召回类型 ID2 |
+| ---------- | ------------ | ------------ |
+| 消费品召回 | xfpzh        | xfpgnzh      |
+| 汽车召回   | qczh         | gnzhqc       |`,
     name: '召回信息',
     maintainers: ['a180285'],
     radar: [

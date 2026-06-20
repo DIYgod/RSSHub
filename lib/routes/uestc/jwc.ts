@@ -60,7 +60,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') || 'important';
-    if (type in typeUrlMap === false) {
+    if (!Object.hasOwn(typeUrlMap, type)) {
         throw new InvalidParameterError('type not supported');
     }
     const typeName = typeNameMap[type];

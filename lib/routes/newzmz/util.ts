@@ -1,10 +1,9 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const rootUrl = 'https://nzmz.xyz';
 
@@ -27,7 +26,7 @@ const getItems = async (tryGet, homeUrl, id, modSelector, itemSelector) => {
     const $ = load(response);
 
     return $(modSelector)
-        .eq(Number.parseInt(id, 10))
+        .eq(Number(id))
         .find(itemSelector)
         .toArray()
         .map((item) => {
@@ -144,9 +143,8 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
                 guid,
                 title,
                 link: i.link,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     ...i.description,
-
                     categories,
                     downLinks,
                 }),

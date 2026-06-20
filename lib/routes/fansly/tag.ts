@@ -36,7 +36,7 @@ async function handler(ctx) {
     const items = suggestion.aggregationData?.posts.map((post) => {
         const account = findAccountById(post.accountId, suggestion.aggregationData.accounts);
         return {
-            title: post.content.split('\n')[0],
+            title: post.content.split('\n', 1)[0],
             description: parseDescription(post, suggestion.aggregationData),
             pubDate: parseDate(post.createdAt, 'X'),
             link: `${baseUrl}/post/${post.id}`,

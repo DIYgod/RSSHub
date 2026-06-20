@@ -51,7 +51,7 @@ async function checkRSS(response) {
     checkDate(parsed.lastBuildDate);
 
     // check items
-    const guids: (string | undefined)[] = [];
+    const guids: Array<string | undefined> = [];
     for (const item of parsed.items) {
         expect(item).toEqual(expect.any(Object));
         expect(item.title).toEqual(expect.any(String));

@@ -13,7 +13,7 @@ const categories = {
 };
 
 export const route: Route = {
-    path: '/nrta/news/:category?',
+    path: '/news/:category?',
     categories: ['government'],
     example: '/gov/nrta/news',
     parameters: { category: '资讯类别，可从地址中获取，默认为总局要闻' },
@@ -45,7 +45,7 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const regex = /<!\[cdata\[([\S\s]*?)]]>(?=\s*<)/gi;
+    const regex = /<!\[cdata\[([\s\S]*?)\]\]>(?=\s*<)/gi;
     const data = response.data.replaceAll(regex, '$1');
 
     const $ = load(data, {
@@ -77,7 +77,7 @@ async function handler(ctx) {
         )
     );
     return {
-        title: category in categories ? categories[category] : '其他',
+        title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
         language: 'zh-cn',

@@ -46,7 +46,7 @@ async function handler() {
             const path = item.find('a').attr('href');
             const itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (!path.startsWith('https://') && !path.startsWith('http://')) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
@@ -65,7 +65,7 @@ async function handler() {
     );
 
     return {
-        title: `中国研究生招生信息网 - 考研动态`,
+        title: '中国研究生招生信息网 - 考研动态',
         link: `${host}/kyzx/kydt/`,
         description: '中国研究生招生信息网 - 考研动态',
         item: items,

@@ -4,15 +4,12 @@ import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36';
-
 /**
  * Extract page ID from script tags in HTML
  */
 export const extractPageId = async (url: string, referer: string): Promise<string> => {
     const response = await ofetch(url, {
         headers: {
-            'User-Agent': USER_AGENT,
             Referer: referer,
             Accept: 'application/json, text/plain, */*',
         },
@@ -23,7 +20,7 @@ export const extractPageId = async (url: string, referer: string): Promise<strin
 
     $('script').each((_, script) => {
         const content = $(script).html() || '';
-        const match = content.match(/PAGE\s*=\s*{\s*id\s*:\s*(\d+)\s*}/);
+        const match = content.match(/PAGE\s*=\s*\{\s*id\s*:\s*(\d+)\s*\}/);
         if (match) {
             pageId = match[1];
         }
@@ -39,7 +36,6 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
     const apiUrl = `${rootUrl}/api/top/${type}`;
     const response = await ofetch(apiUrl, {
         headers: {
-            'User-Agent': USER_AGENT,
             Referer: rootUrl,
             Accept: 'application/json, text/plain, */*',
         },
@@ -60,7 +56,7 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
 
     if (response.code === 0 && response.data && Array.isArray(response.data)) {
         const items = response.data.map((item) => {
-            const content = item.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
+            const content = item.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, () => src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
 
             return {
                 author: item.author,
@@ -114,7 +110,6 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
         const apiUrl = `${rootUrl}/api/forum/posts/${forumId}?page=1`;
         const forumData = await ofetch(apiUrl, {
             headers: {
-                'User-Agent': USER_AGENT,
                 Referer: currentUrl,
                 Accept: 'application/json, text/plain, */*',
             },
@@ -122,7 +117,7 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
 
         if (forumData.code === 0 && forumData.data && forumData.data.list && Array.isArray(forumData.data.list)) {
             const items = forumData.data.list.map((post) => {
-                const content = post.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
+                const content = post.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, () => src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
 
                 return {
                     author: post.author_name,
@@ -153,7 +148,7 @@ export const handleForumSection = async (rootUrl: string): Promise<{ title: stri
             title,
             items: [
                 {
-                    title: `解析错误: 鱼塘`,
+                    title: '解析错误: 鱼塘',
                     description: `解析鱼塘页面时出错: ${error instanceof Error ? error.message : String(error)}`,
                     link: currentUrl,
                     pubDate: new Date(),
@@ -174,7 +169,6 @@ export const handleCommentSection = async (rootUrl: string, category: string): P
 
         const response = await ofetch(currentUrl, {
             headers: {
-                'User-Agent': USER_AGENT,
                 Referer: rootUrl,
                 Accept: 'application/json, text/plain, */*',
             },
@@ -200,7 +194,6 @@ export const handleCommentSection = async (rootUrl: string, category: string): P
         const apiUrl = `${rootUrl}/api/comment/post/${pageId}?order=desc&page=1`;
         const commentsData = await ofetch(apiUrl, {
             headers: {
-                'User-Agent': USER_AGENT,
                 Referer: currentUrl,
                 Accept: 'application/json, text/plain, */*',
             },
@@ -208,7 +201,7 @@ export const handleCommentSection = async (rootUrl: string, category: string): P
 
         if (commentsData.code === 0 && commentsData.data && commentsData.data.list && Array.isArray(commentsData.data.list)) {
             const items = commentsData.data.list.map((comment) => {
-                const content = comment.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
+                const content = comment.content.replaceAll(/img src="(.*?)"/g, (match, src) => match.replace(src, () => src.replace(/^https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn')));
 
                 return {
                     author: comment.author,

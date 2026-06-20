@@ -29,13 +29,14 @@ async function handler(ctx) {
         url: currentUrl,
     });
     const $ = load(response.data);
+    const limit = ctx.req.query('limit');
     const list = $('a', '.dd_bt')
         .toArray()
         .map((item) => ({
             link: rootUrl + $(item).attr('href'),
             title: $(item).text(),
         }))
-        .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 125) : 50);
+        .slice(0, limit ? Number.parseInt(limit) : 50);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -61,9 +62,7 @@ async function handler(ctx) {
                     item.description = content('div.left_zw').html();
                     const info = content('div.left-t')
                         .contents()
-                        .filter(function () {
-                            return this.type === 'text';
-                        })
+                        .filter((_, el) => el.type === 'text')
                         .text()
                         .split('　');
                     item.pubDate = timezone(parseDate(info[0], 'YYYY年MM月DD日 HH:mm'), +8);

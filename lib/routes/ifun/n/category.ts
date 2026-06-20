@@ -8,7 +8,7 @@ import { author, language, processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = rootUrl;
     const apiUrl: string = new URL(`api/articles/${id ? 'categoryId' : 'all'}`, rootUrl).href;
@@ -54,14 +54,12 @@ export const route: Route = {
     parameters: {
         id: '分类 id，默认为空，即全部，见下表',
     },
-    description: `
-| 名称     | ID  |
-| -------- | --- |
-| 全部     |     |
-| 通告     | 1   |
-| 故事盐选 | 2   |
-| 趣集精选 | 3   |
-    `,
+    description: `| 名称     | ID |
+| -------- | -- |
+| 全部     |    |
+| 通告     | 1  |
+| 故事盐选 | 2  |
+| 趣集精选 | 3  |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

@@ -32,7 +32,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id') ?? '2';
 
     const rootUrl = 'https://www.storm.mg';
-    const currentUrl = new URL(`/api/getArticleList`, rootUrl).href;
+    const currentUrl = new URL('/api/getArticleList', rootUrl).href;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
     const response = await ofetch(currentUrl, {

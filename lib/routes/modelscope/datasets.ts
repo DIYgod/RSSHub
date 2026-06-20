@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/desc';
 
 const md = MarkdownIt({
     html: true,
@@ -65,8 +64,8 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const { data } = await got(`${baseUrl}/api/v1/datasets${item.slug}`);
 
-                const content = data.Data.ReadmeContent.replaceAll(/img src="(?!http)(.*?)"/g, `img src="${baseUrl}/api/v1/datasets${item.slug}/repo?Revision=master&FilePath=$1&View=true"`);
-                item.description = art(path.join(__dirname, 'templates/desc.art'), {
+                const content = data.Data.ReadmeContent.replaceAll(/img src="(?!http)(.*?)"/g, (_match, p1) => `img src="${baseUrl}/api/v1/datasets${item.slug}/repo?Revision=master&FilePath=${p1}&View=true"`);
+                item.description = renderDescription({
                     description: item.description,
                     md: md.render(content),
                 });

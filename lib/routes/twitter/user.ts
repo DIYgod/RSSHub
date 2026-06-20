@@ -16,19 +16,19 @@ export const route: Route = {
     },
     features: {
         requireConfig: [
-            {
-                name: 'TWITTER_USERNAME',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_PASSWORD',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_AUTHENTICATION_SECRET',
-                description: 'TOTP 2FA secret, please see above for details.',
-                optional: true,
-            },
+            // {
+            //     name: 'TWITTER_USERNAME',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_PASSWORD',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_AUTHENTICATION_SECRET',
+            //     description: 'TOTP 2FA secret, please see above for details.',
+            //     optional: true,
+            // },
             {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
@@ -37,6 +37,14 @@ export const route: Route = {
                 name: 'TWITTER_THIRD_PARTY_API',
                 description: 'Use third-party API to query twitter data',
                 optional: true,
+            },
+            {
+                name: 'TWITTER_CONSUMER_KEY',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TWITTER_CONSUMER_SECRET',
+                description: 'Please see above for details.',
             },
         ],
         requirePuppeteer: false,

@@ -26,7 +26,7 @@ async function handler(ctx) {
     const link = `${baseUrl}/engineering`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const list: DataItem[] = $('a[class*="cardLink"]')
         .toArray()

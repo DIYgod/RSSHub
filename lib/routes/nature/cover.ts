@@ -45,7 +45,7 @@ export const route: Route = {
     maintainers: ['y9c', 'pseudoyu'],
     handler,
     url: 'nature.com/',
-    description: `Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.`,
+    description: 'Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.',
 };
 
 async function handler() {
@@ -75,7 +75,7 @@ async function handler() {
                 const imageUrl = `https://media.springernature.com/full/springer-static/cover-hires/journal/${id}/${volume}/${issue}?as=webp`;
                 const contents = `<div align="center"><img src="${imageUrl}" alt="Volume ${volume} Issue ${issue}"></div>`;
 
-                const date = $('title').text().split(',')[1].trim();
+                const date = $('title').text().split(',', 2)[1].trim();
                 const issueDescription = $('div[data-test=issue-description]').html() ?? '';
 
                 return {

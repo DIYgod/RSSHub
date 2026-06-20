@@ -6,7 +6,7 @@ import { parseDate as _parseDate } from '@/utils/parse-date';
 import _timezone from '@/utils/timezone';
 
 function transElemText($, prop) {
-    const regex = /\$\((.*)\)/g;
+    const regex = /\$\(.*\)/;
     let result = prop;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const parseDate = _parseDate;
@@ -25,7 +25,7 @@ function replaceParams(data, prop, $) {
     let group = regex.exec(prop);
     while (group) {
         // FIXME Multi vars
-        result = result.replace(group[0], transElemText($, data.params[group[1]]));
+        result = result.replace(group[0], () => transElemText($, data.params[group[1]]));
         group = regex.exec(prop);
     }
     return result;

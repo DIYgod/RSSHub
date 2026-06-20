@@ -2,14 +2,14 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 
 async function getCategoryId(categories) {
-    const baseUrl = `https://macmenubar.com/wp-json/wp/v2/categories`;
+    const baseUrl = 'https://macmenubar.com/wp-json/wp/v2/categories';
     const { data: response } = await got(baseUrl, {
         method: 'GET',
         searchParams: {
             slug: categories,
         },
     });
-    return response.reduce((queryString, item) => queryString + item.id + ',', '');
+    return response.map((item) => item.id + ',').join('');
 }
 
 export const route: Route = {

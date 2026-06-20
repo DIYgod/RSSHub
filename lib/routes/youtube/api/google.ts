@@ -67,7 +67,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
             const ytInitialData = JSON.parse(
                 $('script')
                     .text()
-                    .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
+                    .match(/ytInitialData = (\{.*?\});/)?.[1] || '{}'
             );
             const metadataRenderer = ytInitialData.metadata.channelMetadataRenderer;
 
@@ -92,18 +92,17 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
             const origPlaylistId = userHandleData.playlistId;
 
             return utils.getPlaylistWithShortsFilter(origPlaylistId, filterShorts);
-        } else {
-            const channelData = await utils.getChannelWithUsername(username, 'contentDetails', cache);
-            const items = channelData.data.items;
-
-            if (!items) {
-                throw new NotFoundError(`The channel https://www.youtube.com/user/${username} does not exist.`);
-            }
-
-            const channelId = items[0].id;
-
-            return filterShorts ? utils.getPlaylistWithShortsFilter(channelId, filterShorts) : items[0].contentDetails.relatedPlaylists.uploads;
         }
+        const channelData = await utils.getChannelWithUsername(username, 'contentDetails', cache);
+        const items = channelData.data.items;
+
+        if (!items) {
+            throw new NotFoundError(`The channel https://www.youtube.com/user/${username} does not exist.`);
+        }
+
+        const channelId = items[0].id;
+
+        return filterShorts ? utils.getPlaylistWithShortsFilter(channelId, filterShorts) : items[0].contentDetails.relatedPlaylists.uploads;
     })();
 
     const playlistItems = await utils.getPlaylistItems(playlistId, 'snippet', cache);

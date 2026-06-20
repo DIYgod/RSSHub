@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import { isValidHost } from '@/utils/valid-host';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: ['/global/:lang/:type?', '/ff14_global/:lang/:type?'],
@@ -29,7 +28,7 @@ export const route: Route = {
 | ------------ | ------ | ------ | ------- | ----- |
 | na           | eu     | fr     | de      | jp    |
 
-  Category
+Category
 
 | all | topics | notices | maintenance | updates | status | developers |
 | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
@@ -64,7 +63,7 @@ async function handler(ctx) {
         item: data.map(({ id, url, title, time, description, image }) => ({
             title,
             link: url,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 image,
                 description,
             }),

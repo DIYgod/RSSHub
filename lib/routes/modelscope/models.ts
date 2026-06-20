@@ -57,7 +57,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const { data } = await got(`${baseUrl}/api/v1/models${item.slug}`);
 
-                const content = data.Data.ReadMeContent.replaceAll(/img src="(?!http)(.*?)"/g, `img src="${baseUrl}/api/v1/models${item.slug}/repo?Revision=master&FilePath=$1&View=true"`);
+                const content = data.Data.ReadMeContent.replaceAll(/img src="(?!http)(.*?)"/g, (_match, p1) => `img src="${baseUrl}/api/v1/models${item.slug}/repo?Revision=master&FilePath=${p1}&View=true"`);
                 item.description = md.render(content);
                 return item;
             })

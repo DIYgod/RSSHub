@@ -23,11 +23,11 @@ export const route: Route = {
     maintainers: ['jialinghui', 'Misaka13514'],
     handler,
     description: `::: tip
-  例如：消息速递的网址为 \`https://www.shmeea.edu.cn/page/08000/index.html\`，则页面 ID 为 \`08000\`。
+例如：消息速递的网址为 \`https://www.shmeea.edu.cn/page/08000/index.html\`，则页面 ID 为 \`08000\`。
 :::
 
 ::: warning
-  暂不支持大类分类和[院内动态](https://www.shmeea.edu.cn/page/19000/index.html)
+暂不支持大类分类和[院内动态](https://www.shmeea.edu.cn/page/19000/index.html)
 :::`,
 };
 

@@ -54,7 +54,7 @@ async function handler(ctx) {
             let link;
             let title;
             if (type === 'status') {
-                link = item.target.status.sharing_url.split('&')[0];
+                link = item.target.status.sharing_url.split('&', 1)[0];
                 author = item.target.status.author.name;
                 title = author + '的广播';
                 date = item.target.status.create_time;

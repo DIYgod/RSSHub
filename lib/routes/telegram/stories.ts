@@ -62,7 +62,7 @@ export const route: Route = {
     name: 'Stories',
     maintainers: ['synchrone'],
     handler,
-    description: ``,
+    description: '',
 };
 
 function getMediaAreas(mediaAreas?: Api.TypeMediaArea[]) {

@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '轉角國際 - 首頁',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 首頁 | 編輯精選 | 熱門文章 |
 | ---- | -------- | -------- |
@@ -64,7 +64,7 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const a = $(item);
-                const rawLink = a.attr('href').split('?')[0];
+                const rawLink = a.attr('href').split('?', 1)[0];
                 return {
                     title: config.titleExtractor(a),
                     link: rawLink.startsWith('http') ? rawLink : `${rootUrl}${rawLink}`,
@@ -80,7 +80,7 @@ async function handler(ctx) {
         const hotItems = getItems(categoriesConf.hot);
 
         const combinedItems = [...hotItems, ...defaultItems];
-        items = [...new Map(combinedItems.map((item) => [item.link, item])).values()];
+        items = new Map(combinedItems.map((item) => [item.link, item])).values().toArray();
     }
 
     items = await Promise.all(

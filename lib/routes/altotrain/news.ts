@@ -71,7 +71,7 @@ function extractItem(a: Cheerio<any>, language: string) {
     const descEl = a.find('p').first();
     const description = descEl.text().trim();
 
-    const dateMatch = language === 'fr' ? description.match(/(\d{1,2} [a-zéû]+[.]? \d{4})/i) : description.match(/([A-Z][a-z]+[.]? \d{1,2}, \d{4})/);
+    const dateMatch = language === 'fr' ? description.match(/(\d{1,2} [a-zéû]+\.? \d{4})/i) : description.match(/([A-Z][a-z]+\.? \d{1,2}, \d{4})/);
 
     const pubDateStr = dateMatch ? dateMatch[1].trim() : '';
     const pubDate = parseDate(pubDateStr);

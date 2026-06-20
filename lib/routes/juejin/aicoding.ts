@@ -69,10 +69,10 @@ export const route: Route = {
 async function handler(ctx) {
     const { tag, sort } = ctx.req.param();
     const sortType = sort === 'hot' ? 1 : 2;
-    let tagList: {
+    let tagList: Array<{
             tag_id: string;
             tag: Tag;
-        }[],
+        }>,
         currentTag: Tag | undefined,
         tagId: string | undefined;
     if (tag) {

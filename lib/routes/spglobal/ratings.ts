@@ -28,17 +28,15 @@ export const route: Route = {
         },
     ],
     name: 'Ratings',
-    description: `
-| language | Description |
-| ---   | ---   |
-| zh | 中文 |
-| en | English |
-| es | Español |
-| pt | Português |
-| jp | 日本語 |
-| ru | Русский |
-| ar | العربية |
-    `,
+    description: `| language | Description |
+| -------- | ----------- |
+| zh       | 中文        |
+| en       | English     |
+| es       | Español     |
+| pt       | Português   |
+| jp       | 日本語      |
+| ru       | Русский     |
+| ar       | العربية     |`,
     maintainers: ['Cedaric'],
     handler,
 };

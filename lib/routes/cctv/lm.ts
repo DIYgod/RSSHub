@@ -37,7 +37,7 @@ export const route: Route = {
 | zdzy     | jjbxs      | dydhly       |
 
 ::: tip
-  更多栏目请看 [这里](https://tv.cctv.com/lm)
+更多栏目请看 [这里](https://tv.cctv.com/lm)
 :::`,
 };
 
@@ -90,8 +90,12 @@ async function handler(ctx) {
                     item.description += `<video src="${c.url}" controls="controls" poster="${c.image}" width="100%"></video><br>`;
                 }
 
-                for (let i = 2; data.video[`chapters${i}`]; i++) {
-                    for (const c of data.video[`chapters${i}`]) {
+                for (let i = 2; ; i++) {
+                    const chapters = data.video[`chapters${i}`];
+                    if (!chapters) {
+                        break;
+                    }
+                    for (const c of chapters) {
                         item.description += `<video src="${c.url}" controls="controls" poster="${c.image}" width="100%"></video><br>`;
                     }
                 }

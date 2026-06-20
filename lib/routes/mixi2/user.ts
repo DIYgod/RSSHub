@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { CONFIG_OPTIONS, getClient, parsePost, postFilter } from './utils';
 
 const handler = async (ctx: Context) => {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
     const name = ctx.req.param('name');
     const mediaOnly = ctx.req.param('media') === 'media';
 

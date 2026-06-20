@@ -1,5 +1,3 @@
-import { URL } from 'node:url';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -41,10 +39,10 @@ async function loadContent(link) {
     // 图片相对链接处理
     $('img').attr('src', (n, v) => new URL(v, baseUrl).href);
     // 视频相对链接处理，替换原有播放方法 showVsbVideo
-    $('.vsbcontent_video').each(function () {
-        const u1 = $(this).find('script').attr('vurl');
+    $('.vsbcontent_video').each((_, el) => {
+        const u1 = $(el).find('script').attr('vurl');
         videoUrl = new URL(u1, baseUrl).href;
-        return $(this)
+        $(el)
             .html('<video width="100%" src="' + videoUrl + '"></video>')
             .html();
     });
@@ -74,7 +72,7 @@ async function handler(ctx) {
     return {
         title: newsTitle,
         link: newsLink,
-        description: '温州大学' + ' - ' + newsTitle,
+        description: `温州大学 - ${newsTitle}`,
         item: list.toArray().map(async (item) => {
             const $ = load(item);
             const $a1 = $('li>a');

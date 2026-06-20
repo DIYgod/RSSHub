@@ -29,7 +29,7 @@ async function handler(ctx) {
         size,
     };
     const link = `https://www.miyoushe.com/ys/accountCenter/postList?id=${uid}`;
-    const url = `https://bbs-api.miyoushe.com/post/wapi/userPost`;
+    const url = 'https://bbs-api.miyoushe.com/post/wapi/userPost';
     const response = await got({
         method: 'get',
         url,

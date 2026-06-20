@@ -15,11 +15,11 @@ const pageType = (href) => {
     const url = new URL(href);
     if (url.hostname === 'mp.weixin.qq.com') {
         return 'wechat-mp';
-    } else if (url.hostname === 'news.pku.edu.cn') {
-        return 'pku-news';
-    } else {
-        return 'unknown';
     }
+    if (url.hostname === 'news.pku.edu.cn') {
+        return 'pku-news';
+    }
+    return 'unknown';
 };
 
 export const route: Route = {
@@ -47,7 +47,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got({ url: baseUrl, https: { rejectUnauthorized: false } });
+    const response = await got(baseUrl);
 
     const $ = load(response.data);
     const list = $('div.maincontent > ul > li')
@@ -70,14 +70,14 @@ async function handler() {
                     return finishArticleItem(item);
                 case 'pku-news':
                     return cache.tryGet(item.link, async () => {
-                        const detailResponse = await got({ url: item.link, https: { rejectUnauthorized: false } });
+                        const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.pageArticle > div.col.lf').html();
                         return item;
                     });
                 case 'in-site':
                     return cache.tryGet(item.link, async () => {
-                        const detailResponse = await got({ url: item.link, https: { rejectUnauthorized: false } });
+                        const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.article').html();
                         return item;

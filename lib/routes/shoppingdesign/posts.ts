@@ -44,8 +44,8 @@ async function handler() {
                 const response = await got(`${link}?sn_f=1`);
                 const $ = load(response.data);
                 const article = $('.left article .htmlview');
-                article.find('d-image').each(function () {
-                    $(this).replaceWith(`<img src="${$(this).attr('lg')}">`);
+                article.find('d-image').each((_, el) => {
+                    $(el).replaceWith(`<img src="${$(el).attr('lg')}">`);
                 });
 
                 return {

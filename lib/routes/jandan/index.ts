@@ -61,7 +61,7 @@ async function handler(): Promise<{
                 return single;
             })
         )
-    ).then((items) => items.filter((item): item is DataItem => item !== undefined));
+    );
 
     return {
         title: '煎蛋',

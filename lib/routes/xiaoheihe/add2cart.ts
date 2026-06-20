@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     return {
         title: `小黑盒 ${platform.toUpperCase()} 喜加一`,
-        link: `https://xiaoheihe.cn`,
+        link: 'https://xiaoheihe.cn',
         item: items,
     };
 }

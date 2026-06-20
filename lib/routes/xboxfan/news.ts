@@ -49,7 +49,7 @@ async function handler() {
             const data = {
                 title: '资讯',
                 author: $(item).find('div.homeName').text(),
-                pubDate: parseRelativeDate($(item).find('div.homeTime').first().text().split(' ')[0]),
+                pubDate: parseRelativeDate($(item).find('div.homeTime').first().text().split(' ', 1)[0]),
             };
 
             $(item).find('div.homeName').remove();

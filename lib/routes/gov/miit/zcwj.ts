@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/miit/zcwj',
+    path: '/zcwj',
     categories: ['government'],
     example: '/gov/miit/zcwj',
     parameters: {},

@@ -50,7 +50,7 @@ export const route: Route = {
     maintainers: ['TigerCubDen', 'JimenezLi'],
     handler,
     description: `::: warning
-  用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 
@@ -105,14 +105,14 @@ async function handler(ctx) {
         let imgs = '';
         // 动态图片
         if (data.pictures) {
-            for (let i = 0; i < data.pictures.length; i++) {
-                imgs += `<img src="${data.pictures[i].img_src}">`;
+            for (const pic of data.pictures) {
+                imgs += `<img src="${pic.img_src}">`;
             }
         }
         // 专栏封面
         if (data.image_urls) {
-            for (let i = 0; i < data.image_urls.length; i++) {
-                imgs += `<img src="${data.image_urls[i]}">`;
+            for (const url of data.image_urls) {
+                imgs += `<img src="${url}">`;
             }
         }
         // 视频封面
@@ -179,7 +179,7 @@ async function handler(ctx) {
                 for (const item of emoji) {
                     data_content = data_content.replaceAll(
                         new RegExp(`\\${item.text}`, 'g'),
-                        `<img alt="${item.text}" src="${item.url}"style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                        () => `<img alt="${item.text}" src="${item.url}"style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
                     );
                 }
             }
@@ -212,7 +212,7 @@ async function handler(ctx) {
 
     return {
         title: `${name} 关注的动态`,
-        link: `https://t.bilibili.com`,
+        link: 'https://t.bilibili.com',
         description: `${name} 关注的动态`,
         item: items,
     };

@@ -34,7 +34,7 @@ export const route: Route = {
 | --------------- | ------------ |
 | feature-stories | commentaries |
 
-  Language
+Language
 
 | English | العربية | 中文 | Français | Русский | Español | Português |
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |

@@ -38,7 +38,7 @@ async function handler() {
             variables: {
                 order: 'START_TIME_ASC',
             },
-            query: `
+            query: /* GraphQL */ `
                 query getTrendingEvents($first: Int, $after: String, $order: TrendingEventsRequest_EventOrder, $filter: TrendingEventsRequest_EventFilter) {
                     trendingEvents(first: $first, after: $after, order: $order, filter: $filter) {
                         list {
@@ -58,7 +58,6 @@ async function handler() {
                         }
                     }
                 }
-            
             `,
         },
     });

@@ -31,7 +31,7 @@ export const route: Route = {
     maintainers: ['woshiluo'],
     handler,
     description: `::: warning
-  用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 
@@ -75,7 +75,7 @@ async function handler(ctx) {
 
     return {
         title: `${name} 关注专栏动态`,
-        link: `https://t.bilibili.com/?tab=64`,
+        link: 'https://t.bilibili.com/?tab=64',
         item: out,
     };
 }

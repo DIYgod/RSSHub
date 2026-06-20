@@ -72,7 +72,7 @@ async function handler(ctx) {
                 const result = await got(item.link);
                 const $ = load(result.data);
 
-                item.author = $('.arti-metas').text().split('更新日期')[0];
+                item.author = $('.arti-metas').text().split('更新日期', 1)[0];
                 item.description = $('.article_content').html();
 
                 return item;

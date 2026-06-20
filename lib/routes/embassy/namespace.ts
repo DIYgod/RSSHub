@@ -7,33 +7,33 @@ export const namespace: Namespace = {
 
 加拿大 \`CA\`
 
--   大使馆: \`/embassy/ca\`
+- 大使馆: \`/embassy/ca\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市     | 路由                   |
 | -------- | ---------------------- |
 | 蒙特利尔 | \`/embassy/ca/montreal\` |
 
-* * *
+***
 
 德国 \`DE\`
 
--   大使馆: \`/embassy/de\`
+- 大使馆: \`/embassy/de\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市   | 路由                 |
 | ------ | -------------------- |
 | 慕尼黑 | \`/embassy/de/munich\` |
 
-* * *
+***
 
 法国 \`FR\`
 
--   大使馆: \`/embassy/fr\`
+- 大使馆: \`/embassy/fr\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |
@@ -41,13 +41,13 @@ export const namespace: Namespace = {
 | 斯特拉斯堡 | \`/embassy/fr/strasbourg\` |
 | 里昂       | \`/embassy/fr/lyon\`       |
 
-* * *
+***
 
 日本 \`JP\`
 
--   大使馆: \`/embassy/jp\`
+- 大使馆: \`/embassy/jp\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市   | 路由                   |
 | ------ | ---------------------- |
@@ -58,13 +58,13 @@ export const namespace: Namespace = {
 | 札幌   | \`/embassy/jp/sapporo\`  |
 | 新潟   | \`/embassy/jp/niigata\`  |
 
-* * *
+***
 
 韩国 \`KR\`
 
--   大使馆: \`/embassy/kr\`
+- 大使馆: \`/embassy/kr\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市 | 路由                  |
 | ---- | --------------------- |
@@ -72,25 +72,25 @@ export const namespace: Namespace = {
 | 济州 | \`/embassy/kr/jeju\`    |
 | 光州 | \`/embassy/kr/gwangju\` |
 
-* * *
+***
 
 马来西亚 \`MY\`
 
--   大使馆: \`/embassy/my\`
+- 大使馆: \`/embassy/my\`
 
-* * *
+***
 
 新加坡 \`SG\`
 
--   大使馆: \`/embassy/sg\`
+- 大使馆: \`/embassy/sg\`
 
-* * *
+***
 
 美国 \`US\`
 
--   大使馆: \`/embassy/us\`
+- 大使馆: \`/embassy/us\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市   | 路由                       |
 | ------ | -------------------------- |
@@ -98,13 +98,13 @@ export const namespace: Namespace = {
 | 芝加哥 | \`/embassy/us/chicago\`      |
 | 旧金山 | \`/embassy/us/sanfrancisco\` |
 
-* * *
+***
 
 英国 \`UK\`
 
--   大使馆: \`/embassy/uk\`
+- 大使馆: \`/embassy/uk\`
 
--   领事馆城市列表:
+- 领事馆城市列表:
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |

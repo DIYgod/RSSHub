@@ -37,15 +37,12 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const feed = await parser.parseString(
-        await got
-            .get(`https://posts.careerengine.us/author/${id}/rss`, {
-                headers: {
-                    'User-Agent': UA,
-                },
-            })
-            .then((_) => _.data)
-    );
+    const response = await got.get(`https://posts.careerengine.us/author/${id}/rss`, {
+        headers: {
+            'User-Agent': UA,
+        },
+    });
+    const feed = await parser.parseString(response.data);
 
     const items = await Promise.all(
         feed.items.splice(0, 10).map((item) => {

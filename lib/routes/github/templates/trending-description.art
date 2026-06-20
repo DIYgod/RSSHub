@@ -1,5 +1,0 @@
-<img src="{{@ cover }}">
-<br>{{@ desc }}
-<br><br>Language: {{@ lang }}
-<br>Stars: {{@ stars }}
-<br>Forks: {{@ forks }}

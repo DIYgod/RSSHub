@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderEshopHkDescription } from './templates/eshop-hk';
 
 export const route: Route = {
     path: '/eshop/hk',
@@ -51,24 +50,24 @@ async function handler(ctx) {
                     const gallery = JSON.parse(
                         $('[type=text/x-magento-init]')
                             .text()
-                            .match(/{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder]": {\n\s+"mage(?:\/gal{2}ery){2}".*?}{4}(?:\s+}\n){3}/s)
+                            .match(/\{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder\]": \{\n\s+"mage(?:\/gal{2}ery){2}".*?\}{4}(?:\s+\}\n){3}/s)
                     );
 
-                    description = art(path.join(__dirname, 'templates/eshop_hk.art'), {
+                    description = renderEshopHkDescription({
                         attributes,
                         description: $('.description').html(),
                         gallery: gallery['[data-gallery-role=gallery-placeholder]']['mage/gallery/gallery'].data,
                         host: 'store.nintendo.com.hk',
                     });
                 } else if (item.link.startsWith('https://ec.nintendo.com/')) {
-                    const jsonData = JSON.parse(response.match(/NXSTORE\.titleDetail\.jsonData = ({.*?});/)[1]);
+                    const jsonData = JSON.parse(response.match(/NXSTORE\.titleDetail\.jsonData = (\{.*?\});/)[1]);
                     const { data: priceData } = await got('https://ec.nintendo.com/api/HK/zh/guest_prices', {
                         searchParams: {
                             ns_uids: jsonData.id,
                         },
                     });
 
-                    description = art(path.join(__dirname, 'templates/eshop_hk.art'), {
+                    description = renderEshopHkDescription({
                         host: 'ec.nintendo.com',
                         jsonData,
                         priceData: priceData[0],

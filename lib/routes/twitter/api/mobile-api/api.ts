@@ -48,7 +48,7 @@ const twitterGot = async (url, params) => {
     return response._data;
 };
 
-const paginationTweets = async (endpoint, userId, variables, path) => {
+const paginationTweets = async (endpoint, userId, variables, path?) => {
     const { data } = await twitterGot(baseUrl + endpoint, {
         variables: JSON.stringify({
             ...variables,
@@ -128,7 +128,7 @@ const listTweets = (listId, params = {}) =>
         ['list', 'timeline_response', 'timeline']
     );
 
-function gatherLegacyFromData(entries, filterNested, userId) {
+function gatherLegacyFromData(entries, filterNested?, userId?) {
     const tweets = [];
     const filteredEntries = [];
     for (const entry of entries) {

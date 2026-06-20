@@ -14,7 +14,7 @@ export function getDataItem(href: string) {
     const link = `${origin}${href}`;
 
     return cache.tryGet(link, async () => {
-        const prefix = href?.split('/')[1];
+        const prefix = href?.split('/', 2)[1];
         const res = await ofetch(link);
         const $ = load(res);
 
@@ -232,7 +232,7 @@ function parseDefault($): DataItem {
 
 function parseLinkData($: CheerioAPI) {
     try {
-        const data = (<LinkData>JSON.parse($('script[type="application/ld+json"]').text()))['@graph'][0];
+        const data = (JSON.parse($('script[type="application/ld+json"]').text()) as LinkData)['@graph'][0];
 
         return {
             title: data.name,

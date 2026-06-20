@@ -41,7 +41,7 @@ async function handler(ctx) {
         }));
 
     return {
-        title: `逛丢 - 九块九`,
+        title: '逛丢 - 九块九',
         link: url,
         item: items,
     };

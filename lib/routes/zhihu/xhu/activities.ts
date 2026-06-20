@@ -30,10 +30,11 @@ export const route: Route = {
     description: `[xhu](https://github.com/REToys/xhu)
 
 ::: tip
-  用户的 16 进制 id 获取方式：
+用户的 16 进制 id 获取方式：
 
-  1.  可以通过 RSSHub Radar 扩展获取；
-  2.  或者在用户主页打开 F12 控制台，执行以下代码：\`console.log(/"id":"([0-9a-f]*?)","urlToken"/.exec(document.getElementById('js-initialData').innerHTML)[1]);\` 即可获取用户的 16 进制 id。
+1. 可以通过 RSSHub Radar 扩展获取；
+2. 或者在用户主页打开 F12 控制台，执行以下代码：\`console.log(/"id":"([0-9a-f]*?)","urlToken"/.exec(document.getElementById('js-initialData').innerHTML)[1]);\` 即可获取用户的 16 进制 id。
+
 :::`,
 };
 

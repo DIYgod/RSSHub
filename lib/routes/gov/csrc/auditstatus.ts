@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/csrc/auditstatus/:apply_id',
+    path: '/auditstatus/:apply_id',
     categories: ['government'],
     example: '/gov/csrc/auditstatus/9ce91cf2d750ee62de27fbbcb05fa483',
     parameters: { apply_id: '事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数' },

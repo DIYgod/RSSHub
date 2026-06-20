@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category');
     if (category) {
-        ctx.set('redirect', `/zhihu/hot`);
+        ctx.set('redirect', '/zhihu/hot');
         return null;
     }
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.zhihu.com/topstory/hot-lists/total?limit=10&reverse_order=0`,
+        url: 'https://api.zhihu.com/topstory/hot-lists/total?limit=10&reverse_order=0',
         headers: {
             Cookie: cookie,
         },
@@ -56,8 +56,8 @@ async function handler(ctx) {
     });
 
     return {
-        title: `知乎热榜`,
-        link: `https://www.zhihu.com/hot`,
+        title: '知乎热榜',
+        link: 'https://www.zhihu.com/hot',
         item: items,
     };
 }

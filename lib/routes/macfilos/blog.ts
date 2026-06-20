@@ -69,8 +69,8 @@ async function handler(ctx) {
                 content('hr').nextAll().remove();
                 content('hr').remove();
 
-                content('img').each(function () {
-                    content(this).removeAttr('srcset');
+                content('img').each((_, el) => {
+                    content(el).removeAttr('srcset');
                 });
 
                 item.description = content('.td-post-content').html();

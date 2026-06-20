@@ -122,15 +122,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/department/postgraduate/2701',
+    example: '/nwnu/department/postgraduate/2701',
     radar: [
         {
             source: ['yjsy.nwnu.edu.cn/:column/list.htm'],
             target: '/department/postgraduate/:column',
         },
     ],
-    description: `
-| column | 标题                           | 描述                                               |
+    description: `| column | 标题                           | 描述                                               |
 | ------ | ------------------------------ | -------------------------------------------------- |
 | 2701   | 招生工作（包括硕士、博士招生） | 研究生院招生信息（包含硕士招生和博士招生两个栏目） |
 | 2712   | 博士招生                       | 研究生院博士研究生招生信息                         |

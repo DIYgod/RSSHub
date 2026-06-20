@@ -14,7 +14,7 @@ export const route: Route = {
     path: '/:page?',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `Pass in the name of the php file, e.g. \`angebote\` for \`/de/angebote.php\`\`.`,
+    description: 'Pass in the name of the php file, e.g. `angebote` for \\`/de/angebote.php\\`\\`.',
     parameters: {
         page: 'Page name, e.g. `angebote` for `angebote.php. Defaults to `angebote`',
     },
@@ -25,7 +25,7 @@ export const route: Route = {
 
         const response = await ofetch(link);
         const $ = load(response);
-        const heading = $('h1').text().split('\n')[0].trim();
+        const heading = $('h1').text().split('\n', 1)[0].trim();
 
         const items = $('.col-md-12 > h3 > a')
             .toArray()

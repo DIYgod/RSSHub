@@ -26,7 +26,7 @@ export const route: Route = {
     name: 'Types',
     maintainers: ['emdoe'],
     handler,
-    description: `Supported types: Ideas, Guides, and Films.`,
+    description: 'Supported types: Ideas, Guides, and Films.',
 };
 
 async function handler(ctx) {

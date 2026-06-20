@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import { destr } from 'destr';
 
@@ -7,7 +5,12 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderAudioMedia } from './templates/audio-media';
+import { renderChartMedia } from './templates/chart-media';
+import { renderImageFigure } from './templates/image-figure';
+import { renderLedeMedia } from './templates/lede-media';
+import { renderVideoMedia } from './templates/video-media';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
 const idSel = 'script[id^="article-info"][type="application/json"], script[class^="article-info"][type="application/json"], script#dvz-config';
@@ -52,7 +55,7 @@ const apiEndpoints = {
     },
 };
 
-const pageTypeRegex1 = /\/(?<page>[\w-]*?)\/(?<link>\d{4}-\d{2}-\d{2}\/.*)/;
+const pageTypeRegex1 = /\/(?<page>[\w-]*)\/(?<link>\d{4}-\d{2}-\d{2}\/.*)/;
 const pageTypeRegex2 = /(?<!news|politics)\/(?<page>features\/|graphics\/)(?<link>.*)/;
 const regex = [pageTypeRegex1, pageTypeRegex2];
 
@@ -98,7 +101,7 @@ const parseArticle = (item) =>
             .map((a) => a && a.groups)[0];
         if (group) {
             const { page, link } = group;
-            if (apiEndpoints[page]) {
+            if (Object.hasOwn(apiEndpoints, page)) {
                 const api = { ...apiEndpoints[page] };
                 let res;
 
@@ -107,7 +110,7 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+                    if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -183,7 +186,7 @@ const parseVideoPage = async (res, api, item) => {
             title: video_story.headline.text || item.title,
             link: video_story.url || item.link,
             guid: `bloomberg:${video_story.id}`,
-            description: art(path.join(__dirname, 'templates/video_media.art'), desc),
+            description: renderVideoMedia(desc),
             pubDate: parseDate(video_story.publishedAt) || item.pubDate,
             media: {
                 content: { url: video_story.video?.thumbnail.url || '' },
@@ -221,7 +224,7 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             return {
                 title: item.title,
                 link: item.link,
@@ -267,8 +270,9 @@ const processLedeMedia = async (story_json) => {
             src: story_json.ledeImageUrl,
             video: kind === 'video' && (await processVideo(story_json.ledeAttachment.bmmrId)),
         };
-        return art(path.join(__dirname, 'templates/lede_media.art'), { media });
-    } else if (story_json.lede) {
+        return renderLedeMedia(media);
+    }
+    if (story_json.lede) {
         const lede = story_json.lede;
         const image = {
             src: lede.url,
@@ -276,8 +280,9 @@ const processLedeMedia = async (story_json) => {
             caption: lede.caption?.replaceAll(capRegex, '') ?? '',
             credit: lede.credit?.replaceAll(capRegex, '') ?? '',
         };
-        return art(path.join(__dirname, 'templates/image_figure.art'), image);
-    } else if (story_json.imageAttachments) {
+        return renderImageFigure(image);
+    }
+    if (story_json.imageAttachments) {
         const attachment = Object.values(story_json.imageAttachments)[0];
         if (attachment) {
             const image = {
@@ -286,10 +291,11 @@ const processLedeMedia = async (story_json) => {
                 caption: attachment.caption?.replaceAll(capRegex, '') ?? '',
                 credit: attachment.credit?.replaceAll(capRegex, '') ?? '',
             };
-            return art(path.join(__dirname, 'templates/image_figure.art'), image);
+            return renderImageFigure(image);
         }
         return '';
-    } else if (story_json.type === 'Lede') {
+    }
+    if (story_json.type === 'Lede') {
         const props = story_json.props;
 
         const media = {
@@ -299,7 +305,7 @@ const processLedeMedia = async (story_json) => {
             credit: props.credit?.replaceAll(capRegex, '') ?? '',
             src: props.url,
         };
-        return art(path.join(__dirname, 'templates/lede_media.art'), { media });
+        return renderLedeMedia(media);
     }
 };
 
@@ -340,12 +346,12 @@ const processBody = async (body_html, story_json) => {
                     credit: (episode.credits.map((c) => c.name).join(', ') ?? []) || ($(e).find('[class$="credit"]').html()?.trim() ?? ''),
                 };
             }
-            new_figure = art(path.join(__dirname, 'templates/audio_media.art'), audio);
+            new_figure = renderAudioMedia(audio);
         } else if (imageType === 'video') {
             if (story_json.videoAttachments) {
                 const attachment = story_json.videoAttachments[$(e).data('id')];
                 const video = await processVideo(attachment.bmmrId);
-                new_figure = art(path.join(__dirname, 'templates/video_media.art'), video);
+                new_figure = renderVideoMedia(video);
             }
         } else if (imageType === 'photo' || imageType === 'image' || type === 'image') {
             let src, alt;
@@ -360,7 +366,7 @@ const processBody = async (body_html, story_json) => {
             const caption = $(e).find('[class$="text"], .caption, .photo-essay__text').html()?.trim() ?? '';
             const credit = $(e).find('[class$="credit"], .credit, .photo-essay__source').html()?.trim() ?? '';
             const image = { src, alt, caption, credit };
-            new_figure = art(path.join(__dirname, 'templates/image_figure.art'), image);
+            new_figure = renderImageFigure(image);
         }
         $(new_figure).insertAfter(e);
         $(e).remove();
@@ -369,7 +375,7 @@ const processBody = async (body_html, story_json) => {
     return $.html();
 };
 
-const processVideo = async (bmmrId, summary) => {
+const processVideo = async (bmmrId, summary?) => {
     const api = `https://www.bloomberg.com/multimedia/api/embed?id=${bmmrId}`;
     const res = await redirectGot(api);
 
@@ -404,15 +410,16 @@ const nodeRenderers = {
     paragraph: async (node, nextNode) => `<p>${await nextNode(node.content)}</p>`,
     text: (node) => {
         const { attributes: attr, value: val } = node;
-        if (attr?.emphasis && attr?.strong) {
+        if (attr?.emphasis && attr.strong) {
             return `<strong><em>${val}</em></strong>`;
-        } else if (attr?.emphasis) {
-            return `<em>${val}</em>`;
-        } else if (attr?.strong) {
-            return `<strong>${val}</strong>`;
-        } else {
-            return val;
         }
+        if (attr?.emphasis) {
+            return `<em>${val}</em>`;
+        }
+        if (attr?.strong) {
+            return `<strong>${val}</strong>`;
+        }
+        return val;
     },
     'inline-newsletter': async (node, nextNode) => `<div>${await nextNode(node.content)}</div>`,
     'inline-recirc': async (node, nextNode) => `<div>${await nextNode(node.content)}</div>`,
@@ -463,8 +470,8 @@ const nodeRenderers = {
         }
         return nextNode(node.content);
     },
-    br: () => `<br/>`,
-    hr: () => `<br/>`,
+    br: () => '<br/>',
+    hr: () => '<br/>',
     ad: () => {},
     blockquote: async (node, nextNode) => `<blockquote>${await nextNode(node.content)}</blockquote>`,
     quote: async (node, nextNode) => `<blockquote>${await nextNode(node.content)}</blockquote>`,
@@ -502,7 +509,7 @@ const nodeRenderers = {
                     chartAlt: e.alt,
                     fallback: e.src,
                 };
-                return art(path.join(__dirname, 'templates/chart_media.art'), { chart });
+                return renderChartMedia({ chart });
             }
             const image = {
                 alt: node.data.attachment?.footnote || '',
@@ -510,14 +517,14 @@ const nodeRenderers = {
                 credit: node.data.attachment?.source || '',
                 src: node.data.chart?.fallback || '',
             };
-            return art(path.join(__dirname, 'templates/image_figure.art'), image);
+            return renderImageFigure(image);
         }
         if (t === 'photo') {
             const h = node.data;
             let img = '';
             if (h.attachment) {
                 const image = { src: h.photo?.src, alt: h.photo?.alt, caption: h.photo?.caption, credit: h.photo?.credit };
-                img = art(path.join(__dirname, 'templates/image_figure.art'), image);
+                img = renderImageFigure(image);
             }
             if (h.link && h.link.destination && h.link.destination.web) {
                 const href = h.link.destination.web;
@@ -530,7 +537,7 @@ const nodeRenderers = {
             const id = h.attachment?.id;
             if (id) {
                 const desc = await processVideo(id, h.attachment?.title);
-                return art(path.join(__dirname, 'templates/video_media.art'), desc);
+                return renderVideoMedia(desc);
             }
         }
         if (t === 'audio' && node.data.attachment) {
@@ -545,7 +552,7 @@ const nodeRenderers = {
                     caption: P,
                     credit: '',
                 };
-                return art(path.join(__dirname, 'templates/audio_media.art'), audio);
+                return renderAudioMedia(audio);
             }
         }
         return '';
@@ -575,7 +582,7 @@ const nextNode = async (nodes) => {
 };
 
 const nodeToHtmlString = async (node, obj) => {
-    if (!node.type || !nodeRenderers[node.type]) {
+    if (!node.type || !Object.hasOwn(nodeRenderers, node.type)) {
         return `<node>${node.type}</node>`;
     }
     const str = await nodeRenderers[node.type](node, nextNode, obj);

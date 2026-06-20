@@ -44,7 +44,7 @@ async function callApi(objectType: string, objectFields: string, username: strin
     const headers = MIXCLOUD_CONFIG.headers;
 
     const lookupParams = slug ? `, slug: "${slug}"` : '';
-    const query = `{
+    const query = /* GraphQL */ `{
     ${lookupKey}(lookup: {username: "${username}"${lookupParams}}) {
       ${objectFields}
     }
@@ -104,7 +104,7 @@ export async function handler(ctx) {
     const playlistSlug = ctx.req.param('playlist');
     const type = ctx.req.param('type') ?? (playlistSlug ? 'playlist' : 'uploads');
 
-    if (!TYPE_CONFIG[type]) {
+    if (!Object.hasOwn(TYPE_CONFIG, type)) {
         throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 

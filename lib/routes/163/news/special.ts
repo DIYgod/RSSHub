@@ -52,49 +52,49 @@ async function handler(ctx) {
     let type;
     switch (selectedType) {
         case 1:
-            type = `BD21K0DLwangning`; // 轻松一刻
+            type = 'BD21K0DLwangning'; // 轻松一刻
             break;
         case 2:
-            type = `CICMICLUwangning`; // 槽值
+            type = 'CICMICLUwangning'; // 槽值
             break;
         case 3:
-            type = `CICMOMBLwangning`; // 人间
+            type = 'CICMOMBLwangning'; // 人间
             break;
         case 4:
-            type = `CICMPVC5wangning`; // 大国小民
+            type = 'CICMPVC5wangning'; // 大国小民
             break;
         case 5:
-            type = `CICMLCOUwangning`; // 三三有梗
+            type = 'CICMLCOUwangning'; // 三三有梗
             break;
         case 6:
-            type = `D551V75Cwangning`; // 数读
+            type = 'D551V75Cwangning'; // 数读
             break;
         case 7:
-            type = `D55253RHwangning`; // 看客
+            type = 'D55253RHwangning'; // 看客
             break;
         case 8:
-            type = `D553A53Lwangning`; // 下划线
+            type = 'D553A53Lwangning'; // 下划线
             break;
         case 9:
-            type = `D553PGHQwangning`; // 谈心社
+            type = 'D553PGHQwangning'; // 谈心社
             break;
         case 10:
-            type = `CICMS5BIwangning`; // 哒哒
+            type = 'CICMS5BIwangning'; // 哒哒
             break;
         case 11:
-            type = `CQ9UDVKOwangning`; // 胖编怪聊
+            type = 'CQ9UDVKOwangning'; // 胖编怪聊
             break;
         case 12:
-            type = `CQ9UJIJNwangning`; // 曲一刀
+            type = 'CQ9UJIJNwangning'; // 曲一刀
             break;
         case 13:
-            type = `BD284UM8wangning`; // 今日之声
+            type = 'BD284UM8wangning'; // 今日之声
             break;
         case 14:
-            type = `CICMMGBHwangning`; // 浪潮
+            type = 'CICMMGBHwangning'; // 浪潮
             break;
         case 15:
-            type = `D5543R68wangning`; // 沸点
+            type = 'D5543R68wangning'; // 沸点
             break;
         default:
             break;
@@ -102,7 +102,7 @@ async function handler(ctx) {
     const url = `https://3g.163.com/touch/reconstruct/article/list/${type}/0-20.html`;
     const response = await got(url);
     const data = response.data;
-    const matches = data.replaceAll(/\s/g, '').match(/artiList\((.*?)]}\)/);
+    const matches = data.replaceAll(/\s/g, '').match(/artiList\((.*?)\]\}\)/);
     const articlelist0 = matches[1].replace(/".*?wangning/, '"articles') + ']}';
     const articlelist = JSON.parse(articlelist0);
     const articles = articlelist.articles;
@@ -112,7 +112,7 @@ async function handler(ctx) {
             let url = article.url;
             if (url === null || article.skipType === 'video') {
                 const skipurl = article.skipURL;
-                const vid = skipurl.match(/vid=(.*?)$/);
+                const vid = skipurl.match(/vid=(.*)$/);
                 if (vid !== null) {
                     url = `https://3g.163.com/exclusive/video/${vid[1]}.html`;
                 }

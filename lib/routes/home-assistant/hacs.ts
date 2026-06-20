@@ -20,7 +20,7 @@ async function handler() {
                 return Object.values(response);
             })
         )
-    ).flat() as {
+    ).flat() as Array<{
         manifest: {
             name: string;
         };
@@ -32,11 +32,11 @@ async function handler() {
         topics?: string[];
         last_updated: string;
         last_fetched: number;
-    }[];
+    }>;
 
     return {
         title: 'HACS Repositories',
-        link: `https://www.hacs.xyz/`,
+        link: 'https://www.hacs.xyz/',
         item: dataList.map((item) => ({
             title: item.manifest_name || item.manifest?.name || item.full_name,
             description: `${item.domain ? `<img src="https://brands.home-assistant.io/_/${item.domain}/icon.png" />` : ''}<br>${item.description}<br><br>Last updated: ${item.last_updated}<br>Stars: ${item.stargazers_count}<br>Topics: ${item.topics?.join(', ')}`,

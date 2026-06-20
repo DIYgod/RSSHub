@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
-    const currentUrl = `https://www.gelonghui.com/api/post/search/v4`;
+    const currentUrl = 'https://www.gelonghui.com/api/post/search/v4';
     const { data } = await got(currentUrl, {
         searchParams: {
             keyword,

@@ -1,7 +1,0 @@
-{{ each en }}
-{{ if $index !== 0 }}
-<br>
-{{ /if }}
-<p>{{ $value }}</p>
-<p>{{ zh[$index] }}</p>
-{{ /each }}

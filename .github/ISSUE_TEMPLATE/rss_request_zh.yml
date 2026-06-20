@@ -39,6 +39,7 @@ body:
               - 学习
               - 科学期刊
               - 金融
+              - 体育
               - 其他
       validations:
           required: true
@@ -48,14 +49,6 @@ body:
       attributes:
           label: 网站地址
           placeholder: https://example.com
-      validations:
-          required: true
-
-    - type: textarea
-      id: description
-      attributes:
-          label: 网站描述
-          placeholder: 对网站的简短描述
       validations:
           required: true
 

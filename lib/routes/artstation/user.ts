@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:handle',
@@ -46,7 +45,7 @@ async function handler(ctx) {
             method: 'POST',
             headers,
         });
-        return tokenResponse.headers.getSetCookie()[0].split(';')[0].split('=')[1];
+        return tokenResponse.headers.getSetCookie()[0].split(';', 1)[0].split('=', 2)[1];
     });
 
     const { data: userData } = await got(`https://www.artstation.com/users/${handle}/quick.json`, {
@@ -70,7 +69,7 @@ async function handler(ctx) {
 
     const list = projects.data.map((item) => ({
         title: item.title,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             description: item.description,
             image: {
                 src: resolveImageUrl(item.cover.small_square_url),
@@ -97,7 +96,7 @@ async function handler(ctx) {
                         },
                     });
 
-                    item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    item.description = renderDescription({
                         description: data.description,
                         assets: data.assets,
                     });

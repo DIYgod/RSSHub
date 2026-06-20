@@ -59,13 +59,13 @@ async function handler(ctx) {
                 } else if (item.title.includes('一周時事通識')) {
                     for (const tag of item.pubDate) {
                         if (/^\d{4}年$/.test(tag.title)) {
-                            const monthDayStr = item.title.split('- ')[1] ?? item.title.split('-')[1];
+                            const monthDayStr = item.title.split('- ', 2)[1] ?? item.title.split('-', 2)[1];
                             item.pubDate = timezone(parseDate(monthDayStr, 'D/M'), +8);
                             break;
                         }
                     }
                 } else if (/^\d{4}年新聞回顧$/.test(item.title)) {
-                    item.pubDate = parseDate(`${item.title.split('年')[0]}-12-31`);
+                    item.pubDate = parseDate(`${item.title.split('年', 1)[0]}-12-31`);
                 } else {
                     item.pubDate = '';
                 }

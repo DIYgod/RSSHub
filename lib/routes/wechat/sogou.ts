@@ -74,7 +74,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             if (location) {
                 if (!location.startsWith('http')) {
                     try {
-                        location = new URL(location, sogouLink).toString();
+                        location = new URL(location, sogouLink).href;
                     } catch (error) {
                         logger.warn(`Invalid redirect location "${location}" for title "${title}" (wechatId: ${wechatId}): ${error instanceof Error ? error.message : String(error)}`);
                         location = null;

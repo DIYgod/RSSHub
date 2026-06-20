@@ -1,3 +1,4 @@
+// oxlint-disable no-useless-concat unicorn-js/no-useless-concat
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -58,7 +59,7 @@ const testFetchArticleFinishArticleItem = async (path: string, { setMpNameAsAuth
 
     const ToBeFinishedArticleItem = { link: httpUrl };
     const expectedFinishedArticleItem = { ...fetchArticleItem };
-    expectedFinishedArticleItem.author = setMpNameAsAuthor ? <string>expectedFinishedArticleItem.mpName : expectedFinishedArticleItem.author;
+    expectedFinishedArticleItem.author = setMpNameAsAuthor ? (expectedFinishedArticleItem.mpName as string) : expectedFinishedArticleItem.author;
     expectedFinishedArticleItem.link = skipLink ? ToBeFinishedArticleItem.link : expectedFinishedArticleItem.link;
 
     const finishedArticleItem = await finishArticleItem(ToBeFinishedArticleItem, setMpNameAsAuthor, skipLink);
@@ -73,75 +74,79 @@ describe('wechat-mp', () => {
     it('ExtractMetadata.common', () => {
         expect(ExtractMetadata.common(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const fakeWindowVarsHtml = genScriptHtmlStr(`
             window.fake_item_show_type = '5' || '';
             window.fake_real_item_show_type = '5' || '';
             window.fake_ct = '1713009660' || '';
-        `)
-                )
-            )
-        ).toMatchObject({});
+        `);
+        expect(ExtractMetadata.common(load(fakeWindowVarsHtml))).toMatchObject({});
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const windowVarsHtml = genScriptHtmlStr(`
             window.item_show_type = '5' || '';
             window.real_item_show_type = '5' || '';
             window.ct = '1713009660' || '';
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.common(load(windowVarsHtml))).toMatchObject({
             showType: showTypeMapReverse['5'],
             realShowType: showTypeMapReverse['5'],
             createTime: '1713009660',
         });
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const varDeclsHtml = genScriptHtmlStr(`
             var item_show_type = "5";
             var real_item_show_type = "5";
             var ct = "1713009660";
             var msg_source_url = 'https://mp.weixin.qq.com/rsshub_test/fake';
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.common(load(varDeclsHtml))).toMatchObject({
             showType: showTypeMapReverse['5'],
             realShowType: showTypeMapReverse['5'],
             createTime: '1713009660',
             sourceUrl: 'https://mp.weixin.qq.com/rsshub_test/fake',
         });
 
-        expect(
-            ExtractMetadata.common(
-                load(
-                    genScriptHtmlStr(`
+        const longShowTypeHtml = genScriptHtmlStr(`
             var item_show_type = "998877665544332211";
             var real_item_show_type = "112233445566778899";
             var ct = "1713009660";
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.common(load(longShowTypeHtml))).toMatchObject({
             showType: '998877665544332211',
             realShowType: '112233445566778899',
             createTime: '1713009660',
         });
+
+        // item_show_type in a separate script tag from real_item_show_type
+        expect(
+            ExtractMetadata.common(
+                load(`
+                    <html lang="">
+                        <script type="text/javascript" nonce="123456789">
+                            var item_show_type = '0';
+                        </script>
+                        <script type="text/javascript" nonce="123456789">
+                            var real_item_show_type = '0';
+                            var ct = '1713009660';
+                            var msg_source_url = 'https://mp.weixin.qq.com/rsshub_test/fake';
+                        </script>
+                    </html>
+                `)
+            )
+        ).toMatchObject({
+            showType: showTypeMapReverse['0'],
+            realShowType: showTypeMapReverse['0'],
+            createTime: '1713009660',
+            sourceUrl: 'https://mp.weixin.qq.com/rsshub_test/fake',
+        });
+    });
+
+    it('ExtractMetadata.common rethrows unexpected errors', () => {
+        expect(() => ExtractMetadata.common('not-cheerio' as any)).toThrow(TypeError);
     });
     it('ExtractMetadata.img', () => {
         expect(ExtractMetadata.img(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.img(
-                load(
-                    genScriptHtmlStr(`
+        const imgHtml = genScriptHtmlStr(`
             window.picture_page_info_list = [
             {
               cdn_url: 'https://mmbiz.qpic.cn/rsshub_test/fake_img_1/0?wx_fmt=jpeg',
@@ -150,20 +155,15 @@ describe('wechat-mp', () => {
               cdn_url: 'https://mmbiz.qpic.cn/rsshub_test/fake_img_2/0?wx_fmt=jpeg',
             },
             ].slice(0, 20);
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.img(load(imgHtml))).toMatchObject({
             imgUrls: ['https://mmbiz.qpic.cn/rsshub_test/fake_img_1/0?wx_fmt=jpeg', 'https://mmbiz.qpic.cn/rsshub_test/fake_img_2/0?wx_fmt=jpeg'],
         });
     });
     it('ExtractMetadata.audio', () => {
         expect(ExtractMetadata.audio(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const reportOptHtml = genScriptHtmlStr(`
             reportOpt = {
               voiceid: "",
               uin: "",
@@ -171,46 +171,31 @@ describe('wechat-mp', () => {
               mid: "",
               idx: ""
             };
-        `)
-                )
-            )
-        ).toMatchObject({});
+        `);
+        expect(ExtractMetadata.audio(load(reportOptHtml))).toMatchObject({});
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const cgiDataWithDurationHtml = genScriptHtmlStr(`
             window.cgiData = {
               voiceid: "rsshub_test_voiceid_1",
               duration: "6567" * 1,
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.audio(load(cgiDataWithDurationHtml))).toMatchObject({
             voiceId: 'rsshub_test_voiceid_1',
             duration: '6567',
         });
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const cgiDataNoDurationHtml = genScriptHtmlStr(`
             window.cgiData = {
               voiceid: "rsshub_test_voiceid_1",
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.audio(load(cgiDataNoDurationHtml))).toMatchObject({
             voiceId: 'rsshub_test_voiceid_1',
             duration: null,
         });
 
-        expect(
-            ExtractMetadata.audio(
-                load(
-                    genScriptHtmlStr(`
+        const reportOptAndCgiDataHtml = genScriptHtmlStr(`
             reportOpt = {
               voiceid: "",
               uin: "",
@@ -222,10 +207,8 @@ describe('wechat-mp', () => {
               voiceid: "rsshub_test_voiceid_1",
               duration: "6567" * 1,
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.audio(load(reportOptAndCgiDataHtml))).toMatchObject({
             voiceId: 'rsshub_test_voiceid_1',
             duration: '6567',
         });
@@ -233,10 +216,7 @@ describe('wechat-mp', () => {
     it('ExtractMetadata.location', () => {
         expect(ExtractMetadata.location(load(''))).toStrictEqual({});
 
-        expect(
-            ExtractMetadata.location(
-                load(
-                    genScriptHtmlStr(`
+        const ipWordingHtml = genScriptHtmlStr(`
             window.ip_wording = {
               countryName: '中国',
               countryId: '156',
@@ -245,10 +225,8 @@ describe('wechat-mp', () => {
               cityName: '',
               cityId: ''
             };
-        `)
-                )
-            )
-        ).toMatchObject({
+        `);
+        expect(ExtractMetadata.location(load(ipWordingHtml))).toMatchObject({
             countryName: '中国',
             provinceName: '广东',
             cityName: '',
@@ -370,6 +348,16 @@ describe('wechat-mp', () => {
         expect(fetchArticleItem.description).toContain('🔗️ 阅读原文');
     });
 
+    it('fetches original article when content is empty', async () => {
+        const item = await fetchArticle('https://mp.weixin.qq.com/rsshub_test/original_empty');
+        expect(item.description).toContain('original content');
+    });
+
+    it('skips original article when content is long', async () => {
+        const item = await fetchArticle('https://mp.weixin.qq.com/rsshub_test/original_long');
+        expect(item.description).toContain('long-content-');
+    });
+
     it('fetchArticle_&_finishArticleItem_img', async () => {
         const fetchArticleItem = await testFetchArticleFinishArticleItem('/img');
         const $ = load(fetchArticleItem.description);
@@ -430,13 +418,13 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
-            expect((<WeChatMpError>error).message).not.toContain('console.log');
-            expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).not.toContain('Consider raise an issue');
-            expect((<WeChatMpError>error).message).toContain('request blocked by WAF:');
-            expect((<WeChatMpError>error).message).toContain('/mp/rsshub_test/waf');
-            expect((<WeChatMpError>error).message).toContain('Title');
-            expect((<WeChatMpError>error).message).toContain('环境异常');
+            expect((error as WeChatMpError).message).not.toContain('console.log');
+            expect((error as WeChatMpError).message).not.toContain('.style');
+            expect((error as WeChatMpError).message).not.toContain('Consider raise an issue');
+            expect((error as WeChatMpError).message).toContain('request blocked by WAF:');
+            expect((error as WeChatMpError).message).toContain('/mp/rsshub_test/waf');
+            expect((error as WeChatMpError).message).toContain('Title');
+            expect((error as WeChatMpError).message).toContain('环境异常');
         }
     });
 
@@ -447,12 +435,12 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
-            expect((<WeChatMpError>error).message).not.toContain('console.log');
-            expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).toContain('Consider raise an issue');
-            expect((<WeChatMpError>error).message).toContain('unknown page,');
-            expect((<WeChatMpError>error).message).toContain('Title Unknown paragraph');
-            expect((<WeChatMpError>error).message).toContain(unknownPageUrl);
+            expect((error as WeChatMpError).message).not.toContain('console.log');
+            expect((error as WeChatMpError).message).not.toContain('.style');
+            expect((error as WeChatMpError).message).toContain('Consider raise an issue');
+            expect((error as WeChatMpError).message).toContain('unknown page,');
+            expect((error as WeChatMpError).message).toContain('Title Unknown paragraph');
+            expect((error as WeChatMpError).message).toContain(unknownPageUrl);
         }
     });
 
@@ -464,18 +452,18 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
-            expect((<WeChatMpError>error).message).not.toContain('console.log');
-            expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).not.toContain('Consider raise an issue');
-            expect((<WeChatMpError>error).message).toContain('deleted by author:');
-            expect((<WeChatMpError>error).message).toContain('Title 该内容已被发布者删除');
-            expect((<WeChatMpError>error).message).toContain(deletedPageUrl);
+            expect((error as WeChatMpError).message).not.toContain('console.log');
+            expect((error as WeChatMpError).message).not.toContain('.style');
+            expect((error as WeChatMpError).message).not.toContain('Consider raise an issue');
+            expect((error as WeChatMpError).message).toContain('deleted by author:');
+            expect((error as WeChatMpError).message).toContain('Title 该内容已被发布者删除');
+            expect((error as WeChatMpError).message).toContain(deletedPageUrl);
         }
     });
 
-    it('redirect', () => {
-        expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location')).rejects.toThrow('redirect without location');
-        expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')).rejects.toThrow('too many redirects');
+    it('redirect', async () => {
+        await expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location')).rejects.toThrow('redirect without location');
+        await expect(fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')).rejects.toThrow('too many redirects');
     });
 
     it('route_test', async () => {

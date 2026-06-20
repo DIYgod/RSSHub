@@ -71,10 +71,10 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('figure img').each(function () {
-                    content(this)
+                content('figure img').each((_, el) => {
+                    content(el)
                         .parent()
-                        .html(`<img src="${content(this).attr('data-src')}">`);
+                        .html(`<img src="${content(el).attr('data-src')}">`);
                 });
 
                 content('.inline-post').remove();

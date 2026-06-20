@@ -1,5 +1,3 @@
-import * as url from 'node:url';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -15,7 +13,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const link = url.resolve(host, id);
+    const link = new URL(id, host).href;
     const response = await got.get(link);
     const $ = load(response.data);
     const title = $('div.h1').text();

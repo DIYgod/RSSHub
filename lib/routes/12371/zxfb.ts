@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 const handler = async (ctx) => {
     const { category = 'zxfb' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://www.12371.cn/';
     const currentUrl = `${rootUrl}${category}/`;
@@ -16,7 +16,7 @@ const handler = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    const pattern = /item=(\[{.*?}]);/;
+    const pattern = /item=(\[\{.*?\}\]);/;
     const newsList = JSON.parse($('script[language="javascript"]').text().match(pattern)?.[1].replaceAll("'", '"') || '[]');
 
     const topNewsList = newsList.slice(0, limit).map((item) => ({

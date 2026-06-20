@@ -26,7 +26,7 @@ export const route: Route = {
 | -------------- | --------------- |
 | 1              | 2               |
 
-  Date selection
+Date selection
 
 | 1 month | 3 months | 6 months | 12 months | 24 months |
 | ------- | -------- | -------- | --------- | --------- |
@@ -80,7 +80,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: new Date(item.find('span.source').text().split(' | ')[0] + ' GMT+1').toUTCString(),
+                pubDate: new Date(item.find('span.source').text().split(' | ', 1)[0] + ' GMT+1').toUTCString(),
             };
         });
 

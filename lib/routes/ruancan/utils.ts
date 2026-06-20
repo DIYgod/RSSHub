@@ -39,14 +39,14 @@ const fetchFeed = async (ctx, currentUrl) => {
 
                 content('.entry-copyright').remove();
 
-                content('.entry-content div').each(function () {
-                    if (/^ruanc-\d+/.test(content(this).attr('id'))) {
-                        content(this).remove();
+                content('.entry-content div').each((_, el) => {
+                    if (/^ruanc-\d+/.test(content(el).attr('id'))) {
+                        content(el).remove();
                     }
                 });
 
-                content('figure').each(function () {
-                    content(this).html(`<img src="${content(this).find('a').attr('href')}">`);
+                content('figure').each((_, el) => {
+                    content(el).html(`<img src="${content(el).find('a').attr('href')}">`);
                 });
 
                 item.description = content('.entry-content').html();

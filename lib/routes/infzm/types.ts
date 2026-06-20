@@ -2,12 +2,12 @@ export interface ContentsResponse {
     code: number;
     msg: string;
     data: {
-        contents: {
+        contents: Array<{
             id: number;
             subject: string;
             author: string;
             publish_time: string;
-        }[];
+        }>;
         current_term: {
             id: number;
             title: string;

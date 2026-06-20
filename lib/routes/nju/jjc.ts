@@ -59,7 +59,7 @@ async function handler() {
     );
 
     return {
-        title: `南京大学基建处`,
+        title: '南京大学基建处',
         link: 'https://jjc.nju.edu.cn/main.htm',
         item: [...items[0], ...items[1], ...items[2]],
     };

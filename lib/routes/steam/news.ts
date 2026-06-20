@@ -14,13 +14,12 @@ export const route: Route = {
     url: 'steamcommunity.com',
     maintainers: ['keocheung'],
     handler,
-    example: '/news/958260/english',
+    example: '/steam/news/958260/english',
     parameters: {
         appid: 'Game App ID, all digits, can be found in the URL',
         language: 'Language, english by default, see below for more languages',
     },
-    description: `
-<details>
+    description: `<details>
 <summary>More languages</summary>
 
 | 语言代码                                          | 语言名称   |
@@ -54,8 +53,7 @@ export const route: Route = {
 | Tiếng Việt (Vietnamese)                           | vietnamese |
 | Español - Latinoamérica (Spanish - Latin America) | latam      |
 
-</details>
-    `,
+</details>`,
     categories: ['game'],
     features: {
         requireConfig: false,
@@ -110,7 +108,7 @@ const langMap = {
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
     const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number.parseInt(limitQuery, 10) : 100;
+    const limit = limitQuery ? Number(limitQuery) : 100;
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -132,7 +130,7 @@ async function handler(ctx: Context): Promise<Data> {
         const title = item.event_name;
         const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
-                .replaceAll('{STEAM_CLAN_IMAGE}', `${clanRootUrl}/images`)
+                .replaceAll('{STEAM_CLAN_IMAGE}', () => `${clanRootUrl}/images`)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/(\[\/h\d\])\n/g, '$1')
@@ -181,12 +179,12 @@ const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
 
 const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && /https?:\/\/[^\s]+/.test(node)) {
+        if (typeof node === 'string' && /https?:\/\/\S+/.test(node)) {
             let lastIndex = 0;
             let match: RegExpExecArray | null;
             const content: NodeContent[] = [];
 
-            const urlRe = /https?:\/\/[^\s]+/g;
+            const urlRe = /https?:\/\/\S+/g;
             while ((match = urlRe.exec(node)) !== null) {
                 if (match.index > lastIndex) {
                     content.push(node.slice(lastIndex, match.index));
@@ -252,7 +250,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     previewyoutube: (node) => ({
         tag: 'iframe',
         attrs: {
-            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[A-Za-z0-9_-]+/)?.[0]}`,
+            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[\w-]+/)?.[0]}`,
             title: 'YouTube video player',
             frameborder: '0',
             allowFullScreen: '1',

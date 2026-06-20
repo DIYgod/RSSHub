@@ -19,17 +19,17 @@ async function handler() {
         };
     }
 
-    const response = await ofetch(`https://api.bilibili.com/x/web-interface/nav`, {
+    const response = await ofetch('https://api.bilibili.com/x/web-interface/nav', {
         headers: {
-            Referer: `https://space.bilibili.com/1/`,
+            Referer: 'https://space.bilibili.com/1/',
             Cookie: cookie as string,
         },
     });
     const isResponseValid = response.code === 0 && !!response.data.mid;
 
-    const subtitleResponse = await ofetch(`https://api.bilibili.com/x/player/wbi/v2?bvid=BV1iU411o7R2&cid=1550543560`, {
+    const subtitleResponse = await ofetch('https://api.bilibili.com/x/player/wbi/v2?bvid=BV1iU411o7R2&cid=1550543560', {
         headers: {
-            Referer: `https://www.bilibili.com/video/BV1iU411o7R2`,
+            Referer: 'https://www.bilibili.com/video/BV1iU411o7R2',
             Cookie: cookie,
         },
     });

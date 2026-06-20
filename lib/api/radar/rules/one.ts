@@ -19,12 +19,12 @@ for (const namespace in namespaces) {
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
                 if (domain) {
-                    if (!radar[domain]) {
+                    if (!Object.hasOwn(radar, domain)) {
                         radar[domain] = {
                             _name: namespaces[namespace].name,
                         } as RadarDomain;
                     }
-                    if (!radar[domain][subdomain]) {
+                    if (!Object.hasOwn(radar[domain], subdomain)) {
                         radar[domain][subdomain] = [];
                     }
                     radar[domain][subdomain].push({
@@ -55,13 +55,14 @@ const ParamsSchema = z.object({
 const route = createRoute({
     method: 'get',
     path: '/radar/rules/{domain}',
+    description: 'Radar rules for a domain name',
     tags: ['Radar'],
     request: {
         params: ParamsSchema,
     },
     responses: {
         200: {
-            description: 'Radar rules for a domain name (does not support subdomains)',
+            description: 'Radar rules for a domain name (no subdomains)',
         },
     },
 });

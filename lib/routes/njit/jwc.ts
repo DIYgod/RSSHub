@@ -31,13 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'jx';
     const link = host + '/index/' + type + '.htm';
-    const response = await got({
-        method: 'get',
-        url: link,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
     const $ = load(response.body);
 
     const urlList = $('body')
@@ -59,13 +53,7 @@ async function handler(ctx) {
             itemUrl = new URL(itemUrl, host).href;
             if (itemUrl.includes('.htm')) {
                 return cache.tryGet(itemUrl, async () => {
-                    const response = await got({
-                        method: 'get',
-                        url: itemUrl,
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const response = await got(itemUrl);
                     if (response.redirectUrls.length !== 0) {
                         const single = {
                             title: titleList[index],
@@ -81,22 +69,21 @@ async function handler(ctx) {
                         link: itemUrl,
                         description: $('.v_news_content')
                             .html()
-                            .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', `href="${new URL('.', host).href}`)
+                            .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                            .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                             .trim(),
                         pubDate: $('.author p').eq(1).text().replace('时间:', ''),
                     };
                     return single;
                 });
-            } else {
-                const single = {
-                    title: titleList[index],
-                    link: itemUrl,
-                    description: '该通知为文件，请点击原文链接↑下载',
-                    pubDate: parseDate(dateList[index]),
-                };
-                return single;
             }
+            const single = {
+                title: titleList[index],
+                link: itemUrl,
+                description: '该通知为文件，请点击原文链接↑下载',
+                pubDate: parseDate(dateList[index]),
+            };
+            return single;
         })
     );
     let info;

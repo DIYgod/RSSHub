@@ -60,8 +60,8 @@ async function handler(ctx) {
             const link = item.url;
             const author = item.author.name;
             const pubDate = parseDate(item.collect_time * 1000);
-            let title = '';
-            let description = '';
+            let title: string;
+            let description: string;
 
             // This API gets only article, answer and pin, not zvideo
             switch (item.type) {

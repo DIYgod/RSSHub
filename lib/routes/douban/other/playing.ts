@@ -22,21 +22,21 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const score = Number.parseFloat(ctx.req.param('score')) || 0;
+    const score = Number(ctx.req.param('score')) || 0;
     const response = await got({
         method: 'get',
-        url: `https://movie.douban.com/cinema/nowplaying/beijing`,
+        url: 'https://movie.douban.com/cinema/nowplaying/beijing',
     });
     const $ = load(response.data);
 
     return {
         title: `正在上映的${score ? `超过 ${score} 分的` : ''}电影`,
-        link: `https://movie.douban.com/cinema/nowplaying/`,
+        link: 'https://movie.douban.com/cinema/nowplaying/',
         item: $('.list-item')
             .toArray()
             .map((i) => {
                 const item = $(i);
-                const itemScore = Number.parseFloat(item.attr('data-score')) || 0;
+                const itemScore = Number(item.attr('data-score')) || 0;
                 return itemScore >= score
                     ? {
                           title: item.attr('data-title'),

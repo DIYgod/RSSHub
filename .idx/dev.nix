@@ -25,7 +25,7 @@
       "dbaeumer.vscode-eslint"
       "eamodio.gitlens"
       "EditorConfig.EditorConfig"
-      "prettier.prettier-vscode"
+      "oxc.oxc-vscode"
       "sonarsource.sonarlint-vscode"
     ];
 

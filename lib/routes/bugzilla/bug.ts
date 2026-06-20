@@ -21,7 +21,8 @@ async function handler(ctx: Context): Promise<Data> {
         throw new InvalidParameterError(`unknown site: ${site}`);
     }
     const link = `https://${INSTANCES.get(site)}/show_bug.cgi?id=${bugId}`;
-    const $ = load(await ofetch(`${link}&ctype=xml`));
+    const xml = await ofetch(`${link}&ctype=xml`);
+    const $ = load(xml);
     const items = $('long_desc').map((index, rawItem) => {
         const $ = load(rawItem, null, false);
         return {
@@ -36,7 +37,7 @@ async function handler(ctx: Context): Promise<Data> {
 }
 
 function markdownFrom(instances: Map<string, string>, separator: string = ', '): string {
-    return [...instances.entries()].map(([k, v]) => `[\`${k}\`](https://${v})`).join(separator);
+    return [...instances].map(([k, v]) => `[\`${k}\`](https://${v})`).join(separator);
 }
 
 export const route: Route = {

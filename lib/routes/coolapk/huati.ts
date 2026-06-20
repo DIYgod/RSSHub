@@ -44,7 +44,7 @@ async function handler(ctx) {
     }
     return {
         title: `酷安话题-${tag}`,
-        link: `https://www.coolapk.com/`,
+        link: 'https://www.coolapk.com/',
         description: `酷安话题-${tag}`,
         item: out,
     };

@@ -54,7 +54,7 @@ const handler = async (ctx: Context): Promise<Data | null> => {
 };
 
 export const route: Route = {
-    path: '/mof/gss/:category?',
+    path: '/gss/:category?',
     categories: ['government'],
     example: '/gov/mof/gss',
     parameters: { category: '列表标签，默认为政策发布' },
@@ -71,13 +71,13 @@ export const route: Route = {
     handler,
     description: `#### 关税文件发布
 
-| 政策发布 | 政策解读 |
-| ------------- | -------------- |
-| zhengcefabu   | zhengcejiedu   |`,
+| 政策发布    | 政策解读     |
+| ----------- | ------------ |
+| zhengcefabu | zhengcejiedu |`,
     radar: [
         {
             source: ['gss.mof.gov.cn/gzdt/:category/'],
-            target: '/mof/gss/:category',
+            target: '/gss/:category',
         },
     ],
 };

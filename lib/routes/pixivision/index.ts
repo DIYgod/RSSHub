@@ -25,7 +25,7 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['SnowAgar25'],
     description: `::: tip
-  \`https://www.pixivision.net/zh-tw/c/interview\` → \`/pixivision/zh-tw/interview\`
+\`https://www.pixivision.net/zh-tw/c/interview\` → \`/pixivision/zh-tw/interview\`
 :::`,
     radar: [
         {

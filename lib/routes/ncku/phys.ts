@@ -26,21 +26,20 @@ export const route: Route = {
         name: '國立成功大學物理系公告',
     },
     name: 'Phys News',
-    description: `| 分類 | catagory |
-| ---- | ---- |
-| 物理系 | 24 |
-| 獎助學金 | scholarship |
-| 招生與錄取報到 | admission |
-| 助教公告 | course-announcement |
-| 大學部 | bachelor-announcement |
-| 研究所 | master-announcement |
-| 畢業離校 | graduation |
-| 學生手冊與新生入學 | student-guide |
-| 榮譽榜 | honor |
-| 求才公告 | career |
-| 其他 | others |
-| 所有訊息 | _all |
-`,
+    description: `| 分類               | catagory              |
+| ------------------ | --------------------- |
+| 物理系             | 24                    |
+| 獎助學金           | scholarship           |
+| 招生與錄取報到     | admission             |
+| 助教公告           | course-announcement   |
+| 大學部             | bachelor-announcement |
+| 研究所             | master-announcement   |
+| 畢業離校           | graduation            |
+| 學生手冊與新生入學 | student-guide         |
+| 榮譽榜             | honor                 |
+| 求才公告           | career                |
+| 其他               | others                |
+| 所有訊息           | \\_all                 |`,
     path: '/phys/:catagory?',
     parameters: {
         catagory: 'catagory, default is _all',

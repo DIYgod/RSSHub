@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,13 +8,14 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseRelativeDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '18', 10);
+import { renderDescription } from './templates/description';
 
-    const baseUrl: string = 'https://www.dgtle.com';
+export const handler = async (ctx: Context): Promise<Data> => {
+    const limit = Number(ctx.req.query('limit') ?? '18');
+
+    const baseUrl = 'https://www.dgtle.com';
     const targetUrl: string = new URL('video', baseUrl).href;
     const apiUrl: string = new URL('video/list/1', baseUrl).href;
 
@@ -26,12 +25,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(apiUrl);
 
-    let items: DataItem[] = [];
-
-    items = response.data.list.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.list.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const image: string | undefined = item.cover?.split(/\?/)?.[0];
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const image: string | undefined = item.cover?.split(/\?/, 1)?.[0];
+        const description: string | undefined = renderDescription({
             images: image
                 ? [
                       {
@@ -47,10 +44,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
             {
                 name: item.author.username,
                 url: undefined,
-                avatar: item.author.avatar_path?.split(/\?/)?.[0],
+                avatar: item.author.avatar_path?.split(/\?/, 1)?.[0],
             },
         ];
-        const guid: string = `dgtle-${item.id}`;
+        const guid = `dgtle-${item.id}`;
 
         const processedItem: DataItem = {
             title,
@@ -88,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const enclosureUrl: string | undefined = $$enclosureEl.attr('src');
 
                 const image: string | undefined = $$('div.video-play').attr('data-url');
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     videos: enclosureUrl
                         ? [
                               {
@@ -100,7 +97,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         : undefined,
                     intro: $$('h3.video-summary').text(),
                 });
-                const pubDateStr: string | undefined = $$('p.video-time').text()?.split(/\s/)?.[0];
+                const pubDateStr: string | undefined = $$('p.video-time').text()?.split(/\s/, 1)?.[0];
                 const linkUrl: string | undefined = $$('.title').attr('href');
                 const categoryEls: Element[] = $$('.category').toArray();
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
@@ -159,10 +156,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
-    const author: string | undefined = $('meta[name="keywords"]').attr('content')?.split(/,/)[0] ?? undefined;
+    const author: string | undefined = $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined;
 
     return {
-        title: $('title').text().trim().split(/\s/)[0],
+        title: $('title').text().trim().split(/\s/, 1)[0],
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,

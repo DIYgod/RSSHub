@@ -85,7 +85,7 @@ async function handler(ctx: Context): Promise<Data> {
     const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
     const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
     const category = ctx.req.param('category') ?? 'news';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
 
     const categories = await ofetch(`${cateAPIUrl}?slug=${category}`);
     if (categories.length === 0) {

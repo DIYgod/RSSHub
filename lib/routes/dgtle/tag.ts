@@ -10,7 +10,7 @@ import { baseUrl, ProcessFeedItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const limit = Number(ctx.req.query('limit') ?? '10');
 
     const targetUrl: string = new URL(`tag-${id}-1.html`, baseUrl).href;
     const apiUrl: string = new URL(`tag/getDynamicList/${id}`, baseUrl).href;
@@ -28,15 +28,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const items: DataItem[] = ProcessFeedItems(limit, response.data.dataList, $);
 
-    const title: string | undefined = $(`div.tags-detail-top-1 h2`).text();
+    const title: string | undefined = $('div.tags-detail-top-1 h2').text();
 
     return {
-        title: `${$('title').text().trim().split(/\s/)[0]}${title ? ` - ${title}` : id}`,
+        title: `${$('title').text().trim().split(/\s/, 1)[0]}${title ? ` - ${title}` : id}`,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        author: $('meta[name="keywords"]').attr('content')?.split(/,/)[0] ?? undefined,
+        author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined,
         language,
         id: targetUrl,
     };
@@ -54,10 +54,9 @@ export const route: Route = {
             description: '标签 ID，可在对应标签页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [#手机讨论区](https://www.dgtle.com/tag-394-1.html)，其源网址为 \`https://www.dgtle.com/tag-394-1.html\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/dgtle/tag/394\`](https://rsshub.app/dgtle/tag/394)。
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

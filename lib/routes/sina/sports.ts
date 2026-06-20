@@ -9,8 +9,8 @@ import { parseArticle } from './utils';
 export const route: Route = {
     path: '/sports/:type?',
     name: '新浪体育',
-    categories: ['new-media'],
-    example: '/sports',
+    categories: ['sport'],
+    example: '/sina/sports',
     parameters: { type: '类别' },
     maintainers: ['nczitzk'],
     handler,
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: `${$('title').text().split('_')[0]} - 新浪体育`,
+        title: `${$('title').text().split('_', 1)[0]} - 新浪体育`,
         description: $('meta[name="description"]').attr('content'),
         link: currentUrl,
         item: items,

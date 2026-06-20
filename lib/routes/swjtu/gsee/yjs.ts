@@ -13,7 +13,7 @@ const getItem = (item) => {
     const newsDate = item
         .find('dd')
         .text()
-        .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0];
+        .match(/\d{4}(.)\d{1,2}\1\d{1,2}/)[0];
 
     const infoTitle = newsInfo.text();
     const link = rootURL + newsInfo.find('a').last().attr('href').slice(2);
@@ -52,7 +52,7 @@ export const route: Route = {
     name: '地球科学与工程学院',
     maintainers: ['E1nzbern'],
     handler,
-    description: `研究生教育通知公告`,
+    description: '研究生教育通知公告',
 };
 
 async function handler() {

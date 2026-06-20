@@ -28,7 +28,7 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `::: warning
-  Only some journals are supported.
+Only some journals are supported.
 :::`,
 };
 

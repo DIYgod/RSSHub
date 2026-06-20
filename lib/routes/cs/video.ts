@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '今日聚焦' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://video.cs.com.cn';
     const apiCategoryUrl = new URL('web/api/getCategory', rootUrl).href;

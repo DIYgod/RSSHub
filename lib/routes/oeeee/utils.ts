@@ -20,7 +20,7 @@ const parseArticle = (item, tryGet) =>
             item.description +=
                 content('.post-cont')
                     .html()
-                    .replaceAll(/data:image\S*=="\s*\n*\s*original="/g, '') ?? '';
+                    .replaceAll(/data:image\S*=="\s*original="/g, '') ?? '';
             if (!item.pubDate) {
                 item.pubDate = timezone(parseDate(content('.introduce').text().split()), +8);
             }

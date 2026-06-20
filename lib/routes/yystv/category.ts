@@ -78,9 +78,10 @@ async function handler(ctx) {
 
     const entries = [...firstPart, ...secondPart];
 
-    return await getDescription(entries).then((items) => ({
+    const items = await getDescription(entries);
+    return {
         title: '游研社-' + $('title').text(),
         link: `https://www.yystv.cn/b/${category}`,
         item: items,
-    }));
+    };
 }

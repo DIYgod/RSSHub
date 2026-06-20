@@ -23,13 +23,13 @@ export const route: Route = {
             target: '/tag/:tag/:type',
         },
     ],
-    description: `匹配asianfanfics标签，支持排序类型：
+    description: `匹配 asianfanfics 标签，支持排序类型：
+
 - L: Latest 最近更新
 - N: Newest 最近发布
 - O: Oldest 最早发布
 - C: Completed 已完成
-- OS: One Shots 短篇
-`,
+- OS: One Shots 短篇`,
     handler,
 };
 

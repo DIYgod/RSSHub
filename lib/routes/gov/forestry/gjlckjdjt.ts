@@ -1,15 +1,14 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/forestry/gjlckjdjt/:category?',
+    path: '/gjlckjdjt/:category?',
     categories: ['government'],
     example: '/gov/forestry/gjlckjdjt',
     parameters: { category: '分类，见下表，默认为全部' },
@@ -36,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'gjlckjdjt' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.forestry.gov.cn';
     const currentUrl = new URL(`${category}.jhtml`, rootUrl).href;
@@ -58,7 +57,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     image: {
                         src: item.find('img').prop('src'),
                         alt: title,
@@ -89,7 +88,7 @@ async function handler(ctx) {
                     item.enclosure_url = item.enclosure_url ?? src;
 
                     e.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             video: {
                                 src,
                             },

@@ -9,7 +9,7 @@ import { parseArticle, parseArticleList, parsePost, parsePostList, rootUrl } fro
 
 export const handler = async (ctx) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const decodedParams = params
         ? decodeURIComponent(params)
@@ -73,9 +73,8 @@ export const route: Route = {
     example: '/flyert/forum',
     parameters: { params: '参数，默认为空，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [酒店集团优惠](https://www.flyert.com.cn/forum.php?mod=forumdisplay&sum=all&fid=all&catid=322&filter=sortid&sortid=144&searchsort=1&youhui_type=19)，网址为 \`https://www.flyert.com.cn/forum.php?mod=forumdisplay&sum=all&fid=all&catid=322&filter=sortid&sortid=144&searchsort=1&youhui_type=19\`。截取 \`https://www.flyert.com.cn/forum.php?\` 到末尾的部分 \`mod=forumdisplay&sum=all&fid=all&catid=322&filter=sortid&sortid=144&searchsort=1&youhui_type=19\` **进行 UrlEncode 编码** 后作为参数填入，此时路由为 [\`/flyert/forum/mod%3Dforumdisplay%26sum%3Dall%26fid%3Dall%26catid%3D322%26filter%3Dsortid%26sortid%3D144%26searchsort%3D1%26youhui_type%3D226\`](https://rsshub.app/flyert/forum/mod%3Dforumdisplay%26sum%3Dall%26fid%3Dall%26catid%3D322%26filter%3Dsortid%26sortid%3D144%26searchsort%3D1%26youhui_type%3D226)。
-:::
-    `,
+若订阅 [酒店集团优惠](https://www.flyert.com.cn/forum.php?mod=forumdisplay\\&sum=all\\&fid=all\\&catid=322\\&filter=sortid\\&sortid=144\\&searchsort=1\\&youhui_type=19)，网址为 \`https://www.flyert.com.cn/forum.php?mod=forumdisplay&sum=all&fid=all&catid=322&filter=sortid&sortid=144&searchsort=1&youhui_type=19\`。截取 \`https://www.flyert.com.cn/forum.php?\` 到末尾的部分 \`mod=forumdisplay&sum=all&fid=all&catid=322&filter=sortid&sortid=144&searchsort=1&youhui_type=19\` **进行 UrlEncode 编码** 后作为参数填入，此时路由为 [\`/flyert/forum/mod%3Dforumdisplay%26sum%3Dall%26fid%3Dall%26catid%3D322%26filter%3Dsortid%26sortid%3D144%26searchsort%3D1%26youhui_type%3D226\`](https://rsshub.app/flyert/forum/mod%3Dforumdisplay%26sum%3Dall%26fid%3Dall%26catid%3D322%26filter%3Dsortid%26sortid%3D144%26searchsort%3D1%26youhui_type%3D226)。
+:::`,
     categories: ['bbs'],
 
     features: {
@@ -91,7 +90,11 @@ export const route: Route = {
         {
             source: ['www.flyert.com.cn/forum.php'],
             target: (_, url) => {
-                const params = [...url.searchParams.entries()].map(([key, value]) => key + '=' + value).join('&');
+                const params = url.searchParams
+                    .entries()
+                    .toArray()
+                    .map(([key, value]) => key + '=' + value)
+                    .join('&');
 
                 return `/forum${params ? `/${encodeURIComponent(params)}` : ''}`;
             },

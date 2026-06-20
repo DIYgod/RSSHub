@@ -85,7 +85,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items
-            .filter((a) => (id === 'jnyb' ? /\?div=1$/.test(a) : true))
+            .filter((a) => (id === 'jnyb' ? a.endsWith('?div=1') : true))
             .slice(0, limit)
             .map((link) =>
                 cache.tryGet(link, async () => {
@@ -103,7 +103,7 @@ async function handler(ctx) {
                     return {
                         title,
                         pubDate,
-                        link: link.split('?')[0],
+                        link: link.split('?', 1)[0],
                         description: content('.main-article-content').html(),
                     };
                 })

@@ -32,10 +32,10 @@ export const route: Route = {
         },
     ],
     name: 'Podcast',
-    description: `| Category | URL |
-| -------- | --- |
-| All Podcasts | [/podcast](https://rsshub.app/newslaundry/podcast) |
-| NL Hafta | [/podcast/nl-hafta](https://rsshub.app/newslaundry/podcast/nl-hafta) |
+    description: `| Category         | URL                                                                              |
+| ---------------- | -------------------------------------------------------------------------------- |
+| All Podcasts     | [/podcast](https://rsshub.app/newslaundry/podcast)                               |
+| NL Hafta         | [/podcast/nl-hafta](https://rsshub.app/newslaundry/podcast/nl-hafta)             |
 | What's Your Ism? | [/podcast/whats-your-ism](https://rsshub.app/newslaundry/podcast/whats-your-ism) |`,
     maintainers: ['Rjnishant530'],
     handler,
@@ -59,5 +59,5 @@ async function handler(ctx): Promise<Data> {
     // For main podcast route, skip the first item
     const skipFirstItem = !category;
 
-    return category && categoryMap[category] ? await fetchCollection(categoryMap[category].slug, categoryMap[category].url) : await fetchCollection('podcast', undefined, skipFirstItem);
+    return category && Object.hasOwn(categoryMap, category) ? await fetchCollection(categoryMap[category].slug, categoryMap[category].url) : await fetchCollection('podcast', undefined, skipFirstItem);
 }

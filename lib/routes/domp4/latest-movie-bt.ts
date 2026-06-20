@@ -8,7 +8,7 @@ import { getItemList as detailItemList } from './detail';
 import { ensureDomain } from './utils';
 
 function getItemList($) {
-    const list = $(`#vod .list-group-item`)
+    const list = $('#vod .list-group-item')
         .toArray()
         .map((item) => {
             item = $(item);

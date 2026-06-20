@@ -52,7 +52,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 9;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 9;
 
     const response = await ofetch('https://www.arknights.jp:10014/news', {
         query: {

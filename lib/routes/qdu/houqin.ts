@@ -48,7 +48,6 @@ async function handler() {
             const path = item.find('a').attr('href');
             const itemUrl = base + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
                 const result = await got(itemUrl);
                 const $ = load(result.data);
                 if (
@@ -69,7 +68,7 @@ async function handler() {
                         8
                     );
                 }
-                description = $('.v_news_content').html().trim();
+                const description = $('.v_news_content').html()?.trim();
 
                 return {
                     title: itemTitle,

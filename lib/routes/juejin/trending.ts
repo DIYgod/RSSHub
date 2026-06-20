@@ -150,7 +150,7 @@ async function handler(ctx) {
     });
     let entrylist = trendingResponse.data;
 
-    if (category === 'all' || category === 'devops' || category === 'product' || category === 'design') {
+    if (['all', 'devops', 'product', 'design'].includes(category)) {
         entrylist = trendingResponse.data.filter((item) => item.item_type === 2).map((item) => item.item_info);
     }
     const list = parseList(entrylist);

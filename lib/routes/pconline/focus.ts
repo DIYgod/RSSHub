@@ -137,8 +137,10 @@ export const route: Route = {
     maintainers: ['CH563'],
     handler,
     description: `::: tip
-| 全部 | 科技 | 财经 | 生活 | 公司 | 人物 |
-| --- | --- | --- | --- | --- | --- |
-| all | tech | finance | life | company | character |
+
+| 全部 | 科技 | 财经    | 生活 | 公司    | 人物      |
+| ---- | ---- | ------- | ---- | ------- | --------- |
+| all  | tech | finance | life | company | character |
+
 :::`,
 };

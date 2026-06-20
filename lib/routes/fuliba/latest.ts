@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { data: response } = await got(`https://fuliba2023.net/wp-json/wp/v2/posts`, {
+    const { data: response } = await got('https://fuliba2023.net/wp-json/wp/v2/posts', {
         searchParams: {
             per_page: ctx.req.query('limit') ?? 100,
             _embed: 1,
@@ -44,7 +44,7 @@ async function handler(ctx) {
 
     return {
         title: '福利吧',
-        link: `https://fuliba2023.net`,
+        link: 'https://fuliba2023.net',
         item: items,
     };
 }

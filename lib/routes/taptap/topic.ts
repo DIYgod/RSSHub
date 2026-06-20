@@ -56,8 +56,8 @@ export const route: Route = {
 | feed | elite | official | video |
 
 | 发布时间 | 回复时间  | 默认排序 |
-| -------- | --------- | ------- |
-| created  | commented | default |`,
+| -------- | --------- | -------- |
+| created  | commented | default  |`,
 };
 
 async function handler(ctx) {
@@ -83,22 +83,20 @@ async function handler(ctx) {
                 const author = moment.author.user.name;
                 const topicId = isRepost ? moment.reposted_moment.topic.id_str : moment.topic.id_str;
                 // raw_text sometimes is "" so || is better than ??
-                const title = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.title || moment.topic.summary.split(' ')[0];
+                const title = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.title || moment.topic.summary.split(' ', 1)[0];
                 let description = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.summary || '';
                 if (isRepost) {
                     description += (moment.reposted_moment.topic.title || '') + ((await topicPost(appId, topicId, lang)) || '');
                     if (moment.reposted_moment.topic.footer_images) {
                         description += imagePost(moment.reposted_moment.topic.footer_images);
                     }
-                } else {
-                    if (moment.topic.pin_video) {
-                        description += videoPost(moment.topic.pin_video);
-                        if (moment.topic.footer_images?.images) {
-                            description += imagePost(moment.topic.footer_images.images);
-                        }
-                    } else {
-                        description = await topicPost(appId, topicId, lang);
+                } else if (moment.topic.pin_video) {
+                    description += videoPost(moment.topic.pin_video);
+                    if (moment.topic.footer_images?.images) {
+                        description += imagePost(moment.topic.footer_images.images);
                     }
+                } else {
+                    description = await topicPost(appId, topicId, lang);
                 }
                 return {
                     title,

@@ -38,7 +38,7 @@ export const route: Route = {
     maintainers: ['Qixingchen'],
     handler,
     description: `::: warning
-  UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 

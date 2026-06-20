@@ -24,7 +24,7 @@ const handler = async () => {
                         .filter((_, i) => i.nodeType === 3)
                         .text()
                         .trim()
-                        .split(/\s{2,}/)[0]
+                        .split(/\s{2,}/, 1)[0]
                 ),
                 author: $item.find('.meta a.psnnode').text(),
                 category: $item

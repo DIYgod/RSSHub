@@ -27,9 +27,10 @@ export const route: Route = {
     maintainers: ['gideonsenku'],
     handler,
     description: `Categories:
+
 | 華語 | 西洋 | 東洋 | 韓語 | 古典 |
 | ---- | ---- | ---- | ---- | ---- |
-| A | B | F | M | D |`,
+| A    | B    | F    | M    | D    |`,
     url: 'www.5music.com.tw/New_releases.asp',
 };
 

@@ -20,7 +20,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.jiaoliudao.com';
     const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30,
+            per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
         },
     });
 

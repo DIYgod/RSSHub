@@ -1,4 +1,4 @@
-import Parser from '@postlight/parser';
+import Parser from '@jocmp/mercury-parser';
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -97,7 +97,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.link) {
                 let baseUrl = data.link;
                 if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-                    baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+                    baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
                 item.link = new URL(item.link, baseUrl).href;
@@ -109,7 +109,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 let baseUrl = item.link || data.link;
 
                 if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-                    baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+                    baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
                 $('script').remove();
@@ -264,7 +264,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
-                    isFilter = isFilter && !category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter = isFilter && category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;
@@ -296,9 +296,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     const encodedlink = encodeURIComponent(item.link);
                     item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.req.query('tgiv')}`;
                     return item;
-                } else {
-                    return item;
                 }
+                return item;
             });
         }
 
@@ -407,14 +406,13 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (num.test(ctx.req.query('brief')!)) {
                 const brief: number = Number.parseInt(ctx.req.query('brief')!);
                 for (const item of data.item) {
-                    let text;
                     if (item.description) {
-                        text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
+                        const text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
                         item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
                     }
                 }
             } else {
-                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun`);
+                throw new Error('Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun');
             }
         }
         // some parameters are processed in `anti-hotlink.js`

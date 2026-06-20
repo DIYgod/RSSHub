@@ -30,30 +30,30 @@ export const route: Route = {
     handler: handler as any,
     description: `Supported games
 
-| Game              | Slug          |
-| ----------------- | ------------- |
-| Clash Royale      | clashroyale   |
-| Brawl Stars       | brawlstars    |
-| Clash of Clans    | clashofclans  |
-| Boom Beach        | boombeach     |
-| Hay Day           | hayday        |
+| Game           | Slug         |
+| -------------- | ------------ |
+| Clash Royale   | clashroyale  |
+| Brawl Stars    | brawlstars   |
+| Clash of Clans | clashofclans |
+| Boom Beach     | boombeach    |
+| Hay Day        | hayday       |
 
 Language codes
 
-| Language           | Code    |
-| ------------------ | ------- |
-| English            |         |
-| 繁體中文           | zh      |
-| 简体中文           | zh-hans |
-| Français           | fr      |
-| Deutsch            | de      |
-| Indonesia          | id      |
-| Italiano           | it      |
-| 日本語             | ja      |
-| 한국어             | ko      |
-| Português          | pt      |
-| Русский            | ru      |
-| Español            | es      |`,
+| Language  | Code    |
+| --------- | ------- |
+| English   |         |
+| 繁體中文  | zh      |
+| 简体中文  | zh-hans |
+| Français  | fr      |
+| Deutsch   | de      |
+| Indonesia | id      |
+| Italiano  | it      |
+| 日本語    | ja      |
+| 한국어    | ko      |
+| Português | pt      |
+| Русский   | ru      |
+| Español   | es      |`,
 };
 
 const GAME_NAMES = {
@@ -81,7 +81,7 @@ function renderRichText(json: any): string {
                 case 'heading-4':
                 case 'heading-5':
                 case 'heading-6': {
-                    const level: string = node.nodeType.split('-')[1];
+                    const level: string = node.nodeType.split('-', 2)[1];
                     return `<h${level}>${renderNodeContent(node)}</h${level}>`;
                 }
                 case 'quote':
@@ -191,7 +191,7 @@ async function handler(ctx: any) {
     const game: string = ctx.req.param('game');
     const locale: string = ctx.req.param('locale') || '';
 
-    if (!GAME_NAMES[game]) {
+    if (!Object.hasOwn(GAME_NAMES, game)) {
         throw new Error(`Unsupported game: ${game}. Supported games: ${Object.keys(GAME_NAMES).join(', ')}`);
     }
 

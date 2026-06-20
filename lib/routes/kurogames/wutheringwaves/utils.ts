@@ -17,7 +17,7 @@ export const parseInteger = (value?: string | number, fallback?: number): number
         return fallback === undefined ? NaN : fallback;
     }
 
-    const parsed = Number.parseInt(value, 10);
+    const parsed = Number(value);
 
     if (fallback !== undefined && Number.isNaN(parsed)) {
         return fallback;
@@ -30,12 +30,13 @@ export const parseInteger = (value?: string | number, fallback?: number): number
 export const isValidLanguage = (language: string): language is Language => SUPPORTED_LANGUAGES.includes(language as Language);
 
 /** Fetch the articles for a given language in a given category. */
-export const fetchArticles = (language: Language): Promise<Article[]> => {
+export const fetchArticles = async (language: Language): Promise<Article[]> => {
     if (language === Language.Chinese) {
         return ofetch<Article[]>('https://media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/zh/ArticleMenu.json', { query: { t: Date.now() } });
     }
 
-    return ofetch<{ article: Article[] }>(`https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/${language}/MainMenu.json`).then((data) => data.article);
+    const data = await ofetch<{ article: Article[] }>(`https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/${language}/MainMenu.json`);
+    return data.article;
 };
 
 /** Get the link to the article content. */

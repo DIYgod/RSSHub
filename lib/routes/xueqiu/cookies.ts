@@ -1,17 +1,17 @@
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
-import { getCookies } from '@/utils/puppeteer-utils';
+import playwright from '@/utils/playwright';
+import { getCookies } from '@/utils/playwright-utils';
 
 export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
             });
             await page.goto(link, {
                 waitUntil: 'domcontentloaded',

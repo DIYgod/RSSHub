@@ -9,9 +9,9 @@ import ofetch from '@/utils/ofetch';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = '' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const baseUrl: string = 'https://musify.club';
+    const baseUrl = 'https://musify.club';
     const targetUrl: string = new URL(language, baseUrl).href;
 
     const response = await ofetch(targetUrl);

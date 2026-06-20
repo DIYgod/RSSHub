@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'ndss-symposium.org/',
-    description: `Return results from 2020`,
+    description: 'Return results from 2020',
 };
 
 async function handler() {
@@ -67,35 +67,33 @@ async function handler() {
                                 item.author = $('h1.entry-title').siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' ');
                                 return item;
                             });
-                        } else {
-                            item.link = `${link}#${item.title}`;
-                            return item;
                         }
+                        item.link = `${link}#${item.title}`;
+                        return item;
                     })
                 );
                 return items;
-            } else {
-                const pMatch = $('p strong')
-                    .toArray()
-                    .map((item) => {
-                        item = $(item);
-                        const title = item.text().trim();
-                        return {
-                            title,
-                            author: item
-                                .parent()
-                                .contents()
-                                .filter((_, e) => e.nodeType === 3)
-                                .text()
-                                .trim()
-                                .replaceAll('\n', '')
-                                .replaceAll(/\s+/g, ' '),
-                            link: `${link}#${title}`,
-                            pubDate,
-                        };
-                    });
-                return pMatch;
             }
+            const pMatch = $('p strong')
+                .toArray()
+                .map((item) => {
+                    item = $(item);
+                    const title = item.text().trim();
+                    return {
+                        title,
+                        author: item
+                            .parent()
+                            .contents()
+                            .filter((_, e) => e.nodeType === 3)
+                            .text()
+                            .trim()
+                            .replaceAll('\n', '')
+                            .replaceAll(/\s+/g, ' '),
+                        link: `${link}#${title}`,
+                        pubDate,
+                    };
+                });
+            return pMatch;
         })
     );
 

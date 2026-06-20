@@ -70,7 +70,7 @@ const handler: Route['handler'] = async () => {
             id: 'https://rsshub.app/xbmu/announcement',
         };
     } catch (error) {
-        throw new Error(`Error fetching announcements: ${error}`);
+        throw new Error(`Error fetching announcements: ${error}`, { cause: error });
     }
 };
 

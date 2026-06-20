@@ -1,8 +1,0 @@
-<p>{{ name }} - {{ version_number }}</p>
-<p><b>Loaders: </b>{{ each loaders }}{{ $value }} {{ /each }}</p>
-<p><b>Game Versions: </b>{{ each game_versions }}{{ $value }} {{ /each }}</p>
-
-{{@ changelog }}
-
-<p>Files:</p>
-{{ each files }}<p><a href="{{ $value.url }}">{{ $value.filename }}</a></p>{{ /each }}

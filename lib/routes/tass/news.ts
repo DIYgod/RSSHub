@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const sectionId = $('.container .section-page')
         .attr('ng-init')
-        .match(/sectionId\s*=\s*(\d+?);/);
+        .match(/sectionId\s*=\s*(\d+);/);
 
     const { data: response } = await got.post('https://tass.com/userApi/categoryNewsList', {
         json: {

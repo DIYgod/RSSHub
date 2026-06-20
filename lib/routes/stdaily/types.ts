@@ -6,19 +6,19 @@ export interface DateListResponse {
 
 export interface SectionListResponse {
     obj: {
-        editionList: {
+        editionList: Array<{
             editionName: string;
             periodId: string;
             editionCode: string;
             id: string;
-        }[];
+        }>;
     };
 }
 
 export interface ArticleListResponse {
-    list: {
+    list: Array<{
         id: string;
-    }[];
+    }>;
 }
 
 export interface ArticleDetailResponse {
@@ -28,12 +28,10 @@ export interface ArticleDetailResponse {
             subtitle: string;
             content: string;
             editionName: string;
-            picList:
-                | null
-                | {
-                      url: string;
-                      picText: string;
-                  }[];
+            picList: null | Array<{
+                url: string;
+                picText: string;
+            }>;
             periodTime: string;
             author: string;
         };

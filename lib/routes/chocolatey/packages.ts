@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
 
-    const baseUrl: string = 'https://community.chocolatey.org';
+    const baseUrl = 'https://community.chocolatey.org';
     const targetUrl: string = new URL(`packages/${id}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -33,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             avatar: $authorEl.attr('src'),
         };
     });
-    const guid: string = `chocolatey-${title}`;
+    const guid = `chocolatey-${title}`;
     const image: string | undefined = $('div.package-logo img').attr('src') ? new URL($('div.package-logo img').attr('src') as string, baseUrl).href : undefined;
     const upDatedStr: string | undefined = pubDateStr;
 

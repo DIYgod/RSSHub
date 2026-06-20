@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import { apiBaseUrl, baseUrl, processItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL('new', baseUrl).href;
     const listApiUrl: string = new URL('v1/lists/new', apiBaseUrl).href;

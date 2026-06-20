@@ -1,7 +1,0 @@
-{{ if previewVideo }}
-<video controls preload="metadata" poster="{{ poster }}">
-    <source src="{{ previewVideo }}" type="video/mp4">
-</video>
-{{else if poster}}
-<img src="{{ poster }}">
-{{ /if }}

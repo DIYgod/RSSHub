@@ -56,7 +56,7 @@ async function handler(ctx) {
                 author: item
                     .find('.fire_right')
                     .text()
-                    .match(/作者：(.*)\s*\|/)[1]
+                    .match(/作者：([^|]*)\|/)[1]
                     .trim(),
             };
         });

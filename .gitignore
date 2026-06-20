@@ -28,6 +28,8 @@ node_modules
 tmp
 dist
 dist-lib
+dist-worker
+.wrangler
 
 Session.vim
 combined.log
@@ -38,3 +40,5 @@ package-lock.json
 # pnpm-lock.yaml
 yarn.lock
 yarn-error.log
+
+dist-container

@@ -28,7 +28,7 @@ function getNews(data) {
         .map((elem) => ({
             link: baseUrl + elem.attribs.href,
             title: elem.children[0].data,
-            pubDate: timezone(parseDate(elem.attribs.href.split('/')[3].split('.')[0].slice(0, 14), 'YYYYMMDDHHmmss'), 8),
+            pubDate: timezone(parseDate(elem.attribs.href.split('/', 4)[3].split('.', 1)[0].slice(0, 14), 'YYYYMMDDHHmmss'), 8),
         }));
 }
 

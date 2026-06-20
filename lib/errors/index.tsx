@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/node';
+import Honeybadger from '@honeybadger-io/js';
 import type { ErrorHandler, NotFoundHandler } from 'hono';
 import { routePath } from 'hono/route';
 
@@ -9,6 +9,8 @@ import { requestMetric } from '@/utils/otel';
 import Error from '@/views/error';
 
 import NotFoundError from './types/not-found';
+
+const Sentry = config.sentry.dsn ? await import('@sentry/node') : undefined;
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
@@ -25,20 +27,28 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     }
     debug.error++;
 
-    if (!debug.errorPaths[requestPath]) {
+    const errorPathCount = debug.errorPaths[requestPath];
+    if (!errorPathCount) {
         debug.errorPaths[requestPath] = 0;
     }
     debug.errorPaths[requestPath]++;
 
-    if (!debug.errorRoutes[matchedRoute] && hasMatchedRoute) {
+    const errorRouteCount = debug.errorRoutes[matchedRoute];
+    if (!errorRouteCount && hasMatchedRoute) {
         debug.errorRoutes[matchedRoute] = 0;
     }
     hasMatchedRoute && debug.errorRoutes[matchedRoute]++;
     setDebugInfo(debug);
 
-    if (config.sentry.dsn) {
+    if (config.honeybadger.apiKey) {
+        Honeybadger.notify(error, {
+            context: { name: requestPath.split('/', 2)[1] },
+        });
+    }
+
+    if (Sentry) {
         Sentry.withScope((scope) => {
-            scope.setTag('name', requestPath.split('/')[1]);
+            scope.setTag('name', requestPath.split('/', 2)[1]);
             Sentry.captureException(error);
         });
     }

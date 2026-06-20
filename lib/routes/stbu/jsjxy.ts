@@ -42,9 +42,6 @@ async function handler() {
     const baseUrl = 'https://jsjxy.stbu.edu.cn/news/';
     const { data: response } = await got(baseUrl, {
         responseType: 'buffer',
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(gbk2utf8(response));
     const list = $('.content dl h4')
@@ -63,13 +60,10 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link, {
                     responseType: 'buffer',
-                    https: {
-                        rejectUnauthorized: false,
-                    },
                 });
                 const $ = load(gbk2utf8(response));
                 item.description = $('.content14').first().html().trim();
-                item.pubDate = timezone(parseDate($('.article .source').text().split('日期：')[1].replace('\n', '').trim()), +8);
+                item.pubDate = timezone(parseDate($('.article .source').text().split('日期：', 2)[1].replace('\n', '').trim()), +8);
                 return item;
             })
         )

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -63,7 +63,7 @@ export const route: Route = {
     maintainers: ['KarasuShin', 'TonyRL'],
     handler,
     description: `::: tip
-  在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，默认值为\`10\`
+在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，默认值为\`10\`
 :::
 
 | 分类     | 编码 |
@@ -88,7 +88,7 @@ async function handler(ctx) {
 
     const $ = load(indexData);
 
-    let items: any[] = [];
+    let items: DataItem[];
 
     // 新闻-视频首页特殊处理
     if (column === 'xw' && subColumn === 'SP' && !category) {

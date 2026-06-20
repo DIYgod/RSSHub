@@ -74,7 +74,7 @@ async function handler(ctx): Promise<Data> {
     const apiBase = `${ROOT_URL}/wp-json/wp/v2`;
 
     // Build query using fixed category IDs
-    let categoriesQuery: { include?: number; exclude?: number[] } | undefined;
+    let categoriesQuery: undefined | { include?: number; exclude?: number[] };
     if (sectionParam) {
         if (Object.hasOwn(SECTION_CATEGORY_IDS, sectionParam)) {
             categoriesQuery = { include: SECTION_CATEGORY_IDS[sectionParam] };
@@ -111,7 +111,7 @@ async function handler(ctx): Promise<Data> {
             : undefined,
     }));
 
-    const sectionLabel = sectionParam && SECTION_LABELS[sectionParam] ? ` - ${SECTION_LABELS[sectionParam]}` : '';
+    const sectionLabel = sectionParam && Object.hasOwn(SECTION_LABELS, sectionParam) ? ` - ${SECTION_LABELS[sectionParam]}` : '';
 
     return {
         title: `Hudson River Trading${sectionLabel}`,

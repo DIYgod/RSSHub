@@ -36,7 +36,7 @@ async function handler(ctx: Context) {
     });
 
     const items = response.value.bundle.channelMessages.map((message) => ({
-        title: message.excerpt.split('\n')[0],
+        title: message.excerpt.split('\n', 1)[0],
         description: message.content,
         pubDate: parseDate(message.publishedAt),
         category: message.tags,

@@ -25,7 +25,7 @@ async function handler(ctx) {
 
     let items;
     let category = ctx.params[1] ?? (Object.hasOwn(defaults, site) ? defaults[site] : '');
-    category = Object.hasOwn(shortcuts, site) ? (Object.hasOwn(shortcuts[site], category) ? shortcuts[site][category] : category) : category;
+    category = Object.hasOwn(shortcuts, site) && Object.hasOwn(shortcuts[site], category) ? shortcuts[site][category] : category;
 
     const rootUrl = `https://${site}.dlut.edu.cn`;
     const currentUrl = `${rootUrl}/${category}.htm`;

@@ -105,7 +105,7 @@ const getDataLayer = (html) =>
     JSON.parse(
         html('script[data-test=dataLayer]')
             .text()
-            .match(/window\.dataLayer = \[(.*)];/s)[1]
+            .match(/window\.dataLayer = \[(.*)\];/s)[1]
     );
 
 const cookieJar = new CookieJar();

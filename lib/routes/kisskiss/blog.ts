@@ -10,7 +10,7 @@ const baseUrl = 'https://www.kisskiss.tv/kiss/diary.php';
 export const route: Route = {
     path: '/blog/:category?',
     categories: ['game'],
-    example: '/blog/DLC',
+    example: '/kisskiss/blog/DLC',
     parameters: { category: 'category' },
     features: {
         requireConfig: false,
@@ -58,9 +58,9 @@ async function handler(ctx) {
                     9
                 ),
             };
-            body.find('a img').each(function () {
-                $(this).attr('src', $(this).parent('a').attr('href'));
-                $(this).unwrap();
+            body.find('a img').each((_, el) => {
+                $(el).attr('src', $(el).parent('a').attr('href'));
+                $(el).unwrap();
             });
             body.find('div.blog_data').remove();
             i.description = `<div lang="ja-JP">${body.html()}</div>`;

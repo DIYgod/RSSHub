@@ -29,14 +29,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: Object.entries(idNameMap).map(([type, { title, suffix }]) => ({
+    radar: Array.from(idNameMap, ([type, { title, suffix }]) => ({
         title,
         source: [`www.gamersky.com/${suffix}`],
         target: `/ent/${type}`,
     })),
     name: '娱乐',
     maintainers: ['LogicJake'],
-    description: mdTableBuilder(Object.entries(idNameMap).map(([type, { title, nodeId }]) => ({ type, name: title, nodeId }))),
+    description: mdTableBuilder(Array.from(idNameMap, ([type, { title, nodeId }]) => ({ type, name: title, nodeId }))),
     handler,
 };
 

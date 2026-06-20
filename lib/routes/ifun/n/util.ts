@@ -1,15 +1,15 @@
 import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
-const author: string = '趣集';
-const language: string = 'zh-CN';
-const rootUrl: string = 'https://n.ifun.cool';
+const author = '趣集';
+const language = 'zh-CN';
+const rootUrl = 'https://n.ifun.cool';
 
 const processItems: (items: any[], limit: number) => DataItem[] = (items: any[], limit: number) =>
     items.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string = item.content;
-        const guid: string = `ifun-n-${item.id}`;
+        const guid = `ifun-n-${item.id}`;
 
         const author: DataItem['author'] = item.author;
 

@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
-        throw new ConfigNotFoundError('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('GitHub notification RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const headers = {
         Accept: 'application/vnd.github.v3+json',
@@ -48,6 +48,8 @@ async function handler(ctx) {
         let originUrl = item.subject.url ? item.subject.url.replace('https://api.github.com/repos/', 'https://github.com/') : 'https://github.com/notifications';
         if (originUrl.includes('/releases/')) {
             originUrl = originUrl.replace(/\/releases\/\d+$/, '/releases');
+        } else if (originUrl.includes('/pulls/')) {
+            originUrl = originUrl.replace(/\/pulls\/(\d+)$/, '/pull/$1');
         }
         return {
             title: item.subject.title,
@@ -74,5 +76,6 @@ async function handler(ctx) {
         title: 'Github Notifications',
         link: 'https://github.com/notifications',
         item: items,
+        allowEmpty: true,
     };
 }

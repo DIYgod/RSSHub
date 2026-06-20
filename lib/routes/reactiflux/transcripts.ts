@@ -22,10 +22,10 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.reactiflux.com';
-    const currentUrl = new URL(`transcripts`, rootUrl).href;
+    const currentUrl = new URL('transcripts', rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

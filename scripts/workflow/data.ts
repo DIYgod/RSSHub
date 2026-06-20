@@ -138,6 +138,12 @@ export const categories = [
         zh: '金融',
     },
     {
+        icon: '⚽',
+        link: '/routes/sport',
+        en: 'Sport',
+        zh: '体育',
+    },
+    {
         icon: '🔍',
         link: '/routes/other',
         en: 'Uncategorized',

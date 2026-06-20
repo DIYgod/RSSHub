@@ -79,16 +79,15 @@ async function handler(ctx) {
                 // filter outdated articles
                 if ($('span.old').length > 0) {
                     return null;
-                } else {
-                    const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
-                    item.pubDate = pubDate;
-
-                    if (item.description === '阅读全文') {
-                        item.description = $('p[itemprop="description"]').first().html() as string;
-                    }
-
-                    return item;
                 }
+                const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
+                item.pubDate = pubDate;
+
+                if (item.description === '阅读全文') {
+                    item.description = $('p[itemprop="description"]').first().html() as string;
+                }
+
+                return item;
             })
         )
     );

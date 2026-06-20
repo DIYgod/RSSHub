@@ -38,7 +38,7 @@ export const route: Route = {
 | -------- | ---------- | ------- |
 | censored | uncensored | western |
 
-  时间
+时间
 
 | 日榜  | 週榜   | 月榜    |
 | ----- | ------ | ------- |

@@ -70,7 +70,7 @@ async function handler(ctx) {
 
     return {
         title: `Civitai model ${params.modelId} discussions`,
-        link: `https://civitai.com/`,
+        link: 'https://civitai.com/',
         item: items,
     };
 }

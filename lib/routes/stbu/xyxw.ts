@@ -37,9 +37,6 @@ async function handler() {
     const requestUrl = `${baseUrl}/html/news/xueyuan/`;
     const { data: response } = await got(requestUrl, {
         responseType: 'buffer',
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(gbk2utf8(response));
     const list = $('.style_2 .Simple_title')
@@ -58,13 +55,10 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link, {
                     responseType: 'buffer',
-                    https: {
-                        rejectUnauthorized: false,
-                    },
                 });
                 const $ = load(gbk2utf8(response));
                 item.description = $('.artmainl .articlemain').first().html();
-                item.pubDate = timezone(parseDate($('.artmainl .info').text().split('|')[2].split('：')[1].trim()), +8);
+                item.pubDate = timezone(parseDate($('.artmainl .info').text().split('|', 3)[2].split('：', 2)[1].trim()), +8);
                 return item;
             })
         )

@@ -126,9 +126,9 @@ interface EventbriteEvent {
         url: string;
     };
     summary: string;
-    tags: {
+    tags: Array<{
         display_name: string;
-    }[];
+    }>;
     image: {
         url: string;
         original: {

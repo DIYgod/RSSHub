@@ -61,10 +61,10 @@ interface Title {
         seconds: number;
         __typename: string;
     };
-    certificate: {
+    certificate: null | {
         rating: string;
         __typename: string;
-    } | null;
+    };
     canRate: {
         isRatable: boolean;
         __typename: string;
@@ -81,10 +81,10 @@ interface Title {
         };
         __typename: string;
     };
-    latestTrailer: {
+    latestTrailer: null | {
         id: string;
         __typename: string;
-    } | null;
+    };
     series: null;
     __typename: string;
 }

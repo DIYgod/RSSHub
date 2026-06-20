@@ -64,7 +64,7 @@ async function handler(ctx) {
 
     return {
         title: `${username} 的动态`,
-        link: `https://xiaoheihe.cn`,
+        link: 'https://xiaoheihe.cn',
         item: items,
     };
 }

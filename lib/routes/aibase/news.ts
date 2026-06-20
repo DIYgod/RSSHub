@@ -13,7 +13,7 @@ export const route: Route = {
     maintainers: ['zreo0'],
     handler: async (ctx) => {
         // 每页数量限制
-        const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+        const limit = Number(ctx.req.query('limit') ?? '30');
         // 用项目中已有的获取页面方法，获取页面以及 Token
         const currentUrl = new URL('discover', rootUrl).href;
         const currentHtml = await ofetch(currentUrl);

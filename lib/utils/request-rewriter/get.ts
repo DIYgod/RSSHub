@@ -1,3 +1,4 @@
+// oxlint-disable unicorn-js/no-this-outside-of-class
 import type http from 'node:http';
 import type https from 'node:https';
 
@@ -48,17 +49,22 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         options.headers = options.headers || {};
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
-        const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
-
         // ua
-        if (!headersLowerCaseKeys.has('user-agent')) {
-            options.headers['user-agent'] = config.ua;
-        }
+        if (config.isDefaultUA || options.headerGeneratorOptions) {
+            const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
 
-        for (const header of HEADER_LIST) {
-            if (!headersLowerCaseKeys.has(header) && generatedHeaders[header]) {
-                options.headers[header] = generatedHeaders[header];
+            if (!headersLowerCaseKeys.has('user-agent')) {
+                options.headers['user-agent'] = generatedHeaders['user-agent'];
             }
+
+            for (const header of HEADER_LIST) {
+                const generatedHeader = generatedHeaders[header];
+                if (!headersLowerCaseKeys.has(header) && generatedHeader) {
+                    options.headers[header] = generatedHeader;
+                }
+            }
+        } else if (!headersLowerCaseKeys.has('user-agent')) {
+            options.headers['user-agent'] = config.ua;
         }
 
         // referer
@@ -76,14 +82,14 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
                 url.host !== proxy.proxyUrlHandler?.host &&
                 url.host !== 'localhost' &&
                 !url.host.startsWith('127.') &&
-                !(config.puppeteerWSEndpoint?.includes(url.host) ?? false)
+                [config.playwrightWSEndpoint, config.playwrightCDPEndpoint].every((endpoint) => !endpoint?.includes(url.host))
             ) {
                 options.agent = proxy.agent;
             }
         }
 
         // Remove the headerGeneratorOptions before passing to the original function
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // oxlint-disable-next-line no-unused-vars
         const { headerGeneratorOptions, ...cleanOptions } = options;
 
         return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;

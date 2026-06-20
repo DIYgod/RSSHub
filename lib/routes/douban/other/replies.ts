@@ -55,10 +55,10 @@ async function handler(ctx) {
                     url: item.link,
                 });
 
-                const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)}],/)[1] + '}]');
+                const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)\}\],/)[1] + '}]');
 
                 for (const c of comments) {
-                    if (c.id === item.link.split('#')[1]) {
+                    if (c.id === item.link.split('#', 2)[1]) {
                         return {
                             link: item.link,
                             title: `${c.author.name} 于 ${c.create_time} 的回应`,
@@ -66,7 +66,8 @@ async function handler(ctx) {
                             description: c.text,
                             author: c.author.name,
                         };
-                    } else if (c.replies.length > 0) {
+                    }
+                    if (c.replies.length > 0) {
                         comments.push(...c.replies);
                     }
                 }

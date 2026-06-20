@@ -96,7 +96,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category') || 'new_art_works';
 
-    if (!(category in categoryMap)) {
+    if (!Object.hasOwn(categoryMap, category)) {
         throw new Error('Invalid category');
     }
 
@@ -117,7 +117,7 @@ async function handler(ctx): Promise<Data> {
     }
 
     const items = await cache.tryGet(category, async () => {
-        if (!(category in apiData) || !Array.isArray(apiData[category])) {
+        if (!Object.hasOwn(apiData, category) || !Array.isArray(apiData[category])) {
             return [];
         }
 

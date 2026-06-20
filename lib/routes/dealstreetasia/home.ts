@@ -3,7 +3,7 @@ import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 import type { Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
-// import puppeteer from '@/utils/puppeteer';
+// import playwright from '@/utils/playwright';
 // import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -60,7 +60,7 @@ async function fetchPage() {
         link: item.post_url || item.link || '',
         description: item.post_excerpt || item.excerpt || '',
         pubDate: item.post_date ? new Date(item.post_date).toUTCString() : item.date ? new Date(item.date).toUTCString() : '',
-        category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
+        category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/g, '') : '', // Clean HTML if category_link exists
         image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
     }));
 

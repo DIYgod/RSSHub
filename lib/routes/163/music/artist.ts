@@ -1,8 +1,7 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
+
+import { renderPlaylistDescription } from '../templates/music/playlist';
 
 export const route: Route = {
     path: '/music/artist/:id',
@@ -39,10 +38,13 @@ async function handler(ctx) {
         description: `网易云音乐歌手专辑 - ${data.artist.name}`,
         image: data.artist.img1v1Url || data.artist.picUrl,
         item: data.hotAlbums.map((item) => {
-            const singer = item.artists.length === 1 ? item.artists[0].name : item.artists.reduce((prev, cur) => (prev.name || prev) + '/' + cur.name);
+            let singer = item.artists[0].name;
+            for (const artist of item.artists.slice(1)) {
+                singer += '/' + artist.name;
+            }
             return {
                 title: `${item.name} - ${singer}`,
-                description: art(path.join(__dirname, '../templates/music/playlist.art'), {
+                description: renderPlaylistDescription({
                     singer,
                     album: item.name,
                     date: new Date(item.publishTime).toLocaleDateString(),

@@ -24,9 +24,14 @@ export default {
                 value = value + '';
             }
             return value;
-        } else {
-            return null;
         }
+        return null;
+    },
+    has: (key: string) => {
+        if (key && status.available && clients.memoryCache) {
+            return clients.memoryCache.has(key);
+        }
+        return false;
     },
     set: (key, value, maxAge = config.cache.contentExpire) => {
         if (!value || value === 'undefined') {

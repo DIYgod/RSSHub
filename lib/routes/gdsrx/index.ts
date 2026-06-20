@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '10' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'http://www.gdsrx.org.cn';
     const currentUrl = new URL(`portal/list/index/id/${id}.html`, rootUrl).href;

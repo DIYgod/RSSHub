@@ -22,7 +22,7 @@ export const route: Route = {
     maintainers: ['sitdownkevin'],
     url: 'scupi.scu.edu.cn/activities/notice',
     handler,
-    description: ``,
+    description: '',
 };
 
 async function handler() {

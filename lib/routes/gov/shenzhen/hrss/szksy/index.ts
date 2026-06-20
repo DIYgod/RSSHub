@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 const rootURL = 'http://hrss.sz.gov.cn/';
 
 export const route: Route = {
-    path: '/shenzhen/hrss/szksy/:caty/:page?',
+    path: '/hrss/szksy/:caty/:page?',
     categories: ['government'],
     example: '/gov/shenzhen/hrss/szksy/bmxx/2',
     parameters: { caty: '信息类别', page: '页码' },
@@ -25,7 +25,7 @@ export const route: Route = {
             source: ['xxgk.sz.gov.cn/cn/xxgk/zfxxgj/:caty'],
         },
     ],
-    name: '深圳市考试院',
+    name: '考试院',
     maintainers: ['zlasd'],
     handler,
     url: 'hrss.sz.gov.cn/*',

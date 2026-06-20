@@ -20,7 +20,8 @@ describe('debug', () => {
 
         const response = await app.request('/');
 
-        const $ = load(await response.text());
+        const html = await response.text();
+        const $ = load(html);
         $('.debug-item').each((index, item) => {
             const key = $(item).find('.debug-key').html()?.trim();
             const value = $(item).find('.debug-value').html()?.trim();

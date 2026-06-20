@@ -50,7 +50,7 @@ async function handler() {
             const author = $item.find('span.username a').text();
             const lastTouched = $item.find('span.last-touched').text();
             const pubDate = parseRelativeDate(lastTouched);
-            const link = url ? url.split('#')[0] : undefined;
+            const link = url ? url.split('#', 1)[0] : undefined;
             return link ? { title, link, author, pubDate } : undefined;
         })
         .filter((item) => item !== undefined);

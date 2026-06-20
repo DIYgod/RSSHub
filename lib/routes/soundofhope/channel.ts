@@ -31,7 +31,7 @@ export const route: Route = {
     handler,
     description: `参数均可在官网获取，如：
 
-  \`https://www.soundofhope.org/term/203\` 对应 \`/soundofhope/term/203\``,
+\`https://www.soundofhope.org/term/203\` 对应 \`/soundofhope/term/203\``,
 };
 
 async function handler(ctx) {

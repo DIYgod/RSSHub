@@ -31,7 +31,7 @@ async function handler(ctx) {
             category: [...(e.sections ?? []).map((_) => _.name), e.__from],
             link: `${rootUrl}/${e.style === '' ? 'external' : 'story'}/${e.slug}`,
         }))
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
     const list = await Promise.all(items.map((item) => getArticle(item)));
 

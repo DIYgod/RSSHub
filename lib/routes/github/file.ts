@@ -51,7 +51,7 @@ async function handler(ctx) {
     const resultItems = count.map((i) => {
         const each = list[i];
         return {
-            title: each.commit.message.split('\n')[0],
+            title: each.commit.message.split('\n', 1)[0],
             description: `<pre>${each.commit.message}</pre>`,
             link: each.html_url,
             author: each.commit.author.name,

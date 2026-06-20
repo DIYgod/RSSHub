@@ -22,13 +22,13 @@ export const parseList = async (
     sectionUrl: string
 ): Promise<{
     title: string;
-    resultList: {
+    resultList: Array<{
         title: string;
         description?: string;
         pubDate: Date;
         link: string;
         category?: string[];
-    }[];
+    }>;
 }> => {
     const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
     const $ = load(pageResponse._data);
@@ -59,28 +59,23 @@ export const parseList = async (
                 let $1 = load(response._data);
 
                 let title, pubDate, category, images;
-                const jsonText = $1('head script[type="application/ld+json"]')
+                const jsonText = $1('script[type="application/ld+json"]')
                     .text()
-                    .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    .replaceAll(/\p{Cc}/gu, '');
                 const ldJson = JSON.parse(jsonText);
 
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
                 if (isSingapore) {
-                    const hydrationData = JSON.parse(
-                        JSON.parse(
-                            `"${
-                                $1('script:contains("__staticRouterHydrationData")')
-                                    .text()
-                                    .match(/__staticRouterHydrationData = JSON.parse\("(.*)"\);/)?.[1]
-                            }"`
-                        )
-                    );
-                    const article = hydrationData.loaderData['0-0'].context.payload.article;
+                    const ldJson = JSON.parse($1('#seo-article-page').text());
+                    const article = ldJson['@graph'].find((item) => item['@type'] === 'NewsArticle');
                     title = article.headline;
-                    pubDate = parseDate(article.create_time, 'X');
-                    category = article.tags.map((t) => t.name);
-                    $1 = load(article.body_cn, null, false);
-                    images = article.images;
+                    pubDate = parseDate(article.datePublished);
+                    category = $1('meta[name="keywords"]')
+                        .attr('content')
+                        ?.split(',')
+                        .map((s) => s.trim());
+                    $1 = load($1('.articleBody').html(), null, false);
+                    images = [{ url: article.image.url }];
                 } else {
                     title = ldJson.headline;
                     pubDate = parseDate(ldJson.datePublished);
@@ -171,7 +166,7 @@ const processImageData = (isSg, images, $1) => {
             src: img.url
                 .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
                 .replaceAll('s3/files', 's3fs-public')
-                .split('?')[0],
+                .split('?', 1)[0],
             title: img.caption,
         })) as ImageData[];
     }
@@ -186,7 +181,7 @@ const processImageData = (isSg, images, $1) => {
                     .attr('src')
                     .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
                     .replaceAll('s3/files', 's3fs-public')
-                    .split('?')[0],
+                    .split('?', 1)[0],
                 title: hkImg.attr('title'),
             },
         ] as ImageData[];

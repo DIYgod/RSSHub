@@ -17,10 +17,8 @@ export const route: Route = {
     categories: ['programming'],
     example: '/sketis/isabelle-dev/blog/1',
     parameters: { blog: 'name of blog (1 for NEWS; 2 for Release)' },
-    description: `
-- Isabelle News: \`https://isabelle-dev.sketis.net/phame/blog/view/1/\`
-- Isabelle Release: \`https://isabelle-dev.sketis.net/phame/blog/view/2/\`
-`,
+    description: `- Isabelle News: \`https://isabelle-dev.sketis.net/phame/blog/view/1/\`
+- Isabelle Release: \`https://isabelle-dev.sketis.net/phame/blog/view/2/\``,
     features: {
         requireConfig: false,
         requirePuppeteer: false,

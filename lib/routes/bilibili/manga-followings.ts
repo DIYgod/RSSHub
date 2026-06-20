@@ -31,7 +31,7 @@ export const route: Route = {
     maintainers: ['yindaheng98'],
     handler,
     description: `::: warning
-  用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
     const link = 'https://manga.bilibili.com/account-center';
     const response = await got({
         method: 'POST',
-        url: `https://manga.bilibili.com/twirp/bookshelf.v1.Bookshelf/ListFavorite?device=pc&platform=web`,
+        url: 'https://manga.bilibili.com/twirp/bookshelf.v1.Bookshelf/ListFavorite?device=pc&platform=web',
         json: { page_num: 1, page_size, order: 2, wait_free: 0 },
         headers: {
             Referer: link,

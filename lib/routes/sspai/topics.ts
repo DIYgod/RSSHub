@@ -25,11 +25,11 @@ export const route: Route = {
     maintainers: ['SunShinenny'],
     handler,
     url: 'sspai.com/topics',
-    description: `此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！`,
+    description: '此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！',
 };
 
 async function handler() {
-    const api_url = `https://sspai.com/api/v1/topics?offset=0&limit=20&include_total=false`;
+    const api_url = 'https://sspai.com/api/v1/topics?offset=0&limit=20&include_total=false';
     const resp = await got({
         method: 'get',
         url: api_url,
@@ -56,9 +56,9 @@ async function handler() {
     );
 
     return {
-        title: `少数派专题广场更新推送`,
-        link: `https://sspai.com/topics`,
-        description: `仅仅推送新的专题(集合型而非具体文章) `,
+        title: '少数派专题广场更新推送',
+        link: 'https://sspai.com/topics',
+        description: '仅仅推送新的专题(集合型而非具体文章) ',
         item: items,
     };
 }

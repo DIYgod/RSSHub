@@ -13,7 +13,7 @@ export const route: Route = {
 | 1                              | 2                    |
 
 ::: tip
-  See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
+See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
 :::`,
     features: {
         nsfw: true,

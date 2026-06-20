@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'jgzx/xwzx' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://www.beijingprice.cn';
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
@@ -109,7 +109,7 @@ export const route: Route = {
     example: '/beijingprice/jgzx/xwzx',
     parameters: { category: '分类，默认为 `jgzx/xwzx` 即新闻资讯，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [新闻资讯](https://www.beijingprice.cn/jgzx/xwzx/)，网址为 \`https://www.beijingprice.cn/jgzx/xwzx/\`。截取 \`https://beijingprice.cn/\` 到末尾 \`/\` 的部分 \`jgzx/xwzx\` 作为参数填入，此时路由为 [\`/beijingprice/jgzx/xwzx\`](https://rsshub.app/beijingprice/jgzx/xwzx)。
+若订阅 [新闻资讯](https://www.beijingprice.cn/jgzx/xwzx/)，网址为 \`https://www.beijingprice.cn/jgzx/xwzx/\`。截取 \`https://beijingprice.cn/\` 到末尾 \`/\` 的部分 \`jgzx/xwzx\` 作为参数填入，此时路由为 [\`/beijingprice/jgzx/xwzx\`](https://rsshub.app/beijingprice/jgzx/xwzx)。
 :::
 
 #### [价格资讯](https://www.beijingprice.cn/jgzx/xwzx/)
@@ -122,8 +122,7 @@ export const route: Route = {
 
 | [价格听证](https://www.beijingprice.cn/zhxx/jgtz/)     | [价格监测定点单位名单](https://www.beijingprice.cn/zhxx/jgjcdddwmd/) | [部门预算决算](https://www.beijingprice.cn/bmys/) |
 | ------------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------- |
-| [zhxx/jgtz](https://rsshub.app/beijingprice/zhxx/jgtz) | [zhxx/jgjcdddwmd](https://rsshub.app/beijingprice/zhxx/jgjcdddwmd)   | [bmys](https://rsshub.app/beijingprice/bmys)      |
-    `,
+| [zhxx/jgtz](https://rsshub.app/beijingprice/zhxx/jgtz) | [zhxx/jgjcdddwmd](https://rsshub.app/beijingprice/zhxx/jgjcdddwmd)   | [bmys](https://rsshub.app/beijingprice/bmys)      |`,
     categories: ['government'],
 
     features: {

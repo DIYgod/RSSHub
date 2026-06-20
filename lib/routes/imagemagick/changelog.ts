@@ -54,8 +54,8 @@ async function handler() {
             const title = item.text();
 
             let description = '';
-            item.nextUntil('h2').each(function () {
-                description += $(this).html();
+            item.nextUntil('h2').each((_, el) => {
+                description += $(el).html();
             });
 
             return {

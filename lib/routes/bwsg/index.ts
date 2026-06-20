@@ -16,8 +16,7 @@ export const route: Route = {
     path: '*',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-Copy the query parameters for your https://www.bwsg.at/immobilien/immobilie-suchen
+    description: `Copy the query parameters for your <https://www.bwsg.at/immobilien/immobilie-suchen>
 search, omitting the leading \`?\`
 
 ::: tip

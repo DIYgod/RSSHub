@@ -9,7 +9,7 @@ let viewType: ViewType = ViewType.Articles;
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id, tab } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`collections/${id}${tab ? `?tab=${tab}` : ''}`, baseUrl).href;
     const apiUrl: string = new URL(`gapi/v1/collections/${id}/${tab ?? 'originals'}`, baseUrl).href;
@@ -74,8 +74,7 @@ export const route: Route = {
 
 | 全部 | 播客   | 文章     | 资讯 | 视频   |
 | ---- | ------ | -------- | ---- | ------ |
-|      | radios | articles | news | videos |
-`,
+|      | radios | articles | news | videos |`,
     categories: ['game'],
     features: {
         requireConfig: false,

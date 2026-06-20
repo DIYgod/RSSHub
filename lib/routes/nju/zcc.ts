@@ -35,7 +35,7 @@ async function handler() {
 
     const items = await Promise.all(
         Object.keys(category_dict).map(async () => {
-            const response = await got(`https://zcc.nju.edu.cn/sy/tzzhxx/index.html`);
+            const response = await got('https://zcc.nju.edu.cn/sy/tzzhxx/index.html');
 
             const data = response.data;
             const $ = load(data);
@@ -44,7 +44,7 @@ async function handler() {
 
             const start = script.indexOf('[');
             const end = script.lastIndexOf(']');
-            const t = JSON.parse(script.substring(start, end + 1));
+            const t = JSON.parse(script.slice(start, end + 1));
 
             // only read first page
             return t[0].infolist.map((item) => ({

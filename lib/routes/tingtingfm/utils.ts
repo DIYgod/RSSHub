@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import md5 from '@/utils/md5';
 
 const SALT = '1Ftjv0bfpVmqbE38';
@@ -8,11 +9,11 @@ const getClientVal = (length) => {
         const random = Math.floor(62 * Math.random());
         if (random < 10) {
             return random;
-        } else if (random < 36) {
-            return String.fromCharCode(random + 55);
-        } else {
-            return String.fromCharCode(random + 61);
         }
+        if (random < 36) {
+            return String.fromCharCode(random + 55);
+        }
+        return String.fromCharCode(random + 61);
     };
     while (result.length < length) {
         result += randomChar();

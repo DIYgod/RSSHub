@@ -9,11 +9,11 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const apiSlug = 'wp-json/wp/v2';
 
-    const baseUrl: string = 'https://jbma.net';
+    const baseUrl = 'https://jbma.net';
     const apiUrl = new URL(`${apiSlug}/report`, baseUrl).href;
     let targetUrl: string = new URL('report/', baseUrl).href;
 
@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         }
     }
 
-    const mediaMap: Map<number, any> = new Map();
+    const mediaMap = new Map<number, any>();
     if (postIds.length > 0) {
         const mediaApiUrl = new URL(`${apiSlug}/media`, baseUrl).href;
         const mediaResponse = await ofetch(mediaApiUrl, {
@@ -332,7 +332,7 @@ To subscribe to [Metals Forcus](https://jbma.net/cat_report/metals-forcus/), whe
                 const type: string = params.type;
                 const name: string = params.name;
 
-                if (type === 'report' || type === 'cat_report' || type === 'tag_report') {
+                if (['report', 'cat_report', 'tag_report'].includes(type)) {
                     return `/${type}${name ? `/${name}` : ''}`;
                 }
 

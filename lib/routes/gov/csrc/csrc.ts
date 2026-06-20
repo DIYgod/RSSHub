@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { id = 'c101972' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'http://www.csrc.gov.cn';
     const apiUrl = new URL('getLocalList', rootUrl).href;
@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/csrc/zfxxgk_zdgk/:id?',
+    path: '/zfxxgk_zdgk/:id?',
     name: '政府信息公开',
     url: 'www.csrc.gov.cn',
     maintainers: ['nczitzk'],
@@ -86,7 +86,7 @@ export const route: Route = {
     example: '/gov/csrc/zfxxgk_zdgk/c101971',
     parameters: { id: '频道 id，默认为 `c101971`，即行政处罚决定，可在对应频道页 URL 中找到' },
     description: `::: tip
-  若订阅 [行政处罚决定](http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml)，网址为 \`http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml\`。截取 \`http://www.csrc.gov.cn/csrc/\` 到末尾 \`/zfxxgk_zdgk.shtml\` 的部分 \`c101971\` 作为参数填入，此时路由为 [\`/gov/csrc/zfxxgk_zdgk/c101971\`](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101971)。
+若订阅 [行政处罚决定](http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml)，网址为 \`http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml\`。截取 \`http://www.csrc.gov.cn/csrc/\` 到末尾 \`/zfxxgk_zdgk.shtml\` 的部分 \`c101971\` 作为参数填入，此时路由为 [\`/gov/csrc/zfxxgk_zdgk/c101971\`](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101971)。
 :::
 
 #### [主动公开目录](http://www.csrc.gov.cn/csrc/c100035/zfxxgk_zdgk.shtml)
@@ -200,8 +200,7 @@ export const route: Route = {
 | [其他](http://www.csrc.gov.cn/csrc/c101799/zfxxgk_zdgk.shtml)                           | [c101799](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101799) |
 | [全国人大建议和政协提案复文公开](http://www.csrc.gov.cn/csrc/c101800/zfxxgk_zdgk.shtml) | [c101800](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101800) |
 
-</details>
-    `,
+</details>`,
     categories: ['government'],
 
     features: {
@@ -225,317 +224,317 @@ export const route: Route = {
         {
             title: '主动公开目录 - 按主题查看',
             source: ['www.csrc.gov.cn/csrc/c101793/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101793',
+            target: '/zfxxgk_zdgk/c101793',
         },
         {
             title: '主动公开目录 - 按体裁文种查看',
             source: ['www.csrc.gov.cn/csrc/c101951/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101951',
+            target: '/zfxxgk_zdgk/c101951',
         },
         {
             title: '主动公开目录 - 按派出机构查看',
             source: ['www.csrc.gov.cn/csrc/c101985/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101985',
+            target: '/zfxxgk_zdgk/c101985',
         },
         {
             title: '按主题查看 - 综合政务',
             source: ['www.csrc.gov.cn/csrc/c101794/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101794',
+            target: '/zfxxgk_zdgk/c101794',
         },
         {
             title: '按主题查看 - 发行监管',
             source: ['www.csrc.gov.cn/csrc/c101801/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101801',
+            target: '/zfxxgk_zdgk/c101801',
         },
         {
             title: '按主题查看 - 公众公司监管（含北交所）',
             source: ['www.csrc.gov.cn/csrc/c101828/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101828',
+            target: '/zfxxgk_zdgk/c101828',
         },
         {
             title: '按主题查看 - 证券交易监管',
             source: ['www.csrc.gov.cn/csrc/c101832/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101832',
+            target: '/zfxxgk_zdgk/c101832',
         },
         {
             title: '按主题查看 - 证券经营机构监管',
             source: ['www.csrc.gov.cn/csrc/c101837/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101837',
+            target: '/zfxxgk_zdgk/c101837',
         },
         {
             title: '按主题查看 - 上市公司监管',
             source: ['www.csrc.gov.cn/csrc/c101863/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101863',
+            target: '/zfxxgk_zdgk/c101863',
         },
         {
             title: '按主题查看 - 基金监管',
             source: ['www.csrc.gov.cn/csrc/c101876/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101876',
+            target: '/zfxxgk_zdgk/c101876',
         },
         {
             title: '按主题查看 - 私募基金监管',
             source: ['www.csrc.gov.cn/csrc/c101938/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101938',
+            target: '/zfxxgk_zdgk/c101938',
         },
         {
             title: '按主题查看 - 区域性股权市场规范发展',
             source: ['www.csrc.gov.cn/csrc/c106301/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c106301',
+            target: '/zfxxgk_zdgk/c106301',
         },
         {
             title: '按主题查看 - 期货监管',
             source: ['www.csrc.gov.cn/csrc/c101901/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101901',
+            target: '/zfxxgk_zdgk/c101901',
         },
         {
             title: '按主题查看 - 债券监管',
             source: ['www.csrc.gov.cn/csrc/c106306/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c106306',
+            target: '/zfxxgk_zdgk/c106306',
         },
         {
             title: '按主题查看 - 行政执法',
             source: ['www.csrc.gov.cn/csrc/c101925/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101925',
+            target: '/zfxxgk_zdgk/c101925',
         },
         {
             title: '按主题查看 - 行政复议',
             source: ['www.csrc.gov.cn/csrc/c105938/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c105938',
+            target: '/zfxxgk_zdgk/c105938',
         },
         {
             title: '按主题查看 - 国际合作',
             source: ['www.csrc.gov.cn/csrc/c101931/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101931',
+            target: '/zfxxgk_zdgk/c101931',
         },
         {
             title: '按主题查看 - 证券服务机构监管',
             source: ['www.csrc.gov.cn/csrc/c105939/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c105939',
+            target: '/zfxxgk_zdgk/c105939',
         },
         {
             title: '按主题查看 - 其他',
             source: ['www.csrc.gov.cn/csrc/c101950/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101950',
+            target: '/zfxxgk_zdgk/c101950',
         },
         {
             title: '按派出机构查看 - 北京',
             source: ['www.csrc.gov.cn/csrc/c101986/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101986',
+            target: '/zfxxgk_zdgk/c101986',
         },
         {
             title: '按派出机构查看 - 天津',
             source: ['www.csrc.gov.cn/csrc/c101987/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101987',
+            target: '/zfxxgk_zdgk/c101987',
         },
         {
             title: '按派出机构查看 - 河北',
             source: ['www.csrc.gov.cn/csrc/c101988/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101988',
+            target: '/zfxxgk_zdgk/c101988',
         },
         {
             title: '按派出机构查看 - 山西',
             source: ['www.csrc.gov.cn/csrc/c101989/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101989',
+            target: '/zfxxgk_zdgk/c101989',
         },
         {
             title: '按派出机构查看 - 内蒙古',
             source: ['www.csrc.gov.cn/csrc/c101990/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101990',
+            target: '/zfxxgk_zdgk/c101990',
         },
         {
             title: '按派出机构查看 - 辽宁',
             source: ['www.csrc.gov.cn/csrc/c101991/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101991',
+            target: '/zfxxgk_zdgk/c101991',
         },
         {
             title: '按派出机构查看 - 吉林',
             source: ['www.csrc.gov.cn/csrc/c101992/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101992',
+            target: '/zfxxgk_zdgk/c101992',
         },
         {
             title: '按派出机构查看 - 黑龙江',
             source: ['www.csrc.gov.cn/csrc/c101993/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101993',
+            target: '/zfxxgk_zdgk/c101993',
         },
         {
             title: '按派出机构查看 - 上海',
             source: ['www.csrc.gov.cn/csrc/c101994/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101994',
+            target: '/zfxxgk_zdgk/c101994',
         },
         {
             title: '按派出机构查看 - 江苏',
             source: ['www.csrc.gov.cn/csrc/c101995/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101995',
+            target: '/zfxxgk_zdgk/c101995',
         },
         {
             title: '按派出机构查看 - 浙江',
             source: ['www.csrc.gov.cn/csrc/c101996/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101996',
+            target: '/zfxxgk_zdgk/c101996',
         },
         {
             title: '按派出机构查看 - 安徽',
             source: ['www.csrc.gov.cn/csrc/c101997/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101997',
+            target: '/zfxxgk_zdgk/c101997',
         },
         {
             title: '按派出机构查看 - 福建',
             source: ['www.csrc.gov.cn/csrc/c101998/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101998',
+            target: '/zfxxgk_zdgk/c101998',
         },
         {
             title: '按派出机构查看 - 江西',
             source: ['www.csrc.gov.cn/csrc/c101999/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101999',
+            target: '/zfxxgk_zdgk/c101999',
         },
         {
             title: '按派出机构查看 - 山东',
             source: ['www.csrc.gov.cn/csrc/c102000/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102000',
+            target: '/zfxxgk_zdgk/c102000',
         },
         {
             title: '按派出机构查看 - 河南',
             source: ['www.csrc.gov.cn/csrc/c102001/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102001',
+            target: '/zfxxgk_zdgk/c102001',
         },
         {
             title: '按派出机构查看 - 湖北',
             source: ['www.csrc.gov.cn/csrc/c102002/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102002',
+            target: '/zfxxgk_zdgk/c102002',
         },
         {
             title: '按派出机构查看 - 湖南',
             source: ['www.csrc.gov.cn/csrc/c102003/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102003',
+            target: '/zfxxgk_zdgk/c102003',
         },
         {
             title: '按派出机构查看 - 广东',
             source: ['www.csrc.gov.cn/csrc/c102004/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102004',
+            target: '/zfxxgk_zdgk/c102004',
         },
         {
             title: '按派出机构查看 - 广西',
             source: ['www.csrc.gov.cn/csrc/c102005/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102005',
+            target: '/zfxxgk_zdgk/c102005',
         },
         {
             title: '按派出机构查看 - 海南',
             source: ['www.csrc.gov.cn/csrc/c102006/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102006',
+            target: '/zfxxgk_zdgk/c102006',
         },
         {
             title: '按派出机构查看 - 重庆',
             source: ['www.csrc.gov.cn/csrc/c102007/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102007',
+            target: '/zfxxgk_zdgk/c102007',
         },
         {
             title: '按派出机构查看 - 四川',
             source: ['www.csrc.gov.cn/csrc/c102008/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102008',
+            target: '/zfxxgk_zdgk/c102008',
         },
         {
             title: '按派出机构查看 - 贵州',
             source: ['www.csrc.gov.cn/csrc/c102009/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102009',
+            target: '/zfxxgk_zdgk/c102009',
         },
         {
             title: '按派出机构查看 - 云南',
             source: ['www.csrc.gov.cn/csrc/c102010/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102010',
+            target: '/zfxxgk_zdgk/c102010',
         },
         {
             title: '按派出机构查看 - 西藏',
             source: ['www.csrc.gov.cn/csrc/c102011/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102011',
+            target: '/zfxxgk_zdgk/c102011',
         },
         {
             title: '按派出机构查看 - 陕西',
             source: ['www.csrc.gov.cn/csrc/c102012/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102012',
+            target: '/zfxxgk_zdgk/c102012',
         },
         {
             title: '按派出机构查看 - 甘肃',
             source: ['www.csrc.gov.cn/csrc/c102013/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102013',
+            target: '/zfxxgk_zdgk/c102013',
         },
         {
             title: '按派出机构查看 - 青海',
             source: ['www.csrc.gov.cn/csrc/c102014/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102014',
+            target: '/zfxxgk_zdgk/c102014',
         },
         {
             title: '按派出机构查看 - 宁夏',
             source: ['www.csrc.gov.cn/csrc/c102015/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102015',
+            target: '/zfxxgk_zdgk/c102015',
         },
         {
             title: '按派出机构查看 - 新疆',
             source: ['www.csrc.gov.cn/csrc/c102016/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102016',
+            target: '/zfxxgk_zdgk/c102016',
         },
         {
             title: '按派出机构查看 - 深圳',
             source: ['www.csrc.gov.cn/csrc/c102017/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102017',
+            target: '/zfxxgk_zdgk/c102017',
         },
         {
             title: '按派出机构查看 - 大连',
             source: ['www.csrc.gov.cn/csrc/c102018/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102018',
+            target: '/zfxxgk_zdgk/c102018',
         },
         {
             title: '按派出机构查看 - 宁波',
             source: ['www.csrc.gov.cn/csrc/c102019/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102019',
+            target: '/zfxxgk_zdgk/c102019',
         },
         {
             title: '按派出机构查看 - 厦门',
             source: ['www.csrc.gov.cn/csrc/c102020/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102020',
+            target: '/zfxxgk_zdgk/c102020',
         },
         {
             title: '按派出机构查看 - 青岛',
             source: ['www.csrc.gov.cn/csrc/c102021/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c102021',
+            target: '/zfxxgk_zdgk/c102021',
         },
         {
             title: '按派出机构查看 - 上海专员办',
             source: ['www.csrc.gov.cn/csrc/c105841/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c105841',
+            target: '/zfxxgk_zdgk/c105841',
         },
         {
             title: '按派出机构查看 - 深圳专员办',
             source: ['www.csrc.gov.cn/csrc/c105842/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c105842',
+            target: '/zfxxgk_zdgk/c105842',
         },
         {
             title: '综合政务 - 组织机构',
             source: ['www.csrc.gov.cn/csrc/c101795/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101795',
+            target: '/zfxxgk_zdgk/c101795',
         },
         {
             title: '综合政务 - 征求意见',
             source: ['www.csrc.gov.cn/csrc/c101796/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101796',
+            target: '/zfxxgk_zdgk/c101796',
         },
         {
             title: '综合政务 - 废止规章',
             source: ['www.csrc.gov.cn/csrc/c101797/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101797',
+            target: '/zfxxgk_zdgk/c101797',
         },
         {
             title: '综合政务 - 财务预算管理',
             source: ['www.csrc.gov.cn/csrc/c105887/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c105887',
+            target: '/zfxxgk_zdgk/c105887',
         },
         {
             title: '综合政务 - 其他',
             source: ['www.csrc.gov.cn/csrc/c101799/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101799',
+            target: '/zfxxgk_zdgk/c101799',
         },
         {
             title: '综合政务 - 全国人大建议和政协提案复文公开',
             source: ['www.csrc.gov.cn/csrc/c101800/zfxxgk_zdgk.shtml'],
-            target: '/csrc/zfxxgk_zdgk/c101800',
+            target: '/zfxxgk_zdgk/c101800',
         },
     ],
 };

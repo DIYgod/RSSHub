@@ -44,8 +44,8 @@ async function handler(ctx) {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.pubDate = parseDate($('div.main > div.slayout > div > div.c1 > div:nth-child(1) > div > p:nth-child(4)').text().split('发布时间: ')[1]);
-                const marginLink = `magnet:?xt=urn:btih:${$('#text_hash_id').text().split('，特征码：')[1]}`.trim();
+                item.pubDate = parseDate($('div.main > div.slayout > div > div.c1 > div:nth-child(1) > div > p:nth-child(4)').text().split('发布时间: ', 2)[1]);
+                const marginLink = `magnet:?xt=urn:btih:${$('#text_hash_id').text().split('，特征码：', 2)[1]}`.trim();
                 item.enclosure_url = marginLink;
                 item.enclosure_type = 'application/x-bittorrent';
                 item.description = $('#btm > div.main > div.slayout > div > div.c2 > div:nth-child(1) > div.intro').html();

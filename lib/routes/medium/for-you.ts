@@ -27,7 +27,7 @@ export const route: Route = {
     maintainers: ['ImSingee'],
     handler,
     description: `::: warning
-  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 :::`,
 };
 

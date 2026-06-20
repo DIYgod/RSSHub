@@ -53,10 +53,10 @@ async function handler(ctx) {
                 let pubDate = null;
                 for (const item of content('div.content-title.fl > i').text().split('  ')) {
                     if (item.includes('作者：')) {
-                        author = item.split('：')[1];
+                        author = item.split('：', 2)[1];
                     }
                     if (item.includes('时间：')) {
-                        pubDate = item.split('：')[1];
+                        pubDate = item.split('：', 2)[1];
                     }
                 }
 

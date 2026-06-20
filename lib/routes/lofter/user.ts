@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'post',
-        url: `http://api.lofter.com/v2.0/blogHomePage.api?product=lofter-iphone-10.0.0`,
+        url: 'http://api.lofter.com/v2.0/blogHomePage.api?product=lofter-iphone-10.0.0',
         body: new URLSearchParams({
             blogdomain: rootUrl,
             checkpwd: '1',
@@ -57,7 +57,7 @@ async function handler(ctx) {
         title: item.post.title || item.post.noticeLinkTitle,
         link: item.post.blogPageUrl,
         description:
-            JSON.parse(item.post.photoLinks || `[]`)
+            JSON.parse(item.post.photoLinks || '[]')
                 .map((photo) => {
                     if (photo.raw?.match(/\/\/nos\.netease\.com\//)) {
                         photo.raw = `https://${photo.raw.match(/(imglf\d)/)[0]}.lf127.net${photo.raw.match(/\/\/nos\.netease\.com\/imglf\d(.*)/)[1]}`;
@@ -65,7 +65,7 @@ async function handler(ctx) {
                     return `<img src="${photo.raw || photo.orign}">`;
                 })
                 .join('') +
-            JSON.parse(item.post.embed ? `[${item.post.embed}]` : `[]`)
+            JSON.parse(item.post.embed ? `[${item.post.embed}]` : '[]')
                 .map((video) => `<video src="${video.originUrl}" poster="${video.video_img_url}" controls="controls"></video>`)
                 .join('') +
             item.post.content,

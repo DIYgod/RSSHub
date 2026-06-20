@@ -1,15 +1,13 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import { queryToBoolean } from '@/utils/readable-social';
-import { art } from '@/utils/render';
 
+import { renderUserEmbed } from './templates/user';
 import type { Item } from './types';
 
 const baseUrl = 'https://www.tiktok.com';
@@ -29,7 +27,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['tiktok.com/:user'],
+            source: ['www.tiktok.com/:user'],
             target: '/user/:user',
         },
     ],
@@ -45,12 +43,12 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `tiktok:user:${user}`,
         async () => {
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
+            const context = await playwright();
+            const page = await context.newPage();
             let itemList = { itemList: [] };
-            page.on('request', (request) => {
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -59,11 +57,11 @@ async function handler(ctx) {
                 }
             });
             await page.goto(`${baseUrl}/${user}`, {
-                waitUntil: 'networkidle0',
+                waitUntil: 'networkidle',
             });
 
             const pageHtml = await page.content();
-            await browser.close();
+            await context.close();
 
             const $ = load(pageHtml);
             const rehydrationData = JSON.parse($('script#__UNIVERSAL_DATA_FOR_REHYDRATION__').text());
@@ -79,7 +77,7 @@ async function handler(ctx) {
 
     const items = itemList.itemList.map((item: Item) => ({
         title: item.desc,
-        description: art(path.join(__dirname, 'templates/user.art'), {
+        description: renderUserEmbed({
             poster: item.video.cover,
             source: item.video.playAddr,
             useIframe,

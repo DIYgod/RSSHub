@@ -32,7 +32,7 @@ const handler = async (ctx) => {
                             .filter((_, i) => i.nodeType === 3)
                             .text()
                             .trim()
-                            .split(/\s{2,}/)[0],
+                            .split(/\s{2,}/, 1)[0],
                         ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm']
                     ),
                     8

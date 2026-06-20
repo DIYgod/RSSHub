@@ -1,0 +1,21 @@
+diff --git a/lib/node/ClientRequest-Ca8Qykuv.mjs b/lib/node/ClientRequest-Ca8Qykuv.mjs
+index c123d7d2f63f5ddba9fc47ace83d6ddbc6570329..5ceda7dc46f142692ae19179d58b4e6f410cd199 100644
+--- a/lib/node/ClientRequest-Ca8Qykuv.mjs
++++ b/lib/node/ClientRequest-Ca8Qykuv.mjs
+@@ -199,7 +199,7 @@ function restoreHeadersPrototype() {
+ function getRawFetchHeaders(headers) {
+ 	if (!Reflect.has(headers, kRawHeaders)) return Array.from(headers.entries());
+ 	const rawHeaders = Reflect.get(headers, kRawHeaders);
+-	return rawHeaders.length > 0 ? rawHeaders : Array.from(headers.entries());
++	return rawHeaders && rawHeaders.length > 0 ? rawHeaders : Array.from(headers.entries());
+ }
+ /**
+ * Infers the raw headers from the given `HeadersInit` provided
+@@ -298,6 +298,7 @@ var MockHttpSocket = class extends MockSocket {
+ 			const headers = FetchResponse.parseRawHeaders([...this.requestRawHeadersBuffer, ...rawHeaders || []]);
+ 			this.requestRawHeadersBuffer.length = 0;
+ 			const canHaveBody = method !== "GET" && method !== "HEAD";
++			if (method === "CONNECT") { return; }
+ 			if (url.username || url.password) {
+ 				if (!headers.has("authorization")) headers.set("authorization", `Basic ${url.username}:${url.password}`);
+ 				url.username = "";

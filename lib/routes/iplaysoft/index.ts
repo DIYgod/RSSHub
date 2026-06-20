@@ -9,7 +9,7 @@ import parser from '@/utils/rss-parser';
 
 export const handler = async (ctx): Promise<Data> => {
     const feed = await parser.parseURL('https://feed.iplaysoft.com');
-    const limit = Number.parseInt(ctx.req.query('limit') || '20', 10);
+    const limit = Number(ctx.req.query('limit') || '20');
 
     const filteredItems = feed.items
         .filter((item) => {

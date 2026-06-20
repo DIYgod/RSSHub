@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
-import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/wechat2rss/:id',
@@ -29,13 +28,12 @@ async function handler(ctx) {
 
     const { title, link, description, image, items: item } = await parser.parseURL(feedUrl);
 
-    let items = item.map((i) => ({
+    const items = item.map((i) => ({
         title: i.title,
-        pubDate: parseDate(i.pubDate),
+        pubDate: parseDate(i.isoDate),
         link: i.link,
+        description: i['content:encoded'] || i.content,
     }));
-
-    items = await Promise.all(items.map((item) => finishArticleItem(item)));
 
     return {
         title,

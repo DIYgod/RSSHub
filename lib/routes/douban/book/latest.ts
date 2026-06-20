@@ -20,9 +20,9 @@ export const route: Route = {
     },
     name: '新书速递',
     maintainers: ['fengkx', 'lyqluis'],
-    description: `| 文学         | 小说    | 历史文化 | 社会纪实  | 科学新知 | 艺术设计 | 商业经管 | 绘本漫画 |
-| ------------ | ------- | -------- | --------- | -------- | -------- | -------- | -------- |
-| prose_poetry | fiction | history  | biography | science  | art      | business | comics   |`,
+    description: `| 文学          | 小说    | 历史文化 | 社会纪实  | 科学新知 | 艺术设计 | 商业经管 | 绘本漫画 |
+| ------------- | ------- | -------- | --------- | -------- | -------- | -------- | -------- |
+| prose\\_poetry | fiction | history  | biography | science  | art      | business | comics   |`,
     handler,
 };
 

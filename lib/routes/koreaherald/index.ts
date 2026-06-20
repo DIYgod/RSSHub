@@ -24,11 +24,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-::: tip
-For example, the category for the page https://www.koreaherald.com/Business and https://www.koreaherald.com/Business/Market would be \`/Business\` and \`/Business/Market\` respectively. 
-:::
-`,
+    description: `::: tip
+For example, the category for the page <https://www.koreaherald.com/Business> and <https://www.koreaherald.com/Business/Market> would be \`/Business\` and \`/Business/Market\` respectively.
+:::`,
     radar: [
         {
             source: ['www.koreaherald.com/:category'],

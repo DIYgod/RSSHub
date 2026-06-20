@@ -36,11 +36,9 @@ export const route: Route = {
         },
     ],
     handler,
-    description: `
-| 通知公告 | 要闻简讯 | 博士生招生 | 硕士生招生 | 大学生夏令营 |
+    description: `| 通知公告 | 要闻简讯 | 博士生招生 | 硕士生招生 | 大学生夏令营 |
 | -------- | -------- | ---------- | ---------- | ------------ |
-| tzgg     | ywjx     | zs_bss     | zs_sss     | zs_dxsxly    |
-`,
+| tzgg     | ywjx     | zs\\_bss    | zs\\_sss    | zs\\_dxsxly   |`,
 };
 
 async function handler(ctx) {

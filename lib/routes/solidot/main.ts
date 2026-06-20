@@ -71,10 +71,7 @@ async function handler(ctx) {
 
     // get urls
     const a = $('div.block_m').find('div.bg_htit > h2 > a');
-    const urls = [];
-    for (const element of a) {
-        urls.push($(element).attr('href'));
-    }
+    const urls = Array.from(a, (element) => $(element).attr('href'));
 
     // get articles
     const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u, () => get_article(u))));

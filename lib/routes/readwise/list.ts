@@ -34,13 +34,13 @@ export const route: Route = {
     handler,
     description: `Specify options (in the format of query string) in parameter \`routeParams\` to filter documents.
 
-| Parameter                  | Description                                                                            |   Values                                                                                    |  Default                             |
-| -------------------------- | -------------------------------------------------------------------------------------- |   ----------------------------------------------------------------------------------------- |  ----------------------------------- |
-| \`location\`               | The document's location.                                                               |   \`new\`/\`later\`/\`shortlist\`/\`archive\`/\`feed\`                                      |                                      |
-| \`category\`               | The document's category.                                                               |   \`article\`/\`email\`/\`rss\`/\`highlight\`/\`note\`/\`pdf\`/\`epub\`/\`tweet\`/\`video\` |                                      |
-| \`updatedAfter\`           | Fetch only documents updated after this date.                                          |   string (formatted as ISO 8601 date)                                                       ||
-| \`tag\`                    | The document's tag, can be specified once or multiple times.                           |||
-| \`tagStrategy\`            | If multiple tags are specified, should the documents match all of them or any of them. |   \`any\`/\`all\`                                                                           |  \`any\`                             |
+| Parameter      | Description                                                                            | Values                                                                  | Default |
+| -------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------- |
+| \`location\`     | The document's location.                                                               | \`new\`/\`later\`/\`shortlist\`/\`archive\`/\`feed\`                              |         |
+| \`category\`     | The document's category.                                                               | \`article\`/\`email\`/\`rss\`/\`highlight\`/\`note\`/\`pdf\`/\`epub\`/\`tweet\`/\`video\` |         |
+| \`updatedAfter\` | Fetch only documents updated after this date.                                          | string (formatted as ISO 8601 date)                                     |         |
+| \`tag\`          | The document's tag, can be specified once or multiple times.                           |                                                                         |         |
+| \`tagStrategy\`  | If multiple tags are specified, should the documents match all of them or any of them. | \`any\`/\`all\`                                                             | \`any\`   |
 
 Customise parameter values to fetch specific documents, for example:
 
@@ -54,7 +54,7 @@ fetches articles in the Inbox.
 https://rsshub.app/readwise/list/category=article&tag=shortlist&tag=AI&tagStrategy=all
 \`\`\`
 
-fetches articles tagged both by \`shortlist\` and \`AI\`. `,
+fetches articles tagged both by \`shortlist\` and \`AI\`.`,
 };
 
 const TAG_STRATEGY_ALL = 'all'; // Items with tags matching all the given ones can then be returned.
@@ -124,7 +124,8 @@ async function handler(ctx) {
                 if (tagStrategy === TAG_STRATEGY_ANY) {
                     // Filter if any of the tags match
                     return tag.some((t) => Object.values(itemTags).some((tagObj) => tagObj.name === t));
-                } else if (tagStrategy === TAG_STRATEGY_ALL) {
+                }
+                if (tagStrategy === TAG_STRATEGY_ALL) {
                     // Filter if all tags match
                     return tag.every((t) => Object.values(itemTags).some((tagObj) => tagObj.name === t));
                 }

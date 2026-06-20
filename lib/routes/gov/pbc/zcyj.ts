@@ -10,13 +10,14 @@ import { processItems } from './utils';
 const host = 'http://www.pbc.gov.cn';
 
 export const route: Route = {
-    path: '/pbc/zcyj',
+    path: '/zcyj',
+    example: '/gov/pbc/zcyj',
     radar: [
         {
             source: ['pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html'],
         },
     ],
-    name: 'Unknown',
+    name: '政策研究',
     maintainers: ['Fatpandac'],
     handler,
     url: 'pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html',

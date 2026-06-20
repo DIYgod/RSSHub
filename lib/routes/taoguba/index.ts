@@ -48,7 +48,7 @@ async function handler(ctx) {
     items = await Promise.all(items.map(async (item) => await renderPostDetail(item)));
 
     return {
-        title: $('head title').text().trim().split('_')[0],
+        title: $('head title').text().trim().split('_', 1)[0],
         link: currentUrl,
         item: items,
     };

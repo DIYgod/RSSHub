@@ -38,7 +38,7 @@ export const route: Route = {
         ],
     },
     description: `::: warning
-百合会BBS访问部分板块需要用户登录认证，请参考配置说明
+百合会 BBS 访问部分板块需要用户登录认证，请参考配置说明
 :::`,
 };
 
@@ -63,7 +63,8 @@ async function handler(ctx: Context): Promise<Data> {
 
     const link = `${bbsOrigin}/forum.php?${params.toString()}`;
 
-    const $ = load(await ofetch<string>(link, { headers }));
+    const html = await ofetch<string>(link, { headers });
+    const $ = load(html);
 
     const title = $('title').text().replace(' -  百合会 -  Powered by Discuz!', '');
 

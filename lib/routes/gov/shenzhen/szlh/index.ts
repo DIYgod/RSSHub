@@ -14,7 +14,7 @@ const config = {
 };
 
 export const route: Route = {
-    path: '/shenzhen/szlh/zwfw/zffw/:caty',
+    path: '/szlh/zwfw/zffw/:caty',
     categories: ['government'],
     example: '/gov/shenzhen/szlh/zwfw/zffw/tzgg',
     parameters: { caty: '信息类别' },
@@ -31,7 +31,7 @@ export const route: Route = {
             source: ['szlh.gov.cn/zwfw/zffw/:caty'],
         },
     ],
-    name: '深圳市罗湖区人民政府',
+    name: '罗湖区人民政府 政务服务',
     maintainers: ['lonn'],
     handler,
     description: `| 通知公告 |

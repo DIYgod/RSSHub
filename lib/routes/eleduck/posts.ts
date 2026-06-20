@@ -5,7 +5,7 @@ import got from '@/utils/got';
 const getCateName = async (cid = 0) => {
     const key = 'eleduck-categories';
     const cates = await cache.tryGet(key, async () => {
-        const res = await got(`https://svc.eleduck.com/api/v1/categories`);
+        const res = await got('https://svc.eleduck.com/api/v1/categories');
         const map = {};
         for (const item of res.data.categories) {
             map[item.id] = item.name;
