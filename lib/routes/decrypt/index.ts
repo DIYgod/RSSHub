@@ -89,7 +89,7 @@ async function handler(ctx): Promise<Data> {
     } as Data;
 }
 
-async function extractFullText(url: string): Promise<null | { fullText: string; featuredImage: string; tags: string[] }> {
+async function extractFullText(url: string): Promise<{ fullText: string; featuredImage: string; tags: string[] } | null> {
     try {
         const response = await ofetch(url);
 
