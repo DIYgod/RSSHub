@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { apiRootUrl, getInfo, processItems, rootUrl } from './util';
 
@@ -37,7 +36,6 @@ async function handler(ctx) {
     const items = await processItems(
         apiUrl,
         limit,
-        cache.tryGet,
         id === 'news'
             ? {}
             : {
@@ -47,6 +45,6 @@ async function handler(ctx) {
 
     return {
         item: items,
-        ...(await getInfo(currentUrl, cache.tryGet)),
+        ...(await getInfo(currentUrl)),
     };
 }

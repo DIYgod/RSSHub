@@ -75,7 +75,7 @@ async function handler(ctx) {
                 });
 
                 item.description = content('article').html();
-                item.pubDate = timezone(parseDate(content('.e-date').first().text()), +9);
+                item.pubDate = timezone(parseDate(content('.e-date').first().text()), 9);
                 item.category = content('.c-hashTagList-item')
                     .toArray()
                     .map((t) => content(t).text().split('#').pop().trim());

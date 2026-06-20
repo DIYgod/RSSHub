@@ -116,7 +116,7 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     return {
         title,
         link,
-        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), +8),
+        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8),
         description: title,
         external,
     };

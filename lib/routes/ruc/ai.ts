@@ -54,7 +54,7 @@ export const route: Route = {
                         item.title = title;
                         const titleDiv = $('div.tit');
                         const date = titleDiv.find('span').first().text();
-                        item.pubDate = timezone(parseDate(/\d+-\d+-\d+/.exec(date)[0]), +8);
+                        item.pubDate = timezone(parseDate(/\d+-\d+-\d+/.exec(date)[0]), 8);
                         const frame = $('div.fr');
                         item.description = frame
                             .children()

@@ -37,9 +37,7 @@ async function handler(ctx) {
         if (status === 'best') {
             title = titleBest;
             table = `<table border="1 solid black">${tableBest}</table>`;
-        }
-
-        if (status === 'worsest') {
+        } else if (status === 'worsest') {
             title = titleWorst;
             table = `<table border="1 solid black">${tableWorst}</table>`;
         }

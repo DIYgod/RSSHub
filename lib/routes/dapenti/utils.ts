@@ -60,7 +60,7 @@ export default {
                         title: el.text(),
                         author: pubInfo[0].trim(),
                         description: description.html(),
-                        pubDate: timezone(parseDate(pubInfo[1]?.trim()), +8),
+                        pubDate: timezone(parseDate(pubInfo[1]?.trim()), 8),
                         link: url,
                     };
                     return single;

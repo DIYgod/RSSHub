@@ -64,7 +64,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = renderToString(<XjtuStdDescription description={content('#vsb_newscontent').html()} attachments={content('#vsb_newscontent').parent().next().next().next().html()} />);
-                item.pubDate = timezone(parseDate(content('#vsb_newscontent').parent().prev().prev().text().split('&nbsp', 1)[0], 'YYYY年MM月DD日 HH:mm'), +8);
+                item.pubDate = timezone(parseDate(content('#vsb_newscontent').parent().prev().prev().text().split('&nbsp', 1)[0], 'YYYY年MM月DD日 HH:mm'), 8);
 
                 return item;
             })

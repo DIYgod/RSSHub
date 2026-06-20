@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -78,7 +77,7 @@ async function handler(ctx) {
             };
         });
 
-    items = await processItems(items, cache.tryGet, rootUrl);
+    items = await processItems(items, rootUrl);
 
     const meta = processMeta(response);
     const siteName = getMeta(meta, 'SiteName');

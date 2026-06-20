@@ -70,7 +70,7 @@ async function handler() {
                 const detailHtml = await detailPage.evaluate(() => document.documentElement.innerHTML);
                 const content = load(detailHtml);
                 item.description = content('#zoom').html();
-                item.pubDate = timezone(parseDate(content('.hui12').eq(5).text()), +8);
+                item.pubDate = timezone(parseDate(content('.hui12').eq(5).text()), 8);
                 return item;
             })
         )

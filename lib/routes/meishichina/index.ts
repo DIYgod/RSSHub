@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const isChinese = (text: string): boolean => /^[\u4E00-\u9FA5]+$/.test(text);
+const isChinese = (text: string): boolean => /^[\u{4E00}-\u{9FA5}]+$/u.test(text);
 
 export const handler = async (ctx) => {
     const DEFAULT_CATEGORY = '最新推荐';

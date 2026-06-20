@@ -164,7 +164,7 @@ async function handler(ctx) {
 
                 item.description = renderDescription(project.description, project.allModules);
                 item.category = [...new Set([...(item.category || []), ...(project.tags?.map((tag) => tag.title.toLowerCase()) || [])])];
-                item.pubDate = item.pubDate || (project.publishedOn ? parseDate(project.publishedOn, 'X') : undefined);
+                item.pubDate ||= project.publishedOn ? parseDate(project.publishedOn, 'X') : undefined;
 
                 return item;
             })

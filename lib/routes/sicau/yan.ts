@@ -67,7 +67,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.v_news_content').html();
-                item.pubDate = timezone(parseDate(detailResponse.data.match(/发布时间: (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)[1], 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate(detailResponse.data.match(/发布时间: (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)[1], 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 return item;
             })

@@ -100,7 +100,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.box-article').html();
-                item.pubDate = timezone(parseDate(content('.blog-foot .date').text()), +9);
+                item.pubDate = timezone(parseDate(content('.blog-foot .date').text()), 9);
 
                 return item;
             })

@@ -67,7 +67,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.content-text .inner-text').html();
-                item.pubDate = timezone(parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm'), +8);
+                item.pubDate = timezone(parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm'), 8);
 
                 return item;
             })

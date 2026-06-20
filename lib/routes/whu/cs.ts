@@ -102,7 +102,7 @@ async function handler(ctx) {
                 });
 
                 item.description = content.html();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), 8) : item.pubDate;
 
                 return item;
             })

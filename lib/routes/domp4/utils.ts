@@ -61,6 +61,7 @@ function getUrlType(url) {
  */
 function decodeCipherText(p, a, c, k, e, d) {
     e = function (c) {
+        // oxlint-disable-next-line unicorn-js/operator-assignment
         return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCodePoint(c + 29) : c.toString(36));
     };
     if (!''.replace(/^/, () => '')) {

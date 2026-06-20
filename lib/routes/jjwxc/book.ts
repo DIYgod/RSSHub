@@ -80,7 +80,7 @@ async function handler(ctx) {
                 author,
                 category: [isVip ? 'VIP' : undefined, ...(category?.split(/\s/) ?? [])].filter(Boolean),
                 guid: `jjwxc-${id}#${chapterId}`,
-                pubDate: timezone(parseDate(chapterUpdatedTime), +8),
+                pubDate: timezone(parseDate(chapterUpdatedTime), 8),
                 isVip,
                 isLock,
             };

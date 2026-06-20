@@ -90,7 +90,7 @@ export const route: Route = {
                   } satisfies DataItem)
                 : ({
                       title: item.title,
-                      pubDate: timezone(parseDate(item.publishTime), +8),
+                      pubDate: timezone(parseDate(item.publishTime), 8),
                       link: item.link.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
                       guid: item.tid,
                   } satisfies DataItem)

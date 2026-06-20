@@ -74,11 +74,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         // fix allowEmpty
-        data.item = data.item || [];
+        data.item ||= [];
 
         // decode HTML entities
-        data.title && (data.title = entities.decodeXML(data.title + ''));
-        data.description && (data.description = entities.decodeXML(data.description + ''));
+        data.title &&= entities.decodeXML(data.title + '');
+        data.description &&= entities.decodeXML(data.description + '');
 
         // sort items
         if (ctx.req.query('sorted') !== 'false') {
@@ -86,7 +86,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         const handleItem = (item: DataItem) => {
-            item.title && (item.title = entities.decodeXML(item.title + ''));
+            item.title &&= entities.decodeXML(item.title + '');
 
             // handle pubDate
             if (item.pubDate) {
@@ -227,15 +227,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filter_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filter_description')!);
-                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!descriptionRegex.test(description));
+                    isFilter &&= descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!descriptionRegex.test(description);
                 }
                 if (ctx.req.query('filter_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filter_author')!);
-                    isFilter = isFilter && (authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!authorRegex.test(author));
+                    isFilter &&= authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!authorRegex.test(author);
                 }
                 if (ctx.req.query('filter_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filter_category')!);
-                    isFilter = isFilter && category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter &&= category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;
@@ -256,15 +256,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filterout_description') || ctx.req.query('filterout')!);
-                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !descriptionRegex.test(description));
+                    isFilter &&= descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !descriptionRegex.test(description);
                 }
                 if (ctx.req.query('filterout_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filterout_author')!);
-                    isFilter = isFilter && (authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !authorRegex.test(author));
+                    isFilter &&= authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !authorRegex.test(author);
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
-                    isFilter = isFilter && category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter &&= category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;
@@ -406,10 +406,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (num.test(ctx.req.query('brief')!)) {
                 const brief: number = Number.parseInt(ctx.req.query('brief')!);
                 for (const item of data.item) {
-                    if (item.description) {
-                        const text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
-                        item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
+                    if (!item.description) {
+                        continue;
                     }
+
+                    const text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
+                    item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
                 }
             } else {
                 throw new Error('Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun');

@@ -2,14 +2,15 @@ import { describe, expect, it, vi } from 'vitest';
 
 class FakeRE2 {
     static CASE_INSENSITIVE = 1;
+
+    static compile(pattern: string) {
+        return new FakeRE2(pattern);
+    }
+
     private pattern: string;
 
     constructor(pattern: string) {
         this.pattern = pattern;
-    }
-
-    static compile(pattern: string) {
-        return new FakeRE2(pattern);
     }
 
     matcher(text: string) {

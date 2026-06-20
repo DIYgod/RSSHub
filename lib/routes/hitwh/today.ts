@@ -67,11 +67,10 @@ async function handler() {
                             item.description = '请进行统一身份认证之后再访问';
                             return item;
                         }
-                    } else {
-                        // file to download
-                        item.description = '此链接为文件，点击以下载';
-                        return item;
                     }
+                    // file to download
+                    item.description = '此链接为文件，点击以下载';
+                    return item;
                 })
             )
         ),

@@ -49,12 +49,12 @@ async function handler(ctx) {
     let currentRSSURL = `${rootURL}/?page=rss`;
     let currentLink = `${rootURL}/`;
     if (username !== undefined) {
-        currentRSSURL = `${currentRSSURL}&u=${encodeURI(username)}`;
-        currentLink = `${currentLink}user/${encodeURI(username)}`;
+        currentRSSURL += `&u=${encodeURI(username)}`;
+        currentLink += `user/${encodeURI(username)}`;
     }
     if (query !== undefined) {
-        currentRSSURL = `${currentRSSURL}&q=${encodeURI(query)}`;
-        currentLink = `${currentLink}?q=${encodeURI(query)}`;
+        currentRSSURL += `&q=${encodeURI(query)}`;
+        currentLink += `?q=${encodeURI(query)}`;
     }
 
     const feed = await parser.parseURL(currentRSSURL);

@@ -58,7 +58,7 @@ async function handler(ctx) {
             return {
                 title: item.find('.pandect-content-title a').text(),
                 link: item.find('.pandect-content-title a').attr('href'),
-                pubDate: timezone(parseDate(item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm']), +8),
+                pubDate: timezone(parseDate(item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm']), 8),
             };
         });
 

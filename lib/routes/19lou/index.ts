@@ -100,7 +100,7 @@ async function handler(ctx) {
 
                 item.author = content('.uname, .user-name').first().text();
                 item.description = content('.post-cont').first().html() || content('.thread-cont').html();
-                item.pubDate = timezone(parseDate(content('.cont-top-left meta').first().attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('.cont-top-left meta').first().attr('content')), 8);
 
                 return item;
             })

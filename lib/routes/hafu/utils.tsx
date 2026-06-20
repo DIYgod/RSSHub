@@ -15,7 +15,7 @@ const typeMap = {
 // Number of get articles
 let limit = 10;
 
-const parseList = async (ctx, type) => {
+export const parseList = async (ctx, type) => {
     const link = typeMap[type].url;
     const title = typeMap[type].title;
 
@@ -31,7 +31,6 @@ const parseList = async (ctx, type) => {
         resultList,
     };
 };
-export default parseList;
 
 async function tryGetFullText(href, link, type) {
     let articleData = '';
@@ -113,7 +112,7 @@ async function ggtzParse(ctx, $) {
                 return {
                     title,
                     description,
-                    pubDate: timezone(pubDate, +8),
+                    pubDate: timezone(pubDate, 8),
                     link,
                     author,
                 };
@@ -149,7 +148,7 @@ async function jwcParse(ctx, $) {
                 return {
                     title,
                     description,
-                    pubDate: timezone(pubDate, +8),
+                    pubDate: timezone(pubDate, 8),
                     link,
                     author: '供稿单位：' + author,
                 };
@@ -187,7 +186,7 @@ async function zsjycParse(ctx, $) {
                 return {
                     title,
                     description,
-                    pubDate: timezone(pubDate, +8),
+                    pubDate: timezone(pubDate, 8),
                     link,
                     author: '供稿单位：招生就业处',
                 };

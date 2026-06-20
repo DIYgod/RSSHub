@@ -73,10 +73,12 @@ for (const namespace in namespaces) {
     let defaultCategory = nsData.categories?.[0];
     if (!defaultCategory) {
         for (const routePath in nsData.routes) {
-            if (nsData.routes[routePath].categories) {
-                defaultCategory = nsData.routes[routePath].categories[0];
-                break;
+            if (!nsData.routes[routePath].categories) {
+                continue;
             }
+
+            defaultCategory = nsData.routes[routePath].categories[0];
+            break;
         }
     }
     if (!defaultCategory) {

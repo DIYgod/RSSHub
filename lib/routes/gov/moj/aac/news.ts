@@ -55,7 +55,7 @@ async function handler(ctx) {
                     const response = await got(item.link);
                     const $ = load(response.data);
 
-                    item.pubDate = timezone(parseDate($('.info time').attr('datetime'), 'YYYY-MM-DD HH:mm:ss'), +8);
+                    item.pubDate = timezone(parseDate($('.info time').attr('datetime'), 'YYYY-MM-DD HH:mm:ss'), 8);
                     $('.info, button').remove();
                     item.description = $('.cp').html() + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '') + ($('.file_download').length ? $('.file_download').html() : '');
                 }

@@ -47,7 +47,7 @@ async function handler(ctx) {
                     title: item.children[0].children[0].data,
                     description: newsContent.content,
                     link: newsContent.newsPage,
-                    pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), +8),
+                    pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), 8),
                 };
             });
         })

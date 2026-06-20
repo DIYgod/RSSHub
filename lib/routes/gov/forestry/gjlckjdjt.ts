@@ -85,7 +85,7 @@ async function handler(ctx) {
                     e = content(e);
 
                     const src = e.prop('src');
-                    item.enclosure_url = item.enclosure_url ?? src;
+                    item.enclosure_url ??= src;
 
                     e.replaceWith(
                         renderDescription({

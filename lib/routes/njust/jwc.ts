@@ -55,7 +55,7 @@ async function handler(ctx) {
         link: siteUrl,
         item: list.toArray().map((item) => ({
             title: $(item).find('a').attr('title').trim(),
-            pubDate: timezone(parseDate($(item).find('td[width="14%"]').text(), 'YYYY-MM-DD'), +8),
+            pubDate: timezone(parseDate($(item).find('td[width="14%"]').text(), 'YYYY-MM-DD'), 8),
             link: $(item).find('a').attr('href'),
         })),
     };

@@ -1,5 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 const token =
@@ -47,8 +48,8 @@ const renderSections = (sections) => {
     return output;
 };
 
-const getBoards = (tryGet) =>
-    tryGet('zuvio:boards', async () => {
+const getBoards = () =>
+    cache.tryGet('zuvio:boards', async () => {
         const { data } = await got(`${apiUrl}/board`, {
             searchParams: {
                 api_token: token,

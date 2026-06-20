@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiMomentRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, processItems, rootUrl } from './util';
@@ -40,7 +39,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await processItems(response.data.moment_list.datalist, limit, cache.tryGet);
+    const items = await processItems(response.data.moment_list.datalist, limit);
 
     const data = buildFeedMetadata({
         title: '24 小时',

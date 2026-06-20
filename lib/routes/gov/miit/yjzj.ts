@@ -41,7 +41,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             url: `${rootUrl}${indexContent(item).attr('url')}`,
-            queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll("'", '"').replaceAll('|', '"')),
+            queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll(/['|]/g, '"')),
         }))[0];
 
     const dataUrl = `${dataRequestUrl.url}?${Object.entries(dataRequestUrl.queryData)

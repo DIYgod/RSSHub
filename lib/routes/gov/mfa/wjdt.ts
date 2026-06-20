@@ -72,7 +72,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#News_Body_Txt_A').html();
-                item.pubDate = timezone(parseDate(content('.time span').last().text()), +8);
+                item.pubDate = timezone(parseDate(content('.time span').last().text()), 8);
                 item.category = content('meta[name="Keywords"]').attr('content')?.split(';') ?? [];
 
                 return item;

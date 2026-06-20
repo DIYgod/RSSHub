@@ -50,7 +50,7 @@ const ProcessFeed = (base, list, caches) =>
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}/)
                 ),
-                +8
+                8
             );
 
             // 使用tryGet方法从缓存获取内容。

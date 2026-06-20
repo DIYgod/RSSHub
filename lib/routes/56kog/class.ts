@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { fetchItems, rootUrl } from './util';
 
@@ -34,5 +33,5 @@ async function handler(ctx) {
 
     const currentUrl = new URL(`class/${category}.html`, rootUrl).href;
 
-    return await fetchItems(limit, currentUrl, cache.tryGet);
+    return await fetchItems(limit, currentUrl);
 }

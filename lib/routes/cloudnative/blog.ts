@@ -19,7 +19,7 @@ async function getArticles() {
             title: a.text(),
             link: a.attr('href'),
             description: summary.text(),
-            pubDate: timezone(parseDate(time, 'YYYY-MM-DD'), +8),
+            pubDate: timezone(parseDate(time, 'YYYY-MM-DD'), 8),
             author: meta.find('span').eq(0).find('a').text(),
             category: meta.find('.article-categories a').text(),
         };

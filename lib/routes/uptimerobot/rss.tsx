@@ -117,7 +117,7 @@ async function handler(ctx) {
         }
 
         const duration = item['details:duration'];
-        const monitor = (monitors[monitorName] = monitors[monitorName] || new Monitor(monitorName));
+        const monitor = (monitors[monitorName] ||= new Monitor(monitorName));
 
         if (status === 'UP') {
             monitor.up(duration);

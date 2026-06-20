@@ -61,7 +61,7 @@ Language codes for the \`${Parameter.Language}\` parameter:
                 const contentUrl = getArticleContentLink(language, article.articleId);
                 const item: DataItem = {
                     title: article.articleTitle,
-                    pubDate: timezone(parseDate(article.createTime), +8),
+                    pubDate: timezone(parseDate(article.createTime), 8),
                     link: getArticleLink(language, article.articleId),
                 };
 

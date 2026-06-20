@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { ProcessItems, rootUrl } from './utils';
 
@@ -30,7 +29,7 @@ export const route: Route = {
 async function handler(ctx) {
     const apiUrl = `${rootUrl}/api/ajax/getlistbycid?cid=48&type=1&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
 
-    const items = await ProcessItems(apiUrl, cache.tryGet);
+    const items = await ProcessItems(apiUrl);
 
     return {
         title: '第一财经 - 头条',

@@ -71,7 +71,7 @@ async function handler(ctx) {
                 const single = {
                     title: item.post_title,
                     description,
-                    pubDate: timezone(parseDate(item.post_display_time, 'YYYY-MM-DD HH:mm:ss'), +8),
+                    pubDate: timezone(parseDate(item.post_display_time, 'YYYY-MM-DD HH:mm:ss'), 8),
                     link: `https://fundbarmob.eastmoney.com/index.html?goPage=articleView&lastPage=personDetailView&aid=${item.post_id}`,
                 };
                 return single;

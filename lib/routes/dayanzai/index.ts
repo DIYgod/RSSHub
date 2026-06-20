@@ -56,7 +56,7 @@ async function handler(ctx) {
         }
         return {
             title: item.find('div.r > p.r-top > span > a').text(),
-            pubDate: timezone(date, +8),
+            pubDate: timezone(date, 8),
             description: item.find('div.r > p.desc').text(),
             link: item.find('div.r > p.r-top > span > a').attr('href'),
         };

@@ -94,7 +94,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.author = content('.article-content__authors-name').first().text().trim();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
 
                 const mainImage = content('.article-content__focus').html();
                 const articleBodyHtml = content('.article-content__editor')

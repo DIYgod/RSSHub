@@ -21,7 +21,7 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
             return {
                 title: item.find(titleSelector).attr('title'),
                 link,
-                pubDate: timezone(parseDate(item.find(dateSelector).text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(item.find(dateSelector).text(), 'YYYY-MM-DD'), 8),
             };
         });
 
@@ -53,7 +53,7 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
                     item.description = $content.html() || '';
                     item.title = $(contentSelector.title).text();
                     const dateText = $(contentSelector.date).text().replace('编辑：', '').replace('发布日期：', '').replace('发布时间：', '');
-                    item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), +8);
+                    item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), 8);
                 }
 
                 return item;

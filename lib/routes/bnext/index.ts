@@ -36,7 +36,7 @@ async function handler() {
         const enclosure = item.enclosure;
         const enclosure_url = enclosure?.url;
         const enclosure_type = enclosure?.type;
-        const enclosure_length = enclosure?.length ? Number(enclosure.length) : undefined;
+        const enclosure_length = enclosure?.length || undefined;
 
         return {
             title: item.title ?? item.link ?? 'Untitled',

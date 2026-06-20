@@ -37,7 +37,7 @@ async function handler() {
         .map((item) => {
             const [title, date] = $(item).text().trim().replaceAll(']', '').split(' [');
             const link = new URL($(item).children('a').attr('href')!, baseUrl).href;
-            const pubDate = timezone(parseDate(date), +8);
+            const pubDate = timezone(parseDate(date), 8);
             return {
                 title,
                 link,

@@ -43,7 +43,7 @@ async function handler(ctx) {
     let items = response.data.data.items.data.map((item) => ({
         title: item.title,
         link: `${rootUrl}/activity/${item.id}`,
-        pubDate: timezone(parseDate(item.published_at), +8),
+        pubDate: timezone(parseDate(item.published_at), 8),
     }));
 
     items = await Promise.all(

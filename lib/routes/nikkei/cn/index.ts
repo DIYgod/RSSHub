@@ -133,10 +133,10 @@ async function handler(ctx) {
                 divs.first().remove();
                 divs.last().remove();
 
-                item.pubDate = timezone(parseDate(item.link.match(/\/\d+-(.*?)\.html/)[1], 'YYYY-MM-DD-HH-mm-ss'), +9);
+                item.pubDate = timezone(parseDate(item.link.match(/\/\d+-(.*?)\.html/)[1], 'YYYY-MM-DD-HH-mm-ss'), 9);
 
                 item.author = content('meta[name="author"]').attr('content');
-                item.title = item.title ?? content('meta[name="twitter:title"]').attr('content');
+                item.title ??= content('meta[name="twitter:title"]').attr('content');
                 item.description = content('#contentDiv').html()?.replaceAll('&nbsp;', '').replaceAll('<p></p>', '');
 
                 return item;

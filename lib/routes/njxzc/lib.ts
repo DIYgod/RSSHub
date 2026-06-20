@@ -56,7 +56,7 @@ async function handler() {
             return {
                 title: $item.find('.btt-4').text().trim(),
                 link,
-                pubDate: timezone(parseDate(dateStr, 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(dateStr, 'YYYY-MM-DD'), 8),
             };
         });
 
@@ -92,7 +92,7 @@ async function handler() {
                     }
                     const dateText = $('.arti_update').text().replace('发布时间：', '').trim();
                     if (dateText) {
-                        item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), +8);
+                        item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), 8);
                     }
                 }
 

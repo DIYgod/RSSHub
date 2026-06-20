@@ -68,7 +68,7 @@ async function handler(ctx) {
 
                 item.author = content('.authi').first().text();
                 item.description = content('.t_f').first().html();
-                item.pubDate = timezone(parseDate(content('.authi em').first().text().replace('发表于 ', '')), +8);
+                item.pubDate = timezone(parseDate(content('.authi em').first().text().replace('发表于 ', '')), 8);
                 item.category = content('.ptg a')
                     .toArray()
                     .map((a) => content(a).text());

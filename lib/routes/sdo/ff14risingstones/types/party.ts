@@ -34,11 +34,11 @@ export interface DutiesParty extends BaseParty {
     progress: string;
     strategy: string;
     team_composition: string;
-    team_position: null | {
+    team_position: {
         A: TeamPosition;
         B: TeamPosition;
         C: TeamPosition;
-    };
+    } | null;
 }
 
 export interface DutiesPartyDetail extends DutiesParty {

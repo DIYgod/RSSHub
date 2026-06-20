@@ -57,7 +57,7 @@ async function handler() {
                             title,
                             description,
                             link: href,
-                            pubDate: timezone(parseDate(date), +8),
+                            pubDate: timezone(parseDate(date), 8),
                         };
                     });
                 })

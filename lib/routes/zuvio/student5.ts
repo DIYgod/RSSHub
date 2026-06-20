@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { board = '' } = ctx.req.param();
-    const title = board ? (await getBoards(cache.tryGet)).find((i) => i.boardId === board).title : '全部';
+    const title = board ? (await getBoards()).find((i) => i.boardId === board).title : '全部';
 
     const { data } = await got(`${apiUrl}/article`, {
         searchParams: {
@@ -43,7 +43,7 @@ async function handler(ctx) {
     const items = data.articles.map((item) => ({
         title: item.title,
         description: item.abstract,
-        pubDate: timezone(parseDate(item.created_at), +8),
+        pubDate: timezone(parseDate(item.created_at), 8),
         link: `${rootUrl}/article/${item.id}`,
         api: `${apiUrl}/article/${item.id}`,
         author: `${item.university} ${item.user_name}`,

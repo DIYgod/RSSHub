@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import loadArticle from './article';
+import { loadArticle } from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
 
 export const route: Route = {

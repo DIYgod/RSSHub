@@ -55,14 +55,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             let processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +0) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 0) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
                 doi,
                 guid,
                 id: guid,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr), +0) : undefined,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr), 0) : undefined,
                 language,
             };
 

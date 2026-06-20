@@ -41,10 +41,10 @@ async function handler(ctx) {
         keyword = '';
     }
     if (year === 0) {
-        title = title + '-all';
+        title += '-all';
     } else {
         title = title + '-' + year;
-        year = year - 1811;
+        year -= 1811;
     }
 
     const link = `http://jhsjk.people.cn/result?keywords=${keyword}&year=${year}`;

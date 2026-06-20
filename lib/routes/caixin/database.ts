@@ -55,7 +55,7 @@ async function handler() {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('#pubtime_baidu').text()), +8);
+                item.pubDate = timezone(parseDate(content('#pubtime_baidu').text()), 8);
                 item.description = renderArticle({
                     item,
                     $: content,

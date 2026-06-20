@@ -64,8 +64,8 @@ async function handler(ctx) {
         link: new URL(item.contentUrl, rootUrl).href,
         description: item.contentDetails,
         author: item.contentSource,
-        pubDate: timezone(parseDate(item.contentDatetime), +8),
-        updated: timezone(parseDate(item.updateDate), +8),
+        pubDate: timezone(parseDate(item.contentDatetime), 8),
+        updated: timezone(parseDate(item.updateDate), 8),
     }));
 
     const { data: currentResponse } = await got(currentUrl);

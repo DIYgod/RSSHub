@@ -55,12 +55,14 @@ const createMultiProxy = (proxyUris: string[], proxyObj: Config['proxy']): Multi
     const healthCheck = () => {
         const now = Date.now();
         for (const proxy of proxies) {
-            if (!proxy.isActive && proxy.lastFailureTime && now - proxy.lastFailureTime > healthCheckInterval) {
-                proxy.isActive = true;
-                proxy.failureCount = 0;
-                delete proxy.lastFailureTime;
-                logger.info(`Proxy ${proxy.uri} marked as active again after health check`);
+            if (!(!proxy.isActive && proxy.lastFailureTime && now - proxy.lastFailureTime > healthCheckInterval)) {
+                continue;
             }
+
+            proxy.isActive = true;
+            proxy.failureCount = 0;
+            delete proxy.lastFailureTime;
+            logger.info(`Proxy ${proxy.uri} marked as active again after health check`);
         }
     };
 

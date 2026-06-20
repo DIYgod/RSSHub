@@ -68,9 +68,9 @@ async function handler(ctx) {
         item: data
             .filter((i) => i.mblog)
             .map((item) => {
-                item.mblog.created_at = timezone(item.mblog.created_at, +8);
+                item.mblog.created_at = timezone(item.mblog.created_at, 8);
                 if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
-                    item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, +8);
+                    item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, 8);
                 }
                 return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
                     showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),

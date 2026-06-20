@@ -23,7 +23,7 @@ async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleC
             return {
                 title: item1.find('a').attr('title'),
                 link,
-                pubDate: timezone(parseDate(item2.find(`.${timeStyleClass1}`).text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(item2.find(`.${timeStyleClass1}`).text(), 'YYYY-MM-DD'), 8),
             };
         });
 
@@ -57,7 +57,7 @@ async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleC
                     });
                     item.description = $content.html();
                 }
-                item.pubDate = timezone(parseDate($(`.${timeStyleClass2}`).text().replace('发布时间：', '')), +8);
+                item.pubDate = timezone(parseDate($(`.${timeStyleClass2}`).text().replace('发布时间：', '')), 8);
 
                 return item;
             })

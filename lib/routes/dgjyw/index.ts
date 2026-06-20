@@ -49,7 +49,7 @@ async function handler(ctx) {
                     content('.cont-tit').remove();
                     content('.art-body').html(content('.v_news_content').html());
 
-                    item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), +8);
+                    item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), 8);
                     item.description = content('form[name="_newscontent_fromname"]').html();
                 }
 

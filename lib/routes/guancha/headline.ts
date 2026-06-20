@@ -49,7 +49,7 @@ async function handler() {
                 title: item.text(),
                 description: item.parent().next().html(),
                 link: `${rootUrl}${item.attr('href').replace(/\.shtml$/, '_s.shtml')}`,
-                pubDate: timezone(parseDate(item.parents('div').first().find('span').text()), +8),
+                pubDate: timezone(parseDate(item.parents('div').first().find('span').text()), 8),
             };
         });
 

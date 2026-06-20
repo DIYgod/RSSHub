@@ -55,7 +55,7 @@ const getInfoContent = (rootUrl, item) =>
                 title: $('h1').text().trim(),
                 id: $('#attribute > span:nth-child(1)').text().split('：', 2)[1].trim(),
                 infoNum: $('#attribute > span:nth-child(2)').text().split('：', 2)[1].trim(),
-                pubDate: parseDate(timezone(rawDate, +8)),
+                pubDate: parseDate(timezone(rawDate, 8)),
                 date: rawDate,
                 keyWord: $('#attribute > span:nth-child(6)').text().split('：', 2)[1].trim(),
                 source: $('#attribute > span:nth-child(5)').text().split('：', 2)[1].trim(),

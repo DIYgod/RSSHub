@@ -107,7 +107,7 @@ async function handler(ctx) {
                         try {
                             const detailResponse = await got(item.link);
                             const content = load(detailResponse.data);
-                            item.pubDate = timezone(parseDate(content('.news_info > span').first().text(), 'YYYY年MM月DD日 HH:mm'), +8);
+                            item.pubDate = timezone(parseDate(content('.news_info > span').first().text(), 'YYYY年MM月DD日 HH:mm'), 8);
                             content('.news_tit').remove();
                             content('.news_info').remove();
                             item.description = content('.con_news_body > div').html();

@@ -72,7 +72,7 @@ async function handler(ctx) {
                         <p>作者：{author_name}</p>
                     </>
                 ),
-                pubDate: timezone(parseDate(time, ['HH:mm', 'M-D', 'YYYY-MM'], true), +8),
+                pubDate: timezone(parseDate(time, ['HH:mm', 'M-D', 'YYYY-MM'], true), 8),
                 link: `https://tieba.baidu.com/p/${id}`,
             };
         });

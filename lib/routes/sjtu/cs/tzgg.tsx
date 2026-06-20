@@ -77,14 +77,14 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         let pubDate: Date | undefined;
         if (publishedMatch) {
             const [, y, m, d] = publishedMatch;
-            pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), +8);
+            pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
         }
 
         return {
             title: item.title,
             link: item.link,
             description: $txt.html() ?? '',
-            pubDate: pubDate ?? timezone(parseDate(item.date, 'YYYY-MM-DD'), +8),
+            pubDate: pubDate ?? timezone(parseDate(item.date, 'YYYY-MM-DD'), 8),
         };
     }) as Promise<DataItem>;
 }
@@ -147,7 +147,7 @@ async function handler(ctx): Promise<Data> {
             : {
                   title: items[index].title,
                   link: items[index].link,
-                  pubDate: timezone(parseDate(items[index].date, 'YYYY-MM-DD'), +8),
+                  pubDate: timezone(parseDate(items[index].date, 'YYYY-MM-DD'), 8),
               }
     );
 

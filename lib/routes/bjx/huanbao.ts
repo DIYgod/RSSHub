@@ -89,7 +89,7 @@ const fetchPage = (link) =>
         const item = {
             title: $page('title').text(),
             description: pages.map(($p) => $p('.cc-article').html() ?? '').join(''),
-            pubDate: timezone(parseDate($page('.cc-headline .box p span').eq(0).text()), +8),
+            pubDate: timezone(parseDate($page('.cc-headline .box p span').eq(0).text()), 8),
             link,
             author: $page('.cc-headline .box p span').eq(1).text(),
         };

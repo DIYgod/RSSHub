@@ -45,7 +45,7 @@ async function handler(ctx) {
                 imgurl = item.find('ul.n_media.clearfix img').attr('original');
                 return {
                     title: item.find('div.thread_name a').attr('title'),
-                    pubDate: timezone(parseDate(item.parent().find('div .n_post_time').text(), ['YYYY-MM-DD', 'HH:mm']), +8),
+                    pubDate: timezone(parseDate(item.parent().find('div .n_post_time').text(), ['YYYY-MM-DD', 'HH:mm']), 8),
                     description: `${item.find('div.n_txt').text()}<br><img src="${imgurl}">`,
                     link: item.find('div.thread_name a').attr('href'),
                 };

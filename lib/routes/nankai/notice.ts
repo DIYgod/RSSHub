@@ -39,7 +39,7 @@ export const route: Route = {
                 const $time = $item.find('.time');
                 const day = $time.find('.time-d').text().trim();
                 const monthYear = $time.contents().last().text().trim();
-                const pubDate = timezone(parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD'), +8);
+                const pubDate = timezone(parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD'), 8);
 
                 const $link = $item.find('.tit a');
                 let href = $link.attr('href') || '';

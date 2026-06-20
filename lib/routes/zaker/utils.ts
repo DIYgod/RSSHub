@@ -158,7 +158,7 @@ export const parseList = ($: cheerio.CheerioAPI) => {
         description: item.desc,
         link: 'https:' + item.url,
         author: item.author_name,
-        pubDate: timezone(parseDate(item.date, 'MM月DD日'), +8),
+        pubDate: timezone(parseDate(item.date, 'MM月DD日'), 8),
         category: item.tag.map((t) => t.tag),
         image: item.thumbnail_mpic,
     })) as DataItem[];

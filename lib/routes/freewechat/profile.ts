@@ -81,7 +81,7 @@ async function handler(ctx) {
                 });
 
                 item.description = fixArticleContent($('#js_content'));
-                item.pubDate = timezone(parseDate($('#publish_time').text()), +8);
+                item.pubDate = timezone(parseDate($('#publish_time').text()), 8);
                 return item;
             })
         )

@@ -58,8 +58,8 @@ async function handler(ctx) {
             author: `${item.gname}/${item.feedbackName}`,
             category: [item.messageType],
             guid: `caac-cjwt#${item.id}`,
-            pubDate: timezone(parseDate(item.createDate), +8),
-            updated: timezone(parseDate(item.feedbackDate), +8),
+            pubDate: timezone(parseDate(item.createDate), 8),
+            updated: timezone(parseDate(item.feedbackDate), 8),
         }));
 
     const author = '中国民用航空局';
