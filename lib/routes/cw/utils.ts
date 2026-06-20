@@ -112,7 +112,7 @@ const parseItems = (list, context: BrowserContext, tryGet) =>
                 item.title = $('head title').text();
                 item.category = $('meta[name=keywords]').attr('content').split(',');
                 item.pubDate = parseDate(meta.datePublished);
-                item.author = meta.author;
+                item.author = Array.isArray(meta.author) ? meta.author : meta.author.name;
                 item.description = $('.article__head .container').html() + $('.article__content').html();
 
                 return item;
