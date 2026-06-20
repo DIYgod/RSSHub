@@ -5,8 +5,8 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const sdrj = (link) => {
-    return cache.tryGet(link, async () => {
+export const sdrj = (link) =>
+    cache.tryGet(link, async () => {
         let content, author, exactDate;
         try {
             const result = await got(link);
@@ -21,4 +21,3 @@ export const sdrj = (link) => {
             return { description: content, author, exactDate };
         }
     });
-};
