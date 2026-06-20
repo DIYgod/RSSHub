@@ -70,7 +70,7 @@ async function handler(ctx) {
         guid: item.guid,
         image: item.image,
         title: item.title,
-        pubDate: timezone(parseDate(item.time), +8),
+        pubDate: timezone(parseDate(item.time), 8),
         link: `${vdnRootUrl}/api/getHttpVideoInfo.do?pid=${item.guid}`,
         description: `<p>${item.brief.replaceAll('\r\n', '</p><p>')}</p>`,
     }));

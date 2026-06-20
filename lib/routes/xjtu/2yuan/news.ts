@@ -56,7 +56,7 @@ async function handler(ctx) {
             return {
                 title: item.find('a').attr('title'),
                 link: `${rootUrl}${item.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.dy_date').text()), +8),
+                pubDate: timezone(parseDate(item.find('.dy_date').text()), 8),
             };
         });
 
@@ -78,7 +78,7 @@ async function handler(ctx) {
                             .text()
                             .replace(/发布时间：/, '')
                     ),
-                    +8
+                    8
                 );
 
                 return item;

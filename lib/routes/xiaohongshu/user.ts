@@ -81,9 +81,8 @@ async function handler(ctx) {
             // Fallback to normal logic if cookie method fails
             return await getUserFeeds(url, category);
         }
-    } else {
-        return await getUserFeeds(url, category);
     }
+    return await getUserFeeds(url, category);
 }
 
 async function getUserFeeds(url: string, category: string) {

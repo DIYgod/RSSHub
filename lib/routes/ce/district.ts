@@ -77,7 +77,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const pubDateText = $('span#articleTime').text().trim();
-                item.pubDate = timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), +8);
+                item.pubDate = timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), 8);
 
                 item.description = $('div.TRS_Editor').html();
                 return item;

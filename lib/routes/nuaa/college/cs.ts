@@ -42,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const getDescription = Boolean(ctx.req.param('getDescription')) || false;
+    const getDescription = Boolean(ctx.req.param('getDescription'));
     const suffix = map.get(type).suffix;
 
     const link = new URL(suffix, host).href;

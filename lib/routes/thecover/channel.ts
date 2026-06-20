@@ -73,7 +73,7 @@ async function handler(ctx) {
                 item.description = content('section.article-content').html();
                 const info = content('span', '.props-of-title');
                 item.author = info.eq(0).text();
-                item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), 8);
                 return item;
             })
         )

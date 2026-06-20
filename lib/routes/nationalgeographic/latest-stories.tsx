@@ -40,10 +40,10 @@ type StoryInlineContent = {
 
 type StoryBlock = {
     type?: string;
-    cntnt?: StoryInlineContent & {
+    cntnt?: {
         mrkup?: string;
         cmsType?: string;
-    };
+    } & StoryInlineContent;
 };
 
 type StoryData = {

@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: chapter_link.text(),
                 link: chapter_link.attr('href'),
-                pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), +9),
+                pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), 9),
             };
         })
         .toSorted((a, b) => b.pubDate - a.pubDate)

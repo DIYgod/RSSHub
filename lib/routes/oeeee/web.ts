@@ -39,7 +39,7 @@ async function handler(ctx) {
             thumb: item.img,
             description: item.summary,
         }),
-        pubDate: timezone(parseDate(item.datetime), +8),
+        pubDate: timezone(parseDate(item.datetime), 8),
         link: item.linkurl,
         author: item.author,
         // channelName: item.channel_name,

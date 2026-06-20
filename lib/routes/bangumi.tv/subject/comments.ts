@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-const getComments = async (subjectID, minLength) => {
+export const getComments = async (subjectID, minLength) => {
     // bangumi.tv未提供获取“吐槽（comments）”的API，因此仍需要通过抓取网页来获取
     const link = `https://bgm.tv/subject/${subjectID}/comments`;
     const html = await ofetch(link);
@@ -46,4 +46,3 @@ const getComments = async (subjectID, minLength) => {
         })),
     };
 };
-export default getComments;

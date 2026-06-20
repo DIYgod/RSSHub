@@ -62,7 +62,7 @@ async function handler(ctx) {
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
                 item.description = content('#text').html();
-                item.pubDate = timezone(parseDate(content('.t8').eq(0).text(), 'YYYY/M/D H:mm:ss'), +8);
+                item.pubDate = timezone(parseDate(content('.t8').eq(0).text(), 'YYYY/M/D H:mm:ss'), 8);
 
                 content('.t14').remove();
 

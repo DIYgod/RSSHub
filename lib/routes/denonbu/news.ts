@@ -176,7 +176,7 @@ async function handler(ctx: Context): Promise<Data> {
         const result: DataItem = {
             title: title ?? body.split('\n', 1)[0],
             description: body,
-            pubDate: timezone(parseDate(post_date), +9),
+            pubDate: timezone(parseDate(post_date), 9),
             category: category.map((x) => x.name),
         };
 

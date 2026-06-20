@@ -51,7 +51,7 @@ async function handler(ctx) {
                 title: `${title}:${floor}`,
                 link: new URL(floorUrl, `${host}/2b/`).href,
                 author: each.find('td.by cite').text(),
-                pubDate: timezone(parseDate(each.find('td.by em').first().text()), +8),
+                pubDate: timezone(parseDate(each.find('td.by em').first().text()), 8),
             };
         });
 

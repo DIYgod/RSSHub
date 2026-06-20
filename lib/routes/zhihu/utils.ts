@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 
-import g_encrypt from './execlib/x-zse-96-v3';
+import { encrypt as g_encrypt } from './execlib/x-zse-96-v3';
 
 export const header = {
     'x-api-version': '3.0.91',
@@ -84,7 +84,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
                 return script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1] || '';
             });
             if (zseCk) {
-                cookieStr = `${cookieStr}; __zse_ck=${zseCk}`;
+                cookieStr += `; __zse_ck=${zseCk}`;
             }
         }
 

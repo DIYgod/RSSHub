@@ -253,24 +253,17 @@ async function handler() {
                     // 来源为浙江政务服务网
                     const content = await crawler(item, context);
                     const $ = load(content);
+                    item.category = $('meta[name="ColumnType"]').attr('content');
                     item.description = renderDescription(analyzer($('.item-left .item .bg_box')));
                     item.author = '浙江政务服务网';
-                    item.category = $('meta[name="ColumnType"]').attr('content');
                 } else {
                     // 其他正常抓取
                     const response = await got(item.link);
                     const $ = load(response.data);
-                    if (host === 'police.hangzhou.gov.cn') {
-                        // 来源为杭州市公安局
-                        item.description = $('.art-content .wz_con_content').html();
-                        item.author = $('meta[name="ContentSource"]').attr('content');
-                        item.category = $('meta[name="ColumnType"]').attr('content');
-                    } else {
-                        // 缺省：来源为杭州市政府网
-                        item.description = $('.article').html();
-                        item.author = $('meta[name="ContentSource"]').attr('content');
-                        item.category = $('meta[name="ColumnType"]').attr('content');
-                    }
+                    // 来源为杭州市公安局 / 缺省：来源为杭州市政府网
+                    item.description = host === 'police.hangzhou.gov.cn' ? $('.art-content .wz_con_content').html() : $('.article').html();
+                    item.author = $('meta[name="ContentSource"]').attr('content');
+                    item.category = $('meta[name="ColumnType"]').attr('content');
                 }
                 item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content') as string, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
                 return item;

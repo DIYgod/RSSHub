@@ -60,7 +60,7 @@ function fetchArticle(item) {
         const $ = cheerio.load(response);
 
         $('.original-title, .lookall-box').remove();
-        item.author = item.author || $('span[data-role="original-link"] a').text();
+        item.author ||= $('span[data-role="original-link"] a').text();
         item.pubDate = timezone(parseDate($('meta[itemprop="dateUpdate"]').attr('content')), 8);
 
         if (/window\.sohu_mp\.article_video/.test($('script').text())) {

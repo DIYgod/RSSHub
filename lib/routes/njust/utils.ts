@@ -25,11 +25,10 @@ async function getContent(url, pptr = false) {
         } finally {
             await context.close();
         }
-    } else {
-        const response = await got(url);
-        const data = response.data;
-        return data;
     }
+    const response = await got(url);
+    const data = response.data;
+    return data;
 }
 
 export { getContent };

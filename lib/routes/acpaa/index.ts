@@ -44,7 +44,7 @@ async function handler(ctx) {
             return {
                 title: item.prop('title'),
                 link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: timezone(parseDate(item.find('span[title]').prop('title')), +8),
+                pubDate: timezone(parseDate(item.find('span[title]').prop('title')), 8),
             };
         });
 

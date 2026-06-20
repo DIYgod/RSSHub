@@ -46,7 +46,7 @@ async function handler() {
     const list = response.data.list.map((item) => ({
         link: item.url,
         title: item.title,
-        pubDate: timezone(parseDate(item.time), +8),
+        pubDate: timezone(parseDate(item.time), 8),
     }));
 
     const items = await Promise.all(

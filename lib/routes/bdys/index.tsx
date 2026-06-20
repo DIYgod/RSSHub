@@ -197,7 +197,7 @@ async function handler(ctx) {
                     </>
                 );
 
-                item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), +8);
+                item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), 8);
                 item.guid = `${item.link}#${content('.card h1').text()}`;
 
                 item.enclosure_url = torrents.html() ? `${rootUrl}${torrents.find('a').first().attr('href')}` : downloadResponse.data.pop().url;

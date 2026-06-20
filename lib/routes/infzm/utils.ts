@@ -26,7 +26,7 @@ export async function fetchArticles(data) {
                 return {
                     title: subject,
                     description: $('div.nfzm-content__content').html() ?? '',
-                    pubDate: timezone(publish_time, +8).toUTCString(),
+                    pubDate: timezone(publish_time, 8).toUTCString(),
                     link,
                     author,
                 };

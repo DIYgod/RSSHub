@@ -41,7 +41,7 @@ export default async function get_article(url) {
 
     const item = {
         title,
-        pubDate: timezone(parseDate(date_str), +8),
+        pubDate: timezone(parseDate(date_str), 8),
         author,
         link: url,
         description,

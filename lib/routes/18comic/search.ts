@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     let apiUrl = getApiUrl();
     order = time === 'a' ? order : `${order}_${time}`;
-    apiUrl = `${apiUrl}/search?search_query=${encodedKeyword}&o=${order}`;
+    apiUrl += `/search?search_query=${encodedKeyword}&o=${order}`;
     const apiResult = await processApiItems(apiUrl);
     let filteredItemsByCategory = apiResult.content;
     // Filter items by category if not 'all'

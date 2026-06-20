@@ -1,4 +1,4 @@
-// oxlint-disable no-undef unicorn-js/no-this-outside-of-class
+// oxlint-disable no-undef unicorn-js/no-this-outside-of-class unicorn-js/no-return-array-push
 // oxlint-disable unicorn/prefer-spread
 // oxlint-disable unicorn/prefer-math-trunc
 // @ts-nocheck
@@ -275,7 +275,7 @@ function result_encrypt(long_str: string, num: 's0' | 's1' | 's2' | 's3' | 's4')
 }
 
 function get_long_int(round, long_str) {
-    round = round * 3;
+    round *= 3;
     return (long_str.codePointAt(round) << 16) | (long_str.codePointAt(round + 1) << 8) | long_str.codePointAt(round + 2);
 }
 

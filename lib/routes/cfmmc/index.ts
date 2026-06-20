@@ -47,7 +47,7 @@ async function handler(ctx) {
         response.results?.[0].data.slice(0, limit).map((item) => ({
             title: item.title,
             link: new URL(item.url, rootUrl).href,
-            pubDate: timezone(parseDate(item.publish_date), +8),
+            pubDate: timezone(parseDate(item.publish_date), 8),
         })) ?? [];
 
     items = await Promise.all(

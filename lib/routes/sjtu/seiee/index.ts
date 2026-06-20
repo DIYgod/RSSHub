@@ -82,7 +82,7 @@ async function handler(ctx) {
                             .trim()
                             .match(/日期：([\d-]+) /)[1]
                     ),
-                    +8
+                    8
                 );
 
                 return item;

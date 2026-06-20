@@ -94,10 +94,12 @@ async function handler() {
 
             let prefix = '【其他】';
             for (const code in prefixes) {
-                if (newsLink.search('info/' + code) !== -1) {
-                    prefix = prefixes[code];
-                    break;
+                if (newsLink.search('info/' + code) === -1) {
+                    continue;
                 }
+
+                prefix = prefixes[code];
+                break;
             }
             newsTitle = prefix + newsTitle;
 

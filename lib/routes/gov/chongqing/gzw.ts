@@ -66,7 +66,7 @@ async function handler(ctx) {
                 item.description = content('div.trs_paper_default').html();
                 item.author = content('meta[name="ContentSource"]').prop('content');
                 item.category = content('meta[name="Keywords"]').prop('content').split(/;/).filter(Boolean);
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
 
                 return item;
             })

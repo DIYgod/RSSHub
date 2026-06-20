@@ -89,7 +89,7 @@ async function handler(ctx) {
             let shortenTitle = '一条动态';
             if (content) {
                 shortenTitle = content.replaceAll(/(<br>)+/g, ' ');
-                content = `${content}<br><br>`;
+                content += '<br><br>';
             }
 
             let repostContent;
@@ -104,7 +104,7 @@ async function handler(ctx) {
                 }
 
                 repostContent = `<div class="rsshub-quote">转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}</div>`.replaceAll(/\r\n|\n|\r/g, '<br>');
-                content = `${content}${repostContent}`;
+                content += repostContent;
             }
             // 部分功能未知
             /* else if (item.type === 'ANSWER') {

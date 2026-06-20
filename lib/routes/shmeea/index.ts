@@ -66,7 +66,7 @@ async function handler(ctx) {
                 const pbTimeText = $('#ivs_title .PBtime').text().trim();
 
                 item.description = description;
-                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), +8) : item.pubDate;
+                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
 
                 return item;
             })

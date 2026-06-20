@@ -46,7 +46,7 @@ async function handler() {
             return {
                 title: keyword[1],
                 author: keyword[2],
-                pubDate: timezone(parseDate(keyword[3], 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(keyword[3], 'YYYY-MM-DD'), 8),
                 link,
             };
         });

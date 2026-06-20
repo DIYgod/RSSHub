@@ -89,7 +89,7 @@ async function handler(ctx) {
 
                 item.description = content('.topic-body').html();
                 item.author = content('.user-link').first().text();
-                item.pubDate = timezone(/-/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), +8);
+                item.pubDate = timezone(/-/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8);
 
                 return item;
             })

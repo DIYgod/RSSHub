@@ -68,14 +68,16 @@ async function handler(ctx) {
         });
 
         for (const c of response.data.header.news) {
-            if (c.EnglishName === id || c.ChannelID === id) {
-                channel = {
-                    id: c.ChannelID,
-                    name: c.ChannelName,
-                    slug: c.EnglishName,
-                };
-                break;
+            if (!(c.EnglishName === id || c.ChannelID === id)) {
+                continue;
             }
+
+            channel = {
+                id: c.ChannelID,
+                name: c.ChannelName,
+                slug: c.EnglishName,
+            };
+            break;
         }
     }
 

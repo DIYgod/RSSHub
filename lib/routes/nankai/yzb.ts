@@ -57,7 +57,7 @@ export const route: Route = {
                 return {
                     title: $a.text(),
                     link: linkStr,
-                    pubDate: timezone(parseDate(dateList[index]), +8),
+                    pubDate: timezone(parseDate(dateList[index]), 8),
                 };
             });
 

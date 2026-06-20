@@ -38,7 +38,7 @@ async function handler(ctx) {
             thumb: item.picMiddle,
             description: item.attAbstract,
         }),
-        pubDate: timezone(parseDate(item.publishtime), +8),
+        pubDate: timezone(parseDate(item.publishtime), 8),
         link: `http://pc.nfapp.southcn.com/${item.colID}/${item.fileId}.html`,
         articleId: item.fileId,
         shareUrl: item.shareUrl,

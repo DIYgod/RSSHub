@@ -77,7 +77,7 @@ async function handler(ctx: Context): Promise<Data> {
         .map((i) => {
             const rawPubDate = i.content.broadcastDateLabel;
             const cleanedPubDate = rawPubDate.replaceAll(/\(.*?\)|放送分/g, '').trim();
-            const parsedPubDate = timezone(parseDate(cleanedPubDate, 'M月D日'), +9).toDateString();
+            const parsedPubDate = timezone(parseDate(cleanedPubDate, 'M月D日'), 9).toDateString();
 
             return {
                 title: i.content.title,

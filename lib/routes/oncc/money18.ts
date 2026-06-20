@@ -88,7 +88,7 @@ async function handler(ctx) {
                 images: item.hasHdPhoto ? [`https://hk.on.cc/hk/bkn${item.hdEnlargeThumbnail}`] : undefined,
                 description: item.content,
             }),
-            pubDate: timezone(parseDate(item.pubDate), +8),
+            pubDate: timezone(parseDate(item.pubDate), 8),
         }));
     } else if (id === 'industry') {
         items = response.data.articles.slice(0, limit).map((item) => ({
@@ -96,14 +96,14 @@ async function handler(ctx) {
             author: item.authorname,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
             category: item.sector.map((s) => s.name),
-            pubDate: timezone(parseDate(item.pubDate), +8),
+            pubDate: timezone(parseDate(item.pubDate), 8),
         }));
     } else {
         items = response.data.slice(0, limit).map((item) => ({
             title: item.title,
             author: item.authorname,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
-            pubDate: timezone(parseDate(item.pubDate), +8),
+            pubDate: timezone(parseDate(item.pubDate), 8),
         }));
     }
 

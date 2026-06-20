@@ -63,7 +63,7 @@ function publishDateFromImage(imageUrl: string): Date | undefined {
         return undefined;
     }
     const [, y, mo, d] = m;
-    return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), +8);
+    return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), 8);
 }
 
 function renderDescription(item: ListItem): string {
@@ -136,7 +136,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
                 const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
                 if (publishedMatch) {
                     const [, y, m, d] = publishedMatch;
-                    pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), +8);
+                    pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
                 }
             }
         }

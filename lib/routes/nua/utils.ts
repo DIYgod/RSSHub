@@ -39,7 +39,7 @@ async function ProcessList(newsUrl, baseUrl, listName, listDate, webPageName) {
             return {
                 link: type === 'in-nua' ? baseUrl + href : href,
                 title: $(item).find('a').attr('title'),
-                pubDate: timezone(parseDate($(item).find(listDate).first().text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(item).find(listDate).first().text(), 'YYYY-MM-DD'), 8),
                 type,
             };
         });

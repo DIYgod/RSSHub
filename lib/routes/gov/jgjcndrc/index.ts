@@ -53,7 +53,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate(data.pubDate), +8);
+                item.pubDate = timezone(parseDate(data.pubDate), 8);
                 item.link = data.linkUrl || new URL(data.articleUrl, rootUrl).href;
                 item.category = data.parentColumns.map((c) => c.columnName);
                 item.guid = guid;

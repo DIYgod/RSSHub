@@ -29,7 +29,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: timezone(parseDate(item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), +8),
+                pubDate: timezone(parseDate(item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8),
                 link: item.find('a').prop('href'),
                 category: item
                     .nextAll('a')
@@ -52,7 +52,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8);
                 item.author = $$('img.avatar-1').parent().contents().last().text().trim();
                 item.content = {
                     html: description,

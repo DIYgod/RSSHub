@@ -117,14 +117,12 @@ const scheduleClose = (browser: Browser, timeout = 30000) => {
 /**
  * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
-const outPlaywright = async () => {
+export default async function outPlaywright() {
     const currentProxy = proxy.getCurrentProxy();
     const { browser, context } = await launchBrowser(currentProxy && proxy.proxyObj.url_regex === '.*' ? currentProxy : null);
     scheduleClose(browser);
     return context;
-};
-
-export default outPlaywright;
+}
 
 // No-op in Node.js environment (used by Worker build via alias)
 export const setBrowserBinding = (_binding: any) => {};

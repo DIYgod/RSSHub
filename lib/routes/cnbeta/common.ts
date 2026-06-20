@@ -26,7 +26,7 @@ export async function handler(ctx) {
               title: item.title,
               description: item.hometext,
               author: item.source.split('@http', 1)[0],
-              pubDate: timezone(parseDate(item.inputtime), +8),
+              pubDate: timezone(parseDate(item.inputtime), 8),
               link: item.url_show.startsWith('//') ? `https:${item.url_show}` : item.url_show.replace('http:', 'https:'),
               category: item.label.name,
           }))

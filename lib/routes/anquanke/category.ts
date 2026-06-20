@@ -48,7 +48,7 @@ async function handler(ctx) {
                               return content('#js-article').html();
                           })
                         : item.desc,
-                pubDate: timezone(parseDate(item.date), +8),
+                pubDate: timezone(parseDate(item.date), 8),
                 link: art_url,
                 author: item.author.nickname,
             };

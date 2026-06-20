@@ -46,7 +46,7 @@ async function handler(ctx) {
                 title: item.find('.panel-title').text(),
                 description: item.find('.panel-body').html(),
                 link: `${rootUrl}${item.find('.panel-title a').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.timeago').attr('datetime')), +9),
+                pubDate: timezone(parseDate(item.find('.timeago').attr('datetime')), 9),
             };
         });
 

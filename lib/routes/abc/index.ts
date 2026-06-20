@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    documentId = documentId ?? $('div[data-uri^="coremedia://collection/"]').first().prop('data-uri').split(/\//).pop();
+    documentId ??= $('div[data-uri^="coremedia://collection/"]').first().prop('data-uri').split(/\//).pop();
 
     const response = await ofetch(apiUrl, {
         query: {

@@ -49,7 +49,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), baseUrl).href,
-                pubDate: timezone(date, +8),
+                pubDate: timezone(date, 8),
             };
         });
 

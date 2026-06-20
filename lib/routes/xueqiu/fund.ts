@@ -56,7 +56,7 @@ async function handler(ctx) {
     const single = {
         title,
         description,
-        pubDate: timezone(parseDate(end_date), +8),
+        pubDate: timezone(parseDate(end_date), 8),
         link: appUrl,
     };
 

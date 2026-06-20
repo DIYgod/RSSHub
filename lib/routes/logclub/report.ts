@@ -55,7 +55,7 @@ async function handler(ctx) {
         author: item.author,
         category: [item.channel_name],
         guid: `logclub-report-${item.id}`,
-        pubDate: timezone(parseDate(item.release_time), +8),
+        pubDate: timezone(parseDate(item.release_time), 8),
     }));
 
     items = await Promise.all(

@@ -39,7 +39,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
 
             return {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link,
                 category: $item
                     .find('span.aw-question-tags a, a.aw-topic-name')
@@ -91,7 +91,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                     return {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                         link: item.link,
                         category: item.category,
                         author,
@@ -99,7 +99,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                             html: description,
                             text: $$('div.aw-question-detail-txt').first().text(),
                         },
-                        updated: updatedStr ? timezone(parseDate(updatedStr), +8) : item.updated,
+                        updated: updatedStr ? timezone(parseDate(updatedStr), 8) : item.updated,
                     };
                 });
             })

@@ -42,7 +42,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('h2 > a').text(),
             link: $(item).find('h2 > a').attr('href'),
-            pubDate: timezone(parseDate($(item).find('div.c').attr('data-ot')), +8),
+            pubDate: timezone(parseDate($(item).find('div.c').attr('data-ot')), 8),
         }));
 
     const items = await Promise.all(

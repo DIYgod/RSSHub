@@ -86,7 +86,7 @@ async function handler(ctx) {
                 const pageNumber = Number.parseInt(detailResponse.data.match(/var page_num = '(\d+)'/)[1]);
 
                 item.description = content('#J-contain_detail_cnt').html();
-                item.pubDate = timezone(parseDate(content('meta[property="og:release_date"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[property="og:release_date"]').attr('content')), 8);
 
                 if (pageNumber > 1) {
                     const links = [];

@@ -25,7 +25,7 @@ const processItems = async (items, tryGet) =>
 
                 const content = load(detailResponse);
 
-                item.title = item.title || content('title').text();
+                item.title ||= content('title').text();
                 item.description = content('div.TRS_Editor, div.TRS_UEDITOR, div.content').html();
                 item.author = content('meta[name="ContentSource"]').prop('content');
                 item.category = [
@@ -38,7 +38,7 @@ const processItems = async (items, tryGet) =>
                         ].filter(Boolean)
                     ),
                 ];
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
 
                 return item;
             })

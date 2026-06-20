@@ -59,7 +59,7 @@ async function handler(ctx) {
                     .find('a.label')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), +8),
+                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), 8),
                 upvotes: item.find('span.count').text() ? Number(item.find('span.count').text()) : 0,
             };
         });
@@ -79,7 +79,7 @@ async function handler(ctx) {
                 item.category = content('#mute-category')
                     .toArray()
                     .map((c) => content(c).text().trim());
-                item.pubDate = item.pubDate ?? parseDate(content('i.fa-clock-o').parent().text().trim());
+                item.pubDate ??= parseDate(content('i.fa-clock-o').parent().text().trim());
                 item.upvotes = content('#Addlike span.count').text() ? Number(content('#Addlike span.count').text()) : item.upvotes;
 
                 return item;

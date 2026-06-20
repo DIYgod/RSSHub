@@ -70,7 +70,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 item.title = content('td[id="artTitMob"]').text();
                 item.description = content('div[id="c"]').html();
-                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), +8);
+                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), 8);
                 item.author = content('.mobile_time.shareFromz').text();
                 return item;
             })

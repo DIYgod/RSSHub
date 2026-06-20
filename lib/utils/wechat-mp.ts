@@ -668,7 +668,7 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
                 item.link = skipLink ? item.link : fetchedItem.link || item.link;
                 break;
             default:
-                item[key] = item[key] || fetchedItem[key];
+                item[key] ||= fetchedItem[key];
         }
     }
     return item;

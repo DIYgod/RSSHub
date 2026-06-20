@@ -99,7 +99,7 @@ export async function extractNews(item, selector) {
 function extractArticle(articleDiv, selectorString: string = 'div.ck-content') {
     const $ = load(articleDiv, null, false);
     const articleDiv$ = $(articleDiv);
-    const articleContent = articleDiv$.find(String(selectorString));
+    const articleContent = articleDiv$.find(selectorString);
     articleContent.find('figure').each((_, element) => {
         $(element).css('width', '');
     });

@@ -65,7 +65,7 @@ function getLowestDesc(priceInfo, isSuperLowest = false) {
 function getHeyboxPriceDesc(heyboxPriceInfo) {
     if (heyboxPriceInfo.coupon_info) {
         let discountPrice = heyboxPriceInfo.cost_coin / 1000;
-        discountPrice = discountPrice - heyboxPriceInfo.coupon_info.max_reduce;
+        discountPrice -= heyboxPriceInfo.coupon_info.max_reduce;
         const formatPrice = Number.isSafeInteger(discountPrice) ? discountPrice.toFixed(0) : discountPrice.toFixed(2);
         return `| 券后价: ${formatPrice} [${heyboxPriceInfo.coupon_info.coupon_desc}]`;
     }
@@ -88,22 +88,24 @@ async function handler(ctx) {
             `;
         if (item.platform_infos) {
             for (const platform of item.platform_infos) {
-                if (platform.price) {
-                    if (platform.key) {
-                        description += `平台: ${platform.key.toUpperCase()}<br/>`;
-                    }
-                    if (platform.price.current) {
-                        description += `当前价格: ${platform.price.current} ${getLowestDesc(platform.price)}<br/>`;
-                    }
-                    if (platform.price.initial) {
-                        description += `原价: ${platform.price.initial}<br/>`;
-                    }
-                    if (platform.price.discount && platform.price.discount > 0) {
-                        description += `折扣力度: ${getDiscountDesc(platform.price.discount)}<br/>`;
-                    }
-                    if (platform.price.deadline_date) {
-                        description += `截止时间: ${platform.price.deadline_date}<br/>`;
-                    }
+                if (!platform.price) {
+                    continue;
+                }
+
+                if (platform.key) {
+                    description += `平台: ${platform.key.toUpperCase()}<br/>`;
+                }
+                if (platform.price.current) {
+                    description += `当前价格: ${platform.price.current} ${getLowestDesc(platform.price)}<br/>`;
+                }
+                if (platform.price.initial) {
+                    description += `原价: ${platform.price.initial}<br/>`;
+                }
+                if (platform.price.discount && platform.price.discount > 0) {
+                    description += `折扣力度: ${getDiscountDesc(platform.price.discount)}<br/>`;
+                }
+                if (platform.price.deadline_date) {
+                    description += `截止时间: ${platform.price.deadline_date}<br/>`;
                 }
             }
         } else if (item.price) {

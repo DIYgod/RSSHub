@@ -40,7 +40,7 @@ async function handler(ctx) {
                 title: $item('.weui_media_title a').text(),
                 description: $item('.weui_media_desc').text(),
                 link,
-                pubDate: timezone(parseDate($item('.weui_media_extra_info').attr('title')), +8),
+                pubDate: timezone(parseDate($item('.weui_media_extra_info').attr('title')), 8),
             };
         });
 

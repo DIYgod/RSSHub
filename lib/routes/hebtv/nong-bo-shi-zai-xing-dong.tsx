@@ -76,7 +76,7 @@ async function handler(ctx) {
                 title: a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: `${baseUrl}/../${a.attr('href')}`,
-                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), +8) : null,
+                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), 8) : null,
                 author: '时间|' + timestr,
             };
         });
@@ -106,8 +106,8 @@ async function handler(ctx) {
                 item.title = data.title;
                 item.author = data.source;
                 item.guid = `hebtv-nbszxd-${articleId}`;
-                item.pubDate = timezone(parseDate(data.publishDate), +8);
-                item.updated = timezone(parseDate(data.modifyTime), +8);
+                item.pubDate = timezone(parseDate(data.publishDate), 8);
+                item.updated = timezone(parseDate(data.modifyTime), 8);
 
                 if (videoData) {
                     item.itunes_item_image = videoData.poster;

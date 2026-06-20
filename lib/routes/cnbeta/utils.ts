@@ -18,7 +18,7 @@ const ProcessItems = (items, limit, tryGet) =>
 
                 item.description = content('.article-summary').html() + content('.article-content').html();
                 item.author = content('header.title div.meta span.source').text();
-                item.pubDate ??= timezone(parseDate(content('.meta span').first().text(), 'YYYY年MM月DD日 HH:mm'), +8);
+                item.pubDate ??= timezone(parseDate(content('.meta span').first().text(), 'YYYY年MM月DD日 HH:mm'), 8);
 
                 return item;
             })

@@ -38,7 +38,7 @@ export default {
             let description = contentDetail.content || contentDetail.summary || contentDetail.desc || '';
 
             if (contentDetail.videos) {
-                description = description + contentDetail.summary;
+                description += contentDetail.summary;
             }
             if (useOldMode) {
                 if (contentDetail.videos) {

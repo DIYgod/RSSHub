@@ -53,7 +53,7 @@ const processItems = async (apiUrl, limit, ...parameters) => {
         item = item.source_type ? item[item.source_type] : item;
 
         const column = item.column?.title;
-        info.column = info.column || column;
+        info.column ||= column;
 
         const categories = [
             column,

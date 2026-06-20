@@ -58,7 +58,7 @@ async function handler(ctx) {
                 title: a.text(),
                 category: item.find('.cate').text(),
                 link: `${rootUrl}/service${a.attr('href').replace('./', '/')}`,
-                pubDate: timezone(parseDate(item.find('.date').text()), +9),
+                pubDate: timezone(parseDate(item.find('.date').text()), 9),
             };
         });
 

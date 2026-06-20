@@ -57,7 +57,7 @@ export const route: Route = {
                 return {
                     title: $link.text().trim(),
                     link: linkStr,
-                    pubDate: timezone(parseDate(fullDate, 'YYYY/MM/DD'), +8),
+                    pubDate: timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8),
                 };
             })
             .filter((item) => item.link); // 过滤掉没有链接的项目
@@ -74,7 +74,7 @@ export const route: Route = {
                         const publishTimeText = $('.page-news-souse').text();
                         const timeMatch = publishTimeText.match(/发布时间：(\d{4}-\d{2}-\d{2})/);
                         if (timeMatch) {
-                            item.pubDate = timezone(parseDate(timeMatch[1]), +8);
+                            item.pubDate = timezone(parseDate(timeMatch[1]), 8);
                         }
 
                         // 获取文章内容

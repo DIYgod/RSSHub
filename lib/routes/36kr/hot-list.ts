@@ -56,7 +56,7 @@ const getProperty = (object, key) => {
     let result = object;
     const keys = key.split('.');
     for (const k of keys) {
-        result = result && result[k];
+        result &&= result[k];
     }
     return result;
 };
