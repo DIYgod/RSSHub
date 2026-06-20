@@ -1,11 +1,12 @@
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { renderMedia } from './templates/desc';
 
 const baseUrl = 'https://meteor.today';
 
-const getBoards = (tryGet) =>
-    tryGet('meteor:boards', async () => {
+const getBoards = () =>
+    cache.tryGet('meteor:boards', async () => {
         const { data: response } = await got.post(`${baseUrl}/board/get_boards`, {
             json: {
                 isCollege: 'false',

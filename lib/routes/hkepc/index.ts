@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-code-point */
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -97,7 +96,7 @@ async function handler(ctx) {
                 // Taken from /caixin/blog.js
                 content
                     .find('#view > p')
-                    .filter((_, e) => e.children[0]?.data === String.fromCharCode(160))
+                    .filter((_, e) => e.children[0]?.data === String.fromCodePoint(160))
                     .remove();
 
                 // fix lazyload image

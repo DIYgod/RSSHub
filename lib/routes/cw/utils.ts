@@ -30,9 +30,9 @@ const pathMap = {
     },
 };
 
-const getCookie = async (context, tryGet) => {
+const getCookie = async (context) => {
     if (!cookie) {
-        cookie = await tryGet('cw:cookie', async () => {
+        cookie = await cache.tryGet('cw:cookie', async () => {
             const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
@@ -53,7 +53,7 @@ const getCookie = async (context, tryGet) => {
 const parsePage = async (path, context, ctx) => {
     const pageUrl = `${baseUrl}${pathMap[path].pageUrl(ctx.req.param('channel'))}`;
 
-    const cookie = await getCookie(context, cache.tryGet);
+    const cookie = await getCookie(context);
     const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
@@ -71,7 +71,7 @@ const parsePage = async (path, context, ctx) => {
     const $ = load(response);
 
     const list = parseList($, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : pathMap[path].limit);
-    const items = await parseItems(list, context, cache.tryGet);
+    const items = await parseItems(list, context);
 
     return { $, items };
 };
@@ -89,13 +89,13 @@ const parseList = ($, limit) =>
         })
         .slice(0, limit);
 
-const parseItems = (list, context, tryGet) =>
+const parseItems = (list, context) =>
     Promise.all(
         list.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link, {
                     headers: {
-                        Cookie: await getCookie(context, tryGet),
+                        Cookie: await getCookie(context),
                         'User-Agent': config.ua,
                     },
                 });

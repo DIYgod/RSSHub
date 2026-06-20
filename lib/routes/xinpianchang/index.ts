@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { getData, processItems, rootUrl } from './util';
 
@@ -32,11 +31,11 @@ async function handler(ctx) {
 
     const currentUrl = new URL(`discover/${params}`, rootUrl).href;
 
-    const { data, response } = await getData(currentUrl, cache.tryGet);
+    const { data, response } = await getData(currentUrl);
 
     let items = JSON.parse(response.match(/"list":(\[.*?\]),"total"/)[1]);
 
-    items = await processItems(items.slice(0, limit), cache.tryGet);
+    items = await processItems(items.slice(0, limit));
 
     return {
         ...data,

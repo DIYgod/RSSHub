@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { ossUrl, ProcessFeed, rootUrl } from './utils';
@@ -62,7 +61,7 @@ async function handler(ctx) {
     });
 
     return {
-        item: await ProcessFeed(limit, cache.tryGet, items),
+        item: await ProcessFeed(limit, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
         description: $('div.thinktank-author-description-box p').text(),

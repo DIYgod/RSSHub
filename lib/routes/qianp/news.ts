@@ -19,7 +19,7 @@ async function handler(ctx) {
     const { path = 'news/recommend' } = ctx.req.param();
     const url = `${baseUrl}/${path}/`;
 
-    const { token, secret } = await getTokenAndSecret(cache.tryGet);
+    const { token, secret } = await getTokenAndSecret();
     const headers = {
         cookie: token ? `t=${token}; r=${secret - 100}` : undefined,
     };

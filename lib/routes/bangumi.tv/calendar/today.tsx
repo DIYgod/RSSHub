@@ -1,7 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { getData } from './_base';
 
@@ -49,7 +48,7 @@ const renderTodayDescription = (bgm, siteMeta) =>
     );
 
 async function handler() {
-    const [list, data] = await getData(cache.tryGet);
+    const [list, data] = await getData();
     const siteMeta = data.siteMeta;
 
     const today = new Date(Date.now());

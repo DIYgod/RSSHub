@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -40,7 +39,7 @@ async function handler(ctx) {
         imgsrc: e.imgsrc,
     }));
 
-    const items = await Promise.all(list.map((e) => parseDyArticle(e, cache.tryGet)));
+    const items = await Promise.all(list.map((e) => parseDyArticle(e)));
 
     return {
         title: `网易号 - ${list[0].author}`,

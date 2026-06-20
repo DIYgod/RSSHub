@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { parseArticle } from './utils';
@@ -46,7 +45,7 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `${$('title').text().split('_', 1)[0]} - 新浪体育`,

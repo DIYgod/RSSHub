@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     let categoryName = '最新消息';
     if (!isLatest) {
-        const categories = await getCategories(cache.tryGet);
+        const categories = await getCategories();
         categoryName = categories.find((c) => c.id === Number.parseInt(category)).name;
     }
 

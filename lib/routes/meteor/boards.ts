@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { baseUrl, getBoards } from './utils';
 
@@ -28,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const items = await getBoards(cache.tryGet);
+    const items = await getBoards();
 
     return {
         title: '看板列表',

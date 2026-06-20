@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -511,10 +512,9 @@ const mapItem = (item) => {
  *
  * @param {Object[]} items - The items to process.
  * @param {number} limit - The maximum number of items to process.
- * @param {Function} tryGet   - The tryGet function that handles the retrieval process.
  * @returns {Promise<Object[]>} - A promise that resolves to an array of processed items.
  */
-const processItems = async (items, limit, tryGet) => {
+const processItems = async (items, limit) => {
     const processedItems = items
         .map((item) => mapItem(item))
         .filter(Boolean)
@@ -522,7 +522,7 @@ const processItems = async (items, limit, tryGet) => {
 
     return await Promise.all(
         processedItems.map((item) =>
-            tryGet(item.guid, async () => {
+            cache.tryGet(item.guid, async () => {
                 const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
                 const isMoment = item.guid.startsWith('huxiu-moment');
 

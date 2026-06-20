@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiMemberRootUrl, buildHuxiuRouteTitlePrefix, fetchMemberData, processItems } from './util';
@@ -37,7 +36,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await processItems(response.data.datalist, limit, cache.tryGet);
+    const items = await processItems(response.data.datalist, limit);
 
     const data = await fetchMemberData(id, type, response.data.datalist ?? [], buildHuxiuRouteTitlePrefix(route.name));
 

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -7,10 +8,10 @@ import timezone from '@/utils/timezone';
 const ossUrl = 'https://oss.aisixiang.com';
 const rootUrl = 'https://www.aisixiang.com';
 
-const ProcessFeed = (limit, tryGet, items) =>
+const ProcessFeed = (limit, items) =>
     Promise.all(
         items.slice(0, limit).map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);

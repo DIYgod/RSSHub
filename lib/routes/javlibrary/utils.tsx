@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -32,7 +33,7 @@ const renderDescription = ({ cover, info, comment, videos, thumbs }) =>
             {thumbs?.length ? thumbs.map((thumb) => <img src={thumb} />) : null}
         </>
     );
-const ProcessItems = async (language, currentUrl, tryGet) => {
+const ProcessItems = async (language, currentUrl) => {
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -64,7 +65,7 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
 
     items = await Promise.all(
         items.map((item) =>
-            tryGet(item.url, async () => {
+            cache.tryGet(item.url, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.url,

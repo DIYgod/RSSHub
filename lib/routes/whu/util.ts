@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -125,18 +126,17 @@ const getItemDetail = async (item, rootUrl) => {
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {Function} tryGet     - The function to attempt to get the content of a URL.
  * @param {string} rootUrl      - The root URL.
  * @returns {Array<Promise<Object>>} An array of promises that resolve to the processed items.
  */
-const processItems = async (items, tryGet, rootUrl) =>
+const processItems = async (items, rootUrl) =>
     await Promise.all(
         items.map((item) => {
             if (!item.link.includes(domain)) {
                 return item;
             }
 
-            return tryGet(item.link, async () => await getItemDetail(item, rootUrl));
+            return cache.tryGet(item.link, async () => await getItemDetail(item, rootUrl));
         })
     );
 

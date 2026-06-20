@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiRootUrl, processItems, rootUrl } from './util';
@@ -47,7 +46,7 @@ async function handler(ctx) {
         guid: item.uid,
     }));
 
-    items = await processItems(items, cache.tryGet);
+    items = await processItems(items);
 
     const { data: currentHTMLResponse } = await got(infoUrl);
     const $ = load(currentHTMLResponse);

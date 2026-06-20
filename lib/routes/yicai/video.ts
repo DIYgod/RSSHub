@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { ProcessItems, rootUrl } from './utils';
@@ -94,7 +93,7 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/video${id ? `/${channel.slug}` : ''}`;
     const apiUrl = `${rootUrl}/api/ajax/${id ? `getlistbycid?cid=${channel.id}` : 'getjuhelist?action=video'}&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
 
-    const items = await ProcessItems(apiUrl, cache.tryGet);
+    const items = await ProcessItems(apiUrl);
 
     return {
         title: `第一财经 - ${channel?.name ?? '视听'}`,
