@@ -52,12 +52,12 @@ async function handler(ctx) {
                     item.author = content('a.source').text();
                     const info = content('p', '.left').text().trim().slice(5).split(' ');
                     item.author = info[2].trim();
-                    item.pubDate = timezone(parseDate(info[0] + info[1], 'YYYY年MM月DD日HH:mm'), +8);
+                    item.pubDate = timezone(parseDate(info[0] + info[1], 'YYYY年MM月DD日HH:mm'), 8);
                 } else if (content('div.t3').length > 0) {
                     item.description = content('div.t3').html();
                     const info = content('div[style="text-align:right;font-size:12px;"]').text().slice(5).split(' ');
                     item.author = info[2];
-                    item.pubDate = timezone(parseDate(info[0] + info[1], 'YYYY-MM-DDHH:mm'), +8);
+                    item.pubDate = timezone(parseDate(info[0] + info[1], 'YYYY-MM-DDHH:mm'), 8);
                 } else {
                     item.description = content('div.left_zw').html();
                     const info = content('div.left-t')
@@ -65,7 +65,7 @@ async function handler(ctx) {
                         .filter((_, el) => el.type === 'text')
                         .text()
                         .split('　');
-                    item.pubDate = timezone(parseDate(info[0], 'YYYY年MM月DD日 HH:mm'), +8);
+                    item.pubDate = timezone(parseDate(info[0], 'YYYY年MM月DD日 HH:mm'), 8);
                     item.author = info[1] + content('a.source').text();
                 }
                 return item;

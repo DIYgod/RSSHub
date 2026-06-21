@@ -176,7 +176,7 @@ async function handler(ctx: Context): Promise<Data> {
         link: `https://novel18.syosetu.com/${String(novel.ncode).toLowerCase()}`,
         description: renderDescription({ novel }),
         author: novel.writer,
-        category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
+        category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
     }));
 
     return {

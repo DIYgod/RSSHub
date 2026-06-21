@@ -59,7 +59,7 @@ async function handler(ctx) {
             title: article.title,
             link,
             description: article.content,
-            pubDate: timezone(parseDate(article.firstPublishDate), +9),
+            pubDate: timezone(parseDate(article.firstPublishDate), 9),
             author: article.reporter?.[0]?.name || '',
         };
     });

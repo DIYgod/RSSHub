@@ -61,14 +61,14 @@ async function handler(ctx) {
     // add that item alone to the "to be processed" array.
 
     let items = isCategory
-        ? await getItems(cache.tryGet, currentUrl, id, 'div.rowMod', 'ul.slides li a')
+        ? await getItems(currentUrl, id, 'div.rowMod', 'ul.slides li a')
         : [
               {
                   link: currentUrl,
               },
           ];
 
-    items = await Promise.all(items.slice(0, limit).map((item) => getItemInfo(cache.tryGet, item.link)));
+    items = await Promise.all(items.slice(0, limit).map((item) => getItemInfo(item.link)));
 
     // If the link of the entry is "#",
     // it indicates that there are currently no relevant resources available for that specific item.

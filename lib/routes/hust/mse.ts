@@ -55,9 +55,7 @@ export const handler = async (ctx) => {
                     if (!item.pubDate && data.startsWith('发布')) {
                         const pubDate = data.split(/：/)?.pop();
                         item.pubDate = pubDate ? parseDate(pubDate) : item.pubDate;
-                    } else if (!item.author && data.startsWith('作者')) {
-                        item.author = data.split(/：/)?.pop() ?? undefined;
-                    } else if (!item.author && data.startsWith('编辑')) {
+                    } else if (!item.author && (data.startsWith('作者') || data.startsWith('编辑'))) {
                         item.author = data.split(/：/)?.pop() ?? undefined;
                     }
                 }

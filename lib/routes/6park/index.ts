@@ -67,7 +67,7 @@ async function handler(ctx) {
 
                 item.title = content('title').text().replace(' -6park.com', '');
                 item.author = detailResponse.data.match(/送交者:[^>]*>([^<]*)<\/a>/)[1].trim();
-                item.pubDate = timezone(parseDate(detailResponse.data.match(/于 (.*) 已读/)[1], 'YYYY-MM-DD h:m'), +8);
+                item.pubDate = timezone(parseDate(detailResponse.data.match(/于 (.*) 已读/)[1], 'YYYY-MM-DD h:m'), 8);
                 item.description = content('pre')
                     .html()
                     .replaceAll('<p></p>', '')

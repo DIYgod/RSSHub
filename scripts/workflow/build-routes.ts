@@ -38,10 +38,12 @@ for (const namespace in namespacesToProcess) {
     let defaultCategory = namespaceData.categories?.[0];
     if (!defaultCategory) {
         for (const path in namespaceData.routes) {
-            if (namespaceData.routes[path].categories) {
-                defaultCategory = namespaceData.routes[path].categories[0];
-                break;
+            if (!namespaceData.routes[path].categories) {
+                continue;
             }
+
+            defaultCategory = namespaceData.routes[path].categories[0];
+            break;
         }
     }
     if (!defaultCategory) {

@@ -65,7 +65,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => $(c).text()),
                 guid: `tradingview-desktop#${title.split(/versions?\s/).pop()}`,
-                pubDate: timezone(parseDate(title.split(/\./, 1)[0], 'MMMM D, YYYY'), +8),
+                pubDate: timezone(parseDate(title.split(/\./, 1)[0], 'MMMM D, YYYY'), 8),
             };
         });
 

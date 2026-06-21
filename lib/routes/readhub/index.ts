@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -62,7 +61,7 @@ async function handler(ctx) {
         pubDate: parseDate(item.publishDate),
     }));
 
-    items = await processItems(items, cache.tryGet);
+    items = await processItems(items);
 
     const $ = load(currentResponse);
 

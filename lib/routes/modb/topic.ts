@@ -54,7 +54,7 @@ async function handler(ctx) {
         return {
             title: doc.title,
             link: `${baseLink}/${item.rid}`,
-            pubDate: timezone(parseDate(item.createdTime), +8),
+            pubDate: timezone(parseDate(item.createdTime), 8),
             author: doc.createdByName,
             category: doc.tags,
         };

@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = item.pubDate ?? parseDate($$('div.time span').text());
+                item.pubDate ??= parseDate($$('div.time span').text());
                 item.author = $$('meta[name="author"]').prop('content');
                 item.content = {
                     html: description,

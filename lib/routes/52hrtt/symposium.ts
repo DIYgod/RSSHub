@@ -62,7 +62,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: item.infoTitle,
             author: item.quoteFrom,
-            pubDate: timezone(parseDate(item.infoStartTime), +8),
+            pubDate: timezone(parseDate(item.infoStartTime), 8),
             link: `${rootUrl}/global/n/w/info/${item.infoCentreId}`,
         }));
 

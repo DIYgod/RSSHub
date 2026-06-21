@@ -64,7 +64,7 @@ async function handler(ctx) {
 
                 item.description = content('.info_content').html();
                 item.author = content('meta[name="Author"]').attr('content');
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), 8);
 
                 return item;
             })

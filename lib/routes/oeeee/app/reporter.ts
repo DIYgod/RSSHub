@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { renderDescription } from '../templates/description';
@@ -41,7 +40,7 @@ async function handler(ctx) {
 
     const author = response.data.info ? response.data.info.name : '';
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `南方都市报奥一网 - ${author}`,

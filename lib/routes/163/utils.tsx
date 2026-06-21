@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 const renderDescription = (imgsrc, postBody) =>
@@ -17,8 +18,8 @@ const renderDescription = (imgsrc, postBody) =>
         </>
     );
 
-const parseDyArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseDyArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const response = await got(item.link, {
             responseType: 'buffer',
         });

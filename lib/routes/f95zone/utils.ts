@@ -54,7 +54,8 @@ export const processContent = (html: string): string => {
             return;
         }
         const allowed = new Set(ALLOWED_ATTRS[el.name] || []);
-        for (const attr of Object.keys(el.attribs || {})) {
+        const attrKeys = Object.keys(el.attribs || {});
+        for (const attr of attrKeys) {
             if (!allowed.has(attr)) {
                 $(el).removeAttr(attr);
             }

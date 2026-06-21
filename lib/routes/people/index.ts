@@ -77,7 +77,7 @@ async function handler(ctx) {
                     content('.paper_num, #rwb_tjyd').remove();
 
                     item.description = content('#rwb_zw').html();
-                    item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1] || '', 'YYYY年MM月DD日 HH:mm'), +8);
+                    item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1] || '', 'YYYY年MM月DD日 HH:mm'), 8);
                 } catch (error) {
                     item.description = String(error);
                 }

@@ -55,7 +55,7 @@ async function handler(ctx) {
             const title = element.find('a').text().trim();
             const link = 'https://help.aliyun.com' + element.find('a').attr('href').trim();
             const date = element.find('.y-right').text();
-            const pubDate = timezone(parseDate(date), +8);
+            const pubDate = timezone(parseDate(date), 8);
             return {
                 title,
                 description: '',

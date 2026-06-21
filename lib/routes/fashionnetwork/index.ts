@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('span.time-ago').first().text().trim()), +8);
+                item.pubDate = timezone(parseDate($$('span.time-ago').first().text().trim()), 8);
                 item.category = $$('div.newsTags')
                     .first()
                     .find('div.news-tag')

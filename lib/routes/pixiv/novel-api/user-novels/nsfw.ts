@@ -3,7 +3,6 @@ import queryString from 'query-string';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import { maskHeader } from '../../constants';
@@ -32,7 +31,7 @@ export async function getNSFWUserNovels(id: string, fullContent: boolean = false
         throw new ConfigNotFoundError('This user is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.\n該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。');
     }
 
-    const token = await getToken(cache.tryGet);
+    const token = await getToken();
     if (!token) {
         throw new ConfigNotFoundError('pixiv not login');
     }

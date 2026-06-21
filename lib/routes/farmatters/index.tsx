@@ -83,7 +83,7 @@ async function handler(ctx) {
         author: item.author,
         category: [item.catalogName, item.subCatalogName ?? undefined, ...(item.tags?.map((t) => t.tagName) ?? [])].filter(Boolean),
         guid: `farmatters-${item.id}`,
-        pubDate: timezone(parseDate(item.createdAt), +8),
+        pubDate: timezone(parseDate(item.createdAt), 8),
     }));
 
     const { data: currentResponse } = await got(currentUrl);

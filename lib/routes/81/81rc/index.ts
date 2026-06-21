@@ -27,7 +27,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: item.find('a').text(),
-                pubDate: timezone(parseDate(item.find('span').text()), +8),
+                pubDate: timezone(parseDate(item.find('span').text()), 8),
                 link: item.find('a').prop('href'),
                 language,
             };
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = $$('h2').text();
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.time span').last().text()), +8);
+                item.pubDate = timezone(parseDate($$('div.time span').last().text()), 8);
                 item.author = $$('div.time span').first().text();
                 item.content = {
                     html: description,

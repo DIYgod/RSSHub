@@ -63,7 +63,7 @@ async function handler() {
                         description: $('.post-card:first-child .content').html(),
                         link: url,
                         guid: url,
-                        pubDate: timezone(parseDate(date, '发表于YYYY-MM-DD HH:mm:ss'), +8),
+                        pubDate: timezone(parseDate(date, '发表于YYYY-MM-DD HH:mm:ss'), 8),
                     };
                 } catch {
                     return {

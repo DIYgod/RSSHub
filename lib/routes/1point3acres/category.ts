@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { apiRootUrl, ProcessThreads, rootUrl, types } from './utils';
 
@@ -53,6 +52,6 @@ async function handler(ctx) {
     return {
         title: `一亩三分地 - ${id}${types[type]}`,
         link: currentUrl,
-        item: await ProcessThreads(cache.tryGet, apiUrl, order),
+        item: await ProcessThreads(apiUrl, order),
     };
 }

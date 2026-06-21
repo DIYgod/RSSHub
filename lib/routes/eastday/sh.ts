@@ -45,7 +45,7 @@ async function handler() {
             const entity = {
                 title: item.title,
                 description: item.abstracts,
-                pubDate: timezone(parseDate(item.time), +8),
+                pubDate: timezone(parseDate(item.time), 8),
                 link,
             };
 

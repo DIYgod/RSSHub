@@ -492,8 +492,12 @@ async function handler(ctx) {
                                 height = (Number(aspectRatioStr) / 100) * width;
                             }
                             // Only set width/height when >32 to avoid invisible images.
-                            width > 32 && attrs.push(`width="${width}"`);
-                            height > 32 && attrs.push(`height="${height.toFixed(2).replace('.00', '')}"`);
+                            if (width > 32) {
+                                attrs.push(`width="${width}"`);
+                            }
+                            if (height > 32) {
+                                attrs.push(`height="${height.toFixed(2).replace('.00', '')}"`);
+                            }
                             tag_media += backgroundUrlSrc ? `<img ${attrs.join(' ')}>` : '';
                         }
                         if (tag_media) {

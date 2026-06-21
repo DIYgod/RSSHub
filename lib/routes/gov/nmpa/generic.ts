@@ -67,7 +67,7 @@ async function handler(ctx) {
                     const { data: html } = await got(item.link);
                     const $ = load(html);
                     item.description = $('.text').html();
-                    item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8);
+                    item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')), 8);
                     return item;
                 });
             }

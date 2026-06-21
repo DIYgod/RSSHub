@@ -67,7 +67,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate(item.find('time').attr('datetime')), +9),
+                    pubDate: timezone(parseDate(item.find('time').attr('datetime')), 9),
                     locked: item.find('.icon-locked').length,
                 };
             });
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')), +9),
+                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')), 9),
                     locked: parent.find('.c-list-member-only').length,
                 };
             });

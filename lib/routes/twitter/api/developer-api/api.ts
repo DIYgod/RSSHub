@@ -166,7 +166,8 @@ const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, a
 
     cacheMap.set(tweet.id, legacy);
 
-    for (const reference of tweet.referenced_tweets ?? []) {
+    const referencedTweets = tweet.referenced_tweets ?? [];
+    for (const reference of referencedTweets) {
         const referenced = tweets.get(reference.id);
         if (!referenced) {
             continue;

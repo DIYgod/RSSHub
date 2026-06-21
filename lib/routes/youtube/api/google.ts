@@ -23,13 +23,15 @@ if (config.youtube && config.youtube.key) {
     const keys = config.youtube.key.split(',');
 
     for (const [index, key] of keys.entries()) {
-        if (key) {
-            youtube[index] = google.youtube({
-                version: 'v3',
-                auth: key,
-            });
-            count = index + 1;
+        if (!key) {
+            continue;
         }
+
+        youtube[index] = google.youtube({
+            version: 'v3',
+            auth: key,
+        });
+        count = index + 1;
     }
 }
 

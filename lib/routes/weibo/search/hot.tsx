@@ -205,8 +205,7 @@ function seekContent(clist) {
                         : [],
             });
             stub.append(section);
-        }
-        if (curitem.card_type === 11) {
+        } else if (curitem.card_type === 11) {
             stub.append(seekContent(curitem.card_group));
         }
     }

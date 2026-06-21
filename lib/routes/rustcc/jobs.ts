@@ -60,6 +60,6 @@ function getFeedItem(item) {
         title: title.text(),
         link: `${base_url}${title.attr('href')}`,
         description: $('.info .tags').text(),
-        pubDate: timezone(parseDate($('.info .timestamp').text(), 'YYYY-MM-DD hh:mm'), +8),
+        pubDate: timezone(parseDate($('.info .timestamp').text(), 'YYYY-MM-DD hh:mm'), 8),
     };
 }

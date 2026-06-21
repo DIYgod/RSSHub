@@ -20,7 +20,7 @@ export const parseResult = (results, limit) =>
         title: item.title,
         link: `${rootUrl}/article/${item.id}`,
         author: item.article_author_displayname,
-        pubDate: timezone(parseDate(item.article_published_time), +8),
+        pubDate: timezone(parseDate(item.article_published_time), 8),
         category: item.article_category.map((c) => c.category_name),
     }));
 

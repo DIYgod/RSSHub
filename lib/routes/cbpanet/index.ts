@@ -52,7 +52,7 @@ export const handler = async (ctx) => {
                             .replace(/发布时间:/, ''),
                         'YYYY/M/D HH:mm:ss'
                     ),
-                    +8
+                    8
                 );
                 item.content = {
                     html: description,

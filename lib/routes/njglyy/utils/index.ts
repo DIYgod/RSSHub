@@ -37,7 +37,7 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
                     const preDate = $(contentSelector.date)
                         .text()
                         .match(/(\d{4}-\d{2}-\d{2})/)[1];
-                    item.pubDate = timezone(parseDate(preDate, 'YYYY-MM-DD'), +8);
+                    item.pubDate = timezone(parseDate(preDate, 'YYYY-MM-DD'), 8);
                 }
                 return item;
             })

@@ -124,8 +124,8 @@ async function handler(ctx) {
             language,
             size: Number.parseInt(ctx.req.query('limit')) || 15,
         };
-        const gameInfo = await getI18nGameInfo(gids, language, cache.tryGet);
-        const typeInfo = await getI18nType(language, cache.tryGet);
+        const gameInfo = await getI18nGameInfo(gids, language);
+        const typeInfo = await getI18nType(language);
         const list = await getEventList(params);
         const items = await getPostContent(list, params);
         return {

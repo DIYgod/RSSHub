@@ -50,7 +50,7 @@ async function handler(ctx) {
                 article.find('#showHiddenText').remove();
 
                 item.description = $('.cover-image').prop('outerHTML') + $('.tab-container').html() + article.html();
-                item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), +8) : null;
+                item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), 8) : null;
 
                 return item;
             })

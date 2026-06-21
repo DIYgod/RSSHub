@@ -42,10 +42,12 @@ async function handler(ctx) {
     let name = '';
 
     for (const item of typesIdMap) {
-        if (item.type === type) {
-            id = item.id;
-            name = item.name;
+        if (item.type !== type) {
+            continue;
         }
+
+        id = item.id;
+        name = item.name;
     }
 
     if (id === '') {

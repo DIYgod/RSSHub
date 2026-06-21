@@ -53,7 +53,7 @@ async function handler() {
                 const detailData = await got.get(item.link);
                 const $ = load(detailData.data);
                 item.description = $('div.pdbox').html();
-                item.pubDate = timezone(parseDate($('div.newbox > div.newtit > p').text(), 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate($('div.newbox > div.newtit > p').text(), 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 return item;
             })

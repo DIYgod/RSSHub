@@ -42,7 +42,7 @@ async function handler(ctx) {
         item: data.newsOfEntry.map((item) => ({
             title: item.title,
             description: renderDescription(item),
-            pubDate: timezone(parseDate(item.happenedTime), +8),
+            pubDate: timezone(parseDate(item.happenedTime), 8),
             link: item.link,
         })),
     };

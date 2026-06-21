@@ -61,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                       const processedItem: DataItem = {
                           title,
                           description,
-                          pubDate: timezone(parseDate(pubDateStr, 'HH:mm YYYY/MM/DD'), +8),
+                          pubDate: timezone(parseDate(pubDateStr, 'HH:mm YYYY/MM/DD'), 8),
                           link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                           author: authors,
                           guid,
@@ -70,7 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               html: description,
                               text: description,
                           },
-                          updated: timezone(parseDate(upDatedStr, 'HH:mm YYYY/MM/DD'), +8),
+                          updated: timezone(parseDate(upDatedStr, 'HH:mm YYYY/MM/DD'), 8),
                           language,
                       };
 
@@ -107,7 +107,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                       const processedItem: DataItem = {
                           title,
                           description,
-                          pubDate: timezone(parseDate(pubDateStr), +8),
+                          pubDate: timezone(parseDate(pubDateStr), 8),
                           link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                           guid,
                           id: guid,
@@ -117,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                           image,
                           banner: image,
-                          updated: timezone(parseDate(upDatedStr), +8),
+                          updated: timezone(parseDate(upDatedStr), 8),
                           language,
                       };
 

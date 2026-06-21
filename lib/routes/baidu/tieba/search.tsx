@@ -88,7 +88,7 @@ async function handler(ctx) {
                     </>
                 ),
                 author,
-                pubDate: timezone(parseDate(time, 'YYYY-MM-DD HH:mm'), +8),
+                pubDate: timezone(parseDate(time, 'YYYY-MM-DD HH:mm'), 8),
                 link,
             };
         }),

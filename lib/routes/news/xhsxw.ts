@@ -66,7 +66,7 @@ async function handler(ctx) {
         author: item.author,
         category: item.keywords.split(/-|,/),
         guid: `news-${item.contentId}`,
-        pubDate: timezone(parseDate(item.publishTime), +8),
+        pubDate: timezone(parseDate(item.publishTime), 8),
     }));
 
     items = await Promise.all(

@@ -70,7 +70,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.g-articl-text').html();
-                item.pubDate = timezone(parseDate(detailResponse.data.match(/"pubDate": "(.*)"/)[1]), +8);
+                item.pubDate = timezone(parseDate(detailResponse.data.match(/"pubDate": "(.*)"/)[1]), 8);
 
                 return item;
             })

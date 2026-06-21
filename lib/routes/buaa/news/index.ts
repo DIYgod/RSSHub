@@ -44,7 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(item.find('h2 em').text(), '[YYYY-MM-DD]'), +8),
+                pubDate: timezone(parseDate(item.find('h2 em').text(), '[YYYY-MM-DD]'), 8),
             };
         });
 

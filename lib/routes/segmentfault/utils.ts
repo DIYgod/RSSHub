@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -8,8 +9,8 @@ import { getAcwScV2ByArg1 } from '../5eplay/utils';
 
 const host = 'https://segmentfault.com';
 
-const acw_sc__v2 = (link, tryGet) =>
-    tryGet(
+const acw_sc__v2 = (link) =>
+    cache.tryGet(
         'segmentfault:acw_sc__v2',
         async () => {
             const response = await ofetch(link);
@@ -34,8 +35,8 @@ const parseList = (data) =>
         description: item.excerpt,
     }));
 
-const parseItems = (cookie, item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseItems = (cookie, item) =>
+    cache.tryGet(item.link, async () => {
         try {
             const response = await ofetch(item.link, {
                 headers: {

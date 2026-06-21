@@ -34,7 +34,7 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
                         .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
                         .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                         .trim();
-                    item.pubDate = timezone(parseDate($(contentSelector.date).text()), +8);
+                    item.pubDate = timezone(parseDate($(contentSelector.date).text()), 8);
                 }
                 return item;
             })

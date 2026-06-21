@@ -49,7 +49,7 @@ export const route: Route = {
 
         const filteredEls = $(`div.limit_style1[frag="${fragList[type].frag}"]`).find('table > tbody > tr > td').toArray();
         const links = filteredEls.map((el) => ({
-            pubDate: timezone(parseDate($(el).find('.data').text()), +8),
+            pubDate: timezone(parseDate($(el).find('.data').text()), 8),
             link: new URL($(el).find('a').attr('href'), baseUrl).href,
             title: $(el).find('.news_title').text(),
         }));

@@ -53,7 +53,7 @@ async function getFullcontent(item, cookie = '') {
     return {
         title: item.title,
         link: item.url,
-        pubDate: parseDate(item.pubdate, +8),
+        pubDate: parseDate(item.pubdate, 8),
         description: fullContent || item.abstract, // Return item.abstract if fullContent is null
     };
 }

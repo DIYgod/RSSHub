@@ -69,7 +69,8 @@ function processStory(story: any): DataItem {
                                 // Skip if unable to decode
                                 return null;
                             }
-                        } else if (element.type === 'youtube-video' && element.url) {
+                        }
+                        if (element.type === 'youtube-video' && element.url) {
                             return {
                                 type: 'youtube-video',
                                 url: element.url,

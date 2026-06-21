@@ -54,7 +54,7 @@ async function handler(ctx) {
         link: item.docpuburl,
         author: item.chnlname,
         description: item.doccontent,
-        pubDate: timezone(parseDate(item.docpubtime), +8),
+        pubDate: timezone(parseDate(item.docpubtime), 8),
     }));
 
     return {

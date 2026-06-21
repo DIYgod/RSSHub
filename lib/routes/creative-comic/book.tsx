@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, coverOnly = 'true', quality = '1' } = ctx.req.param();
-    const uuid = await getUuid(cache.tryGet);
+    const uuid = await getUuid();
     const {
         data: { data: book },
     } = await getBook(id, uuid);

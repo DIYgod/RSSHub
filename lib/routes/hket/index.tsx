@@ -175,8 +175,8 @@ async function handler(ctx) {
                               },
                           }));
 
-                    item.pubDate = timezone(parseDate(data.displayDate), +8);
-                    item.updated = timezone(parseDate(data.lastModifiedDate), +8);
+                    item.pubDate = timezone(parseDate(data.displayDate), 8);
+                    item.updated = timezone(parseDate(data.lastModifiedDate), 8);
                     item.author = data.authors?.map((e) => e.name).join(', ');
                     item.description = data.content.full || data.content.partial;
                     item.category = data.contentTags?.map((e) => e.name);

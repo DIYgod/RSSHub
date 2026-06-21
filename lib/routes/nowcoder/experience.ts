@@ -54,7 +54,7 @@ async function handler(ctx) {
             title: x.postTitle,
             link: new URL('discuss/' + x.postId, host).href,
             author: x.author,
-            pubDate: timezone(parseDate(x.createTime), +8),
+            pubDate: timezone(parseDate(x.createTime), 8),
             category: x.postTypeName,
         };
         return info;

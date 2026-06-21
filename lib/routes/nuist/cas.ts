@@ -73,7 +73,7 @@ async function handler(ctx) {
                                 .text()
                                 .match(/发布时间:(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/)[1]
                         ),
-                        +8
+                        8
                     );
                     item.description = $('#vsb_content').html();
                 } catch {

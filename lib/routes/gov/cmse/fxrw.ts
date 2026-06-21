@@ -50,7 +50,7 @@ async function handler() {
             return {
                 title: item.find('.title').text().split('：').pop().trim(),
                 link: new URL(item.attr('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('.infoR').first().text().trim(), 'YYYY年M月D日H时m分'), +8),
+                pubDate: timezone(parseDate(item.find('.infoR').first().text().trim(), 'YYYY年M月D日H时m分'), 8),
                 description: renderDescription({
                     image: new URL(item.find('img').attr('src'), currentUrl).href,
                     description: item.find('.info').html(),

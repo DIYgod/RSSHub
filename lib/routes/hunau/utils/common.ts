@@ -4,11 +4,11 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import categoryTitle from './category-title';
-import indexPage from './index-page';
-import newsContent from './news-content';
+import { categoryTitle } from './category-title';
+import { indexPage } from './index-page';
+import { newsContent } from './news-content';
 
-async function getContent(ctx, { baseHost, baseCategory, baseType, baseTitle, baseDescription = '', baseDeparment = '', baseClass = 'div.article_list ul li:has(a)' }) {
+export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTitle, baseDescription = '', baseDeparment = '', baseClass = 'div.article_list ul li:has(a)' }) => {
     const { category = baseCategory, type = baseType, page = '1' } = ctx.req.param();
 
     const title = `${baseTitle} - ${categoryTitle(category)}`;
@@ -59,6 +59,4 @@ async function getContent(ctx, { baseHost, baseCategory, baseType, baseTitle, ba
         // 源文章
         item: items,
     };
-}
-
-export default getContent;
+};

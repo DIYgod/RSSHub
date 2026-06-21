@@ -52,7 +52,7 @@ async function handler(ctx) {
     let items = response.data.data.slice(0, limit).map((item) => ({
         title: item.articleCode,
         author: item.author,
-        pubDate: timezone(parseDate(item.gmtCreated), +8),
+        pubDate: timezone(parseDate(item.gmtCreated), 8),
         link: `${rootUrl}/ch/information/informationdetails?articleCode=${item.articleCode}`,
     }));
 

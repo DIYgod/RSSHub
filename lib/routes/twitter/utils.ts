@@ -212,7 +212,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
         const originalItem = item;
         item = item.retweeted_status || item;
-        item.full_text = item.full_text || item.text;
+        item.full_text ||= item.text;
         item.full_text = formatText(item);
         const img = formatMedia(item);
         let picsPrefix = generatePicsPrefix(item);
@@ -224,7 +224,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             const quoteData = item.quoted_status;
 
             if (quoteData?.user) {
-                quoteData.full_text = quoteData.full_text || quoteData.text;
+                quoteData.full_text ||= quoteData.text;
                 const author = quoteData.user;
                 if (!readable) {
                     quote += quoteSeparator;

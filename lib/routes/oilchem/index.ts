@@ -79,7 +79,7 @@ async function handler(ctx) {
                             .match(/发布时间：\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}/)[0],
                         'YYYY-MM-DD HH:mm'
                     ),
-                    +8
+                    8
                 );
 
                 return item;

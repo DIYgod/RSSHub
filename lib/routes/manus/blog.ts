@@ -50,16 +50,18 @@ async function handler() {
     let blogList;
     const lines = renderData.split('\n');
     for (const line of lines) {
-        if (line.includes('{"blogList":{"$typeName"')) {
-            const jsonStr = line.slice(Math.max(0, line.indexOf('{"blogList":{"$typeName"')));
-            const lastBrace = jsonStr.lastIndexOf('}');
-            try {
-                const parsed = JSON.parse(jsonStr.slice(0, Math.max(0, lastBrace + 1)));
-                blogList = parsed.blogList;
-                break;
-            } catch {
-                // Ignore parse errors and try next line if any
-            }
+        if (!line.includes('{"blogList":{"$typeName"')) {
+            continue;
+        }
+
+        const jsonStr = line.slice(Math.max(0, line.indexOf('{"blogList":{"$typeName"')));
+        const lastBrace = jsonStr.lastIndexOf('}');
+        try {
+            const parsed = JSON.parse(jsonStr.slice(0, Math.max(0, lastBrace + 1)));
+            blogList = parsed.blogList;
+            break;
+        } catch {
+            // Ignore parse errors and try next line if any
         }
     }
 

@@ -89,11 +89,9 @@ async function handler(ctx) {
     const { data: response } = await got.post(apiUrl, {
         json: {
             key,
-            ...(type === 'v6'
-                ? {
-                      type: 'v6',
-                  }
-                : {}),
+            ...(type === 'v6' && {
+                type: 'v6',
+            }),
         },
     });
 
@@ -104,7 +102,7 @@ async function handler(ctx) {
         const loss = item.loss === undefined ? undefined : `${item.loss}%`;
         const node = item.node;
         const speed = item.speed === undefined ? undefined : `${item.speed} KB/s`;
-        const pubDate = timezone(parseDate(item.time), +8);
+        const pubDate = timezone(parseDate(item.time), 8);
 
         return {
             title: renderTitle({

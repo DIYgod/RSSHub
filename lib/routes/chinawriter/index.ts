@@ -71,7 +71,7 @@ async function handler(ctx) {
                             ].filter(Boolean)
                         ),
                     ];
-                    item.pubDate = content('div.end_info em').text() ? timezone(parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm'), +8) : parseDate(content('meta[name="publishdate"]').prop('content'));
+                    item.pubDate = content('div.end_info em').text() ? timezone(parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm'), 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
                 } catch {
                     //
                 }

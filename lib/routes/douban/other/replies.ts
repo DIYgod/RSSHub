@@ -57,7 +57,8 @@ async function handler(ctx) {
 
                 const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)\}\],/)[1] + '}]');
 
-                for (const c of comments) {
+                while (comments.length > 0) {
+                    const c = comments.shift();
                     if (c.id === item.link.split('#', 2)[1]) {
                         return {
                             link: item.link,

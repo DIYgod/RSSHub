@@ -56,7 +56,7 @@ async function handler(ctx) {
                     .match(/(\d{4}年\d{2}月\d{2}日 \d{2}:\d{2})/);
 
                 item.description = content('.v_news_content').html();
-                item.pubDate = timeMatches ? timezone(parseDate(timeMatches[1], 'YYYY年MM月DD日 HH:mm'), +8) : item.pubDate;
+                item.pubDate = timeMatches ? timezone(parseDate(timeMatches[1], 'YYYY年MM月DD日 HH:mm'), 8) : item.pubDate;
 
                 return item;
             })

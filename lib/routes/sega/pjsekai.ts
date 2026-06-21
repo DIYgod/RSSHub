@@ -60,7 +60,7 @@ async function handler() {
             const item = {
                 title: post.title,
                 link,
-                pubDate: timezone(new Date(post.startAt), +8), // +8时区
+                pubDate: timezone(new Date(post.startAt), 8), // +8时区
                 description,
                 category: post.informationTag, // event,gacha,music,bug,information
                 guid,

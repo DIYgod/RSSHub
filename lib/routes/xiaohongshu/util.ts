@@ -26,7 +26,7 @@ const getHeaders = (cookie?: string) => ({
     'Sec-Fetch-User': '?1',
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-    ...(cookie ? { Cookie: cookie } : {}),
+    ...(cookie && { Cookie: cookie }),
 });
 
 // Fetch HTML through proxy when configured
@@ -291,9 +291,9 @@ async function getUserWithCookie(url: string) {
     for (const item of state.user.notes.flat()) {
         const path = paths[index];
         if (path && path.includes('?')) {
-            item.id = item.id + path?.slice(path.indexOf('?'));
+            item.id += path?.slice(path.indexOf('?'));
         }
-        index = index + 1;
+        index += 1;
     }
     return state.user;
 }

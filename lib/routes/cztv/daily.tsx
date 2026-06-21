@@ -57,7 +57,7 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate(item.find('span.t2').text() + ' 16:30', 'YYYY-MM-DD hh:mm'), +8),
+                pubDate: timezone(parseDate(item.find('span.t2').text() + ' 16:30', 'YYYY-MM-DD hh:mm'), 8),
             };
         });
 

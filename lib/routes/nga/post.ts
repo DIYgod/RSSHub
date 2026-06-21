@@ -123,7 +123,7 @@ async function handler(ctx) {
             const description = formatContent(content.html());
             const postId = content.attr('id');
             const link = getPageUrl(tid, authorId, pageId, postId);
-            const pubDate = timezone(parseDate(post.find('.postInfo > span').first().text(), 'YYYY-MM-DD HH:mm'), +8);
+            const pubDate = timezone(parseDate(post.find('.postInfo > span').first().text(), 'YYYY-MM-DD HH:mm'), 8);
 
             return {
                 title: load(description).text(),

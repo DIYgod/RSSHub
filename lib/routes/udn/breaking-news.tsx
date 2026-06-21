@@ -99,7 +99,7 @@ async function handler(ctx) {
                     title: item.title,
                     author: [{ name: $('.article-content__author').text().match('中央社')?.at(0) }, { name: data.publisher.name.match('轉角國際 udn Global')?.at(0) }, data.author].filter((e) => e.name),
                     description,
-                    pubDate: timezone(parseDate(item.time.date, 'YYYY-MM-DD HH:mm'), +8),
+                    pubDate: timezone(parseDate(item.time.date, 'YYYY-MM-DD HH:mm'), 8),
                     category: [data.articleSection, vip ? $('.article-head li.breadcrumb__item:last > b').text() : $("meta[name='subsection']").attr('content'), ...data.keywords.split(',')],
                     link,
                 };

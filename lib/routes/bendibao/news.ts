@@ -128,7 +128,7 @@ async function handler(ctx) {
                                 .text()
                                 .replace(/发布时间：/, '') ?? content('span.public_time').text()
                         ),
-                        +8
+                        8
                     );
 
                     return item;

@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: $$('a').text(),
                 link: itemUrl,
-                pubDate: timezone(parseDate($$('.news_meta').text()), +8),
+                pubDate: timezone(parseDate($$('.news_meta').text()), 8),
             };
         });
 

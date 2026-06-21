@@ -52,8 +52,8 @@ async function handler(ctx) {
         description: item.desc,
         author: item.company,
         guid: item.id,
-        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), +8),
-        updated: timezone(parseDate(item.live_end_time ?? item.end_time), +8),
+        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), 8),
+        updated: timezone(parseDate(item.live_end_time ?? item.end_time), 8),
         itunes_item_image: new URL(item.cover, apiRootUrl).href,
         comments: item.display_comment ?? 0,
     }));

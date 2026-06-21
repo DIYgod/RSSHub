@@ -63,7 +63,7 @@ async function handler() {
                         link,
                         author: $('.page-header~#featured-news h4').text(),
                         category: $("meta[name='keywords']").attr('content').split(',').filter(Boolean),
-                        pubDate: timezone(parseDate((isTV ? $('.icon-calendar')[0].next.data : $('.date').text()).trim()), +8),
+                        pubDate: timezone(parseDate((isTV ? $('.icon-calendar')[0].next.data : $('.date').text()).trim()), 8),
                         description: (isTV ? $('.post-item').html() : $('.body').html()).replaceAll(/\/News.*?\.jpg/g, (match) => `http://my-formosa.com${match}`),
                     };
                 });

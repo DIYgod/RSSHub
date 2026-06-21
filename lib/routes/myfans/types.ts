@@ -61,11 +61,11 @@ export interface Post {
     pinned_at: string | null;
     attachment: null;
     plan: null;
-    current_single_plan: null | {
+    current_single_plan: {
         id: string;
         amount: number;
         auto_message_body: string;
-    };
+    } | null;
     plans: Array<{
         id: string;
         product_name: string;
@@ -73,21 +73,21 @@ export interface Post {
         status: null;
         is_limited_access: boolean;
         disallow_new_subscriber: boolean;
-        active_discount: null | {
+        active_discount: {
             id: string;
             discount_rate: number;
             start_at: string | null;
             end_at: string | null;
             limited_number: null;
             status: string;
-        };
+        } | null;
     }>;
     video_processing: boolean | null;
-    video_duration: null | {
+    video_duration: {
         hours: string | null;
         minutes: string;
         seconds: string;
-    };
+    } | null;
     free: boolean;
     limited: boolean;
     available: boolean;
