@@ -68,14 +68,14 @@ async function handler(ctx) {
             const image = $item.find('.cover .cover_link img');
             const alt = image.attr('alt') || '';
             const sum = $item.find('.sum');
-            const title = sum.text().split('\n')[0] || alt;
+            const title = sum.text().split('\n', 1)[0] || alt;
             const content = sum.html()?.replaceAll('\n', '<br>') || alt;
 
             return {
                 title,
                 description: `<img src="${image.attr('data-src')}"><br>${content}`,
                 link: `${baseUrl}${coverLink}`,
-                guid: coverLink?.split('/')?.[2],
+                guid: coverLink?.split('/', 3)?.[2],
                 pubDate: parseRelativeDate($item.find('.time .txt').text()),
                 slideOrVideo: $item.find('.corner').length,
             };
@@ -107,12 +107,11 @@ async function handler(ctx) {
                                   const $item = $(item);
                                   if ($item.hasClass('video')) {
                                       return $item.find('video').prop('outerHTML');
-                                  } else {
-                                      // $item.hasClass('pic')
-                                      $item.find('img').attr('src', $item.find('img').attr('data-src'));
-                                      $item.find('img').removeAttr('data-src');
-                                      return $item.html() || '';
                                   }
+                                  // $item.hasClass('pic')
+                                  $item.find('img').attr('src', $item.find('img').attr('data-src'));
+                                  $item.find('img').removeAttr('data-src');
+                                  return $item.html() || '';
                               })
                               .join('')
                         : $('.view .video').html() || '';

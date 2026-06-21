@@ -181,7 +181,7 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
 
         if (mimeType) {
             enclosureInfo = {
-                enclosure_url: new URL(src, KEMONO_ROOT_URL).toString(),
+                enclosure_url: new URL(src, KEMONO_ROOT_URL).href,
                 enclosure_type: mimeType,
             };
             return false;
@@ -354,7 +354,8 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
             });
 
             description = (kemonoFileElements[0] || '') + $.html();
-            for (const fileElement of kemonoFileElements.slice(replacementCount + 1)) {
+            const remainingFileElements = kemonoFileElements.slice(replacementCount + 1);
+            for (const fileElement of remainingFileElements) {
                 description += fileElement;
             }
 

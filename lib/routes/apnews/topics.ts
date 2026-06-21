@@ -10,7 +10,7 @@ import { fetchArticle, removeDuplicateByKey } from './utils';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
-    path: ['/topics/:topic?', '/nav/:nav{.*}?'],
+    path: ['/topics/:topic?', '/nav/:nav{.+}?'],
     categories: ['traditional-media'],
     example: '/apnews/topics/apf-topnews',
     view: ViewType.Articles,
@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
-    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.*}?';
+    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.+}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);

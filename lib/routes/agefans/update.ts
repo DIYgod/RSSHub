@@ -57,10 +57,12 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 content('img').each((_, ele) => {
-                    if (ele.attribs['data-original']) {
-                        ele.attribs.src = ele.attribs['data-original'];
-                        delete ele.attribs['data-original'];
+                    if (!ele.attribs['data-original']) {
+                        return;
                     }
+
+                    ele.attribs.src = ele.attribs['data-original'];
+                    delete ele.attribs['data-original'];
                 });
                 content('.video_detail_collect').remove();
 

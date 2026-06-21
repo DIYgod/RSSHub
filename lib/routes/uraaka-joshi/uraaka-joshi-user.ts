@@ -102,7 +102,7 @@ async function handler(ctx) {
             // correct src of img tags
             item.find('img').each((_, i) => {
                 i = $(i);
-                i.attr('src', 'https:' + i.attr('data-src').split('?resize')[0]);
+                i.attr('src', 'https:' + i.attr('data-src').split('?resize', 1)[0]);
                 i.removeAttr('data-src');
             });
 

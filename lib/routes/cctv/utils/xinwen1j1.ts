@@ -14,7 +14,7 @@ async function loadContent(link) {
     // console.log('********')
     const js_txt = '' + $('script');
 
-    const guid = js_txt.split('guid_Ad_VideoCode = "')[1].split('";')[0];
+    const guid = js_txt.split('guid_Ad_VideoCode = "', 2)[1].split('";', 1)[0];
     // console.log(guid+' js_txt********')
     const { data: videoDetail } = await got({
         method: 'get',
@@ -54,7 +54,7 @@ const ProcessFeed = (data) =>
             return { ...single, ...other };
         })
     );
-const xinwen1j1 = async () => {
+export const xinwen1j1 = async () => {
     const baseUrl = 'https://api.cntv.cn/NewVideo/getVideoListByColumn?id=TOPC1451559066181661&n=20&sort=desc&p=1&mode=0&serviceId=tvcctv';
     // 获取要处理的页面
     const res = await got({
@@ -81,4 +81,3 @@ const xinwen1j1 = async () => {
         item: result,
     };
 };
-export default xinwen1j1;

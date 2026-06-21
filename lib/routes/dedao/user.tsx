@@ -11,7 +11,7 @@ const types = {
     12: '视频',
 };
 
-const mentionPattern = /<\u2267\u2746>\{"name":"(.*?)","uid":"\d+","at":"1"\}<\/\u2266\u2746>/g;
+const mentionPattern = /<\u{2267}\u{2746}>\{"name":"(.*?)","uid":"\d+","at":"1"\}<\/\u{2266}\u{2746}>/gu;
 
 const formatNoteText = (text = '') => text.replaceAll('\n\n', '</p><p>').replaceAll(mentionPattern, ' @$1');
 

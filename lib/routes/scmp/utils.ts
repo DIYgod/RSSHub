@@ -13,29 +13,29 @@ export const renderHTML = (node) => {
 
     switch (node.type) {
         case 'a':
-            return `<a ${Object.keys(node.attribs)
-                .map((key) => `${key}="${node.attribs[key]}"`)
+            return `<a ${Object.entries(node.attribs)
+                .map(([key, value]) => `${key}="${value}"`)
                 .join(' ')}>${renderHTML(node.children)}</a>`;
         case 'div':
             return `<div ${
                 node.attribs
-                    ? Object.keys(node.attribs)
-                          .map((key) => `${key}="${node.attribs[key]}"`)
+                    ? Object.entries(node.attribs)
+                          .map(([key, value]) => `${key}="${value}"`)
                           .join(' ')
                     : ''
             }>${renderHTML(node.children)}</div>`;
         case 'blockquote-quote':
             return `<blockquote>${renderHTML(node.children)}</blockquote>`;
         case 'iframe':
-            return `<iframe ${Object.keys(node.attribs)
-                .map((key) => `${key}="${node.attribs[key]}"`)
+            return `<iframe ${Object.entries(node.attribs)
+                .map(([key, value]) => `${key}="${value}"`)
                 .join(' ')}></iframe>`;
         case 'leading':
         case 'img':
             return `<figure><img ${
                 node.attribs
-                    ? Object.keys(node.attribs)
-                          .map((key) => `${key}="${node.attribs[key]}"`)
+                    ? Object.entries(node.attribs)
+                          .map(([key, value]) => `${key}="${value}"`)
                           .join(' ')
                     : `url="${node.url}"`
             }><figcaption>${

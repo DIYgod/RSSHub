@@ -28,8 +28,8 @@ export const route: Route = {
         const links = $('ul.wp_article_list > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.Article_PublishDate').text()), +8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+                pubDate: timezone(parseDate($(el).find('.Article_PublishDate').text()), 8),
+                link: new URL($(el).find('a').attr('href'), baseUrl).href,
                 title: $(el).find('a').text(),
             }));
         const items = await Promise.all(
@@ -44,16 +44,15 @@ export const route: Route = {
                             const attr = el.tagName === 'img' ? 'src' : 'href';
                             const val = $el.attr(attr);
                             if (val) {
-                                $el.attr(attr, new URL(val, baseUrl).toString());
+                                $el.attr(attr, new URL(val, baseUrl).href);
                             }
                         });
                         item.description = $read.html()?.trim();
                         return item;
-                    } else {
-                        // file to download
-                        item.description = '请至原网页访问内容';
-                        return item;
                     }
+                    // file to download
+                    item.description = '请至原网页访问内容';
+                    return item;
                 })
             )
         );

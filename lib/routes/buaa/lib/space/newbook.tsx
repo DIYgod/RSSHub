@@ -234,7 +234,7 @@ async function getItem(item: Book): Promise<DataItem> {
         return {
             language: item.language === 'eng' ? 'en' : 'zh-CN',
             title: item.title,
-            pubDate: item.onSelfDate ? timezone(parseDate(item.onSelfDate), +8) : undefined,
+            pubDate: item.onSelfDate ? timezone(parseDate(item.onSelfDate), 8) : undefined,
             description: content,
             link,
         };

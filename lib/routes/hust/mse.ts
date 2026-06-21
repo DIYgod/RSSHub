@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'sylm/xyxw' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const domain = 'mse.hust.edu.cn';
     const rootUrl = `https://${domain}`;
@@ -55,9 +55,7 @@ export const handler = async (ctx) => {
                     if (!item.pubDate && data.startsWith('发布')) {
                         const pubDate = data.split(/：/)?.pop();
                         item.pubDate = pubDate ? parseDate(pubDate) : item.pubDate;
-                    } else if (!item.author && data.startsWith('作者')) {
-                        item.author = data.split(/：/)?.pop() ?? undefined;
-                    } else if (!item.author && data.startsWith('编辑')) {
+                    } else if (!item.author && (data.startsWith('作者') || data.startsWith('编辑'))) {
                         item.author = data.split(/：/)?.pop() ?? undefined;
                     }
                 }
@@ -85,7 +83,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         image,
-        author: title.split(/-/)[0]?.trim(),
+        author: title.split(/-/, 1)[0]?.trim(),
         language,
     };
 };

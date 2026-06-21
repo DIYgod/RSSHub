@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const DOMAIN = 'www.moj.gov.cn';
 
 export const route: Route = {
-    path: '/moj/lfyjzj',
+    path: '/lfyjzj',
     categories: ['government'],
     example: '/gov/moj/lfyjzj',
     parameters: {},
@@ -51,7 +51,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link,
-                pubDate: timezone(parseDate(pubDate), +8),
+                pubDate: timezone(parseDate(pubDate), 8),
             };
         });
 
@@ -61,9 +61,9 @@ async function handler() {
                 const { data: detailResponse } = await got(item.link);
                 const content = load(detailResponse);
                 item.description = content('div.TRS_Editor').html();
-                item.author = content('div.sT_left span:first').text().split('：')[1];
-                const pubDate = content('div.sT_left span:last').text().split('：')[1];
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
+                item.author = content('div.sT_left span:first').text().split('：', 2)[1];
+                const pubDate = content('div.sT_left span:last').text().split('：', 2)[1];
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
                 return item;
             })
         )

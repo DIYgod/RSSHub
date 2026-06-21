@@ -46,7 +46,7 @@ async function handler(ctx) {
 
     // const link = `https://www.nowcoder.com/discuss/experience/json?tagId=${tagId}&order=${order}&companyId=${companyId}&phaseId=${phaseId}`;
     link.search = params;
-    const response = await got.get(link.toString());
+    const response = await got.get(link.href);
     const data = response.data.data;
 
     const list = data.discussPosts.map((x) => {
@@ -54,7 +54,7 @@ async function handler(ctx) {
             title: x.postTitle,
             link: new URL('discuss/' + x.postId, host).href,
             author: x.author,
-            pubDate: timezone(parseDate(x.createTime), +8),
+            pubDate: timezone(parseDate(x.createTime), 8),
             category: x.postTypeName,
         };
         return info;

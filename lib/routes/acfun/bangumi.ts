@@ -44,7 +44,7 @@ async function handler(ctx) {
         image: bangumiData.belongResource.coverImageV,
         item: bangumiList.items.map((item) => ({
             title: `${item.episodeName}${item.title ? ` - ${item.title}` : ''}`,
-            description: renderDescription({ embed, aid: `ac${item.itemId}`, img: item.imgInfo.thumbnailImage.cdnUrls[0].url.split('?')[0] }),
+            description: renderDescription({ embed, aid: `ac${item.itemId}`, img: item.imgInfo.thumbnailImage.cdnUrls[0].url.split('?', 1)[0] }),
             link: `https://www.acfun.cn/bangumi/aa${id}_36188_${item.itemId}`,
             pubDate: parseDate(item.updateTime, 'x'),
         })),

@@ -1,9 +1,9 @@
-// oxlint-disable unicorn/prefer-code-point
+// oxlint-disable unicorn/prefer-code-point unicorn/prefer-single-call unicorn-js/prefer-array-from-map unicorn/prefer-spread unicorn-js/no-array-concat-in-loop
 // Credit:
 // https://blog.csdn.net/zjq592767809/article/details/126512798
 // https://blog.csdn.net/zhoumi_/article/details/126659351
 
-/* eslint-disable @typescript-eslint/no-unused-expressions */
+// oxlint-disable @typescript-eslint/no-unused-expressions
 
 function i(e, t, n) {
     ((t[n] = 255 & (e >>> 24)), (t[n + 1] = 255 & (e >>> 16)), (t[n + 2] = 255 & (e >>> 8)), (t[n + 3] = 255 & e));
@@ -97,7 +97,7 @@ const preProcess = (md5Str) => {
     return __g_r.concat(__g_x);
 };
 
-const encrypt = (md5Str) => {
+export const encrypt = (md5Str) => {
     const processed = preProcess(md5Str);
 
     let current = 0;
@@ -122,5 +122,3 @@ const encrypt = (md5Str) => {
     }
     return resultStr;
 };
-
-export default encrypt;

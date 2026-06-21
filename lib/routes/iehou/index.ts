@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://iehou.com';
     const currentUrl = new URL(category ? `page-${category}.htm` : '', rootUrl).href;
@@ -29,7 +29,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: timezone(parseDate(item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), +8),
+                pubDate: timezone(parseDate(item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8),
                 link: item.find('a').prop('href'),
                 category: item
                     .nextAll('a')
@@ -52,7 +52,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8);
                 item.author = $$('img.avatar-1').parent().contents().last().text().trim();
                 item.content = {
                     html: description,

@@ -7,7 +7,7 @@ import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/pbc/goutongjiaoliu',
+    path: '/goutongjiaoliu',
     categories: ['finance'],
     example: '/gov/pbc/goutongjiaoliu',
     parameters: {},
@@ -70,7 +70,7 @@ async function handler() {
                 const detailHtml = await detailPage.evaluate(() => document.documentElement.innerHTML);
                 const content = load(detailHtml);
                 item.description = content('#zoom').html();
-                item.pubDate = timezone(parseDate(content('.hui12').eq(5).text()), +8);
+                item.pubDate = timezone(parseDate(content('.hui12').eq(5).text()), 8);
                 return item;
             })
         )

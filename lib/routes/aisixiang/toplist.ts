@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -19,7 +18,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '1', period = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const currentUrl = new URL(`toplist${id ? `?id=${id}${id === '1' ? `&period=${period}` : ''}` : ''}`, rootUrl).href;
 
@@ -27,7 +26,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const title = `${$('a.hl').text() || ''}${$('title').text().split('_')[0]}`;
+    const title = `${$('a.hl').text() || ''}${$('title').text().split('_', 1)[0]}`;
 
     const items = $('div.tops_list')
         .slice(0, limit)
@@ -46,7 +45,7 @@ async function handler(ctx) {
         });
 
     return {
-        item: await ProcessFeed(limit, cache.tryGet, items),
+        item: await ProcessFeed(limit, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
         language: 'zh-cn',

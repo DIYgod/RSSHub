@@ -52,7 +52,7 @@ async function handler(ctx) {
                 item = $(item);
 
                 const title = item.find('h3').text().trim();
-                const author = title.split('/')[0];
+                const author = title.split('/', 1)[0];
                 const description = (item.find('a img').prop('outerHTML') ?? '') + item.find('div > div > p').text();
                 const link = `https://github.com${item.find('h3 a').last().attr('href')}`;
                 const category = item

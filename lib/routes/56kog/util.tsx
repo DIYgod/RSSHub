@@ -2,13 +2,14 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.56kog.com';
 
-const fetchItems = async (limit, currentUrl, tryGet) => {
+const fetchItems = async (limit, currentUrl) => {
     const { data: response } = await got(currentUrl, {
         responseType: 'buffer',
     });
@@ -31,7 +32,7 @@ const fetchItems = async (limit, currentUrl, tryGet) => {
 
     items = await Promise.all(
         items.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link, {
                         responseType: 'buffer',
@@ -46,7 +47,7 @@ const fetchItems = async (limit, currentUrl, tryGet) => {
                             const as = detail.find('a');
 
                             return {
-                                label: detail.find('span.c-l-depths').text().split(/：/)[0],
+                                label: detail.find('span.c-l-depths').text().split(/：/, 1)[0],
                                 value:
                                     as.length === 0
                                         ? content(
@@ -79,7 +80,7 @@ const fetchItems = async (limit, currentUrl, tryGet) => {
                     item.author = details.find((detail) => detail.label === '作者').value;
                     item.category = [details.find((detail) => detail.label === '状态').value, details.find((detail) => detail.label === '类型').value.text].filter(Boolean);
                     item.guid = `56kog-${item.link.match(/\/(\d+)\.html$/)[1]}#${pubDate}`;
-                    item.pubDate = timezone(parseDate(pubDate), +8);
+                    item.pubDate = timezone(parseDate(pubDate), 8);
                 } catch {
                     // no-empty
                 }
@@ -121,7 +122,7 @@ const renderDescription = ({ images, details }: { images?: Array<{ src?: string;
                         {details.map((detail, index) => (
                             <tr key={`${detail.label}-${index}`}>
                                 <th>{detail.label}</th>
-                                <td>{detail.value?.href && detail.value?.text ? <a href={detail.value.href}>{detail.value.text}</a> : detail.value}</td>
+                                <td>{detail.value?.href && detail.value.text ? <a href={detail.value.href}>{detail.value.text}</a> : detail.value}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -63,15 +63,14 @@ async function handler(ctx) {
             if (item.link.startsWith('http')) {
                 item.description = `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>`;
                 return item;
-            } else {
-                return cache.tryGet(`${host}${item.link}`, async () => {
-                    const itemsResponse = await got(`${host}${item.link}`);
-                    const $ = load(itemsResponse.data);
-                    item.link = `${host}${item.link}`;
-                    item.description = $('div[class="wp_articlecontent"]').html();
-                    return item;
-                });
             }
+            return cache.tryGet(`${host}${item.link}`, async () => {
+                const itemsResponse = await got(`${host}${item.link}`);
+                const $ = load(itemsResponse.data);
+                item.link = `${host}${item.link}`;
+                item.description = $('div[class="wp_articlecontent"]').html();
+                return item;
+            });
         })
     );
 

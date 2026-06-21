@@ -74,7 +74,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'v4' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const domain = 'hostmonit.com';
     const title = `CloudFlareYes${type === 'v6' ? type.toUpperCase() : ''}`;
@@ -89,11 +89,9 @@ async function handler(ctx) {
     const { data: response } = await got.post(apiUrl, {
         json: {
             key,
-            ...(type === 'v6'
-                ? {
-                      type: 'v6',
-                  }
-                : {}),
+            ...(type === 'v6' && {
+                type: 'v6',
+            }),
         },
     });
 
@@ -104,7 +102,7 @@ async function handler(ctx) {
         const loss = item.loss === undefined ? undefined : `${item.loss}%`;
         const node = item.node;
         const speed = item.speed === undefined ? undefined : `${item.speed} KB/s`;
-        const pubDate = timezone(parseDate(item.time), +8);
+        const pubDate = timezone(parseDate(item.time), 8);
 
         return {
             title: renderTitle({
@@ -139,14 +137,16 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: $('title').text().replace(/- .*$/, `- ${title}`),
+        title: $('title')
+            .text()
+            .replace(/- .*$/, () => `- ${title}`),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang'),
         icon,
         logo: icon,
         subtitle: title,
-        author: $('title').text().split(/\s-/)[0],
+        author: $('title').text().split(/\s-/, 1)[0],
         allowEmpty: true,
     };
 }

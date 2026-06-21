@@ -9,7 +9,7 @@ async function getCategoryId(categories) {
             slug: categories,
         },
     });
-    return response.reduce((queryString, item) => queryString + item.id + ',', '');
+    return response.map((item) => item.id + ',').join('');
 }
 
 export const route: Route = {

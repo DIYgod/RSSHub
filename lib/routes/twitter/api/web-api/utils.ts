@@ -54,25 +54,25 @@ const token2Cookie = async (token) => {
 const lockPrefix = 'twitter:lock-token1:';
 
 const getAuth = async (retry: number) => {
-    if (config.twitter.authToken && retry > 0) {
-        const index = authTokenIndex++ % config.twitter.authToken.length;
-        const token = config.twitter.authToken[index];
-        const lock = await cache.get(`${lockPrefix}${token}`, false);
-        if (lock) {
-            logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
-            await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
-            return await getAuth(retry - 1);
-        } else {
-            logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
-            await cache.set(`${lockPrefix}${token}`, '1', 20);
-            return {
-                token,
-                username: config.twitter.username?.[index],
-                password: config.twitter.password?.[index],
-                authenticationSecret: config.twitter.authenticationSecret?.[index],
-            };
-        }
+    if (!config.twitter.authToken || retry <= 0) {
+        return;
     }
+    const index = authTokenIndex++ % config.twitter.authToken.length;
+    const token = config.twitter.authToken[index];
+    const lock = await cache.get(`${lockPrefix}${token}`, false);
+    if (lock) {
+        logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
+        await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
+        return await getAuth(retry - 1);
+    }
+    logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+    await cache.set(`${lockPrefix}${token}`, '1', 20);
+    return {
+        token,
+        username: config.twitter.username?.[index],
+        password: config.twitter.password?.[index],
+        authenticationSecret: config.twitter.authenticationSecret?.[index],
+    };
 };
 
 export const twitterGot = async (
@@ -324,9 +324,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     for (const entry of entries) {
         const entryId = entry.entryId;
         if (entryId) {
-            if (entryId.startsWith('tweet-')) {
-                filteredEntries.push(entry);
-            } else if (entryId.startsWith('profile-grid-0-tweet-')) {
+            if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
                 filteredEntries.push(entry);
             }
             if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
@@ -335,64 +333,66 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         }
     }
     for (const entry of filteredEntries) {
-        if (entry.entryId) {
-            const content = entry.content || entry.item;
-            let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
-            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
-            if (tweet?.__typename === 'TweetPreviewDisplay') {
-                const preview = tweet.tweet;
-                if (preview?.rest_id) {
-                    const userResult = preview.core?.user_results?.result;
-                    const fakeLegacy: any = {
-                        id_str: preview.rest_id,
-                        full_text: `[Subscribers Only] ${preview.text ?? ''}`,
-                        created_at: preview.created_at ?? '',
-                        entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
-                        user_id_str: userResult?.rest_id ?? '',
-                        favorite_count: preview.favorite_count ?? 0,
-                        reply_count: preview.reply_count ?? 0,
-                        retweet_count: preview.retweet_count ?? 0,
-                    };
-                    hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
-                    if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
-                        tweets.push(fakeLegacy);
-                    }
+        if (!entry.entryId) {
+            continue;
+        }
+
+        const content = entry.content || entry.item;
+        let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+        // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
+        if (tweet?.__typename === 'TweetPreviewDisplay') {
+            const preview = tweet.tweet;
+            if (preview?.rest_id) {
+                const userResult = preview.core?.user_results?.result;
+                const fakeLegacy: any = {
+                    id_str: preview.rest_id,
+                    full_text: `[Subscribers Only] ${preview.text ?? ''}`,
+                    created_at: preview.created_at ?? '',
+                    entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
+                    user_id_str: userResult?.rest_id ?? '',
+                    favorite_count: preview.favorite_count ?? 0,
+                    reply_count: preview.reply_count ?? 0,
+                    retweet_count: preview.retweet_count ?? 0,
+                };
+                hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
+                if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
+                    tweets.push(fakeLegacy);
                 }
-                continue;
             }
-            if (tweet && tweet.tweet) {
-                tweet = tweet.tweet;
-            }
-            if (tweet) {
-                const retweet = tweet.legacy?.retweeted_status_result?.result;
-                for (const t of [tweet, retweet]) {
-                    if (!t?.legacy) {
-                        continue;
-                    }
-                    hydrateLegacyUser(t.legacy, t);
-                    t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
-                    const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
-                    if (quote?.legacy) {
-                        t.legacy.quoted_status = quote.legacy;
-                        hydrateLegacyUser(t.legacy.quoted_status, quote);
-                    }
-                    if (t.note_tweet) {
-                        const tmp = t.note_tweet.note_tweet_results.result;
-                        t.legacy.entities.hashtags = tmp.entity_set.hashtags;
-                        t.legacy.entities.symbols = tmp.entity_set.symbols;
-                        t.legacy.entities.urls = tmp.entity_set.urls;
-                        t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
-                        t.legacy.full_text = tmp.text;
-                    }
+            continue;
+        }
+        if (tweet && tweet.tweet) {
+            tweet = tweet.tweet;
+        }
+        if (tweet) {
+            const retweet = tweet.legacy?.retweeted_status_result?.result;
+            for (const t of [tweet, retweet]) {
+                if (!t?.legacy) {
+                    continue;
                 }
-                const legacy = tweet.legacy;
-                if (legacy) {
-                    if (retweet) {
-                        legacy.retweeted_status = retweet.legacy;
-                    }
-                    if (userId === undefined || legacy.user_id_str === userId + '') {
-                        tweets.push(legacy);
-                    }
+                hydrateLegacyUser(t.legacy, t);
+                t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
+                const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
+                if (quote?.legacy) {
+                    t.legacy.quoted_status = quote.legacy;
+                    hydrateLegacyUser(t.legacy.quoted_status, quote);
+                }
+                if (t.note_tweet) {
+                    const tmp = t.note_tweet.note_tweet_results.result;
+                    t.legacy.entities.hashtags = tmp.entity_set.hashtags;
+                    t.legacy.entities.symbols = tmp.entity_set.symbols;
+                    t.legacy.entities.urls = tmp.entity_set.urls;
+                    t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
+                    t.legacy.full_text = tmp.text;
+                }
+            }
+            const legacy = tweet.legacy;
+            if (legacy) {
+                if (retweet) {
+                    legacy.retweeted_status = retweet.legacy;
+                }
+                if (userId === undefined || legacy.user_id_str === userId + '') {
+                    tweets.push(legacy);
                 }
             }
         }

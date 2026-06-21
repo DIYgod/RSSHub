@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/jinan/healthcommission/medical_exam_notice',
+    path: '/healthcommission/medical_exam_notice',
     categories: ['government'],
     example: '/gov/jinan/healthcommission/medical_exam_notice',
     parameters: {},
@@ -60,7 +60,7 @@ async function handler() {
 
             const title = html('td[width="620"] a').attr('title');
             const link = html('td[width="620"] a').attr('href');
-            const date = timezone(parseDate(html('td[width="100"]').text()), +8);
+            const date = timezone(parseDate(html('td[width="100"]').text()), 8);
             return {
                 title,
                 description: title,

@@ -32,7 +32,7 @@ export const route: Route = {
 const getMachineCookie = () =>
     cache.tryGet('seekingalpha:machine_cookie', async () => {
         const response = await ofetch.raw(baseUrl);
-        return response.headers.getSetCookie().map((c) => c.split(';')[0]);
+        return response.headers.getSetCookie().map((c) => c.split(';', 1)[0]);
     });
 
 const apiParams = {
@@ -64,7 +64,7 @@ async function handler(ctx) {
             'filter[until]': 0,
             id: symbol.toLowerCase(),
             include: 'author,primaryTickers,secondaryTickers,sentiments',
-            'page[size]': ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : category === 'news' ? 40 : 20,
+            'page[size]': ctx.req.query('limit') ? Number(ctx.req.query('limit')) : category === 'news' ? 40 : 20,
             'page[number]': 1,
         },
     });
@@ -75,7 +75,7 @@ async function handler(ctx) {
         pubDate: parseDate(item.attributes.publishOn),
         author: response.included.find((i) => i.id === item.relationships.author.data.id).attributes.nick,
         id: item.id,
-        articleType: item.links.self.split('/')[1],
+        articleType: item.links.self.split('/', 2)[1],
     }));
 
     const items = list

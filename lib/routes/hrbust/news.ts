@@ -48,7 +48,7 @@ async function handler(ctx) {
     const response = await ofetch(columnUrl);
     const $ = load(response);
 
-    const bigTitle = $('title').text().split('-')[0].trim();
+    const bigTitle = $('title').text().split('-', 1)[0].trim();
 
     const list = $('li[id^=line_u10]')
         .toArray()
@@ -56,7 +56,7 @@ async function handler(ctx) {
             const element = $(item);
             const link = new URL(element.find('a').attr('href'), rootUrl).href;
             const pubDateText = element.find('span').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), +8) : null;
+            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {
                 title: element.find('a').text().trim(),
                 pubDate,
@@ -76,7 +76,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 const dateText = content('p.xinxi span:contains("日期时间：")').text().replace('日期时间：', '').trim();
-                const pubTime = dateText ? timezone(parseDate(dateText), +8) : null;
+                const pubTime = dateText ? timezone(parseDate(dateText), 8) : null;
                 if (pubTime) {
                     item.pubDate = pubTime;
                 }

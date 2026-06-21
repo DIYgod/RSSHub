@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
-const setCookie = function (cookieName, cookieValue, seconds, path, domain, secure) {
+const setCookie = function (cookieName, cookieValue, seconds, path, domain, secure?) {
     let expires = null;
     if (seconds !== -1) {
         expires = new Date();
@@ -100,7 +100,7 @@ async function handler(ctx) {
 
                 item.author = content('.uname, .user-name').first().text();
                 item.description = content('.post-cont').first().html() || content('.thread-cont').html();
-                item.pubDate = timezone(parseDate(content('.cont-top-left meta').first().attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('.cont-top-left meta').first().attr('content')), 8);
 
                 return item;
             })
@@ -108,7 +108,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('title').text().split('-')[0],
+        title: $('title').text().split('-', 1)[0],
         link: rootUrl,
         item: items,
     };

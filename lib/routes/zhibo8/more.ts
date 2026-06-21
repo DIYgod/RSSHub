@@ -46,7 +46,6 @@ async function handler(ctx) {
     const rootUrl = 'https://news.zhibo8.cc';
 
     let list;
-    let apiUrl: string;
     let currentUrl: string;
     let response;
 
@@ -67,20 +66,20 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: `https:${a.attr('href')}`,
-                    pubDate: timezone(parseDate(item.find('span.postTime').text()), +8),
+                    pubDate: timezone(parseDate(item.find('span.postTime').text()), 8),
                     category: item.attr('data-label').split(',').filter(Boolean),
                 };
             });
     } else {
         currentUrl = `${rootUrl}/${category}`;
-        apiUrl = `https://api.qiumibao.com/application/app/index.php?_url=/news/${category}List`;
+        const apiUrl = `https://api.qiumibao.com/application/app/index.php?_url=/news/${category}List`;
 
         response = await got(apiUrl);
 
         list = response.data.data.list.map((item) => ({
             title: item.title,
             link: `https:${item.url}`,
-            pubDate: timezone(parseDate(item.createtime), +8),
+            pubDate: timezone(parseDate(item.createtime), 8),
         }));
     }
 

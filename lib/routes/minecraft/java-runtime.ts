@@ -77,7 +77,7 @@ function generateArch(arch: string, data: any, javaType: string): DataItem[] {
 
     if (javaType === 'all') {
         for (const k in data) {
-            if (!(k in data)) {
+            if (!Object.hasOwn(data, k)) {
                 continue;
             }
             items = [...items, ...generateJavas(arch, k, data[k])];
@@ -106,7 +106,7 @@ async function handler(ctx: Context) {
 
     if (arch === 'all') {
         for (const k in data) {
-            if (!(k in data)) {
+            if (!Object.hasOwn(data, k)) {
                 continue;
             }
             items = [...items, ...generateArch(k, data[k], javaType)];

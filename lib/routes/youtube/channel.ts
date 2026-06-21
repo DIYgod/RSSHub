@@ -62,7 +62,7 @@ async function handler(ctx) {
 
     // Get filterShorts parameter (default to true if not specified)
     const filterShortsStr = params.get('filterShorts');
-    const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
+    const filterShorts = [null, '', 'true'].includes(filterShortsStr);
 
     if (!utils.isYouTubeChannelId(id)) {
         throw new InvalidParameterError('Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.');

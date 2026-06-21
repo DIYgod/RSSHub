@@ -34,7 +34,7 @@ All journals at [Current journals](https://pubs.rsc.org/en/journals)
 
 async function handler(ctx) {
     const { id, category = 'allrecentarticles' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://pubs.rsc.org';
     const currentUrl = new URL(`en/journals/journalissues/${id}#!recentarticles`, rootUrl).href;
@@ -85,7 +85,7 @@ async function handler(ctx) {
                 author: authors,
                 category: [item.find('span.capsule__context').text().trim(), ...authors.split(/,\s|and\s/), isOpenAccess || isManuscript],
                 guid: `rsc-${doi}`,
-                pubDate: timezone(parseDate(item.find('div.text--small span.block').text().split(/on\s/).pop(), 'DD MMM YYYY'), +1),
+                pubDate: timezone(parseDate(item.find('div.text--small span.block').text().split(/on\s/).pop(), 'DD MMM YYYY'), 1),
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureUrl ? 'application/pdf' : undefined,
                 doi,
@@ -105,7 +105,7 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="DC.title"]').prop('content');
                     item.description = content('#wrapper, article.article-control').html();
-                    item.pubDate = timezone(parseDate(content('meta[name="citation_online_date"]').prop('content'), 'YYYY/MM/DD'), +1);
+                    item.pubDate = timezone(parseDate(content('meta[name="citation_online_date"]').prop('content'), 'YYYY/MM/DD'), 1);
                     item.enclosure_url = content('meta[name="citation_pdf_url"]').prop('content');
                     item.enclosure_type = item.enclosure_url ? 'application/pdf' : undefined;
                     item.doi = content('meta[name="DC.Identifier"]').prop('content');

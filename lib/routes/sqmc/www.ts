@@ -67,7 +67,7 @@ async function handler(ctx) {
                         title: item.find('dt a').text(),
                         description: content('div.Tr_Detail').html(),
                         link,
-                        pubDate: timezone(pubDate, +8),
+                        pubDate: timezone(pubDate, 8),
                     };
                 });
 

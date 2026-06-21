@@ -98,7 +98,7 @@ async function handler(ctx) {
                         {from}
                     </>
                 ),
-                pubDate: timezone(parseDate(time, 'YYYY-MM-DD hh:mm'), +8),
+                pubDate: timezone(parseDate(time, 'YYYY-MM-DD hh:mm'), 8),
                 link: `https://tieba.baidu.com/p/${id}?pid=${content.post_id}#${content.post_id}`,
             };
         }),

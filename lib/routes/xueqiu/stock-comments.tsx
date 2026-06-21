@@ -46,7 +46,7 @@ async function handler(ctx) {
             url: `https://xueqiu.com/S/${id}`,
         });
         const $ = load(res.data); // 使用 cheerio 加载返回的 HTML
-        return $('.stock-name').text().split('(')[0];
+        return $('.stock-name').text().split('(', 1)[0];
     });
 
     const data = res.data.list;

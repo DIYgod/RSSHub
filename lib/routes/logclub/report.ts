@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'Report' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const rootUrl = 'https://www.logclub.com';
     const currentUrl = new URL('lc_report', rootUrl).href;
@@ -48,14 +48,14 @@ async function handler(ctx) {
         link: new URL(`front/lc_report/get_report_info/${item.id}`, rootUrl).href,
         description: renderDescription({
             image: {
-                src: item.img_url?.split(/\?/)[0] ?? undefined,
+                src: item.img_url?.split(/\?/, 1)[0] ?? undefined,
                 alt: item.title,
             },
         }),
         author: item.author,
         category: [item.channel_name],
         guid: `logclub-report-${item.id}`,
-        pubDate: timezone(parseDate(item.release_time), +8),
+        pubDate: timezone(parseDate(item.release_time), 8),
     }));
 
     items = await Promise.all(
@@ -70,7 +70,7 @@ async function handler(ctx) {
                     el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/)[0] ?? undefined,
+                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
                                 alt: el.prop('title'),
                             },
                         })
@@ -117,6 +117,6 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),
-        author: subtitle.split(/,/)[0],
+        author: subtitle.split(/,/, 1)[0],
     };
 }

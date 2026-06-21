@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/caac/cjwt/:category?',
+    path: '/cjwt/:category?',
     categories: ['government'],
     example: '/gov/caac/cjwt',
     parameters: { category: '分类，见下表，默认为全部' },
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['caac.gov.cn/HDJL/'],
-            target: '/caac/cjwt',
+            target: '/cjwt',
         },
     ],
     name: '公众留言',
@@ -35,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.caac.gov.cn';
     const apiUrl = new URL(`caacgov/jsonp/messageBoard/visit/get${category ? 'CJWT' : ''}List`, rootUrl).href;
@@ -58,8 +58,8 @@ async function handler(ctx) {
             author: `${item.gname}/${item.feedbackName}`,
             category: [item.messageType],
             guid: `caac-cjwt#${item.id}`,
-            pubDate: timezone(parseDate(item.createDate), +8),
-            updated: timezone(parseDate(item.feedbackDate), +8),
+            pubDate: timezone(parseDate(item.createDate), 8),
+            updated: timezone(parseDate(item.feedbackDate), 8),
         }));
 
     const author = '中国民用航空局';

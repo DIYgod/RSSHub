@@ -11,7 +11,7 @@ type DescriptionData = {
 export const renderDescription = ({ head, rendered }: DescriptionData): string =>
     renderToString(
         <>
-            {head.og_image?.length ? head.og_image.map((img) => <img src={img.url.split('?')[0]} />) : null}
+            {head.og_image?.length ? head.og_image.map((img) => <img src={img.url.split('?', 1)[0]} />) : null}
             {head.og_image?.length ? <br /> : null}
             {raw(rendered)}
         </>

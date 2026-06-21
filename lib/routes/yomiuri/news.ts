@@ -67,7 +67,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate(item.find('time').attr('datetime')), +9),
+                    pubDate: timezone(parseDate(item.find('time').attr('datetime')), 9),
                     locked: item.find('.icon-locked').length,
                 };
             });
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')), +9),
+                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')), 9),
                     locked: parent.find('.c-list-member-only').length,
                 };
             });
@@ -101,7 +101,7 @@ async function handler(ctx) {
 
                 mainContent.find('[class^=ev-article], svg').remove();
                 mainContent.find('img').each((_, img) => {
-                    img.attribs.src = img.attribs.src.split('?')[0];
+                    img.attribs.src = img.attribs.src.split('?', 1)[0];
                 });
 
                 item.description = mainContent.html();

@@ -82,10 +82,12 @@ async function handler(ctx) {
                     .join(', ');
 
                 $('.figure__image').each((_, elem) => {
-                    if (elem.attribs['data-lg-src']) {
-                        $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);
-                        delete elem.attribs['data-lg-src'];
+                    if (!elem.attribs['data-lg-src']) {
+                        return;
                     }
+
+                    $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);
+                    delete elem.attribs['data-lg-src'];
                 });
 
                 item.description = $('.article__body').html();

@@ -22,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://www.warhammer-community.com';
-    const limit = Number.parseInt(ctx.req.query('limit') || '16', 10);
+    const limit = Number(ctx.req.query('limit') || '16');
 
     const response = await ofetch(`${baseUrl}/api/search/news/`, {
         method: 'POST',

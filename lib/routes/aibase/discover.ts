@@ -10,7 +10,7 @@ export const handler = async (ctx) => {
 
     const [pid, sid] = id?.split(/-/) ?? [undefined, undefined];
 
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const currentUrl = new URL(`discover${id ? `/${id}` : ''}`, rootUrl).href;
 

@@ -55,7 +55,7 @@ const handler = async (ctx) => {
     }
 
     // Validate category parameter
-    if (!categories[category]) {
+    if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError(`Invalid category: ${category}. Please refer to the category table in the documentation.`);
     }
 

@@ -47,12 +47,11 @@ export default {
                     // redisClient.set(cacheTtlKey, cacheTtl, 'EX', cacheTtl);
                 }
                 clients.redisClient.expire(key, cacheTtl);
-                value = value + '';
+                value += '';
             }
             return value || '';
-        } else {
-            return null;
         }
+        return null;
     },
     has: async (key: string) => {
         if (key && status.available && clients.redisClient) {

@@ -99,7 +99,7 @@ export default async function checkPr({ github, context, core }) {
     }
 
     const association = context.payload.pull_request.author_association;
-    if (association === 'OWNER' || association === 'MEMBER' || association === 'COLLABORATOR') {
+    if (['OWNER', 'MEMBER', 'COLLABORATOR'].includes(association)) {
         core.info(`Skipping vouched label for collaborator ${author} (${association}).`);
         return;
     }

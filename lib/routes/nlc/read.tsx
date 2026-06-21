@@ -29,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = '电子图书' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const author = '中国国家图书馆';
 

@@ -13,7 +13,7 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const limit = Number(ctx.req.query('limit') ?? '10');
 
     const baseUrl = 'https://musikguru.de';
     const targetUrl: string = new URL('news/', baseUrl).href;
@@ -74,21 +74,21 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('div.article h1').text();
                 const leadHtml = ($$('p.lead').html() ?? '') + ($$('div.lead').html() ?? '');
                 const description: string | undefined = item.description + renderDescription({ description: leadHtml || undefined });
-                const pubDateStr: string | undefined = $$('div.article div.text-muted').text().split(/\sUhr/)?.[0];
+                const pubDateStr: string | undefined = $$('div.article div.text-muted').text().split(/\sUhr/, 1)?.[0];
                 const image: string | undefined = $$('div.article img').first().attr('src');
                 const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'DD.MM.YYYY HH:mm'), +1) : item.pubDate,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'DD.MM.YYYY HH:mm'), 1) : item.pubDate,
                     content: {
                         html: description,
                         text: description,
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr, 'DD.MM.YYYY HH:mm'), +1) : item.updated,
+                    updated: upDatedStr ? timezone(parseDate(upDatedStr, 'DD.MM.YYYY HH:mm'), 1) : item.updated,
                     language,
                 };
 

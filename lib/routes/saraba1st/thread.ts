@@ -46,22 +46,23 @@ async function handler(ctx) {
     const title = $('#thread_subject').text();
 
     const list = $('#postlist > div[id^=post_]:not(:first-of-type)');
-    const count = [];
-
-    for (let i = 0; i < Math.min(list.length, 20); i++) {
-        count.push(i);
-    }
 
     const staticUrl = new URL('/image/common/none.gif', host);
     staticUrl.hostname = `static.${staticUrl.hostname.split('.').slice(-2).join('.')}`;
-    const resultItems = count.map((i) => {
-        const each = $(list[i]);
-        const floor = each.find('td.plc .pi a > em').text();
-        const floorUrl = each.find('td.plc .pi a').attr('href');
-        const contentHtml = $(each.find('td.t_f'));
-        const imgsHtml = contentHtml.find('img');
-        for (const element of imgsHtml) {
-            if (element.attribs.src === staticUrl.href) {
+    const resultItems = list
+        .toArray()
+        .slice(0, 20)
+        .map((post) => {
+            const each = $(post);
+            const floor = each.find('td.plc .pi a > em').text();
+            const floorUrl = each.find('td.plc .pi a').attr('href');
+            const contentHtml = $(each.find('td.t_f'));
+            const imgsHtml = contentHtml.find('img');
+            for (const element of imgsHtml) {
+                if (element.attribs.src !== staticUrl.href) {
+                    continue;
+                }
+
                 element.attribs.src = element.attribs.file;
                 const imgHtml = $(element);
                 imgHtml.removeAttr('zoomfile');
@@ -69,16 +70,15 @@ async function handler(ctx) {
                 imgHtml.removeAttr('onmouseover');
                 imgHtml.removeAttr('onclick');
             }
-        }
-        contentHtml.find('div.aimg_tip').remove();
-        return {
-            title: `${title} #${floor}`,
-            link: new URL(floorUrl, `${host}/2b/`).href,
-            description: contentHtml.html(),
-            author: each.find('.authi .xw1').text(),
-            pubDate: timezone(parseDate(each.find('.authi em').text()), +8),
-        };
-    });
+            contentHtml.find('div.aimg_tip').remove();
+            return {
+                title: `${title} #${floor}`,
+                link: new URL(floorUrl, `${host}/2b/`).href,
+                description: contentHtml.html(),
+                author: each.find('.authi .xw1').text(),
+                pubDate: timezone(parseDate(each.find('.authi em').text()), 8),
+            };
+        });
 
     return {
         title: `Stage1 论坛 - ${title}`,

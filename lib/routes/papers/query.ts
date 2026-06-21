@@ -10,13 +10,13 @@ const pdfUrlGenerators = {
 
 export const handler = async (ctx) => {
     const { keyword = 'query/Detection' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 150;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 150;
 
     const rootUrl = 'https://papers.cool';
     const currentUrl = new URL(`arxiv/search?highlight=1&query=${keyword}&sort=0`, rootUrl).href;
     const feedUrl = new URL(`arxiv/search/feed?query=${keyword}`, rootUrl).href;
 
-    const site = keyword.split(/\//)[0];
+    const site = keyword.split(/\//, 1)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
     const feed = await parser.parseURL(feedUrl);
 

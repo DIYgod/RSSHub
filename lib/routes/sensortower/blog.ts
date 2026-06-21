@@ -68,7 +68,7 @@ async function handler(ctx) {
                 content('div[data-testid="Text-embedded-entry-block"]').remove();
 
                 content('img').each((_, el) => {
-                    const image = (content(el).attr('srcset') ?? content(el).attr('src')).split('?w=')[0];
+                    const image = (content(el).attr('srcset') ?? content(el).attr('src')).split('?w=', 1)[0];
 
                     content(el).replaceWith(renderDescription({ image }));
                 });

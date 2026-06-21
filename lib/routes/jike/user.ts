@@ -89,7 +89,7 @@ async function handler(ctx) {
             let shortenTitle = '一条动态';
             if (content) {
                 shortenTitle = content.replaceAll(/(<br>)+/g, ' ');
-                content = `${content}<br><br>`;
+                content += '<br><br>';
             }
 
             let repostContent;
@@ -104,7 +104,7 @@ async function handler(ctx) {
                 }
 
                 repostContent = `<div class="rsshub-quote">转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}</div>`.replaceAll(/\r\n|\n|\r/g, '<br>');
-                content = `${content}${repostContent}`;
+                content += repostContent;
             }
             // 部分功能未知
             /* else if (item.type === 'ANSWER') {
@@ -167,13 +167,11 @@ async function handler(ctx) {
 
                 single.title = `一觉醒来世界发生了什么 ${$$('title').text()}`;
 
-                single.description = '';
-                $$('div.container')
+                single.description = $$('div.container')
                     .find('li.item')
-                    // eslint-disable-next-line array-callback-return
-                    .map((i, j) => {
-                        single.description += `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`;
-                    });
+                    .toArray()
+                    .map((j) => `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`)
+                    .join('');
             }
 
             return single;

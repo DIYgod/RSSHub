@@ -48,7 +48,7 @@ async function handler(ctx) {
     let items = response.data.data.items.map((item) => ({
         title: item.title,
         author: item.source,
-        pubDate: timezone(parseDate(item.ptime), +8),
+        pubDate: timezone(parseDate(item.ptime), 8),
         description: `<p>${item.digest}</p><img src="${item.imgsrc}">`,
         link: item.url || `https://c.m.163.com/news/a/${item.docid}.html`,
     }));

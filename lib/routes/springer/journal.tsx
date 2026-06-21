@@ -43,7 +43,7 @@ async function handler(ctx) {
     });
     const authorizeCookie = authorizeResponse.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
 
     await ofetch(authorizeResponse.headers.get('location'), {

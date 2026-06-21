@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -16,10 +17,10 @@ const processList = (articleData) =>
         _id: item._id,
     }));
 
-const ProcessFeed = (list, tryGet) =>
+const ProcessFeed = (list) =>
     Promise.all(
         list.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const {
                     data: { article },
                 } = await got(`${apiUrl}/api/article/${item._id}`, {
@@ -33,7 +34,7 @@ const ProcessFeed = (list, tryGet) =>
                 $('div.draft--imgNormal').each((_, elem) => (elem.name = 'figure'));
                 $('.image-block-prerender').each((_, elem) => {
                     elem.name = 'img';
-                    elem.attribs.src = elem.attribs['data-src'].split('?')[0];
+                    elem.attribs.src = elem.attribs['data-src'].split('?', 1)[0];
                 });
 
                 item.description = $.html();

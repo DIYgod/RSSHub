@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 /**
@@ -6,8 +7,8 @@ import got from '@/utils/got';
  */
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/com/atproto/identity/resolveHandle.json
-const resolveHandle = (handle, tryGet) =>
-    tryGet(`bsky:${handle}`, async () => {
+const resolveHandle = (handle) =>
+    cache.tryGet(`bsky:${handle}`, async () => {
         const { data } = await got('https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle', {
             searchParams: {
                 handle,
@@ -17,8 +18,8 @@ const resolveHandle = (handle, tryGet) =>
     });
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/actor/getProfile.json
-const getProfile = (did, tryGet) =>
-    tryGet(`bsky:profile:${did}`, async () => {
+const getProfile = (did) =>
+    cache.tryGet(`bsky:profile:${did}`, async () => {
         const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile', {
             searchParams: {
                 actor: did,
@@ -28,8 +29,8 @@ const getProfile = (did, tryGet) =>
     });
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getAuthorFeed.json
-const getAuthorFeed = (did, filter, tryGet) =>
-    tryGet(
+const getAuthorFeed = (did, filter) =>
+    cache.tryGet(
         `bsky:authorFeed:${did}:${filter}`,
         async () => {
             const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed', {
@@ -46,8 +47,8 @@ const getAuthorFeed = (did, filter, tryGet) =>
     );
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getFeed.json
-const getFeed = (uri, tryGet) =>
-    tryGet(
+const getFeed = (uri) =>
+    cache.tryGet(
         `bsky:feed:${uri}`,
         async () => {
             const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getFeed', {
@@ -63,8 +64,8 @@ const getFeed = (uri, tryGet) =>
     );
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getFeedGenerator.json
-const getFeedGenerator = (uri, tryGet) =>
-    tryGet(
+const getFeedGenerator = (uri) =>
+    cache.tryGet(
         `bsky:feedGenerator:${uri}`,
         async () => {
             const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getFeedGenerator', {

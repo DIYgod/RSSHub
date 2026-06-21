@@ -53,7 +53,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
 
     const apiRootUrl = 'http://api.cmc.hebtv.com';
     const apiUrl = new URL('cmsback/api/article/getMyArticleDetail', apiRootUrl).href;
@@ -76,7 +76,7 @@ async function handler(ctx) {
                 title: a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: `${baseUrl}/../${a.attr('href')}`,
-                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), +8) : null,
+                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), 8) : null,
                 author: '时间|' + timestr,
             };
         });
@@ -106,8 +106,8 @@ async function handler(ctx) {
                 item.title = data.title;
                 item.author = data.source;
                 item.guid = `hebtv-nbszxd-${articleId}`;
-                item.pubDate = timezone(parseDate(data.publishDate), +8);
-                item.updated = timezone(parseDate(data.modifyTime), +8);
+                item.pubDate = timezone(parseDate(data.publishDate), 8);
+                item.updated = timezone(parseDate(data.modifyTime), 8);
 
                 if (videoData) {
                     item.itunes_item_image = videoData.poster;
@@ -134,7 +134,7 @@ async function handler(ctx) {
     );
 
     const description = $('meta[name="description"]').prop('content');
-    const author = description.split(/,/)[0];
+    const author = description.split(/,/, 1)[0];
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
     return {

@@ -197,12 +197,13 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         item: items,
     };
 
+    const resetTimestamp = Number.parseInt(response.headers.get('x-ratelimit-reset'));
     ctx.set('json', {
         ...ret,
         rateLimit: {
             limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
             remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
-            reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset')) * 1000),
+            reset: parseDate(resetTimestamp * 1000),
             resoure: response.headers.get('x-ratelimit-resource'),
             used: Number.parseInt(response.headers.get('x-ratelimit-used')),
         },

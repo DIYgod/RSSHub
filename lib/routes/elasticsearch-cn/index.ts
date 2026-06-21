@@ -58,7 +58,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 author: item.find('.aw-user-name').text(),
-                pubDate: timezone(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), +8),
+                pubDate: timezone(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8),
             };
         });
 

@@ -34,7 +34,7 @@ const filters = {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { query = 's=2&d=1&n=true&dm=true&o=true' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const baseUrl = 'https://scoop.sh';
     const apiBaseUrl = 'https://scoopsearch.search.windows.net';

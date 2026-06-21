@@ -39,9 +39,7 @@ let api: {
     getHomeLatestTimeline: () => null,
 };
 
-if (enableThirdPartyApi) {
-    api = webApi;
-} else if (enableWebApi) {
+if (enableThirdPartyApi || enableWebApi) {
     api = webApi;
 } else if (enableDeveloperApi) {
     api = devApi;

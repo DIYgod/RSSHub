@@ -74,7 +74,8 @@ const extractArticle = (item) =>
         for (const v of jsonData) {
             if (v.type === 'header' && v.content.includes('What we’re reading')) {
                 break;
-            } else if (v.type === 'custom_embed' && Boolean(v.embed.config.text)) {
+            }
+            if (v.type === 'custom_embed' && Boolean(v.embed.config.text)) {
                 filteredData.push({ type: v.type, data: v.embed.config.text });
             } else if (v.type === 'text' && !v.content.includes('<b>NOW READ: </b>')) {
                 filteredData.push({ type: v.type, data: v.content });

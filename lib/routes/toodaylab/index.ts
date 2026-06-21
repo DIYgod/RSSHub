@@ -15,7 +15,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { params = 'posts' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const isHot = params === 'hot';
 
@@ -58,7 +58,7 @@ async function handler(ctx) {
                       link: new URL(a.prop('href'), rootUrl).href,
                       description: item.find('p.excerpt').html(),
                       author: item.find('div.left-infos p a').text().trim(),
-                      pubDate: timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), +8),
+                      pubDate: timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8),
                   };
               });
 
@@ -82,16 +82,16 @@ async function handler(ctx) {
                     .slice(1)
                     .toArray()
                     .map((c) => content(c).text().replace(/#/, ''));
-                item.pubDate = item.pubDate ?? timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), +8);
-                item.upvotes = content('#like_count').text() ? Number.parseInt(content('#like_count').text(), 10) : 0;
-                item.comments = Number.parseInt(content('div.right-infos a').first().text(), 10) || 0;
+                item.pubDate ??= timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8);
+                item.upvotes = content('#like_count').text() ? Number(content('#like_count').text()) : 0;
+                item.comments = Number(content('div.right-infos a').first().text()) || 0;
 
                 return item;
             })
         )
     );
 
-    const title = $('title').text().split(/\s-/)[0];
+    const title = $('title').text().split(/\s-/, 1)[0];
     const icon = $('link[rel="apple-touch-icon"]').last().prop('href');
 
     return {

@@ -18,7 +18,7 @@ const random_nonce = (count) => {
     while (i-- > min) {
         index = Math.floor((i + 1) * Math.random());
         temp = shuffled[index];
-        str = str + temp;
+        str += temp;
     }
     return str;
 };
@@ -102,7 +102,7 @@ async function getCookie() {
         if (set_cookie) {
             for (const e of set_cookie) {
                 if (e.indexOf('token') === 0) {
-                    token = e.split(';')[0];
+                    token = e.split(';', 1)[0];
                 }
             }
         }

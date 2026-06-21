@@ -13,7 +13,7 @@ const categories = {
 };
 
 export const route: Route = {
-    path: '/nrta/news/:category?',
+    path: '/news/:category?',
     categories: ['government'],
     example: '/gov/nrta/news',
     parameters: { category: '资讯类别，可从地址中获取，默认为总局要闻' },
@@ -70,14 +70,14 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 item.title = content('td[id="artTitMob"]').text();
                 item.description = content('div[id="c"]').html();
-                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), +8);
+                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), 8);
                 item.author = content('.mobile_time.shareFromz').text();
                 return item;
             })
         )
     );
     return {
-        title: category in categories ? categories[category] : '其他',
+        title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
         language: 'zh-cn',

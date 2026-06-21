@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://www.jjwxc.net';
     const currentUrl = new URL(`onebook.php?novelid=${id}`, rootUrl).href;
@@ -80,7 +80,7 @@ async function handler(ctx) {
                 author,
                 category: [isVip ? 'VIP' : undefined, ...(category?.split(/\s/) ?? [])].filter(Boolean),
                 guid: `jjwxc-${id}#${chapterId}`,
-                pubDate: timezone(parseDate(chapterUpdatedTime), +8),
+                pubDate: timezone(parseDate(chapterUpdatedTime), 8),
                 isVip,
                 isLock,
             };

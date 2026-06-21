@@ -1,11 +1,11 @@
 import type { NoviceNetworkIdentity } from '../constant';
-import type { DateFormat, DateTimeFormat, TeamPosition, TimeStamp } from './other';
+import type { DateFormat, DateTimeFormat, TeamPosition, Timestamp } from './other';
 
 export interface BaseParty {
     area_name: string;
-    begin_time: TimeStamp;
+    begin_time: Timestamp;
     character_name: string;
-    end_time: TimeStamp;
+    end_time: Timestamp;
     group_name: string;
     id: number;
     status: number; // 1: 招募中, !1: 已结束
@@ -81,7 +81,7 @@ export interface RolePlayPartyDetail extends RolePlayParty {
 
 // 部队招募
 export interface FreeCompanyParty extends BaseParty {
-    created_at: TimeStamp;
+    created_at: Timestamp;
     guild_id: string;
     guild_name: string;
     guild_tag: string;

@@ -38,14 +38,14 @@ async function getTopic(rootUrl, id, seqMarkInput = '') {
             topicTitle: topic.title,
             topicDescription: topic.detail,
         };
-    } else if (hasMore === 1) {
-        return getTopic(rootUrl, id, seqMark);
-    } else {
-        return {
-            topicTitle: '',
-            topicDescription: '',
-        };
     }
+    if (hasMore === 1) {
+        return getTopic(rootUrl, id, seqMark);
+    }
+    return {
+        topicTitle: '',
+        topicDescription: '',
+    };
 }
 
 async function handler(ctx) {

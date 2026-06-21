@@ -86,12 +86,12 @@ const READABLE_CATEGORIES = {
 async function handler(ctx) {
     const category = ctx.req.param('category');
 
-    const subDomain = SUB_DOMAIN_MAP[category];
-    if (!subDomain) {
+    const subdomain = SUB_DOMAIN_MAP[category];
+    if (!subdomain) {
         throw new Error('未知的金属类型');
     }
 
-    const url = `https://${subDomain}`;
+    const url = `https://${subdomain}`;
 
     const response = await got({
         method: 'get',
@@ -133,7 +133,7 @@ async function handler(ctx) {
                 .trim();
 
             const changeStr = $avgSpan.find('.up_down').text().trim();
-            const changeNum = Number.parseFloat(changeStr);
+            const changeNum = Number(changeStr);
 
             let icon; // 如果 change 为 0 或者无法解析，则不显示图标
             if (changeNum > 0) {
@@ -191,7 +191,7 @@ async function handler(ctx) {
                 description,
                 link: `${url}/quota/${dataId}.html`,
                 guid: dataId, // 使用 data-id 作为唯一标识
-                pubDate: timezone(parseDate(dateStr, 'MM-DD'), +8),
+                pubDate: timezone(parseDate(dateStr, 'MM-DD'), 8),
             };
         });
 

@@ -47,7 +47,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'News' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 200;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 200;
 
     if (!Object.hasOwn(categories, category.toLowerCase())) {
         throw new InvalidParameterError(`No category '${category}'.`);

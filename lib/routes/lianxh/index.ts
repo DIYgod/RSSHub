@@ -79,7 +79,7 @@ async function handler(ctx: Context) {
     const $ = cheerio.load(response);
 
     const list = $('.card-body > a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 30)
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 30)
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -87,7 +87,7 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find('h5').text().trim(),
                 link: rootUrl + href,
-                id: href?.split('/').pop()?.split('.')[0],
+                id: href?.split('/').pop()?.split('.', 1)[0],
             };
         }) as DataItem[];
 

@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, coverOnly = 'true', quality = '1' } = ctx.req.param();
-    const uuid = await getUuid(cache.tryGet);
+    const uuid = await getUuid();
     const {
         data: { data: book },
     } = await getBook(id, uuid);
@@ -40,10 +40,12 @@ async function handler(ctx) {
         data: { data: chapters },
     } = await getChapters(id, uuid);
 
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 3;
+
     const items = await Promise.all(
         chapters.chapters
             .toSorted((a, b) => b.idx - a.idx)
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 3)
+            .slice(0, limit)
             .map(async (c) => {
                 let pages;
                 if (coverOnly !== 'true' && coverOnly !== '1') {

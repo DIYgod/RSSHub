@@ -48,7 +48,7 @@ async function handler(ctx) {
     });
     const buildAuthorizeCookie = buildAuthorizeResponse.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
 
     const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location'), {
@@ -63,7 +63,7 @@ async function handler(ctx) {
     });
     const idpCookie = idpResponse.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
 
     const data = await ofetch('https://news.web.nhk/news/easy/news-list.json', {
@@ -84,7 +84,7 @@ async function handler(ctx) {
                 </>
             ),
             guid: article.news_id,
-            pubDate: timezone(parseDate(article.news_prearranged_time), +9),
+            pubDate: timezone(parseDate(article.news_prearranged_time), 9),
             link: `https://news.web.nhk/news/easy/${article.news_id}/${article.news_id}.html`,
         }))
     );

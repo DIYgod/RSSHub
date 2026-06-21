@@ -34,14 +34,14 @@ export default async function get_article(url) {
     const description = $('div.block_m')
         .html()
         .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, '$1$2')
-        .replaceAll('href="/', 'href="' + domain + '/')
+        .replaceAll('href="/', () => 'href="' + domain + '/')
         // Preserve the not extremely disturbing donation ad
         // to support the site.
         .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, '<br><br>$1');
 
     const item = {
         title,
-        pubDate: timezone(parseDate(date_str), +8),
+        pubDate: timezone(parseDate(date_str), 8),
         author,
         link: url,
         description,

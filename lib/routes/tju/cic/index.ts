@@ -84,49 +84,48 @@ async function handler(ctx) {
                 },
             ],
         };
-    } else {
-        const $ = load(response.data);
-        const list = $('.wenzi_list_ul > li')
-            .toArray()
-            .map((item) => {
-                const href = $('a', item).attr('href');
-                const type = pageType(href);
-                return {
-                    title: $('a', item).text(),
-                    link: type === 'in-site' ? cic_base_url + href : href,
-                    type,
-                };
-            });
-
-        const items = await Promise.all(
-            list.map((item) => {
-                switch (item.type) {
-                    case 'tju-cic':
-                    case 'in-site':
-                        return cache.tryGet(item.link, async () => {
-                            try {
-                                const detailResponse = await got(item.link);
-                                const content = load(detailResponse.data);
-                                item.pubDate = timezone(parseDate(content('.news_info > span').first().text(), 'YYYY年MM月DD日 HH:mm'), +8);
-                                content('.news_tit').remove();
-                                content('.news_info').remove();
-                                item.description = content('.con_news_body > div').html();
-                            } catch {
-                                // ignore error handler
-                            }
-                            return item;
-                        });
-                    default:
-                        return item;
-                }
-            })
-        );
-
-        return {
-            title: '天津大学智能与计算学部 - ' + subtitle,
-            link: cic_base_url + path,
-            description: null,
-            item: items,
-        };
     }
+    const $ = load(response.data);
+    const list = $('.wenzi_list_ul > li')
+        .toArray()
+        .map((item) => {
+            const href = $('a', item).attr('href');
+            const type = pageType(href);
+            return {
+                title: $('a', item).text(),
+                link: type === 'in-site' ? cic_base_url + href : href,
+                type,
+            };
+        });
+
+    const items = await Promise.all(
+        list.map((item) => {
+            switch (item.type) {
+                case 'tju-cic':
+                case 'in-site':
+                    return cache.tryGet(item.link, async () => {
+                        try {
+                            const detailResponse = await got(item.link);
+                            const content = load(detailResponse.data);
+                            item.pubDate = timezone(parseDate(content('.news_info > span').first().text(), 'YYYY年MM月DD日 HH:mm'), 8);
+                            content('.news_tit').remove();
+                            content('.news_info').remove();
+                            item.description = content('.con_news_body > div').html();
+                        } catch {
+                            // ignore error handler
+                        }
+                        return item;
+                    });
+                default:
+                    return item;
+            }
+        })
+    );
+
+    return {
+        title: '天津大学智能与计算学部 - ' + subtitle,
+        link: cic_base_url + path,
+        description: null,
+        item: items,
+    };
 }

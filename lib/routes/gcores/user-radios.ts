@@ -81,7 +81,7 @@ const buildDescription = (attributes: any, title: string | undefined, enclosureU
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl = new URL(`users/${id}/content?tab=radios`, baseUrl).href;
     const apiUrl = new URL(`gapi/v1/users/${id}/radios`, baseUrl).href;

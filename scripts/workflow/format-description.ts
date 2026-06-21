@@ -175,7 +175,7 @@ function collectDescriptionEdits(sourceFile: typescript.SourceFile): Description
                         raw: init.text,
                     });
                 }
-            } else if ((name === 'ja' || name === 'zh' || name === 'zh-TW') && typescript.isObjectLiteralExpression(prop.initializer)) {
+            } else if (['ja', 'zh', 'zh-TW'].includes(name) && typescript.isObjectLiteralExpression(prop.initializer)) {
                 visitObject(prop.initializer);
             }
         }
@@ -190,10 +190,7 @@ function collectDescriptionEdits(sourceFile: typescript.SourceFile): Description
             continue;
         }
         for (const decl of stmt.declarationList.declarations) {
-            if (!isTargetTypedDeclaration(decl)) {
-                continue;
-            }
-            if (decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
+            if (isTargetTypedDeclaration(decl) && decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
                 visitObject(decl.initializer);
             }
         }

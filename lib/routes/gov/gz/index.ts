@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -13,15 +12,8 @@ const urlMap = {
     zcjd: 'zcjd/zcjd',
 };
 
-export const route: Route = {
-    path: '/gz/:channel/:category',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
-    const channel = ctx.req.param('channel');
+export async function handler(ctx) {
+    const channel = ctx.req.param('channel') ?? ctx.req.path.split('/', 4)[3];
     const category = ctx.req.param('category');
     const url = `${rootUrl}/${channel}/${urlMap[category]}/`;
     const response = await got(url);

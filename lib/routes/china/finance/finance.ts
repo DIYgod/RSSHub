@@ -56,7 +56,7 @@ async function handler(ctx) {
     const $ = load(data);
     const categoryTitle = $('.list-hd strong').text();
     const listCategory = `中华网-财经-${categoryTitle}新闻`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
     const detailsUrls = $('.item-con-inner')
         .toArray()
         .map((item) => {
@@ -77,7 +77,7 @@ async function handler(ctx) {
                     title: $d('.article_title').text(),
                     link: item.link,
                     description: $d('#js_article_content').html(),
-                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), +8),
+                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), 8),
                     author: $d(' div.article_info > span.source').text(),
                     category: listCategory,
                 };

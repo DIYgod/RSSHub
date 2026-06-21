@@ -60,7 +60,7 @@ function fetchArticle(item) {
         const $ = cheerio.load(response);
 
         $('.original-title, .lookall-box').remove();
-        item.author = item.author || $('span[data-role="original-link"] a').text();
+        item.author ||= $('span[data-role="original-link"] a').text();
         item.pubDate = timezone(parseDate($('meta[itemprop="dateUpdate"]').attr('content')), 8);
 
         if (/window\.sohu_mp\.article_video/.test($('script').text())) {
@@ -117,7 +117,7 @@ async function handler(ctx) {
     const suv = pageResponse.headers
         ?.getSetCookie()
         .find((e) => e.startsWith('SUV'))
-        ?.split(';')[0];
+        ?.split(';', 1)[0];
     const $ = cheerio.load(pageResponse._data);
 
     const CBDRenderConst = JSON.parse(

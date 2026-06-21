@@ -14,7 +14,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = '9' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://dbaplus.cn';
     const targetUrl: string = new URL(`news-${id}-1.html`, baseUrl).href;
@@ -113,14 +113,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                     category: categories,
                     author: authors,
                     content: {
                         html: description,
                         text: description,
                     },
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : item.updated,
+                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                     language,
                 };
 
@@ -135,13 +135,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const description: string = $('meta[name="description"]').attr('content') ?? '';
 
     return {
-        title: $('title').text().split(/：/)[0],
+        title: $('title').text().split(/：/, 1)[0],
         description,
         link: targetUrl,
         item: items,
         allowEmpty: true,
         image: $('div.navbar-header img').attr('src'),
-        author: description.split(/：/)[0],
+        author: description.split(/：/, 1)[0],
         language,
         id: targetUrl,
     };

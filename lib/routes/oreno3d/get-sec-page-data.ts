@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 const rootUrl = 'https://oreno3d.com';
 
-async function sync_detail(link) {
+export const sync_detail = async (link) => {
     // 主选择器
     const sec_page_selector = 'article.g-main-video-article';
     // 分条选择器
@@ -71,6 +71,4 @@ async function sync_detail(link) {
         iwara_link,
         oreno3d_link: link,
     };
-}
-
-export default sync_detail;
+};

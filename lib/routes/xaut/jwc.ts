@@ -55,8 +55,8 @@ async function handler(ctx) {
             item = $(item);
             const link = item
                 .attr('href')
-                .replace(/^\.\./, rootUrl)
-                .replace(/^(info)/, rootUrl + 'info');
+                .replace(/^\.\./, () => rootUrl)
+                .replace(/^(info)/, () => rootUrl + 'info');
             return {
                 title: item.find('em').text(),
                 link,

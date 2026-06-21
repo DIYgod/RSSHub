@@ -15,7 +15,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'main/noticeannouncement/cfmmcnotice' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'http://www.cfmmc.com';
     const apiUrl = new URL('servlet/json', rootUrl).href;
@@ -47,7 +47,7 @@ async function handler(ctx) {
         response.results?.[0].data.slice(0, limit).map((item) => ({
             title: item.title,
             link: new URL(item.url, rootUrl).href,
-            pubDate: timezone(parseDate(item.publish_date), +8),
+            pubDate: timezone(parseDate(item.publish_date), 8),
         })) ?? [];
 
     items = await Promise.all(

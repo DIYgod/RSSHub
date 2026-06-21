@@ -15,7 +15,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'xmxw' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://news.xmnn.cn';
     const currentUrl = new URL(`${category}/`, rootUrl).href;
@@ -35,7 +35,7 @@ async function handler(ctx) {
                 link: item.prop('href'),
                 description: item.find('div.abstract').html(),
                 author: item.find('div.source').text(),
-                pubDate: timezone(parseDate(item.find('div.time').text()), +8),
+                pubDate: timezone(parseDate(item.find('div.time').text()), 8),
             };
         });
 
@@ -51,7 +51,7 @@ async function handler(ctx) {
                 item.author = content('span.cont-a-src a')
                     .toArray()
                     .map((a) => content(a).text());
-                item.pubDate = timezone(parseDate(content('span.time, div.pubtime div.w').contents().first().text().trim()), +8);
+                item.pubDate = timezone(parseDate(content('span.time, div.pubtime div.w').contents().first().text().trim()), 8);
 
                 return item;
             })

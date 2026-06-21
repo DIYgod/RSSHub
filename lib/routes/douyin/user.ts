@@ -95,16 +95,15 @@ async function handler(ctx) {
             videoList = videoList.map((item) => proxyVideo(item, relay));
         }
         let duration = post.video?.duration;
-        duration = duration && duration / 1000;
+        duration &&= duration / 1000;
         let img;
         // if (!embed) {
         //     img = post.video && post.video.dynamicCover; // dynamic cover (webp)
         // }
-        img =
-            img ||
+        img ||=
             post.video?.cover?.url_list.at(-1) || // HD
             post.video?.origin_cover?.url_list.at(-1); // LD
-        img = img && resolveUrl(img);
+        img &&= resolveUrl(img);
 
         // render description
         const desc = post.desc?.replaceAll('\n', '<br>');
@@ -113,7 +112,7 @@ async function handler(ctx) {
         const description = templates.desc({ desc, media });
 
         return {
-            title: post.desc.split('\n')[0],
+            title: post.desc.split('\n', 1)[0],
             description,
             link: `https://www.douyin.com/video/${post.aweme_id}`,
             pubDate: parseDate(post.create_time * 1000),

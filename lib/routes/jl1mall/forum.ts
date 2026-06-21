@@ -24,7 +24,8 @@ const findMainIds = (data: readonly any[], searchKey: string): MainIdsResult => 
                         racer2: grandParentMainId,
                         racer3: item.mainId as string,
                     };
-                } else if (parentMainId !== undefined) {
+                }
+                if (parentMainId !== undefined) {
                     return {
                         name: item.name as string,
                         racer2: item.mainId as string,
@@ -54,7 +55,7 @@ const findMainIds = (data: readonly any[], searchKey: string): MainIdsResult => 
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '2', key } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://www.jl1mall.com';
     const targetUrl: string = new URL('forum', baseUrl).href;
@@ -99,7 +100,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+            pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
             link: linkUrl,
             category: categories,
             author: authors,
@@ -111,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            updated: updated ? timezone(parseDate(updated), +8) : undefined,
+            updated: updated ? timezone(parseDate(updated), 8) : undefined,
             language,
         };
 

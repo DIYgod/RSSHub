@@ -15,7 +15,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const filter = ctx.req.param('filter');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const filters = parseFilterStr(filter);
     const filtersWithPair = await bakeFiltersWithPair(filters);

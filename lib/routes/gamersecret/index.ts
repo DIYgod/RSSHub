@@ -91,7 +91,7 @@ async function handler(ctx) {
                 });
 
                 item.author = content('.jeg_meta_author').text().replace(/by/, '');
-                item.pubDate = timezone(parseDate(detailResponse.data.match(/datePublished":"(.*)","dateModified/)[1]), +8);
+                item.pubDate = timezone(parseDate(detailResponse.data.match(/datePublished":"(.*)","dateModified/)[1]), 8);
                 item.description = content('.thumbnail-container').html() + content('.elementor-text-editor, .content-inner').html();
 
                 return item;

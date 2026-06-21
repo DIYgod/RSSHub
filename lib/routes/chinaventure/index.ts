@@ -57,13 +57,14 @@ async function handler(ctx) {
         url: currentUrl,
     });
     const $ = load(response.data);
+    const limit = ctx.req.query('limit');
     const list = $('a', '.common_newslist_pc')
         .filter((element) => $(element).attr('href'))
         .toArray()
         .map((item) => ({
             link: rootUrl + $(item).attr('href'),
         }))
-        .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 20) : 20);
+        .slice(0, limit ? Number.parseInt(limit) : 20);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -76,7 +77,7 @@ async function handler(ctx) {
                 item.title = content('h1.maintitle_pc').text();
                 item.description = content('div.article_slice_pc').html();
                 item.author = content('div.source_author').text();
-                item.pubDate = timezone(parseDate(content('div.releaseTime').text()), +8);
+                item.pubDate = timezone(parseDate(content('div.releaseTime').text()), 8);
                 return item;
             })
         )

@@ -79,7 +79,7 @@ async function handler(ctx) {
     }
     platform = undefined;
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://apps.apple.com';
     const currentUrl = new URL(`${country}/app/${id}`, rootUrl).href;
@@ -129,8 +129,7 @@ async function handler(ctx) {
         image = platformAttribute.iconArtwork?.url?.replace('{w}x{h}{c}.{f}', '3000x3000bb.webp');
     } else {
         title = appName;
-        for (const pid of Object.keys(platformAttributes)) {
-            const platformAttribute = platformAttributes[pid];
+        for (const [pid, platformAttribute] of Object.entries(platformAttributes)) {
             items = [
                 ...items,
                 ...platformAttribute.versionHistory.map((v) => ({

@@ -11,7 +11,7 @@ async function getData(category, id) {
 
 function combDate(date, time) {
     // combine date and time, return a Date object
-    return timezone(parseDate(date + ' ' + time), +8);
+    return timezone(parseDate(date + ' ' + time), 8);
 }
 
 export const route: Route = {
@@ -45,7 +45,7 @@ async function handler(ctx) {
     const data = await getData(categoryMap[category], id);
     const items = data.data.map((item) => ({
         title: item.title,
-        pubDate: combDate(item.showDate, item.time.split(' ')[0]),
+        pubDate: combDate(item.showDate, item.time.split(' ', 1)[0]),
         description: item.programSeries.content || item.detail,
         itunes_item_image: item.programUrl,
         itunes_duration: item.duration,

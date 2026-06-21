@@ -85,7 +85,7 @@ async function handler(ctx) {
         default:
             items = response.data.data[category].map((item) => {
                 let timeArray = item.media_time && item.media_time.trim().split(/\D+/, 3);
-                timeArray = timeArray && timeArray.filter((item) => item !== '');
+                timeArray &&= timeArray.filter((item) => item !== '');
                 let itunes_duration;
                 if (timeArray) {
                     itunes_duration = 0;
@@ -102,7 +102,7 @@ async function handler(ctx) {
                     enclosure_length: item.media_size,
                     itunes_duration,
                     enclosure_type: 'audio/mpeg',
-                    pubDate: Number.isNaN(+item.created_at) ? timezone(parseDate(item.created_at), +8) : parseDate(item.created_at * 1000),
+                    pubDate: Number.isNaN(+item.created_at) ? timezone(parseDate(item.created_at), 8) : parseDate(item.created_at * 1000),
                 };
             });
     }

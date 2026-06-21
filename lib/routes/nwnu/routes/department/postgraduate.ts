@@ -122,7 +122,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/department/postgraduate/2701',
+    example: '/nwnu/department/postgraduate/2701',
     radar: [
         {
             source: ['yjsy.nwnu.edu.cn/:column/list.htm'],

@@ -46,7 +46,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const proma = ctx.req.param('proma');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const title = '晚点';
     const defaultTitle = '最新报道';
@@ -66,7 +66,7 @@ async function handler(ctx) {
         form: {
             page: 1,
             limit,
-            programa: Number.parseInt(proma, 10),
+            programa: Number(proma),
         },
     });
 
@@ -93,7 +93,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.title = item.title ?? content('div.article-header-title').text();
+                item.title ??= content('div.article-header-title').text();
                 item.description = content('#select-main').html().replaceAll('<p><br></p>', '');
                 item.author = content('div.article-header-author div.author-link a.label').first().text();
                 item.category = item.category.filter(Boolean);
@@ -105,7 +105,7 @@ async function handler(ctx) {
                     item.pubDate = /\d+月\d+日/.test(pubDate) ? parseDate(pubDate, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm']) : parseRelativeDate(pubDate);
                 }
 
-                item.pubDate = timezone(item.pubDate, +8);
+                item.pubDate = timezone(item.pubDate, 8);
                 item.comments = commentResponse.data?.length() ?? 0;
 
                 return item;

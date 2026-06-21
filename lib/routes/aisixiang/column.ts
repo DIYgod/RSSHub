@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -28,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const currentUrl = new URL(`/data/search?column=${id}`, rootUrl).href;
 
@@ -49,13 +48,13 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
-                author: a.text().split('：')[0],
-                pubDate: timezone(parseDate(item.find('span').text()), +8),
+                author: a.text().split('：', 1)[0],
+                pubDate: timezone(parseDate(item.find('span').text()), 8),
             };
         });
 
     return {
-        item: await ProcessFeed(limit, cache.tryGet, items),
+        item: await ProcessFeed(limit, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
         description: $('div.tips').text(),

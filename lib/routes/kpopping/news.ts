@@ -14,7 +14,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '2', 10);
+    const limit = Number(ctx.req.query('limit') ?? '2');
 
     const baseUrl = 'https://kpopping.com';
     const targetUrl: string = new URL(`news${filter ? `/${filter}` : ''}`, baseUrl).href;
@@ -50,12 +50,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'MMM D, YYYY h:mma'), +8) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'MMM D, YYYY h:mma'), 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
                 doi: $el.find('meta[name="citation_doi"]').attr('content'),
-                updated: upDatedStr ? timezone(parseDate(upDatedStr, 'MMM D, YYYY h:mma'), +8) : undefined,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr, 'MMM D, YYYY h:mma'), 8) : undefined,
                 language,
             };
 

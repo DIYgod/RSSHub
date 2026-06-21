@@ -69,7 +69,7 @@ async function handler(ctx: Context): Promise<Data> {
                     handle,
                     description,
                     built_for_shopify: $(item).find('span.built-for-shopify-badge').length > 0,
-                    ratting: rattingMatch ? Number.parseFloat(rattingMatch[0]) : 0,
+                    ratting: rattingMatch ? Number(rattingMatch[0]) : 0,
                     ratting_count: rattingCountMatch ? Number(rattingCountMatch[0]) : 0,
                 },
             };

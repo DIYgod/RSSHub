@@ -71,7 +71,7 @@ async function handler(ctx) {
                         pubDate: Date.now(),
                     };
                 }
-                const pubDate = timezone(parseDate(dateText), +8);
+                const pubDate = timezone(parseDate(dateText), 8);
 
                 return {
                     title,

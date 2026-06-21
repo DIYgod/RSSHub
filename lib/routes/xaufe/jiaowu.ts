@@ -59,7 +59,10 @@ async function handler(ctx) {
             item = $(item);
             const pubDate = item.children('span').text();
             const title = item.find('a em').text();
-            const link = item.children('a').attr('href').replaceAll('../', rootMeta.url);
+            const link = item
+                .children('a')
+                .attr('href')
+                .replaceAll('../', () => rootMeta.url);
             return {
                 pubDate: parseDate(pubDate),
                 title,

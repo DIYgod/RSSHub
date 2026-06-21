@@ -55,7 +55,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const rawDate = $('div.read-hd p span').eq(2).text();
-                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), +8);
+                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), 8);
 
                 return item;
             })

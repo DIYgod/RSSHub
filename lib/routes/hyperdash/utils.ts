@@ -33,7 +33,8 @@ export function formatCurrency(value: number | null): string {
     }
     if (Math.abs(value) >= 1e6) {
         return `$${(value / 1e6).toFixed(2)}M`;
-    } else if (Math.abs(value) >= 1e3) {
+    }
+    if (Math.abs(value) >= 1e3) {
         return `$${(value / 1e3).toFixed(2)}K`;
     }
     return `$${value.toFixed(2)}`;

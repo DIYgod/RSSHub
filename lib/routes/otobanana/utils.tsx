@@ -1,6 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -8,8 +9,8 @@ const domain = 'otobanana.com';
 const apiBase = `https://api.${domain}`;
 const baseUrl = `https://${domain}`;
 
-const getUserInfo = (id, tryGet) =>
-    tryGet(`otobanana:user:${id}`, async () => {
+const getUserInfo = (id) =>
+    cache.tryGet(`otobanana:user:${id}`, async () => {
         const { data } = await got(`${apiBase}/users/${id}/`);
         return data;
     });
@@ -57,7 +58,7 @@ const renderPost = ({ id, type_label: type, cast, /** livestream  */ message /**
             return renderCast(cast);
         case 'message':
             return {
-                title: message.text.split('\n')[0],
+                title: message.text.split('\n', 1)[0],
                 description: message.text.replaceAll('\n', '<br>'),
                 pubDate: parseDate(message.created_at),
                 link: `https://otobanana.com/${type}/${id}`,

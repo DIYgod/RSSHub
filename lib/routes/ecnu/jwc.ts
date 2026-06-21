@@ -33,7 +33,7 @@ export const route: Route = {
             .toArray()
             .map((el) => ({
                 pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+                link: new URL($(el).find('a').attr('href'), baseUrl).href,
                 title: $(el).find('a').text(),
             }));
         const items = await Promise.all(
@@ -43,18 +43,21 @@ export const route: Route = {
                         try {
                             const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                            item.description = $('div.article')
+                                ?.html()
+                                ?.replaceAll('src="/', () => `src="${baseUrl}/`)
+                                ?.replaceAll('href="/', () => `href="${baseUrl}/`)
+                                ?.trim();
                             return item;
                         } catch {
                             // intranet
                             item.description = '请进行统一身份认证之后再访问';
                             return item;
                         }
-                    } else {
-                        // file to download
-                        item.description = '点击认证后访问内容';
-                        return item;
                     }
+                    // file to download
+                    item.description = '点击认证后访问内容';
+                    return item;
                 })
             )
         );

@@ -59,7 +59,7 @@ async function handler(ctx: Context): Promise<Data> {
     const query = filters.get('query') ?? '';
     const category = filters.get('category') ?? ('theses' as keyof typeof categoryMap);
 
-    if (!(category in categoryMap)) {
+    if (!Object.hasOwn(categoryMap, category)) {
         throw new InvalidParameterError('Invalid category');
     }
     let title = categoryMap[category] as string;
@@ -76,12 +76,12 @@ async function handler(ctx: Context): Promise<Data> {
 
     if (subject) {
         data.filters.subject = subject;
-        title = `${title}「${subject}」`;
+        title += `「${subject}」`;
     }
 
     if (columns) {
         data.filters.columns = columns;
-        title = `${title}「${columns}」`;
+        title += `「${columns}」`;
     }
 
     const dataURL = `${baseURL}/api/${category === 'careers' ? 'articles' : category}/search`;

@@ -85,12 +85,14 @@ async function handler(ctx) {
     const resultItems = [];
 
     function handleCard(ctx, card, resultItems) {
-        if (card.card_type === '9' && 'mblog' in card) {
-            const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);
-            resultItems.push(formatExtended);
+        if (card.card_type !== '9' || !('mblog' in card)) {
+            return;
         }
+        const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);
+        resultItems.push(formatExtended);
     }
-    for (const card of containerData?.cards ?? []) {
+    const cards = containerData?.cards ?? [];
+    for (const card of cards) {
         handleCard(ctx, card, resultItems);
         if (!('card_group' in card)) {
             continue;

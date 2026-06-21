@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://chinese.joins.com';
     const currentUrl = new URL(`news/articleList.html?view_type=s${category ? `&sc_section_code=${category}` : ''}`, rootUrl).href;
@@ -29,9 +29,9 @@ export const handler = async (ctx) => {
 
             return {
                 title: item.find('strong').text(),
-                pubDate: timezone(parseDate(item.find('div.list-dated').text().split(/\|/).pop()), +8),
+                pubDate: timezone(parseDate(item.find('div.list-dated').text().split(/\|/).pop()), 8),
                 link: new URL(item.find('a.links').prop('href'), rootUrl).href,
-                author: item.find('div.list-dated').text().split(/\|/)[0],
+                author: item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,
             };
         });
@@ -106,7 +106,7 @@ export const route: Route = {
     url: 'chinese.joins.com',
     maintainers: ['nczitzk'],
     handler,
-    example: '/chinese',
+    example: '/joins/chinese',
     parameters: { category: '分类，默认为空，可在对应分类页 URL 中找到 `sc_section_code`' },
     description: `::: tip
 若订阅 [财经](https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1)，网址为 \`https://chinese.joins.com/news/articleList.html?sc_section_code=S1N1\`。截取 \`sc_section_code\` 的值作为参数填入，此时路由为 [\`/joins/chinese/S1N1\`](https://rsshub.app/joins/chinese/S1N1)。

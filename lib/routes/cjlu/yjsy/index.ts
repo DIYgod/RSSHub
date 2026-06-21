@@ -83,7 +83,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cate = ctx.req.param('cate');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
     const url = `${host}index/${cate}.htm`;
 
     const { page, destroy } = await getPlaywrightPage(url, {
@@ -120,7 +120,7 @@ async function handler(ctx) {
 
             return {
                 title: a.attr('title') ?? titleMap.get(cate) ?? '中量大研究生院通知',
-                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), +8),
+                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), 8),
                 link: `${host}${route}`,
                 description: '',
             };

@@ -112,9 +112,10 @@ async function handler(ctx: Context) {
                 game_versions: parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '',
             },
         });
+        const authorIds = [...new Set(versions.map((it) => it.author_id))];
         const authors = await ofetch<Author[]>('https://api.modrinth.com/v2/users', {
             query: {
-                ids: JSON.stringify([...new Set(versions.map((it) => it.author_id))]),
+                ids: JSON.stringify(authorIds),
             },
         });
         const groupedAuthors: Record<string, Author> = {};

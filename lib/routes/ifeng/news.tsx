@@ -34,7 +34,7 @@ async function handler(ctx) {
     let items = newsStream.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: timezone(parseDate(item.newsTime), +8),
+        pubDate: timezone(parseDate(item.newsTime), 8),
         description: item.thumbnails.image.pop(),
     }));
 

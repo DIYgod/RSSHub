@@ -26,7 +26,7 @@ const getCookie = async (username, password, cache) => {
 
     const { data, headers } = await got(loginUrl);
     const csrfTokenMiddleware = data.match(/name="csrfmiddlewaretoken" value="(.*?)"/)[1];
-    const csrfTokenCookie = headers['set-cookie'].map((c) => c.split(';')[0]).join('; ');
+    const csrfTokenCookie = headers['set-cookie'].map((c) => c.split(';', 1)[0]).join('; ');
 
     const login = await got.post(loginUrl, {
         headers: {
@@ -53,7 +53,7 @@ const getCookie = async (username, password, cache) => {
         return '';
     }
 
-    const userTokenCookie = login.headers['set-cookie'].map((c) => c.split(';')[0]).join('; ');
+    const userTokenCookie = login.headers['set-cookie'].map((c) => c.split(';', 1)[0]).join('; ');
 
     cache.set(
         cacheKey,

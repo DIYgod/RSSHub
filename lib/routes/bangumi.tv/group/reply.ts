@@ -57,13 +57,13 @@ async function handler(ctx) {
                 date: $el.children().first().find('small').children().remove().end().text().slice(3),
             };
         });
-    const finalLatestReplies = [...latestReplies, ...latestSubReplies].toSorted((a, b) => (a.id < b.id ? 1 : -1));
+    const finalLatestReplies = [...latestReplies, ...latestSubReplies].toSorted((a, b) => b.id.localeCompare(a.id));
 
     const postTopic = {
         title,
         description: $('.postTopic .topic_content').html(),
         author: $('.postTopic .inner strong a').first().text(),
-        pubDate: timezone(parseDate($('.postTopic .re_info small').text().trim().slice(5)), +8),
+        pubDate: timezone(parseDate($('.postTopic .re_info small').text().trim().slice(5)), 8),
         link,
     };
 
@@ -74,7 +74,7 @@ async function handler(ctx) {
             ...finalLatestReplies.map((c) => ({
                 title: `${c.author} 回复了小组话题《${title}》`,
                 description: c.content,
-                pubDate: timezone(parseDate(c.date), +8),
+                pubDate: timezone(parseDate(c.date), 8),
                 author: c.author,
                 link: `${link}#${c.id}`,
             })),

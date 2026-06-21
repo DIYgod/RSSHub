@@ -89,7 +89,7 @@ async function handler(ctx) {
             author,
             category: [bookStatus],
             guid: `jjwxc-${id}-${bookId}#${bookWords}`,
-            pubDate: timezone(parseDate(bookUpdatedTime), +8),
+            pubDate: timezone(parseDate(bookUpdatedTime), 8),
         },
     ];
 

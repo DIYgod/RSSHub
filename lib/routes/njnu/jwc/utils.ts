@@ -12,7 +12,7 @@ async function loadContent(link) {
     const $ = load(response.data);
     const dateStr = $('span+ span').text();
     // 解析日期
-    const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD', 'zh-cn'), +8);
+    const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD', 'zh-cn'), 8);
     // 提取内容
     const description = $('form > div').html();
 

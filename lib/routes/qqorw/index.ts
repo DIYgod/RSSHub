@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://qqorw.cn';
     const currentUrl = new URL(category, rootUrl).href;
@@ -59,8 +59,8 @@ async function handler(ctx) {
                     .find('a.label')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), +8),
-                upvotes: item.find('span.count').text() ? Number.parseInt(item.find('span.count').text(), 10) : 0,
+                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), 8),
+                upvotes: item.find('span.count').text() ? Number(item.find('span.count').text()) : 0,
             };
         });
 
@@ -79,8 +79,8 @@ async function handler(ctx) {
                 item.category = content('#mute-category')
                     .toArray()
                     .map((c) => content(c).text().trim());
-                item.pubDate = item.pubDate ?? parseDate(content('i.fa-clock-o').parent().text().trim());
-                item.upvotes = content('#Addlike span.count').text() ? Number.parseInt(content('#Addlike span.count').text(), 10) : item.upvotes;
+                item.pubDate ??= parseDate(content('i.fa-clock-o').parent().text().trim());
+                item.upvotes = content('#Addlike span.count').text() ? Number(content('#Addlike span.count').text()) : item.upvotes;
 
                 return item;
             })

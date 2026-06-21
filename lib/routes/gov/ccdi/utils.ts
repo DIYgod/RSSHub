@@ -45,7 +45,7 @@ const parseNewsList = async (url, selector, ctx) => {
         });
     const title = $('.other_Location')
         .text()
-        .replace(/(.+)首页/, owner);
+        .replace(/(.+)首页/, () => owner);
     return { list, title };
 };
 
@@ -74,7 +74,7 @@ const parseArticle = async (item) => {
         const $ = load(data);
         const title = $('.daty, .source-box').text().trim();
         item.author = title.match(/来源：(.*)发布时间/s)?.[1].trim() ?? owner;
-        item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), +8);
+        item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), 8);
 
         // Change the img src from relative to absolute for a better compatibility
         $('.content, .bom-box')

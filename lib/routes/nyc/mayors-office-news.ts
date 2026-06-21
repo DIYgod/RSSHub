@@ -69,7 +69,7 @@ Categories
         const data = await ofetch(`https://www.nyc.gov/bin/nyc/articlesearch.json?pageSize=10&currentPage=1&types=${types}&categories=${categories}`);
         const list = data.results.map((item) => {
             const imageUrl = item.articleImage ? baseUrl + item.articleImage : undefined;
-            const imageExtension = item.articleImage ? item.articleImage.split('.')[1] : undefined;
+            const imageExtension = item.articleImage ? item.articleImage.split('.', 2)[1] : undefined;
 
             return {
                 title: item.title,
@@ -113,7 +113,7 @@ Categories
 
         if (categories) {
             title = types ? `${title} (` : 'All (';
-            title = `${title}${spacedToTitleCase(fixedCategories)})`;
+            title += `${spacedToTitleCase(fixedCategories)})`;
         }
 
         // Description
@@ -121,20 +121,20 @@ Categories
         description = types ? toTitleCase(cleanedTypes) : 'News';
 
         if (categories) {
-            description = `${description} categorized as ${fixedCategories}`;
+            description += ` categorized as ${fixedCategories}`;
         }
 
         // Link
         let link = 'https://www.nyc.gov/mayors-office/news/?';
         if (types) {
-            link = `${link}types=${types.replaceAll(',', '&types=')}`;
+            link += `types=${types.replaceAll(',', '&types=')}`;
         }
 
         if (categories) {
             if (types) {
-                link = `${link}&`;
+                link += '&';
             }
-            link = `${link}categories=${categories.replaceAll(',', '&categories=')}`;
+            link += `categories=${categories.replaceAll(',', '&categories=')}`;
         }
 
         return {

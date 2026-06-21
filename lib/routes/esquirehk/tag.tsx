@@ -96,7 +96,7 @@ const renderSubpages = (subpages): string =>
                         break;
                     }
                     case 'video_block': {
-                        const videoId = page.source?.split('&')[0];
+                        const videoId = page.source?.split('&', 1)[0];
                         blocks.push(
                             <iframe
                                 key={`video-${index}`}

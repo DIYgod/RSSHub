@@ -62,7 +62,7 @@ async function handler(ctx) {
         const link = `https://www.gcores.com/radios/${id}`;
         const itunes_item_image = `https://image.gcores.com/${attributes.cover}`;
         const media_id = relationships.media.data.id;
-        const enclosure_url = new URL(audios[media_id], 'https://alioss.gcores.com/uploads/audio/').toString();
+        const enclosure_url = new URL(audios[media_id], 'https://alioss.gcores.com/uploads/audio/').href;
         const description = renderContentDescription(JSON.parse(attributes.content));
 
         return {

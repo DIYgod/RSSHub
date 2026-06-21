@@ -57,39 +57,35 @@ const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Reco
 // So abstract these tasks out into a map so that they can be dynamically executed during the login flow.
 // If there are missing tasks in the future, simply add the implementation of that task to it.
 const flowTasks = {
-    async LoginEnterUserIdentifier({ flowToken, username }) {
-        return await postTask(flowToken, 'LoginEnterUserIdentifier', {
+    LoginEnterUserIdentifier: async ({ flowToken, username }) =>
+        await postTask(flowToken, 'LoginEnterUserIdentifier', {
             enter_text: {
                 suggestion_id: null,
                 text: username,
                 link: 'next_link',
             },
-        });
-    },
-    async LoginEnterPassword({ flowToken, password }) {
-        return await postTask(flowToken, 'LoginEnterPassword', {
+        }),
+    LoginEnterPassword: async ({ flowToken, password }) =>
+        await postTask(flowToken, 'LoginEnterPassword', {
             enter_password: {
                 password,
                 link: 'next_link',
             },
-        });
-    },
-    async LoginEnterAlternateIdentifierSubtask({ flowToken, phoneOrEmail }) {
-        return await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
+        }),
+    LoginEnterAlternateIdentifierSubtask: async ({ flowToken, phoneOrEmail }) =>
+        await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
             enter_text: {
                 suggestion_id: null,
                 text: phoneOrEmail,
                 link: 'next_link',
             },
-        });
-    },
-    async AccountDuplicationCheck({ flowToken }) {
-        return await postTask(flowToken, 'AccountDuplicationCheck', {
+        }),
+    AccountDuplicationCheck: async ({ flowToken }) =>
+        await postTask(flowToken, 'AccountDuplicationCheck', {
             check_logged_in_account: {
                 link: 'AccountDuplicationCheck_false',
             },
-        });
-    },
+        }),
     async LoginTwoFactorAuthChallenge({ flowToken, authenticationSecret }) {
         const token = await generate({ secret: authenticationSecret });
         return await postTask(flowToken, 'LoginTwoFactorAuthChallenge', {
@@ -126,42 +122,39 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
 
                 headers['x-guest-token'] = guestToken.data.guest_token;
 
-                let task = await ofetch
-                    .raw(
-                        ENDPOINT +
-                            '?' +
-                            new URLSearchParams({
-                                flow_name: 'login',
-                                api_version: '1',
-                                known_device_token: '',
-                                sim_country_code: 'us',
-                            }).toString(),
-                        {
-                            method: 'POST',
-                            headers,
-                            body: {
-                                flow_token: null,
-                                input_flow_data: {
-                                    country_code: null,
-                                    flow_context: {
-                                        referrer_context: {
-                                            referral_details: 'utm_source=google-play&utm_medium=organic',
-                                            referrer_url: '',
-                                        },
-                                        start_location: {
-                                            location: 'deeplink',
-                                        },
+                const { headers: _headers, _data } = await ofetch.raw(
+                    ENDPOINT +
+                        '?' +
+                        new URLSearchParams({
+                            flow_name: 'login',
+                            api_version: '1',
+                            known_device_token: '',
+                            sim_country_code: 'us',
+                        }).toString(),
+                    {
+                        method: 'POST',
+                        headers,
+                        body: {
+                            flow_token: null,
+                            input_flow_data: {
+                                country_code: null,
+                                flow_context: {
+                                    referrer_context: {
+                                        referral_details: 'utm_source=google-play&utm_medium=organic',
+                                        referrer_url: '',
                                     },
-                                    requested_variant: null,
-                                    target_user_id: 0,
+                                    start_location: {
+                                        location: 'deeplink',
+                                    },
                                 },
+                                requested_variant: null,
+                                target_user_id: 0,
                             },
-                        }
-                    )
-                    .then(({ headers: _headers, _data }) => {
-                        headers.att = _headers.get('att');
-                        return { data: _data };
-                    });
+                        },
+                    }
+                );
+                headers.att = _headers.get('att');
+                let task = { data: _data };
 
                 logger.debug('Twitter login flow start.');
                 const runTask = async ({ data }) => {
@@ -173,7 +166,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                     }
 
                     // If task does not exist in `flowTasks`, we need to implement it.
-                    if (!(subtask_id in flowTasks)) {
+                    if (!Object.hasOwn(flowTasks, subtask_id)) {
                         logger.error(`Twitter login flow task failed: unknown subtask: ${subtask_id}`);
                         return;
                     }

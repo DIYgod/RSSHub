@@ -112,7 +112,7 @@ async function handler(ctx) {
                     guid: item.id,
                     title: item.programmeTitle,
                     link: item.programmeUrl,
-                    pubDate: timezone(parseDate(item.pubTime), +8),
+                    pubDate: timezone(parseDate(item.pubTime), 8),
                     description: renderToString(
                         <video poster={item.programmeImage} controls>
                             <source src={item.programmeUrl} type="video/mp4" />
@@ -138,11 +138,13 @@ async function handler(ctx) {
 
     let name, cover;
     for (const p of response.data.data.programme_official) {
-        if (p.programmeId === id) {
-            name = p.programmeName;
-            cover = p.programmeCover;
-            break;
+        if (p.programmeId !== id) {
+            continue;
         }
+
+        name = p.programmeName;
+        cover = p.programmeCover;
+        break;
     }
 
     return {

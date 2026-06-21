@@ -57,7 +57,7 @@ const handler = async (ctx) => {
         .filter((v): v is { title: string; link: string; pubDate: Date | undefined } => !!v && !!v.title && !!v.link);
 
     // 尊重 limit 参数，默认 10（与仓库常见写法保持一致）
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '') || 10;
+    const limit = Number.parseInt(ctx.req.query('limit')) || 10;
     const limitedItems = items.slice(0, limit);
 
     const enhancedItems = await Promise.all(

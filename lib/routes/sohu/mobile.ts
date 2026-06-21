@@ -45,7 +45,7 @@ async function handler() {
         .filter((item) => item.id && item.url?.startsWith('//'))
         .map((item) => ({
             title: item.title,
-            link: new URL(item.url.split('?')[0], 'https://m.sohu.com').href,
+            link: new URL(item.url.split('?', 1)[0], 'https://m.sohu.com').href,
         }));
     const items = await Promise.all(
         list.map((item) =>
@@ -57,7 +57,7 @@ async function handler() {
                     let description = '';
                     let pubDate = '';
                     if (item.link.includes('/xtopic/')) {
-                        const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?')[0]?.replace('www.sohu.com/', 'm.sohu.com/');
+                        const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?', 1)[0]?.replace('www.sohu.com/', 'm.sohu.com/');
                         const response = await ofetch(`https:${fullArticleUrl}`);
                         const $ = cheerio.load(response);
                         description = getDescription($);
@@ -85,23 +85,24 @@ async function handler() {
 
 function extractPlateBlockNewsLists(jsonData: any) {
     const result: any[] = [];
-    for (const key of Object.keys(jsonData)) {
-        if (key.startsWith('PlateBlock')) {
-            const plateBlock = jsonData[key];
-            // 处理新闻列表
-            if (plateBlock?.param?.newsData?.list) {
-                result.push(...plateBlock.param.newsData.list);
-            }
-            // 处理焦点图数据
-            if (plateBlock?.param?.focusData?.list) {
-                result.push(...plateBlock.param.focusData.list);
-            }
-            if (plateBlock?.param?.feedData0?.list) {
-                result.push(...plateBlock.param.feedData0.list);
-            }
-            if (plateBlock?.param?.feedData1?.list) {
-                result.push(...plateBlock.param.feedData1.list);
-            }
+    for (const [key, plateBlock] of Object.entries(jsonData)) {
+        if (!key.startsWith('PlateBlock')) {
+            continue;
+        }
+
+        // 处理新闻列表
+        if (plateBlock?.param?.newsData?.list) {
+            result.push(...plateBlock.param.newsData.list);
+        }
+        // 处理焦点图数据
+        if (plateBlock?.param?.focusData?.list) {
+            result.push(...plateBlock.param.focusData.list);
+        }
+        if (plateBlock?.param?.feedData0?.list) {
+            result.push(...plateBlock.param.feedData0.list);
+        }
+        if (plateBlock?.param?.feedData1?.list) {
+            result.push(...plateBlock.param.feedData1.list);
         }
     }
     return result;

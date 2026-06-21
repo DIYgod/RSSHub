@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -61,10 +60,10 @@ async function handler(ctx) {
             };
         });
 
-    const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const out = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
-        title: '3DM - ' + $('title').text().split('_')[0],
+        title: '3DM - ' + $('title').text().split('_', 1)[0],
         description: $('meta[name="Description"]').attr('content'),
         link: url,
         item: out,

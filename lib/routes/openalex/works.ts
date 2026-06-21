@@ -34,14 +34,14 @@ export const handler = async (ctx) => {
     // Get date 14 days ago (2 weeks)
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-    const twoWeeksAgoStr = twoWeeksAgo.toISOString().split('T')[0];
+    const twoWeeksAgoStr = twoWeeksAgo.toISOString().split('T', 1)[0];
 
     // Build filter parameters
     const filters = [`publication_date:>${twoWeeksAgoStr}`, 'has_abstract:true', `primary_location.source.id:${journals}`];
 
     // Add type filter if provided
     if (type && ids) {
-        if (!filterTypeMap[type]) {
+        if (!Object.hasOwn(filterTypeMap, type)) {
             throw new Error(`Invalid type: ${type}. Must be one of: ${Object.keys(filterTypeMap).join(', ')}`);
         }
         const typeField = filterTypeMap[type];
@@ -92,7 +92,7 @@ export const handler = async (ctx) => {
             };
         })
         .filter((item) => {
-            const day = item.pubDate instanceof Date ? item.pubDate.toISOString().split('T')[0] : '';
+            const day = item.pubDate instanceof Date ? item.pubDate.toISOString().split('T', 1)[0] : '';
             const titleKey = `${item.normalizedTitle}::${day}`;
             if (seenTitleKeys.has(titleKey)) {
                 return false;

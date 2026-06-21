@@ -10,7 +10,8 @@ interface ContentNode {
 
 const TextNode = ({ node }: { node: ContentNode }) => {
     let content: JSX.Element | string = node.text ?? '';
-    for (const mark of node.marks ?? []) {
+    const marks = node.marks ?? [];
+    for (const mark of marks) {
         if (mark.type === 'bold') {
             content = <strong>{content}</strong>;
         } else if (mark.type === 'link' && mark.attrs?.href) {

@@ -74,7 +74,7 @@ async function handler(ctx) {
     const list = contents.records.map((item) => ({
         title: item.title,
         link: `${baseUrl}${item.draftPath}`,
-        pubDate: timezone(parseDate(item.releaseDate, 'YYYY-MM-DD'), +8),
+        pubDate: timezone(parseDate(item.releaseDate, 'YYYY-MM-DD'), 8),
         contentId: item.contentId,
     }));
 
@@ -101,7 +101,7 @@ async function handler(ctx) {
                 });
 
                 item.description = article.html();
-                item.pubDate = timezone(parseDate($('.AC-l span').text().trim(), 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate($('.AC-l span').text().trim(), 'YYYY-MM-DD HH:mm'), 8);
 
                 return item;
             })
@@ -109,7 +109,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${channels[channelId] ? channels[channelId].title + ' - ' : ''}中国货币网`,
+        title: `${Object.hasOwn(channels, channelId) ? channels[channelId].title + ' - ' : ''}中国货币网`,
         link: `${baseUrl}${channels[channelId]?.urlPath ?? ''}`,
         item: items,
     };

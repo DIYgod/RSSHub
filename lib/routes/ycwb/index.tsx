@@ -62,7 +62,7 @@ async function handler(ctx) {
                 ) : null}
             </>
         ),
-        pubDate: timezone(parseDate(item.PUBTIME), +8),
+        pubDate: timezone(parseDate(item.PUBTIME), 8),
         link: item.PUBURL,
         nodeName: item.NODENAME,
     }));
@@ -90,7 +90,7 @@ async function handler(ctx) {
                     }
                     // Filter author from comments
                     if (/author/.test(el.data)) {
-                        item.author = el.data.split('<author>')[1].split('</author>')[0];
+                        item.author = el.data.split('<author>', 2)[1].split('</author>', 1)[0];
                     }
                 });
 

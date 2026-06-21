@@ -67,7 +67,7 @@ async function handler() {
                 content('h1, .intro').remove();
 
                 item.description = content('.news').html();
-                item.pubDate = timezone(parseDate(content('meta[property="og:release_date"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[property="og:release_date"]').attr('content')), 8);
 
                 return item;
             })

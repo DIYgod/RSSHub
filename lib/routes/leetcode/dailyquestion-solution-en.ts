@@ -146,7 +146,7 @@ async function handler() {
         }
         const matched = s.match(new RegExp(pattern, 'g'));
         const fn = async (m) => {
-            const relaurl = m.match(pattern)[1].split(':')[0];
+            const relaurl = m.match(pattern)[1].split(':', 1)[0];
             const fullurl = path.resolve('/' + questionUrl + 'solution/', relaurl).slice(1);
             const pngList = (
                 await got({
@@ -159,7 +159,7 @@ async function handler() {
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
         for (let i = 0; i < matched.length; i++) {
-            s = s.replace(matched[i], strs[i]);
+            s = s.replace(matched[i], () => strs[i]);
         }
         return s;
     };
@@ -205,7 +205,7 @@ async function handler() {
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
         for (let i = 0; i < matched.length; i++) {
-            s = s.replace(matched[i], strs[i]);
+            s = s.replace(matched[i], () => strs[i]);
         }
         return s;
     };
@@ -226,13 +226,13 @@ async function handler() {
                 title: `DailyQuestion-${question.title}${diffEmoji}`,
                 link: questionUrl,
                 description: question.content,
-                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), +8),
+                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), 8),
             },
             {
                 title: `Solution-${question.title}`,
                 link: `${questionUrl}solution/`,
                 description: md.render(article.content),
-                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), +8),
+                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), 8),
                 author: 'leetcode',
             },
         ],

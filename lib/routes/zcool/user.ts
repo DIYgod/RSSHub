@@ -81,7 +81,7 @@ async function handler(ctx) {
     return {
         title: data.props.pageProps.seo.title,
         description: data.props.pageProps.seo.description,
-        image: data.props.pageProps.userInfo.avatar.includes('?x-oss-process') ? data.props.pageProps.userInfo.avatar.split('?')[0] : data.props.pageProps.userInfo.avatar,
+        image: data.props.pageProps.userInfo.avatar.includes('?x-oss-process') ? data.props.pageProps.userInfo.avatar.split('?', 1)[0] : data.props.pageProps.userInfo.avatar,
         link: pageUrl,
         item: items,
     };

@@ -30,7 +30,7 @@ async function handler(ctx) {
         .toArray()
         .flatMap((item) => {
             item = $(item);
-            const dateStr = item.find('h2').text().split(' ')[0];
+            const dateStr = item.find('h2').text().split(' ', 1)[0];
             return item
                 .find('a')
                 .toArray()
@@ -39,7 +39,7 @@ async function handler(ctx) {
                     return {
                         title: `${item.previousSibling.data.replace(' | ', '')} ${$(item).text()}`,
                         link: `${rootUrl}${href}`,
-                        pubDate: timezone(parseDate(`${href.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日'), +8),
+                        pubDate: timezone(parseDate(`${href.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日'), 8),
                     };
                 });
         });

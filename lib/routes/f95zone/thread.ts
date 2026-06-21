@@ -51,7 +51,7 @@ Note: If you want to track a specific post's content changes (e.g., first post w
 
         const headers = {
             referer: baseUrl,
-            ...(config.f95zone.cookie ? { cookie: config.f95zone.cookie } : {}),
+            ...(config.f95zone.cookie && { cookie: config.f95zone.cookie }),
         };
 
         const firstPageResponse = await ofetch(threadLink, { headers });
@@ -59,7 +59,7 @@ Note: If you want to track a specific post's content changes (e.g., first post w
         const title = $firstPage('h1.p-title-value').text().trim();
 
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
-        const totalPages = lastPageLink ? Number.parseInt(lastPageLink.match(/page-(\d+)/)?.[1] || '1', 10) : 1;
+        const totalPages = lastPageLink ? Number(lastPageLink.match(/page-(\d+)/)?.[1] || '1') : 1;
 
         const extractPosts = ($: ReturnType<typeof load>): DataItem[] =>
             $('article.message')

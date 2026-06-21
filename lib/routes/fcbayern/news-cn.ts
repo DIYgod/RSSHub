@@ -25,7 +25,7 @@ export const cnNewsHander = async (limit: number) => {
         title: item.title,
         link: item.url,
         pubDate: timezone(parseDate(item.time), 8),
-        image: item.pic?.split('?')[0],
+        image: item.pic?.split('?', 1)[0],
     }));
 
     return {

@@ -10,7 +10,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { id = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.eshukan.com';
     const currentUrl = new URL(`academic/index.aspx?cid=${id}`, rootUrl).href;
@@ -42,7 +42,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                 link: new URL(a.prop('href'), currentUrl).href,
                 content: {
                     html: description,
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
                 item.author = $$('div.author a').text();
                 item.content = {
                     html: description,

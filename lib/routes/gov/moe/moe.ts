@@ -16,7 +16,7 @@ const typesIdMap = [
 ];
 
 export const route: Route = {
-    path: '/moe/:type',
+    path: '/:type',
     categories: ['government'],
     example: '/gov/moe/policy_anal',
     parameters: { type: '分类名' },
@@ -42,10 +42,12 @@ async function handler(ctx) {
     let name = '';
 
     for (const item of typesIdMap) {
-        if (item.type === type) {
-            id = item.id;
-            name = item.name;
+        if (item.type !== type) {
+            continue;
         }
+
+        id = item.id;
+        name = item.name;
     }
 
     if (id === '') {

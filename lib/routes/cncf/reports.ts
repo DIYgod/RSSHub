@@ -38,7 +38,7 @@ async function handler() {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.parseDate = parseDate(content('p.is-style-spaced-uppercase').splice(':')[1]);
+                item.parseDate = parseDate(content('p.is-style-spaced-uppercase').text().split(':', 2)[1]);
                 item.description = content('article > div.has-background').html();
 
                 return item;

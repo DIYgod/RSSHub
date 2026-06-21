@@ -68,7 +68,7 @@ async function handler(ctx) {
                           const content = load(detailResponse.data);
 
                           item.description = content('.cont_main').html();
-                          item.pubDate = timezone(parseDate(content('.timeTag').text()), +8);
+                          item.pubDate = timezone(parseDate(content('.timeTag').text()), 8);
 
                           return item;
                       })
@@ -89,12 +89,12 @@ async function handler(ctx) {
                       title,
                       description,
                       link: currentUrl,
-                      pubDate: timezone(parseDate(`${item.parent().find('dt').text()} ${item.text()}`), +8),
+                      pubDate: timezone(parseDate(`${item.parent().find('dt').text()} ${item.text()}`), 8),
                   };
               });
 
     return {
-        title: $('title').text().split('，')[0],
+        title: $('title').text().split('，', 1)[0],
         link: currentUrl,
         item: items,
     };

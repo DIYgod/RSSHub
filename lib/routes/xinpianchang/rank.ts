@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { getData, processItems, rootUrl } from './util';
@@ -32,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 60;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 60;
 
     const apiRankUrl = new URL(`api/xpc/v2/rank/${category}`, rootUrl).href;
 
@@ -42,7 +41,7 @@ async function handler(ctx) {
     const currentUrl = current.web_link;
     const currentName = `${current.code}-${current.year}-${current.index}`;
 
-    const { data, response: currentResponse } = await getData(currentUrl, cache.tryGet);
+    const { data, response: currentResponse } = await getData(currentUrl);
 
     const buildId = currentResponse.match(/\/static\/(\w+)\/_buildManifest\.js/)[1];
 
@@ -52,7 +51,7 @@ async function handler(ctx) {
 
     let items = response.pageProps.rankList;
 
-    items = await processItems(items.slice(0, limit), cache.tryGet);
+    items = await processItems(items.slice(0, limit));
 
     return {
         ...data,

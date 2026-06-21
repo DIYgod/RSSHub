@@ -46,7 +46,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://jinse.com.cn';
     const rootApiUrl = 'https://api.jinse.com.cn';

@@ -55,11 +55,13 @@ const formatObject = (obj: unknown) => {
 
     let result = '';
     for (const key in obj as Record<string, unknown>) {
-        if (Object.hasOwn(obj, key)) {
-            const value = (obj as Record<string, unknown>)[key];
-            if (value !== null && value !== '') {
-                result += `<div><strong>${escapeHTML(key)}:</strong> ${escapeHTML(value)}</div>`;
-            }
+        if (!Object.hasOwn(obj, key)) {
+            continue;
+        }
+
+        const value = (obj as Record<string, unknown>)[key];
+        if (value !== null && value !== '') {
+            result += `<div><strong>${escapeHTML(key)}:</strong> ${escapeHTML(value)}</div>`;
         }
     }
 

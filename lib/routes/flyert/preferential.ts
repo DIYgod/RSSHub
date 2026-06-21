@@ -61,7 +61,7 @@ async function handler() {
                 content('div.artical_top').remove();
 
                 item.description = content('#artMain').html();
-                item.pubDate = timezone(parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|')[0], 'YYYY-M-D HH:mm'), +8);
+                item.pubDate = timezone(parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|', 1)[0], 'YYYY-M-D HH:mm'), 8);
                 return item;
             })
         )

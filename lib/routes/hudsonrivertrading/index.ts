@@ -111,7 +111,7 @@ async function handler(ctx): Promise<Data> {
             : undefined,
     }));
 
-    const sectionLabel = sectionParam && SECTION_LABELS[sectionParam] ? ` - ${SECTION_LABELS[sectionParam]}` : '';
+    const sectionLabel = sectionParam && Object.hasOwn(SECTION_LABELS, sectionParam) ? ` - ${SECTION_LABELS[sectionParam]}` : '';
 
     return {
         title: `Hudson River Trading${sectionLabel}`,

@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/zx/xingnew',
     categories: ['travel'],
-    example: '/zx/xingnew',
+    example: '/chnmuseum/zx/xingnew',
     parameters: {},
     features: {
         requireConfig: false,
@@ -41,7 +41,7 @@ export const route: Route = {
                 return {
                     title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href'), 'https://www.chnmuseum.cn/zx/xingnew/').href,
-                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), +8),
+                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
                     // description: a.attr('title') || a.text(),
                 };
             });

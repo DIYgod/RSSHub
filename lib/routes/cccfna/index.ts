@@ -66,7 +66,7 @@ export const route: Route = {
                     const content = $('.list_cont');
 
                     item.title = content.find('.title').text();
-                    item.pubDate = timezone(parseDate(content.find('.tip > .time').text(), '发布时间：YYYY-MM-DD'), +8);
+                    item.pubDate = timezone(parseDate(content.find('.tip > .time').text(), '发布时间：YYYY-MM-DD'), 8);
                     item.description = content.find('#article-content').html()!;
 
                     return item;

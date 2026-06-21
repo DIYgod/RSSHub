@@ -24,7 +24,7 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
         data: JSON.stringify({ keyword_list: [keyword], start_date, end_date, app_name }),
     };
 
-    const res = await page.evaluate((e) => {
+    const res = await page.evaluate(async (e) => {
         function queryData() {
             const p = new Promise((resolve) => {
                 const req = new XMLHttpRequest();
@@ -43,7 +43,7 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
             });
             return p;
         }
-        return Promise.resolve(queryData()).then((result) => result);
+        return await queryData();
     }, e);
     return res[0];
 };
@@ -141,7 +141,7 @@ async function handler(ctx) {
                     author: `巨量算数 - ${channelName}算数指数`,
                     description: content,
                     link,
-                    pubDate: timezone(parseDate(date), +8),
+                    pubDate: timezone(parseDate(date), 8),
                     guid: `巨量算数 - ${channelName}算数指数 | ${keyword} - ${date}`,
                 };
             });

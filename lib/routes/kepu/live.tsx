@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://live.kepu.net.cn';
     const apiRootUrl = 'https://live.kepu.net.cn:8089';
@@ -52,8 +52,8 @@ async function handler(ctx) {
         description: item.desc,
         author: item.company,
         guid: item.id,
-        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), +8),
-        updated: timezone(parseDate(item.live_end_time ?? item.end_time), +8),
+        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), 8),
+        updated: timezone(parseDate(item.live_end_time ?? item.end_time), 8),
         itunes_item_image: new URL(item.cover, apiRootUrl).href,
         comments: item.display_comment ?? 0,
     }));

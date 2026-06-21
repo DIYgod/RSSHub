@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -8,18 +9,17 @@ const apiRootUrl = 'https://api1.cyzone.cn';
 const apiShowUrl = new URL('v2/content/app_content/show', apiRootUrl).href;
 
 /**
- * Retrieves information from a given URL using a provided tryGet function.
+ * Retrieves information from a given URL.
  * @param {string} url        - The URL to retrieve information from.
- * @param {Function} tryGet   - The tryGet function that handles the retrieval process.
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
-const getInfo = (url, tryGet) =>
-    tryGet(url, async () => {
+const getInfo = (url) =>
+    cache.tryGet(url, async () => {
         const { data: response } = await got(url);
 
         const $ = load(response);
 
-        const avatar = $('img.avatar')?.prop('src')?.split('?')[0] ?? undefined;
+        const avatar = $('img.avatar')?.prop('src')?.split('?', 1)[0] ?? undefined;
         const icon = new URL($('link[rel="icon"]')?.prop('href'), rootUrl).href;
         const image = new URL($('div.logo img')?.prop('src'), rootUrl).href;
 
@@ -40,11 +40,10 @@ const getInfo = (url, tryGet) =>
  * Process the item list and return the resulting array.
  * @param {string} apiUrl          - The URL of the API.
  * @param {number} limit           - The limit of the results.
- * @param {function} tryGet        - The tryGet function that handles the retrieval process.
  * @param {...Object} searchParams - The search parameter objects.
  * @returns {Promise<Array>}       - The processed item array.
  */
-const processItems = async (apiUrl, limit, tryGet, ...params) => {
+const processItems = async (apiUrl, limit, ...params) => {
     // Merge search parameters
     let searchParams = {
         size: limit,
@@ -76,7 +75,7 @@ const processItems = async (apiUrl, limit, tryGet, ...params) => {
 
     items = await Promise.all(
         items.map((item) =>
-            tryGet(`cyzone-${item.guid}`, async () => {
+            cache.tryGet(`cyzone-${item.guid}`, async () => {
                 const { data: detailResponse } = await got.post(apiShowUrl, {
                     json: {
                         content_id: item.guid,
@@ -91,7 +90,7 @@ const processItems = async (apiUrl, limit, tryGet, ...params) => {
 
                 content('img').each((_, el) => {
                     if (content(el).prop('src')) {
-                        content(el).prop('src', content(el).prop('src').split('?')[0]);
+                        content(el).prop('src', content(el).prop('src').split('?', 1)[0]);
                     } else {
                         content(el).remove();
                     }

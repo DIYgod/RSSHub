@@ -46,7 +46,7 @@ async function handler() {
 
     const $ = cheerio.load(res);
 
-    const items = $('div h3 a')
+    const list = $('div h3 a')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -56,8 +56,8 @@ async function handler() {
             };
         });
 
-    await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {

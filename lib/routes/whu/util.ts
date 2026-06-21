@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -50,10 +51,11 @@ const getItemDetail = async (item, rootUrl) => {
         // Replace images in the content with custom JSX template.
         content('p.vsbcontent_img').each((_, el) => {
             const image = content(el).find('img');
+            const imageSrc = new URL(image.prop('orisrc'), rootUrl).href;
             content(el).replaceWith(
                 renderDescription({
                     image: {
-                        src: new URL(image.prop('orisrc'), rootUrl).href,
+                        src: imageSrc,
                         width: image.prop('width'),
                     },
                 })
@@ -65,10 +67,11 @@ const getItemDetail = async (item, rootUrl) => {
         // Replace videos in the content with custom JSX template.
         content('script[name="_videourl"]').each((_, el) => {
             const video = content(el);
+            const videoSrc = new URL(video.prop('vurl').split('?', 1)[0], rootUrl).href;
             video.replaceWith(
                 renderDescription({
                     video: {
-                        src: new URL(video.prop('vurl').split('?')[0], rootUrl).href,
+                        src: videoSrc,
                         width: content(video).prop('vwidth'),
                         height: content(video).prop('vheight'),
                     },
@@ -105,7 +108,7 @@ const getItemDetail = async (item, rootUrl) => {
         item.author = getMeta(meta, 'ContentSource');
         item.category = getMeta(meta, 'Keywords')?.split(' ').filter(Boolean) ?? [];
         item.guid = getMeta(meta, 'Url') ?? item.link;
-        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), +8) : item.pubDate;
+        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), 8) : item.pubDate;
 
         // Set enclosure information if attachments exist.
         if (attachments.length > 0) {
@@ -123,18 +126,17 @@ const getItemDetail = async (item, rootUrl) => {
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {Function} tryGet     - The function to attempt to get the content of a URL.
  * @param {string} rootUrl      - The root URL.
  * @returns {Array<Promise<Object>>} An array of promises that resolve to the processed items.
  */
-const processItems = async (items, tryGet, rootUrl) =>
+const processItems = async (items, rootUrl) =>
     await Promise.all(
         items.map((item) => {
             if (!item.link.includes(domain)) {
                 return item;
             }
 
-            return tryGet(item.link, async () => await getItemDetail(item, rootUrl));
+            return cache.tryGet(item.link, async () => await getItemDetail(item, rootUrl));
         })
     );
 

@@ -105,7 +105,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const content = $('#art');
                 item.description = content.html();
-                item.pubDate = item.pubDate.includes('-') ? timezone(parseDate(item.pubDate, 'YYYY-MM-DD'), +8) : parseRelativeDate(item.pubDate);
+                item.pubDate = item.pubDate.includes('-') ? timezone(parseDate(item.pubDate, 'YYYY-MM-DD'), 8) : parseRelativeDate(item.pubDate);
 
                 return item;
             })
@@ -113,7 +113,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `中国智库网 —— ${$('title').text().split('_中国智库网')[0]}`,
+        title: `中国智库网 —— ${$('title').text().split('_中国智库网', 1)[0]}`,
         link,
         item: items,
     };

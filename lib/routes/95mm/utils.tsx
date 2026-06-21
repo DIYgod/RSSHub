@@ -44,7 +44,7 @@ const ProcessItems = async (ctx, title, currentUrl) => {
                 item.description = renderToString(
                     <>
                         {images.map((image) => (
-                            <img src={image.split("'")[1].replaceAll(String.raw`\/`, '/')} />
+                            <img src={image.split("'", 2)[1].replaceAll(String.raw`\/`, '/')} />
                         ))}
                     </>
                 );

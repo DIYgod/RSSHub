@@ -9,7 +9,7 @@ import { parseArticle, parseArticleList, parsePost, parsePostList, rootUrl } fro
 
 export const handler = async (ctx) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const decodedParams = params
         ? decodeURIComponent(params)
@@ -90,7 +90,11 @@ export const route: Route = {
         {
             source: ['www.flyert.com.cn/forum.php'],
             target: (_, url) => {
-                const params = [...url.searchParams.entries()].map(([key, value]) => key + '=' + value).join('&');
+                const params = url.searchParams
+                    .entries()
+                    .toArray()
+                    .map(([key, value]) => key + '=' + value)
+                    .join('&');
 
                 return `/forum${params ? `/${encodeURIComponent(params)}` : ''}`;
             },

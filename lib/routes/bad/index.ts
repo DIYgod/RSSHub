@@ -52,7 +52,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 description: item.find('.coverdiv').html(),
                 author: item.find('.author').text().trim(),
-                pubDate: timezone(parseDate(item.find('time').attr('datetime')), +8),
+                pubDate: timezone(parseDate(item.find('time').attr('datetime')), 8),
                 category: item
                     .find('.label')
                     .toArray()

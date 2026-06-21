@@ -32,12 +32,11 @@ const proxyVideo = (url, proxy) => {
             proxy += '=';
         }
         return proxy + encodeURIComponent(url);
-    } else {
-        if (!proxy.endsWith('/')) {
-            proxy += '/';
-        }
-        return proxy + url;
     }
+    if (!proxy.endsWith('/')) {
+        proxy += '/';
+    }
+    return proxy + url;
 };
 
 const getOriginAvatar = (url) =>

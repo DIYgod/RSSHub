@@ -40,11 +40,10 @@ async function handler(ctx) {
     const { status, message, company } = await utils.checkCode(number, id, phone);
 
     let data;
-    let query;
     const time = new Date().toString();
 
     if (status) {
-        query = await utils.getQuery(number, id, phone);
+        const query = await utils.getQuery(number, id, phone);
         data =
             query.status === '200'
                 ? query.data

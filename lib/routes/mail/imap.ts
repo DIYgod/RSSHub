@@ -68,7 +68,8 @@ async function handler(ctx) {
     const mails = [];
     const lock = await client.getMailboxLock(folder);
     try {
-        for await (const message of client.fetch(`${Math.max(client.mailbox.exists - limit + 1, 1)}:*`, { envelope: true, source: true, uid: true })) {
+        const messages = client.fetch(`${Math.max(client.mailbox.exists - limit + 1, 1)}:*`, { envelope: true, source: true, uid: true });
+        for await (const message of messages) {
             mails.push(message);
         }
     } finally {
@@ -103,7 +104,7 @@ async function handler(ctx) {
 
     return {
         title: `${email}'s Inbox${folder === 'INBOX' ? '' : ` - ${folder}`}`,
-        link: `https://${email.split('@')[1]}`,
+        link: `https://${email.split('@', 2)[1]}`,
         item: items,
         allowEmpty: true,
     };

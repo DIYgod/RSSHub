@@ -63,7 +63,7 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 item.description = content('.v_news_content').html();
-                item.pubDate = timezone(parseDate(content('.info span').first().text().replace('发布时间 : ', '')), +8);
+                item.pubDate = timezone(parseDate(content('.info span').first().text().replace('发布时间 : ', '')), 8);
 
                 return item;
             })

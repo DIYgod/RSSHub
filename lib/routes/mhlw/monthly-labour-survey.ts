@@ -29,7 +29,7 @@ async function fetchPage(url: string) {
 }
 
 async function handler(ctx: Context) {
-    const limit = Number.parseInt(ctx.req.query('limit') || '24', 10);
+    const limit = Number(ctx.req.query('limit') || '24');
     const baseUrl = 'https://www.mhlw.go.jp';
     const link = `${baseUrl}/toukei/list/30-1a.html`;
 

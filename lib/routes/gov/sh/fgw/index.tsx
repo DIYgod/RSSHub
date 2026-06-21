@@ -25,7 +25,7 @@ const renderDescription = ({ images, description }) =>
     );
 export const handler = async (ctx) => {
     const { category = 'fgw_zxxxgk' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://fgw.sh.gov.cn';
     const currentUrl = new URL(`${category}/index.html`, rootUrl).href;
@@ -81,7 +81,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), 8);
                 item.category = [...new Set([$$('meta[name="ColumnName"]').prop('content'), $$('meta[name="ColumnKeywords"]').prop('content')])].filter(Boolean);
                 item.author = $$('meta[name="ContentSource"]').prop('content');
                 item.content = {
@@ -119,8 +119,8 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: ['/sh/fgw/:category{.+}?', '/shanghai/fgw/:category{.+}?'],
-    name: '上海市发展和改革委员会',
+    path: '/fgw/:category{.+}?',
+    name: '发展和改革委员会',
     url: 'fgw.sh.gov.cn',
     maintainers: ['nczitzk'],
     handler,
@@ -156,12 +156,12 @@ export const route: Route = {
         {
             title: '最新信息公开',
             source: ['fgw.sh.gov.cn/fgw_zxxxgk/index.html'],
-            target: '/sh/fgw/fgw_zxxxgk',
+            target: '/fgw/fgw_zxxxgk',
         },
         {
             title: '要闻动态',
             source: ['fgw.sh.gov.cn/fgw_fzggdt/index.html'],
-            target: '/sh/fgw/fgw_fzggdt',
+            target: '/fgw/fgw_fzggdt',
         },
     ],
 };

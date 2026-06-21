@@ -115,10 +115,12 @@ const getDiscountNum = async (platform) => {
     const data = response.data.data;
     let totalNum = 0;
     for (const index in data) {
-        if (data[index].platformAlias.toLocaleLowerCase() === platform.toLocaleLowerCase()) {
-            totalNum = data[index].gameNum;
-            break;
+        if (data[index].platformAlias.toLocaleLowerCase() !== platform.toLocaleLowerCase()) {
+            continue;
         }
+
+        totalNum = data[index].gameNum;
+        break;
     }
     return totalNum;
 };

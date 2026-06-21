@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const isChinese = (text: string): boolean => /^[\u4E00-\u9FA5]+$/.test(text);
+const isChinese = (text: string): boolean => /^[\u{4E00}-\u{9FA5}]+$/u.test(text);
 
 export const handler = async (ctx) => {
     const DEFAULT_CATEGORY = '最新推荐';
@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
     const DEFAULT_ORDERBY = 'hot';
 
     const { category = DEFAULT_CATEGORY } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     // If `category` is in Chinese, it should come from the tab titles,
     // because each `recipe-type` has an English ID.
@@ -57,7 +57,7 @@ export const handler = async (ctx) => {
         ? response.data.slice(0, limit).map((item) => {
               const title = item.title;
               const guid = `meishichina-${item.id}`;
-              const image = item.fcover.split(/\?/)[0];
+              const image = item.fcover.split(/\?/, 1)[0];
 
               return {
                   title,
@@ -80,7 +80,7 @@ export const handler = async (ctx) => {
                   const title = item.find('div.detail h2').text();
                   const description = item.find('div.detail').html();
                   const guid = `meishichina-${item.prop('data-id')}`;
-                  const image = item.find('div.pic img').prop('src').split(/\?/)[0];
+                  const image = item.find('div.pic img').prop('src').split(/\?/, 1)[0];
 
                   return {
                       title,
@@ -112,7 +112,7 @@ export const handler = async (ctx) => {
 
                 const title = $$('a#recipe_title').text();
                 const description = $$('div.recipDetail').html();
-                const image = $$('div#recipe_De_imgBox img').prop('src')?.split(/\?/)[0] ?? undefined;
+                const image = $$('div#recipe_De_imgBox img').prop('src')?.split(/\?/, 1)[0] ?? undefined;
 
                 const pubDate = detailResponse.match(/"pubDate":\s"(.*?)",/)?.[1] ?? undefined;
                 const updated = detailResponse.match(/"upDate":\s"(.*?)",/)?.[1] ?? undefined;

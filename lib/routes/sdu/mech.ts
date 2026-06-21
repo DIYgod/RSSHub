@@ -61,13 +61,13 @@ async function handler(ctx) {
                     const $ = load(response.data);
 
                     const info = $('#show_info').text().split(/\s{4}/);
-                    const date = info[0].split('：')[1];
+                    const date = info[0].split('：', 2)[1];
 
                     item.title = $('#show_title').text().trim();
                     item.author = info[1].replace('作者：', '') || '山东大学机械工程学院';
                     $('#show_title, #show_info').remove();
                     item.description = $('form[name=_newscontent_fromname] div').html();
-                    item.pubDate = timezone(parseDate(date), +8);
+                    item.pubDate = timezone(parseDate(date), 8);
 
                     return item;
                 });

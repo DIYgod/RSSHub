@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 1;
     const response = await ofetch(`${baseUrl}/current-affairs/weekly-focus/archive`);
     const $ = load(response);
     const cards = $('div.weekly-focus-single-card').slice(0, limit).toArray();

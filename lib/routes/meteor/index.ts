@@ -26,7 +26,7 @@ export const route: Route = {
 async function handler(ctx) {
     let { board = 'all' } = ctx.req.param();
 
-    const boards = await getBoards(cache.tryGet);
+    const boards = await getBoards();
     let boardInfo;
     if (board !== 'all') {
         boardInfo = boards.find((b) => b.id === board || b.alias === board);
@@ -59,7 +59,7 @@ async function handler(ctx) {
     return {
         title: `${board === 'all' ? '全部看板' : boardInfo.title} | Meteor 學生社群`,
         description: board === 'all' ? null : boardInfo.feedDescription,
-        image: board === 'all' ? null : boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl,
+        image: board === 'all' || boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl,
         link: `${board === 'all' ? `${baseUrl}/board/all` : boardInfo.link}/new`,
         item: items,
     };

@@ -60,7 +60,7 @@ export const search = async (opts: {
     url.searchParams.append('shippingCarrier', opts.shippingCarrier || '');
     url.searchParams.append('shipping', '');
 
-    const response = await ofetch(url.toString());
+    const response = await ofetch(url.href);
     const $ = load(response);
 
     const items = await parseListingPage($);
@@ -69,7 +69,7 @@ export const search = async (opts: {
         // channel title
         title: `Kleinanzeigen Offers: ${opts.query || opts.category} ${opts.minPrice || opts.maxPrice ? `${opts.minPrice || 0}€ - ${opts.maxPrice}` : ''}`,
         // channel link
-        link: url.toString(),
+        link: url.href,
         language: 'de',
         // each feed item
         item: items,

@@ -150,7 +150,7 @@ async function handler(ctx) {
                 });
                 const downloadResponse = await got({
                     method: 'get',
-                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/')[4].split('.')[0]}`,
+                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/', 5)[4].split('.', 1)[0]}`,
                     headers,
                 });
                 const content = load(detailResponse.data);
@@ -197,7 +197,7 @@ async function handler(ctx) {
                     </>
                 );
 
-                item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), +8);
+                item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), 8);
                 item.guid = `${item.link}#${content('.card h1').text()}`;
 
                 item.enclosure_url = torrents.html() ? `${rootUrl}${torrents.find('a').first().attr('href')}` : downloadResponse.data.pop().url;

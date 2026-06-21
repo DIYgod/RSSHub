@@ -34,8 +34,7 @@ const formatExhibitionDate = (dateStr: string | undefined): string | undefined =
     const normalized = dateStr
         .replaceAll(/年|月/g, '-')
         .replaceAll('日', '')
-        .replaceAll('/', '-')
-        .replaceAll('.', '-');
+        .replaceAll(/[/.]/g, '-');
     const parts = normalized.split('-').filter(Boolean);
     if (parts.length === 3) {
         return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
@@ -87,12 +86,12 @@ const parseExhibitionDuration = (duration: string) => {
 };
 
 // to identify the route config and titletag based on type and subtype, this function is used in both route handler and radar to ensure consistency
-const resolveRouteConfig = (type: string | undefined, subType: string | undefined, baseUrl: string) => {
+const resolveRouteConfig = (type: string | undefined, subtype: string | undefined, baseUrl: string) => {
     let url = `${baseUrl}/zl/`;
     let cleanType = '';
 
     if (type) {
-        cleanType = subType ? `${type}/${subType}` : type;
+        cleanType = subtype ? `${type}/${subtype}` : type;
         url = `${baseUrl}/zl/${cleanType}/`;
     }
     return {
@@ -103,7 +102,7 @@ const resolveRouteConfig = (type: string | undefined, subType: string | undefine
 };
 
 // to concurrent or single-page retrieval according to titletag
-const fetchTargetElements = async (cleanType: string, subType: string | undefined, url: string, baseUrl: string) => {
+const fetchTargetElements = async (cleanType: string, subtype: string | undefined, url: string, baseUrl: string) => {
     const items: Array<{ $item: any; contextUrl: string }> = [];
     // Use a Set to track visited links and filter out duplicate HTML elements directly at the source
     // (e.g., when the same exhibition appears in both the main list and a specific sub-category list).
@@ -169,12 +168,12 @@ export const route: Route = {
     ],
     handler: async (ctx: Context): Promise<Data> => {
         const type = ctx.req.param('type')?.trim();
-        const subType = ctx.req.param('subType')?.trim();
+        const subtype = ctx.req.param('subType')?.trim();
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.chnmuseum.cn';
 
-        const { cleanType, url, titleTag } = resolveRouteConfig(type, subType, baseUrl);
-        const itemsToParse = await fetchTargetElements(cleanType, subType, url, baseUrl);
+        const { cleanType, url, titleTag } = resolveRouteConfig(type, subtype, baseUrl);
+        const itemsToParse = await fetchTargetElements(cleanType, subtype, url, baseUrl);
 
         const list = (
             await Promise.all(

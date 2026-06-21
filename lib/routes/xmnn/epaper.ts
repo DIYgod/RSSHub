@@ -100,7 +100,7 @@ async function handler(ctx) {
                 content('#qw').remove();
 
                 item.description = content('.cont-b, content').html();
-                item.pubDate = timezone(parseDate(content('.time').text() || content('.today').text().split()[0], ['YYYY-MM-DD HH:mm', 'YYYY年MM月DD日']), +8);
+                item.pubDate = timezone(parseDate(content('.time').text() || content('.today').text().split()[0], ['YYYY-MM-DD HH:mm', 'YYYY年MM月DD日']), 8);
 
                 return item;
             })

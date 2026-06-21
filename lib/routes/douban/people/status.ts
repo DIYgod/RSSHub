@@ -101,7 +101,7 @@ function tryFixStatus(status) {
     }
 
     if (status.sharing_url) {
-        status.sharing_url = status.sharing_url.split('&')[0];
+        status.sharing_url = status.sharing_url.split('&', 1)[0];
     }
 
     if (!result.isFixSuccess) {
@@ -313,10 +313,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         }
         picsPrefixes.push(picsPrefix);
 
-        const imageUrls: Array<string | undefined> = [];
-        for (const image of status.images) {
-            imageUrls.push(image?.large?.url);
-        }
+        const imageUrls: Array<string | undefined> = Array.from(status.images, (image) => image?.large?.url);
         description += prepareImages(imageUrls);
     }
 
@@ -412,10 +409,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
             description += '<br clear="both" /><div style="clear: both"></div></blockquote>';
         }
         if (status.card.images_block) {
-            const imageUrls: Array<string | undefined> = [];
-            for (const image of status.card.images_block.images) {
-                imageUrls.push(image.image?.large?.url);
-            }
+            const imageUrls: Array<string | undefined> = Array.from(status.card.images_block.images, (image) => image.image?.large?.url);
             description += prepareImages(imageUrls);
         }
     }
