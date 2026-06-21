@@ -88,10 +88,10 @@ const parseList = ($, limit) =>
         })
         .slice(0, limit);
 
-const parseItems = (list, context: BrowserContext, tryGet) =>
+const parseItems = (list, context: BrowserContext) =>
     Promise.all(
         list.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const page = await context.newPage();
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
