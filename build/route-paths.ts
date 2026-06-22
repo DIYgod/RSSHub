@@ -1307,6 +1307,8 @@ export type RoutePath =
   | `/gov/zj/ningbogzw-notice/:colId?`
   | `/gov/zj/ningborsjnotice/:colId?`
   | `/gov/zj/search/:websiteid?/:word/:cateid?`
+  | `/gov/zj/zfcg-helper`
+  | `/gov/zj/zfcg/:code?`
   | `/gq/news`
   | `/grainoil/:category/:id`
   | `/greasyfork/:language/:domain?`
