@@ -69,7 +69,7 @@ const loadWeiboUtils = async ({ pageReady = Promise.resolve() } = {}) => {
     vi.doMock('@/utils/playwright', () => ({ getPlaywrightPage }));
     vi.doMock('@/utils/playwright-utils', () => ({ getCookies }));
 
-    const { default: weiboUtils } = await import('./utils');
+    const { default: weiboUtils } = await import('./routes/weibo/utils');
 
     return {
         cache,
