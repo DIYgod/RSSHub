@@ -21,6 +21,13 @@ type NewsArticleJsonLd = Record<string, unknown> & {
     dateModified?: string;
 };
 
+type Video = {
+    src: string;
+    poster?: string;
+    width?: string;
+    height?: string;
+};
+
 export const route: Route = {
     path: '/',
     categories: ['new-media'],
@@ -45,7 +52,7 @@ export const route: Route = {
     maintainers: ['Circloud'],
     handler,
     url: 'www.zaihua.news',
-    description: '在花新闻的全文内容，包含文章图片。',
+    description: '在花新闻的全文内容，包含文章图片和视频。',
     view: ViewType.Articles,
 };
 
@@ -77,8 +84,10 @@ const fetchArticle = (item: Item & { link: string }) =>
         cleanupContent($, content);
 
         const imageUrls = extractImageUrls($);
+        const videos = extractVideos($);
         const contentHtml = content.html() ?? item.content ?? item.contentSnippet;
         const imageHtml = renderImages(imageUrls);
+        const videoHtml = renderVideos(videos);
         const pubDate = $('meta[property="article:published_time"]').attr('content') ?? jsonLd?.datePublished ?? item.isoDate ?? item.pubDate;
         const updated = $('meta[property="article:modified_time"]').attr('content') ?? jsonLd?.dateModified;
         const title = jsonLd?.headline || $('article h1').first().text() || item.title || item.link;
@@ -86,7 +95,7 @@ const fetchArticle = (item: Item & { link: string }) =>
         return {
             title,
             link: item.link,
-            description: [contentHtml, imageHtml].filter(Boolean).join(''),
+            description: [contentHtml, imageHtml, videoHtml].filter(Boolean).join(''),
             pubDate: pubDate ? parseDate(pubDate) : undefined,
             updated: updated ? parseDate(updated) : undefined,
             author,
@@ -132,7 +141,63 @@ const extractImageUrls = ($: CheerioAPI) => {
     return [...new Set(galleryImages)];
 };
 
+const extractVideos = ($: CheerioAPI): Video[] => {
+    const videos = $('video[data-feed-video], video[src]')
+        .toArray()
+        .flatMap((element) => {
+            const video = $(element);
+            const src = video.attr('src');
+
+            if (!src) {
+                return [];
+            }
+
+            return [
+                {
+                    src: normalizeUrl(src),
+                    poster: normalizeOptionalUrl(video.attr('poster')),
+                    width: video.attr('width'),
+                    height: video.attr('height'),
+                },
+            ];
+        });
+
+    const seen = new Set<string>();
+
+    return videos.filter((video) => {
+        if (seen.has(video.src)) {
+            return false;
+        }
+
+        seen.add(video.src);
+
+        return true;
+    });
+};
+
 const renderImages = (imageUrls: string[]) => imageUrls.map((src) => `<p><img src="${escapeAttribute(src)}"></p>`).join('');
+
+const renderVideos = (videos: Video[]) =>
+    videos
+        .map((video) => {
+            const attrs = [
+                `src="${escapeAttribute(video.src)}"`,
+                video.poster ? `poster="${escapeAttribute(video.poster)}"` : '',
+                video.width ? `width="${escapeAttribute(video.width)}"` : '',
+                video.height ? `height="${escapeAttribute(video.height)}"` : '',
+                'controls',
+                'preload="metadata"',
+            ]
+                .filter(Boolean)
+                .join(' ');
+
+            return `<p><video ${attrs}></video></p>`;
+        })
+        .join('');
+
+const normalizeUrl = (url: string) => (url.startsWith('/') ? new URL(url, rootUrl).href : url);
+
+const normalizeOptionalUrl = (url?: string) => (url ? normalizeUrl(url) : undefined);
 
 const extractNewsArticleJsonLd = ($: CheerioAPI) =>
     $('script[type="application/ld+json"]')
