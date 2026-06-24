@@ -1263,6 +1263,7 @@ export type RoutePath =
   | `/gov/nmpa/:path{.+}`
   | `/gov/nopss/:path{.+}?`
   | `/gov/npc/:caty`
+  | `/gov/nppa/:path{.+}`
   | `/gov/nrta/dsj/:category?`
   | `/gov/nrta/news/:category?`
   | `/gov/nsfc/:path{.+}?`

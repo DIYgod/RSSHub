@@ -3907,6 +3907,9 @@
   "/gov/npc/:caty": [
     "233yeee"
   ],
+  "/gov/nppa/:path{.+}": [
+    "y2361547758"
+  ],
   "/gov/nrta/dsj/:category?": [
     "nczitzk"
   ],
