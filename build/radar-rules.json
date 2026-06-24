@@ -10019,6 +10019,19 @@
       }
     ]
   },
+  "cefco.cn": {
+    "_name": "亚布力中国企业家论坛",
+    "www": [
+      {
+        "title": "观点",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/research/news.html"
+        ],
+        "target": "/cefco/research/news"
+      }
+    ]
+  },
   "ceph.io": {
     "_name": "Ceph",
     ".": [
