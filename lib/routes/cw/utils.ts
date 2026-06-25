@@ -93,6 +93,10 @@ const parseItems = (list, context: BrowserContext) =>
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                });
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
