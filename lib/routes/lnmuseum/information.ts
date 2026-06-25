@@ -13,7 +13,7 @@ export const route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.lnmuseum.com.cn/#/about?pageType=2'],
+            source: ['www.lnmuseum.com.cn/#/about'],
             target: '/information',
         },
     ],

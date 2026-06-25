@@ -17,7 +17,7 @@ export const route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.lnmuseum.com.cn/#/exhibition?type=1'],
+            source: ['www.lnmuseum.com.cn/#/exhibition'],
             target: '/exhibition/temporary',
         },
     ],
