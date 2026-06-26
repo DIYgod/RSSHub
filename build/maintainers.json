@@ -6888,6 +6888,9 @@
     "nczitzk",
     "dvorak0"
   ],
+  "/pawchive/:service/:id": [
+    "TonyRL"
+  ],
   "/pconline/focus/:category?": [
     "CH563"
   ],

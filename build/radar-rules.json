@@ -38945,6 +38945,27 @@
       }
     ]
   },
+  "pawchive.st": {
+    "_name": "Pawchive",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/pawchive/:service/:id"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:service/user/:id"
+        ],
+        "target": "/pawchive/:service/:id"
+      }
+    ]
+  },
   "pconline.com.cn": {
     "_name": "太平洋科技",
     ".": [
