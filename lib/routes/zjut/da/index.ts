@@ -1,22 +1,28 @@
-import { load } from 'cheerio';
-import iconv from 'iconv-lite';
-
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const rootUrl = 'http://www.design.zjut.edu.cn/';
-const host = 'http://www.design.zjut.edu.cn/BigClass.jsp?';
+const rootUrl = 'http://www.design.zjut.edu.cn';
+const apiUrl = `${rootUrl}/jsp/api/an`;
 
 const map = new Map([
-    [1, { id: 'bigclassid=16', title: '学院新闻 - 浙工大设建学院' }],
-    [2, { id: 'bigclassid=18', title: '公告通知 - 浙工大设建学院' }],
-    [3, { id: 'bigclassid=5&sid=25', title: '科研申报 - 浙工大设建学院' }],
-    [4, { id: 'bigclassid=5&sid=26', title: '科研成果 - 浙工大设建学院' }],
-    [5, { id: 'bigclassid=5&sid=27', title: '文件与资源 - 浙工大设建学院' }],
-    [6, { id: 'bigclassid=20', title: '学术交流 - 浙工大设建学院' }],
+    [1, { id: '16', title: '学院新闻 - 浙工大设建学院' }],
+    [2, { id: '18', title: '公告通知 - 浙工大设建学院' }],
+    [3, { id: '25', title: '科研申报 - 浙工大设建学院' }],
+    [4, { id: '26', title: '科研成果 - 浙工大设建学院' }],
+    [5, { id: '27', title: '文件与资源 - 浙工大设建学院' }],
+    [6, { id: '20', title: '学术交流 - 浙工大设建学院' }],
 ]);
+
+type Article = {
+    id: string;
+    title: string;
+    content?: string | null;
+    date?: string;
+    url?: string | null;
+};
 
 export const route: Route = {
     path: '/da/:type',
@@ -42,52 +48,56 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const id = map.get(type)?.id;
-    const listResponse = await got(`${host}${id}`, {
-        responseType: 'buffer',
+    const category = map.get(type);
+    if (!category) {
+        throw new InvalidParameterError(`Invalid type: ${type}`);
+    }
+
+    const listResponse = await got(`${apiUrl}/column`, {
+        searchParams: {
+            id: category.id,
+        },
     });
-    listResponse.data = iconv.decode(listResponse.data, 'gbk');
-    const $ = load(listResponse.data);
 
-    const list = $("td[class='newstd'] .news2")
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('a').text();
-
-            let link = item.find('a').attr('href');
-            if (!link) {
-                return null;
-            }
-            if (!link.startsWith('http')) {
-                link = rootUrl + link;
-            }
-
-            const date = item.next().text().replace('[', '').replace(']', '');
-
-            return {
-                title,
-                description: '',
-                pubDate: parseDate(date),
-                link,
-            };
-        });
+    const list = listResponse.data.data.pages.list as Article[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const itemsResponse = await got(item.link);
-                const $ = load(itemsResponse.data);
-                item.description = $('div[style="line-height:27px;"]').html();
+            cache.tryGet(item.url?.trim() || `${apiUrl}/news?id=${item.id}`, async (): Promise<DataItem> => {
+                const link = item.url?.trim() || `${apiUrl}/news?id=${item.id}`;
+                if (item.url?.trim()) {
+                    return {
+                        title: item.title,
+                        description: item.content ? makeAbsolute(item.content) : `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`,
+                        pubDate: item.date ? parseDate(item.date) : undefined,
+                        link,
+                    };
+                }
 
-                return item;
+                const detailResponse = await got(`${apiUrl}/news`, {
+                    searchParams: {
+                        id: item.id,
+                    },
+                });
+                const detail = detailResponse.data.data as Article;
+
+                return {
+                    title: detail.title,
+                    description: makeAbsolute(detail.content ?? item.content ?? ''),
+                    pubDate: detail.date ? parseDate(detail.date) : undefined,
+                    link,
+                };
             })
         )
     );
 
     return {
-        title: map.get(type)?.title,
-        link: `${host}${id}`,
+        title: category.title,
+        link: rootUrl,
         item: items,
     };
+}
+
+function makeAbsolute(html: string) {
+    return html.replaceAll(/(href|src)="(upload\/[^"]+)"/g, (_, attr: string, url: string) => `${attr}="${rootUrl}/${url}"`);
 }
