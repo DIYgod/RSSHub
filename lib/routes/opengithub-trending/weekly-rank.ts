@@ -2,6 +2,7 @@ import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -77,12 +78,15 @@ async function handler() {
 
     const getFileItem = async (year: string, month: string, dayItem: any) => {
         const fileName = dayItem.name.replace('.md', '');
-        const fileUrl = `https://raw.githubusercontent.com/OpenGithubs/github-weekly-rank/main/${year}/${month}/${dayItem.name}`;
-        const fileContent = await got(fileUrl);
+        const key = `opengithub-trending:${year}/${month}/${dayItem.name}`;
+        const fileContent = await cache.tryGet(key, async () => {
+            const response = await got(`https://raw.githubusercontent.com/OpenGithubs/github-weekly-rank/main/${year}/${month}/${dayItem.name}`);
+            return response.data;
+        });
 
         return {
             title: `GitHub Weekly Rank - ${fileName}`,
-            description: md.render(fileContent.data),
+            description: md.render(fileContent),
             link: `https://github.com/OpenGithubs/github-weekly-rank/blob/main/${year}/${month}/${fileName}.md`,
             pubDate: parseDate(`${year}-${month}-${fileName.slice(6)}`),
         };
