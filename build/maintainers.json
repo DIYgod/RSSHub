@@ -9753,13 +9753,13 @@
   "/xueqiu/hots": [
     "hillerliao"
   ],
+  "/xueqiu/stock_info/:id/:type?": [
+    "YuYang"
+  ],
   "/xueqiu/user/:id/:type?": [
     "imlonghao"
   ],
   "/xueqiu/stock_comments/:id": [],
-  "/xueqiu/stock_info/:id/:type?": [
-    "YuYang"
-  ],
   "/xueqiu/today": [
     "nczitzk"
   ],
