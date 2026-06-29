@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import dayjs from 'dayjs';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -10,19 +11,15 @@ import { parseDate } from '@/utils/parse-date';
 import { namespace } from './namespace';
 
 const titleTagMap: Record<string, string> = {
-    zhanlanyugao: '正在展出', // This is what the website used for current exhibition
-    ztzl: '主题展览',
+    zhanlanyugao: '正在展出',
     jbcl: '基本陈列',
     ztcl: '专题展览',
     lszl: '临时展览',
-    'lszl/zdztzl': '临时展览 - 主题展览',
-    'lszl/dfjpwwxl': '临时展览 - 精品文物展',
-    'lszl/lswhxl': '临时展览 - 历史文化展',
-    'lszl/kgfjxl': '临时展览 - 考古发现展',
-    'lszl/kjcxz': '临时展览 - 科技创新展',
-    'lszl/dywhxl': '临时展览 - 地域文化展',
-    'lszl/jdmszpxl': '临时展览 - 经典美术展',
-    'lszl/gjjlxl': '临时展览 - 国际交流展',
+    'lszl/lswh': '临时展览 - 历史文化',
+    'lszl/gjjl': '临时展览 - 国际交流',
+    'lszl/zdzt': '临时展览 - 重大主题',
+    'lszl/yscx': '临时展览 - 艺术创新',
+    gjzl: '国家展览',
     gbxz: '国博巡展',
 };
 
@@ -35,11 +32,8 @@ const formatExhibitionDate = (dateStr: string | undefined): string | undefined =
         .replaceAll(/年|月/g, '-')
         .replaceAll('日', '')
         .replaceAll(/[/.]/g, '-');
-    const parts = normalized.split('-').filter(Boolean);
-    if (parts.length === 3) {
-        return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
-    }
-    return undefined;
+    const d = dayjs(normalized);
+    return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
 };
 
 const parseExhibitionDuration = (duration: string) => {
@@ -72,7 +66,8 @@ const parseExhibitionDuration = (duration: string) => {
         }
         endDateRaw = rawEnd;
     } else if (allDates.length === 1) {
-        if (cleanStr.includes('展至')) {
+        // add 闭展 situation for endDate
+        if (cleanStr.includes('展至') || cleanStr.includes('闭展')) {
             endDateRaw = allDates[0];
         } else {
             startDateRaw = allDates[0];
@@ -101,23 +96,50 @@ const resolveRouteConfig = (type: string | undefined, subtype: string | undefine
     };
 };
 
+// create itemLink
+const buildItemLink = (rawLink: string, contextUrl: string, baseUrl: string) => (rawLink ? new URL(rawLink, contextUrl).href : baseUrl);
+
+// create exhibitionLink
+const buildExhibitionLink = (rawZtzl: string, itemLink: string, baseUrl: string) => (rawZtzl ? new URL(rawZtzl, baseUrl).href : itemLink);
+
 // to concurrent or single-page retrieval according to titletag
 const fetchTargetElements = async (cleanType: string, subtype: string | undefined, url: string, baseUrl: string) => {
-    const items: Array<{ $item: any; contextUrl: string }> = [];
+    const items: Array<{ $item: any; contextUrl: string; itemLink: string; exhibitionLink: string; rawZtzl: string }> = [];
     // Use a Set to track visited links and filter out duplicate HTML elements directly at the source
     // (e.g., when the same exhibition appears in both the main list and a specific sub-category list).
     const seenLinks = new Set<string>();
 
     const extractItems = (html: string, contextUrl: string) => {
         const $ = load(html);
-        const pageElements = $('ul[id="div"] a.recurl, ul.cj_hb_list a.recurl').toArray();
+        const selectors = [
+            'ul[id="div"] > li > a',
+            'ul.cj_hb_list > li > a',
+            '.zl_zzzl_list li.scale_imgs > a',
+            '.zl_jbc_list li.scale_imgs > a',
+            '.zl_ztzl_list li.scale_imgs > a',
+            '.zl_gjzl_list li.scale_imgs > a',
+            '.zl_gbxz_list li.scale_imgs > a',
+        ].join(', ');
+
+        const pageElements = $(selectors).toArray();
+
         for (const el of pageElements) {
             const $item = $(el).closest('li');
             if ($item.length > 0) {
-                const href = $(el).attr('href') || '';
-                if (href && !seenLinks.has(href)) {
-                    seenLinks.add(href);
-                    items.push({ $item, contextUrl });
+                const rawLink = $(el).attr('href') || '';
+                const rawZtzl = $(el).attr('ztzlurl')?.trim() || '';
+
+                if (!rawLink && !rawZtzl) {
+                    continue;
+                }
+
+                // Use exhibitionLink to remove the repeat ones
+                const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
+                const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
+
+                if (exhibitionLink && !seenLinks.has(exhibitionLink)) {
+                    seenLinks.add(exhibitionLink);
+                    items.push({ $item, contextUrl, itemLink, exhibitionLink, rawZtzl });
                 }
             }
         }
@@ -142,23 +164,15 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
     return items;
 };
 
-// create itemLink
-const buildItemLink = (rawLink: string, contextUrl: string, baseUrl: string) => (rawLink ? new URL(rawLink, contextUrl).href : baseUrl);
-
-// create exhibitionLink
-const buildExhibitionLink = (rawZtzl: string, itemLink: string, baseUrl: string) => (rawZtzl ? new URL(rawZtzl, baseUrl).href : itemLink);
-
 export const route: Route = {
     path: '/zl/:type?/:subType?',
     categories: ['travel'],
-    example: '/chnmuseum/zl/lszl/zdztzl',
+    example: '/chnmuseum/zl/lszl/zdzt',
     parameters: {
-        type: 'Exhibition type, supported values: zhanlanyugao（正在展出）、ztzl（主题展览）、jbcl（基本陈列）、ztcl（专题展览）、lszl（临时展览）、gbxz（国博巡展）. Default: All exhibitions.',
-        subType:
-            'subtype only works under type lszl（临时展览）, supported values: zdztzl（主题展览）、dfjpwwxl（精品文物展）、lswhxl（历史文化展）、kgfjxl（考古发现展）、kjcxz（科技创新展）、dywhxl（地域文化展）、jdmszpxl（经典美术展）、gjjlxl（国际交流展）',
+        type: 'Exhibition type, supported values: zhanlanyugao（正在展出）、jbcl（基本陈列）、ztcl（专题展览）、lszl（临时展览）、gjzl（国家展览）、gbxz（国博巡展）. Default: All exhibitions.',
+        subType: 'subtype only works under type lszl（临时展览）, supported values: zdzt（重大主题）、lswh（历史文化）、yscx（艺术创新）、gjjl（国际交流）',
     },
-    // Use Chnmuseum English version channel name
-    name: 'Exhibitions',
+    name: 'Exhibitions', // Use Chnmuseum English version channel name
     maintainers: ['magazian'],
     radar: [
         {
@@ -178,7 +192,7 @@ export const route: Route = {
         const list = (
             await Promise.all(
                 itemsToParse.map(({ $item, contextUrl }) => {
-                    const aTag = $item.find('a.recurl');
+                    const aTag = $item.find('a').first();
 
                     if (!aTag.length) {
                         return null;
@@ -194,56 +208,81 @@ export const route: Route = {
 
                         // title may not have full display on the page, use the img alt information instead
                         const imgTag = $item.find('img');
-                        const title = imgTag.attr('alt') || '';
+                        let title = $item.find('.hide_title').text() || imgTag.attr('alt') || '';
 
                         const rawSrc = imgTag.attr('src')!;
                         const imgUrl = new URL(rawSrc, contextUrl).href;
 
-                        const location = $item.find('div.cj_zxx1').text().trim();
+                        let location = '';
+                        let fullDuration = '';
 
-                        let fullDuration = $item.find('div.cj_zxx2 p').text().trim();
+                        $item.find('.hide_box').each((_, el) => {
+                            const $box = load(el);
+                            const label = $box('p').first().text().trim();
+                            const value = $box('p').last().text().trim();
 
-                        if (fullDuration.endsWith('...')) {
+                            if (label.includes('地点')) {
+                                location = value;
+                            } else if (label.includes('展期')) {
+                                fullDuration = value;
+                            }
+                        });
+
+                        if (!title || title.endsWith('...')) {
                             const detailResponse = await got(itemLink);
-                            const match = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/);
-                            if (match && match[1]) {
-                                fullDuration = match[1];
+                            const $detail = load(detailResponse.data);
+
+                            if (!title || title.endsWith('...')) {
+                                const detailTitle = $detail('.crumb_mod_box .title').text();
+                                title =
+                                    detailTitle ||
+                                    $detail('title')
+                                        .text()
+                                        .replace(/-?\s*中国国家博物馆/, '');
+                            }
+
+                            if (!fullDuration) {
+                                const match = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/);
+                                if (match && match[1]) {
+                                    fullDuration = match[1];
+                                } else {
+                                    // for jbcl to fetch the fullDuration
+                                    $detail('li, strong, p').each((_, el) => {
+                                        const text = $detail(el).text().trim();
+                                        if (text.startsWith('展期：')) {
+                                            fullDuration = text.replace('展期：', '').trim();
+                                        } else if (text.includes('闭展')) {
+                                            fullDuration = text;
+                                        }
+                                    });
+                                }
                             }
                         }
 
                         const { startDate, endDate } = parseExhibitionDuration(fullDuration);
 
                         // CHN museum didnot have pubDate on the page, use exhibition startDate instead.
-                        // Variable Handling: If the value is `undefined`, it remains `undefined` to facilitate subsequent processing by the Calendar component.
                         const pubDate = startDate ? parseDate(startDate) : undefined;
 
                         const description = renderToString(
                             <div>
-                                {
-                                    <>
-                                        <img src={imgUrl} />
-                                        <br />
-                                    </>
-                                }
+                                <img src={imgUrl} />
+                                <br />
                                 <p>
                                     <b>地点：</b>
-                                    {location}
+                                    {location || '参考详情'}
                                 </p>
                                 <p>
                                     <b>开展：</b>
-                                    {startDate ?? '未定/常设'}
+                                    {startDate || '未定/常设'}
                                 </p>
                                 <p>
                                     <b>闭展：</b>
-                                    {endDate ?? '未定/常设'}
+                                    {endDate || '未定/常设'}
                                 </p>
-
                                 {fullDuration && (
                                     <p>
-                                        <small>
-                                            原始展期：
-                                            {fullDuration}
-                                        </small>
+                                        <small>原始展期：{fullDuration}</small>
                                     </p>
                                 )}
                             </div>
@@ -260,11 +299,9 @@ export const route: Route = {
                             // For further .ics file processing
                             _extra: {
                                 museumName,
-                                title,
                                 location,
-                                startDate, // format: YYYY-MM-DD or '未定/常设'
-                                endDate, // format: YYYY-MM-DD or '未定/常设'
-                                itemLink,
+                                startDate,
+                                endDate,
                             },
                         } as DataItem;
                     }) as Promise<DataItem>;
