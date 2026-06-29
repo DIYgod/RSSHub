@@ -20,9 +20,9 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
 
 patchedDependencies:
-  '@mswjs/interceptors@0.41.3':
-    hash: 5027fcc424409c41c41147fc6c90b36166061522e0b03e73b45f9a973fcd2a28
-    path: patches/@mswjs__interceptors@0.41.3.patch
+  '@mswjs/interceptors@0.41.9':
+    hash: 4812d3969aa7556a2a52094a00be1d5f5e38f768b5f7df238e0128415253c171
+    path: patches/@mswjs__interceptors@0.41.9.patch
   rss-parser@3.13.0:
     hash: afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d
     path: patches/rss-parser@3.13.0.patch
@@ -420,8 +420,8 @@ importers:
         specifier: 3.0.5
         version: 3.0.5
       msw:
-        specifier: 2.13.4
-        version: 2.13.4(@types/node@26.0.1)(typescript@5.9.3)
+        specifier: 2.14.6
+        version: 2.14.6(@types/node@26.0.1)(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.30
         version: 1.0.30(undici@8.5.0)(utf-8-validate@5.0.10)
@@ -463,7 +463,7 @@ importers:
         version: 6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
       vitest:
         specifier: 4.1.9
-        version: 4.1.9(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.0.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.13.4(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
+        version: 4.1.9(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.0.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.14.6(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
       wrangler:
         specifier: 4.105.0
         version: 4.105.0(@cloudflare/workers-types@4.20260629.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
@@ -1447,8 +1447,8 @@ packages:
   '@mixmark-io/domino@2.2.0':
     resolution: {integrity: sha512-Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==}
 
-  '@mswjs/interceptors@0.41.3':
-    resolution: {integrity: sha512-cXu86tF4VQVfwz8W1SPbhoRyHJkti6mjH/XJIxp40jhO4j2k1m4KYrEykxqWPkFF3vrK4rgQppBh//AwyGSXPA==}
+  '@mswjs/interceptors@0.41.9':
+    resolution: {integrity: sha512-VVPPgHyQ6ShqnrmDWuxjmUIsO9gWyOZFmuOfLd9LfBGQJwZfy0gvv9pbHSJuoFNIYC7ZDX9aoFwowjcdSC4E8w==}
     engines: {node: '>=18'}
 
   '@napi-rs/wasm-runtime@1.1.5':
@@ -4499,8 +4499,8 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  msw@2.13.4:
-    resolution: {integrity: sha512-fPlKBeFe+8rpcyR3umUmmHuNwu6gc6T3STvkgEa9WDX/HEgal9wDeflpCUAIRtmvaLZM2igfI5y1bZ9G5J26KA==}
+  msw@2.14.6:
+    resolution: {integrity: sha512-ALe+N10S72cyx94cMcy3Zs4HhXCj35sgeAL4c+WTvKi0zWnbd8/h0lcFqv0mb2P+aSgAdD7p9HzvA0DiUPxsyg==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -5041,8 +5041,8 @@ packages:
     resolution: {integrity: sha512-oMA2dcrw6u0YfxJQXm342bFKX/E4sG9rbTzO9ptUcR/e8A33cHuvStiYOwH7fszkZlZ1z/ta9AAoPk2F4qIOHA==}
     engines: {node: '>=18'}
 
-  rettime@0.11.7:
-    resolution: {integrity: sha512-DoAm1WjR1eH7z8sHPtvvUMIZh4/CSKkGCz6CxPqOrEAnOGtOuHSnSE9OC+razqxKuf4ub7pAYyl/vZV0vGs5tg==}
+  rettime@0.11.11:
+    resolution: {integrity: sha512-ILJRqVWBCTlg9r42fFgwVZx1gnFAcQF8mRoMkbgQfIrjEDf9nbBFDFx00oloOa+Q869FUtaYDXZvEfnecQSCoQ==}
 
   rfc4648@1.5.4:
     resolution: {integrity: sha512-rRg/6Lb+IGfJqO05HZkN50UtY7K/JhxJag1kP23+zyMfrvoB0B7RWv06MbOzoc79RgCdNTiUaNsTT1AJZ7Z+cg==}
@@ -6774,7 +6774,7 @@ snapshots:
 
   '@mixmark-io/domino@2.2.0': {}
 
-  '@mswjs/interceptors@0.41.3(patch_hash=5027fcc424409c41c41147fc6c90b36166061522e0b03e73b45f9a973fcd2a28)':
+  '@mswjs/interceptors@0.41.9(patch_hash=4812d3969aa7556a2a52094a00be1d5f5e38f768b5f7df238e0128415253c171)':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
       '@open-draft/logger': 0.3.0
@@ -7799,7 +7799,7 @@ snapshots:
       obug: 2.1.3
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.9(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.0.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.13.4(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
+      vitest: 4.1.9(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.0.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.14.6(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
 
   '@vitest/expect@4.1.9':
     dependencies:
@@ -7810,13 +7810,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.9(msw@2.13.4(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))':
+  '@vitest/mocker@4.1.9(msw@2.14.6(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))':
     dependencies:
       '@vitest/spy': 4.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      msw: 2.13.4(@types/node@26.0.1)(typescript@5.9.3)
+      msw: 2.14.6(@types/node@26.0.1)(typescript@5.9.3)
       vite: 7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)
 
   '@vitest/pretty-format@4.1.9':
@@ -9915,10 +9915,10 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.13.4(@types/node@26.0.1)(typescript@5.9.3):
+  msw@2.14.6(@types/node@26.0.1)(typescript@5.9.3):
     dependencies:
       '@inquirer/confirm': 6.0.11(@types/node@26.0.1)
-      '@mswjs/interceptors': 0.41.3(patch_hash=5027fcc424409c41c41147fc6c90b36166061522e0b03e73b45f9a973fcd2a28)
+      '@mswjs/interceptors': 0.41.9(patch_hash=4812d3969aa7556a2a52094a00be1d5f5e38f768b5f7df238e0128415253c171)
       '@open-draft/deferred-promise': 3.0.0
       '@types/statuses': 2.0.6
       cookie: 1.1.1
@@ -9928,7 +9928,7 @@ snapshots:
       outvariant: 1.4.3
       path-to-regexp: 6.3.0
       picocolors: 1.1.1
-      rettime: 0.11.7
+      rettime: 0.11.11
       statuses: 2.0.2
       strict-event-emitter: 0.5.1
       tough-cookie: 6.0.1
@@ -10522,7 +10522,7 @@ snapshots:
       onetime: 7.0.0
       signal-exit: 4.1.0
 
-  rettime@0.11.7: {}
+  rettime@0.11.11: {}
 
   rfc4648@1.5.4: {}
 
@@ -11235,10 +11235,10 @@ snapshots:
       tsx: 4.22.4
       yaml: 2.9.0
 
-  vitest@4.1.9(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.0.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.13.4(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)):
+  vitest@4.1.9(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.0.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.14.6(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)):
     dependencies:
       '@vitest/expect': 4.1.9
-      '@vitest/mocker': 4.1.9(msw@2.13.4(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
+      '@vitest/mocker': 4.1.9(msw@2.14.6(@types/node@26.0.1)(typescript@5.9.3))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
       '@vitest/pretty-format': 4.1.9
       '@vitest/runner': 4.1.9
       '@vitest/snapshot': 4.1.9
