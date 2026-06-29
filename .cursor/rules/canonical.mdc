@@ -1,0 +1,12 @@
+---
+description: Canonical backend spec discovery — feeds independent of malmoi
+alwaysApply: true
+---
+
+## Session start (mandatory)
+Read /home/ian/code/src/malmoi-rust/docs/WORKSPACE.md first, then
+/home/ian/code/src/malmoi-rust/docs/CANONICAL_BACKEND.md.
+
+Canonical backend: `../malmoi-rust/docs/CANONICAL_BACKEND.md` + `../malmoi-rust/docs/canonical.yaml`.
+spec-rsshub `:1200` is in scope but independent of dictionary HTTP.
+Lint: `bash ../malmoi-rust/scripts/lint_canonical.sh .`
