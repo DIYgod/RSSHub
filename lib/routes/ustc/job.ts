@@ -41,7 +41,7 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'joblist2';
 
-    const rand = 0.012_345_678_901_234_56;
+    const rand = 0.01234567890123456;
     const apiRootUrl = 'http://ustc.ahbys.com';
     const rootUrl = 'http://www.job.ustc.edu.cn';
 
