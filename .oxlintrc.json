@@ -175,7 +175,7 @@
         "unicorn/import-style": "error",
         "unicorn-js/isolated-functions": "error",
         "unicorn-js/logical-assignment-operators": "error",
-        "unicorn-js/max-nested-calls": "error",
+        "unicorn/max-nested-calls": "error",
         // "unicorn-js/name-replacements": "error", // unopinionated, rebranded prevent-abbreviations
         "unicorn/new-for-builtins": "error",
         "unicorn/no-abusive-eslint-disable": "error",
@@ -366,7 +366,7 @@
         "unicorn/prefer-native-coercion-functions": "error",
         "unicorn/prefer-negative-index": "error",
         "unicorn/prefer-node-protocol": "error",
-        "unicorn-js/prefer-number-coercion": "error",
+        "unicorn/prefer-number-coercion": "error",
         "unicorn-js/prefer-number-is-safe-integer": "error",
         // "unicorn/prefer-number-properties": "error", // checkNaN: false
         "unicorn-js/prefer-object-define-properties": "error",
