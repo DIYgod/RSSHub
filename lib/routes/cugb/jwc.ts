@@ -74,8 +74,8 @@ async function handler(ctx): Promise<Data> {
         link: listUrl,
         item: items,
         language: 'zh-CN',
-        image: 'https://www.cugb.edu.cn/r/cms/www/blue/images/iconCugb.ico',
-        icon: 'https://www.cugb.edu.cn/r/cms/www/blue/images/iconCugb.ico',
-        logo: 'https://www.cugb.edu.cn/r/cms/www/blue/images/iconCugb.ico',
+        image: 'https://bm.cugb.edu.cn/vis/images/xhgf/logo.png',
+        icon: 'https://bm.cugb.edu.cn/vis/images/xhgf/logo.png',
+        logo: 'https://bm.cugb.edu.cn/vis/images/xhgf/logo.png',
     };
 }
