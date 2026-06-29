@@ -399,8 +399,8 @@ importers:
         specifier: 11.3.5
         version: 11.3.5
       globals:
-        specifier: 17.6.0
-        version: 17.6.0
+        specifier: 17.7.0
+        version: 17.7.0
       got:
         specifier: 15.0.7
         version: 15.0.7
@@ -3245,7 +3245,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.49:
@@ -3739,8 +3739,8 @@ packages:
     resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
     engines: {node: '>=18'}
 
-  globals@17.6.0:
-    resolution: {integrity: sha512-sepffkT8stwnIYbsMBpoCHJuJM5l98FUF2AnE07hfvE0m/qp3R586hw4jF4uadbhvg1ooIdzuu7CsfD2jzCaNA==}
+  globals@17.7.0:
+    resolution: {integrity: sha512-Czmyns5dUsq4seFBR/Kdydhmo8y9kC79hiSkPn0YcGtNnYWnrgt0vjrSjx9tspoDGWm2CMarffRuLjM4xUz8xg==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -8564,7 +8564,7 @@ snapshots:
       detect-indent: 7.0.2
       eslint: 10.6.0(jiti@2.6.1)
       find-up-simple: 1.0.1
-      globals: 17.6.0
+      globals: 17.7.0
       indent-string: 5.0.0
       is-builtin-module: 5.0.0
       jsesc: 3.1.0
@@ -8885,7 +8885,7 @@ snapshots:
 
   globals@15.15.0: {}
 
-  globals@17.6.0: {}
+  globals@17.7.0: {}
 
   globrex@0.1.2: {}
 
