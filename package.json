@@ -188,7 +188,7 @@
         "lint-staged": "17.0.8",
         "magic-string": "0.30.21",
         "mockdate": "3.0.5",
-        "msw": "2.13.4",
+        "msw": "2.14.6",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.56.0",
         "oxlint": "1.71.0",
@@ -261,7 +261,7 @@
             "side-channel": "npm:@nolyfill/side-channel@^1"
         },
         "patchedDependencies": {
-            "@mswjs/interceptors@0.41.3": "patches/@mswjs__interceptors@0.41.3.patch",
+            "@mswjs/interceptors@0.41.9": "patches/@mswjs__interceptors@0.41.9.patch",
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
         }
     }
