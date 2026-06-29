@@ -80,8 +80,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.11.4
-        version: 0.11.4(hono@4.12.27)
+        specifier: 0.11.6
+        version: 0.11.6(hono@4.12.27)
       '@sentry/node':
         specifier: 10.59.0
         version: 10.59.0(@opentelemetry/exporter-trace-otlp-http@0.219.0(@opentelemetry/api@1.9.1))(vite@7.3.1(@types/node@26.0.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
@@ -2343,26 +2343,26 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.2.4':
-    resolution: {integrity: sha512-IQC39aQQXKsZXOqQw0LNiZ/gQ1WxHpF+WLTo/hurn0S/FmNHlBGUAhFyt1BeDSUYxics7ixgzQatKJDggafBTw==}
+  '@scalar/client-side-rendering@0.2.6':
+    resolution: {integrity: sha512-wvnyBtNdYob6CdmpFqLSQoGM5q5Ra8bXyq713T/u8Nq1NXbULk1znz/LyR78u8g++0G8bkxnVzhvOf7s9FwHFw==}
     engines: {node: '>=22'}
 
-  '@scalar/helpers@0.8.2':
-    resolution: {integrity: sha512-qNbqUjSB3S4Gr4A0oANcm5G1Ip+EqBxICYKhe9YzmnaBpbmW6shxqpiivApTvvuDf+uIhR3uMwWyVQbYcGLsxA==}
+  '@scalar/helpers@0.9.0':
+    resolution: {integrity: sha512-M34CLRCttqC1bXthI/QSzQj0s5C6nrU2PFWf/vOT3RpycbiGDGQbqR+5RfFzpOIQvRqbHfNdcRbeiZBw+vCbkQ==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.11.4':
-    resolution: {integrity: sha512-JD5vv5z44iY2O3++l4MqJ5NrKEucCLenLP26kDLyXZfO44ip5H5XFcPw5mRfnHMFgVhdJMWsvFf1mGLiPGDy/A==}
+  '@scalar/hono-api-reference@0.11.6':
+    resolution: {integrity: sha512-fq75HkPnM6YKBURAcpIFnf6gC4LNo58qerkje0FUlOYyCiIJ6/QIW9/Sbz58BoYuJKaqltWsOvjv6KarH1BicA==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.5.0':
-    resolution: {integrity: sha512-aV0PWqFpQft9a6d4Z6HOTHKDaA+K4AquxSPfBDI1c5f6lMe5l3zViww/iBQA/Yw+V1+Y2iwSVzhuxaktC1UiMg==}
+  '@scalar/schemas@0.7.0':
+    resolution: {integrity: sha512-Roj0e7S29yTbGojwdx/b8C1H5arVN4h/VSPrtQ5vb9NT2ZAbrfPQVmpQYrF845rKOWX7kSzIvyBwrKNEMIAkxA==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.14.0':
-    resolution: {integrity: sha512-aS1FvHbKhBC51mWqXmhkPe6lmhCd9+u//DQ1YTiCWOz4/fXAdWfwHvW9UZ7AzzcGwGiCo9diE81xV+UvSI1qIg==}
+  '@scalar/types@0.16.0':
+    resolution: {integrity: sha512-26OSrvZjKWZ7F236wWmJajBGDVFJuvXFJqKPFqbt/PxlgZKXQXfJsZorASRQmdNogT576nxYalQ7oaYWEnQwfw==}
     engines: {node: '>=22'}
 
   '@scalar/validation@0.6.0':
@@ -2711,9 +2711,6 @@ packages:
 
   '@vitest/utils@4.1.9':
     resolution: {integrity: sha512-A51o8ymO5PpqlWNnBP9ZHPXDIpuMtTLlGSjN7la4US+LJzoUMyhwjA5QXlm39JexgwHKW4Xjs8Z2d3dLCXOeuA==}
-
-  '@zone-eu/mailsplit@5.4.12':
-    resolution: {integrity: sha512-w7Gy+NvjZ0MiXm8F6zfjImAqcTONKDImgWVBjDKQVFUXWuz3VFM5levNArkL2M877ajql5+bkS2pDV56injlmg==}
 
   '@zone-eu/mailsplit@5.4.13':
     resolution: {integrity: sha512-j40NeNlSAivqnKEjzZYsGP/bKWr2zwuyb8XOYsC3i0ZlfM5UnTYTa7aCRkE8rYQvVzE1dRjVYdvZ1Epi6x+h6w==}
@@ -4187,9 +4184,6 @@ packages:
   libbase64@1.3.0:
     resolution: {integrity: sha512-GgOXd0Eo6phYgh0DJtjQ2tO8dc0IVINtZJeARPeiIJqge+HdsWSuaDTe8ztQ7j/cONByDZ3zeB325AHiv5O0dg==}
 
-  libmime@5.3.8:
-    resolution: {integrity: sha512-ZrCY+Q66mPvasAfjsQ/IgahzoBvfE1VdtGRpo1hwRB1oK3wJKxhKA3GOcd2a6j7AH5eMFccxK9fBoCpRZTf8ng==}
-
   libmime@5.4.0:
     resolution: {integrity: sha512-MAWyU2qYtCsrZ6GClgukz2jx73NQrzA6ASo9qzThuTG+A7+H3lWQuBsjoy9lls+v6q/epAeBdEMJ3T0f4b+uRw==}
 
@@ -4518,8 +4512,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@5.1.11:
-    resolution: {integrity: sha512-v+KEsUv2ps74PaSKv0gHTxTCgMXOIfBEbaqa6w6ISIGC7ZsvHN4N9oJ8d4cmf0n5oTzQz2SLmThbQWhjd/8eKg==}
+  nanoid@5.1.16:
+    resolution: {integrity: sha512-kVrnsrJqMR8+oLJnGEmSWw9BivK5mt7H3FZatVRjrc5wGqFYuBxX1yG7+A7Gi5AefkX6t/oCkizcQgpu0cY1dQ==}
     engines: {node: ^18 || >=20}
     hasBin: true
 
@@ -7376,28 +7370,28 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.2.4':
+  '@scalar/client-side-rendering@0.2.6':
     dependencies:
-      '@scalar/schemas': 0.5.0
-      '@scalar/types': 0.14.0
+      '@scalar/schemas': 0.7.0
+      '@scalar/types': 0.16.0
       '@scalar/validation': 0.6.0
 
-  '@scalar/helpers@0.8.2': {}
+  '@scalar/helpers@0.9.0': {}
 
-  '@scalar/hono-api-reference@0.11.4(hono@4.12.27)':
+  '@scalar/hono-api-reference@0.11.6(hono@4.12.27)':
     dependencies:
-      '@scalar/client-side-rendering': 0.2.4
+      '@scalar/client-side-rendering': 0.2.6
       hono: 4.12.27
 
-  '@scalar/schemas@0.5.0':
+  '@scalar/schemas@0.7.0':
     dependencies:
-      '@scalar/helpers': 0.8.2
+      '@scalar/helpers': 0.9.0
       '@scalar/validation': 0.6.0
 
-  '@scalar/types@0.14.0':
+  '@scalar/types@0.16.0':
     dependencies:
-      '@scalar/helpers': 0.8.2
-      nanoid: 5.1.11
+      '@scalar/helpers': 0.9.0
+      nanoid: 5.1.16
       type-fest: 5.7.0
       zod: 4.4.3
 
@@ -7827,12 +7821,6 @@ snapshots:
       '@vitest/pretty-format': 4.1.9
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.0
-
-  '@zone-eu/mailsplit@5.4.12':
-    dependencies:
-      libbase64: 1.3.0
-      libmime: 5.3.8
-      libqp: 2.1.1
 
   '@zone-eu/mailsplit@5.4.13':
     dependencies:
@@ -9401,13 +9389,6 @@ snapshots:
 
   libbase64@1.3.0: {}
 
-  libmime@5.3.8:
-    dependencies:
-      encoding-japanese: 2.2.0
-      iconv-lite: 0.7.2
-      libbase64: 1.3.0
-      libqp: 2.1.1
-
   libmime@5.4.0:
     dependencies:
       encoding-japanese: 2.2.0
@@ -9933,7 +9914,7 @@ snapshots:
 
   nanoid@3.3.15: {}
 
-  nanoid@5.1.11: {}
+  nanoid@5.1.16: {}
 
   narou@2.0.1: {}
 
