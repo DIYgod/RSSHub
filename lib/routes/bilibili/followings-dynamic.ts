@@ -27,7 +27,7 @@ export const route: Route = {
 | directLink | 使用内容直链                      | 0/1/true/false | false  |
 | hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
 
-用例：\`/bilibili/followings/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
+用例：\`/bilibili/followings/dynamic/2267573/showEmoji=1&embed=0&useAvid=1&directLink=1\``,
     },
     features: {
         requireConfig: [
@@ -61,6 +61,7 @@ async function handler(ctx) {
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
+    const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
 
     const name = await cache.getUsernameFromUID(uid);
     const cookie = config.bilibili.cookies[uid];
@@ -100,6 +101,44 @@ async function handler(ctx) {
             return '';
         }
         return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
+    };
+    // Resolve a direct content URL from the legacy card structure.
+    // Field-presence based, mirroring the MAJOR_TYPE_* switch in dynamic.ts getUrl().
+    const getDirectUrl = (data, type?: number): string | null => {
+        if (!data) {
+            return null;
+        }
+        // UGC video (type 8)
+        if (data.bvid) {
+            return `https://www.bilibili.com/video/${data.bvid}`;
+        }
+        if (data.aid) {
+            return `https://www.bilibili.com/video/av${data.aid}`;
+        }
+        // Article / column (type 64)
+        if (data.id && type === 64) {
+            return `https://www.bilibili.com/read/cv${data.id}`;
+        }
+        // PGC bangumi (type 2048)
+        if (data.season_id) {
+            return `https://www.bilibili.com/bangumi/play/ss${data.season_id}`;
+        }
+        if (data.media_id) {
+            return `https://www.bilibili.com/bangumi/media/md${data.media_id}`;
+        }
+        // Audio (type 256)
+        if (data.id && type === 256) {
+            return `https://www.bilibili.com/audio/au${data.id}`;
+        }
+        // Live room
+        if (data.roomid) {
+            return `https://live.bilibili.com/${data.roomid}`;
+        }
+        // Sketch / shared link card
+        if (data.sketch?.target_url) {
+            return data.sketch.target_url;
+        }
+        return null;
     };
     const getImgs = (data) => {
         let imgs = '';
@@ -171,6 +210,15 @@ async function handler(ctx) {
             } else if (item.desc?.dynamic_id) {
                 link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
             }
+            // guid always points to the dynamic card URL (unique per dynamic)
+            const guid = link;
+            // directLink: replace the link with a direct content URL (guid stays unique)
+            if (directLink) {
+                const direct = getDirectUrl(data, item.desc?.type) || (origin && getDirectUrl(origin.item || origin, item.desc?.type));
+                if (direct) {
+                    link = direct;
+                }
+            }
 
             // emoji
             let data_content = getDes(data);
@@ -206,6 +254,7 @@ async function handler(ctx) {
                 })(),
                 pubDate: new Date(item.desc?.timestamp * 1000).toUTCString(),
                 link,
+                guid,
             };
         })
     );
