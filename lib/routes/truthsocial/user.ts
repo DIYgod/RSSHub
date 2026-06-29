@@ -57,17 +57,31 @@ async function handler(ctx: Context): Promise<Data> {
         });
 
         logger.http(`Requesting ${ORIGIN}/@${username}`);
-        await page.goto(`${ORIGIN}/@${username}`, { waitUntil: 'domcontentloaded' });
+        // `networkidle` gives Cloudflare's challenge JS time to run and set the
+        // clearance cookie before we touch the API.
+        await page.goto(`${ORIGIN}/@${username}`, { waitUntil: 'networkidle' });
 
         // Inside the page context, same-origin fetch carries the Cloudflare cookie.
-        const apiFetch = (url: string) =>
-            page.evaluate(async (u) => {
-                const res = await fetch(u, { headers: { accept: 'application/json' }, credentials: 'include' });
-                if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}`);
-                }
-                return res.json();
-            }, url);
+        // A fresh challenge can take a moment to clear, so retry on 403/503.
+        const apiFetch = (url: string): Promise<any> =>
+            page.evaluate(
+                async ({ u, retries }) => {
+                    for (let i = 0; i <= retries; i++) {
+                        // eslint-disable-next-line no-await-in-loop
+                        const res = await fetch(u, { headers: { accept: 'application/json' }, credentials: 'include' });
+                        if (res.ok) {
+                            return res.json();
+                        }
+                        if ((res.status === 403 || res.status === 503) && i < retries) {
+                            // eslint-disable-next-line no-await-in-loop
+                            await new Promise((resolve) => setTimeout(resolve, 3000));
+                            continue;
+                        }
+                        throw new Error(`HTTP ${res.status}`);
+                    }
+                },
+                { u: url, retries: 3 }
+            );
 
         account = await cache.tryGet(`truthsocial:account:${username}`, () => apiFetch(`${API_BASE}/v1/accounts/lookup?acct=${encodeURIComponent(username)}`));
 
@@ -86,7 +100,7 @@ async function handler(ctx: Context): Promise<Data> {
             const media = (source.media_attachments ?? [])
                 .map((m) => {
                     if (m.type === 'image') {
-                        return `<img src="${m.url}" referrerpolicy="no-referrer">`;
+                        return `<img src="${m.url}">`;
                     }
                     if (m.type === 'video' || m.type === 'gifv') {
                         return `<video src="${m.url}" controls poster="${m.preview_url ?? ''}"></video>`;
