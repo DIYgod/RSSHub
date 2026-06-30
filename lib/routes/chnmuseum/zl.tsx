@@ -28,12 +28,9 @@ const formatExhibitionDate = (dateStr: string | undefined): string | undefined =
     if (!dateStr) {
         return undefined;
     }
-    const normalized = dateStr
-        .replaceAll(/年|月/g, '-')
-        .replaceAll('日', '')
-        .replaceAll(/[/.]/g, '-');
+    const normalized = dateStr.replaceAll(/[年月/.]/g, '-').replaceAll('日', '');
     const d = dayjs(normalized);
-    return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
+    return d.format('YYYY-MM-DD');
 };
 
 const parseExhibitionDuration = (duration: string) => {
@@ -51,23 +48,20 @@ const parseExhibitionDuration = (duration: string) => {
     let startDateRaw: string | undefined;
     let endDateRaw: string | undefined;
 
-    if (cleanStr.startsWith('展至') && allDates.length > 0) {
-        endDateRaw = allDates[0];
-    } else if (allDates.length >= 2) {
+    if (allDates.length >= 2) {
         startDateRaw = allDates[0];
         let rawEnd = allDates[1];
         // Logic to complete the year
         if (!/\d{4}/.test(rawEnd) && startDateRaw) {
             const startYear = startDateRaw.match(/^\d{4}/);
-            if (startYear) {
-                const sep = startDateRaw.includes('年') ? '年' : startDateRaw.includes('/') ? '/' : '-';
-                rawEnd = `${startYear[0]}${sep}${rawEnd}`;
+            if (startYear?.[0]) {
+                rawEnd = `${startYear[0]}${startDateRaw[4]}${rawEnd}`;
             }
         }
         endDateRaw = rawEnd;
     } else if (allDates.length === 1) {
-        // add 闭展 situation for endDate
-        if (cleanStr.includes('展至') || cleanStr.includes('闭展')) {
+        if (cleanStr.includes('闭展')) {
+            // e.g. "2025年2月16日闭展"
             endDateRaw = allDates[0];
         } else {
             startDateRaw = allDates[0];
@@ -111,15 +105,9 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
 
     const extractItems = (html: string, contextUrl: string) => {
         const $ = load(html);
-        const selectors = [
-            'ul[id="div"] > li > a',
-            'ul.cj_hb_list > li > a',
-            '.zl_zzzl_list li.scale_imgs > a',
-            '.zl_jbc_list li.scale_imgs > a',
-            '.zl_ztzl_list li.scale_imgs > a',
-            '.zl_gjzl_list li.scale_imgs > a',
-            '.zl_gbxz_list li.scale_imgs > a',
-        ].join(', ');
+        const selectors = ['ul[id="div"] > li > a', '.zl_zzzl_list li.scale_imgs > a', '.zl_jbc_list li.scale_imgs > a', '.zl_ztzl_list li.scale_imgs > a', '.zl_gjzl_list li.scale_imgs > a', '.zl_gbxz_list li.scale_imgs > a'].join(
+            ', '
+        );
 
         const pageElements = $(selectors).toArray();
 
@@ -127,11 +115,7 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
             const $item = $(el).closest('li');
             if ($item.length > 0) {
                 const rawLink = $(el).attr('href') || '';
-                const rawZtzl = $(el).attr('ztzlurl')?.trim() || '';
-
-                if (!rawLink && !rawZtzl) {
-                    continue;
-                }
+                const rawZtzl = $(el).attr('ztzlurl')?.trim() || ''; // some exhibition links have a separate detailed page, use ztzlurl to get the detailed exhibition link if available
 
                 // Use exhibitionLink to remove the repeat ones
                 const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
@@ -181,8 +165,8 @@ export const route: Route = {
         },
     ],
     handler: async (ctx: Context): Promise<Data> => {
-        const type = ctx.req.param('type')?.trim();
-        const subtype = ctx.req.param('subType')?.trim();
+        const type = ctx.req.param('type');
+        const subtype = ctx.req.param('subType');
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.chnmuseum.cn';
 
@@ -194,10 +178,6 @@ export const route: Route = {
                 itemsToParse.map(({ $item, contextUrl }) => {
                     const aTag = $item.find('a').first();
 
-                    if (!aTag.length) {
-                        return null;
-                    }
-
                     const rawLink = aTag.attr('href') || '';
                     const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
 
@@ -208,7 +188,7 @@ export const route: Route = {
 
                         // title may not have full display on the page, use the img alt information instead
                         const imgTag = $item.find('img');
-                        let title = $item.find('.hide_title').text() || imgTag.attr('alt') || '';
+                        let title = $item.find('.hide_title').text() || '';
 
                         const rawSrc = imgTag.attr('src')!;
                         const imgUrl = new URL(rawSrc, contextUrl).href;
@@ -231,30 +211,21 @@ export const route: Route = {
                         if (!title || title.endsWith('...')) {
                             const detailResponse = await got(itemLink);
                             const $detail = load(detailResponse.data);
-
-                            if (!title || title.endsWith('...')) {
-                                const detailTitle = $detail('.crumb_mod_box .title').text();
-                                title =
-                                    detailTitle ||
-                                    $detail('title')
-                                        .text()
-                                        .replace(/-?\s*中国国家博物馆/, '');
-                            }
+                            const detailTitle = $detail('.crumb_mod_box .title').text();
+                            title =
+                                detailTitle ||
+                                $detail('title')
+                                    .text()
+                                    .replace(/-?\s*中国国家博物馆/, '');
 
                             if (!fullDuration) {
-                                const match = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/);
-                                if (match && match[1]) {
-                                    fullDuration = match[1];
-                                } else {
-                                    // for jbcl to fetch the fullDuration
-                                    $detail('li, strong, p').each((_, el) => {
-                                        const text = $detail(el).text().trim();
-                                        if (text.startsWith('展期：')) {
-                                            fullDuration = text.replace('展期：', '').trim();
-                                        } else if (text.includes('闭展')) {
-                                            fullDuration = text;
-                                        }
-                                    });
+                                fullDuration = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/)?.[1] || '';
+                                for (const el of $detail('li, strong, p').toArray()) {
+                                    const text = $detail(el).text().trim();
+                                    if (text.startsWith('展期：') || text.includes('闭展')) {
+                                        fullDuration = text.replace('展期：', '').trim();
+                                        break;
+                                    }
                                 }
                             }
                         }
