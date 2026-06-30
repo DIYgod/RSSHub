@@ -180,7 +180,7 @@
         "eslint-plugin-unicorn": "69.0.0",
         "eslint-plugin-yml": "3.5.0",
         "fast-string-width": "3.0.2",
-        "fs-extra": "11.3.5",
+        "fs-extra": "11.3.6",
         "globals": "17.7.0",
         "got": "15.0.7",
         "husky": "9.1.7",
