@@ -2,7 +2,9 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const API_BASE = 'https://nextmusic.toubiec.cn';
 const SITE_BASE = 'https://wyapi.toubiec.cn';
@@ -168,44 +170,46 @@ function renderSongDescription(song: SongInfo, urlData?: SongUrl, lyric?: LyricD
     return `<p>${lines.join('<br>')}</p>${urlData?.url ? `<p><a href="${urlData.url}">下载音频</a></p>` : ''}${lyrics}`;
 }
 
-async function songToItem(song: SongInfo, level: string, includeLyric = false): Promise<DataItem> {
+function songToItem(song: SongInfo, level: string, includeLyric = false): Promise<DataItem> {
     const id = String(song.id);
-    const { data: urlData, endpoint } = await getSongUrl(id, level);
-    let lyric: LyricData | undefined;
-    if (includeLyric) {
-        try {
-            lyric = await postApi<LyricData>('getSongLyric', { id });
-        } catch {
-            // Lyrics are optional; keep the audio item if the lyric endpoint fails.
+    return cache.tryGet(`toubiec:wyapi:song:${id}:${level}:${includeLyric ? 'lyrics' : 'audio'}`, async () => {
+        const { data: urlData, endpoint } = await getSongUrl(id, level);
+        let lyric: LyricData | undefined;
+        if (includeLyric) {
+            try {
+                lyric = await postApi<LyricData>('getSongLyric', { id });
+            } catch {
+                // Lyrics are optional; keep the audio item if the lyric endpoint fails.
+            }
         }
-    }
-    const title = [song.name || id, song.singer].filter(Boolean).join(' - ');
-    const description = renderSongDescription(song, urlData, lyric, endpoint);
+        const title = [song.name || id, song.singer].filter(Boolean).join(' - ');
+        const description = renderSongDescription(song, urlData, lyric, endpoint);
 
-    return {
-        title,
-        link: songLink(id),
-        guid: `toubiec-${id}-${urlData.level ?? level}`,
-        author: song.singer,
-        pubDate: song.time,
-        description,
-        content: {
-            html: description,
-            text: [song.name, song.singer, song.album, lyric?.lrc].filter(Boolean).join('\n'),
-        },
-        image: song.picimg,
-        enclosure_url: urlData.url,
-        enclosure_type: urlData.url ? audioMimeType(urlData.url) : undefined,
-        enclosure_title: title,
-        enclosure_length: urlData.size,
-        itunes_duration: song.duration,
-        itunes_item_image: song.picimg,
-        _extra: {
-            level: urlData.level ?? level,
-            bitrate: urlData.br,
-            lyrics: lyric,
-        },
-    };
+        return {
+            title,
+            link: songLink(id),
+            guid: `toubiec-${id}-${urlData.level ?? level}`,
+            author: song.singer,
+            pubDate: song.time ? parseDate(song.time) : undefined,
+            description,
+            content: {
+                html: description,
+                text: [song.name, song.singer, song.album, lyric?.lrc].filter(Boolean).join('\n'),
+            },
+            image: song.picimg,
+            enclosure_url: urlData.url,
+            enclosure_type: urlData.url ? audioMimeType(urlData.url) : undefined,
+            enclosure_title: title,
+            enclosure_length: urlData.size,
+            itunes_duration: song.duration,
+            itunes_item_image: song.picimg,
+            _extra: {
+                level: urlData.level ?? level,
+                bitrate: urlData.br,
+                lyrics: lyric,
+            },
+        };
+    });
 }
 
 async function collectPlaylistSongs(id: string, limit: number, offset = 0, songs: SongInfo[] = [], info?: CollectionData): Promise<{ info?: CollectionData; songs: SongInfo[] }> {
@@ -291,7 +295,7 @@ export async function buildWyapiData(mode: string, input: string, level = DEFAUL
 
 export const handler = (ctx: Context): Promise<Data> => {
     const { mode, id, level = DEFAULT_LEVEL } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? String(DEFAULT_LIMIT), 10);
+    const limit = Math.trunc(Number(ctx.req.query('limit') ?? String(DEFAULT_LIMIT)));
     return buildWyapiData(mode, decodeURIComponent(id), level, limit);
 };
 
@@ -342,15 +346,15 @@ export const route: Route = {
             target: '/song/:id',
         },
         {
-            source: ['music.163.com/song?id=:id'],
+            source: ['music.163.com/song'],
             target: '/song/:id',
         },
         {
-            source: ['music.163.com/playlist?id=:id'],
+            source: ['music.163.com/playlist'],
             target: '/playlist/:id',
         },
         {
-            source: ['music.163.com/album?id=:id'],
+            source: ['music.163.com/album'],
             target: '/album/:id',
         },
     ],
