@@ -25,7 +25,7 @@ export const handler = async (ctx) => {
         .map((item) => {
             item = $(item);
 
-            const image = item.find('div.List-item-excerpt img').prop('src')?.split(/\?/, 1)[0] ?? undefined;
+            const image = item.find('div.List-item-excerpt img').prop('data-src')?.split(/\?/, 1)[0] ?? undefined;
             const title = item.find('h2.List-item-title').text();
             const description = renderDescription({
                 images: image
@@ -51,9 +51,6 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language,
-                enclosure_url: image,
-                enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
-                enclosure_title: title,
             };
         });
 
@@ -63,6 +60,11 @@ export const handler = async (ctx) => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
+
+                $$('div.Post-content img[data-src]').each((_, img) => {
+                    $$(img).prop('src', $$(img).prop('data-src').split(/\?/, 1)[0]);
+                    $$(img).removeAttr('data-src');
+                });
 
                 const title = $$('h1.Post-title').text().trim();
                 const description = renderDescription({
@@ -80,9 +82,6 @@ export const handler = async (ctx) => {
                 item.image = image;
                 item.banner = image;
                 item.language = language;
-                item.enclosure_url = image;
-                item.enclosure_type = image ? `image/${image.split(/\./).pop()}` : undefined;
-                item.enclosure_title = title;
 
                 return item;
             })
