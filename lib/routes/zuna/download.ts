@@ -54,7 +54,7 @@ function buildSignature(params: Record<string, string>): { signature: string; ti
     delete cleaned.ver;
 
     let signString = timestamp + SIGN_DOMAIN;
-    for (const key of Object.keys(cleaned).toSorted()) {
+    for (const key of Object.keys(cleaned).toSorted((a, b) => a.localeCompare(b))) {
         signString += `${key}=${cleaned[key]}`;
     }
 
@@ -96,7 +96,7 @@ function parseSizeBytes(size: string | number | undefined): number | undefined {
     if (!match) {
         return undefined;
     }
-    const value = Number.parseFloat(match[1]);
+    const value = Number(match[1]);
     const unit = match[2]?.toLowerCase() ?? 'b';
     const multiplier = unit === 'gb' ? 1024 ** 3 : unit === 'mb' ? 1024 ** 2 : unit === 'kb' ? 1024 : 1;
     return Math.round(value * multiplier);
@@ -243,7 +243,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['music.163.com/song?id=:id'],
+            source: ['music.163.com/song'],
             target: '/download/:id',
         },
     ],
