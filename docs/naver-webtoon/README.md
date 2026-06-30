@@ -8,4 +8,4 @@ Connector documentation consolidated under **`docs/impl/`** (dragnet 2026-06).
 | Operator setup / proxy  | [`../routes/RSSHUB_SETUP.md`](../routes/RSSHUB_SETUP.md)               |
 | OCR / extension overlay | Sunbi `docs/feed/naver-webtoon/`                                       |
 
-Historical multi-doc bundle: [`../archive/dragnet-2026-06/naver-webtoon/`](../archive/dragnet-2026-06/naver-webtoon/).
+Historical multi-doc bundle: [`../archive/naver-webtoon/`](../archive/naver-webtoon/).

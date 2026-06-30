@@ -12,8 +12,8 @@
 | Action          |      Count | Notes                                                                      |
 | --------------- | ---------: | -------------------------------------------------------------------------- |
 | **MERGE → hub** | 11 created | `docs/impl/README.md` + `IMPL-00`…`IMPL-09` (06–07 tests/client)           |
-| **ARCHIVE**     |    7 moved | `ROUTE_*.md` → `archive/dragnet-2026-06/routes/`                           |
-| **ARCHIVE**     |    2 moved | `docs/naver-webtoon/*` → `archive/dragnet-2026-06/naver-webtoon/`          |
+| **ARCHIVE**     |    7 moved | `ROUTE_*.md` → `archive/routes/`                                           |
+| **ARCHIVE**     |    2 moved | `docs/naver-webtoon/*` → `archive/naver-webtoon/`                          |
 | **STUB**        |          2 | `docs/routes/README.md`, `docs/naver-webtoon/README.md`                    |
 | **KEEP_ACTIVE** |         10 | Operator runbooks + product spec                                           |
 | **DELETE**      |          0 | Full narratives retained in archive                                        |
@@ -74,7 +74,7 @@
 
 ## ARCHIVE
 
-### `archive/dragnet-2026-06/routes/`
+### `archive/routes/`
 
 | File                     | Rationale                                          |
 | ------------------------ | -------------------------------------------------- |
@@ -86,7 +86,7 @@
 | `ROUTE_NAVER_WEBTOON.md` | Superseded by IMPL-08                              |
 | `ROUTE_NAVER_BLOG.md`    | Superseded by IMPL-09                              |
 
-### `archive/dragnet-2026-06/naver-webtoon/`
+### `archive/naver-webtoon/`
 
 | File              | Rationale                                                   |
 | ----------------- | ----------------------------------------------------------- |
@@ -149,7 +149,7 @@ test -f docs/impl/IMPL-05-netflix.md
 
 # Route docs archived
 ! test -f docs/routes/ROUTE_YOUTUBE.md
-test -f docs/archive/dragnet-2026-06/routes/ROUTE_YOUTUBE.md
+test -f docs/archive/routes/ROUTE_YOUTUBE.md
 
 # Stubs present
 test -f docs/routes/README.md

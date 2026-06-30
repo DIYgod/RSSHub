@@ -49,7 +49,7 @@ All routes live under namespace **`/spec/`** (`lib/routes/spec/`). `_extra` must
 
 ## Archived route narratives (dragnet 2026-06)
 
-Pre-impl per-route markdown (`ROUTE_*.md`, `docs/naver-webtoon/`) moved to [`../archive/dragnet-2026-06/`](../archive/dragnet-2026-06/AGENT-19-rsshub-MANIFEST.md). Use **`IMPL-*`** + **`spec-extra.ts`** for current paths and contracts.
+Pre-impl per-route markdown (`ROUTE_*.md`, `docs/naver-webtoon/`) moved to [`../archive/manifests/`](../archive/manifests/AGENT-19-rsshub-MANIFEST.md). Use **`IMPL-*`** + **`spec-extra.ts`** for current paths and contracts.
 
 ---
 

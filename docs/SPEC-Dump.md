@@ -17,6 +17,6 @@ Implementation detail lives in **`docs/impl/`** — one file per area.
 | IMPL-07 | [Sunbi client](impl/IMPL-07-rsshub-client-extension.md)          |
 
 - **Product / sprint spec:** [SPEC-sunbi-rsshub.md](SPEC-sunbi-rsshub.md)
-- **Dragnet manifest:** [archive/dragnet-2026-06/AGENT-19-rsshub-MANIFEST.md](archive/dragnet-2026-06/AGENT-19-rsshub-MANIFEST.md)
+- **Dragnet manifest:** [archive/manifests/AGENT-19-rsshub-MANIFEST.md](archive/manifests/AGENT-19-rsshub-MANIFEST.md)
 
-Archived monolithic route docs: `archive/dragnet-2026-06/routes/ROUTE_*.md`.
+Archived monolithic route docs: `archive/routes/ROUTE_*.md`.

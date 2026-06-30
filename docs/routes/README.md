@@ -11,4 +11,4 @@
 | [RSSHUB_SETUP.md](RSSHUB_SETUP.md)                         | Env, Docker, proxy       |
 | [SPEC_SMOKE_RESULTS.md](SPEC_SMOKE_RESULTS.md)             | Smoke test record        |
 
-Archived `ROUTE_*.md` narratives: [`../archive/dragnet-2026-06/routes/`](../archive/dragnet-2026-06/routes/).
+Archived `ROUTE_*.md` narratives: [`../archive/routes/`](../archive/routes/).
