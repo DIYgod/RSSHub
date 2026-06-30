@@ -49,6 +49,11 @@ artifacts/naver-webtoon-758037.json
 artifacts/naver-webtoon-811721-v2.json
 artifacts/naver-webtoon-811721.json
 
+# Archived route/plan narratives (local-only; dragnet manifests tracked)
+docs/archive/**
+!docs/archive/manifests/
+!docs/archive/manifests/**
+
 # galmuri — managed block (do not edit)
 .galmuri/
 knowledge-wiki/**/__pycache__/
