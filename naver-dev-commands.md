@@ -11,7 +11,7 @@ The `chore/claude-skills` branch is confirmed live at [`koreanpatch/SPEC-RSSHub`
 `CLAUDE.md` is the primary Claude Code memory file. Key things it tells Claude about this repo:
 
 - Custom Sunbi routes go in `lib/routes/` under their own namespace, **not** `lib/v2/`
-- `ROUTE_NAVER_WEBTOON.md` is the spec doc living at `docs/routes/`
+- Canonical spec doc: `docs/impl/IMPL-08-naver-webtoon.md`
 - Each `DataItem` should include an `extra` field with a typed Sunbi payload like `{ type: 'youtube_video', ... }` — **this contradicts `AGENTS.md` rule #18**, which means you have a conflict to resolve
 - `NAVER_COOKIE` env var is the config key for paywalled content
 
@@ -45,10 +45,10 @@ Run this once to generate `.planning/codebase/` snapshots so all subsequent sess
 
 ```
 /feature Add a Naver Webtoon series route at lib/routes/naver/webtoon-series.ts
-following the spec in docs/routes/ROUTE_NAVER_WEBTOON.md
+following the spec in docs/impl/IMPL-08-naver-webtoon.md
 ```
 
-The `feature` skill will: read `AGENTS.md` + `CLAUDE.md`, write a spec for approval, then build only after you confirm. It also handles the doc update to `docs/routes/ROUTE_NAVER_WEBTOON.md` automatically.
+The `feature` skill will: read `AGENTS.md` + `CLAUDE.md`, write a spec for approval, then build only after you confirm. It also handles the doc update to `docs/impl/IMPL-08-naver-webtoon.md` automatically.
 
 ### Step 3 — Check Sunbi contract after
 

@@ -1,6 +1,6 @@
 # RSSHub Self-Hosted Setup
 
-← [INDEX](INDEX.md) | See also: [ARCH.md](ARCH.md)
+← [routes README](README.md) | Impl hub: [../impl/README.md](../impl/README.md)
 
 ## Repo
 
@@ -39,16 +39,17 @@ pnpm dev
 lib/routes/
 ├── naver/
 │   ├── namespace.ts            ← extend upstream Naver routes
-│   ├── webtoon-series.ts       ← see ROUTE_NAVER_WEBTOON.md
-│   └── ...
+│   └── webtoon-series.ts       ← upstream; prefer spec/naver-webtoon.ts
 ├── spec/                       ← SPEC namespace (Sunbi media contract)
 │   ├── namespace.ts
 │   ├── utils.ts
-│   ├── youtube.ts              ← see ROUTE_YOUTUBE.md / IMPL-01
-│   ├── viki.ts                 ← see ROUTE_VIKI.md / IMPL-02
-│   ├── weverse.ts              ← see ROUTE_WEVERSE.md / IMPL-03
-│   ├── bubble.ts               ← see ROUTE_BUBBLE.md / IMPL-04
-│   └── netflix.ts              ← see ROUTE_NETFLIX.md / IMPL-05
+│   ├── youtube.ts              ← IMPL-01
+│   ├── viki.ts                 ← IMPL-02
+│   ├── weverse.ts              ← IMPL-03
+│   ├── bubble.ts               ← IMPL-04
+│   ├── netflix.ts              ← IMPL-05
+│   ├── naver-webtoon.ts        ← IMPL-08
+│   └── naver-blog.ts           ← IMPL-09
 ├── viki/                       ← upstream (reference / wrap as needed)
 ├── netflix/
 ├── weverse/
@@ -281,5 +282,4 @@ Expected for Naver Webtoon:
 }
 ```
 
-The ingestion Edge Function reads this object to populate `feed.items` columns.
-See [INGESTION.md](INGESTION.md) for the full mapping.
+Sunbi ingestion mapping lives in the Sunbi repo (`docs/feed/`) and [`../SPEC-sunbi-rsshub.md`](../SPEC-sunbi-rsshub.md) Sprint 3.

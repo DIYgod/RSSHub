@@ -1,16 +1,58 @@
-# SPEC RSSHub — implementation specs (IMPL)
+# SPEC-RSSHub — implementation docs (operator + dev front door)
 
-Split from the consolidated [SPEC-Dump](../SPEC-Dump.md) for easier navigation. High-level product spec: [SPEC-sunbi-rsshub](../SPEC-sunbi-rsshub.md).
+**Product / sprint spec:** [`../SPEC-sunbi-rsshub.md`](../SPEC-sunbi-rsshub.md)  
+**Contract types:** [`lib/types/spec-extra.ts`](../../lib/types/spec-extra.ts) — authoritative `_extra` shapes
 
-| Doc                                                                 | Scope                                                                                        |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [IMPL-00 — Shared infrastructure](IMPL-00-shared-infrastructure.md) | **`spec` namespace** (`lib/routes/spec/`), utils, `SpecExtra` / `_extra` TypeScript contract |
-| [IMPL-01 — YouTube](IMPL-01-spec-youtube.md)                        | Atom channel feed route                                                                      |
-| [IMPL-02 — Viki](IMPL-02-viki.md)                                   | Viki API episodes route                                                                      |
-| [IMPL-03 — Weverse](IMPL-03-weverse.md)                             | Weverse feed route                                                                           |
-| [IMPL-04 — Bubble](IMPL-04-bubble.md)                               | Bubble messages route                                                                        |
-| [IMPL-05 — Netflix](IMPL-05-netflix.md)                             | Shakti metadata route                                                                        |
-| [IMPL-06 — Tests](IMPL-06-tests.md)                                 | Vitest + MSW layout and samples                                                              |
-| [IMPL-07 — Extension client](IMPL-07-rsshub-client-extension.md)    | `RsshubClient` in the **sunbi** extension repo (paired client)                               |
+---
 
-**Note:** Code blocks are design targets. Before implementing, align imports and `cache.tryGet` signatures with the current fork (`lib/middleware/cache` pattern, `Route` type in `lib/types.ts`, and `pnpm build:routes` registration under `lib/routes/spec/`). Public URL prefix is **`/spec/`** (lowercase path segment; display name **SPEC**).
+## Operator runbooks (start here)
+
+| Doc                                                                              | When                                               |
+| -------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [`../LAUNCH_RUNBOOK.md`](../LAUNCH_RUNBOOK.md)                                   | Ship production VM (Docker Compose + Caddy)        |
+| [`../routes/SPEC_ROUTE_RUNBOOK.md`](../routes/SPEC_ROUTE_RUNBOOK.md)             | Local bring-up, contract validation, deploy phases |
+| [`../routes/RSSHUB_SETUP.md`](../routes/RSSHUB_SETUP.md)                         | Fork setup, env vars, proxy, Compose reference     |
+| [`../routes/SPEC_REMAINING_CHECKLIST.md`](../routes/SPEC_REMAINING_CHECKLIST.md) | Completion status + ops backlog                    |
+| [`../spec-secrets-runbook.md`](../spec-secrets-runbook.md)                       | Token/cookie acquisition and rotation              |
+| [`../spec-upstream-merge.md`](../spec-upstream-merge.md)                         | Monthly upstream sync                              |
+| [`../spec-cache.md`](../spec-cache.md)                                           | TTL table + L1/L2 cache behavior                   |
+| [`../spec-error-codes.md`](../spec-error-codes.md)                               | Typed auth/upstream errors                         |
+| [`../routes/SPEC_SMOKE_RESULTS.md`](../routes/SPEC_SMOKE_RESULTS.md)             | Last recorded `scripts/spec-smoke.sh` run          |
+
+Quick local smoke:
+
+```bash
+pnpm dev
+BASE_URL=http://localhost:1200 bash scripts/spec-smoke.sh
+```
+
+---
+
+## Per-route implementation specs (`IMPL-*`)
+
+All routes live under namespace **`/spec/`** (`lib/routes/spec/`). `_extra` must match `SpecExtra` in `lib/types/spec-extra.ts`.
+
+| ID                                            | Route                           | Handler                                              |
+| --------------------------------------------- | ------------------------------- | ---------------------------------------------------- |
+| [IMPL-00](IMPL-00-shared-infrastructure.md)   | Shared                          | `utils.ts`, namespace, middleware                    |
+| [IMPL-01](IMPL-01-spec-youtube.md)            | `/spec/youtube/:channelId`      | `youtube.ts`, `youtube-sources.ts`                   |
+| [IMPL-02](IMPL-02-viki.md)                    | `/spec/viki/:titleId`           | `viki.ts`                                            |
+| [IMPL-03](IMPL-03-weverse.md)                 | `/spec/weverse/:artistId`       | `weverse.ts`                                         |
+| [IMPL-04](IMPL-04-bubble.md)                  | `/spec/bubble/:artistId`        | `bubble.ts`                                          |
+| [IMPL-05](IMPL-05-netflix.md)                 | `/spec/netflix/:netflixTitleId` | `netflix.ts`, `netflix-bridge.ts`, `netflix-tmdb.ts` |
+| [IMPL-08](IMPL-08-naver-webtoon.md)           | `/spec/naver/webtoon/:titleId`  | `naver-webtoon.ts`                                   |
+| [IMPL-09](IMPL-09-naver-blog.md)              | `/spec/naver/blog/:blogId`      | `naver-blog.ts`                                      |
+| [IMPL-06](IMPL-06-tests.md)                   | Tests                           | `tests/routes/spec/`, MSW, fixtures                  |
+| [IMPL-07](IMPL-07-rsshub-client-extension.md) | Sunbi client                    | sibling `sunbi` repo                                 |
+
+---
+
+## Archived route narratives (dragnet 2026-06)
+
+Pre-impl per-route markdown (`ROUTE_*.md`, `docs/naver-webtoon/`) moved to [`../archive/dragnet-2026-06/`](../archive/dragnet-2026-06/AGENT-19-rsshub-MANIFEST.md). Use **`IMPL-*`** + **`spec-extra.ts`** for current paths and contracts.
+
+---
+
+## Deferred work
+
+See [`../TODO.md`](../TODO.md) (membership YouTube, NAVER_COOKIE paywall, public registry, monitoring).

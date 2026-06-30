@@ -37,27 +37,25 @@ Exit criteria:
 
 - At least one known route responds with JSON.
 
-## Phase 2: Implement Remaining Route Backlog
+## Phase 2: Route implementation reference
 
-Current observed custom coverage:
+All target **SPEC** routes are implemented under `lib/routes/spec/`. Per-route specs: [`../impl/README.md`](../impl/README.md).
 
-- Implemented: `naver/webtoon-series`
-- Remaining: `spec/youtube`, `spec/viki`, `spec/weverse`, `spec/bubble`, and Sunbi ingestion validation for `spec/netflix`
+| Route                           | IMPL    |
+| ------------------------------- | ------- |
+| `/spec/youtube/:channelId`      | IMPL-01 |
+| `/spec/viki/:titleId`           | IMPL-02 |
+| `/spec/weverse/:artistId`       | IMPL-03 |
+| `/spec/bubble/:artistId`        | IMPL-04 |
+| `/spec/netflix/:netflixTitleId` | IMPL-05 |
+| `/spec/naver/webtoon/:titleId`  | IMPL-08 |
+| `/spec/naver/blog/:blogId`      | IMPL-09 |
 
-For each remaining route:
-
-1. Add/verify `lib/routes/spec/namespace.ts` and route modules beside it
-2. Add route file with correct `Route` metadata.
-3. Build item payloads with typed fields and `_extra` object.
-4. Add caching for detail fetches (`cache.tryGet` in loops).
-5. Ensure:
-    - unique `item.link`
-    - `pubDate` when available
-    - no unsupported top-level fields
+When adding or changing a route: update the matching `IMPL-*`, `lib/types/spec-extra.ts`, tests, and `scripts/spec-smoke.sh`.
 
 Exit criteria:
 
-- All planned namespaces have working endpoint(s).
+- Handler + contract tests green for the route you touched.
 
 ## Phase 3: Contract validation for Sunbi ingestion
 

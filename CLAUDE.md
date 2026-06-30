@@ -97,18 +97,19 @@ Both clients share proxy support, retry logic, and cookie jar handling configure
 
 ### Custom Sunbi Routes
 
-Routes added for Sunbi are documented in `docs/routes/`:
+Routes added for Sunbi are documented in `docs/impl/` (see [`docs/impl/README.md`](docs/impl/README.md)):
 
-| Doc                      | Route namespace    | Purpose                                                 |
-| ------------------------ | ------------------ | ------------------------------------------------------- |
-| `ROUTE_YOUTUBE.md`       | `sunbi-youtube`    | YouTube channel feed with transcript + `_extra` payload |
-| `ROUTE_NAVER_WEBTOON.md` | `naver` (extended) | Naver Webtoon series episodes                           |
-| `ROUTE_VIKI.md`          | `viki`             | Viki drama series episodes                              |
-| `ROUTE_NETFLIX.md`       | `netflix`          | Netflix drama episodes                                  |
-| `ROUTE_WEVERSE.md`       | `weverse`          | Weverse artist feed                                     |
-| `ROUTE_BUBBLE.md`        | `bubble`           | Bubble artist notifications                             |
+| Doc                        | Route                           |
+| -------------------------- | ------------------------------- |
+| `IMPL-01-spec-youtube.md`  | `/spec/youtube/:channelId`      |
+| `IMPL-02-viki.md`          | `/spec/viki/:titleId`           |
+| `IMPL-03-weverse.md`       | `/spec/weverse/:artistId`       |
+| `IMPL-04-bubble.md`        | `/spec/bubble/:artistId`        |
+| `IMPL-05-netflix.md`       | `/spec/netflix/:netflixTitleId` |
+| `IMPL-08-naver-webtoon.md` | `/spec/naver/webtoon/:titleId`  |
+| `IMPL-09-naver-blog.md`    | `/spec/naver/blog/:blogId`      |
 
-All Sunbi routes attach structured metadata on each `DataItem` using the **`_extra`** field (see `lib/types.ts`). Payloads are discriminated with a `type` field (e.g. `{ type: 'youtube_video', videoId, transcript, ... }`, `{ type: 'webtoon_episode', ... }`). JSON feeds expose this as `_extra`; this feeds downstream Sunbi ingestion. Do not use a bare `extra` property — it is not on `DataItem`.
+All Sunbi routes attach structured metadata on each `DataItem` using the **`_extra`** field (see `lib/types/spec-extra.ts`). Payloads are discriminated with a `type` field (e.g. `youtube/video`, `naver/webtoon/episode`). JSON feeds expose this as `_extra`; this feeds downstream Sunbi ingestion. Do not use a bare `extra` property — it is not on `DataItem`.
 
 ### Deployment Targets
 
