@@ -73,7 +73,7 @@ export const route = {
                     const pubDate = timezone(parseDate(item.create_time), 8);
                     const startDate = item.start_time.split('T', 1)[0];
                     const endDate = item.end_time.split('T', 1)[0];
-                    const location = `${item.museum_area} ${item.address}`;
+                    const location = [item.museum_area, item.address].filter(Boolean).join(' ');
                     const imgUrl = `${baseUrl}${item.cover_url}`;
 
                     // fullDuration is not used here due to the website only provides start and end date.
@@ -104,11 +104,9 @@ export const route = {
                         // For further .ics file processing
                         _extra: {
                             museumName,
-                            title,
                             location,
-                            startDate, // format: YYYY-MM-DD or '未定/常设'
-                            endDate, // format: YYYY-MM-DD or '未定/常设'
-                            itemLink,
+                            startDate,
+                            endDate,
                         },
                     };
                 });
