@@ -193,7 +193,7 @@
         "oxfmt": "0.57.0",
         "oxlint": "1.72.0",
         "oxlint-plugin-eslint": "1.72.0",
-        "oxlint-tsgolint": "0.23.0",
+        "oxlint-tsgolint": "0.24.0",
         "remark": "15.0.1",
         "remark-gfm": "4.0.1",
         "remark-pangu": "2.2.0",
