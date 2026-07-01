@@ -126,7 +126,7 @@ export const route: Route = {
                     <br />
                     <p>
                         <b>地点：</b>
-                        {location}
+                        {location || '参考展览详情'}
                     </p>
                     <p>
                         <b>开展：</b>
@@ -150,11 +150,9 @@ export const route: Route = {
                 // For further .ics file processing
                 _extra: {
                     museumName,
-                    title,
                     location,
-                    startDate: startDate || '未定/常设', // format: YYYY-MM-DD or '未定/常设'
-                    endDate: endDate || '未定/常设', // format: YYYY-MM-DD or '未定/常设'
-                    itemLink,
+                    startDate,
+                    endDate,
                 },
             };
         });
