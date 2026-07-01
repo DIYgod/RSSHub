@@ -54,6 +54,8 @@ const createDispatcherForProxy = (uri: string, proxyObj: Record<string, any>): P
                 rejectUnauthorized: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '0',
             },
         });
+    } else if (uri.startsWith('socks')) {
+        return new ProxyAgent({ uri });
     }
     return null;
 };
