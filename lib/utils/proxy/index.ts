@@ -55,6 +55,9 @@ const createDispatcherForProxy = (uri: string, proxyObj: Record<string, any>): P
             },
         });
     }
+    if (uri.startsWith('socks')) {
+        return new ProxyAgent({ uri });
+    }
     return null;
 };
 
