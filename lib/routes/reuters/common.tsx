@@ -6,6 +6,7 @@ import type { JSX } from 'hono/jsx/jsx-runtime';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -194,12 +195,6 @@ async function handler(ctx) {
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;
 
-    const browserHeaders = {
-        Accept: 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        Referer: 'https://www.reuters.com/',
-    };
-
     try {
         const { title, description, rootUrl, response } = await (async () => {
             if (MUST_FETCH_BY_TOPICS.has(category)) {
@@ -213,7 +208,7 @@ async function handler(ctx) {
                             website: 'reuters',
                         }),
                     },
-                    headers: browserHeaders,
+                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
                 });
 
                 return {
@@ -222,30 +217,33 @@ async function handler(ctx) {
                     rootUrl,
                     response,
                 };
-            }
-            const rootUrl = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-section-alias-or-id-v1';
-            const response = await ofetch(rootUrl, {
-                query: {
-                    query: JSON.stringify({
-                        offset: 0,
-                        size: limit,
-                        section_id,
-                        website: 'reuters',
-                        ...(useSophi && {
-                            fetch_type: 'sophi',
-                            sophi_page: '*',
-                            sophi_widget: 'topic',
+            } else {
+                const rootUrl = 'https://www.reuters.com/pf/api/v3/content/fetch/articles-by-section-alias-or-id-v1';
+                const response = await ofetch(rootUrl, {
+                    query: {
+                        query: JSON.stringify({
+                            offset: 0,
+                            size: limit,
+                            section_id,
+                            website: 'reuters',
+                            ...(useSophi
+                                ? {
+                                      fetch_type: 'sophi',
+                                      sophi_page: '*',
+                                      sophi_widget: 'topic',
+                                  }
+                                : {}),
                         }),
-                    }),
-                },
-                headers: browserHeaders,
-            });
-            return {
-                title: response.result.section.title,
-                description: response.result.section.section_about,
-                rootUrl,
-                response,
-            };
+                    },
+                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS_FIREFOX,
+                });
+                return {
+                    title: response.result.section.title,
+                    description: response.result.section.section_about,
+                    rootUrl,
+                    response,
+                };
+            }
         })();
 
         let items = response.result.articles.map((e) => ({
@@ -266,7 +264,7 @@ async function handler(ctx) {
                 ctx.req.query('fulltext') === 'true'
                     ? cache.tryGet(item.link, async () => {
                           const detailResponse = await ofetch(item.link, {
-                              headers: browserHeaders,
+                              headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
                           });
                           const content = load(detailResponse.data);
 
@@ -334,7 +332,7 @@ async function handler(ctx) {
         const arcUrl = topic ? `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section${section_id}?outputType=json` : `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section/${category}/?outputType=json`;
 
         const arcResponse = await ofetch(arcUrl, {
-            headers: browserHeaders,
+            headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
         });
         if (arcResponse.wireitems?.length) {
             const items = arcResponse.wireitems
