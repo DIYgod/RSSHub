@@ -1,11 +1,9 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { Articles, Profile } from './types';
+import type { Articles } from './types';
 import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
@@ -45,18 +43,23 @@ async function handler(ctx) {
     const usertype = ctx.req.param('usertype');
 
     const userProfile = await cache.tryGet(`zhihu:posts:profile:${id}`, async () => {
-        const userAPIPath = `/${usertype === 'people' ? 'people' : 'org'}/${id}`;
+        // Read the profile from the API instead of scraping the user's HTML
+        // homepage, which is now rate-limited (403) more aggressively than the API.
+        const profileApiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}`;
 
-        const result = await ofetch(`https://www.zhihu.com${userAPIPath}`, {
+        const result = await ofetch(`https://www.zhihu.com${profileApiPath}`, {
             headers: {
                 ...header,
-                ...(await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/`, userAPIPath)),
+                ...(await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/`, profileApiPath)),
                 Referer: `https://www.zhihu.com/${usertype}/${id}/`,
             },
         });
-        const $ = load(result);
-        const data = JSON.parse($('#js-initialData').text());
-        return data?.initialState?.entities?.users[id] as Profile;
+
+        return {
+            name: result.name,
+            headline: result.headline,
+            avatarUrl: result.avatar_url,
+        };
     });
 
     const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
