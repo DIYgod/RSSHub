@@ -21,9 +21,21 @@ const params = {
 const rootUrl = 'https://foresightnews.pro';
 const apiRootUrl = 'https://api.foresightnews.pro';
 const imgRootUrl = 'https://img.foresightnews.pro';
+const frontendRootUrl = 'https://s.foresightnews.pro';
 
 const icon = new URL('foresight.ico', rootUrl).href;
 const image = new URL('vertical_logo.png', imgRootUrl).href;
+
+const apiHeaders = {
+    accept: 'application/json, text/plain, */*',
+    'accept-language': 'zh-CN,zh;q=0.9',
+    origin: frontendRootUrl,
+    referer: frontendRootUrl + '/',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+    'x-requested-with': 'XMLHttpRequest',
+};
 
 const processItems = async (apiUrl, limit, ...parameters) => {
     let searchParams = {
@@ -41,6 +53,7 @@ const processItems = async (apiUrl, limit, ...parameters) => {
     };
 
     const { data: response } = await got(apiUrl, {
+        headers: apiHeaders,
         searchParams,
     });
 
