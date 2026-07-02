@@ -1,3 +1,4 @@
+import { http, HttpResponse } from 'msw';
 import Parser from 'rss-parser';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -458,5 +459,61 @@ describe('openai', () => {
         const parsedDescriptionOnly = await parser.parseString(await responseDescriptionOnly.text());
         expect(parsedDescriptionOnly.items[0].title).not.toContain('AI processed content.');
         expect(parsedDescriptionOnly.items[0].content).toContain('AI processed content.');
+    });
+
+    it('supports target language override via query', async () => {
+        const { default: server } = await import('@/setup.test');
+        const originalInput = config.openai.inputOption;
+
+        server.use(
+            http.post('https://api.openai.mock/v1/chat/completions', async ({ request }) => {
+                const body = (await request.json()) as { messages?: Array<{ content?: string }> };
+                const prompt = body.messages?.[0]?.content ?? '';
+
+                if (prompt.includes('into Japanese')) {
+                    return HttpResponse.json({
+                        choices: [{ message: { content: '日本語タイトル' } }],
+                    });
+                }
+
+                return HttpResponse.json({
+                    choices: [{ message: { content: 'AI processed content.' } }],
+                });
+            })
+        );
+
+        config.openai.inputOption = 'title';
+        const response = await app.request('/test/gpt?chatgpt=true&chatgpt_to=Japanese&chatgpt_from=English');
+        const parsed = await parser.parseString(await response.text());
+        expect(parsed.items[0].title).toBe('日本語タイトル');
+
+        config.openai.inputOption = originalInput;
+    });
+
+    it('keeps the default cache key when only source language is provided', async () => {
+        const { default: server } = await import('@/setup.test');
+        const cache = (await import('@/utils/cache')).default;
+        const originalInput = config.openai.inputOption;
+        let requests = 0;
+
+        cache.clients.memoryCache?.clear();
+        server.use(
+            http.post('https://api.openai.mock/v1/chat/completions', () => {
+                requests += 1;
+                return HttpResponse.json({
+                    choices: [{ message: { content: 'cache-compatible output' } }],
+                });
+            })
+        );
+
+        config.openai.inputOption = 'title';
+        await app.request('/test/gpt?chatgpt=true');
+        const requestsAfterDefault = requests;
+        await app.request('/test/gpt?chatgpt=true&chatgpt_from=English');
+
+        expect(requests).toBe(requestsAfterDefault);
+
+        config.openai.inputOption = originalInput;
+        cache.clients.memoryCache?.clear();
     });
 });
