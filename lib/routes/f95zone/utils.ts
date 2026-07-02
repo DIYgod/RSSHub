@@ -38,7 +38,7 @@ export const processContent = (html: string): string => {
     while (changed) {
         changed = false;
         $('*').each((_, el) => {
-            if (!(el.type === 'tag' && !ALLOWED_TAGS.has(el.name))) {
+            if (el.type !== 'tag' || ALLOWED_TAGS.has(el.name)) {
                 return;
             }
 
