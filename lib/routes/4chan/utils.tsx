@@ -35,7 +35,7 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
                 return false;
             }
 
-            return !(viewOptions.maxReplies !== undefined && replies > viewOptions.maxReplies);
+            return viewOptions.maxReplies === undefined || replies <= viewOptions.maxReplies;
         })
         .map((thread) => ({
             author: `${thread.name} ${thread.trip ?? thread.no}`,
