@@ -192,6 +192,8 @@ type ConfigEnvKeys =
     | 'SIS001_BASE_URL'
     | 'SKEB_BEARER_TOKEN'
     | 'SORRYCC_COOKIES'
+    | 'SOUTHPLUS_COOKIE'
+    | 'SOUTHPLUS_UA'
     | 'SPOTIFY_CLIENT_ID'
     | 'SPOTIFY_CLIENT_SECRET'
     | 'SPOTIFY_REFRESHTOKEN'
@@ -605,6 +607,10 @@ export type Config = {
     };
     sorrycc: {
         cookie?: string;
+    };
+    southplus: {
+        cookie?: string;
+        ua?: string;
     };
     spotify: {
         clientId?: string;
@@ -1107,6 +1113,10 @@ const calculateValue = () => {
         },
         sorrycc: {
             cookie: envs.SORRYCC_COOKIES,
+        },
+        southplus: {
+            cookie: envs.SOUTHPLUS_COOKIE,
+            ua: envs.SOUTHPLUS_UA,
         },
         spotify: {
             clientId: envs.SPOTIFY_CLIENT_ID,
