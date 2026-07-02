@@ -7,6 +7,7 @@
 // oxlint-disable unicorn-js/prefer-array-from-map
 // oxlint-disable unicorn-js/require-array-sort-compare
 // oxlint-disable unicorn-js/prefer-short-arrow-method
+// oxlint-disable unicorn-js/prefer-block-statement-over-iife
 // oxlint-disable no-unused-vars
 // oxlint-disable unicorn/consistent-function-scoping
 /* eslint-disable prefer-rest-params */
