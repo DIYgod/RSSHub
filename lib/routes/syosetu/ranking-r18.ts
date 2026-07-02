@@ -55,7 +55,7 @@ const getParameters = () => {
 };
 
 const getBest5RadarItems = () =>
-    Object.entries(SyosetuSub).flatMap(([, domain]) =>
+    Object.values(SyosetuSub).flatMap((domain) =>
         Object.values(RankingPeriod).map((period) => ({
             title: `${syosetuSubToJapanese[domain]} ${periodToJapanese[period]}ランキング BEST5`,
             source: [`${domain === SyosetuSub.MOONLIGHT_BL ? SyosetuSub.MOONLIGHT : domain}.syosetu.com/rank/${domain === SyosetuSub.MOONLIGHT_BL ? 'bltop' : 'top'}`],
