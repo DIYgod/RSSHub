@@ -88,7 +88,7 @@ jobs:
 
             - name: Extract Docker metadata (ordinary version)
               id: meta-ordinary
-              uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
+              uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
               with:
                   images: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -141,7 +141,7 @@ jobs:
 
             - name: Extract Docker metadata (Chromium-bundled version)
               id: meta-chromium-bundled
-              uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
+              uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
               with:
                   images: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -228,7 +228,7 @@ jobs:
 
             - name: Extract Docker metadata (ordinary version)
               id: meta-ordinary-merge
-              uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
+              uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
               with:
                   images: |
                       ${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}
@@ -254,7 +254,7 @@ jobs:
 
             - name: Extract Docker metadata (Chromium-bundled version)
               id: meta-chromium-bundled-merge
-              uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
+              uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
               with:
                   images: |
                       ${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}
