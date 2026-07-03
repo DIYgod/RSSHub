@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import pMap from 'p-map';
 
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -16,6 +16,14 @@ type RumbleVideoObject = {
     description?: string;
     embedUrl?: string;
     thumbnailUrl?: string;
+};
+type RumbleListVideo = {
+    relative_url?: string;
+    tags?: string[];
+    thumb?: string;
+    title?: string;
+    upload_date?: string;
+    url?: string;
 };
 
 export const route: Route = {
@@ -67,13 +75,19 @@ function parseStructuredVideoObject($: ReturnType<typeof load>): RumbleVideoObje
         return;
     }
 
-    try {
-        const parsed = JSON.parse(content);
-        const type = parsed?.['@type'];
-        return type === 'VideoObject' || (Array.isArray(type) && type.includes('VideoObject')) ? (parsed as RumbleVideoObject) : undefined;
-    } catch {
-        return;
+    const parsed = JSON.parse(content);
+    const type = parsed?.['@type'];
+    return type === 'VideoObject' ? (parsed as RumbleVideoObject) : undefined;
+}
+
+function parseListVideos($: ReturnType<typeof load>): RumbleListVideo[] {
+    const content = $('rum-videos-grid script[type="application/json"]').text().trim();
+    if (!content) {
+        return [];
     }
+
+    const parsed = JSON.parse(content);
+    return Array.isArray(parsed?.items) ? parsed.items : [];
 }
 
 function parseImage($: ReturnType<typeof load>, videoObject: RumbleVideoObject | undefined) {
@@ -112,8 +126,11 @@ function getMedia(image: string | undefined): DataItem['media'] {
         : undefined;
 }
 
-async function buildItem(link: string, title: string, listImage: string | undefined, pubDate: Date | undefined, includeEmbed: boolean): Promise<DataItem> {
+async function buildItem(link: string, title: string, listImage: string | undefined, pubDate: Date | undefined, includeEmbed: boolean, category: string[] | undefined): Promise<DataItem> {
     const response = await ofetch(link, {
+        headers: {
+            'user-agent': config.trueUA,
+        },
         retryStatusCodes: [403],
     });
 
@@ -129,6 +146,7 @@ async function buildItem(link: string, title: string, listImage: string | undefi
         image,
         link,
         description,
+        category,
         itunes_item_image: image,
         media: getMedia(image),
         pubDate,
@@ -142,6 +160,9 @@ async function handler(ctx) {
     const videosUrl = `${channelUrl}/videos`;
 
     const response = await ofetch(videosUrl, {
+        headers: {
+            'user-agent': config.trueUA,
+        },
         retryStatusCodes: [403],
     });
 
@@ -149,30 +170,30 @@ async function handler(ctx) {
 
     const title = parseChannelTitle($);
 
-    const videoElements = $('.videostream.thumbnail__grid--item[data-video-id]').toArray();
+    const videos = parseListVideos($);
     const items = await pMap(
-        videoElements,
-        (element: Element) => {
-            const $video = $(element);
-            const href = $video.find('.videostream__link[href]').attr('href')?.trim();
-            if (!href) {
+        videos,
+        (video) => {
+            const videoUrl = video.url || video.relative_url;
+            if (!videoUrl) {
                 return null;
             }
 
-            const url = new URL(href, rootUrl);
+            const url = new URL(videoUrl, rootUrl);
             url.search = '';
 
-            const title = $video.find('.thumbnail__title').text().trim();
+            const title = video.title;
             if (!title) {
                 return null;
             }
 
-            const imageRaw = $video.find('img.thumbnail__image').attr('src');
+            const imageRaw = video.thumb;
             const listImage = imageRaw ? new URL(imageRaw, rootUrl).href : undefined;
-            const pubDateRaw = $video.find('time.videostream__time[datetime]').attr('datetime')?.trim();
+            const pubDateRaw = video.upload_date;
             const pubDate = pubDateRaw ? parseDate(pubDateRaw) : undefined;
+            const category = video.tags?.length ? video.tags : undefined;
 
-            return cache.tryGet(`${url.href}:${includeEmbed ? 'embed' : 'noembed'}`, () => buildItem(url.href, title, listImage, pubDate, includeEmbed));
+            return cache.tryGet(`${url.href}:${includeEmbed ? 'embed' : 'noembed'}`, () => buildItem(url.href, title, listImage, pubDate, includeEmbed, category));
         },
         { concurrency: 5 }
     );
