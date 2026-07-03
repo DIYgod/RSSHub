@@ -80,8 +80,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.11.7
-        version: 0.11.7(hono@4.12.27)
+        specifier: 0.11.8
+        version: 0.11.8(hono@4.12.27)
       '@sentry/node':
         specifier: 10.63.0
         version: 10.63.0(@opentelemetry/core@2.8.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.219.0(@opentelemetry/api@1.9.1))
@@ -2334,26 +2334,26 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.3.0':
-    resolution: {integrity: sha512-FFpLokNEyKvpKAJesa+eDh+2e+4qdhoexAJp6alhhxUA6SGqhDfTIV4P+0nZBMdMD6WPu4YeVJHa1hRrGKUVMA==}
+  '@scalar/client-side-rendering@0.3.1':
+    resolution: {integrity: sha512-V9pBpA5j59wCDfYeKQ/mSGc1M5YnOAc/aU0D3KVkvsZpSvlGuig5RW7Q8EeohtES4acZKq0KhVB+Rxx/GT58LA==}
     engines: {node: '>=22'}
 
   '@scalar/helpers@0.9.0':
     resolution: {integrity: sha512-M34CLRCttqC1bXthI/QSzQj0s5C6nrU2PFWf/vOT3RpycbiGDGQbqR+5RfFzpOIQvRqbHfNdcRbeiZBw+vCbkQ==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.11.7':
-    resolution: {integrity: sha512-XhQbhhHP9R2CknVIjuqKie7+fkbLWuZzKoXMKPefYGkL+tji7CfametAwvzyb/WzaPktZBl7ZxqpC3pAve0Y7A==}
+  '@scalar/hono-api-reference@0.11.8':
+    resolution: {integrity: sha512-LsRSlm6Uh6p28LvWalJ++38ObMmXJmY+XhdZiNgeED3nNprgp/DsX/z9wj0Xps5kaIAphGOT3lL4LUGF/9XmwA==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.7.0':
-    resolution: {integrity: sha512-Roj0e7S29yTbGojwdx/b8C1H5arVN4h/VSPrtQ5vb9NT2ZAbrfPQVmpQYrF845rKOWX7kSzIvyBwrKNEMIAkxA==}
+  '@scalar/schemas@0.7.1':
+    resolution: {integrity: sha512-80bxEp4ZOWxOm8kqhPi3kdJ2gipz2lZBSEHStAh3Z6NZPkFAOlZZYnDFwodhY0LwTihgvv4FVNmi64gziM0F1g==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.16.0':
-    resolution: {integrity: sha512-26OSrvZjKWZ7F236wWmJajBGDVFJuvXFJqKPFqbt/PxlgZKXQXfJsZorASRQmdNogT576nxYalQ7oaYWEnQwfw==}
+  '@scalar/types@0.16.1':
+    resolution: {integrity: sha512-zzApf0dtEqztdY//3gmRJTgySGMpKnAVqcZltAzt95yuQPXbkSqxXDTitBLd1abeSeik+W6GFTIjffL8K+1wqQ==}
     engines: {node: '>=22'}
 
   '@scalar/validation@0.6.0':
@@ -4810,6 +4810,10 @@ packages:
 
   picomatch@4.0.4:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
+    engines: {node: '>=12'}
+
+  picomatch@4.0.5:
+    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
     engines: {node: '>=12'}
 
   pino-abstract-transport@3.0.0:
@@ -7359,25 +7363,25 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.3.0':
+  '@scalar/client-side-rendering@0.3.1':
     dependencies:
-      '@scalar/schemas': 0.7.0
-      '@scalar/types': 0.16.0
+      '@scalar/schemas': 0.7.1
+      '@scalar/types': 0.16.1
       '@scalar/validation': 0.6.0
 
   '@scalar/helpers@0.9.0': {}
 
-  '@scalar/hono-api-reference@0.11.7(hono@4.12.27)':
+  '@scalar/hono-api-reference@0.11.8(hono@4.12.27)':
     dependencies:
-      '@scalar/client-side-rendering': 0.3.0
+      '@scalar/client-side-rendering': 0.3.1
       hono: 4.12.27
 
-  '@scalar/schemas@0.7.0':
+  '@scalar/schemas@0.7.1':
     dependencies:
       '@scalar/helpers': 0.9.0
       '@scalar/validation': 0.6.0
 
-  '@scalar/types@0.16.0':
+  '@scalar/types@0.16.1':
     dependencies:
       '@scalar/helpers': 0.9.0
       nanoid: 5.1.16
@@ -8718,6 +8722,10 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.4):
     optionalDependencies:
       picomatch: 4.0.4
+
+  fdir@6.5.0(picomatch@4.0.5):
+    optionalDependencies:
+      picomatch: 4.0.5
 
   fecha@4.2.3: {}
 
@@ -10247,6 +10255,8 @@ snapshots:
 
   picomatch@4.0.4: {}
 
+  picomatch@4.0.5: {}
+
   pino-abstract-transport@3.0.0:
     dependencies:
       split2: 4.2.0
@@ -10964,7 +10974,7 @@ snapshots:
 
   ts-declaration-location@1.0.7(typescript@5.9.3):
     dependencies:
-      picomatch: 4.0.4
+      picomatch: 4.0.5
       typescript: 5.9.3
     optional: true
 
@@ -11204,8 +11214,8 @@ snapshots:
   vite@7.3.1(@types/node@26.1.0)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0):
     dependencies:
       esbuild: 0.27.7
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
+      fdir: 6.5.0(picomatch@4.0.5)
+      picomatch: 4.0.5
       postcss: 8.5.16
       rollup: 4.62.2
       tinyglobby: 0.2.17
