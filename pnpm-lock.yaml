@@ -135,7 +135,7 @@ importers:
         version: 10.0.0
       http-cookie-agent:
         specifier: 8.0.0
-        version: 8.0.0(tough-cookie@6.0.1)(undici@8.5.0)
+        version: 8.0.0(tough-cookie@6.0.1)(undici@8.6.0)
       https-proxy-agent:
         specifier: 9.1.0
         version: 9.1.0
@@ -257,8 +257,8 @@ importers:
         specifier: 1.6.4
         version: 1.6.4
       undici:
-        specifier: 8.5.0
-        version: 8.5.0
+        specifier: 8.6.0
+        version: 8.6.0
       uuid:
         specifier: 14.0.1
         version: 14.0.1
@@ -424,7 +424,7 @@ importers:
         version: 2.14.6(@types/node@26.1.0)(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.30
-        version: 1.0.30(undici@8.5.0)(utf-8-validate@5.0.10)
+        version: 1.0.30(undici@8.6.0)(utf-8-validate@5.0.10)
       oxfmt:
         specifier: 0.57.0
         version: 0.57.0
@@ -3235,7 +3235,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.49:
@@ -5564,8 +5564,8 @@ packages:
     resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
     engines: {node: '>=20.18.1'}
 
-  undici@8.5.0:
-    resolution: {integrity: sha512-xamtWoB1EshgjpmlXd7GGm2VfdDtw1+rD8uhry8pSNW3If6S8E0m2T2+orSKeZXEn/aPJMviCpDBA65WJt8zhg==}
+  undici@8.6.0:
+    resolution: {integrity: sha512-l2FlC6I510GawyEd1qgcE/okihKrzy+BRTEBlu6T0fdbM9m5yxtIH5Oa3ysRsH0zC4EhmWUEaSDsy2QngBeRlw==}
     engines: {node: '>=22.19.0'}
 
   unenv@2.0.0-rc.24:
@@ -9064,12 +9064,12 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@8.0.0(tough-cookie@6.0.1)(undici@8.5.0):
+  http-cookie-agent@8.0.0(tough-cookie@6.0.1)(undici@8.6.0):
     dependencies:
       agent-base: 9.0.0
       tough-cookie: 6.0.1
     optionalDependencies:
-      undici: 8.5.0
+      undici: 8.6.0
 
   http-proxy-agent@9.1.0:
     dependencies:
@@ -9989,13 +9989,13 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.30(undici@8.5.0)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.30(undici@8.6.0)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.1.0
       iconv-lite: 0.7.2
       inspector: 0.5.0
       open: 8.4.2
-      undici: 8.5.0
+      undici: 8.6.0
       ws: 8.21.0(bufferutil@4.1.0)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - utf-8-validate
@@ -11086,7 +11086,7 @@ snapshots:
 
   undici@7.28.0: {}
 
-  undici@8.5.0: {}
+  undici@8.6.0: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
