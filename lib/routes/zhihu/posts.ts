@@ -59,7 +59,7 @@ async function handler(ctx) {
         return data?.initialState?.entities?.users[id] as Profile;
     });
 
-    const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
+    const apiPath = `/api/v4/members/${id}/articles?${new URLSearchParams({
         include:
             'data[*].comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,can_comment,comment_permission,admin_closed_comment,content,voteup_count,created,updated,upvoted_followees,voting,review_info,reaction_instruction,is_labeled,label_info;data[*].vessay_info;data[*].author.badge[?(type=best_answerer)].topics;data[*].author.vip_info;',
         offset: '0',
