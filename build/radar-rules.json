@@ -45026,6 +45026,27 @@
       }
     ]
   },
+  "sxhm.com": {
+    "_name": "Shaanxi History Museum",
+    "www": [
+      {
+        "title": "Announcements",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/info/announcement.html"
+        ],
+        "target": "/sxhm/announcement"
+      },
+      {
+        "title": "Special Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/Temporary.html"
+        ],
+        "target": "/sxhm/temporary"
+      }
+    ]
+  },
   "syosetu.com": {
     "_name": "Syosetu",
     "noc": [

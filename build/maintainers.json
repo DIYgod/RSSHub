@@ -8429,6 +8429,12 @@
   "/swpu/scs/:code": [
     "CYTMWIA"
   ],
+  "/sxhm/announcement": [
+    "magazian"
+  ],
+  "/sxhm/temporary": [
+    "magazian"
+  ],
   "/sycl/:feed?": [
     "mocusez"
   ],
