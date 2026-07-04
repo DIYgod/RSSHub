@@ -99,7 +99,10 @@ export const route: Route = {
                     // if title or duration ends with ..., need to fetch the detail page to get the full info
                     if (title.endsWith('...') || fullDuration.endsWith('...')) {
                         const detailData = await cache.tryGet(link, async () => {
-                            const detailRes = await got.get(link);
+                            const detailRes = await got({
+                                method: 'get',
+                                url: link,
+                            });
                             return detailRes.data;
                         });
 
