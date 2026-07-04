@@ -107,8 +107,7 @@ export const route: Route = {
             };
         };
 
-        const { list: rawItems, title: fetchedTitle } = await fetchExhibits(currentType);
-        const titleTag = fetchedTitle;
+        const { list: rawItems, title: titleTag } = await fetchExhibits(currentType);
 
         const items = rawItems.map((item) => {
             const title = item.title;
