@@ -156,8 +156,9 @@ export const route: Route = {
                         };
                     }
                     if (item.exhibitionType === 'temporary') {
+                        const url = new URL(item.itemLink);
                         // for theme exhibition, the detail page may be a SPA, so need to fetch the JS file to extract the data
-                        if (item.itemLink?.includes('vrexhibition.hnmuseum.com')) {
+                        if (url.hostname === 'vrexhibition.hnmuseum.com') {
                             const htmlRes = await got({ method: 'get', url: item.itemLink });
                             const $spa = load(htmlRes.data);
                             const jsSrc = $spa('script[type="module"][src]').attr('src') || '';
