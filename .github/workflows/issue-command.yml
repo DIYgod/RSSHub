@@ -70,7 +70,7 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           issue_number: prNumber,
-                          body: 'This pull request has been automatically closed.',
+                          body: 'This pull request has been automatically closed for denounced users by [vouch](https://github.com/mitchellh/vouch).'
                       });
                       await github.rest.pulls.update({
                           owner: context.repo.owner,

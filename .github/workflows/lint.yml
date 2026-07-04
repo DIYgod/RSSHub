@@ -80,12 +80,11 @@ jobs:
         runs-on: ubuntu-slim
         timeout-minutes: 5
         steps:
-            - name: Checkout
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
             - name: Check if PR author is denounced
-              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              uses: mitchellh/vouch/action/check-pr@c6d80ead49839655b61b422700b7a3bc9d0804a9 # v1.4.2
               with:
-                  script: |
-                      const { default: checkPr } = await import('${{ github.workspace }}/scripts/workflow/vouch/check-pr.mjs')
-                      await checkPr({ github, context, core })
+                  pr-number: ${{ github.event.pull_request.number }}
+                  auto-close: true
+                  require-vouch: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
