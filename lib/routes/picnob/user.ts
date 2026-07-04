@@ -73,6 +73,8 @@ async function handler(ctx) {
 
             return {
                 title,
+                // Grid thumbnail is square-cropped (stp=c…a_…s640x640); used only as a fallback if the
+                // detail fetch below fails. On success it's swapped for the post's native-aspect image.
                 description: `<img src="${image.attr('data-src')}"><br>${content}`,
                 link: `${baseUrl}${coverLink}`,
                 guid: coverLink?.split('/', 3)?.[2],
@@ -83,16 +85,17 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
+            // Always fetch the post detail page — the profile grid only exposes square-cropped
+            // thumbnails, and its `.corner` badge (slideOrVideo) is unreliable (single photos and many
+            // videos are never badged), so gating on it left most posts square. Cached per post link.
             cache.tryGet(item.link, async () => {
-                let media = '';
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
+                });
 
-                if (item.slideOrVideo) {
-                    const page = await context.newPage();
-                    await page.route('**/*', (route) => {
-                        const request = route.request();
-                        request.resourceType() === 'document' ? route.continue() : route.abort();
-                    });
-
+                try {
                     await page.goto(item.link, {
                         waitUntil: 'domcontentloaded',
                     });
@@ -100,23 +103,48 @@ async function handler(ctx) {
                     const html = await page.content();
                     const $ = load(html);
 
-                    media = $('.slide-item').length
-                        ? $('.slide-item div:first-of-type')
-                              .toArray()
-                              .map((item) => {
-                                  const $item = $(item);
-                                  if ($item.hasClass('video')) {
-                                      return $item.find('video').prop('outerHTML');
-                                  }
-                                  // $item.hasClass('pic')
-                                  $item.find('img').attr('src', $item.find('img').attr('data-src'));
-                                  $item.find('img').removeAttr('data-src');
-                                  return $item.html() || '';
-                              })
-                              .join('')
-                        : $('.view .video').html() || '';
-
-                    item.description = `${media}<br>${item.description}`;
+                    if ($('.slide-item').length) {
+                        // Carousel: prepend every slide's native-aspect image/video (unchanged behaviour).
+                        const media = $('.slide-item div:first-of-type')
+                            .toArray()
+                            .map((slide) => {
+                                const $slide = $(slide);
+                                // Detect video by element presence — the slide wrapper is `.entry-body`, not
+                                // `.video`, so a class check misses it. Emit the native-aspect poster as an <img>
+                                // so downstream image extraction (which only reads <img>) still gets a frame.
+                                const video = $slide.find('video');
+                                if (video.length) {
+                                    const poster = video.attr('poster') || '';
+                                    return (poster ? `<img src="${poster}">` : '') + (video.prop('outerHTML') || '');
+                                }
+                                // image slide
+                                $slide.find('img').attr('src', $slide.find('img').attr('data-src'));
+                                $slide.find('img').removeAttr('data-src');
+                                return $slide.html() || '';
+                            })
+                            .join('');
+                        item.description = `${media}<br>${item.description}`;
+                    } else if ($('.view video').length) {
+                        // Single video: use the native-aspect poster as the leading image, keep the
+                        // <video> element so downstream can still detect it's a video post.
+                        const poster = $('.view video').attr('poster') || '';
+                        const videoHtml = $('.view .video').html() || '';
+                        if (poster) {
+                            item.description = item.description.replace(/<img\b[^>]*>/, `<img src="${poster}">${videoHtml}`);
+                        }
+                    } else if ($('.view img').length) {
+                        // Single photo: swap the square grid thumbnail for the detail page's native-aspect image.
+                        const $img = $('.view img').first();
+                        const full = $img.attr('data-src') || $img.attr('src');
+                        if (full) {
+                            item.description = item.description.replace(/<img\b[^>]*>/, `<img src="${full}">`);
+                        }
+                    }
+                } catch (error) {
+                    // Detail fetch failed — keep the square grid thumbnail fallback rather than dropping the post.
+                    logger.warn(`picnob: failed to fetch post detail ${item.link}: ${error}`);
+                } finally {
+                    await page.close();
                 }
 
                 return item;
