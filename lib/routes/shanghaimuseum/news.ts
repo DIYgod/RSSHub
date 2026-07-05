@@ -1,5 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route = {
     path: '/information/news/:type?',
@@ -67,7 +68,7 @@ export const route = {
 
             return {
                 title: item.titleDecoded || item.title,
-                pubDate: parseDate(item.issueTime),
+                pubDate: timezone(parseDate(item.issueTime), 8),
                 category: item.infoType?.entryItemName || item.bulletinInfoType?.entryItemName,
                 link: itemLink,
             };
