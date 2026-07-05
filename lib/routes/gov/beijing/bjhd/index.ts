@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -25,7 +27,7 @@ const categories = {
     },
     ywdt: {
         title: '要闻动态',
-        link: `${rootUrl}/ywdt/`,
+        link: `${apiRootUrl}/ywdt/`,
     },
 } as const;
 
@@ -64,7 +66,7 @@ export const route: Route = {
             target: '/gov/beijing/bjhd/zcjd',
         },
         {
-            source: ['zyk.bjhd.gov.cn/ywdt/'],
+            source: ['www.bjhd.gov.cn/ywdt/'],
             target: '/gov/beijing/bjhd/ywdt',
         },
     ],
@@ -84,6 +86,15 @@ function pubDateFromArticleUrl(url: string) {
     return timezone(parseDate(`${match[1]}-${match[2]}-${match[3]}`, 'YYYY-MM-DD'), 8);
 }
 
+function stripHtml(html: string) {
+    return sanitizeHtml(html, {
+        allowedTags: [],
+        allowedAttributes: {},
+    })
+        .replaceAll(/\s+/g, ' ')
+        .trim();
+}
+
 function parseDocumentWriteArticles(html: string) {
     const items: DataItem[] = [];
     const seen = new Set<string>();
@@ -99,10 +110,7 @@ function parseDocumentWriteArticles(html: string) {
             continue;
         }
         seen.add(link);
-        const title = match[2]
-            .replaceAll(/<[^>]+>/g, '')
-            .replaceAll(/\s+/g, ' ')
-            .trim();
+        const title = stripHtml(match[2]);
         if (!title) {
             continue;
         }
@@ -142,14 +150,7 @@ function parseZcjdList(html: string) {
 }
 
 async function fetchZcmlItems(limit: number) {
-    const { data } = await got(`${apiRootUrl}/sjkf-api/haidian/data/catalog/search`, {
-        headers: getHeaders(`${rootUrl}/zwdt/zcml/`),
-        searchParams: {
-            channelId: '76770,83277',
-            pageNum: 1,
-            pageSize: limit,
-        },
-    }).json<{
+    const data = await ofetch<{
         rows: Array<{
             title: string;
             docPubUrl: string;
@@ -159,7 +160,14 @@ async function fetchZcmlItems(limit: number) {
             yearOfPublish: string;
             serialNumberOfPublish: string;
         }>;
-    }>();
+    }>(`${apiRootUrl}/sjkf-api/haidian/data/catalog/search`, {
+        headers: getHeaders(`${rootUrl}/zwdt/zcml/`),
+        query: {
+            channelId: '76770,83277',
+            pageNum: 1,
+            pageSize: limit,
+        },
+    });
 
     return data.rows.map((item) => {
         const docNumber = item.organCodeName && item.yearOfPublish && item.serialNumberOfPublish ? `${item.organCodeName}〔${item.yearOfPublish}〕${item.serialNumberOfPublish}号` : undefined;
