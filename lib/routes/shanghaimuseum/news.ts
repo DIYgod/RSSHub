@@ -68,7 +68,7 @@ export const route = {
 
             return {
                 title: item.titleDecoded || item.title,
-                pubDate: timezone(parseDate(item.issueTime), +8),
+                pubDate: timezone(parseDate(item.issueTime), 8),
                 category: item.infoType?.entryItemName || item.bulletinInfoType?.entryItemName,
                 link: itemLink,
             };

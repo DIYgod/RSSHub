@@ -109,7 +109,7 @@ export const route: Route = {
                         const $detail = load(detailResponse.data);
 
                         const pubDateStr = $detail('meta[name="PubDate"]').attr('content') || '';
-                        const pubDate = timezone(parseDate(pubDateStr, 'YYYY-MM-DD HH:mm'), +8);
+                        const pubDate = timezone(parseDate(pubDateStr, 'YYYY-MM-DD HH:mm'), 8);
 
                         const description = renderToString(
                             <div>

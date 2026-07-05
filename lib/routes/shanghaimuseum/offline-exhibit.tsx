@@ -74,7 +74,7 @@ export const route: Route = {
             const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
             const imgUrl = item.picPath ? `${baseUrl}/${item.picPath}` : '';
             const location = item.exhibitPlace || '上海博物馆';
-            const pubDate = timezone(parseDate(item.issueTime), +8);
+            const pubDate = timezone(parseDate(item.issueTime), 8);
 
             const fullDuration = item.exhibitDateRange || '';
             const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ').map((s) => s.trim()) : [fullDuration, ''];
