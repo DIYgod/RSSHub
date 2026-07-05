@@ -49,7 +49,7 @@ export const route = {
                     // The API server has an incompatible ECDHE implementation causing TLS handshake failures in Node 18+.
                     dispatcher: new Agent({
                         connect: {
-                            ciphers: 'DEFAULT:!ECDHE',
+                            ecdhCurve: 'X25519:P-256:P-521:P-384',
                         },
                     }),
                     json: {
