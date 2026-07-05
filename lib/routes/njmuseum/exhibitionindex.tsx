@@ -109,7 +109,7 @@ export const route: Route = {
 
         const { list: rawItems, title: titleTag } = await fetchExhibits(currentType);
 
-        const items = rawItems.map((item) => {
+        const items = rawItems?.map((item) => {
             const title = item.title;
             const itemLink = `${baseUrl}/zh/${item.link}?id=${item.id}`;
             const imgPath = item.imgSrc?.[0];
