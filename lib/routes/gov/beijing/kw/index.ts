@@ -196,7 +196,7 @@ async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    if (channel in categories) {
+    if (Object.hasOwn(categories, channel)) {
         return await handleCategory(channel as Category, limit);
     }
 
