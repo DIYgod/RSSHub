@@ -367,11 +367,9 @@ async function handler(ctx) {
             break;
         case 'zjtx':
             items = await fetchWebApiItems(categories.zjtx.webApiId, config.link, limit);
-            items = await enrichHtmlItems(items, config.link);
             break;
         case 'myjj':
             items = await fetchWebApiItems(categories.myjj.webApiId, config.link, limit);
-            items = await enrichHtmlItems(items, config.link);
             break;
         case 'jrfw':
         case 'yshj': {
