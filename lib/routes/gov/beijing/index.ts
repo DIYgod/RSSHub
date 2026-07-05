@@ -195,12 +195,20 @@ async function fetchZhaopinItems(limit: number) {
         });
 }
 
+function isSameHost(link: string, base: string) {
+    try {
+        return new URL(link).hostname === new URL(base).hostname;
+    } catch {
+        return false;
+    }
+}
+
 async function enrichHtmlItems(items: DataItem[], referer: string) {
     return await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link, {
-                    headers: getHeaders(item.link.startsWith(rootUrl) ? referer : item.link),
+                    headers: getHeaders(isSameHost(item.link, rootUrl) ? referer : item.link),
                 });
                 const $ = load(detailResponse.data);
 
