@@ -6317,6 +6317,9 @@
   "/njit/tzgg": [
     "zefengdaguo"
   ],
+  "/njmuseum/exhibitionIndex/:type?": [
+    "magazian"
+  ],
   "/njnu/ceai/:type": [
     "Shujakuinkuraudo"
   ],
