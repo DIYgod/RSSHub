@@ -3,12 +3,12 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://zyk.bjhd.gov.cn';
 const apiRootUrl = 'https://www.bjhd.gov.cn';
+const refererUrl = 'https://www.beijing.gov.cn/';
 
 const categories = {
     zcml: {
@@ -25,11 +25,17 @@ const categories = {
     },
     ywdt: {
         title: '要闻动态',
-        link: 'https://www.bjhd.gov.cn/ywdt/',
+        link: `${rootUrl}/ywdt/`,
     },
 } as const;
 
 type Category = keyof typeof categories;
+
+function getHeaders(referer = refererUrl) {
+    return {
+        Referer: referer,
+    };
+}
 
 export const route: Route = {
     path: '/bjhd/:category',
@@ -39,7 +45,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -58,7 +64,7 @@ export const route: Route = {
             target: '/gov/beijing/bjhd/zcjd',
         },
         {
-            source: ['www.bjhd.gov.cn/ywdt/'],
+            source: ['zyk.bjhd.gov.cn/ywdt/'],
             target: '/gov/beijing/bjhd/ywdt',
         },
     ],
@@ -81,9 +87,13 @@ function pubDateFromArticleUrl(url: string) {
 function parseDocumentWriteArticles(html: string) {
     const items: DataItem[] = [];
     const seen = new Set<string>();
-    const pattern = /document\.write\('<a href="(https?:\/\/(?:zyk\.)?bjhd\.gov\.cn[^"]+\.shtml)"[^>]*>([\s\S]*?)<\/a>'\)/g;
+    const pattern = /document\.write\('<a href="(https?:\/\/(?:zyk\.)?bjhd\.gov\.cn[^"]+\.shtml)"[^>]*>(.*)<\/a>'\)/;
 
-    for (const match of html.matchAll(pattern)) {
+    for (const line of html.split('\n')) {
+        const match = line.match(pattern);
+        if (!match) {
+            continue;
+        }
         const link = match[1];
         if (seen.has(link) || !/\/t20\d{6}_\d+\.shtml/.test(link)) {
             continue;
@@ -108,13 +118,23 @@ function parseDocumentWriteArticles(html: string) {
 
 function parseZcjdList(html: string) {
     const items: DataItem[] = [];
-    const pattern = /document\.write\('<a href="(https:\/\/zyk\.bjhd\.gov\.cn\/zwdt\/zcjd\/[^"]+\.shtml)"[^>]*>(?:<span[^>]*>[^<]*<\/span><i[^>]*><\/i>)?([^<]+)<\/a>'\)[\s\S]*?<span class="date">\[(\d{4}-\d{2}-\d{2})\]<\/span>/g;
+    const lines = html.split('\n');
 
-    for (const match of html.matchAll(pattern)) {
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const linkMatch = line.match(/document\.write\('<a href="(https:\/\/zyk\.bjhd\.gov\.cn\/zwdt\/zcjd\/[^"]+\.shtml)"/);
+        if (!linkMatch) {
+            continue;
+        }
+        const titleMatch = line.match(/<\/i>([^<]+)<\/a>/);
+        const dateMatch = lines[i + 1]?.match(/\[(\d{4}-\d{2}-\d{2})\]/);
+        if (!titleMatch) {
+            continue;
+        }
         items.push({
-            title: match[2].trim(),
-            link: match[1],
-            pubDate: timezone(parseDate(match[3], 'YYYY-MM-DD'), 8),
+            title: titleMatch[1].trim(),
+            link: linkMatch[1],
+            pubDate: dateMatch ? timezone(parseDate(dateMatch[1], 'YYYY-MM-DD'), 8) : undefined,
         });
     }
 
@@ -122,7 +142,14 @@ function parseZcjdList(html: string) {
 }
 
 async function fetchZcmlItems(limit: number) {
-    const response = await ofetch<{
+    const { data } = await got(`${apiRootUrl}/sjkf-api/haidian/data/catalog/search`, {
+        headers: getHeaders(`${rootUrl}/zwdt/zcml/`),
+        searchParams: {
+            channelId: '76770,83277',
+            pageNum: 1,
+            pageSize: limit,
+        },
+    }).json<{
         rows: Array<{
             title: string;
             docPubUrl: string;
@@ -132,15 +159,9 @@ async function fetchZcmlItems(limit: number) {
             yearOfPublish: string;
             serialNumberOfPublish: string;
         }>;
-    }>(`${apiRootUrl}/sjkf-api/haidian/data/catalog/search`, {
-        query: {
-            channelId: '76770,83277',
-            pageNum: 1,
-            pageSize: limit,
-        },
-    });
+    }>();
 
-    return response.rows.map((item) => {
+    return data.rows.map((item) => {
         const docNumber = item.organCodeName && item.yearOfPublish && item.serialNumberOfPublish ? `${item.organCodeName}〔${item.yearOfPublish}〕${item.serialNumberOfPublish}号` : undefined;
 
         return {
@@ -179,11 +200,13 @@ function fetchGfxwjItems(html: string, limit: number) {
     return items;
 }
 
-async function enrichItems(items: DataItem[]) {
+async function enrichItems(items: DataItem[], referer: string) {
     return await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link);
+                const detailResponse = await got(item.link, {
+                    headers: getHeaders(referer),
+                });
                 const $ = load(detailResponse.data);
 
                 const pubDate = $('meta[name="PubDate"]').attr('content');
@@ -217,27 +240,33 @@ async function handler(ctx) {
     switch (category) {
         case 'zcml':
             items = await fetchZcmlItems(limit);
-            items = await enrichItems(items);
+            items = await enrichItems(items, config.link);
             break;
         case 'gfxwj': {
-            const response = await got(config.link);
+            const response = await got(config.link, {
+                headers: getHeaders(config.link),
+            });
             items = fetchGfxwjItems(response.data, limit);
-            items = await enrichItems(items);
+            items = await enrichItems(items, config.link);
             break;
         }
         case 'zcjd': {
-            const response = await got(config.link);
+            const response = await got(config.link, {
+                headers: getHeaders(config.link),
+            });
             items = parseZcjdList(response.data).slice(0, limit);
-            items = await enrichItems(items);
+            items = await enrichItems(items, config.link);
             break;
         }
         case 'ywdt': {
-            const response = await got(config.link);
+            const response = await got(config.link, {
+                headers: getHeaders(config.link),
+            });
             items = parseDocumentWriteArticles(response.data)
                 .filter((item) => item.link.includes('/ywdt/') && !item.link.includes('/ywdt/jdt/'))
                 .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
                 .slice(0, limit);
-            items = await enrichItems(items);
+            items = await enrichItems(items, config.link);
             break;
         }
         default:
