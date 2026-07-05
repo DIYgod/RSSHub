@@ -10141,6 +10141,9 @@
   "/zjgtjy/:type?": [
     "Fatpandac"
   ],
+  "/zjmuseum/exhibition/:type?": [
+    "magazian"
+  ],
   "/zjol/paper/:id?": [
     "nczitzk"
   ],

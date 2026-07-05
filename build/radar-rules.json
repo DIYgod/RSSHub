@@ -50806,6 +50806,19 @@
       }
     ]
   },
+  "zjmuseum.com.cn": {
+    "_name": "Zhejiang Provincial Museum",
+    "www": [
+      {
+        "title": "Temporary Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/cn/"
+        ],
+        "target": "/zjmuseum/exhibition/:type?"
+      }
+    ]
+  },
   "zjut.edu.cn": {
     "_name": "浙江工业大学",
     "cs": [

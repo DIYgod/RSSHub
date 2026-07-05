@@ -3271,6 +3271,7 @@ export type RoutePath =
   | `/zimuxia/:category?`
   | `/zimuxia/portfolio/:id`
   | `/zjgtjy/:type?`
+  | `/zjmuseum/exhibition/:type?`
   | `/zjol/paper/:id?`
   | `/zju/career/:type`
   | `/zju/cse/:category?`
