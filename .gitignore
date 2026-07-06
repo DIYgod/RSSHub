@@ -53,12 +53,3 @@ artifacts/naver-webtoon-811721.json
 docs/archive/**
 !docs/archive/manifests/
 !docs/archive/manifests/**
-
-# galmuri — managed block (do not edit)
-.galmuri/
-knowledge-wiki/**/__pycache__/
-knowledge-wiki/**/*.py[cod]
-knowledge-wiki/**/.pytest_cache/
-knowledge-wiki/**/.mypy_cache/
-knowledge-wiki/**/.ruff_cache/
-# end galmuri — managed block
