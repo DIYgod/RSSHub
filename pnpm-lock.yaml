@@ -294,8 +294,8 @@ importers:
         specifier: 1.3.0
         version: 1.3.0
       '@cloudflare/workers-types':
-        specifier: 5.20260703.1
-        version: 5.20260703.1
+        specifier: 5.20260706.1
+        version: 5.20260706.1
       '@eslint/eslintrc':
         specifier: 3.3.5
         version: 3.3.5
@@ -466,7 +466,7 @@ importers:
         version: 4.1.10(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@26.1.0)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.14.6(@types/node@26.1.0)(typescript@5.9.3))(vite@7.3.1(@types/node@26.1.0)(jiti@2.6.1)(tsx@4.22.5)(yaml@2.9.0))
       wrangler:
         specifier: 4.107.0
-        version: 4.107.0(@cloudflare/workers-types@5.20260703.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
+        version: 4.107.0(@cloudflare/workers-types@5.20260706.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
       yaml-eslint-parser:
         specifier: 2.0.0
         version: 2.0.0
@@ -649,8 +649,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@5.20260703.1':
-    resolution: {integrity: sha512-FaX1NlA+XbCjR6c0v0dLqXLmSlWvnMDg2fneVOzOoHJM5XL8gwqoAv9T0I0Ev5f199bTsr7styYgT88j7RftwA==}
+  '@cloudflare/workers-types@5.20260706.1':
+    resolution: {integrity: sha512-PdGrKyJMmKjrZs6xPN/LYN2zpKo9bgn8Iq3JLYho1/76t0HEfUYnssgUljqFxQYPzH4SZ8wsIThaGHmW5GZkLg==}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -3241,7 +3241,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.49:
@@ -6171,7 +6171,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260701.1':
     optional: true
 
-  '@cloudflare/workers-types@5.20260703.1': {}
+  '@cloudflare/workers-types@5.20260706.1': {}
 
   '@colors/colors@1.6.0': {}
 
@@ -11352,7 +11352,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260701.1
       '@cloudflare/workerd-windows-64': 1.20260701.1
 
-  wrangler@4.107.0(@cloudflare/workers-types@5.20260703.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10):
+  wrangler@4.107.0(@cloudflare/workers-types@5.20260706.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260701.1)
@@ -11363,7 +11363,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260701.1
     optionalDependencies:
-      '@cloudflare/workers-types': 5.20260703.1
+      '@cloudflare/workers-types': 5.20260706.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
