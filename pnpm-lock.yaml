@@ -390,8 +390,8 @@ importers:
         specifier: 71.0.0
         version: 71.0.0(eslint@10.6.0(jiti@2.6.1))
       eslint-plugin-yml:
-        specifier: 3.5.0
-        version: 3.5.0(eslint@10.6.0(jiti@2.6.1))
+        specifier: 3.6.0
+        version: 3.6.0(eslint@10.6.0(jiti@2.6.1))
       fast-string-width:
         specifier: 3.0.2
         version: 3.0.2
@@ -3475,8 +3475,8 @@ packages:
     peerDependencies:
       eslint: '>=10.4'
 
-  eslint-plugin-yml@3.5.0:
-    resolution: {integrity: sha512-u2UkSIp/+th1wYCt0QWeCI6agf24dxX6PbFfCCN18gGQHmXh3Cn9D/U5OiP5RNYTEwjXCLusj1OJRK+zwdvFqQ==}
+  eslint-plugin-yml@3.6.0:
+    resolution: {integrity: sha512-8lSqBIiOJO8ms1gktdlNaVGm3zXQJiYeKhQmtIG66XzU58kFDOjQae4sufQEMGHC4bP8VxiaH3tjU5PpDB6euw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       eslint: '>=9.38.0'
@@ -8629,7 +8629,7 @@ snapshots:
       semver: 7.8.5
       strip-indent: 4.1.1
 
-  eslint-plugin-yml@3.5.0(eslint@10.6.0(jiti@2.6.1)):
+  eslint-plugin-yml@3.6.0(eslint@10.6.0(jiti@2.6.1)):
     dependencies:
       '@eslint/core': 1.2.1
       '@eslint/plugin-kit': 0.7.2
