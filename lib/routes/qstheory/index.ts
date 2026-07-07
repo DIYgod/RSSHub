@@ -107,7 +107,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href')!,
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
