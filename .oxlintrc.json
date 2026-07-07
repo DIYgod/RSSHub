@@ -666,7 +666,9 @@
 
         "unicorn/no-array-callback-reference": "warn",
         "unicorn/no-array-reduce": "warn",
-        "unicorn/no-array-sort": "warn",
+
+        "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }],
+
         "unicorn/no-await-expression-member": "off",
         "unicorn/no-empty-file": "warn",
         // "unicorn/no-for-loop": "off", // won't be implemented
