@@ -1,0 +1,18 @@
+---
+description: Supabase shared DB — read/malmoi HTTP; no hand-rolled dict DDL
+alwaysApply: true
+---
+
+## Supabase (consumer)
+
+**Runbook:** [`../dictionary/docs/ops/SUPABASE_AGENT_OPS.md`](../dictionary/docs/ops/SUPABASE_AGENT_OPS.md) · Project `dtbrtukejtbooqmnxvvl`
+
+| Never | Do |
+|-------|-----|
+| Agent-run `CREATE INDEX` on `dict.*` / embeddings | Dictionary maintenance scripts + operator tmux |
+| Dashboard SQL editor for long DDL on shared project | platform-db migrations + dictionary CLIs |
+| `supabase db push` from this repo for `dict.*` DDL | PR to **platform-db**; `make db-push-sync` from dictionary |
+
+Dictionary HTTP: malmoi **:8081** only. Agents probe — do not start servers.
+
+Heavy `dict.*` work lives in **dictionary** (`make supabase-health`, `push-dict-*`).

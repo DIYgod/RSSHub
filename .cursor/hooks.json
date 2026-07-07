@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "hooks": {
+        "preToolUse": [
+            {
+                "command": "CURSOR_HOOK=1 bash /home/ian/code/src/spec-rsshub/scripts/agent-hook-supabase-guard.sh",
+                "timeout": 5,
+                "_comment": "infra-supabase-agent-guard"
+            }
+        ]
+    }
+}
