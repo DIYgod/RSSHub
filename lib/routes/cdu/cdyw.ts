@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -49,10 +49,10 @@ async function handler() {
 
             return {
                 title,
-                link, // 现在保证是 string 类型
+                link,
                 pubDate,
                 author: '成都大学新闻网',
-                description: '', // 预先添加 description 字段，类型占位
+                description: '',
             };
         });
 
@@ -80,7 +80,7 @@ async function handler() {
                         ...item,
                         description: content.html() || '正文加载失败，请点击链接查看原文。',
                     };
-                } catch (error) {
+                } catch {
                     return {
                         ...item,
                         description: '文章详情加载失败，请点击链接查看原文。',
