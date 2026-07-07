@@ -40,23 +40,23 @@ async function handler() {
         .toArray()
         .map((item) => {
             const element = $(item);
-            // 优先使用title属性内容，避免内容被截断
-            const title = element.attr('title') || element.find('.tit').text().trim();
-            const link = element.attr('href');
+            const href = element.attr('href');
+            // 确保 link 不为 undefined
+            const link = href ? (href.startsWith('http') ? href : new URL(href, baseUrl).href) : '';
+            const title = element.attr('title') || element.find('.tit').text().trim() || '无标题';
             const dateText = element.find('.date').text().trim();
-            const pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), 8);
+            const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : new Date();
 
             return {
                 title,
-                // 处理相对路径链接
-                link: link.startsWith('http') ? link : new URL(link, baseUrl).href,
+                link, // 现在保证是 string 类型
                 pubDate,
                 author: '成都大学新闻网',
+                description: '', // 预先添加 description 字段，类型占位
             };
         });
 
-
-     const items = await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
@@ -76,11 +76,16 @@ async function handler() {
                         }
                     });
 
-                    item.description = content.html() || '正文加载失败，请点击链接查看原文。';
+                    return {
+                        ...item,
+                        description: content.html() || '正文加载失败，请点击链接查看原文。',
+                    };
                 } catch (error) {
-                    item.description = '文章详情加载失败，请点击链接查看原文。';
+                    return {
+                        ...item,
+                        description: '文章详情加载失败，请点击链接查看原文。',
+                    };
                 }
-                return item;
             })
         )
     );
