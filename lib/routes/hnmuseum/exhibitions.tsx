@@ -76,9 +76,12 @@ const renderDescription = (imgUrl: string, location?: string, startDate?: string
     );
 
 export const route: Route = {
-    path: '/current-exhibitions',
+    path: '/current-exhibitions/:type?',
     categories: ['travel'],
-    example: '/hnmuseum/current-exhibitions',
+    example: '/hnmuseum/current-exhibitions/special',
+    parameters: {
+        type: 'Exhibition type, supported values: special（临时展览 special+temporary）. Default: All exhibitions.',
+    },
     name: 'Current Exhibitions',
     maintainers: ['magazian'],
     radar: [
@@ -88,7 +91,10 @@ export const route: Route = {
         },
     ],
 
-    handler: async () => {
+    handler: async (ctx) => {
+        const typeParam = ctx.req.param('type');
+        const isSpecial = typeParam === 'special';
+
         const baseUrl = 'https://www.hnmuseum.com';
         const listUrl = `${baseUrl}/zh-hans/content/当前展览－基本陈列`;
         const museumName = namespace.zh?.name || namespace.name;
@@ -140,8 +146,10 @@ export const route: Route = {
             });
         }
 
+        const targetList = isSpecial ? list.filter((item) => item.exhibitionType === 'special' || item.exhibitionType === 'temporary') : list;
+
         const items = await Promise.all(
-            list.map((item) => {
+            targetList.map((item) => {
                 const cacheKey = item.itemLink;
 
                 return cache.tryGet(cacheKey, async (): Promise<DataItem> => {
@@ -198,7 +206,7 @@ export const route: Route = {
         );
 
         return {
-            title: `${museumName} - 当前展览`,
+            title: `${museumName} - 当前展览${isSpecial ? ' - 专题&临时展览' : ''}`,
             link: listUrl,
             language: 'zh-CN',
             item: items.filter((item) => item.title && Object.keys(item).length > 0) as DataItem[],
