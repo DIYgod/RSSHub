@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const base = 'http://www.math.zju.edu.cn/';
 
@@ -36,7 +37,7 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
             return {
                 title,
                 link: link ? new URL(link, base).href : undefined,
-                pubDate: parseDate(dateText),
+                pubDate: timezone(parseDate(dateText), 8),
             };
         })
         .filter((item): item is DataItem => Boolean(item.title && item.link));
@@ -72,7 +73,7 @@ async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Pr
             }
 
             if (pubDate) {
-                item.pubDate = parseDate(pubDate);
+                item.pubDate = timezone(parseDate(pubDate), 8);
             }
 
             return item;
@@ -109,7 +110,7 @@ async function handler(ctx: { req: { param: (arg0: string) => string } }) {
     const categoryInfo = categoryMap.get(type);
 
     if (!categoryInfo) {
-        const validTypes = [...categoryMap.keys()].join(', ');
+        const validTypes = [...categoryMap.keys().toArray()].join(', ');
         throw new Error(`Invalid type: ${type}. Valid types are: ${validTypes}`);
     }
 
