@@ -8576,11 +8576,11 @@
   "/telecompaper/search/:keyword?/:company?/:sort?/:period?": [
     "nczitzk"
   ],
-  "/telegram/media/:entityName/:messageId": [
-    "synchrone"
-  ],
   "/telegram/stickerpack/:name": [
     "DIYgod"
+  ],
+  "/telegram/media/:entityName/:messageId": [
+    "synchrone"
   ],
   "/telegram/stories/:username/:story?": [
     "synchrone"
