@@ -16,6 +16,7 @@ vi.mock('@/utils/cache/index', () => ({
         globalCache: {
             get: getSpy,
             set: setSpy,
+            claim: vi.fn(() => true),
         },
     },
 }));
