@@ -1,4 +1,3 @@
-import Parser from '@jocmp/mercury-parser';
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -309,6 +308,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (link) {
                         // if parser failed, return default description and not report error
                         try {
+                            const { default: Parser } = await import('@jocmp/mercury-parser');
                             const res = await ofetch(link);
                             const $ = load(res);
                             const result = await Parser.parse(link, {
