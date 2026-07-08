@@ -80,13 +80,14 @@ jobs:
 
             - name: Review PR with rules
               if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
-              uses: anthropics/claude-code-action@ba0aafd4308cbba7165f9f2cdb0cfbed5a3c99ce # v1.0.168
+              uses: anthropics/claude-code-action@v1
               env:
                   GH_TOKEN: ${{ github.token }}
                   PR_NUMBER: ${{ steps.source-run-info.outputs.number || inputs.pr_number }}
               with:
                   claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
                   github_token: ${{ secrets.GITHUB_TOKEN }}
+                  display_report: 'true'
                   claude_args: |
                       --model ${{ vars.OPENCODE_MODEL }}
                       --allowedTools "Bash(base64:*),Bash(cat:*),Bash(echo:*),Bash(gh api:*),Bash(gh auth:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh repo view:*),Bash(gh search:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git status:*),Bash(grep:*),Bash(head:*),Bash(ls:*),Bash(rg:*),Bash(sed:*),Bash(tail:*),Bash(wc:*),WebFetch(domain:docs.rsshub.app)"
