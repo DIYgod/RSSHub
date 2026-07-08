@@ -188,7 +188,7 @@
         "lint-staged": "17.0.8",
         "magic-string": "0.30.21",
         "mockdate": "3.0.5",
-        "msw": "2.14.6",
+        "msw": "2.15.0",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.58.0",
         "oxlint": "1.73.0",
