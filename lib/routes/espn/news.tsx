@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -112,7 +112,7 @@ export const route: Route = {
                             },
                         });
 
-                        const $ = cheerio.load(article.content.story, null, false);
+                        const $ = load(article.content.story, null, false);
                         $('*').each((_, ele) => {
                             if (junkPattern.test(ele.name)) {
                                 $(ele).remove();

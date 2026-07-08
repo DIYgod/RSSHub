@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -30,7 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { app } = ctx.req.param();
     const { data: response } = await got(`https://f-droid.org/en/packages/${app}/`);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const appName = $('.package-title').find('h3').text().trim();
 

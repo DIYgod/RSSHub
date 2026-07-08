@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -124,7 +124,7 @@ async function handler(ctx) {
                     },
                 });
 
-                const $ = cheerio.load(response);
+                const $ = load(response);
                 const topVideo = $('#topvideo').length
                     ? $('#topvideo iframe')
                           .toArray()
@@ -155,7 +155,7 @@ async function handler(ctx) {
                           ?.replaceAll(String.raw`\"`, '"')
                     : '';
                 if (lowerContent) {
-                    const $ = cheerio.load(lowerContent, null, false);
+                    const $ = load(lowerContent, null, false);
                     fancybox = [
                         ...fancybox,
                         ...$('a.fancybox')

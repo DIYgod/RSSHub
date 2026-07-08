@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
 import { google } from 'googleapis';
@@ -65,7 +65,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
         userHandleData = await cache.tryGet(`youtube:handle:${username}`, async () => {
             const link = `https://www.youtube.com/${username}`;
             const response = await ofetch(link);
-            const $ = cheerio.load(response);
+            const $ = load(response);
             const ytInitialData = JSON.parse(
                 $('script')
                     .text()

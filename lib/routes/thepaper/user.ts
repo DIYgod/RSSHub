@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -110,7 +110,7 @@ async function handler(ctx) {
 
     const mobileBuildId = (await cache.tryGet('thepaper:m:buildId', async () => {
         const response = await ofetch('https://m.thepaper.cn');
-        const $ = cheerio.load(response);
+        const $ = load(response);
         const nextData = JSON.parse($('script#__NEXT_DATA__').text());
         return nextData.buildId;
     })) as string;
