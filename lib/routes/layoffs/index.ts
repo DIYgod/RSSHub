@@ -49,7 +49,7 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Layoff Data Tracker',
     maintainers: ['BrandNewLifeJackie26'],
     handler,
     url: 'layoffs.fyi/',
