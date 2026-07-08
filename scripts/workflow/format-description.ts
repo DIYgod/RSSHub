@@ -2,10 +2,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import stringWidth from 'fast-string-width';
+import { type ObjectExpression, parse, type Program, type VariableDeclarator } from 'oxc-parser';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkPangu from 'remark-pangu';
-import typescript from 'typescript';
 
 const __dirname = import.meta.dirname;
 const routesDir = path.resolve(__dirname, '../../lib/routes');
@@ -131,67 +131,70 @@ interface DescriptionEdit {
     raw: string;
 }
 
-function getPropertyName(name: typescript.PropertyName): string {
-    if (typescript.isIdentifier(name) || typescript.isPrivateIdentifier(name) || typescript.isStringLiteral(name) || typescript.isNoSubstitutionTemplateLiteral(name)) {
-        return name.text;
+function getPropertyName(prop: ObjectExpression['properties'][number]): string {
+    if (prop.type !== 'Property' || prop.computed) {
+        return '';
+    }
+    if (prop.key.type === 'Identifier') {
+        return prop.key.name;
+    }
+    if (prop.key.type === 'Literal' && typeof prop.key.value === 'string') {
+        return prop.key.value;
     }
     return '';
 }
 
 const TARGETS: Record<string, string> = { route: 'Route', namespace: 'Namespace' };
 
-function isTargetTypedDeclaration(decl: typescript.VariableDeclaration): boolean {
-    if (!typescript.isIdentifier(decl.name)) {
+function isTargetTypedDeclaration(decl: VariableDeclarator): boolean {
+    if (decl.id.type !== 'Identifier') {
         return false;
     }
-    const expectedType = TARGETS[decl.name.text];
+    const expectedType = TARGETS[decl.id.name];
     if (!expectedType) {
         return false;
     }
-    if (decl.type && typescript.isTypeReferenceNode(decl.type)) {
-        const typeName = decl.type.typeName;
-        if (typescript.isIdentifier(typeName) && typeName.text === expectedType) {
-            return true;
-        }
-    }
-    return false;
+    const typeAnnotation = decl.id.typeAnnotation?.typeAnnotation;
+    return typeAnnotation?.type === 'TSTypeReference' && typeAnnotation.typeName.type === 'Identifier' && typeAnnotation.typeName.name === expectedType;
 }
 
-function collectDescriptionEdits(sourceFile: typescript.SourceFile): DescriptionEdit[] {
+function collectDescriptionEdits(program: Program): DescriptionEdit[] {
     const edits: DescriptionEdit[] = [];
 
-    const visitObject = (obj: typescript.ObjectLiteralExpression) => {
+    const visitObject = (obj: ObjectExpression) => {
         for (const prop of obj.properties) {
-            if (!typescript.isPropertyAssignment(prop)) {
+            if (prop.type !== 'Property') {
                 continue;
             }
-            const name = getPropertyName(prop.name);
+            const name = getPropertyName(prop);
+            const init = prop.value;
             if (name === 'description') {
-                const init = prop.initializer;
-                if (typescript.isStringLiteral(init) || typescript.isNoSubstitutionTemplateLiteral(init)) {
+                if (init.type === 'Literal' && typeof init.value === 'string') {
                     edits.push({
-                        start: init.getStart(sourceFile),
-                        end: init.getEnd(),
-                        raw: init.text,
+                        start: init.start,
+                        end: init.end,
+                        raw: init.value,
+                    });
+                } else if (init.type === 'TemplateLiteral' && init.expressions.length === 0 && typeof init.quasis[0]?.value.cooked === 'string') {
+                    edits.push({
+                        start: init.start,
+                        end: init.end,
+                        raw: init.quasis[0].value.cooked,
                     });
                 }
-            } else if (['ja', 'zh', 'zh-TW'].includes(name) && typescript.isObjectLiteralExpression(prop.initializer)) {
-                visitObject(prop.initializer);
+            } else if ((name.includes('ja') || name.includes('zh')) && init.type === 'ObjectExpression') {
+                visitObject(init);
             }
         }
     };
 
-    for (const stmt of sourceFile.statements) {
-        if (!typescript.isVariableStatement(stmt)) {
+    for (const stmt of program.body) {
+        if (stmt.type !== 'ExportNamedDeclaration' || stmt.declaration?.type !== 'VariableDeclaration') {
             continue;
         }
-        const isExported = stmt.modifiers?.some((m) => m.kind === typescript.SyntaxKind.ExportKeyword);
-        if (!isExported) {
-            continue;
-        }
-        for (const decl of stmt.declarationList.declarations) {
-            if (isTargetTypedDeclaration(decl) && decl.initializer && typescript.isObjectLiteralExpression(decl.initializer)) {
-                visitObject(decl.initializer);
+        for (const decl of stmt.declaration.declarations) {
+            if (isTargetTypedDeclaration(decl) && decl.init?.type === 'ObjectExpression') {
+                visitObject(decl.init);
             }
         }
     }
@@ -224,9 +227,9 @@ async function processFile(filePath: string): Promise<void> {
         return;
     }
 
-    const sourceFile = typescript.createSourceFile(filePath, sourceText, typescript.ScriptTarget.Latest, false, filePath.endsWith('.tsx') ? typescript.ScriptKind.TSX : typescript.ScriptKind.TS);
+    const { program } = await parse(filePath, sourceText);
 
-    const edits = collectDescriptionEdits(sourceFile);
+    const edits = collectDescriptionEdits(program);
     if (edits.length === 0) {
         return;
     }
