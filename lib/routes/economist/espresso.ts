@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import sanitizeHtml from 'sanitize-html';
 import xxhash from 'xxhash-wasm';
 
@@ -42,7 +42,7 @@ async function handler() {
         link,
         async () => {
             const response = await ofetch(link);
-            const $ = cheerio.load(response);
+            const $ = load(response);
             return JSON.parse($('script#__NEXT_DATA__').text());
         },
         config.cache.routeExpire,

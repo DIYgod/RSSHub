@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -23,7 +23,7 @@ export const route: Route = {
 async function handler() {
     const urlData = await ofetch('https://www.zhizhuan100.com.cn/analysis');
 
-    const $ = cheerio.load(urlData);
+    const $ = load(urlData);
 
     const bodyJsUrl: string | undefined = $('script[src*="Body.js"]').attr('src');
 
@@ -41,7 +41,7 @@ async function handler() {
     }
 
     const htmlContent = JSON.parse(`"${htmlMatch[1]}"`);
-    const $content = cheerio.load(htmlContent);
+    const $content = load(htmlContent);
 
     const listItems = $content('.w-list-item');
 

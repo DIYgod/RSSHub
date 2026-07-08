@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -23,7 +23,7 @@ async function handler() {
         method: 'get',
         url,
     });
-    const $ = cheerio.load(response.data);
+    const $ = load(response.data);
     const resultItem = $('.media')
         .toArray()
         .map((elem) => {

@@ -1,5 +1,5 @@
 // import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -57,7 +57,7 @@ async function handler() {
     //     },
     // });
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const items = $('.grid .group')
         .toArray()

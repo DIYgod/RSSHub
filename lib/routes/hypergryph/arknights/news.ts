@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -80,7 +80,7 @@ async function handler(ctx) {
         'hypergryph:arknights:news',
         async () => {
             const response = await ofetch('https://ak.hypergryph.com/news');
-            const $ = cheerio.load(response);
+            const $ = load(response);
             const renderData = JSON.parse(
                 $('script:contains("initialData")')
                     .first()
@@ -99,7 +99,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 const description = $('div > div > div > div > div > div > div:nth-child(4)');
                 item.description = description.length ? description.html() : item.description;
