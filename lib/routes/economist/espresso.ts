@@ -11,6 +11,8 @@ import { parseDate } from '@/utils/parse-date';
 
 const link = 'https://www.economist.com/the-world-in-brief';
 
+const xxhashPromise = xxhash();
+
 export const route: Route = {
     path: '/espresso',
     categories: ['traditional-media'],
@@ -37,7 +39,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { h64ToString } = await xxhash();
+    const { h64ToString } = await xxhashPromise;
     const nextData = await cache.tryGet(
         link,
         async () => {

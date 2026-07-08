@@ -7,6 +7,8 @@ import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
 
 const bypassList = new Set(['/', '/robots.txt', '/logo.png', '/favicon.ico']);
+
+const xxhashPromise = xxhash();
 // only give cache string, as the `!` condition tricky
 // XXH64 is used to shrink key size
 // plz, write these tips in comments!
@@ -19,7 +21,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const requestPath = ctx.req.path;
     const format = `:${ctx.req.query('format') || 'rss'}`;
     const limit = ctx.req.query('limit') ? `:${ctx.req.query('limit')}` : '';
-    const { h64ToString } = await xxhash();
+    const { h64ToString } = await xxhashPromise;
     const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + format + limit);
     const controlKey = 'rsshub:path-requested:' + h64ToString(requestPath + format + limit);
 

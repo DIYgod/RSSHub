@@ -4,6 +4,8 @@ import xxhash from 'xxhash-wasm';
 
 import cacheModule from '@/utils/cache/index';
 
+const xxhashPromise = xxhash();
+
 const QuerySchema = z.object({
     requestPath: z.string().openapi({
         param: {
@@ -62,7 +64,7 @@ const handler: RouteHandler<typeof route> = async (ctx) => {
     }
 
     const { requestPath } = ctx.req.valid('query');
-    const { h64ToString } = await xxhash();
+    const { h64ToString } = await xxhashPromise;
     const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + ':rss');
     const cached = await cacheModule.globalCache.has(key);
 
