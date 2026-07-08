@@ -27,12 +27,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     let value = await cacheModule.globalCache.get(key);
 
     // Doesn't hit the cache? Try to become the fetcher and let others know!
-    let claimed = false;
+    let isRequesting = false;
     if (!value) {
-        claimed = await cacheModule.globalCache.claim(controlKey, config.cache.requestTimeout);
+        isRequesting = !(await cacheModule.globalCache.claim(controlKey, config.cache.requestTimeout));
     }
 
-    if (!value && !claimed) {
+    if (isRequesting) {
         let retryTimes = process.env.NODE_ENV === 'test' ? 1 : 10;
         let bypass = false;
         while (retryTimes > 0) {
@@ -59,7 +59,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return;
     }
 
-    if (!claimed) {
+    if (isRequesting) {
         // waited out a stale claim without finding a cache entry, take over the fetch
         await cacheModule.globalCache.set(controlKey, '1', config.cache.requestTimeout);
     }
