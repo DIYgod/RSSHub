@@ -13513,7 +13513,7 @@
           "/" ],
         target:"/last-origin/news" } ] },
   "layoffs.fyi":{ _name:"Layoffs.fyi",
-    ".":[ { title:"Unknown",
+    ".":[ { title:"Layoff Data Tracker",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/" ],
         target:"/layoffs/" } ] },
