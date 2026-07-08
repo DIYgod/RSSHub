@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -27,7 +27,7 @@ async function handler(ctx) {
     const link = `${baseUrl}/tag/${tag}/`;
 
     const response = await ofetch(link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
     const preloadedState = JSON.parse(
         $('script:contains("window.__PRELOADED_STATE__")')
             .text()
@@ -47,7 +47,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
                 const preloadedState = JSON.parse(
                     $('script:contains("window.__PRELOADED_STATE__")')
                         .text()
@@ -57,7 +57,7 @@ async function handler(ctx) {
                 const headerLeadAsset = $('div[data-testid*="ContentHeaderLeadAsset"]');
                 headerLeadAsset.find('button').remove();
                 // false postive: 'some' does not exist on type 'Cheerio<Element>'
-                // eslint-disable-next-line unicorn/prefer-array-some
+                // oxlint-disable-next-line unicorn/prefer-array-some
                 if (headerLeadAsset.find('video')) {
                     headerLeadAsset.find('video').attr('src', $('link[rel="preload"][as="video"]').attr('href'));
                     headerLeadAsset.find('video').attr('controls', '');

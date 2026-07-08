@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -67,7 +67,7 @@ async function handler(ctx) {
     isValidType && url.searchParams.set('type', type);
 
     const { data: res } = await got(url);
-    const $ = cheerio.load(res);
+    const $ = load(res);
     const list = $('#ajaxtable > tbody:nth-child(2) .tr3')
         .not('.tr2.tac')
         .toArray()

@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { destr } from 'destr';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -25,7 +25,7 @@ const handler = async (ctx) => {
 
     const response = await ofetch(currentUrl);
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
     const list = [
         ...$('div[class^="max-w-[100%]"] > div > div:nth-child(2) > a')
             .toArray()
