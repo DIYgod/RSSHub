@@ -204,7 +204,7 @@
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.1.10",
         "wrangler": "4.107.0",
-        "yaml-eslint-parser": "2.0.0"
+        "yaml-eslint-parser": "2.1.0"
     },
     "lint-staged": {
         "!(*.ts|*.tsx|*.js|*.cjs|*.mjs|*.yml)": [
