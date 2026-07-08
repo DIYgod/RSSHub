@@ -135,7 +135,7 @@ importers:
         version: 10.0.0
       http-cookie-agent:
         specifier: 8.0.0
-        version: 8.0.0(tough-cookie@6.0.1)(undici@8.7.0)
+        version: 8.0.0(tough-cookie@6.0.2)(undici@8.7.0)
       https-proxy-agent:
         specifier: 9.1.0
         version: 9.1.0
@@ -245,8 +245,8 @@ importers:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
       tough-cookie:
-        specifier: 6.0.1
-        version: 6.0.1
+        specifier: 6.0.2
+        version: 6.0.2
       tsx:
         specifier: 4.23.0
         version: 4.23.0
@@ -5532,8 +5532,8 @@ packages:
     resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}
     engines: {node: '>=0.8'}
 
-  tough-cookie@6.0.1:
-    resolution: {integrity: sha512-LktZQb3IeoUWB9lqR5EWTHgW/VTITCXg4D21M+lvybRVdylLrRMnqaIONLVb5mav8vM19m44HIcGq4qASeu2Qw==}
+  tough-cookie@6.0.2:
+    resolution: {integrity: sha512-exgYmnmL/sJpR3upZfXG5PoatXQii55xAiXGXzY+sROLZ/Y+SLcp9PgJNI9Vz37HpQ74WvDcLT8eqm+kV3FzrA==}
     engines: {node: '>=16'}
 
   tr46@0.0.3:
@@ -9150,7 +9150,7 @@ snapshots:
       got: 14.6.6
       memoizee: 0.4.17
       ramda: 0.32.0
-      tough-cookie: 6.0.1
+      tough-cookie: 6.0.2
     transitivePeerDependencies:
       - supports-color
 
@@ -9276,10 +9276,10 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@8.0.0(tough-cookie@6.0.1)(undici@8.7.0):
+  http-cookie-agent@8.0.0(tough-cookie@6.0.2)(undici@8.7.0):
     dependencies:
       agent-base: 9.0.0
-      tough-cookie: 6.0.1
+      tough-cookie: 6.0.2
     optionalDependencies:
       undici: 8.7.0
 
@@ -9561,7 +9561,7 @@ snapshots:
       parse5: 8.0.1
       saxes: 6.0.0
       symbol-tree: 3.2.4
-      tough-cookie: 6.0.1
+      tough-cookie: 6.0.2
       undici: 7.28.0
       w3c-xmlserializer: 5.0.0
       webidl-conversions: 8.0.1
@@ -10168,7 +10168,7 @@ snapshots:
       rettime: 0.11.11
       statuses: 2.0.2
       strict-event-emitter: 0.5.1
-      tough-cookie: 6.0.1
+      tough-cookie: 6.0.2
       type-fest: 5.7.0
       until-async: 3.0.2
       yargs: 17.7.3
@@ -11199,7 +11199,7 @@ snapshots:
       psl: 1.15.0
       punycode: 2.3.1
 
-  tough-cookie@6.0.1:
+  tough-cookie@6.0.2:
     dependencies:
       tldts: 7.4.7
 
