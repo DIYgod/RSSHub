@@ -68,109 +68,83 @@ jobs:
 
                   Please fix the Docker build test issues first."
 
-            - name: Set up Bun
-              if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
-              uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
-
-            - name: Install opencode
-              if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
-              run: curl -fsSL https://opencode.ai/install | bash
-
-            - name: Review PR with rules
+            - name: Check PR number
               if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
               env:
-                  OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  GITHUB_REPOSITORY: ${{ github.repository }}
                   PR_NUMBER: ${{ steps.source-run-info.outputs.number || inputs.pr_number }}
-                  OPENCODE_PERMISSION: |
-                      {
-                        "bash": {
-                          "*": "deny",
-                          "base64*": "allow",
-                          "cat*": "allow",
-                          "echo*": "allow",
-                          "gh api*": "allow",
-                          "gh auth*": "allow",
-                          "gh pr comment*": "allow",
-                          "gh pr diff*": "allow",
-                          "gh pr view*": "allow",
-                          "gh repo view*": "allow",
-                          "gh search*": "allow",
-                          "git diff*": "allow",
-                          "git log*": "allow",
-                          "git show*": "allow",
-                          "git status*": "allow",
-                          "grep*": "allow",
-                          "head*": "allow",
-                          "ls*": "allow",
-                          "rg*": "allow",
-                          "sed*": "allow",
-                          "tail*": "allow",
-                          "wc*": "allow"
-                        },
-                        "webfetch": "deny"
-                      }
               run: |
                   if [ -z "$PR_NUMBER" ]; then
                     echo "pr_number is required"
                     exit 1
                   fi
 
-                  RULES=$(cat .github/prompts/pr_review_rules.md)
+            - name: Review PR with rules
+              if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
+              uses: anthropics/claude-code-action@ba0aafd4308cbba7165f9f2cdb0cfbed5a3c99ce # v1.0.168
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  PR_NUMBER: ${{ steps.source-run-info.outputs.number || inputs.pr_number }}
+              with:
+                  claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  claude_args: |
+                      --model ${{ vars.OPENCODE_MODEL }}
+                      --allowedTools "Bash(base64:*),Bash(cat:*),Bash(echo:*),Bash(gh api:*),Bash(gh auth:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh repo view:*),Bash(gh search:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git status:*),Bash(grep:*),Bash(head:*),Bash(ls:*),Bash(rg:*),Bash(sed:*),Bash(tail:*),Bash(wc:*),WebFetch(domain:docs.rsshub.app)"
+                      --disallowedTools "WebSearch"
+                  prompt: |
+                      A pull request has been created or updated in this repository.
 
-                  opencode run -m ${{ vars.OPENCODE_MODEL }} "A pull request has been created or updated in this repository.
+                      Pull request number:
+                      ${{ steps.source-run-info.outputs.number || inputs.pr_number }}
 
-                  Pull request number:
-                  $PR_NUMBER
+                      Repository:
+                      ${{ github.repository }}
 
-                  Repository:
-                  $GITHUB_REPOSITORY
+                      Your task:
+                      1. Use GitHub CLI commands to inspect this PR's metadata and code changes.
+                      2. Review only based on the following rules.
+                      3. Report only clear and actionable violations from changed files.
+                      4. If no clear violations are found, do not comment.
 
-                  Your task:
-                  1. Use GitHub CLI commands to inspect this PR's metadata and code changes.
-                  2. Review only based on the following rules.
-                  3. Report only clear and actionable violations from changed files.
-                  4. If no clear violations are found, do not comment.
+                      Review rules:
+                      Read them from .github/prompts/pr_review_rules.md and AGENTS.md in the checked-out repository.
+                      Also read the script standard at https://docs.rsshub.app/joinus/advanced/script-standard and apply it to changed route scripts.
 
-                  Review rules:
-                  $RULES
+                      Required behavior:
+                      - Keep feedback concise and grouped by rule.
+                      - Include file path and a concrete fix suggestion for each issue.
+                      - Ignore uncertain or low-confidence findings.
+                      - Avoid duplicate comments.
 
-                  Required behavior:
-                  - Keep feedback concise and grouped by rule.
-                  - Include file path and a concrete fix suggestion for each issue.
-                  - Ignore uncertain or low-confidence findings.
-                  - Avoid duplicate comments.
+                      Comment protocol:
+                      - Use marker: <!-- pr-auto-review -->
+                      - Check existing comments in issue comments for this marker.
+                      - If a marker comment exists, update it with latest findings.
+                      - Otherwise create a new PR comment.
+                      - If there are no findings and marker comment exists, edit marker comment to a short pass status.
 
-                  Comment protocol:
-                  - Use marker: <!-- pr-auto-review -->
-                  - Check existing comments in issue comments for this marker.
-                  - If a marker comment exists, update it with latest findings.
-                  - Otherwise create a new PR comment.
-                  - If there are no findings and marker comment exists, edit marker comment to a short pass status.
+                      gh command reference (PR_NUMBER and GITHUB_REPOSITORY are available as env vars):
+                      - Create a new PR comment:
+                          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "<!-- pr-auto-review -->
+                          ## Auto Review
+                          ..."
+                      - List existing marker comments to find the one to update:
+                          gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json comments \
+                            --jq '.comments[] | select(.body | startswith("<!-- pr-auto-review -->")) | {id: .id, body: .body}'
+                      - Update an existing marker comment (use the numeric id from the URL, not the node id):
+                          gh api "repos/$GITHUB_REPOSITORY/issues/comments/<comment_id>" -X PATCH -f body="<!-- pr-auto-review -->
+                          ## Auto Review
+                          ..."
+                      - Prefer --body-file - with a heredoc when the body contains quotes or many lines.
 
-                  gh command reference (PR_NUMBER and GITHUB_REPOSITORY are available as env vars):
-                  - Create a new PR comment:
-                      gh pr comment \"\$PR_NUMBER\" --repo \"\$GITHUB_REPOSITORY\" --body \"<!-- pr-auto-review -->
+                      Suggested comment format:
+                      <!-- pr-auto-review -->
                       ## Auto Review
-                      ...\"
-                  - List existing marker comments to find the one to update:
-                      gh pr view \"\$PR_NUMBER\" --repo \"\$GITHUB_REPOSITORY\" --json comments \\
-                        --jq '.comments[] | select(.body | startswith(\"<!-- pr-auto-review -->\")) | {id: .id, body: .body}'
-                  - Update an existing marker comment (use the numeric id from the URL, not the node id):
-                      gh api \"repos/\$GITHUB_REPOSITORY/issues/comments/<comment_id>\" -X PATCH -f body=\"<!-- pr-auto-review -->
+                      - [Rule] file: issue + suggestion
+
+                      For no findings:
+                      <!-- pr-auto-review -->
                       ## Auto Review
-                      ...\"
-                  - Prefer --body-file - with a heredoc when the body contains quotes or many lines.
+                      No clear rule violations found in the current diff.
 
-                  Suggested comment format:
-                  <!-- pr-auto-review -->
-                  ## Auto Review
-                  - [Rule] file: issue + suggestion
-
-                  For no findings:
-                  <!-- pr-auto-review -->
-                  ## Auto Review
-                  No clear rule violations found in the current diff.
-
-                  Use only gh commands and repository data."
+                      Use only gh commands and repository data.
