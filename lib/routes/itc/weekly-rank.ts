@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/weekly-rank',
     categories: ['programming'],
-    example: '/opengithub-trending/weekly-rank',
+    example: '/itc/weekly-rank',
     parameters: {},
     features: {
         requireConfig: false,
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/OpenGithubs/github-weekly-rank'],
-            target: '/opengithub-trending/weekly-rank',
+            target: '/itc/weekly-rank',
         },
     ],
     name: 'Weekly Rank',
@@ -35,8 +35,8 @@ async function handler() {
     const repoUrl = 'https://api.github.com/repos/OpenGithubs/github-weekly-rank/contents';
     const headers: Record<string, string> = {};
 
-    if (config.github?.accessToken) {
-        headers.Authorization = `token ${config.github.accessToken}`;
+    if (config.github?.access_token) {
+        headers.Authorization = `token ${config.github.access_token}`;
     }
 
     const yearResponse = await got(repoUrl, { headers });
