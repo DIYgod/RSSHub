@@ -4793,6 +4793,27 @@
       }
     ]
   },
+  "lnmuseum.com.cn": {
+    "_name": "Liaoning Provincial Museum",
+    "www": [
+      {
+        "title": "Information",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/"
+        ],
+        "target": "/lnmuseum/information"
+      },
+      {
+        "title": "Temporary Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/"
+        ],
+        "target": "/lnmuseum/exhibition/temporary"
+      }
+    ]
+  },
   "lxixsxa.com": {
     "_name": "LiSA",
     "www": [

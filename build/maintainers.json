@@ -1220,6 +1220,12 @@
   "/lmu/jobs": [
     "StarDxxx"
   ],
+  "/lnmuseum/information": [
+    "magazian"
+  ],
+  "/lnmuseum/exhibition/temporary/:type?": [
+    "magazian"
+  ],
   "/loltw/news/:category?": [
     "hoilc"
   ],
