@@ -694,6 +694,8 @@ export type RoutePath =
   | `/ctinews/topic/:topic?`
   | `/cts/:category`
   | `/cuc/yz`
+  | `/cugb/jwc/:channel?`
+  | `/cugb/news/:channel?`
   | `/cuilingmag/:category?`
   | `/cupl/jwc`
   | `/curiouscat/user/:id`

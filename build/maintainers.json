@@ -3139,6 +3139,12 @@
   "/cuc/yz": [
     "niuyi1017"
   ],
+  "/cugb/jwc/:channel?": [
+    "syncmeta"
+  ],
+  "/cugb/news/:channel?": [
+    "syncmeta"
+  ],
   "/cuilingmag/:category?": [
     "nczitzk"
   ],

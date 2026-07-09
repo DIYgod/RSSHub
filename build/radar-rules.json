@@ -17623,6 +17623,29 @@
       }
     ]
   },
+  "cugb.edu.cn": {
+    "_name": "China University of Geosciences (Beijing)",
+    "jwc": [
+      {
+        "title": "教务处",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:channel"
+        ],
+        "target": "/cugb/jwc/:channel"
+      }
+    ],
+    "www": [
+      {
+        "title": "校园新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:channel.jhtml"
+        ],
+        "target": "/cugb/news/:channel"
+      }
+    ]
+  },
   "cuilingmag.com": {
     "_name": "萃嶺网",
     ".": [
