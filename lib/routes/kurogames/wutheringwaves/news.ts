@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -70,7 +70,7 @@ Language codes for the \`${Parameter.Language}\` parameter:
                     // Article content may not always be available, e.g: https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/2596
                     const articleContent = articleDetails.articleContent ?? '';
 
-                    const $ = cheerio.load(articleContent);
+                    const $ = load(articleContent);
 
                     item.description = $.html() ?? article.articleDesc ?? '';
 

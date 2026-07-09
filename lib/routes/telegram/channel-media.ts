@@ -73,7 +73,7 @@ function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
 }
 
 export async function* streamThumbnail(client: TelegramClient, doc: Api.Document) {
-    if (doc.thumbs?.length ?? 0 > 0) {
+    if ((doc.thumbs?.length ?? 0) > 0) {
         const size = chooseLargestThumb(doc.thumbs!);
         if (size instanceof Api.PhotoCachedSize || size instanceof Api.PhotoStrippedSize) {
             yield ExpandInlineBytes(size.bytes);

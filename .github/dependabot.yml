@@ -36,6 +36,7 @@ updates:
           oxc:
               patterns:
                   - '@oxlint/*'
+                  - 'oxc-parser'
                   - 'oxfmt'
                   - 'oxlint'
                   - 'oxlint-plugin-eslint'

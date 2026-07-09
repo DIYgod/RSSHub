@@ -171,7 +171,7 @@
         "unicorn/escape-case": "error",
         // "unicorn/expiring-todo-comments": "error", // not yet implemented
         // "unicorn/explicit-length-check": "error",
-        "unicorn-js/explicit-timer-delay": "error",
+        "unicorn/explicit-timer-delay": "error",
         // "unicorn/filename-case": "error",
         "unicorn/import-style": "error",
         "unicorn-js/isolated-functions": ["error", { "overrideGlobals": { "document": "readonly", "window": "readonly", "fetch": "readonly", "XMLHttpRequest": "readonly" } }],
@@ -205,7 +205,7 @@
         "unicorn-js/no-collection-bracket-access": "error",
         "unicorn-js/no-computed-property-existence-check": "error",
         "unicorn-js/no-confusing-array-splice": "error",
-        "unicorn-js/no-confusing-array-with": "error",
+        "unicorn/no-confusing-array-with": "error",
         "unicorn/no-console-spaces": "error",
         "unicorn-js/no-constant-zero-expression": "error",
         // "unicorn-js/no-declarations-before-early-exit": "error", // unopinionated
@@ -666,7 +666,9 @@
 
         "unicorn/no-array-callback-reference": "warn",
         "unicorn/no-array-reduce": "warn",
-        "unicorn/no-array-sort": "warn",
+
+        "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }],
+
         "unicorn/no-await-expression-member": "off",
         "unicorn/no-empty-file": "warn",
         // "unicorn/no-for-loop": "off", // won't be implemented

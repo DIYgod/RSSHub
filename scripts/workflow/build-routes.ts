@@ -17,7 +17,8 @@ process.env.REDIS_URL = '';
 process.env.CACHE_TYPE = '';
 process.env.REMOTE_CONFIG = '';
 
-const { namespaces } = await import('../../lib/registry');
+const { ensureAllLoaded, namespaces } = await import('../../lib/registry');
+await ensureAllLoaded();
 
 const maintainers: Record<string, string[]> = {};
 const radar: {

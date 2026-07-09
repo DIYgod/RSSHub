@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -27,7 +27,7 @@ async function handler(ctx) {
     const link = `${baseUrl}/${magazine}/mulu.htm`;
     const yearResponse = await ofetch(link);
 
-    const $ = cheerio.load(yearResponse);
+    const $ = load(yearResponse);
 
     const yearList = $('.booktitle a')
         .toArray()
@@ -40,7 +40,7 @@ async function handler(ctx) {
         });
 
     const issueResponse = await ofetch(yearList[0].link);
-    const $$ = cheerio.load(issueResponse);
+    const $$ = load(issueResponse);
 
     const list = $$('.highlight a')
         .toArray()
