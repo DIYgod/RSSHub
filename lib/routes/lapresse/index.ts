@@ -33,14 +33,13 @@ async function handler(ctx) {
     });
 
     const items = posts.map((item) => {
-        const $ = load(item.content?.rendered ?? '');
         const media = item._embedded?.['wp:featuredmedia']?.[0];
         const image = media?.source_url;
         const descriptionParts: string[] = [];
         if (image) {
             descriptionParts.push(`<img src="${image}" />`);
         }
-        descriptionParts.push($.html() || item.excerpt?.rendered || '');
+        descriptionParts.push(item.content?.rendered || item.excerpt?.rendered || '');
 
         return {
             title: load(item.title?.rendered ?? '').text(),
