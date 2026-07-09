@@ -22,14 +22,13 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 20;
     const posts = await ofetch(apiUrl, { query: { per_page: limit, _embed: '1' } });
     const items = posts.map((item) => {
-        const $ = load(item.content?.rendered ?? '');
         const media = item._embedded?.['wp:featuredmedia']?.[0];
         const image = media?.source_url;
         const parts: string[] = [];
         if (image) {
             parts.push(`<img src="${image}" />`);
         }
-        parts.push($.html() || item.excerpt?.rendered || '');
+        parts.push(item.content?.rendered || item.excerpt?.rendered || '');
         return {
             title: load(item.title?.rendered ?? '').text(),
             link: item.link,
