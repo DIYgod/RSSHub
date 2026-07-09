@@ -76,7 +76,7 @@ async function handler(ctx) {
             };
         });
 
-    const categoryLabel = category === 'media' ? '媒体报道' : category === 'news' ? '新闻' : '新闻';
+    const categoryLabel = category === 'media' ? '媒体报道' : '新闻';
 
     return {
         title: `北京智源人工智能研究院 - ${categoryLabel}`,
