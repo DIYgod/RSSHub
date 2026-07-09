@@ -79,17 +79,16 @@ async function handler() {
     const getFileItem = async (year: string, month: string, dayItem: any) => {
         const fileName = dayItem.name.replace('.md', '');
         const key = `opengithub-trending:${year}/${month}/${dayItem.name}`;
-        const fileContent = await cache.tryGet(key, async () => {
+        return await cache.tryGet(key, async () => {
             const response = await got(`https://raw.githubusercontent.com/OpenGithubs/github-weekly-rank/main/${year}/${month}/${dayItem.name}`);
-            return response.data;
+            const fileContent = response.data;
+            return {
+                title: `GitHub Weekly Rank - ${fileName}`,
+                description: md.render(fileContent),
+                link: `https://github.com/OpenGithubs/github-weekly-rank/blob/main/${year}/${month}/${fileName}.md`,
+                pubDate: parseDate(`${year}-${month}-${fileName.slice(6)}`),
+            };
         });
-
-        return {
-            title: `GitHub Weekly Rank - ${fileName}`,
-            description: md.render(fileContent),
-            link: `https://github.com/OpenGithubs/github-weekly-rank/blob/main/${year}/${month}/${fileName}.md`,
-            pubDate: parseDate(`${year}-${month}-${fileName.slice(6)}`),
-        };
     };
 
     const filePromises = allDayData.flatMap(({ year, month, days }: any) => days.map((dayItem: any) => getFileItem(year, month, dayItem))).slice(0, 20);
