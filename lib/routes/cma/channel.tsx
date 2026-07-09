@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { fetchWithPow } from './bypass-waf'
 
 export const route: Route = {
     path: '/channel/:id?',
@@ -59,17 +60,16 @@ async function handler(ctx) {
     const apiUrl = new URL('api/channel', rootUrl).href;
     const currentUrl = new URL(`web/channel-${id}.html`, rootUrl).href;
 
-    const { data: response } = await got(apiUrl, {
-        searchParams: {
-            id,
-        },
+    const apiResponseText  = await fetchWithPow(apiUrl, {
+        searchParams: { id },
     });
 
+    const response = JSON.parse(apiResponseText);
     const data = response?.data?.pop() ?? {};
 
     data.image = data.image?.replace(/\?.*$/, '') ?? undefined;
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await fetchWithPow(currentUrl);
 
     const $ = load(currentResponse);
 
