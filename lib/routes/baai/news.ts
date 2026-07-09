@@ -68,7 +68,7 @@ async function handler(ctx) {
             return {
                 title: item.title,
                 link: item.source_url || `${siteUrl}/news`,
-                description: descriptionParts.join('<br>') || item.title,
+                description: descriptionParts.join('<br>') || undefined,
                 pubDate: item.published_at ? parseDate(item.published_at) : undefined,
                 category: item.category ? [item.category] : undefined,
                 guid: item.id,
