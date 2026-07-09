@@ -53,7 +53,14 @@ export function parseList($: CheerioAPI, baseUrl: string, limit = 20) {
         }
 
         // Keep article / PDF / weixin links; skip bare section roots
-        const isContent = /\.(?:htm|html|pdf)(?:\?|$)/i.test(link) || link.includes('mp.weixin.qq.com');
+        let isWeixin = false;
+        try {
+            const host = new URL(link).hostname;
+            isWeixin = host === 'mp.weixin.qq.com' || host.endsWith('.mp.weixin.qq.com');
+        } catch {
+            continue;
+        }
+        const isContent = /\.(?:htm|html|pdf)(?:\?|$)/i.test(link) || isWeixin;
         if (!isContent) {
             continue;
         }
