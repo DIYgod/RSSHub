@@ -1,0 +1,66 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+const rootUrl = 'https://www.24.kg';
+const hrefPattern = /^\/[\w-]+\/\d+_[\w-]+\/?$/;
+
+export const route: Route = {
+    path: '/',
+    categories: ['traditional-media'],
+    example: '/n24',
+    radar: [{ source: ['24.kg/', '24.kg/*'], target: '/' }],
+    name: 'News',
+    maintainers: ['lisyer'],
+    url: '24.kg/',
+    handler,
+};
+
+async function handler(ctx) {
+    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 20;
+    const html = await ofetch(rootUrl);
+    const $ = load(html);
+    const seen = new Set<string>();
+    const items: Array<{ title: string; link: string }> = [];
+
+    for (const el of $('a[href]').toArray()) {
+        const a = $(el);
+        const href = a.attr('href') || '';
+        if (!href || href.startsWith('#') || href.startsWith('javascript')) {
+            continue;
+        }
+        let link: string;
+        try {
+            link = new URL(href, rootUrl).href;
+        } catch {
+            continue;
+        }
+        if (!link.startsWith(rootUrl)) {
+            continue;
+        }
+        const path = new URL(link).pathname;
+        if (!hrefPattern.test(path) && !hrefPattern.test(href)) {
+            continue;
+        }
+        if (seen.has(link)) {
+            continue;
+        }
+        const title = a.text().replaceAll(/\s+/g, ' ').trim() || a.attr('title')?.trim();
+        if (!title || title.length < 8) {
+            continue;
+        }
+        seen.add(link);
+        items.push({ title, link });
+        if (items.length >= limit) {
+            break;
+        }
+    }
+
+    return {
+        title: '24.kg',
+        link: rootUrl,
+        language: 'ru',
+        item: items,
+    };
+}
