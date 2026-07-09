@@ -36,7 +36,13 @@ async function handler(ctx) {
         } catch {
             continue;
         }
-        if (!link.startsWith(rootUrl)) {
+        try {
+            const host = new URL(link).hostname.replace(/^www\./, '');
+            const rootHost = new URL(rootUrl).hostname.replace(/^www\./, '');
+            if (host !== rootHost && !host.endsWith('.' + rootHost)) {
+                continue;
+            }
+        } catch {
             continue;
         }
         const path = new URL(link).pathname;
