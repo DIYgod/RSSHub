@@ -1,0 +1,66 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+const rootUrl = 'https://www.abc.com.py';
+const hrefPattern = /^\/[\w-]+\/\d{4}\/\d{2}\/\d{2}\/[\w-]+\/?$/;
+
+export const route: Route = {
+    path: '/',
+    categories: ['traditional-media'],
+    example: '/abc2',
+    radar: [{ source: ['abc.com.py/', 'abc.com.py/*'], target: '/' }],
+    name: 'News',
+    maintainers: ['lisyer'],
+    url: 'abc.com.py/',
+    handler,
+};
+
+async function handler(ctx) {
+    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 20;
+    const html = await ofetch(rootUrl);
+    const $ = load(html);
+    const seen = new Set<string>();
+    const items: Array<{ title: string; link: string }> = [];
+
+    for (const el of $('a[href]').toArray()) {
+        const a = $(el);
+        const href = a.attr('href') || '';
+        if (!href || href.startsWith('#') || href.startsWith('javascript')) {
+            continue;
+        }
+        let link: string;
+        try {
+            link = new URL(href, rootUrl).href;
+        } catch {
+            continue;
+        }
+        if (!link.startsWith(rootUrl)) {
+            continue;
+        }
+        const path = new URL(link).pathname;
+        if (!hrefPattern.test(path) && !hrefPattern.test(href)) {
+            continue;
+        }
+        if (seen.has(link)) {
+            continue;
+        }
+        const title = a.text().replaceAll(/\s+/g, ' ').trim() || a.attr('title')?.trim();
+        if (!title || title.length < 8) {
+            continue;
+        }
+        seen.add(link);
+        items.push({ title, link });
+        if (items.length >= limit) {
+            break;
+        }
+    }
+
+    return {
+        title: 'ABC Color',
+        link: rootUrl,
+        language: 'es',
+        item: items,
+    };
+}
