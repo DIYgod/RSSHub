@@ -1,13 +1,9 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 const rootUrl = 'https://www.dr.dk';
-const rootHost = 'dr.dk';
-const hrefPattern = /\d{5,}/;
-
-const registrable = (h: string) => h.split('.').slice(-2).join('.');
+const feedUrl = 'https://www.dr.dk/nyheder/service/feeds/allenyheder';
 
 export const route: Route = {
     path: '/',
@@ -22,56 +18,21 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 20;
-    const html = await ofetch(rootUrl);
-    const $ = load(html);
-    const seen = new Set<string>();
-    const items: Array<{ title: string; link: string }> = [];
-
-    for (const el of $('a[href]').toArray()) {
-        const a = $(el);
-        const href = a.attr('href') || '';
-        if (!href || href.startsWith('#') || href.startsWith('javascript')) {
-            continue;
-        }
-        let link: string;
-        try {
-            link = new URL(href, rootUrl).href;
-        } catch {
-            continue;
-        }
-        try {
-            const hostName = new URL(link).hostname.replace(/^www\./, '');
-            if (hostName !== rootHost && !hostName.endsWith('.' + rootHost) && registrable(hostName) !== registrable(rootHost)) {
-                continue;
-            }
-        } catch {
-            continue;
-        }
-        const path = new URL(link).pathname;
-        if (!hrefPattern.test(path) && !hrefPattern.test(href)) {
-            continue;
-        }
-        if (seen.has(link)) {
-            continue;
-        }
-        let title = a.attr('title')?.trim() || a.text().replaceAll(/\s+/g, ' ').trim();
-        if (!title || title.length < 10) {
-            title = a.closest('article, li, div').find('h1, h2, h3, h4').first().text().replaceAll(/\s+/g, ' ').trim() || title;
-        }
-        if (!title || title.length < 10) {
-            continue;
-        }
-        seen.add(link);
-        items.push({ title, link });
-        if (items.length >= limit) {
-            break;
-        }
-    }
-
+    const feed = await parser.parseURL(feedUrl);
+    const items = (feed.items || []).slice(0, limit).map((item) => ({
+        title: item.title,
+        link: item.link,
+        description: item['content:encoded'] || item.content || item.contentSnippet || item.summary,
+        pubDate: item.isoDate ? parseDate(item.isoDate) : item.pubDate ? parseDate(item.pubDate) : undefined,
+        author: item.creator || item.author,
+        category: item.categories,
+        guid: item.guid || item.id || item.link,
+    }));
     return {
-        title: 'DR',
-        link: rootUrl,
-        language: 'da',
+        title: feed.title || 'DR Nyheder',
+        link: feed.link || rootUrl,
+        description: feed.description || 'DR news feed',
+        language: feed.language || 'da',
         item: items,
     };
 }
