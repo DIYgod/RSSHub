@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -108,7 +109,7 @@ export const route: Route = {
                         const $detail = load(detailResponse.data);
 
                         const pubDateStr = $detail('meta[name="PubDate"]').attr('content') || '';
-                        const pubDate = parseDate(pubDateStr, 'YYYY-MM-DD HH:mm');
+                        const pubDate = timezone(parseDate(pubDateStr, 'YYYY-MM-DD HH:mm'), 8);
 
                         const description = renderToString(
                             <div>

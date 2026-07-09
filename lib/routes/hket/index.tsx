@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
@@ -137,7 +137,7 @@ async function handler(ctx) {
 
     const response = await ofetch(`${baseUrl}/${category}`);
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('.main-listing-container div.listing-title > a')
         .toArray()
@@ -185,7 +185,7 @@ async function handler(ctx) {
                 }
 
                 const response = await ofetch(item.link!);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 item.category = $('.contentTags-container > .hotkey-container-wrapper > .hotkey-container > a')
                     .toArray()

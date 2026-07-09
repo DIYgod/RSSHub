@@ -1,7 +1,7 @@
-import * as cheerio from 'cheerio';
+import { auth as googleAuth, youtube as googleYoutube } from '@googleapis/youtube';
+import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
-import { google } from 'googleapis';
 
 import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/parse-date';
 import utils, { getVideoUrl } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
-const { OAuth2 } = google.auth;
+const { OAuth2 } = googleAuth;
 
 dayjs.extend(duration);
 
@@ -27,7 +27,7 @@ if (config.youtube && config.youtube.key) {
             continue;
         }
 
-        youtube[index] = google.youtube({
+        youtube[index] = googleYoutube({
             version: 'v3',
             auth: key,
         });
@@ -65,7 +65,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
         userHandleData = await cache.tryGet(`youtube:handle:${username}`, async () => {
             const link = `https://www.youtube.com/${username}`;
             const response = await ofetch(link);
-            const $ = cheerio.load(response);
+            const $ = load(response);
             const ytInitialData = JSON.parse(
                 $('script')
                     .text()
