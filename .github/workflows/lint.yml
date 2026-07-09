@@ -88,3 +88,52 @@ jobs:
                   require-vouch: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    agentscan:
+        name: AgentScan
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            contents: read
+            issues: write
+            pull-requests: write
+        runs-on: ubuntu-slim
+        timeout-minutes: 10
+        steps:
+            - name: Cache AgentScan analysis
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+              with:
+                  path: .agentscan-cache
+                  key: agentscan-cache-${{ github.actor }}
+                  restore-keys: agentscan-cache-
+
+            - name: AgentScan
+              uses: MatteoGabriele/agentscan-action@c7d61446e7aece6bdd3edcee4558bbfc0392615e # v2.0.1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  trusted-author-associations: 'collaborator,member,owner'
+                  cache-path: .agentscan-cache
+                  label-community-flagged: spam
+                  label-mixed: spam
+                  label-automation: spam
+                  auto-close: true
+                  auto-close-classifications: spam
+
+    anti-slop:
+        name: Anti Slop
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        runs-on: ubuntu-slim
+        permissions:
+            contents: read
+            issues: read
+            pull-requests: write
+        steps:
+            - name: Anti Slop
+              uses: peakoss/anti-slop@57858eead489d08b255fab2af45a506c2ca6eab2 # v0.3.0
+              with:
+                  close-pr: true
+                  exempt-label: exempt
+                  failure-add-pr-labels: spam
+                  failure-pr-message: |
+                      Thanks for the contribution. This PR was automatically closed because
+                      it matched multiple low-quality/spam signals.
+                  lock-pr: false
