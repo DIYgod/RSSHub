@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
 import { config } from '@/config';
@@ -95,5 +95,123 @@ describe('route throws an error', () => {
                 default:
             }
         });
+    });
+});
+
+describe('error handler honeybadger', () => {
+    const notify = vi.fn();
+
+    afterEach(() => {
+        vi.doUnmock('@honeybadger-io/js');
+        vi.doUnmock('@sentry/node');
+        vi.doUnmock('hono/route');
+        vi.doUnmock('@/utils/logger');
+        vi.doUnmock('@/utils/otel');
+        vi.resetModules();
+    });
+
+    it('sends errors to honeybadger when enabled', async () => {
+        process.env.HONEYBADGER_API_KEY = 'hbp_test_key';
+        vi.resetModules();
+
+        vi.doMock('@honeybadger-io/js', () => ({
+            default: { notify },
+        }));
+        vi.doMock('@sentry/node', () => ({
+            withScope: vi.fn(),
+            captureException: vi.fn(),
+        }));
+        vi.doMock('hono/route', () => ({
+            routePath: () => '/test/path',
+        }));
+        vi.doMock('@/utils/logger', () => ({
+            default: { error: vi.fn() },
+        }));
+        vi.doMock('@/utils/otel', () => ({
+            requestMetric: { error: vi.fn() },
+        }));
+
+        const { errorHandler } = await import('@/errors');
+
+        const ctx = {
+            req: {
+                path: '/test/path',
+                method: 'GET',
+                query: () => 'json',
+            },
+            res: {
+                status: 500,
+                headers: new Headers(),
+            },
+            status: vi.fn(),
+            header: vi.fn(),
+            json: (payload: unknown) => payload,
+            html: (payload: unknown) => payload,
+        };
+
+        errorHandler(new Error('boom'), ctx as any);
+
+        expect(notify).toHaveBeenCalledWith(expect.any(Error), {
+            context: { name: 'test' },
+        });
+
+        delete process.env.HONEYBADGER_API_KEY;
+    });
+});
+
+describe('error handler sentry', () => {
+    const captureException = vi.fn();
+    const setTag = vi.fn();
+
+    afterEach(() => {
+        vi.doUnmock('@sentry/node');
+        vi.doUnmock('hono/route');
+        vi.doUnmock('@/utils/logger');
+        vi.doUnmock('@/utils/otel');
+        vi.resetModules();
+    });
+
+    it('sends errors to sentry when enabled', async () => {
+        process.env.SENTRY = 'dsn';
+        vi.resetModules();
+
+        vi.doMock('@sentry/node', () => ({
+            withScope: (cb: (scope: { setTag: typeof setTag }) => void) => cb({ setTag }),
+            captureException,
+        }));
+        vi.doMock('hono/route', () => ({
+            routePath: () => '/test/path',
+        }));
+        vi.doMock('@/utils/logger', () => ({
+            default: { error: vi.fn() },
+        }));
+        vi.doMock('@/utils/otel', () => ({
+            requestMetric: { error: vi.fn() },
+        }));
+
+        const { errorHandler } = await import('@/errors');
+
+        const ctx = {
+            req: {
+                path: '/test/path',
+                method: 'GET',
+                query: () => 'json',
+            },
+            res: {
+                status: 500,
+                headers: new Headers(),
+            },
+            status: vi.fn(),
+            header: vi.fn(),
+            json: (payload: unknown) => payload,
+            html: (payload: unknown) => payload,
+        };
+
+        errorHandler(new Error('boom'), ctx as any);
+
+        expect(setTag).toHaveBeenCalledWith('name', 'test');
+        expect(captureException).toHaveBeenCalled();
+
+        delete process.env.SENTRY;
     });
 });

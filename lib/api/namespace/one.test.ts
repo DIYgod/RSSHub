@@ -2,7 +2,6 @@ import type { Next } from 'hono';
 import { describe, expect, it } from 'vitest';
 
 import api from '@/api';
-import { handler as allHandler } from '@/api/namespace/all';
 import { handler as oneHandler } from '@/api/namespace/one';
 import { namespaces } from '@/registry';
 
@@ -16,13 +15,8 @@ const createCtx = (param: Record<string, string> = {}) =>
         json: (data: unknown) => data,
     }) as any;
 
-describe('api/namespace', () => {
+describe('api/namespace/one', () => {
     const nestedKey = Object.keys(namespaces).find((key) => key.includes('/')) as string;
-
-    it('returns all namespaces', async () => {
-        const result = await allHandler(createCtx(), noopNext);
-        expect(result).toBe(namespaces);
-    });
 
     it('returns a single namespace', async () => {
         const result = await oneHandler(createCtx({ namespace: 'test' }), noopNext);

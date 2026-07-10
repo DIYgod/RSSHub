@@ -116,7 +116,7 @@ jobs:
                   label-mixed: spam
                   label-automation: spam
                   auto-close: true
-                  auto-close-classifications: spam
+                  auto-close-classifications: automation,mixed
 
     anti-slop:
         name: Anti Slop
