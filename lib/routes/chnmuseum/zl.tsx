@@ -105,11 +105,9 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
 
     const extractItems = (html: string, contextUrl: string) => {
         const $ = load(html);
-        const selectors = ['ul[id="div"] > li > a', '.zl_zzzl_list li.scale_imgs > a', '.zl_jbc_list li.scale_imgs > a', '.zl_ztzl_list li.scale_imgs > a', '.zl_gjzl_list li.scale_imgs > a', '.zl_gbxz_list li.scale_imgs > a'].join(
-            ', '
-        );
+        const selectors = ['ul[id="div"] > li > a', 'li.scale_imgs > a'].join(', ');
 
-        const pageElements = $(selectors).toArray();
+        const pageElements = $(selectors).not('.zl_lszl_list *').toArray();
 
         for (const el of pageElements) {
             const $item = $(el).closest('li');
