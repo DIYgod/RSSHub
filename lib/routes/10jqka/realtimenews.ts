@@ -8,6 +8,8 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx) => {
     const { tag } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const page = ctx.req.query('page') ? Number(ctx.req.query('page')) : 1;
+    const pagesize = ctx.req.query('pagesize') ? Number(ctx.req.query('pagesize')) : 20;
 
     const rootUrl = 'https://news.10jqka.com.cn';
     const apiUrl = new URL('tapp/news/push/stock', rootUrl).href;
@@ -25,6 +27,7 @@ export const handler = async (ctx) => {
         searchParams: {
             page: 1,
             tag: tag ?? '',
+            pagesize: pagesize,
         },
     });
 
