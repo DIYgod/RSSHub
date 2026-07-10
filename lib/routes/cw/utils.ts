@@ -104,7 +104,7 @@ const parseItems = (list, context: BrowserContext) =>
                 await page.close();
                 const $ = load(response);
 
-                const meta = JSON.parse($('head script[type="application/ld+json"]').eq(1).text());
+                const meta = JSON.parse($('head script[type="application/ld+json"]:includes("NewsArticle")').text());
                 $('.article__head .breadcrumb, .article__head h1, .article__provideViews, .ad').remove();
                 $('img.lazyload').each((_, img) => {
                     if (!img.attribs['data-src']) {
