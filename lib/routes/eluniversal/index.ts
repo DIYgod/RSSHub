@@ -3,20 +3,19 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-const rootUrl = 'https://www.eluniversal.com.mx';
-const rootHost = 'eluniversal.com.mx';
-const hrefPattern = /\/[a-z-]+\/[a-z0-9-]{25,}\//;
-
-const registrable = (h: string) => h.split('.').slice(-2).join('.');
+const rootUrl = 'https://www.eluniversal.com';
+const rootHost = 'eluniversal.com';
+// /politica/236999/slug-title
+const hrefPattern = /^\/[a-z-]+\/\d{5,}\/[a-z0-9-]+\/?$/;
 
 export const route: Route = {
     path: '/',
     categories: ['traditional-media'],
     example: '/eluniversal',
-    radar: [{ source: ['eluniversal.com.mx/', 'eluniversal.com.mx/*'], target: '/' }],
+    radar: [{ source: ['eluniversal.com/', 'eluniversal.com/*'], target: '/' }],
     name: 'News',
     maintainers: ['lisyer'],
-    url: 'eluniversal.com.mx/',
+    url: 'eluniversal.com/',
     handler,
 };
 
@@ -40,15 +39,15 @@ async function handler(ctx) {
             continue;
         }
         try {
-            const hostName = new URL(link).hostname.replace(/^www\./, '');
-            if (hostName !== rootHost && !hostName.endsWith('.' + rootHost) && registrable(hostName) !== registrable(rootHost)) {
+            const host = new URL(link).hostname.replace(/^www\./, '');
+            if (host !== rootHost && !host.endsWith('.' + rootHost)) {
                 continue;
             }
         } catch {
             continue;
         }
         const path = new URL(link).pathname;
-        if (!hrefPattern.test(path) && !hrefPattern.test(href)) {
+        if (!hrefPattern.test(path)) {
             continue;
         }
         if (seen.has(link)) {
@@ -69,7 +68,7 @@ async function handler(ctx) {
     }
 
     return {
-        title: 'El Universal',
+        title: 'El Universal Venezuela',
         link: rootUrl,
         language: 'es',
         item: items,
