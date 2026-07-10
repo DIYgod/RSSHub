@@ -5,9 +5,8 @@ import ofetch from '@/utils/ofetch';
 
 const rootUrl = 'https://www.dailymirror.lk';
 const rootHost = 'dailymirror.lk';
-const hrefPattern = /\/\d+-\d+/;
-
-const registrable = (h: string) => h.split('.').slice(-2).join('.');
+// /breaking-news/Article-Title/108-345280
+const hrefPattern = /^\/[a-z0-9-]+\/[^/]+\/\d+-\d+\/?$/i;
 
 export const route: Route = {
     path: '/',
@@ -40,15 +39,15 @@ async function handler(ctx) {
             continue;
         }
         try {
-            const hostName = new URL(link).hostname.replace(/^www\./, '');
-            if (hostName !== rootHost && !hostName.endsWith('.' + rootHost) && registrable(hostName) !== registrable(rootHost)) {
+            const host = new URL(link).hostname.replace(/^www\./, '');
+            if (host !== rootHost && !host.endsWith('.' + rootHost)) {
                 continue;
             }
         } catch {
             continue;
         }
         const path = new URL(link).pathname;
-        if (!hrefPattern.test(path) && !hrefPattern.test(href)) {
+        if (!hrefPattern.test(path)) {
             continue;
         }
         if (seen.has(link)) {
