@@ -50,12 +50,13 @@
         "vercel-build": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts",
         "vitest": "cross-env NODE_ENV=test vitest",
         "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
-        "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
+        "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" lib/app.test.ts",
         "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
+        "vitest:workerd": "cross-env NODE_ENV=test vitest run --config vitest.workers.config.ts",
         "worker-build": "npm run build:routes:worker && tsdown --config ./tsdown-worker.config.ts",
         "worker-deploy": "npm run worker-build && wrangler deploy",
         "worker-dev": "npm run worker-build && wrangler dev",
-        "worker-test": "npm run worker-build && vitest run lib/worker.worker.test.ts"
+        "worker-test": "npm run worker-build && vitest run lib/worker.test.ts"
     },
     "dependencies": {
         "@bbob/html": "4.3.1",
@@ -147,6 +148,7 @@
         "@bbob/types": "4.3.1",
         "@cloudflare/containers": "0.3.7",
         "@cloudflare/playwright": "1.3.0",
+        "@cloudflare/vitest-pool-workers": "0.18.4",
         "@cloudflare/workers-types": "5.20260710.1",
         "@eslint/eslintrc": "3.3.5",
         "@eslint/js": "10.0.1",

@@ -6,8 +6,14 @@ import toSource from 'tosource';
 
 import type { RadarItem } from '../../lib/types';
 import { getCurrentPath } from '../../lib/utils/helpers';
+import { findOrphanFiles } from './check-orphan-files';
 
 const __dirname = getCurrentPath(import.meta.url);
+
+const orphanTests = await findOrphanFiles();
+if (orphanTests.length) {
+    throw new Error(`Test files without a corresponding source file:\n${orphanTests.join('\n')}`);
+}
 
 // Check if building for Worker environment
 const isWorkerBuild = process.env.WORKER_BUILD === 'true';
