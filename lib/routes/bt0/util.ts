@@ -1,28 +1,30 @@
-import { CookieJar } from 'tough-cookie';
-
 import got from '@/utils/got';
 
-const cookieJar = new CookieJar();
+// The site formerly at (1-9)bt0.com now serves from web{domain}.mukaku.com as a Vue SPA backed
+// by a JSON API under /prod/api/v1/. Every request must carry app_id + identity: both are
+// constants hardcoded in the site's own JS bundle (an axios interceptor appends them to every
+// call) rather than per-visitor tokens, so replaying them verbatim is exactly what the site does.
+const APP_ID = '83768d9ad4';
+const IDENTITY = '23734adac0301bccdcb107c4aa21f96c';
 
-async function doGot(num, host, link) {
-    if (num > 4) {
-        throw new Error('The number of attempts has exceeded 5 times');
-    }
-    const response = await got.get(link, {
-        cookieJar,
+const host = (domain) => `https://web${domain}.mukaku.com`;
+
+// Call a /prod/api/v1/ endpoint and return its `data` payload, throwing on the API's own error envelope.
+const api = async (domain, path, params = {}) => {
+    const { data: body } = await got(`${host(domain)}/prod/api/v1/${path}`, {
+        searchParams: {
+            ...params,
+            app_id: APP_ID,
+            identity: IDENTITY,
+        },
     });
-    const data = response.data;
-    if (typeof data === 'string') {
-        const regex = /document\.cookie\s*=\s*"([^"]*)"/;
-        const match = data.match(regex);
-        if (!match) {
-            throw new Error('api error');
-        }
-        cookieJar.setCookieSync(match[1], host);
-        return doGot(num + 1, host, link);
+
+    if (!body?.success) {
+        throw new Error(`mukaku api ${path} failed: ${body?.code} ${body?.message}`);
     }
-    return data;
-}
+
+    return body.data;
+};
 
 const genSize = (sizeStr) => {
     // 正则表达式，用于匹配数字和单位 GB 或 MB
@@ -50,4 +52,4 @@ const genSize = (sizeStr) => {
     return bytes;
 };
 
-export { doGot, genSize };
+export { api, genSize, host };

@@ -1,13 +1,14 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 
-import { doGot, genSize } from './util';
+import { api, genSize, host } from './util';
 
 export const route: Route = {
     path: '/mv/:number/:domain?',
     categories: ['multimedia'],
-    example: '/bt0/mv/35575567/2',
-    parameters: { number: '影视详情id, 网页路径为`/mv/{id}.html`其中的id部分, 一般为8位纯数字', domain: '数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2' },
+    example: '/bt0/mv/3158713',
+    parameters: { number: '影视详情 id, 网页详情页路径为 `/mv/{id}` 中的数字部分', domain: '镜像编号, 对应域名 web{domain}.mukaku.com, 常用 2/3/5, 默认为 2' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,11 +19,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['2bt0.com/mv/'],
+            source: ['mukaku.com/mv/:number'],
         },
     ],
     name: '影视资源下载列表',
-    maintainers: ['miemieYaho'],
+    maintainers: ['miemieYaho', 'JaggerH'],
     handler,
 };
 
@@ -32,35 +33,27 @@ async function handler(ctx) {
     if (!/^[1-9]$/.test(domain)) {
         throw new InvalidParameterError('Invalid domain');
     }
-    const regex = /^\d{6,}$/;
-    if (!regex.test(number)) {
+    if (!/^\d{3,}$/.test(number)) {
         throw new InvalidParameterError('Invalid number');
     }
 
-    const host = `https://www.${domain}bt0.com`;
-    const _link = `${host}/prod/core/system/getVideoDetail/${number}`;
+    const data = await api(domain, 'getVideoDetail', { id: number });
 
-    const data = (await doGot(0, host, _link)).data;
-    const items = Object.values(data.ecca).flatMap((item) =>
-        item.map((i) => ({
-            title: i.zname,
-            guid: i.zname,
-            description: `${i.zname}[${i.zsize}]`,
-            link: `${host}/tr/${i.id}.html`,
-            pubDate: i.ezt,
-            enclosure_type: 'application/x-bittorrent',
-            enclosure_url: i.zlink,
-            enclosure_length: genSize(i.zsize),
-            category: strsJoin(i.zqxd, i.text_html, i.audio_html, i.new === 1 ? '新' : ''),
-        }))
-    );
+    const items = (data.all_seeds ?? []).map((i) => ({
+        title: i.zname,
+        guid: `mukaku-seed-${i.id}`,
+        description: `${i.zname}[${i.zsize}]`,
+        link: `${host(domain)}/tr/${i.id}.html`,
+        pubDate: parseDate(i.ezt),
+        enclosure_type: 'application/x-bittorrent',
+        enclosure_url: i.zlink,
+        enclosure_length: genSize(i.zsize),
+        category: [i.definition_group, i.zqxd, i.new === 1 ? '新' : ''].filter(Boolean),
+    }));
+
     return {
-        title: data.title,
-        link: `${host}/mv/${number}.html`,
+        title: `${data.title} - 不太灵影视`,
+        link: `${host(domain)}/mv/${number}`,
         item: items,
     };
-}
-
-function strsJoin(...strings) {
-    return strings.filter((str) => str !== '').join(',');
 }
