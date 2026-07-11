@@ -74,7 +74,7 @@ async function handler(ctx) {
         }),
     });
 
-    let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map((item) => ({
+    let items = [...response.data.depth_list].slice(0, limit).map((item) => ({
         title: item.title || item.brief,
         link: `${rootUrl}/detail/${item.id}`,
         pubDate: parseDate(item.ctime, 'X'),
