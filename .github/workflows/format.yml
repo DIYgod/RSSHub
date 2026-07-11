@@ -1,31 +1,32 @@
 name: Format
 
 on:
-    push:
-        branches:
-            - master
+  push:
+    branches:
+      - master
 
 jobs:
-    format:
-        permissions:
-            contents: write # for Git to git push
-        name: Auto format
-        runs-on: ubuntu-latest
-        timeout-minutes: 15
+  format:
+    permissions:
+      contents: write # for Git to git push
+      workflows: write # for Git to push workflow file changes
+    name: Auto format
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
 
-        steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-            - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
-            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-              with:
-                  node-version: lts/*
-                  cache: 'pnpm'
-            - run: pnpm i
-            - run: npm run format:description
-            - run: npm run format
-            - name: Commit files
-              run: |
-                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git config --local user.name "github-actions[bot]"
-                  git status
-                  git diff-index --quiet HEAD || (git commit -m "style: auto format" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: lts/*
+          cache: "pnpm"
+      - run: pnpm i
+      - run: npm run format:description
+      - run: npm run format
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git status
+          git diff-index --quiet HEAD || (git commit -m "style: auto format" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)

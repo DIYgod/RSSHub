@@ -1,31 +1,31 @@
 name: Sync Upstream
 
 on:
-  schedule:
-    - cron: "0 0 * * 0"
-  workflow_dispatch:
+    schedule:
+        - cron: "0 0 * * 0"
+    workflow_dispatch:
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
-  sync:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    sync:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-      - name: Add upstream remote
-        run: git remote add upstream https://github.com/DIYgod/RSSHub.git
+            - name: Add upstream remote
+              run: git remote add upstream https://github.com/DIYgod/RSSHub.git
 
-      - name: Fetch upstream
-        run: git fetch upstream
+            - name: Fetch upstream
+              run: git fetch upstream
 
-      - name: Merge upstream changes
-        run: |
-          git checkout master
-          git merge upstream/master --no-edit
+            - name: Merge upstream changes
+              run: |
+                  git checkout master
+                  git merge upstream/master --no-edit
 
-      - name: Push to origin
-        run: git push origin master
+            - name: Push to origin
+              run: git push origin master

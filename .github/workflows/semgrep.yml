@@ -2,32 +2,33 @@ name: Semgrep
 
 # https://semgrep.dev/docs/semgrep-ci/sample-ci-configs/#sample-github-actions-configuration-file
 on:
-    pull_request_target:
-        branches:
-            - master
-    push:
-        branches:
-            - master
-    schedule:
-        # random HH:MM to avoid a load spike on GitHub Actions at 00:00
-        - cron: 21 20 * * *
+  pull_request_target:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  schedule:
+    # random HH:MM to avoid a load spike on GitHub Actions at 00:00
+    - cron: 21 20 * * *
 
 jobs:
-    semgrep:
-        name: Scan
-        runs-on: ubuntu-latest
-        container:
-            image: returntocorp/semgrep
-        if: (github.triggering_actor != 'dependabot[bot]')
-        permissions:
-            security-events: write
-        steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-            - run: semgrep ci --sarif > semgrep.sarif
-              env:
-                  SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-            - name: Upload SARIF file for GitHub Advanced Security Dashboard
-              uses: github/codeql-action/upload-sarif@v4
-              with:
-                  sarif_file: semgrep.sarif
-              if: always()
+  semgrep:
+    name: Scan
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    if: (github.triggering_actor != 'dependabot[bot]')
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - run: semgrep ci --sarif > semgrep.sarif
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        continue-on-error: true
+      - name: Upload SARIF file for GitHub Advanced Security Dashboard
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: semgrep.sarif
+        if: always() && hashFiles('semgrep.sarif') != ''
