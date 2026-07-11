@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import dayjs from 'dayjs';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -50,7 +51,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '1000';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const beginDate = ctx.req.query('beginDate') ? dayjs(parseDate(ctx.req.query('beginDate'))).format('YYYY-MM-DD') : dayjs().subtract(2, 'day').format('YYYY-MM-DD');
+    const endDate = ctx.req.query('endDate') ? dayjs(parseDate(ctx.req.query('endDate'))).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD');
+
+    const beginDateTimestamp = Math.floor(new Date(`${beginDate}T00:00:00+08:00`).getTime() / 1000);
+    const endDateTimestamp = Math.floor(new Date(`${endDate}T23:59:59+08:00`).getTime() / 1000);
 
     const title = categories[category];
 
@@ -58,14 +63,42 @@ async function handler(ctx) {
         throw new InvalidParameterError('Bad category. See <a href="https://docs.rsshub.app/routes/finance#cai-lian-she-shen-du">docs</a>');
     }
 
-    const apiUrl = `${rootUrl}/v3/depth/home/assembled/${category}`;
+    const apiUrl = `${rootUrl}/v3/depth/list/${category}`;
     const currentUrl = `${rootUrl}/depth?id=${category}`;
 
-    const response = await ofetch(apiUrl, {
-        query: getSearchParams(),
-    });
+    const articles = [];
+    let lastTime = endDateTimestamp;
 
-    let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map((item) => ({
+    while (true) {
+        // 后续请求依赖上一次响应中的 ctime，无法并行请求
+        // eslint-disable-next-line no-await-in-loop
+        const response = await ofetch(apiUrl, {
+            query: getSearchParams({
+                last_time: lastTime,
+            }),
+        });
+        const currentArticles = response.data;
+
+        if (currentArticles.length === 0) {
+            break;
+        }
+
+        articles.push(
+            ...currentArticles.filter((item) => {
+                const timestamp = Number(item.ctime);
+                return timestamp >= beginDateTimestamp && timestamp <= endDateTimestamp;
+            })
+        );
+
+        const currentLastTime = Number(currentArticles.at(-1).ctime);
+        if (currentLastTime < beginDateTimestamp) {
+            break;
+        }
+
+        lastTime = currentLastTime;
+    }
+
+    let items = articles.map((item) => ({
         title: item.title || item.brief,
         link: `${rootUrl}/detail/${item.id}`,
         pubDate: parseDate(item.ctime, 'X'),
