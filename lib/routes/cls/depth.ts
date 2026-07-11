@@ -51,8 +51,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '1000';
-    const beginDate = ctx.req.query('beginDate') ? dayjs(parseDate(ctx.req.query('beginDate'))).format('YYYY-MM-DD') : '1900-01-01';
-    const endDate = ctx.req.query('endDate') ? dayjs(parseDate(ctx.req.query('endDate'))).format('YYYY-MM-DD') : '9999-12-31';
+    const beginDate = ctx.req.query('beginDate') ? dayjs(parseDate(ctx.req.query('beginDate'))).format('YYYY-MM-DD') : dayjs().subtract(2, 'day').format('YYYY-MM-DD');
+    const endDate = ctx.req.query('endDate') ? dayjs(parseDate(ctx.req.query('endDate'))).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD');
 
     const beginDateTimestamp = Math.floor(new Date(`${beginDate}T00:00:00+08:00`).getTime() / 1000);
     const endDateTimestamp = Math.floor(new Date(`${endDate}T23:59:59+08:00`).getTime() / 1000);
