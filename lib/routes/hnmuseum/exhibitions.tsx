@@ -105,7 +105,6 @@ export const route: Route = {
         });
 
         const $ = load(response.data);
-        const list: ExhibitionItem[] = [];
 
         const exhibitionConfigs: ExhibitionConfig[] = [
             {
@@ -130,21 +129,24 @@ export const route: Route = {
             },
         ];
 
-        for (const config of exhibitionConfigs) {
-            $(config.selector).each((_, item) => {
-                const $item = $(item);
-                const $a = $item.find('.views_title a, .views_img_bg a').first();
-                const link = $a.attr('href') || '';
+        // use flatMap to avoid pushing into an external array, making the code cleaner and more functional
+        const list = exhibitionConfigs.flatMap((config) =>
+            $(config.selector)
+                .toArray()
+                .map((item) => {
+                    const $item = $(item);
+                    const $a = $item.find('.views_title a, .views_img_bg a').first();
+                    const link = $a.attr('href') || '';
 
-                list.push({
-                    exhibitionType: config.type,
-                    title: $a.text().trim(),
-                    itemLink: link.startsWith('http') ? link : `${baseUrl}${link}`,
-                    imgUrl: $item.find('img').first().attr('src') || '',
-                    ...config.extra($item as Cheerio<Element>),
-                });
-            });
-        }
+                    return {
+                        exhibitionType: config.type,
+                        title: $a.text(),
+                        itemLink: link.startsWith('http') ? link : `${baseUrl}${link}`,
+                        imgUrl: $item.find('img').attr('src') || '',
+                        ...config.extra($item as Cheerio<Element>),
+                    };
+                })
+        );
 
         const targetList = isSpecial ? list.filter((item) => item.exhibitionType === 'special' || item.exhibitionType === 'temporary') : list;
 
@@ -163,44 +165,42 @@ export const route: Route = {
                             _extra: { museumName, location: item.location, startDate, endDate },
                         };
                     }
-                    if (item.exhibitionType === 'temporary') {
-                        const url = new URL(item.itemLink);
-                        // for theme exhibition, the detail page may be a SPA, so need to fetch the JS file to extract the data
-                        if (url.hostname === 'vrexhibition.hnmuseum.com') {
-                            const htmlRes = await got({ method: 'get', url: item.itemLink });
-                            const $spa = load(htmlRes.data);
-                            const jsSrc = $spa('script[type="module"][src]').attr('src') || '';
-                            const jsUrl = new URL(jsSrc, item.itemLink).href;
-                            const jsRes = await got({ method: 'get', url: jsUrl });
-                            const jsContent = jsRes.data;
-                            const titleMatch = jsContent.match(/"title"[^)]*\)\s*\},[^"]*"([^"]+)"/);
-                            const title = titleMatch?.[1];
-                            const dateMatch = jsContent.match(/"(\d{4}年\d{1,2}月\d{1,2}日—\d{4}年\d{1,2}月\d{1,2}日)"/);
-                            const fullDuration = dateMatch?.[1];
-                            const locMatch = jsContent.match(/"(湖南省博物馆[^"]+厅)"/);
-                            const location = locMatch?.[1];
-                            const { startDate, endDate } = extractDates(fullDuration);
 
-                            return {
-                                title,
-                                link: item.itemLink,
-                                pubDate: startDate ? parseDate(startDate) : undefined,
-                                description: renderDescription(item.imgUrl, location, startDate, endDate, fullDuration),
-                                _extra: { museumName, location, startDate, endDate },
-                            };
-                        }
+                    const url = new URL(item.itemLink);
+                    // for theme exhibition, the detail page may be a SPA, so need to fetch the JS file to extract the data
+                    if (url.hostname === 'vrexhibition.hnmuseum.com') {
+                        const htmlRes = await got({ method: 'get', url: item.itemLink });
+                        const $spa = load(htmlRes.data);
+                        const jsSrc = $spa('script[type="module"][src]').attr('src') || '';
+                        const jsUrl = new URL(jsSrc, item.itemLink).href;
+                        const jsRes = await got({ method: 'get', url: jsUrl });
+                        const jsContent = jsRes.data;
+                        const titleMatch = jsContent.match(/"title"[^)]*\)\s*\},[^"]*"([^"]+)"/);
+                        const title = titleMatch?.[1];
+                        const dateMatch = jsContent.match(/"(\d{4}年\d{1,2}月\d{1,2}日—\d{4}年\d{1,2}月\d{1,2}日)"/);
+                        const fullDuration = dateMatch?.[1];
+                        const locMatch = jsContent.match(/"(湖南省博物馆[^"]+厅)"/);
+                        const location = locMatch?.[1];
+                        const { startDate, endDate } = extractDates(fullDuration);
 
-                        const detailResponse = await got({ method: 'get', url: item.itemLink });
-                        const content = load(detailResponse.data);
-                        const title = content('h1#page-title').text();
                         return {
                             title,
                             link: item.itemLink,
-                            description: renderDescription(item.imgUrl),
-                            _extra: { museumName },
+                            pubDate: startDate ? parseDate(startDate) : undefined,
+                            description: renderDescription(item.imgUrl, location, startDate, endDate, fullDuration),
+                            _extra: { museumName, location, startDate, endDate },
                         };
                     }
-                    return {} as DataItem;
+
+                    const detailResponse = await got({ method: 'get', url: item.itemLink });
+                    const content = load(detailResponse.data);
+                    const title = content('h1#page-title').text();
+                    return {
+                        title,
+                        link: item.itemLink,
+                        description: renderDescription(item.imgUrl),
+                        _extra: { museumName },
+                    };
                 }) as Promise<DataItem>;
             })
         );
