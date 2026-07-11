@@ -21859,13 +21859,13 @@
     "_name": "Hacker News",
     "news": [
       {
-        "title": "User",
+        "title": "Stories",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/:section",
           "/"
         ],
-        "target": "/hackernews/:section?/:type?/:user?"
+        "target": "/hackernews/:section?/:type?/:value?"
       }
     ]
   },

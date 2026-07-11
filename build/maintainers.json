@@ -4167,7 +4167,7 @@
   "/gzhu/yjs": [
     "shengmaosu"
   ],
-  "/hackernews/:section?/:type?/:user?": [
+  "/hackernews/:section?/:type?/:value?": [
     "nczitzk",
     "xie-dongping"
   ],

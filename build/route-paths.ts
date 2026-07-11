@@ -1348,7 +1348,7 @@ export type RoutePath =
   | `/gxmzu/yjszsgg`
   | `/gzdaily/app/:column?`
   | `/gzhu/yjs`
-  | `/hackernews/:section?/:type?/:user?`
+  | `/hackernews/:section?/:type?/:value?`
   | `/hackertalk/`
   | `/hacking8/:category?`
   | `/hacking8/search/:keyword?`
