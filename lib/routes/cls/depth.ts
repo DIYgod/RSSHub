@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     // eslint-disable-next-line no-unused-vars -- 后续用于开始日期过滤
     const beginDateTimestamp = new Date(`${beginDate}T00:00:00+08:00`).getTime();
-    const endDateTimestamp = new Date(`${endDate}T00:00:00+08:00`).getTime();
+    const endDateTimestamp = new Date(`${endDate}T23:59:59+08:00`).getTime();
 
     const title = categories[category];
 
@@ -73,7 +73,7 @@ async function handler(ctx) {
         }),
     });
 
-    let items = response.data.depth_list.map((item) => ({
+    let items = response.data.map((item) => ({
         title: item.title || item.brief,
         link: `${rootUrl}/detail/${item.id}`,
         pubDate: parseDate(item.ctime, 'X'),
