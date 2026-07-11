@@ -28,11 +28,11 @@ export const route: Route = {
         const response = await ofetch('https://www.chnmuseum.cn/zx/xwzt/');
         const $ = load(response);
 
-        const items = $('ul.cj_hd_zhanh li')
+        const items = $('ul.xly_list_ts li')
             .toArray()
             .map((item) => {
                 item = $(item);
-                const a = item.find('div.cj_hd_biaoti a').first();
+                const a = item.find('a.titles').first();
 
                 return {
                     title: a.attr('title') || a.text(),
