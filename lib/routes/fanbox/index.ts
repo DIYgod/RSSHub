@@ -62,7 +62,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const cookieString = getCookieString();
     if (cookieString) {
-        setCookies(page, cookieString, '.fanbox.cc');
+        await setCookies(page, cookieString, '.fanbox.cc');
     }
 
     await page.route('**/*', (route) => {
