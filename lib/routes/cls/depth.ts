@@ -67,13 +67,34 @@ async function handler(ctx) {
     const apiUrl = `${rootUrl}/v3/depth/list/${category}`;
     const currentUrl = `${rootUrl}/depth?id=${category}`;
 
-    const response = await ofetch(apiUrl, {
-        query: getSearchParams({
-            last_time: endDateTimestamp,
-        }),
-    });
+    const articles = [];
+    let lastTime = endDateTimestamp;
 
-    let items = response.data.map((item) => ({
+    while (true) {
+        // 后续请求依赖上一次响应中的 ctime，无法并行请求
+        // eslint-disable-next-line no-await-in-loop
+        const response = await ofetch(apiUrl, {
+            query: getSearchParams({
+                last_time: lastTime,
+            }),
+        });
+        const currentArticles = response.data;
+
+        if (currentArticles.length === 0) {
+            break;
+        }
+
+        articles.push(...currentArticles);
+
+        const currentLastTime = currentArticles.at(-1).ctime;
+        if (parseDate(currentLastTime, 'X').getTime() < beginDateTimestamp) {
+            break;
+        }
+
+        lastTime = currentLastTime;
+    }
+
+    let items = articles.map((item) => ({
         title: item.title || item.brief,
         link: `${rootUrl}/detail/${item.id}`,
         pubDate: parseDate(item.ctime, 'X'),
