@@ -4309,6 +4309,12 @@
   "/hljucm/yjsy/:category?": [
     "nczitzk"
   ],
+  "/hnmuseum/current-exhibitions/:type?": [
+    "magazian"
+  ],
+  "/hnmuseum/hnmnews": [
+    "magazian"
+  ],
   "/hnrb/:id?": [
     "nczitzk"
   ],
