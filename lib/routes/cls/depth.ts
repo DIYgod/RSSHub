@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import dayjs from 'dayjs';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -51,6 +52,12 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '1000';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const beginDate = ctx.req.query('beginDate') ? dayjs(parseDate(ctx.req.query('beginDate'))).format('YYYY-MM-DD') : '1900-01-01';
+    const endDate = ctx.req.query('endDate') ? dayjs(parseDate(ctx.req.query('endDate'))).format('YYYY-MM-DD') : '9999-12-31';
+
+    // eslint-disable-next-line no-unused-vars -- 后续用于开始日期过滤
+    const beginDateTimestamp = new Date(`${beginDate}T00:00:00+08:00`).getTime();
+    const endDateTimestamp = new Date(`${endDate}T00:00:00+08:00`).getTime();
 
     const title = categories[category];
 
@@ -58,11 +65,13 @@ async function handler(ctx) {
         throw new InvalidParameterError('Bad category. See <a href="https://docs.rsshub.app/routes/finance#cai-lian-she-shen-du">docs</a>');
     }
 
-    const apiUrl = `${rootUrl}/v3/depth/home/assembled/${category}`;
+    const apiUrl = `${rootUrl}/v3/depth/list/${category}`;
     const currentUrl = `${rootUrl}/depth?id=${category}`;
 
     const response = await ofetch(apiUrl, {
-        query: getSearchParams(),
+        query: getSearchParams({
+            last_time: endDateTimestamp,
+        }),
     });
 
     let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map((item) => ({
