@@ -42,8 +42,8 @@ export const route: Route = {
 
 Examples:
 
-| HN100 | User submitted | User threads | Comments list |
-| ----- | -------------- | ------------ | ------------- |
+| HN100              | User submitted                       | User threads                       | Comments list                            |
+| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- |
 | \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` |`,
 };
 
