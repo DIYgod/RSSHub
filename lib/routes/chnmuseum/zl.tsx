@@ -23,7 +23,7 @@ const titleTagMap: Record<string, string> = {
     gbxz: '国博巡展',
 };
 
-// Formatting Function: Returns YYYY-MM-DD only if there are 3 valid numeric segments; otherwise, returns undefined.
+// Formatting Function: Returns YYYY-MM-DD when there are 3 valid numeric segments that are formatted by parseExhibitionDate; otherwise, returns undefined.
 const formatExhibitionDate = (dateStr: string | undefined): string | undefined => {
     if (!dateStr) {
         return undefined;
@@ -194,17 +194,18 @@ export const route: Route = {
                         let location = '';
                         let fullDuration = '';
 
-                        $item.find('.hide_box').each((_, el) => {
-                            const $box = load(el);
-                            const label = $box('p').first().text().trim();
-                            const value = $box('p').last().text().trim();
+                        const hideBoxes = $item.find('.hide_box');
+                        for (let i = 0; i < hideBoxes.length; i++) {
+                            const box = hideBoxes.eq(i);
+                            const label = box.find('p').first().text().trim();
+                            const value = box.find('p').last().text().trim();
 
                             if (label.includes('地点')) {
                                 location = value;
                             } else if (label.includes('展期')) {
                                 fullDuration = value;
                             }
-                        });
+                        }
 
                         if (!title || title.endsWith('...')) {
                             const detailResponse = await got(itemLink);
