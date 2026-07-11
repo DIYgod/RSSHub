@@ -7,19 +7,19 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:section?/:type?/:user?',
+    path: '/:section?/:type?/:value?',
     categories: ['programming'],
     view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
     parameters: {
         section: {
-            description: 'Content section, default to `index`',
+            description: 'Content section, default to `index`. Common sections: `index`, `newest`, `ask`, `show`, `jobs`, `over`, `threads`, `submitted`. Any valid HN section (e.g. `best`, `front`, `active`) is also accepted',
         },
         type: {
-            description: 'Link type, default to `sources`',
+            description: 'Content format, default to `sources`. `sources` links to original articles, `comments` fetches full comment threads, `comments_list` shows parent story with single comment',
         },
-        user: {
-            description: 'Set user, only valid in `threads` and `submitted` sections',
+        value: {
+            description: 'For `threads`/`submitted` sections, set user ID. For `over` section, set minimum points threshold (default 100). For other sections, appended as `?id=<value>` (e.g. `value=dang` → `?id=dang`)',
         },
     },
     features: {
@@ -35,23 +35,29 @@ export const route: Route = {
             source: ['news.ycombinator.com/:section', 'news.ycombinator.com/'],
         },
     ],
-    name: 'User',
+    name: 'Stories',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
-    description: 'Subscribe to the content of a specific user',
+    description: `Subscribe to Hacker News content by section, user, or minimum points
+
+Examples:
+
+| HN100              | User submitted                       | User threads                       | Comments list                            |
+| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- |
+| \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` |`,
 };
 
 async function handler(ctx) {
     const section = ctx.req.param('section') ?? 'index';
     const type = ctx.req.param('type') ?? 'sources';
-    const user = ctx.req.param('user') ?? '';
+    const value = ctx.req.param('value') ?? '';
 
     const rootUrl = 'https://news.ycombinator.com';
     const sectionUrl = section === 'index' ? '' : `/${section}`;
-    let optUrl = user === '' ? '' : '?id=' + user;
+    let optUrl = value === '' ? '' : '?id=' + value;
 
     if (section === 'over') {
-        optUrl = user === '' ? '?points=100' : '?points=' + user;
+        optUrl = value === '' ? '?points=100' : '?points=' + value;
     }
 
     const currentUrl = `${rootUrl}${sectionUrl}${optUrl}`;

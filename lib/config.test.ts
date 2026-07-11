@@ -115,3 +115,54 @@ describe('config', () => {
         delete process.env.REMOTE_CONFIG;
     });
 });
+
+const errorSpy = vi.fn();
+const infoSpy = vi.fn();
+const ofetchMock = vi.fn();
+
+const setupRemoteMocks = () => {
+    vi.resetModules();
+    vi.doMock('@/utils/logger', () => ({
+        default: {
+            error: errorSpy,
+            info: infoSpy,
+        },
+    }));
+    vi.doMock('ofetch', () => ({
+        ofetch: ofetchMock,
+    }));
+};
+
+describe('config remote errors', () => {
+    afterEach(() => {
+        vi.clearAllMocks();
+        vi.unmock('@/utils/logger');
+        vi.unmock('ofetch');
+        ofetchMock.mockReset();
+    });
+
+    it('logs when remote config returns empty', async () => {
+        process.env.REMOTE_CONFIG = 'http://rsshub.test/empty';
+        setupRemoteMocks();
+        ofetchMock.mockResolvedValueOnce(null);
+        await import('@/config');
+        await vi.waitFor(() => {
+            expect(errorSpy).toHaveBeenCalledWith('Remote config load failed.');
+        });
+
+        delete process.env.REMOTE_CONFIG;
+    });
+
+    it('logs when remote config throws', async () => {
+        process.env.REMOTE_CONFIG = 'http://rsshub.test/fail';
+        const error = new Error('boom');
+        setupRemoteMocks();
+        ofetchMock.mockRejectedValueOnce(error);
+        await import('@/config');
+        await vi.waitFor(() => {
+            expect(errorSpy).toHaveBeenCalledWith('Remote config load failed.', error);
+        });
+
+        delete process.env.REMOTE_CONFIG;
+    });
+});

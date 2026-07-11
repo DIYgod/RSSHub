@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -29,7 +29,7 @@ async function handler() {
             page: 1,
         },
     });
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('.grid__column')
         .toArray()
@@ -47,7 +47,7 @@ async function handler() {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 const content = $('.newsentry');
 

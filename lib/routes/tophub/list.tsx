@@ -6,6 +6,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
+const { h64ToString } = await xxhash();
+
 export const route: Route = {
     path: '/list/:id',
     categories: ['new-media'],
@@ -39,7 +41,6 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { h64ToString } = await xxhash();
     const id = ctx.req.param('id');
     const link = `https://tophub.today/n/${id}`;
     const response = await ofetch(link, {

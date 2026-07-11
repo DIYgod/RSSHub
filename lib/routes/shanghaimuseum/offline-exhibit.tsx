@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -32,7 +33,7 @@ export const route: Route = {
         },
     ],
     handler: async (ctx) => {
-        const type = ctx.req.param('type')?.toUpperCase();
+        const type = ctx.req.param('type');
 
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
@@ -73,7 +74,7 @@ export const route: Route = {
             const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
             const imgUrl = item.picPath ? `${baseUrl}/${item.picPath}` : '';
             const location = item.exhibitPlace || '上海博物馆';
-            const pubDate = parseDate(item.issueTime);
+            const pubDate = timezone(parseDate(item.issueTime), 8);
 
             const fullDuration = item.exhibitDateRange || '';
             const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ').map((s) => s.trim()) : [fullDuration, ''];

@@ -1,9 +1,11 @@
+import type { Next } from 'hono';
 import { describe, expect, it } from 'vitest';
 
 import api from '@/api';
-import { handler as allHandler } from '@/api/namespace/all';
 import { handler as oneHandler } from '@/api/namespace/one';
 import { namespaces } from '@/registry';
+
+const noopNext: Next = () => Promise.resolve();
 
 const createCtx = (param: Record<string, string> = {}) =>
     ({
@@ -13,23 +15,18 @@ const createCtx = (param: Record<string, string> = {}) =>
         json: (data: unknown) => data,
     }) as any;
 
-describe('api/namespace', () => {
+describe('api/namespace/one', () => {
     const nestedKey = Object.keys(namespaces).find((key) => key.includes('/')) as string;
 
-    it('returns all namespaces', () => {
-        const result = allHandler(createCtx());
-        expect(result).toBe(namespaces);
-    });
-
-    it('returns a single namespace', () => {
-        const result = oneHandler(createCtx({ namespace: 'test' }));
+    it('returns a single namespace', async () => {
+        const result = await oneHandler(createCtx({ namespace: 'test' }), noopNext);
         expect(result).toBe(namespaces.test);
     });
 
-    it('returns a nested namespace', () => {
+    it('returns a nested namespace', async () => {
         expect(nestedKey).toBeDefined();
         const [namespace, sub] = nestedKey.split('/');
-        const result = oneHandler(createCtx({ namespace, sub }));
+        const result = await oneHandler(createCtx({ namespace, sub }), noopNext);
         expect(result).toBe(namespaces[nestedKey]);
     });
 

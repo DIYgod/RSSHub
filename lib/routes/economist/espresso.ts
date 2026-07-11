@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import sanitizeHtml from 'sanitize-html';
 import xxhash from 'xxhash-wasm';
 
@@ -10,6 +10,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const link = 'https://www.economist.com/the-world-in-brief';
+
+const { h64ToString } = await xxhash();
 
 export const route: Route = {
     path: '/espresso',
@@ -37,12 +39,11 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { h64ToString } = await xxhash();
     const nextData = await cache.tryGet(
         link,
         async () => {
             const response = await ofetch(link);
-            const $ = cheerio.load(response);
+            const $ = load(response);
             return JSON.parse($('script#__NEXT_DATA__').text());
         },
         config.cache.routeExpire,

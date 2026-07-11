@@ -1,4 +1,5 @@
-import * as cheerio from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';
@@ -6,8 +7,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 const hints = ['globalThis', 'headless', 'languages', 'permHook', 'vendor', 'webDriverValue', 'webdriver'];
 export const baseUrl = 'https://www.myzaker.com';
@@ -52,7 +52,13 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     const cacheAge = 3600;
     const cacheIn = await cache.get(cacheKey, false);
     if (cacheIn) {
-        return JSON.parse(cacheIn);
+        const cookie = JSON.parse(cacheIn);
+        const data = await ofetch<string>(link, {
+            headers: {
+                Cookie: cookie,
+            },
+        });
+        return { cookie, data };
     }
     const apiBaseUrl = 'https://challenge.rivers.chaitin.cn/captcha/api';
 
@@ -146,7 +152,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     };
 };
 
-export const parseList = ($: cheerio.CheerioAPI) => {
+export const parseList = ($: CheerioAPI) => {
     const winPageData = JSON.parse(
         $('script:contains("window.WinPageData")')
             .text()
@@ -158,7 +164,7 @@ export const parseList = ($: cheerio.CheerioAPI) => {
         description: item.desc,
         link: 'https:' + item.url,
         author: item.author_name,
-        pubDate: timezone(parseDate(item.date, 'MM月DD日'), 8),
+        pubDate: parseRelativeDate(item.date, 'MM月DD日'),
         category: item.tag.map((t) => t.tag),
         image: item.thumbnail_mpic,
     })) as DataItem[];
@@ -171,7 +177,7 @@ export const fetchItem = async (item: DataItem, cookie: string) => {
         },
     });
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const content = $('div.article_content div');
     content.find('img').each((_, img) => {

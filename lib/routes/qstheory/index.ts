@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -98,7 +98,7 @@ async function handler(ctx) {
     const currentUrl = config[category].url;
     const response = await ofetch(currentUrl);
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('.list-style1 ul li a, .text h2 a, .no-pic ul li a')
         .slice(0, limit)
@@ -107,7 +107,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href')!,
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 

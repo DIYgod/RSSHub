@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+import { youtube as googleYoutube } from '@googleapis/youtube';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -99,7 +99,7 @@ export const getSubscriptions = async (part, cache) => {
     return cache.tryGet('youtube:getSubscriptions', () => getSubscriptionsRecusive(part), config.cache.routeExpire, false);
 };
 export async function getSubscriptionsRecusive(part, nextPageToken?) {
-    const res = await google.youtube('v3').subscriptions.list({
+    const res = await googleYoutube('v3').subscriptions.list({
         auth: youtubeOAuth2Client,
         part,
         mine: true,
