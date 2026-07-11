@@ -97,7 +97,7 @@ async function handler(ctx) {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
 
-                    if (category === 'stock') {
+                    if (category === 'stock' && false) {
                         const { title, stockName, stockCode, emRatingName, ratingChange, indvInduName } = tempOriginItem;
                         const ratingChangeStr = getRatingChangeStr(ratingChange);
                         const currentYear = new Date().getFullYear();
