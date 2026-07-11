@@ -9,7 +9,6 @@ jobs:
     format:
         permissions:
             contents: write # for Git to git push
-            workflows: write # for Git to push workflow file changes
         name: Auto format
         runs-on: ubuntu-latest
         timeout-minutes: 15
