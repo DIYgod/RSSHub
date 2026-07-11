@@ -54,9 +54,8 @@ async function handler(ctx) {
     const beginDate = ctx.req.query('beginDate') ? dayjs(parseDate(ctx.req.query('beginDate'))).format('YYYY-MM-DD') : '1900-01-01';
     const endDate = ctx.req.query('endDate') ? dayjs(parseDate(ctx.req.query('endDate'))).format('YYYY-MM-DD') : '9999-12-31';
 
-    // eslint-disable-next-line no-unused-vars -- 后续用于开始日期过滤
-    const beginDateTimestamp = new Date(`${beginDate}T00:00:00+08:00`).getTime();
-    const endDateTimestamp = new Date(`${endDate}T23:59:59+08:00`).getTime();
+    const beginDateTimestamp = Math.floor(new Date(`${beginDate}T00:00:00+08:00`).getTime() / 1000);
+    const endDateTimestamp = Math.floor(new Date(`${endDate}T23:59:59+08:00`).getTime() / 1000);
 
     const title = categories[category];
 
@@ -84,10 +83,15 @@ async function handler(ctx) {
             break;
         }
 
-        articles.push(...currentArticles);
+        articles.push(
+            ...currentArticles.filter((item) => {
+                const timestamp = Number(item.ctime);
+                return timestamp >= beginDateTimestamp && timestamp <= endDateTimestamp;
+            })
+        );
 
-        const currentLastTime = currentArticles.at(-1).ctime;
-        if (parseDate(currentLastTime, 'X').getTime() < beginDateTimestamp) {
+        const currentLastTime = Number(currentArticles.at(-1).ctime);
+        if (currentLastTime < beginDateTimestamp) {
             break;
         }
 
