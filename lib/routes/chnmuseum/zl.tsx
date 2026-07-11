@@ -191,21 +191,18 @@ export const route: Route = {
                         const rawSrc = imgTag.attr('src')!;
                         const imgUrl = new URL(rawSrc, contextUrl).href;
 
-                        let location = '';
-                        let fullDuration = '';
+                        const hideBox = $item.find('.hide_box');
+                        const hideBoxes = hideBox.toArray().map((_, i) => hideBox.eq(i));
+                        const findValue = (keyword: string) =>
+                            hideBoxes
+                                .find((box) => box.find('p').first().text().includes(keyword))
+                                ?.find('p')
+                                .last()
+                                .text()
+                                .trim() ?? '';
 
-                        const hideBoxes = $item.find('.hide_box');
-                        for (let i = 0; i < hideBoxes.length; i++) {
-                            const box = hideBoxes.eq(i);
-                            const label = box.find('p').first().text().trim();
-                            const value = box.find('p').last().text().trim();
-
-                            if (label.includes('地点')) {
-                                location = value;
-                            } else if (label.includes('展期')) {
-                                fullDuration = value;
-                            }
-                        }
+                        const location = findValue('地点');
+                        let fullDuration = findValue('展期');
 
                         if (!title || title.endsWith('...')) {
                             const detailResponse = await got(itemLink);
@@ -218,14 +215,14 @@ export const route: Route = {
                                     .replace(/-?\s*中国国家博物馆/, '');
 
                             if (!fullDuration) {
-                                fullDuration = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/)?.[1] || '';
-                                for (const el of $detail('li, strong, p').toArray()) {
-                                    const text = $detail(el).text().trim();
-                                    if (text.startsWith('展期：') || text.includes('闭展')) {
-                                        fullDuration = text.replace('展期：', '').trim();
-                                        break;
-                                    }
-                                }
+                                const textDuration = $detail('li, strong, p')
+                                    .toArray()
+                                    .map((el) => $detail(el).text().trim())
+                                    .find((text) => text.startsWith('展期：') || text.includes('闭展'))
+                                    ?.replace('展期：', '')
+                                    .trim();
+                                const regexDuration = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/)?.[1];
+                                fullDuration = textDuration || regexDuration || '';
                             }
                         }
 
