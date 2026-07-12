@@ -9885,7 +9885,7 @@
   "jihs.go.jp":{ _name:"JapanGov",
     "id-info":[ { title:"感染症発生動向調査週報",
         docs:"https://docs.rsshub.app/routes/government",
-        source:[ "/surveillance/idwr/jp/idwr/:year" ],
+        source:[ "/surveillance/idwr/idwr/:year" ],
         target:"/goparams=>{const year=params.year;return`/go/jihs/idwr${year?`/${year}`:\"\"}`}" } ] },
   "mhlw.go.jp":{ _name:"JapanGov",
     www:[ { title:"PDF",

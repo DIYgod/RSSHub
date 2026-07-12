@@ -21550,7 +21550,7 @@
         "title": "感染症発生動向調査週報",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/surveillance/idwr/jp/idwr/:year"
+          "/surveillance/idwr/idwr/:year"
         ],
         "target": "/goparams=>{const year=params.year;return`/go/jihs/idwr${year?`/${year}`:\"\"}`}"
       }
