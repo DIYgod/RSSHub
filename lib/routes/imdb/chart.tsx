@@ -1,4 +1,3 @@
-import * as cheerio from 'cheerio';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -7,6 +6,48 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import type { ChartTitleSearchConnection } from './types';
+
+// IMDb no longer ships chart data in the page HTML (it is behind an AWS WAF JS
+// challenge). The same data is served by IMDb's public GraphQL API, which we
+// query directly.
+const GRAPHQL_ENDPOINT = 'https://api.graphql.imdb.com/';
+
+// Route chart id -> ChartTitleType GraphQL enum.
+const CHART_TYPES = {
+    top: 'TOP_RATED_MOVIES',
+    moviemeter: 'MOST_POPULAR_MOVIES',
+    toptv: 'TOP_RATED_TV_SHOWS',
+    tvmeter: 'MOST_POPULAR_TV_SHOWS',
+};
+
+const CHART_NAMES = {
+    top: 'Top 250 Movies',
+    moviemeter: 'Most Popular Movies',
+    toptv: 'Top 250 TV Shows',
+    tvmeter: 'Most Popular TV Shows',
+};
+
+const CHART_QUERY = `
+    query Chart($chartType: ChartTitleType!, $first: Int!) {
+        chartTitles(chart: { chartType: $chartType }, first: $first) {
+            edges {
+                currentRank
+                node {
+                    id
+                    titleText { text }
+                    originalTitleText { text }
+                    titleType { text }
+                    releaseYear { year endYear }
+                    primaryImage { url caption { plainText } }
+                    ratingsSummary { aggregateRating voteCount }
+                    certificate { rating }
+                    plot { plotText { plainText } }
+                    titleGenres { genres { genre { text } } }
+                }
+            }
+        }
+    }
+`;
 
 const render = ({ primaryImage, originalTitleText, certificate, ratingsSummary, plot }) =>
     renderToString(
@@ -53,7 +94,7 @@ export const route: Route = {
         },
     ],
     name: 'Charts',
-    maintainers: ['TonyRL'],
+    maintainers: ['TonyRL', 'JaggerH'],
     handler,
     url: 'www.imdb.com/chart/top/',
     description: `| Top 250 Movies | Most Popular Movies | Top 250 TV Shows | Most Popular TV Shows |
@@ -63,16 +104,24 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { chart = 'top' } = ctx.req.param();
-    const baseUrl = 'https://www.imdb.com';
-    const link = `${baseUrl}/chart/${chart}/`;
+    const chartType = CHART_TYPES[chart] ?? CHART_TYPES.top;
+    const link = `https://www.imdb.com/chart/${chart}/`;
 
-    const response = await ofetch(link);
-    const $ = cheerio.load(response);
-    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-    const chartTitles = nextData.props.pageProps.pageData.chartTitles as ChartTitleSearchConnection;
+    const { data } = await ofetch<{ data: { chartTitles: ChartTitleSearchConnection } }>(GRAPHQL_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'x-imdb-user-country': 'US',
+            'x-imdb-user-language': 'en-US',
+        },
+        body: {
+            query: CHART_QUERY,
+            variables: { chartType, first: 250 },
+        },
+    });
 
-    const items = chartTitles.edges.map(({ currentRank, node }) => ({
-        title: `${currentRank}. ${node.titleText.text} (${node.releaseYear.year}${node.releaseYear.endYear ? `-${node.releaseYear.endYear}` : ''})`,
+    const items = data.chartTitles.edges.map(({ currentRank, node }) => ({
+        title: `${currentRank}. ${node.titleText.text}${node.releaseYear ? ` (${node.releaseYear.year}${node.releaseYear.endYear ? `-${node.releaseYear.endYear}` : ''})` : ''}`,
         description: render({
             primaryImage: node.primaryImage,
             originalTitleText: node.originalTitleText,
@@ -80,13 +129,12 @@ async function handler(ctx: Context) {
             ratingsSummary: node.ratingsSummary,
             plot: node.plot,
         }),
-        link: `${baseUrl}/title/${node.id}`,
-        category: node.titleGenres.genres.map((g) => chartTitles.genres.find((genre) => genre.filterId === g.genre.text)?.text),
+        link: `https://www.imdb.com/title/${node.id}`,
+        category: node.titleGenres?.genres.map((g) => g.genre.text) ?? [],
     }));
 
     return {
-        title: $('head title').text(),
-        description: $('head meta[name="description"]').attr('content'),
+        title: `IMDb: ${CHART_NAMES[chart] ?? CHART_NAMES.top}`,
         link,
         item: items,
     };
