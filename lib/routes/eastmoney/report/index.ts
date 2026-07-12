@@ -36,6 +36,10 @@ const categories = Object.keys(reportType) as Array<keyof typeof reportType>;
 const datePattern = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
 const pageSize = 20;
 
+const baseUrl = 'https://data.eastmoney.com';
+const reqUrl = 'https://reportapi.eastmoney.com/report/jg';
+const reqUrlStock = 'https://reportapi.eastmoney.com/report/list2';
+
 function isValidDate(dateString: string): boolean {
     if (!datePattern.test(dateString)) {
         return false;
@@ -59,6 +63,47 @@ function parseDateParameter(value: string, fieldName: string, defaultValue: stri
     return value;
 }
 
+async function request(category, beginTime, endTime, pageNo, pageSize) {
+    if (category === 'stock') {
+        const { data: response } = await got.post(reqUrlStock, {
+            json: {
+                beginTime,
+                endTime,
+                pageNo,
+                pageSize,
+            },
+        });
+
+        const reports = response.data ?? [];
+
+        return reports.map((item) => ({
+            title: `[${item.orgSName}][${item.stockName}]${item.title}`,
+            link: `${baseUrl}/report/${linkType[category as keyof typeof linkType]}/${item.infoCode}.html`,
+            pubDate: parseDate(item.publishDate),
+            author: item.researcher,
+        }));
+    }
+
+    const { data: response } = await got(reqUrl, {
+        searchParams: {
+            beginTime,
+            endTime,
+            qType: qType[category as keyof typeof qType],
+            pageNo,
+            pageSize,
+        },
+    });
+
+    const reports = response.data ?? [];
+
+    return reports.map((item) => ({
+        title: `[${item.orgSName}]${item.title}`,
+        link: `${baseUrl}/report/${linkType[category as keyof typeof linkType]}.jshtml?encodeUrl=${item.encodeUrl}`,
+        pubDate: parseDate(item.publishDate),
+        author: item.researcher,
+    }));
+}
+
 async function handler(ctx) {
     const category = (ctx.req.param('category') ?? 'strategyreport') as string;
     if (!categories.includes(category as keyof typeof reportType)) {
@@ -67,46 +112,25 @@ async function handler(ctx) {
     const beginDate = parseDateParameter(ctx.req.query('beginDate') ?? '', 'beginDate', dayjs().subtract(2, 'day').format('YYYY-MM-DD'));
     const endDate = parseDateParameter(ctx.req.query('endDate') ?? '', 'endDate', dayjs().format('YYYY-MM-DD'));
 
-    const reqUrl = 'https://reportapi.eastmoney.com/report/jg';
-    const baseUrl = 'https://data.eastmoney.com';
-    const reports = [];
+    const items = [];
     let page = 1;
 
     while (true) {
         // 后续请求依赖当前页返回的数据量，无法并行请求
         // eslint-disable-next-line no-await-in-loop
-        const { data: response } = await got(reqUrl, {
-            searchParams: {
-                beginTime: beginDate,
-                endTime: endDate,
-                qType: qType[category as keyof typeof qType],
-                pageNo: page,
-                pageSize,
-            },
-        });
-        const currentReports = response.data ?? [];
+        const currentItems = (await request(category, beginDate, endDate, page, pageSize)) ?? [];
 
-        reports.push(...currentReports);
+        items.push(...currentItems);
 
-        if (currentReports.length < pageSize) {
+        if (currentItems.length < pageSize) {
             break;
         }
 
         page++;
     }
 
-    const list = reports.map((item) => {
-        const stockName = category === 'stock' ? `[${item.stockName}]` : '';
-        return {
-            title: `[${item.orgSName}]${stockName}${item.title}`,
-            link: `${baseUrl}/report/${linkType[category as keyof typeof linkType]}` + (category === 'stock' ? `/${item.infoCode}.html` : `.jshtml?encodeUrl=${item.encodeUrl}`),
-            pubDate: parseDate(item.publishDate),
-            author: item.researcher,
-        };
-    });
-
-    const items = await Promise.all(
-        list.map((item) =>
+    const feedItems = await Promise.all(
+        items.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
@@ -127,7 +151,7 @@ async function handler(ctx) {
     return {
         title: `东方财富网-${reportType[category as keyof typeof reportType]}`,
         link: `${baseUrl}/report/${category}`,
-        item: items,
+        item: feedItems,
     };
 }
 

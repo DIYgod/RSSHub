@@ -3,53 +3,36 @@ import { describe, expect, it } from 'vitest';
 
 import { route } from './routes/eastmoney/report';
 
-function createCtx({ category = 'strategyreport', routeParams = '' }: { category?: string; routeParams?: string } = {}) {
+function createCtx({ category, query = {} }: { category?: string; query?: Record<string, string | undefined> } = {}) {
     return {
         req: {
             param: (name?: string) => {
-                if (!name) {
-                    return { category, routeParams };
-                }
-
                 if (name === 'category') {
                     return category;
                 }
-
-                if (name === 'routeParams') {
-                    return routeParams;
-                }
             },
+            query: (name?: string) => (name ? query[name] : undefined),
         },
     } as any;
 }
 
 describe('/eastmoney/report', () => {
-    it("证明对 ctx.req.param('category') 的字符串结果做对象解构会回退到默认值", () => {
-        const mockReq = {
-            param: (name?: string) => (name === 'category' ? 'stock' : { category: 'stock' }),
-        };
-
-        const { category = 'strategyreport' } = mockReq.param('category') as any;
-
-        expect(category).toBe('strategyreport');
-    });
-
-    it('使用 category 与 routeParams 请求东方财富接口并生成 feed', async () => {
+    it('请求个股研报接口并生成 feed', async () => {
         const { default: server } = await import('@/setup.test');
 
         server.use(
-            http.get('https://reportapi.eastmoney.com/report/jg', ({ request }) => {
-                const url = new URL(request.url);
-                expect(url.searchParams.get('qType')).toBe('0');
-                expect(url.searchParams.get('pageNo')).toBe('2');
-                expect(url.searchParams.get('pageSize')).toBe('3');
-                expect(url.searchParams.get('beginTime')).toBe('2026-01-01');
-                expect(url.searchParams.get('endTime')).toBe('2026-01-31');
+            http.post('https://reportapi.eastmoney.com/report/list2', async ({ request }) => {
+                const body = await request.json();
+                expect(body).toEqual({
+                    beginTime: '2026-01-01',
+                    endTime: '2026-01-31',
+                    pageNo: 1,
+                    pageSize: 20,
+                });
 
                 return HttpResponse.json({
                     data: [
                         {
-                            encodeUrl: 'encoded-report',
                             infoCode: 'INFO001',
                             orgSName: '东方证券',
                             publishDate: '2026-01-15',
@@ -71,7 +54,10 @@ describe('/eastmoney/report', () => {
         const feed = await route.handler(
             createCtx({
                 category: 'stock',
-                routeParams: 'page=2&pageSize=3&beginDate=2026-01-01&endDate=2026-01-31',
+                query: {
+                    beginDate: '2026-01-01',
+                    endDate: '2026-01-31',
+                },
             })
         );
 
@@ -93,18 +79,14 @@ describe('/eastmoney/report', () => {
                 expect(url.searchParams.get('qType')).toBe('2');
                 expect(url.searchParams.get('pageNo')).toBe('1');
                 expect(url.searchParams.get('pageSize')).toBe('20');
-                expect(url.searchParams.get('beginTime')).toBe('1900-01-01');
-                expect(url.searchParams.get('endTime')).toBe('9999-12-31');
 
                 return HttpResponse.json({
                     data: [
                         {
                             encodeUrl: 'encoded-strategy-report',
-                            infoCode: 'INFO002',
                             orgSName: '东方财富证券',
                             publishDate: '2026-02-01',
                             researcher: '分析师B',
-                            stockName: '',
                             title: '策略周报',
                         },
                     ],
@@ -121,7 +103,7 @@ describe('/eastmoney/report', () => {
             })
         );
 
-        const feed = await route.handler(createCtx({ category: undefined }));
+        const feed = await route.handler(createCtx());
 
         expect(feed.title).toBe('东方财富网-策略报告');
         expect(feed.link).toBe('https://data.eastmoney.com/report/strategyreport');
@@ -135,19 +117,9 @@ describe('/eastmoney/report', () => {
         await expect(route.handler(createCtx({ category: 'invalid-category' }))).rejects.toThrow('Invalid category: invalid-category. Expected one of brokerreport, industry, macresearch, strategyreport, stock');
     });
 
-    it('在 page 非法时抛出明确错误', async () => {
-        await expect(route.handler(createCtx({ routeParams: 'page=0' }))).rejects.toThrow('Invalid page. Expected a positive integer.');
-        await expect(route.handler(createCtx({ routeParams: 'page=abc' }))).rejects.toThrow('Invalid page. Expected a positive integer.');
-    });
-
-    it('在 pageSize 非法时抛出明确错误', async () => {
-        await expect(route.handler(createCtx({ routeParams: 'pageSize=-1' }))).rejects.toThrow('Invalid pageSize. Expected a positive integer.');
-        await expect(route.handler(createCtx({ routeParams: 'pageSize=1.5' }))).rejects.toThrow('Invalid pageSize. Expected a positive integer.');
-    });
-
     it('在 beginDate 或 endDate 非法时抛出明确错误', async () => {
-        await expect(route.handler(createCtx({ routeParams: 'beginDate=2026-02-30' }))).rejects.toThrow('Invalid beginDate format. Expected YYYY-MM-DD.');
-        await expect(route.handler(createCtx({ routeParams: 'endDate=2026/01/31' }))).rejects.toThrow('Invalid endDate format. Expected YYYY-MM-DD.');
+        await expect(route.handler(createCtx({ query: { beginDate: '2026-02-30' } }))).rejects.toThrow('Invalid beginDate format. Expected YYYY-MM-DD.');
+        await expect(route.handler(createCtx({ query: { endDate: '2026/01/31' } }))).rejects.toThrow('Invalid endDate format. Expected YYYY-MM-DD.');
     });
 
     it('在上游返回空数据时生成空 feed', async () => {
@@ -176,11 +148,9 @@ describe('/eastmoney/report', () => {
                     data: [
                         {
                             encodeUrl: 'encoded-no-pdf',
-                            infoCode: 'INFO003',
                             orgSName: '东方财富证券',
                             publishDate: '2026-03-01',
                             researcher: '分析师C',
-                            stockName: '',
                             title: '无 PDF 策略周报',
                         },
                     ],
