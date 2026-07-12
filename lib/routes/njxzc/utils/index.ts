@@ -13,7 +13,7 @@ export interface NoticeItem extends DataItem {
     link: string;
 }
 
-// 站内日期写法不统一，可能为 2026-07-01、2026/07/01 或 2026年07月01日 14:53，且常带「发布时间：」等前缀
+// Date formats vary across the site: 2026-07-01, 2026/07/01 or 2026年07月01日 14:53, often prefixed with a label such as "发布时间："
 export function parsePubDate(text?: string): Date | undefined {
     const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
     if (!match) {
@@ -72,7 +72,7 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
     };
 }
 
-// 单篇文章抓取失败时回退到列表页信息，避免拖垮整个订阅源；站外链接不抓取正文
+// Fall back to the list-page data when a single article fails to load, so one bad page does not break the whole feed; content of off-site links is not fetched
 export function resolveArticles(list: NoticeItem[], pageUrl: string): Promise<DataItem[]> {
     const pageHost = new URL(pageUrl).host;
     return Promise.all(

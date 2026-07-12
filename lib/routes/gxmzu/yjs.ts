@@ -35,7 +35,7 @@ async function handler() {
     const response = await ofetch(pageUrl);
     const $ = load(response);
 
-    // 研究生院与人工智能学院共用同一套博达模板，列表和正文的样式 ID 相同
+    // The graduate school shares the same Boda CMS template with the AI college, so the list and article style IDs are identical
     const list = parseNoticeList($, pageUrl, 'table.winstyle55267 tr[height="20"]', '.timestyle55267');
     const items = await resolveArticles(list, pageUrl, {
         title: '.titlestyle55269',

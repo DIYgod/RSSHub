@@ -18,7 +18,7 @@ export interface DetailSelectors {
     date?: string;
 }
 
-// 各站日期写法不统一，可能为 2026-05-28、2026/06/02 或 2026年05月28日 14:53，且常带「发布日期：」等前缀
+// Date formats vary across sites: 2026-05-28, 2026/06/02 or 2026年05月28日 14:53, often prefixed with a label such as "发布日期："
 export function parsePubDate(text?: string): Date | undefined {
     const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
     if (!match) {
@@ -42,7 +42,7 @@ export function parseNoticeList($: CheerioAPI, pageUrl: string, rowSelector: str
             return {
                 title: $link.attr('title') || $link.text().trim(),
                 link: new URL(href, pageUrl).href,
-                pubDate: parsePubDate($row.find(dateSelector).text()),
+                pubDate: parsePubDate($(dateSelector, $row).text()),
             };
         })
         .filter((item) => item !== null);
@@ -52,7 +52,7 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
     const response = await ofetch(item.link);
     const $ = load(response);
 
-    // 正文为嵌入式 PDF 的页面没有可提取的内容
+    // Pages whose body is an embedded PDF have no extractable content
     if ($('script:contains("showVsbpdfIframe")').length > 0) {
         return { ...item, description: FALLBACK_DESCRIPTION };
     }
@@ -88,7 +88,7 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
     };
 }
 
-// 单篇文章抓取失败时回退到列表页信息，避免拖垮整个订阅源；站外链接（如微信公众号）不抓取正文
+// Fall back to the list-page data when a single article fails to load, so one bad page does not break the whole feed; content of off-site links (e.g. WeChat posts) is not fetched
 export function resolveArticles(list: NoticeItem[], pageUrl: string, selectors: DetailSelectors): Promise<DataItem[]> {
     const pageHost = new URL(pageUrl).host;
     return Promise.all(
