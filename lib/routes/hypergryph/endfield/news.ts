@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -73,7 +73,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 // The detail page's article HTML appears in one of two shapes
                 // within the Next.js RSC stream (self.__next_f.push chunks):

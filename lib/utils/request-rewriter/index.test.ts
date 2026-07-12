@@ -1,8 +1,8 @@
 // oxlint-disable unicorn-js/no-global-object-property-assignment
+import { once } from 'node:events';
 import http from 'node:http';
 import https from 'node:https';
 
-import got from 'got';
 import undici from 'undici';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -225,12 +225,7 @@ describe('request-rewriter', () => {
         const httpSpy = vi.spyOn(http, 'request');
 
         try {
-            await got.get('http://rsshub.test/headers', {
-                headers: {
-                    'user-agent': undefined,
-                    accept: undefined,
-                },
-            });
+            await once(http.request('http://rsshub.test/headers', {}).end(), 'response');
         } catch {
             // ignore
         }
@@ -250,12 +245,7 @@ describe('request-rewriter', () => {
         // url regex not match
         {
             try {
-                await got.get('http://rsshub.test/rss', {
-                    headers: {
-                        'user-agent': undefined,
-                        accept: undefined,
-                    },
-                });
+                await once(http.request('http://rsshub.test/rss', {}).end(), 'response');
             } catch {
                 // ignore
             }

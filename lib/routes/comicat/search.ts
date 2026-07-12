@@ -7,6 +7,12 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://comicat.org';
 
+// comicat.org fronts every page with a fake JS "captcha" interstitial (/public/html/start/)
+// whose only effect is to POST a form that sets a `visitor_test=human` cookie. Sending that
+// cookie directly skips the interstitial; without it every request 302s to the captcha page
+// and the listing/detail selectors match nothing.
+const headers = { Cookie: 'visitor_test=human' };
+
 export const route: Route = {
     path: '/search/:keyword',
     categories: ['anime'],
@@ -27,7 +33,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
-    const { data: response } = await got(`${baseUrl}/search.php?keyword=${encodeURIComponent(keyword)}`);
+    const { data: response } = await got(`${baseUrl}/search.php?keyword=${encodeURIComponent(keyword)}`, { headers });
     const $ = load(response);
     const list = $('#listTable tbody > tr')
         .toArray()
@@ -41,7 +47,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
+                const { data: response } = await got(item.link, { headers });
                 const $ = load(response);
 
                 item.pubDate = parseDate($('div.main > div.slayout > div > div.c1 > div:nth-child(1) > div > p:nth-child(4)').text().split('发布时间: ', 2)[1]);

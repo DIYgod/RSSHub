@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { Agent } from 'undici';
 
 import { config } from '@/config';
 import type { DataItem } from '@/types';
@@ -8,11 +9,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const BASE_URL = new URL('https://openai.com');
 
+// OpenAI article pages return Cloudflare 403 challenges when Undici negotiates HTTP/2.
+const articleDispatcher = new Agent({ allowH2: false });
+
 /** Fetch the details of an article. */
 export const fetchArticleDetails = async (url: string) => {
     // Ensure trailing slash to avoid 301 redirect
     const normalizedUrl = url.endsWith('/') ? url : `${url}/`;
-    const html = await ofetch(normalizedUrl, { responseType: 'text' });
+    const html = await ofetch(normalizedUrl, {
+        dispatcher: articleDispatcher,
+        responseType: 'text',
+    });
     const $ = load(html);
 
     const $article = $('#main article');

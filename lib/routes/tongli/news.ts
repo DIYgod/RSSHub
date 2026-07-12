@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -33,7 +33,7 @@ async function handler(ctx) {
             Page: 1,
         },
     });
-    const $ = cheerio.load(res);
+    const $ = load(res);
 
     const list = $('.news_list ul li')
         .toArray()
@@ -51,7 +51,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: res } = await got(item.link);
-                const $ = cheerio.load(res);
+                const $ = load(res);
 
                 if (item.link.startsWith('https://tonglinv.pixnet.net/')) {
                     item.description = $('.article-content-inner').html();

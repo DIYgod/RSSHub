@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -57,7 +57,7 @@ function createAuthToken() {
 function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
-        const $ = cheerio.load(response);
+        const $ = load(response);
 
         $('.original-title, .lookall-box').remove();
         item.author ||= $('span[data-role="original-link"] a').text();
@@ -118,7 +118,7 @@ async function handler(ctx) {
         ?.getSetCookie()
         .find((e) => e.startsWith('SUV'))
         ?.split(';', 1)[0];
-    const $ = cheerio.load(pageResponse._data);
+    const $ = load(pageResponse._data);
 
     const CBDRenderConst = JSON.parse(
         $('script:contains("CBDRenderConst")')

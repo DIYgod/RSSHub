@@ -18,23 +18,23 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const { page, destroy, context } = await getPlaywrightPage('about:blank');
-    if (config.javdb.session) {
-        await page.context().addCookies([
-            {
-                name: '_jdb_session',
-                value: config.javdb.session,
-                domain,
-                path: '/',
-            },
-        ]);
-    }
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' ? route.continue() : route.abort();
-    });
-    await page.goto(url.href, {
-        waitUntil: 'domcontentloaded',
+    const { page, destroy, context } = await getPlaywrightPage(url.href, {
+        onBeforeLoad: async (page) => {
+            if (config.javdb.session) {
+                await page.context().addCookies([
+                    {
+                        name: '_jdb_session',
+                        value: config.javdb.session,
+                        domain,
+                        path: '/',
+                    },
+                ]);
+            }
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
+            });
+        },
     });
     const response = await page.content();
     await page.close();

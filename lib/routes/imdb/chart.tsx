@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -67,7 +67,7 @@ async function handler(ctx: Context) {
     const link = `${baseUrl}/chart/${chart}/`;
 
     const response = await ofetch(link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
     const chartTitles = nextData.props.pageProps.pageData.chartTitles as ChartTitleSearchConnection;
 
