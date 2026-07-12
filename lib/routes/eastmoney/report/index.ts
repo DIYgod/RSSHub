@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import dayjs from 'dayjs';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -32,8 +33,8 @@ const qType = {
 };
 
 const categories = Object.keys(reportType) as Array<keyof typeof reportType>;
-const positiveIntegerPattern = /^\d+$/;
 const datePattern = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
+const pageSize = 20;
 
 function isValidDate(dateString: string): boolean {
     if (!datePattern.test(dateString)) {
@@ -44,18 +45,6 @@ function isValidDate(dateString: string): boolean {
     const date = new Date(year, month - 1, day);
 
     return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-}
-
-function parsePositiveInteger(value: string, fieldName: string, defaultValue: string) {
-    if (!value) {
-        return defaultValue;
-    }
-
-    if (!positiveIntegerPattern.test(value) || Number(value) <= 0) {
-        throw new InvalidParameterError(`Invalid ${fieldName}. Expected a positive integer.`);
-    }
-
-    return value;
 }
 
 function parseDateParameter(value: string, fieldName: string, defaultValue: string) {
@@ -71,31 +60,42 @@ function parseDateParameter(value: string, fieldName: string, defaultValue: stri
 }
 
 async function handler(ctx) {
-    const { category: routeCategory, routeParams = '' } = ctx.req.param();
-    const category = (routeCategory ?? 'strategyreport') as string;
+    const category = (ctx.req.param('category') ?? 'strategyreport') as string;
     if (!categories.includes(category as keyof typeof reportType)) {
         throw new InvalidParameterError(`Invalid category: ${category}. Expected one of ${categories.join(', ')}`);
     }
-    const params = new URLSearchParams(routeParams);
-    const page = parsePositiveInteger(params.get('page') ?? '', 'page', '1');
-    const pageSize = parsePositiveInteger(params.get('pageSize') ?? '', 'pageSize', '20');
-    const beginDate = parseDateParameter(params.get('beginDate') ?? '', 'beginDate', '1900-01-01');
-    const endDate = parseDateParameter(params.get('endDate') ?? '', 'endDate', '9999-12-31');
+    const beginDate = parseDateParameter(ctx.req.query('beginDate') ?? '', 'beginDate', dayjs().subtract(2, 'day').format('YYYY-MM-DD'));
+    const endDate = parseDateParameter(ctx.req.query('endDate') ?? '', 'endDate', dayjs().format('YYYY-MM-DD'));
 
     const reqUrl = 'https://reportapi.eastmoney.com/report/jg';
     const baseUrl = 'https://data.eastmoney.com';
+    const reports = [];
+    let page = 1;
 
-    const { data: response } = await got(reqUrl, {
-        searchParams: {
-            beginTime: beginDate,
-            endTime: endDate,
-            qType: qType[category as keyof typeof qType],
-            pageNo: page,
-            pageSize,
-        },
-    });
+    while (true) {
+        // 后续请求依赖当前页返回的数据量，无法并行请求
+        // eslint-disable-next-line no-await-in-loop
+        const { data: response } = await got(reqUrl, {
+            searchParams: {
+                beginTime: beginDate,
+                endTime: endDate,
+                qType: qType[category as keyof typeof qType],
+                pageNo: page,
+                pageSize,
+            },
+        });
+        const currentReports = response.data ?? [];
 
-    const list = (response.data ?? []).map((item) => {
+        reports.push(...currentReports);
+
+        if (currentReports.length < pageSize) {
+            break;
+        }
+
+        page++;
+    }
+
+    const list = reports.map((item) => {
         const stockName = category === 'stock' ? `[${item.stockName}]` : '';
         return {
             title: `[${item.orgSName}]${stockName}${item.title}`,
@@ -132,10 +132,10 @@ async function handler(ctx) {
 }
 
 export const route: Route = {
-    path: '/report/:category/:routeParams?',
+    path: '/report/:category',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/eastmoney/report/strategyreport/page=1&pageSize=20&beginDate=2026-01-01&endDate=2026-01-31',
+    example: '/eastmoney/report/strategyreport?beginDate=2026-01-01&endDate=2026-01-31',
     parameters: {
         category: {
             description: '研报类型',
@@ -147,7 +147,8 @@ export const route: Route = {
                 { value: 'stock', label: '个股研报' },
             ],
         },
-        routeParams: '额外筛选参数，可选 `page`、`pageSize`、`beginDate`、`endDate`，例如 `page=1&pageSize=20&beginDate=2026-01-01&endDate=2026-01-31`',
+        beginDate: '查询开始日期，格式为 `YYYY-MM-DD`，默认为当前日期前 2 天',
+        endDate: '查询结束日期，格式为 `YYYY-MM-DD`，默认为当前日期',
     },
     features: {
         requireConfig: false,
