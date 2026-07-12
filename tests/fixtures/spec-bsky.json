@@ -1,0 +1,15 @@
+{
+    "_extras": [
+        {
+            "type": "bsky/post",
+            "platform": "bluesky",
+            "sourceUrl": "https://bsky.app/profile/bsky.app/post/3kxyzabc",
+            "externalId": "3kxyzabc",
+            "seriesExternalId": "bsky.app",
+            "publishedAt": "2026-04-01T12:00:00.000Z",
+            "handle": "bsky.app",
+            "did": "did:plc:z72i7hdynmk6r22z27h6tvur",
+            "rkey": "3kxyzabc"
+        }
+    ]
+}

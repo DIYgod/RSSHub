@@ -6,7 +6,7 @@ interface SpecExtraBase {
      * e.g. "youtube/video", "netflix/episode"
      */
     type: string;
-    platform: 'youtube' | 'viki' | 'weverse' | 'bubble' | 'netflix' | 'naver-blog' | 'naver-webtoon';
+    platform: 'youtube' | 'viki' | 'weverse' | 'bubble' | 'netflix' | 'naver-blog' | 'naver-webtoon' | 'bluesky' | 'instagram';
     /** Canonical human-readable URL for this item (same as DataItem.link). */
     sourceUrl: string;
     /** Stable platform-specific item ID. */
@@ -115,6 +115,26 @@ export interface SpecExtraNaverWebtoon extends SpecExtraBase {
     totalPages?: number;
 }
 
+export interface SpecExtraBsky extends SpecExtraBase {
+    type: 'bsky/post';
+    platform: 'bluesky';
+    /** Profile handle (with or without domain), e.g. `bsky.app`. */
+    handle: string;
+    /** ATProto DID for the author. */
+    did: string;
+    /** Post rkey (last segment of `at://…/app.bsky.feed.post/…`). */
+    rkey: string;
+}
+
+export interface SpecExtraInstagram extends SpecExtraBase {
+    type: 'instagram/post';
+    platform: 'instagram';
+    /** Instagram username (no @). */
+    username: string;
+    /** Shortcode from `/p/:shortcode/`. */
+    shortcode: string;
+}
+
 // ─── Union ───────────────────────────────────────────────────────────────────
 
-export type SpecExtra = SpecExtraYoutube | SpecExtraViki | SpecExtraWeverse | SpecExtraBubble | SpecExtraNetflix | SpecExtraNaverBlog | SpecExtraNaverWebtoon;
+export type SpecExtra = SpecExtraYoutube | SpecExtraViki | SpecExtraWeverse | SpecExtraBubble | SpecExtraNetflix | SpecExtraNaverBlog | SpecExtraNaverWebtoon | SpecExtraBsky | SpecExtraInstagram;

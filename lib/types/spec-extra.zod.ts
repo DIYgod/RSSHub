@@ -17,7 +17,7 @@ import type { SpecExtra } from './spec-extra';
 const specExtraBaseSchema = z.object({
     /** Discriminator: "<platform>/<item-kind>". */
     type: z.string(),
-    platform: z.enum(['youtube', 'viki', 'weverse', 'bubble', 'netflix', 'naver-blog', 'naver-webtoon']),
+    platform: z.enum(['youtube', 'viki', 'weverse', 'bubble', 'netflix', 'naver-blog', 'naver-webtoon', 'bluesky', 'instagram']),
     /** Canonical human-readable URL for this item (same as DataItem.link). */
     sourceUrl: z.string(),
     /** Stable platform-specific item ID. */
@@ -109,9 +109,34 @@ const specExtraNaverWebtoonSchema = specExtraBaseSchema.extend({
     totalPages: z.number().optional(),
 });
 
+const specExtraBskySchema = specExtraBaseSchema.extend({
+    type: z.literal('bsky/post'),
+    platform: z.literal('bluesky'),
+    handle: z.string(),
+    did: z.string(),
+    rkey: z.string(),
+});
+
+const specExtraInstagramSchema = specExtraBaseSchema.extend({
+    type: z.literal('instagram/post'),
+    platform: z.literal('instagram'),
+    username: z.string(),
+    shortcode: z.string(),
+});
+
 // ─── Union ──────────────────────────────────────────────────────────────────
 
-export const specExtraSchema = z.discriminatedUnion('type', [specExtraYoutubeSchema, specExtraVikiSchema, specExtraWeverseSchema, specExtraBubbleSchema, specExtraNetflixSchema, specExtraNaverBlogSchema, specExtraNaverWebtoonSchema]);
+export const specExtraSchema = z.discriminatedUnion('type', [
+    specExtraYoutubeSchema,
+    specExtraVikiSchema,
+    specExtraWeverseSchema,
+    specExtraBubbleSchema,
+    specExtraNetflixSchema,
+    specExtraNaverBlogSchema,
+    specExtraNaverWebtoonSchema,
+    specExtraBskySchema,
+    specExtraInstagramSchema,
+]);
 
 /**
  * Throws with a Zod-formatted error message if `value` does not match the

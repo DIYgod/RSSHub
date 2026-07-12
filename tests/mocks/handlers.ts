@@ -352,4 +352,86 @@ export const naverWebtoonHandlers = [
     http.get('https://m.comic.naver.com/webtoon/detail', () => HttpResponse.text(naverWebtoonDetailHtml)),
 ];
 
-export const handlers = [...youtubeHandlers, ...vikiHandlers, ...weverseHandlers, ...bubbleHandlers, ...netflixHandlers, ...naverBlogHandlers, ...naverWebtoonHandlers];
+// ── Bluesky (public API) ────────────────────────────────────────────────────
+const BSKY_DID = 'did:plc:z72i7hdynmk6r22z27h6tvur';
+const BSKY_HANDLE = 'bsky.app';
+const BSKY_RKEY = '3kxyzabc';
+
+export const bskyHandlers = [
+    http.get('https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle', () => HttpResponse.json({ did: BSKY_DID })),
+    http.get('https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile', () =>
+        HttpResponse.json({
+            did: BSKY_DID,
+            handle: BSKY_HANDLE,
+            displayName: 'Bluesky',
+            description: 'Official Bluesky account',
+            avatar: 'https://cdn.bsky.app/avatar.jpg',
+        })
+    ),
+    http.get('https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed', () =>
+        HttpResponse.json({
+            feed: [
+                {
+                    post: {
+                        uri: `at://${BSKY_DID}/app.bsky.feed.post/${BSKY_RKEY}`,
+                        cid: 'bafytest',
+                        author: {
+                            did: BSKY_DID,
+                            handle: BSKY_HANDLE,
+                            displayName: 'Bluesky',
+                        },
+                        record: {
+                            text: 'Hello from Bluesky fixture',
+                            createdAt: '2026-04-01T12:00:00.000Z',
+                        },
+                        likeCount: 1,
+                        replyCount: 0,
+                    },
+                },
+            ],
+        })
+    ),
+];
+
+// ── Instagram (guest web_profile_info) ──────────────────────────────────────
+const IG_USERNAME = 'instagram';
+const IG_SHORTCODE = 'AbCdEfGhIjK';
+const IG_MEDIA_ID = '3000000000000000001';
+
+export const instagramHandlers = [
+    http.get('https://www.instagram.com/api/v1/users/web_profile_info/', () =>
+        HttpResponse.json({
+            data: {
+                user: {
+                    id: '25025320',
+                    username: IG_USERNAME,
+                    full_name: 'Instagram',
+                    biography: 'Test profile',
+                    profile_pic_url: 'https://instagram.com/avatar.jpg',
+                    profile_pic_url_hd: 'https://instagram.com/avatar_hd.jpg',
+                    edge_felix_video_timeline: { edges: [] },
+                    edge_owner_to_timeline_media: {
+                        edges: [
+                            {
+                                node: {
+                                    __typename: 'GraphImage',
+                                    id: IG_MEDIA_ID,
+                                    shortcode: IG_SHORTCODE,
+                                    display_url: 'https://instagram.com/media.jpg',
+                                    dimensions: { height: 1080, width: 1080 },
+                                    taken_at_timestamp: 1_775_044_800,
+                                    owner: { username: IG_USERNAME },
+                                    edge_media_to_caption: {
+                                        edges: [{ node: { text: 'Hello from Instagram fixture' } }],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+        })
+    ),
+];
+
+export const handlers = [...youtubeHandlers, ...vikiHandlers, ...weverseHandlers, ...bubbleHandlers, ...netflixHandlers, ...naverBlogHandlers, ...naverWebtoonHandlers, ...bskyHandlers, ...instagramHandlers];

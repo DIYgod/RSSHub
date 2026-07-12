@@ -42,6 +42,8 @@ All routes live under namespace **`/spec/`** (`lib/routes/spec/`). `_extra` must
 | [IMPL-05](IMPL-05-netflix.md)                 | `/spec/netflix/:netflixTitleId` | `netflix.ts`, `netflix-bridge.ts`, `netflix-tmdb.ts` |
 | [IMPL-08](IMPL-08-naver-webtoon.md)           | `/spec/naver/webtoon/:titleId`  | `naver-webtoon.ts`                                   |
 | [IMPL-09](IMPL-09-naver-blog.md)              | `/spec/naver/blog/:blogId`      | `naver-blog.ts`                                      |
+| [IMPL-10](IMPL-10-bsky.md)                    | `/spec/bsky/:handle`            | `bsky.ts` (reuses `../bsky/utils`)                   |
+| [IMPL-11](IMPL-11-instagram.md)               | `/spec/instagram/:username`     | `instagram.ts` (guest web-api)                       |
 | [IMPL-06](IMPL-06-tests.md)                   | Tests                           | `tests/routes/spec/`, MSW, fixtures                  |
 | [IMPL-07](IMPL-07-rsshub-client-extension.md) | Sunbi client                    | sibling `sunbi` repo                                 |
 
