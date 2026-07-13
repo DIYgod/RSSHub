@@ -135,7 +135,7 @@ async function parseArtile(body: ArticlePost['body']) {
     return ret.join('');
 }
 
-async function parseDetail(i: PostDetailResponse['body']) {
+async function parseDetail(i: PostDetailResponse['body']['post']) {
     let ret = '';
     if (i.feeRequired !== 0) {
         ret += `Fee Required: <b>${i.feeRequired} JPY/month</b><hr>`;
@@ -173,7 +173,7 @@ async function parseDetail(i: PostDetailResponse['body']) {
 
 export function parseItem(page: Page, item: PostItem) {
     return cache.tryGet(`fanbox-${item.id}-${item.updatedDatetime}`, async () => {
-        const postDetail = await page.evaluate(
+        const postDetail: PostDetailResponse = await page.evaluate(
             async ({ url }) => {
                 const res = await fetch(url, {
                     method: 'GET',
@@ -196,7 +196,7 @@ export function parseItem(page: Page, item: PostItem) {
 
         return {
             title: item.title || 'No title',
-            description: await parseDetail(postDetail.body),
+            description: await parseDetail(postDetail.body.post),
             pubDate: parseDate(item.updatedDatetime),
             link: `https://${item.creatorId}.fanbox.cc/posts/${item.id}`,
             category: item.tags,
