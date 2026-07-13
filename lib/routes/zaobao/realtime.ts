@@ -37,9 +37,7 @@ async function handler(ctx) {
 
         case 'zfinance':
             name = '财经';
-            // this is for HK version; for SG version, it's redirected to
-            // /realtime/finance
-            sectionLink = '/finance/realtime';
+            sectionLink = '/realtime/finance';
 
             break;
 
