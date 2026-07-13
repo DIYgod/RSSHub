@@ -206,7 +206,7 @@
         "typescript-7": "npm:typescript@7.0.2",
         "unified": "11.0.5",
         "unrun": "0.3.1",
-        "vite-tsconfig-paths": "6.1.1",
+        "vite-tsconfig-paths": "7.0.0-alpha.1",
         "vitest": "4.1.10",
         "wrangler": "4.110.0",
         "yaml-eslint-parser": "2.1.0"
