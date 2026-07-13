@@ -84,6 +84,7 @@ async function handler(ctx: Context): Promise<Data> {
         items = await Promise.all(postListResponse.body.map((i) => parseItem(page, i)));
     } finally {
         await page.close();
+        await context.close();
     }
 
     return {
