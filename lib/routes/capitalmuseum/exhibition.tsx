@@ -80,7 +80,13 @@ export const route: Route = {
             return false;
         });
 
-        const listItems: DataItem[] = exhibitionList.map((item) => {
+        interface ExhibitionListItem {
+            title: string;
+            itemlink: string;
+            imgUrl: string;
+        }
+
+        const listItems: ExhibitionListItem[] = exhibitionList.map((item: any) => {
             const eid = nuxtData[item.eid];
             const title = nuxtData[item.title];
             const link = `${apiUrl}/${eid}`;
@@ -95,7 +101,7 @@ export const route: Route = {
 
         // get location and fullDuration from the detail page of each exhibition
         const items: DataItem[] = await Promise.all(
-            listItems.map((item: any) =>
+            listItems.map((item: ExhibitionListItem) =>
                 cache.tryGet(item.itemlink, async () => {
                     const detailResponse = await got({
                         method: 'get',
