@@ -45,7 +45,7 @@ async function handler(ctx) {
     const userProfile = await cache.tryGet(`zhihu:posts:profile:${id}`, async () => {
         // Read the profile from the API instead of scraping the user's HTML
         // homepage, which is now rate-limited (403) more aggressively than the API.
-        const profileApiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}`;
+        const profileApiPath = `/api/v4/members/${id}`;
 
         const result = await ofetch(`https://www.zhihu.com${profileApiPath}`, {
             headers: {
@@ -62,7 +62,7 @@ async function handler(ctx) {
         };
     });
 
-    const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
+    const apiPath = `/api/v4/members/${id}/articles?${new URLSearchParams({
         include:
             'data[*].comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,can_comment,comment_permission,admin_closed_comment,content,voteup_count,created,updated,upvoted_followees,voting,review_info,reaction_instruction,is_labeled,label_info;data[*].vessay_info;data[*].author.badge[?(type=best_answerer)].topics;data[*].author.vip_info;',
         offset: '0',
