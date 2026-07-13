@@ -1,5 +1,6 @@
-import type { CheerioAPI } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { BrowserContext } from 'patchright';
 
 import type { DataItem } from '@/types';
@@ -68,7 +69,7 @@ function tryParseAsDate(text: string): Date | undefined {
 /**
  * Extract author from article element
  */
-function extractAuthor(article: ReturnType<CheerioAPI>): DataItem['author'] {
+function extractAuthor(article: Cheerio<Element>): DataItem['author'] {
     const container = article.find('.flex.items-center.gap-3').first();
     if (container.length === 0) {
         return undefined;
@@ -134,7 +135,7 @@ function extractAuthor(article: ReturnType<CheerioAPI>): DataItem['author'] {
 /**
  * Extract categories/tags from article element
  */
-function extractCategories(article: ReturnType<CheerioAPI>, $: CheerioAPI): string[] {
+function extractCategories(article: Cheerio<Element>, $: CheerioAPI): string[] {
     return article
         .find('a[href^="/"]')
         .toArray()
@@ -155,7 +156,7 @@ function extractCategories(article: ReturnType<CheerioAPI>, $: CheerioAPI): stri
 /**
  * Extract publication date from article element
  */
-function extractPubDate(article: ReturnType<CheerioAPI>): Date | undefined {
+function extractPubDate(article: Cheerio<Element>): Date | undefined {
     const container = article.find('.flex.items-center.gap-3').first();
     if (container.length === 0) {
         return undefined;
@@ -208,7 +209,7 @@ function extractPubDate(article: ReturnType<CheerioAPI>): Date | undefined {
 /**
  * Parse a single article element into an ArticleItem
  */
-function parseArticle(article: ReturnType<CheerioAPI>, $: CheerioAPI, baseUrl: string): (DataItem & ArticleItem) | null {
+function parseArticle(article: Cheerio<Element>, $: CheerioAPI, baseUrl: string): (DataItem & ArticleItem) | null {
     // Find the title link in h2 > a
     const titleLink = article.find('h2 a[href^="http"]');
     if (titleLink.length === 0) {

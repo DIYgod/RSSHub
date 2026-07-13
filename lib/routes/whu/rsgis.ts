@@ -1,5 +1,6 @@
-import type { AnyNode, Cheerio } from 'cheerio';
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
@@ -103,7 +104,7 @@ function checkExternal(link: string): boolean {
  * @param element
  * @returns A list of RSS meta node.
  */
-function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
+function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
     const linkElement = element.find('a').first();
     const title = linkElement.text();
     const href = linkElement.attr('href');
