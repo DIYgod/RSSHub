@@ -51016,15 +51016,6 @@
         "target": "/zhihu/collection/:id"
       },
       {
-        "title": "用户文章",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:usertype/:id/posts",
-          "/:usertype/:id"
-        ],
-        "target": "/zhihu/posts/:usertype/:id"
-      },
-      {
         "title": "知乎书店 - 知乎周刊",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
@@ -51055,6 +51046,15 @@
           "/people/:id/answers"
         ],
         "target": "/zhihu/people/answers/:id"
+      },
+      {
+        "title": "用户文章",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:usertype/:id/posts",
+          "/:usertype/:id"
+        ],
+        "target": "/zhihu/posts/:usertype/:id"
       },
       {
         "title": "问题",

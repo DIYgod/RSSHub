@@ -10132,10 +10132,6 @@
     "DHPO",
     "pseudoyu"
   ],
-  "/zhihu/posts/:usertype/:id": [
-    "whtsky",
-    "Colin-XKL"
-  ],
   "/zhihu/weekly": [
     "LogicJake"
   ],
@@ -10157,6 +10153,10 @@
   ],
   "/zhihu/daily/section/:sectionId": [
     "ccbikai"
+  ],
+  "/zhihu/posts/:usertype/:id": [
+    "whtsky",
+    "Colin-XKL"
   ],
   "/zhihu/question/:questionId/:sortBy?": [],
   "/zhihu/timeline": [
