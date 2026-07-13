@@ -1,10 +1,14 @@
+import { Script } from 'node:vm';
+
 import { load } from 'cheerio';
+import { JSDOM, VirtualConsole } from 'jsdom';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
+import { generateHeaders } from '@/utils/header-generator';
 import md5 from '@/utils/md5';
-import playwright from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
+import wait from '@/utils/wait';
 
 import { encrypt as g_encrypt } from './execlib/x-zse-96-v3';
 
@@ -68,94 +72,166 @@ const getCookieValueFrom = (cookieStr: string | undefined, key: string) =>
 
 export const getCookieValueByKey = (key: string) => getCookieValueFrom(config.zhihu.cookies as string | undefined, key);
 
-// Zhihu's web API needs a self-consistent triple: the `d_c0` cookie, the
-// `__zse_ck` cookie, and the `x-zse-96`/`x-zse-93` request signature (derived
-// from `d_c0`). `__zse_ck` is computed at runtime by Zhihu's obfuscated JS from
-// the device fingerprint plus `d_c0`, it rotates every few days, and the backend
-// cross-checks it against `d_c0`, so it has to be produced by a real browser.
-//
-// On top of that, most content (column item lists, answers, user activities,
-// ...) now also requires the `z_c0` login cookie, which can only be obtained by
-// logging in. Provide it in ZHIHU_COOKIES (copied from a logged-in browser);
-// without it those endpoints return 403.
-//
-// So we run Zhihu's JS in a real browser seeded with the configured cookies, let
-// it compute a fresh `__zse_ck` for the (logged-in) session, and harvest the
-// whole cookie jar. The rotating `__zse_ck` is refreshed on a timer, so the only
-// thing the user maintains is the long-lived `d_c0`/`z_c0`.
-//
-// Recommended ZHIHU_COOKIES: `d_c0=...; z_c0=...` (omit `__zse_ck` so it is
-// refreshed automatically; a pinned `__zse_ck` is trusted as-is and will expire).
-const ZSE_CK_CACHE_KEY = 'zhihu:browser-cookies';
-// `__zse_ck` rotates every few days; re-harvest at most this often so we are not
-// launching a browser on every request.
-const ZSE_CK_TTL = 30 * 60;
+let isUnreachableRuntimeErrorGuarded = false;
+const pendingZseCredentials = new Map<string, Promise<{ dc0: string; zseCk: string; ua: string }>>();
 
-const harvestBrowserCookies = (seedCookies?: string): Promise<string> =>
-    cache.tryGet(
-        ZSE_CK_CACHE_KEY,
-        async () => {
-            const context = await playwright();
-            try {
-                const page = await context.newPage();
+const preventUnreachableRuntimeError = () => {
+    if (isUnreachableRuntimeErrorGuarded) {
+        return;
+    }
+    isUnreachableRuntimeErrorGuarded = true;
+    process.on('unhandledRejection', (reason) => {
+        const error = reason as { name?: string; message?: string } | undefined;
+        if (error?.name === 'RuntimeError' && error.message === 'unreachable') {
+            return;
+        }
+        throw reason;
+    });
+};
 
-                if (seedCookies) {
-                    const seeded = seedCookies
-                        .split(';')
-                        .map((pair) => pair.trim())
-                        .filter(Boolean)
-                        .map((pair) => {
-                            // Split on the first '=' only: values such as the
-                            // base64-ish `z_c0` contain further '=' characters.
-                            const idx = pair.indexOf('=');
-                            return idx === -1 ? { name: '', value: pair, domain: '.zhihu.com', path: '/' } : { name: pair.slice(0, idx), value: pair.slice(idx + 1), domain: '.zhihu.com', path: '/' };
-                        })
-                        .filter((c) => c.name);
-                    if (seeded.length) {
-                        await context.addCookies(seeded);
-                    }
-                }
+const generateZseCk = async (url: string, apiPath: string, configuredDc0: string) => {
+    preventUnreachableRuntimeError();
 
-                await page.goto('https://www.zhihu.com/', { waitUntil: 'domcontentloaded' });
+    // `__zse_ck` is checked against the user-agent that generated it.
+    const ua = generateHeaders()['user-agent'];
+    const headers = { 'user-agent': ua };
 
-                // Wait until Zhihu's JS has computed and set `__zse_ck` (it is
-                // written to `document.cookie` alongside `d_c0`).
-                try {
-                    await page.waitForFunction(() => /(?:^|;\s*)__zse_ck=/.test(document.cookie) && /(?:^|;\s*)d_c0=/.test(document.cookie), null, { polling: 300, timeout: 10000 });
-                } catch {
-                    // token did not appear in time; harvest whatever cookies exist
-                }
+    let dc0 = configuredDc0;
+    if (!dc0) {
+        const seed = await ofetch.raw('https://www.zhihu.com/explore', {
+            headers,
+            redirect: 'manual',
+            ignoreResponseError: true,
+        });
+        dc0 =
+            (seed.headers.getSetCookie?.() ?? [])
+                .find((line) => line.startsWith('d_c0='))
+                ?.split(';', 1)[0]
+                .slice('d_c0='.length) || '';
+    }
+    if (!dc0) {
+        throw new Error('zhihu: failed to obtain a guest d_c0 cookie');
+    }
 
-                const cookies = await context.cookies();
-                return cookies
-                    .filter(({ domain }) => domain === 'zhihu.com' || domain.endsWith('.zhihu.com'))
-                    .map(({ name, value }) => (name ? `${name}=${value}` : value))
-                    .join('; ');
-            } finally {
-                await context.close();
-            }
+    const challenge = await ofetch.raw(`https://www.zhihu.com${apiPath}`, {
+        headers: {
+            ...headers,
+            cookie: `d_c0=${dc0}; __zse_ck=005_x-x`,
+            referer: url,
+            'x-requested-with': 'fetch',
         },
-        ZSE_CK_TTL,
-        false
-    );
+        ignoreResponseError: true,
+    });
+    const html = challenge._data as string;
+    const meta = html.match(/id="zh-zse-ck"[^>]*content="([^"]*)"/)?.[1];
+    const hash = html.match(/zse-ck\/v4\/([a-f0-9]+)\.js/)?.[1];
+    if (!meta || !hash) {
+        throw new Error('zhihu: challenge page did not contain an URL to __zse_ck meta/script');
+    }
+
+    const vmScript = await ofetch<string>(`https://static.zhihu.com/zse-ck/v4/${hash}.js`, {
+        headers,
+        parseResponse: (text) => text,
+    });
+    const dom = new JSDOM(`<!doctype html><html><head><meta id="zh-zse-ck" content="${meta}"><script data-assets-tracker-config='{"appName":"zse_ck"}'></script></head><body></body></html>`, {
+        url,
+        referrer: 'https://www.zhihu.com/',
+        runScripts: 'outside-only',
+        pretendToBeVisual: true,
+        virtualConsole: new VirtualConsole(),
+    });
+    const { window } = dom;
+    Object.defineProperties(window.navigator, {
+        userAgent: { value: ua, configurable: true },
+        webdriver: { value: false, configurable: true },
+    });
+    window.TextEncoder = TextEncoder;
+    window.TextDecoder = TextDecoder as typeof window.TextDecoder;
+    window.atob = (value: string) => Buffer.from(value, 'base64').toString('binary');
+    window.btoa = (value: string) => Buffer.from(value, 'binary').toString('base64');
+    Object.assign(window, { __g: {} });
+
+    const cookieDescriptor = Object.getOwnPropertyDescriptor(window.Document.prototype, 'cookie');
+    if (!cookieDescriptor?.get || !cookieDescriptor.set) {
+        window.close();
+        throw new Error('zhihu: JSDOM did not provide document.cookie accessors');
+    }
+    const tokenPromise = new Promise<string>((resolve) => {
+        Object.defineProperty(window.document, 'cookie', {
+            configurable: true,
+            get: cookieDescriptor.get,
+            set(value: string) {
+                Reflect.apply(cookieDescriptor.set, window.document, [value]);
+                const token = value.match(/__zse_ck=([^;]+)/)?.[1];
+                if (token?.includes('-')) {
+                    resolve(token);
+                }
+            },
+        });
+    });
+
+    let zseCk: string | undefined;
+    try {
+        // Zhihu's challenge is intentionally delivered as executable JavaScript.
+        new Script(vmScript).runInContext(dom.getInternalVMContext());
+        zseCk = (await Promise.race([tokenPromise, wait(3000)])) as string | undefined;
+    } finally {
+        window.close();
+    }
+    if (!zseCk) {
+        throw new Error('zhihu: WASM VM did not produce a __zse_ck');
+    }
+    return { dc0, zseCk, ua };
+};
+
+const getGeneratedZseCredentials = (url: string, apiPath: string, configuredDc0: string) => {
+    const cacheKey = `zhihu:zse-ck:v4:${configuredDc0 ? md5(configuredDc0) : 'guest'}`;
+    const pending = pendingZseCredentials.get(cacheKey);
+    if (pending) {
+        return pending;
+    }
+
+    const created = (async () => {
+        try {
+            return await cache.tryGet(cacheKey, () => generateZseCk(url, apiPath, configuredDc0), config.cache.contentExpire, false);
+        } finally {
+            pendingZseCredentials.delete(cacheKey);
+        }
+    })();
+    pendingZseCredentials.set(cacheKey, created);
+    return created;
+};
+
+const mergeGeneratedCookies = (configured: string, dc0: string, zseCk: string) => {
+    const remaining = configured
+        .split(';')
+        .map((pair) => pair.trim())
+        .filter((pair) => {
+            const name = pair.split('=', 1)[0];
+            return name && name !== 'd_c0' && name !== '__zse_ck';
+        });
+    return [`__zse_ck=${zseCk}`, `d_c0=${dc0}`, ...remaining].join('; ');
+};
 
 export const getSignedHeader = async (url: string, apiPath: string) => {
     const configured = (config?.zhihu?.cookies as string | undefined) || '';
 
-    // If a complete, self-consistent pair (`d_c0` + `__zse_ck`) is configured,
-    // trust it as-is. Otherwise harvest a fresh, consistent pair from a real
-    // browser, seeding any configured cookies (notably the `z_c0` login cookie).
+    const configuredDc0 = getCookieValueFrom(configured, 'd_c0');
+    const configuredZseCk = getCookieValueFrom(configured, '__zse_ck');
+
+    // A configured pair may have been generated with a different user-agent, so
+    // preserve the previous behavior and trust it as-is. Generated credentials
+    // always return their matching user-agent.
     let cookieStr: string;
-    if (getCookieValueFrom(configured, 'd_c0') && getCookieValueFrom(configured, '__zse_ck')) {
+    let ua: string | undefined;
+    if (configuredDc0 && configuredZseCk) {
         cookieStr = configured;
     } else {
-        cookieStr = await harvestBrowserCookies(configured);
-        if (!getCookieValueFrom(cookieStr, '__zse_ck') || !getCookieValueFrom(cookieStr, 'd_c0')) {
-            logger.warn('zhihu: failed to harvest a valid __zse_ck/d_c0 pair from the browser; requests may be rejected with 403.');
-        }
-        if (!getCookieValueFrom(cookieStr, 'z_c0')) {
-            logger.warn('zhihu: no z_c0 login cookie configured; most content (column items, answers, activities) requires login and will return 403. Set ZHIHU_COOKIES=d_c0=...; z_c0=... copied from a logged-in browser.');
-        }
+        const credentials = await getGeneratedZseCredentials(url, apiPath, configuredDc0);
+        // Login cookies only belong to the configured d_c0 session. Do not mix
+        // an isolated z_c0 with a newly-created guest session.
+        cookieStr = configuredDc0 ? mergeGeneratedCookies(configured, credentials.dc0, credentials.zseCk) : `__zse_ck=${credentials.zseCk}; d_c0=${credentials.dc0}`;
+        ua = credentials.ua;
     }
 
     // Sign with the same `d_c0` that is sent, otherwise the backend rejects the
@@ -167,6 +243,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
 
     return {
         cookie: cookieStr,
+        ...(ua && { 'user-agent': ua }),
         'x-zse-96': xzse96,
         'x-app-za': 'OS=Web',
         'x-zse-93': xzse93,
