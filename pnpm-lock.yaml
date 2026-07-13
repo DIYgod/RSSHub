@@ -454,7 +454,7 @@ importers:
         version: 11.0.0
       tsdown:
         specifier: 0.22.7
-        version: 0.22.7(@typescript/typescript6@6.0.2)(tsx@4.23.1)
+        version: 0.22.7(@typescript/typescript6@6.0.2)(tsx@4.23.1)(unrun@0.3.1)
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
         version: '@typescript/typescript6@6.0.2'
@@ -464,6 +464,9 @@ importers:
       unified:
         specifier: 11.0.5
         version: 11.0.5
+      unrun:
+        specifier: 0.3.1
+        version: 0.3.1
       vite-tsconfig-paths:
         specifier: 6.1.1
         version: 6.1.1(@typescript/typescript6@6.0.2)(vite@7.3.1(@types/node@26.1.1)(lightningcss@1.32.0)(tsx@4.23.1)(yaml@2.9.0))
@@ -5923,6 +5926,16 @@ packages:
   universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
+
+  unrun@0.3.1:
+    resolution: {integrity: sha512-onIck/oNnCaytwths1ZVp1LK2Gq2hPoyFhiHebObuUXqR3S0uHuLLaBK8K6mRRgV7Ptip8AnNvaUsgzwWwBZuA==}
+    engines: {node: ^22.13.0 || >=24.0.0}
+    hasBin: true
+    peerDependencies:
+      synckit: ^0.11.11
+    peerDependenciesMeta:
+      synckit:
+        optional: true
 
   until-async@3.0.2:
     resolution: {integrity: sha512-IiSk4HlzAMqTUseHHe3VhIGyuFmN90zMTpD3Z3y8jeQbzLIq500MVM7Jq2vUAnTKAFPJrqwkzr6PoTcPhGcOiw==}
@@ -11440,7 +11453,7 @@ snapshots:
     optionalDependencies:
       typescript: '@typescript/typescript6@6.0.2'
 
-  tsdown@0.22.7(@typescript/typescript6@6.0.2)(tsx@4.23.1):
+  tsdown@0.22.7(@typescript/typescript6@6.0.2)(tsx@4.23.1)(unrun@0.3.1):
     dependencies:
       ansis: 4.3.1
       cac: 7.0.0
@@ -11460,6 +11473,7 @@ snapshots:
     optionalDependencies:
       tsx: 4.23.1
       typescript: '@typescript/typescript6@6.0.2'
+      unrun: 0.3.1
     transitivePeerDependencies:
       - '@ts-macro/tsc'
       - '@typescript/native-preview'
@@ -11607,6 +11621,10 @@ snapshots:
   universalify@0.2.0: {}
 
   universalify@2.0.1: {}
+
+  unrun@0.3.1:
+    dependencies:
+      rolldown: 1.1.5
 
   until-async@3.0.2: {}
 

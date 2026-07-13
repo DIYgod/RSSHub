@@ -205,6 +205,7 @@
         "typescript": "npm:@typescript/typescript6@6.0.2",
         "typescript-7": "npm:typescript@7.0.2",
         "unified": "11.0.5",
+        "unrun": "0.3.1",
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.1.10",
         "wrangler": "4.110.0",
