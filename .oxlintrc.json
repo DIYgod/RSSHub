@@ -602,6 +602,14 @@
             {
                 "selector": "CallExpression[callee.property.name=\"map\"] > FunctionExpression",
                 "message": "Use an arrow function instead."
+            },
+            {
+                "selector": "TSTypeReference[typeName.name='ReturnType'] TSTypeQuery[exprName.name='load']",
+                "message": "Usage of ReturnType<typeof load> is not allowed. Please use appropriate types from cheerio instead."
+            },
+            {
+                "selector": "TSTypeReference[typeName.name='ReturnType'] TSTypeReference[typeName.name='CheerioAPI']",
+                "message": "Usage of ReturnType<CheerioAPI> is not allowed. Please use appropriate types from cheerio and domhandler instead."
             }
         ],
 

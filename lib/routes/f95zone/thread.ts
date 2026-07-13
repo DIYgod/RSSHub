@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
@@ -61,7 +61,7 @@ Note: If you want to track a specific post's content changes (e.g., first post w
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
         const totalPages = lastPageLink ? Number(lastPageLink.match(/page-(\d+)/)?.[1] || '1') : 1;
 
-        const extractPosts = ($: ReturnType<typeof load>): DataItem[] =>
+        const extractPosts = ($: CheerioAPI): DataItem[] =>
             $('article.message')
                 .toArray()
                 .flatMap((article) => {
