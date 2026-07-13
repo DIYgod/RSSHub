@@ -3,13 +3,14 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 const baseURL = 'https://freecomputerbooks.com/';
 
 async function cheerioLoad(url) {
-    const response = await got(url);
+    const response = await got(url, { timeout: { request: config.requestTimeout } });
     return load(response.data);
 }
 
