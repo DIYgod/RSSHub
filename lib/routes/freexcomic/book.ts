@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -9,11 +9,11 @@ const jjmhw = 'http://www.jjmhw.cc';
 const getLatestAddress = () =>
     cache.tryGet('freexcomic:getLatestAddress', async () => {
         const portalResponse = await ofetch('https://www.freexcomic.com');
-        const $portal = cheerio.load(portalResponse);
+        const $portal = load(portalResponse);
         const portalUrl = new URL($portal('.alert-btn').attr('href')).href.replace('http:', 'https:');
 
         const addressList = await ofetch(portalUrl);
-        const $address = cheerio.load(addressList);
+        const $address = load(addressList);
 
         return $address('p.ta-c.mb10 a')
             .toArray()
@@ -22,12 +22,12 @@ const getLatestAddress = () =>
 
 const handler = async (ctx) => {
     const { id } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || 10;
+    const limit = Number(ctx.req.query('limit')) || 10;
     const addresses = (await getLatestAddress()) as string[];
     const link = `${addresses[0]}book/${id}`;
 
     const response = await ofetch(link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('#detail-list-select > li > a')
         .toArray()
@@ -46,7 +46,7 @@ const handler = async (ctx) => {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 const comicpage = $('.comicpage');
                 comicpage.find('img').each((_, ele) => {

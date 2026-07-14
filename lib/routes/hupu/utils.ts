@@ -250,7 +250,7 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
                 processedDateString = `${currentYear}-${month}-${day} ${pubDateString}`;
             }
 
-            const pubDate = [item.pubDate, timezone(parseDate(processedDateString), +8), timezone(parseRelativeDate(pubDateString), +8)].find((d) => d instanceof Date && !Number.isNaN(d.getTime()));
+            const pubDate = [item.pubDate, timezone(parseDate(processedDateString), 8), timezone(parseRelativeDate(pubDateString), 8)].find((d) => d instanceof Date && !Number.isNaN(d.getTime()));
             const categories = content('.basketballTobbs_tag > a, .tag-player-team')
                 .toArray()
                 .map((c) => content(c).text())

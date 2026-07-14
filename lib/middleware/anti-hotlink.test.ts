@@ -1,5 +1,5 @@
 import Parser from 'rss-parser';
-import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 const parser = new Parser();
 
@@ -272,7 +272,7 @@ const testAntiHotlink = async (path, expectObj, query?: string | Record<string, 
                       .map(([key, value]) => `${key}=${value}`)
                       .join('&');
     }
-    path = path + (queryStr ? `?${queryStr}` : '');
+    path += queryStr ? `?${queryStr}` : '';
 
     const response = await app.request(path);
     const parsed = await parser.parseString(await response.text());
@@ -436,5 +436,67 @@ describe('anti-hotlink', () => {
         const app = (await import('@/app')).default;
         const response = await app.request('/test/complicated');
         expect(await response.text()).toContain('Error: Invalid URL property: createObjectURL');
+    });
+});
+
+describe('anti-hotlink edge cases', () => {
+    const errorSpy = vi.fn();
+
+    const createCtx = (query: Record<string, string | undefined>, data: any) => {
+        const store = new Map<string, unknown>([['data', data]]);
+        return {
+            req: {
+                path: '/test/path',
+                query: (key: string) => query[key],
+            },
+            get: (key: string) => store.get(key),
+            set: (key: string, value: unknown) => store.set(key, value),
+        };
+    };
+
+    beforeAll(() => {
+        vi.doMock('@/utils/logger', () => ({
+            default: {
+                error: errorSpy,
+                warn: vi.fn(),
+                info: vi.fn(),
+                debug: vi.fn(),
+            },
+        }));
+    });
+
+    afterAll(() => {
+        vi.doUnmock('@/utils/logger');
+    });
+
+    it('logs parse errors and keeps invalid urls', async () => {
+        const { config } = await import('@/config');
+        config.feature.allow_user_hotlink_template = true;
+
+        const { default: antiHotlink } = await import('@/middleware/anti-hotlink');
+        const data = {
+            image: 'http://invalid url',
+        };
+        const ctx = createCtx({ image_hotlink_template: 'https://img.test/${href}' }, data);
+
+        await antiHotlink(ctx as any, async () => {});
+
+        expect(data.image).toBe('http://invalid url');
+        expect(errorSpy).toHaveBeenCalled();
+    });
+
+    it('returns original url when template is missing', async () => {
+        const { config } = await import('@/config');
+        config.feature.allow_user_hotlink_template = true;
+
+        const { default: antiHotlink } = await import('@/middleware/anti-hotlink');
+        const data = {
+            image: 'https://example.com/img.jpg',
+        };
+        const ctx = createCtx({ multimedia_hotlink_template: 'https://media.test/${href}' }, data);
+
+        await antiHotlink(ctx as any, async () => {});
+
+        expect(data.image).toBe('https://example.com/img.jpg');
     });
 });

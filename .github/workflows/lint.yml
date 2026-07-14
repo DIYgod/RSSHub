@@ -20,9 +20,9 @@ jobs:
         permissions:
             security-events: write
         steps:
-            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-            - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
-            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
               with:
                   node-version: lts/*
                   cache: 'pnpm'
@@ -65,9 +65,10 @@ jobs:
         runs-on: ubuntu-slim
         timeout-minutes: 5
         steps:
-            - uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213 # v6.1.0
+            - uses: actions/labeler@b8dd2d9be0f68b860e7dae5dae7d772984eacd6d # v6.2.0
               with:
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
+                  sync-labels: true
 
     vouch-check-pr:
         name: Vouch check PR
@@ -79,12 +80,60 @@ jobs:
         runs-on: ubuntu-slim
         timeout-minutes: 5
         steps:
-            - name: Checkout
-              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-
             - name: Check if PR author is denounced
-              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              uses: mitchellh/vouch/action/check-pr@d66fa29a64600490892131ad87597c30c91fcac4 # v1.5.0
               with:
-                  script: |
-                      const { default: checkPr } = await import('${{ github.workspace }}/scripts/workflow/vouch/check-pr.mjs')
-                      await checkPr({ github, context, core })
+                  pr-number: ${{ github.event.pull_request.number }}
+                  auto-close: true
+                  require-vouch: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    agentscan:
+        name: AgentScan
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            contents: read
+            issues: write
+            pull-requests: write
+        runs-on: ubuntu-slim
+        timeout-minutes: 10
+        steps:
+            - name: Cache AgentScan analysis
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+              with:
+                  path: .agentscan-cache
+                  key: agentscan-cache-${{ github.actor }}
+                  restore-keys: agentscan-cache-
+
+            - name: AgentScan
+              uses: MatteoGabriele/agentscan-action@c7d61446e7aece6bdd3edcee4558bbfc0392615e # v2.0.1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  trusted-author-associations: 'collaborator,member,owner'
+                  cache-path: .agentscan-cache
+                  label-community-flagged: spam
+                  label-mixed: spam
+                  label-automation: spam
+                  auto-close: true
+                  auto-close-classifications: automation,mixed
+
+    anti-slop:
+        name: Anti Slop
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        runs-on: ubuntu-slim
+        permissions:
+            contents: read
+            issues: read
+            pull-requests: write
+        steps:
+            - name: Anti Slop
+              uses: peakoss/anti-slop@57858eead489d08b255fab2af45a506c2ca6eab2 # v0.3.0
+              with:
+                  close-pr: true
+                  exempt-label: exempt
+                  failure-add-pr-labels: spam
+                  failure-pr-message: |
+                      Thanks for the contribution. This PR was automatically closed because
+                      it matched multiple low-quality/spam signals.
+                  lock-pr: false

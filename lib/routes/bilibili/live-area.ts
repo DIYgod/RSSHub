@@ -47,20 +47,21 @@ async function handler(ctx) {
     });
 
     let parentTitle = '';
-    let parentID: string;
     let areaTitle = '';
     let areaLink = '';
 
     for (const parentArea of nameResponse.data.data) {
         for (const area of parentArea.list) {
-            if (area.id === areaID) {
-                parentTitle = parentArea.name;
-                parentID = parentArea.id;
-                areaTitle = area.name;
-                // cateID = area.cate_id;
-                areaLink = `https://live.bilibili.com/p/eden/area-tags?parentAreaId=${parentID}&areaId=${areaID}`;
-                break;
+            if (area.id !== areaID) {
+                continue;
             }
+
+            parentTitle = parentArea.name;
+            const parentID: string = parentArea.id;
+            areaTitle = area.name;
+            // cateID = area.cate_id;
+            areaLink = `https://live.bilibili.com/p/eden/area-tags?parentAreaId=${parentID}&areaId=${areaID}`;
+            break;
         }
     }
 

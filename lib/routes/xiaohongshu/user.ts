@@ -81,9 +81,8 @@ async function handler(ctx) {
             // Fallback to normal logic if cookie method fails
             return await getUserFeeds(url, category);
         }
-    } else {
-        return await getUserFeeds(url, category);
     }
+    return await getUserFeeds(url, category);
 }
 
 async function getUserFeeds(url: string, category: string) {
@@ -101,7 +100,7 @@ async function getUserFeeds(url: string, category: string) {
         notes.flatMap((n) =>
             n.map(({ id, noteCard }) => ({
                 title: noteCard.displayTitle,
-                link: new URL(noteCard.noteId || id, url).toString(),
+                link: new URL(noteCard.noteId || id, url).href,
                 guid: noteCard.displayTitle,
                 description: `<img src="${noteCard.cover.infoList.pop().url}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,

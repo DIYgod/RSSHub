@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { id = 'xijiayi' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.ithome.com';
     const currentUrl = new URL(`zt/${id}`, rootUrl).href;
@@ -39,7 +39,7 @@ export const handler = async (ctx) => {
                             .text()
                             .match(/'(.*?)'/)
                     ),
-                    +8
+                    8
                 ),
                 link: item.find('a').first().prop('href'),
                 author: item.find('div.editor').contents().first().text(),
@@ -75,7 +75,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('span#pubtime_baidu').text()), +8);
+                item.pubDate = timezone(parseDate($$('span#pubtime_baidu').text()), 8);
                 item.category = $$('div.cv a')
                     .toArray()
                     .map((c) => $$(c).text())

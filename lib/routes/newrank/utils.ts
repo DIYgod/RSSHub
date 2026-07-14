@@ -18,7 +18,7 @@ const random_nonce = (count) => {
     while (i-- > min) {
         index = Math.floor((i + 1) * Math.random());
         temp = shuffled[index];
-        str = str + temp;
+        str += temp;
     }
     return str;
 };

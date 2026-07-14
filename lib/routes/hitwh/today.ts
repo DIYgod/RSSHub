@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((el) => ({
             pubDate: timezone(parseDate($(el).find('.news-time2').text()), 8),
-            link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+            link: new URL($(el).find('a').attr('href'), baseUrl).href,
             title: $(el).find('a').text(),
         }));
 
@@ -54,18 +54,23 @@ async function handler() {
                         try {
                             const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.wp_articlecontent').html() && $('div.wp_articlecontent').html().replaceAll('src="/', `src="${baseUrl}/`).replaceAll('href="/', `href="${baseUrl}/`).trim();
+                            item.description =
+                                $('div.wp_articlecontent').html() &&
+                                $('div.wp_articlecontent')
+                                    .html()
+                                    .replaceAll('src="/', () => `src="${baseUrl}/`)
+                                    .replaceAll('href="/', () => `href="${baseUrl}/`)
+                                    .trim();
                             return item;
                         } catch {
                             // intranet
                             item.description = '请进行统一身份认证之后再访问';
                             return item;
                         }
-                    } else {
-                        // file to download
-                        item.description = '此链接为文件，点击以下载';
-                        return item;
                     }
+                    // file to download
+                    item.description = '此链接为文件，点击以下载';
+                    return item;
                 })
             )
         ),

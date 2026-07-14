@@ -10,7 +10,7 @@ const baseUrl = 'https://www.kisskiss.tv/kiss/diary.php';
 export const route: Route = {
     path: '/blog/:category?',
     categories: ['game'],
-    example: '/blog/DLC',
+    example: '/kisskiss/blog/DLC',
     parameters: { category: 'category' },
     features: {
         requireConfig: false,

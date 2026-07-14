@@ -38,7 +38,8 @@ const createAgentForProxy = (uri: string, proxyObj: Record<string, any>): any =>
                 'proxy-authorization': proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
             },
         });
-    } else if (uri.startsWith('socks')) {
+    }
+    if (uri.startsWith('socks')) {
         return new SocksProxyAgent(uri);
     }
     return null;
@@ -53,6 +54,9 @@ const createDispatcherForProxy = (uri: string, proxyObj: Record<string, any>): P
                 rejectUnauthorized: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '0',
             },
         });
+    }
+    if (uri.startsWith('socks')) {
+        return new ProxyAgent({ uri });
     }
     return null;
 };
@@ -104,21 +108,22 @@ const getCurrentProxy = (): ProxyState | null => {
 };
 
 const markProxyFailed = (failedProxyUri: string) => {
-    if (multiProxy) {
-        multiProxy.markProxyFailed(failedProxyUri);
-        const nextProxy = multiProxy.getNextProxy();
-        if (nextProxy) {
-            proxyUri = nextProxy.uri;
-            proxyUrlHandler = nextProxy.urlHandler || null;
-            agent = createAgentForProxy(nextProxy.uri, proxyObj);
-            dispatcher = createDispatcherForProxy(nextProxy.uri, proxyObj);
-            logger.info(`Switched to proxy: ${nextProxy.uri}`);
-        } else {
-            logger.warn('No available proxies remaining');
-            agent = null;
-            dispatcher = null;
-            proxyUri = undefined;
-        }
+    if (!multiProxy) {
+        return;
+    }
+    multiProxy.markProxyFailed(failedProxyUri);
+    const nextProxy = multiProxy.getNextProxy();
+    if (nextProxy) {
+        proxyUri = nextProxy.uri;
+        proxyUrlHandler = nextProxy.urlHandler || null;
+        agent = createAgentForProxy(nextProxy.uri, proxyObj);
+        dispatcher = createDispatcherForProxy(nextProxy.uri, proxyObj);
+        logger.info(`Switched to proxy: ${nextProxy.uri}`);
+    } else {
+        logger.warn('No available proxies remaining');
+        agent = null;
+        dispatcher = null;
+        proxyUri = undefined;
     }
 };
 

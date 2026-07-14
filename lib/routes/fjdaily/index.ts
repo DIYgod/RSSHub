@@ -173,7 +173,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text().replaceAll(/\s+/g, ' ').trim(),
-                link: new URL(href, padUrl).toString().replace('/pad/', '/pc/'),
+                link: new URL(href, padUrl).href.replace('/pad/', '/pc/'),
                 category: [currentCategory.replace(/^\d+版\s*/, '')],
             };
         })

@@ -99,7 +99,7 @@ async function getList(url: string | URL, form: Record<string, string> = {}) {
             return {
                 title: $('a').text(),
                 link,
-                pubDate: timezone(parseDate($('span.Floatright').text()), +8),
+                pubDate: timezone(parseDate($('span.Floatright').text()), 8),
             };
         })
         .filter((item) => item !== null);

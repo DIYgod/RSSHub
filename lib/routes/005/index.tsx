@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'zx' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://005.tv';
     const currentUrl = new URL(category ? `${category}/` : '', rootUrl).href;
@@ -67,7 +67,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('.time').text()), +8);
+                item.pubDate = timezone(parseDate($$('.time').text()), 8);
                 item.category = $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.content = {
                     html: description,

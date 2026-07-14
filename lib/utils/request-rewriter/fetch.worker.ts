@@ -18,7 +18,7 @@ const STATIC_BROWSER_HEADERS: Record<string, string> = {
     'upgrade-insecure-requests': '1',
 };
 
-const originalFetch = globalThis.fetch;
+const originalFetch = fetch;
 
 const wrappedFetch = (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     const request = new Request(input, init);

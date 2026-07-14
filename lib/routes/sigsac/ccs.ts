@@ -30,6 +30,9 @@ async function handler() {
 
     const urlList = yearResponses
         .map((response, i) => {
+            if (response.status !== 'fulfilled') {
+                return;
+            }
             const $ = load(response.value);
             const href = $('a:contains("Accepted Papers")').attr('href');
             return href && new URL($('a:contains("Accepted Papers")').attr('href')!, yearList[i]).href;
@@ -39,6 +42,9 @@ async function handler() {
     const responses = await Promise.allSettled(urlList.map((url) => ofetch(url)));
 
     const items = responses.flatMap((response, i) => {
+        if (response.status !== 'fulfilled') {
+            return [];
+        }
         const $ = load(response.value);
         const link = urlList[i];
         const paperSection = $('div.papers-item')

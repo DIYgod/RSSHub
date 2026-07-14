@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/zj/ningbogzw-notice/:colId?',
+    path: '/ningbogzw-notice/:colId?',
     categories: ['government'],
     example: '/gov/zj/ningbogzw-notice/1229116730',
     parameters: {
@@ -14,7 +14,7 @@ export const route: Route = {
     radar: [
         {
             source: ['gzw.ningbo.gov.cn/col/col1229116730/index.html'],
-            target: '/zj/ningbogzw-notice/:colId?',
+            target: '/ningbogzw-notice/:colId?',
         },
     ],
     name: '宁波市国资委-公告',

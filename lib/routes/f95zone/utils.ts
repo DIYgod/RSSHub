@@ -38,11 +38,13 @@ export const processContent = (html: string): string => {
     while (changed) {
         changed = false;
         $('*').each((_, el) => {
-            if (el.type === 'tag' && !ALLOWED_TAGS.has(el.name)) {
-                $(el).replaceWith($(el).html() || '');
-                changed = true;
-                return false;
+            if (el.type !== 'tag' || ALLOWED_TAGS.has(el.name)) {
+                return;
             }
+
+            $(el).replaceWith($(el).html() || '');
+            changed = true;
+            return false;
         });
     }
 
@@ -52,7 +54,8 @@ export const processContent = (html: string): string => {
             return;
         }
         const allowed = new Set(ALLOWED_ATTRS[el.name] || []);
-        for (const attr of Object.keys(el.attribs || {})) {
+        const attrKeys = Object.keys(el.attribs || {});
+        for (const attr of attrKeys) {
             if (!allowed.has(attr)) {
                 $(el).removeAttr(attr);
             }

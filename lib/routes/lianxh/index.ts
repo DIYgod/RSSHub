@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 import markdownit from 'markdown-it';
 
@@ -76,10 +76,10 @@ async function handler(ctx: Context) {
 
     const response = await ofetch(currentUrl);
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('.card-body > a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 30)
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 30)
         .toArray()
         .map((item) => {
             const $item = $(item);

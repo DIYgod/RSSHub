@@ -1,7 +1,10 @@
+import type { Next } from 'hono';
 import { describe, expect, it } from 'vitest';
 
 import { handler, route } from '@/api/category/one';
 import { namespaces } from '@/registry';
+
+const noopNext: Next = () => Promise.resolve();
 
 const createCtx = (param: Record<string, string>, query: Record<string, any> = {}) =>
     ({
@@ -27,11 +30,11 @@ const findCategory = (requireLang = false) => {
 };
 
 describe('api/category/one', () => {
-    it('returns namespaces that match a category', () => {
+    it('returns namespaces that match a category', async () => {
         const { categories } = findCategory();
         const category = categories[0];
 
-        const result = handler(createCtx({ category }, {}));
+        const result = await handler(createCtx({ category }, {}), noopNext);
         expect(Object.keys(result)).not.toHaveLength(0);
 
         for (const namespace of Object.values(result)) {
@@ -41,19 +44,20 @@ describe('api/category/one', () => {
         }
     });
 
-    it('intersects categories and filters by lang', () => {
+    it('intersects categories and filters by lang', async () => {
         const { namespace, categories, lang } = findCategory(true);
         const [primary, secondary] = categories.length > 1 ? categories : [categories[0], categories[0]];
         const selectedLang = lang || namespaces[namespace].lang;
 
-        const result = handler(
+        const result = await handler(
             createCtx(
                 { category: primary },
                 {
                     categories: [secondary],
                     lang: selectedLang,
                 }
-            )
+            ),
+            noopNext
         );
 
         expect(Object.keys(result)).toContain(namespace);
@@ -68,8 +72,8 @@ describe('api/category/one', () => {
         expect(parsed?.lang).toBe('en');
     });
 
-    it('returns empty result for unknown categories', () => {
-        const result = handler(createCtx({ category: 'rsshub-unknown-category' }, {}));
+    it('returns empty result for unknown categories', async () => {
+        const result = await handler(createCtx({ category: 'rsshub-unknown-category' }, {}), noopNext);
         expect(result).toEqual({});
     });
 });

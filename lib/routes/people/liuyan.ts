@@ -69,7 +69,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.content').html();
-                currentForum = currentForum ?? content('#currentForum').text();
+                currentForum ??= content('#currentForum').text();
 
                 return item;
             })

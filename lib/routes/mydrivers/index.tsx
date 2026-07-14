@@ -58,7 +58,7 @@ async function handler(ctx) {
         category = `ac/${category}`;
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const queryString = convertToQueryString(category);
     const currentUrl = new URL(`newsclass.aspx${queryString}`, rootUrl).href;
@@ -89,8 +89,8 @@ async function handler(ctx) {
                 ),
                 author: item.find('p.tname').text(),
                 guid: item.prop('data-id'),
-                pubDate: timezone(parseDate(item.find('p.ttime').text()), +8),
-                comments: item.find('a.tpinglun').text() ? Number.parseInt(item.find('a.tpinglun').text(), 10) : 0,
+                pubDate: timezone(parseDate(item.find('p.ttime').text()), 8),
+                comments: item.find('a.tpinglun').text() ? Number(item.find('a.tpinglun').text()) : 0,
             };
         });
 
@@ -98,7 +98,7 @@ async function handler(ctx) {
 
     return {
         ...(await getInfo(currentUrl)),
-        ...(newTitle ? { title: newTitle } : {}),
+        ...(newTitle && { title: newTitle }),
         item: items,
     };
 }

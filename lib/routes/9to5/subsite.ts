@@ -41,16 +41,18 @@ async function handler(ctx) {
     }
 
     if (ctx.req.param('tag')) {
-        link = `${link}/guides/${ctx.req.param('tag')}/feed/`;
+        link += `/guides/${ctx.req.param('tag')}/feed/`;
         title = `${ctx.req.param('tag')} | ${title}`;
     } else {
-        link = `${link}/feed/`;
+        link += '/feed/';
     }
 
     const feed = await parser.parseURL(link);
 
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+
     const items = await Promise.all(
-        feed.items.splice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map((item) =>
+        feed.items.splice(0, limit).map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got({
                     method: 'get',

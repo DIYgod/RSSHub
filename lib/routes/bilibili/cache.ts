@@ -21,18 +21,20 @@ const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
 });
 
 const getConfiguredCookie = () => {
-    if (Object.keys(config.bilibili.cookies).length > 0) {
-        // Update b_lsid in cookies
-        for (const key of Object.keys(config.bilibili.cookies)) {
-            const cookie = config.bilibili.cookies[key];
-            if (cookie) {
-                const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                config.bilibili.cookies[key] = updatedCookie;
-            }
-        }
-
-        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
+    if (Object.keys(config.bilibili.cookies).length === 0) {
+        return;
     }
+
+    // Update b_lsid in cookies
+    for (const key of Object.keys(config.bilibili.cookies)) {
+        const cookie = config.bilibili.cookies[key];
+        if (cookie) {
+            const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
+            config.bilibili.cookies[key] = updatedCookie;
+        }
+    }
+
+    return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
 };
 
 const getCookie = (disableConfig = false) => {
@@ -50,12 +52,13 @@ const getCookie = (disableConfig = false) => {
             onBeforeLoad: (page) => {
                 waitForRequest = new Promise<string>((resolve) => {
                     page.on('requestfinished', async (request) => {
-                        if (request.url() === 'https://api.bilibili.com/x/web-interface/nav') {
-                            const cookies = await page.context().cookies();
-                            let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                            resolve(cookieString);
+                        if (request.url() !== 'https://api.bilibili.com/x/web-interface/nav') {
+                            return;
                         }
+                        const cookies = await page.context().cookies();
+                        let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                        cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
+                        resolve(cookieString);
                     });
                 });
             },
@@ -120,7 +123,9 @@ const getWbiVerifyString = () => {
         const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+\]/));
         const o = [];
         for (const t of array) {
-            r.charAt(t) && o.push(r.charAt(t));
+            if (r.charAt(t)) {
+                o.push(r.charAt(t));
+            }
         }
         return o.join('').slice(0, 32);
     });
@@ -362,13 +367,11 @@ const getArticleDataFromCvid = async (cvid, uid) => {
                                 description += `<p>${text.word.words}</p>`;
                             }
                         }
-                    }
-                    if (element.para_type === 2) {
+                    } else if (element.para_type === 2) {
                         for (const image of element.pic.pics) {
                             description += `<p ><img src="${image.url}@progressive.webp"></p>`;
                         }
-                    }
-                    if (element.para_type === 3 && element.line?.pic?.url) {
+                    } else if (element.para_type === 3 && element.line?.pic?.url) {
                         description += `<figure><img src="${element.line.pic.url}"></figure>`;
                     }
                 }

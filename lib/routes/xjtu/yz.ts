@@ -49,7 +49,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(item.find('span.date.fr').text()), +8),
+                pubDate: timezone(parseDate(item.find('span.date.fr').text()), 8),
             } as DataItem;
         });
     const items = await Promise.all(

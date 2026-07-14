@@ -120,7 +120,7 @@ async function handler(ctx) {
         // discuz 7.x 系列
         // 支持全文抓取，限制抓取页面5个
         const list = $('tbody[id^="normalthread"] > tr')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5)
+            .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
             .map((item) => {
                 item = $(item);
@@ -147,7 +147,7 @@ async function handler(ctx) {
         // discuz X 系列
         // 支持全文抓取，限制抓取页面5个
         const list = $('tbody[id^="normalthread"] > tr')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5)
+            .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
             .map((item) => {
                 item = $(item);

@@ -182,7 +182,7 @@ const parseDuration = (str: string): plugin.Duration => {
     for (const { unit, regExp } of UNIT_PATTERNS) {
         const match = regExp.exec(cleanStr);
         if (match) {
-            const val = Number.parseInt(match[1], 10);
+            const val = Number(match[1]);
             if (!Number.isNaN(val)) {
                 totalDuration = totalDuration.add(val, unit);
             }
@@ -226,7 +226,7 @@ const processSemanticKeyword = (baseTime: Dayjs, timePart: string, originalConte
     // Attempt 2: Handle cases where duration regex fails (e.g., "3 pm" doesn't match standard units)
     const stickyMatch = REGEX_STICKY_AMPM.exec(timePart);
     if (addedMillis === 0 && stickyMatch) {
-        addedMillis = Number.parseInt(stickyMatch[1], 10) * 60 * 60 * 1000;
+        addedMillis = Number(stickyMatch[1]) * 60 * 60 * 1000;
     }
 
     if (addedMillis > 0) {

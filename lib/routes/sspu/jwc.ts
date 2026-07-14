@@ -44,7 +44,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 item.description = $('.wp_articlecontent').html();
-                item.pubDate = timezone(parseDate($('.arti_update').text(), 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate($('.arti_update').text(), 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 return item;
             })

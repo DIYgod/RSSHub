@@ -66,7 +66,7 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="ArticleTitle"]').attr('content');
                     item.author = content('meta[name="contentSource"]').attr('content');
-                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')), +8);
+                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')), 8);
                     item.category = [content('meta[name="ColumnName"]').attr('content')];
 
                     item.description = content('.arccont').html();

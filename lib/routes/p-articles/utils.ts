@@ -12,7 +12,7 @@ const ProcessFeed = (info, data) => {
     info.author = author;
 
     const dateValue = $('div.detail_title_02 > h4 ').text().trim();
-    info.pubDate = timezone(parseDate(dateValue), +8);
+    info.pubDate = timezone(parseDate(dateValue), 8);
 
     const description = $('div.detail_contect_01').html();
     info.description = description;

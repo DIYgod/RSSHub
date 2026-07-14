@@ -132,7 +132,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
         body: {
             category_id: '',
-            limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit') as string, 10) : 30,
+            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit') as string) : 30,
             order: 0,
             start: 1,
             type: 0,

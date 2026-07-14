@@ -11,10 +11,16 @@ const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
     has: (key: string) => Promise<boolean> | boolean;
     set: (key: string, value?: string | Record<string, any>, maxAge?: number) => any;
+    /**
+     * Atomically set `key` to '1' and return true, unless it is already '1' (return false).
+     * A get-then-set in the caller races: two same-tick requests would both read "not '1'".
+     */
+    claim: (key: string, maxAge: number) => Promise<boolean> | boolean;
 } = {
     get: () => null,
     has: () => false,
     set: () => null,
+    claim: () => true,
 };
 
 const noopCacheModule: CacheModule = {
@@ -40,10 +46,11 @@ if (isWorker) {
             cacheModule.init();
             const { redisClient } = cacheModule.clients;
             globalCache.get = async (key) => {
-                if (key && cacheModule.status.available && redisClient) {
-                    const value = await redisClient.get(key);
-                    return value;
+                if (!key || !cacheModule.status.available || !redisClient) {
+                    return;
                 }
+                const value = await redisClient.get(key);
+                return value;
             };
             globalCache.has = async (key) => {
                 if (key && cacheModule.status.available && redisClient) {
@@ -53,6 +60,13 @@ if (isWorker) {
                 return false;
             };
             globalCache.set = cacheModule.set;
+            globalCache.claim = async (key, maxAge) => {
+                if (!key || !cacheModule.status.available || !redisClient) {
+                    return true;
+                }
+                const result = await redisClient.eval("if redis.call('GET', KEYS[1]) == '1' then return 0 end redis.call('SET', KEYS[1], '1', 'EX', ARGV[1]) return 1", 1, key, maxAge);
+                return result === 1;
+            };
             break;
         }
         case 'http':
@@ -73,6 +87,17 @@ if (isWorker) {
                 if (key && cacheModule.status.available) {
                     return cacheModule.set(key, value, maxAge);
                 }
+            };
+            globalCache.claim = async (key, maxAge) => {
+                if (!key || !cacheModule.status.available) {
+                    return true;
+                }
+                // best effort: the HTTP cache protocol has no atomic operation
+                if ((await cacheModule.get(key, false)) === '1') {
+                    return false;
+                }
+                await cacheModule.set(key, '1', maxAge);
+                return true;
             };
             break;
         case 'memory': {
@@ -100,6 +125,17 @@ if (isWorker) {
                 if (key && memoryCache) {
                     return memoryCache.set(key, value, { ttl: maxAge * 1000 });
                 }
+            };
+            // fully synchronous, so nothing can interleave between the read and the write
+            globalCache.claim = (key, maxAge) => {
+                if (!key || !cacheModule.status.available || !memoryCache) {
+                    return true;
+                }
+                if (memoryCache.get(key, { updateAgeOnGet: false }) === '1') {
+                    return false;
+                }
+                memoryCache.set(key, '1', { ttl: maxAge * 1000 });
+                return true;
             };
             break;
         }
@@ -139,12 +175,11 @@ export default {
             }
 
             return v as T;
-        } else {
-            const value = await getValueFunc();
-            cacheModule.set(key, JSON.stringify(value), maxAge);
-
-            return value;
         }
+        const value = await getValueFunc();
+        cacheModule.set(key, JSON.stringify(value), maxAge);
+
+        return value;
     },
     globalCache,
 };

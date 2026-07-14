@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'game', sort = 'new', filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.metacritic.com';
     const rootApiUrl = 'https://backend.metacritic.com';
@@ -83,7 +83,8 @@ async function handler(ctx) {
         const labels = {};
         const labelPattern = String.raw`\{label:"([^"]+)",value:(\d+),href:a,meta:\{mcDisplayWeight`;
 
-        for (const m of currentResponse.match(new RegExp(labelPattern, 'g'))) {
+        const matches = currentResponse.match(new RegExp(labelPattern, 'g'));
+        for (const m of matches) {
             const matches = m.match(new RegExp(labelPattern));
 
             labels[
@@ -132,9 +133,9 @@ async function handler(ctx) {
         category: item.genres?.map((c) => c.name),
         guid: `metacritic-${item.id}`,
         pubDate: parseDate(item.releaseDate),
-        upvotes: item.criticScoreSummary?.positiveCount ? Number.parseInt(item.criticScoreSummary?.positiveCount, 10) : 0,
-        downvotes: item.criticScoreSummary?.negativeCount ? Number.parseInt(item.criticScoreSummary?.negativeCount, 10) : 0,
-        comments: item.criticScoreSummary?.reviewCount ? Number.parseInt(item.criticScoreSummary?.reviewCount, 10) : 0,
+        upvotes: item.criticScoreSummary?.positiveCount ? Number(item.criticScoreSummary?.positiveCount) : 0,
+        downvotes: item.criticScoreSummary?.negativeCount ? Number(item.criticScoreSummary?.negativeCount) : 0,
+        comments: item.criticScoreSummary?.reviewCount ? Number(item.criticScoreSummary?.reviewCount) : 0,
     }));
 
     const $ = load(currentResponse);

@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 
-import getMzzlbg from './utils/mzzlbg';
-import getNews from './utils/news';
-import xinwen1j1 from './utils/xinwen1j1';
+import { getMzzlbg } from './utils/mzzlbg';
+import { getNews } from './utils/news';
+import { xinwen1j1 } from './utils/xinwen1j1';
 import getXWLB from './xwlb';
 
 export const route: Route = {

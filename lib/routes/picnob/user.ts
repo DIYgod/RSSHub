@@ -107,12 +107,11 @@ async function handler(ctx) {
                                   const $item = $(item);
                                   if ($item.hasClass('video')) {
                                       return $item.find('video').prop('outerHTML');
-                                  } else {
-                                      // $item.hasClass('pic')
-                                      $item.find('img').attr('src', $item.find('img').attr('data-src'));
-                                      $item.find('img').removeAttr('data-src');
-                                      return $item.html() || '';
                                   }
+                                  // $item.hasClass('pic')
+                                  $item.find('img').attr('src', $item.find('img').attr('data-src'));
+                                  $item.find('img').removeAttr('data-src');
+                                  return $item.html() || '';
                               })
                               .join('')
                         : $('.view .video').html() || '';

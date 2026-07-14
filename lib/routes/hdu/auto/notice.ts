@@ -39,7 +39,7 @@ export const route: Route = {
     maintainers: ['jalenzz'],
     handler: (ctx) => {
         let type = ctx.req.param('type') || 'notice';
-        if (!(type in typeMap)) {
+        if (!Object.hasOwn(typeMap, type)) {
             logger.error(`Invalid type: ${type}. Valid types are: ${Object.keys(typeMap).join(', ')}, defaulting to notice`);
             type = 'notice';
         }

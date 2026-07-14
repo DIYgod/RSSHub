@@ -70,7 +70,7 @@ async function handler(ctx) {
         guid: item.guid,
         image: item.image,
         title: item.title,
-        pubDate: timezone(parseDate(item.time), +8),
+        pubDate: timezone(parseDate(item.time), 8),
         link: `${vdnRootUrl}/api/getHttpVideoInfo.do?pid=${item.guid}`,
         description: `<p>${item.brief.replaceAll('\r\n', '</p><p>')}</p>`,
     }));
@@ -90,8 +90,12 @@ async function handler(ctx) {
                     item.description += `<video src="${c.url}" controls="controls" poster="${c.image}" width="100%"></video><br>`;
                 }
 
-                for (let i = 2; data.video[`chapters${i}`]; i++) {
-                    for (const c of data.video[`chapters${i}`]) {
+                for (let i = 2; ; i++) {
+                    const chapters = data.video[`chapters${i}`];
+                    if (!chapters) {
+                        break;
+                    }
+                    for (const c of chapters) {
                         item.description += `<video src="${c.url}" controls="controls" poster="${c.image}" width="100%"></video><br>`;
                     }
                 }

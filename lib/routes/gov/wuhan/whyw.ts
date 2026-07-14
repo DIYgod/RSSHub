@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/wuhan/sy/whyw',
+    path: '/sy/whyw',
     categories: ['government'],
     example: '/gov/wuhan/sy/whyw',
     parameters: {},
@@ -24,7 +24,7 @@ export const route: Route = {
             source: ['wuhan.gov.cn/sy/whyw/', 'wuhan.gov.cn/whyw', 'wuhan.gov.cn/'],
         },
     ],
-    name: '武汉要闻',
+    name: '要闻',
     maintainers: ['nczitzk'],
     handler,
     url: 'wuhan.gov.cn/sy/whyw/',
@@ -45,7 +45,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('.time').text()), +8),
+                pubDate: timezone(parseDate(item.find('.time').text()), 8),
             };
         });
 

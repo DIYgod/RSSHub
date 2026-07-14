@@ -62,7 +62,7 @@ async function handler(ctx) {
                 ) : null}
             </>
         ),
-        pubDate: timezone(parseDate(item.PUBTIME), +8),
+        pubDate: timezone(parseDate(item.PUBTIME), 8),
         link: item.PUBURL,
         nodeName: item.NODENAME,
     }));

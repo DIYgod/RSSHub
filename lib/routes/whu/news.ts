@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -38,7 +37,7 @@ const parseCategory = (category: string | number) => {
 
 async function handler(ctx) {
     let { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     category = parseCategory(category);
 
@@ -78,7 +77,7 @@ async function handler(ctx) {
             };
         });
 
-    items = await processItems(items, cache.tryGet, rootUrl);
+    items = await processItems(items, rootUrl);
 
     const meta = processMeta(response);
     const siteName = getMeta(meta, 'SiteName');

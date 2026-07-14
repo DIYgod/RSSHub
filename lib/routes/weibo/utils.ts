@@ -47,6 +47,7 @@ const weiboUtils = {
         const url = 'https://m.weibo.cn/';
         const coolingDownMessage = `Cooling down before new visitor Cookies from ${url} may be fetched`;
         let coolingDown = false;
+        let visitorCookiesPromise: Promise<string> | undefined;
 
         return async (renew: any = false) => {
             if (config.weibo.cookies) {
@@ -61,13 +62,15 @@ const weiboUtils = {
                 cache.set(cacheKey, '', 1);
             }
             return await cache.tryGet(cacheKey, async () => {
+                if (visitorCookiesPromise) {
+                    return await visitorCookiesPromise;
+                }
                 if (coolingDown) {
                     if (renew?.message) {
                         logger.warn(coolingDownMessage);
                         throw renew;
-                    } else {
-                        throw new Error(coolingDownMessage);
                     }
+                    throw new Error(coolingDownMessage);
                 }
                 coolingDown = true;
                 setTimeout(() => {
@@ -79,32 +82,40 @@ const weiboUtils = {
                 } else {
                     logger.info(`Fetching visitor Cookies from ${url}`);
                 }
-                let times = 0;
-                const { page, destroy } = await getPlaywrightPage(url, {
-                    onBeforeLoad: async (page) => {
-                        const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
-                        await page.route('**/*', (route) => {
-                            const request = route.request();
-                            // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
-                            if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
-                                route.abort();
-                                return;
-                            }
-                            if (request.url().startsWith(url)) {
-                                times++;
-                            }
-                            route.continue();
-                        });
-                    },
-                    gotoConfig: { waitUntil: 'networkidle' },
-                });
-                const cookies: string = await getCookies(page, 'weibo.cn');
-                await destroy();
-                if (times < 2 || !cookies) {
-                    throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
+                visitorCookiesPromise = (async () => {
+                    let times = 0;
+                    const { page, destroy } = await getPlaywrightPage(url, {
+                        onBeforeLoad: async (page) => {
+                            const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+                            await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
+                            await page.route('**/*', (route) => {
+                                const request = route.request();
+                                // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
+                                if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
+                                    route.abort();
+                                    return;
+                                }
+                                if (request.url().startsWith(url)) {
+                                    times++;
+                                }
+                                route.continue();
+                            });
+                        },
+                        gotoConfig: { waitUntil: 'networkidle' },
+                    });
+                    const cookies: string = await getCookies(page, 'weibo.cn');
+                    await destroy();
+                    if (times < 2 || !cookies) {
+                        throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
+                    }
+                    return cookies;
+                })();
+
+                try {
+                    return await visitorCookiesPromise;
+                } finally {
+                    visitorCookiesPromise = undefined;
                 }
-                return cookies;
             });
         };
     })(),
@@ -366,7 +377,7 @@ const weiboUtils = {
             title += ' [视频]';
         }
 
-        uid = uid || status.user?.id;
+        uid ||= status.user?.id;
         const bid = status.bid || status.id;
         const guid = uid ? `https://weibo.com/${uid}/${bid}` : `https://m.weibo.cn/status/${bid}`;
         const link = preferMobileLink ? `https://m.weibo.cn/status/${bid}` : guid;
@@ -576,7 +587,7 @@ const weiboUtils = {
                                         const imgSrc = decodeURIComponent(hrefMatch[1]);
                                         const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
                                         // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        replyText = replyText.replaceAll(match, imgTag);
+                                        replyText = replyText.replaceAll(match, () => imgTag);
                                     }
                                 }
                             }
@@ -611,8 +622,9 @@ const weiboUtils = {
         const replace = (html) => html.replaceAll(regex, 'tvax'); // enforce `tvax` as `tva` has a strict WAF
         const replaceKV = (obj, keys) => {
             for (const key of keys) {
-                if (obj[key]) {
-                    obj[key] = replace(obj[key]);
+                const value = obj[key];
+                if (value) {
+                    obj[key] = replace(value);
                 }
             }
         };

@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'latest' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.sse.com.cn';
     const currentUrl = new URL(`lawandrules/sselawsrules/${category}`, rootUrl).href;
@@ -56,7 +56,7 @@ export const handler = async (ctx) => {
                                   .split(/时间\s/)
                                   .pop()
                           ),
-                          +8
+                          8
                       )
                     : undefined;
 

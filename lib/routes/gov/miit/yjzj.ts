@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
-    path: '/miit/yjzj',
+    path: '/yjzj',
     categories: ['government'],
     example: '/gov/miit/yjzj',
     parameters: {},
@@ -41,11 +41,11 @@ async function handler() {
         .toArray()
         .map((item) => ({
             url: `${rootUrl}${indexContent(item).attr('url')}`,
-            queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll("'", '"').replaceAll('|', '"')),
+            queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll(/['|]/g, '"')),
         }))[0];
 
-    const dataUrl = `${dataRequestUrl.url}?${Object.keys(dataRequestUrl.queryData)
-        .map((key) => `${key}=${dataRequestUrl.queryData[key]}`)
+    const dataUrl = `${dataRequestUrl.url}?${Object.entries(dataRequestUrl.queryData)
+        .map(([key, value]) => `${key}=${value}`)
         .join('&')}`;
     const response = await got({
         method: 'get',
@@ -71,7 +71,7 @@ async function handler() {
 
                 item.description = content('#con_con')
                     .html()
-                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, '$1' + rootUrl + '$2$3');
+                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, (_match, p1, p2, p3) => p1 + rootUrl + p2 + p3);
 
                 return item;
             })

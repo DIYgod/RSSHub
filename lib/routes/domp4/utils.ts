@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-code-point */
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -62,9 +61,10 @@ function getUrlType(url) {
  */
 function decodeCipherText(p, a, c, k, e, d) {
     e = function (c) {
-        return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
+        // oxlint-disable-next-line unicorn-js/operator-assignment
+        return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCodePoint(c + 29) : c.toString(36));
     };
-    if (!''.replace(/^/, String)) {
+    if (!''.replace(/^/, () => '')) {
         while (c--) {
             d[e(c.toString())] = k[c] || e(c.toString());
         }
@@ -79,8 +79,10 @@ function decodeCipherText(p, a, c, k, e, d) {
         c = 1;
     }
     while (c--) {
-        if (k[c]) {
-            p = p.replaceAll(new RegExp(String.raw`\b` + e(c.toString()) + String.raw`\b`, 'g'), k[c]);
+        const replacement = k[c];
+        if (replacement) {
+            const token = e(c.toString());
+            p = p.replaceAll(new RegExp(String.raw`\b` + token + String.raw`\b`, 'g'), () => replacement);
         }
     }
     return p;

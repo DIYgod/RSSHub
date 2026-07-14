@@ -1,7 +1,6 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import getBookmarks from './api/get-bookmarks';
@@ -40,7 +39,7 @@ async function handler(ctx) {
 
     const id = ctx.req.param('id');
 
-    const token = await getToken(cache.tryGet);
+    const token = await getToken();
     if (!token) {
         throw new ConfigNotFoundError('pixiv not login');
     }

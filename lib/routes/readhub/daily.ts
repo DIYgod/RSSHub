@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiRootUrl, processItems, rootUrl } from './util';
@@ -31,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const currentUrl = new URL('daily', apiRootUrl).href;
     const infoUrl = new URL('daily', rootUrl).href;
@@ -47,7 +46,7 @@ async function handler(ctx) {
         guid: item.uid,
     }));
 
-    items = await processItems(items, cache.tryGet);
+    items = await processItems(items);
 
     const { data: currentHTMLResponse } = await got(infoUrl);
     const $ = load(currentHTMLResponse);

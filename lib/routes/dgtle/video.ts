@@ -13,7 +13,7 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '18', 10);
+    const limit = Number(ctx.req.query('limit') ?? '18');
 
     const baseUrl = 'https://www.dgtle.com';
     const targetUrl: string = new URL('video', baseUrl).href;
@@ -117,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseRelativeDate(pubDateStr), +8) : item.pubDate,
+                    pubDate: pubDateStr ? timezone(parseRelativeDate(pubDateStr), 8) : item.pubDate,
                     link: linkUrl ? new URL(linkUrl, baseUrl).href : item.link,
                     category: categories,
                     author: authors,
@@ -130,7 +130,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseRelativeDate(upDatedStr), +8) : item.updated,
+                    updated: upDatedStr ? timezone(parseRelativeDate(upDatedStr), 8) : item.updated,
                     language,
                 };
 

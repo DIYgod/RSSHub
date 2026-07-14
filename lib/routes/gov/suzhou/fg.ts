@@ -7,18 +7,30 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/suzhou/fg/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/fg/:category{.+}?',
+    name: '发展和改革委员会',
+    example: '/gov/suzhou/fg/szfgw/ggl/nav_list',
+    parameters: { category: '分类，见下表，默认为通知公告' },
+    radar: [
+        {
+            source: ['fg.suzhou.gov.cn/*category'],
+            target: '/fg/:category',
+        },
+    ],
+    maintainers: ['nczitzk'],
     handler,
+    description: `| 通知公告            | 发改要闻             |
+| ------------------- | -------------------- |
+| szfgw/ggl/nav\\_list | szfgw/gzdt/nav\\_list |`,
 };
 
 async function handler(ctx) {
     const { category = 'szfgw/ggl/nav_list' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const categoryPath = category.replace(/\.shtml$/, '');
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://fg.suzhou.gov.cn';
-    const currentUrl = new URL(`${category}.shtml`, rootUrl).href;
+    const currentUrl = new URL(`${categoryPath}.shtml`, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
@@ -48,7 +60,7 @@ async function handler(ctx) {
                 item.title = content('ucaptitle').text().trim();
                 item.description = content('ucapcontent').html();
                 item.author = content('span.ly b').text().trim();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
 
                 return item;
             })

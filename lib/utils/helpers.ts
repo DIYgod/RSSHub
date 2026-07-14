@@ -19,7 +19,7 @@ export const getPath = (request: Request): string => {
 
 const humanize = (times: string[]) => {
     const [delimiter, separator] = [',', '.'];
-    const orderTimes = times.map((v) => v.replaceAll(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + delimiter));
+    const orderTimes = times.map((v) => v.replaceAll(/(\d)(?=(\d{3})+(?!\d))/g, (_match, p1) => p1 + delimiter));
     return orderTimes.join(separator);
 };
 
@@ -52,11 +52,14 @@ export function parseDuration(timeStr: string | undefined | null): number | unde
         return;
     }
     const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
-    return clean.split(':').reduceRight((total, part, idx, arr) => {
+    const parts = clean.split(':');
+    let total = 0;
+    for (const [idx, part] of parts.entries()) {
         const n = Number(part);
         if (Number.isNaN(n)) {
             throw new TypeError(`Invalid segment: ${part}`);
         }
-        return total + n * Math.pow(60, arr.length - 1 - idx);
-    }, 0);
+        total += n * Math.pow(60, parts.length - 1 - idx);
+    }
+    return total;
 }

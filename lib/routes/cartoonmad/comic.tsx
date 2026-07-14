@@ -27,10 +27,10 @@ const loadContent = (id, { chapter, pages }) => {
     return description;
 };
 
-const getChapters = (id, list, tryGet) =>
+const getChapters = (id, list) =>
     Promise.all(
         list.map((item) =>
-            tryGet(item.link, () => {
+            cache.tryGet(item.link, () => {
                 item.description = loadContent(id, item);
 
                 return item;
@@ -91,7 +91,7 @@ async function handler(ctx) {
         })
         .toReversed();
 
-    const chapters = await getChapters(id, list, cache.tryGet);
+    const chapters = await getChapters(id, list);
 
     return {
         title: $('head title').text(),

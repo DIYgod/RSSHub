@@ -1,7 +1,7 @@
-import * as cheerio from 'cheerio';
+import { auth as googleAuth, youtube as googleYoutube } from '@googleapis/youtube';
+import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
-import { google } from 'googleapis';
 
 import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/parse-date';
 import utils, { getVideoUrl } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
-const { OAuth2 } = google.auth;
+const { OAuth2 } = googleAuth;
 
 dayjs.extend(duration);
 
@@ -23,13 +23,15 @@ if (config.youtube && config.youtube.key) {
     const keys = config.youtube.key.split(',');
 
     for (const [index, key] of keys.entries()) {
-        if (key) {
-            youtube[index] = google.youtube({
-                version: 'v3',
-                auth: key,
-            });
-            count = index + 1;
+        if (!key) {
+            continue;
         }
+
+        youtube[index] = googleYoutube({
+            version: 'v3',
+            auth: key,
+        });
+        count = index + 1;
     }
 }
 
@@ -63,7 +65,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
         userHandleData = await cache.tryGet(`youtube:handle:${username}`, async () => {
             const link = `https://www.youtube.com/${username}`;
             const response = await ofetch(link);
-            const $ = cheerio.load(response);
+            const $ = load(response);
             const ytInitialData = JSON.parse(
                 $('script')
                     .text()
@@ -92,18 +94,17 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
             const origPlaylistId = userHandleData.playlistId;
 
             return utils.getPlaylistWithShortsFilter(origPlaylistId, filterShorts);
-        } else {
-            const channelData = await utils.getChannelWithUsername(username, 'contentDetails', cache);
-            const items = channelData.data.items;
-
-            if (!items) {
-                throw new NotFoundError(`The channel https://www.youtube.com/user/${username} does not exist.`);
-            }
-
-            const channelId = items[0].id;
-
-            return filterShorts ? utils.getPlaylistWithShortsFilter(channelId, filterShorts) : items[0].contentDetails.relatedPlaylists.uploads;
         }
+        const channelData = await utils.getChannelWithUsername(username, 'contentDetails', cache);
+        const items = channelData.data.items;
+
+        if (!items) {
+            throw new NotFoundError(`The channel https://www.youtube.com/user/${username} does not exist.`);
+        }
+
+        const channelId = items[0].id;
+
+        return filterShorts ? utils.getPlaylistWithShortsFilter(channelId, filterShorts) : items[0].contentDetails.relatedPlaylists.uploads;
     })();
 
     const playlistItems = await utils.getPlaylistItems(playlistId, 'snippet', cache);

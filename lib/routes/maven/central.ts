@@ -55,7 +55,7 @@ const DATE_REGEX = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
 async function handler(ctx) {
     const group = ctx.req.param('group');
     const artifact = ctx.req.param('artifact');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     // (org.springframework, spring-core) -> org/springframework/spring-core
     const identifier = `${group.replaceAll('.', '/')}/${artifact}`;

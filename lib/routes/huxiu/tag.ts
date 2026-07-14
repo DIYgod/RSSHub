@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiArticleRootUrl, buildHuxiuRouteTitlePrefix, fetchApiRouteData, processItems, rootUrl } from './util';
@@ -25,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const apiUrl = new URL('/v3/tag/articleList', apiArticleRootUrl).href;
     const currentUrl = new URL(`tag/${id}.html`, rootUrl).href;
@@ -36,7 +35,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await processItems(response.data.datalist, limit, cache.tryGet);
+    const items = await processItems(response.data.datalist, limit);
 
     const data = await fetchApiRouteData<{
         tag_name: string;

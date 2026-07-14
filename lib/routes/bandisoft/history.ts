@@ -128,7 +128,7 @@ const languageOptions = [
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'bandizip', language = 'en' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
+    const limit = Number(ctx.req.query('limit') ?? '500');
 
     const validIds = new Set<string>(idOptions.map((option) => option.value));
 

@@ -46,7 +46,7 @@ async function handler(): Promise<Data> {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate(pubDate), +8),
+                pubDate: timezone(parseDate(pubDate), 8),
                 description,
             };
         });

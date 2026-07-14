@@ -36,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '1', downLinkType = '磁力链' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     // If the id is not composed solely of digits,
     // then consider it as the id of a movie or TV show;
@@ -61,14 +61,14 @@ async function handler(ctx) {
     // add that item alone to the "to be processed" array.
 
     let items = isCategory
-        ? await getItems(cache.tryGet, currentUrl, id, 'div.rowMod', 'ul.slides li a')
+        ? await getItems(currentUrl, id, 'div.rowMod', 'ul.slides li a')
         : [
               {
                   link: currentUrl,
               },
           ];
 
-    items = await Promise.all(items.slice(0, limit).map((item) => getItemInfo(cache.tryGet, item.link)));
+    items = await Promise.all(items.slice(0, limit).map((item) => getItemInfo(item.link)));
 
     // If the link of the entry is "#",
     // it indicates that there are currently no relevant resources available for that specific item.
@@ -77,7 +77,7 @@ async function handler(ctx) {
 
     items = items.flat();
 
-    const headerTitle = isCategory ? $('div.rowMod').eq(Number.parseInt(id, 10)).find('h2.row-header-title').text() : '';
+    const headerTitle = isCategory ? $('div.rowMod').eq(Number(id)).find('h2.row-header-title').text() : '';
     const title = `${$('title').text()}${headerTitle ? ` - ${headerTitle}` : ''}`;
     const icon = $('link[rel="shortcut icon"]').prop('href');
 

@@ -77,7 +77,7 @@ async function handler(ctx) {
             const info = {
                 title: $(child[1]).find('a').attr('title'),
                 link: $(child[1]).find('a').attr('href').startsWith('../') ? new URL($(child[1]).find('a').attr('href'), notice_type[type].url).href : $(child[1]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(child[2]).text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(child[2]).text(), 'YYYY-MM-DD'), 8),
             };
             return info;
         });

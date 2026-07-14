@@ -9,17 +9,17 @@ const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断 host
 
 export const route: Route = {
-    path: '/moa/suburl/:suburl{.+}',
+    path: '/suburl/:suburl{.+}',
     categories: ['government'],
     example: '/gov/moa/suburl/gk/zcjd/',
     radar: [
         {
             source: ['moa.gov.cn/'],
-            target: '/moa/suburl/:suburl',
+            target: '/suburl/:suburl',
         },
     ],
     parameters: { suburl: '下级目录，请使用最下级的目录' },
-    name: '中华人民共和国农业农村部 - 新闻',
+    name: '新闻',
     maintainers: ['Origami404', 'lyqluis'],
     handler,
     url: 'moa.gov.cn/',
@@ -43,10 +43,12 @@ async function handler(ctx) {
             titleSelector: 'a[class="block w_fill ellipsis adc ahc"]',
             dateSelector: 'span',
         });
-    } else if (suburl.startsWith('sj/zxfb')) {
+    }
+    if (suburl.startsWith('sj/zxfb')) {
         // 数据 - 最新发布
         return await dealLatestDataChannel();
-    } else if (suburl.startsWith('gk')) {
+    }
+    if (suburl.startsWith('gk')) {
         // 公开
         return await dealChannel(suburl, {
             channelTitleSelector: 'title',
@@ -54,7 +56,8 @@ async function handler(ctx) {
             titleSelector: 'a',
             dateSelector: 'span',
         });
-    } else if (suburl.startsWith('govpublic')) {
+    }
+    if (suburl.startsWith('govpublic')) {
         // 最新公开
         return await dealChannel('govpublic/1/index.htm', {
             channelTitleText: '最新公开',
@@ -62,14 +65,13 @@ async function handler(ctx) {
             titleSelector: 'a',
             dateSelector: 'span',
         });
-    } else {
-        return await dealChannel(suburl, {
-            channelTitleSelector: '.pub-media1-head-title',
-            listSelector: '.ztlb',
-            titleSelector: 'a',
-            dateSelector: 'span',
-        });
     }
+    return await dealChannel(suburl, {
+        channelTitleSelector: '.pub-media1-head-title',
+        listSelector: '.ztlb',
+        titleSelector: 'a',
+        dateSelector: 'span',
+    });
 }
 
 // 处理文章列表，从那里获得一堆要爬取的页面，然后爬取

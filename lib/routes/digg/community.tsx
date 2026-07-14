@@ -127,7 +127,7 @@ const DiggDescription = ({ node }) => {
 
 async function handler(ctx) {
     const { community } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? 30, 10);
+    const limit = Number(ctx.req.query('limit') ?? 30);
 
     const communityData = await cache.tryGet(`digg:community:${community}`, async () => {
         const {

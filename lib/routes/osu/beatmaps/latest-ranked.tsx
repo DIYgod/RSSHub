@@ -232,9 +232,9 @@ async function handler(ctx): Promise<Data> {
     if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
-                upperLimit = Number.parseFloat(dfLimit.slice(1));
+                upperLimit = Number(dfLimit.slice(1));
             } else if (dfLimit.startsWith('L')) {
-                lowerLimit = Number.parseFloat(dfLimit.slice(1));
+                lowerLimit = Number(dfLimit.slice(1));
             }
         }
 
@@ -242,10 +242,7 @@ async function handler(ctx): Promise<Data> {
             if (item.beatmaps.at(0)!.difficulty_rating > upperLimit) {
                 return false;
             }
-            if (item.beatmaps.at(-1)!.difficulty_rating < lowerLimit) {
-                return false;
-            }
-            return true;
+            return item.beatmaps.at(-1)!.difficulty_rating >= lowerLimit;
         };
 
         beatmapsetList = beatmapsetList.filter((item) => difficultyRateFilterFunc(item));

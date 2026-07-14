@@ -59,7 +59,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
         });
 

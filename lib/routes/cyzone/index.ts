@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { apiRootUrl, getInfo, processItems, rootUrl } from './util';
 
@@ -29,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     const apiUrl = new URL(`v2/content/channel/${id === 'news' ? 'getArticle' : 'detail'}`, apiRootUrl).href;
     const currentUrl = new URL(`channel/${id}`, rootUrl).href;
@@ -37,7 +36,6 @@ async function handler(ctx) {
     const items = await processItems(
         apiUrl,
         limit,
-        cache.tryGet,
         id === 'news'
             ? {}
             : {
@@ -47,6 +45,6 @@ async function handler(ctx) {
 
     return {
         item: items,
-        ...(await getInfo(currentUrl, cache.tryGet)),
+        ...(await getInfo(currentUrl)),
     };
 }

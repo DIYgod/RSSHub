@@ -100,7 +100,7 @@ const getInfoUrlList = async (url) => {
         .map((item) => ({
             title: $('a', item).attr('title'),
             url: `${rootUrl}${$('a', item).attr('href')}`,
-            pubDate: parseDate(timezone($('div > div:nth-child(4)', item).html().trim()), +8),
+            pubDate: parseDate(timezone($('div > div:nth-child(4)', item).html().trim()), 8),
         }));
     return infoList;
 };
@@ -119,7 +119,7 @@ const getInfoContent = (item) =>
     });
 
 export const route: Route = {
-    path: '/sichuan/deyang/mztoday/:infoType?',
+    path: '/deyang/mztoday/:infoType?',
     categories: ['government'],
     example: '/gov/sichuan/deyang/mztoday/zx',
     parameters: { infoType: '信息栏目名称。默认最新(zx)' },
@@ -134,7 +134,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.mztoday.gov.cn/*'],
-            target: '/sichuan/deyang/mztoday',
+            target: '/deyang/mztoday',
         },
     ],
     name: '今日绵竹',

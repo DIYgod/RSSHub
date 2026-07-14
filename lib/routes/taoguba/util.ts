@@ -18,11 +18,13 @@ const renderPostDetail = async (item) =>
 
         content('#videoImg').remove();
         content('img').each((_, img) => {
-            if (img.attribs.src2) {
-                img.attribs.src = img.attribs.src2;
-                delete img.attribs.src2;
-                delete img.attribs['data-original'];
+            if (!img.attribs.src2) {
+                return;
             }
+
+            img.attribs.src = img.attribs.src2;
+            delete img.attribs.src2;
+            delete img.attribs['data-original'];
         });
 
         item.description = content('#first').html();
@@ -36,7 +38,7 @@ const renderPostDetail = async (item) =>
                     .text()
                     .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)[0]
             ),
-            +8
+            8
         );
 
         item.category = content('.classify')

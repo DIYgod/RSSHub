@@ -84,7 +84,7 @@ async function handler(ctx) {
 
                 return {
                     title,
-                    link: new URL(link, `${baseUrl}/`).toString(),
+                    link: new URL(link, `${baseUrl}/`).href,
                     description,
                 };
             })

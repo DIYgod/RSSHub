@@ -62,20 +62,20 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
 const getSortTimestamp = (pubdate?: string[]): number => {
     const pubDateText = getPubDateText(pubdate);
     if (!pubDateText) {
-        return Number.POSITIVE_INFINITY;
+        return Infinity;
     }
 
     const datePart = pubDateText.split('(', 1)[0].trim();
     const match = /^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?/.exec(datePart);
     if (!match) {
-        return Number.POSITIVE_INFINITY;
+        return Infinity;
     }
 
-    const year = Number.parseInt(match[1], 10);
-    const month = match[2] ? Number.parseInt(match[2], 10) : 1;
-    const day = match[3] ? Number.parseInt(match[3], 10) : 1;
+    const year = Number(match[1]);
+    const month = match[2] ? Number(match[2]) : 1;
+    const day = match[3] ? Number(match[3]) : 1;
     const timestamp = Date.UTC(year, month - 1, day);
-    return Number.isNaN(timestamp) ? Number.POSITIVE_INFINITY : timestamp;
+    return Number.isNaN(timestamp) ? Infinity : timestamp;
 };
 
 const getWishCount = (wishCount?: number | string): number => {
@@ -83,7 +83,7 @@ const getWishCount = (wishCount?: number | string): number => {
         return wishCount;
     }
     if (typeof wishCount === 'string') {
-        const parsed = Number.parseInt(wishCount, 10);
+        const parsed = Number(wishCount);
         return Number.isNaN(parsed) ? 0 : parsed;
     }
     return 0;
@@ -146,7 +146,7 @@ async function handler(ctx) {
     const countParam = ctx.req.param('count');
 
     const sortBy = sortByParam === 'time' ? 'time' : 'hot';
-    const rawCount = Number.parseInt(countParam || '', 10);
+    const rawCount = Number(countParam || '');
     const requestCount = Number.isNaN(rawCount) || rawCount <= 0 ? 10 : rawCount;
 
     const ts = new Date().toISOString().slice(0, 10).replaceAll('-', '');

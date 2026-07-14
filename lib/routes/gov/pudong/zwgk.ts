@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 
 export const route: Route = {
-    path: '/pudong/zwgk',
+    path: '/zwgk',
     categories: ['government'],
     example: '/gov/pudong/zwgk',
     features: {
@@ -20,10 +20,10 @@ export const route: Route = {
     radar: [
         {
             source: ['www.pudong.gov.cn/zwgk/zxxxgk/index.html'],
-            target: '/pudong/zwgk',
+            target: '/zwgk',
         },
     ],
-    name: '政务公开-浦东新区',
+    name: '政务公开',
     maintainers: ['himingway'],
     handler,
 };

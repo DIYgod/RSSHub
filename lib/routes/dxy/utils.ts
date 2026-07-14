@@ -1,6 +1,7 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -33,8 +34,8 @@ const sign = (params) => {
     return CryptoJS.SHA1(searchParams.toString()).toString();
 };
 
-const getPost = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const getPost = (item) =>
+    cache.tryGet(item.link, async () => {
         const postParams = {
             postId: item.postId,
             serverTimestamp: Date.now(),
@@ -52,7 +53,7 @@ const getPost = (item, tryGet) =>
             throw new Error(post.message);
         }
 
-        const $ = cheerio.load(post.data.body, null, false);
+        const $ = load(post.data.body, null, false);
 
         $('img').each((_, img) => {
             img = $(img);

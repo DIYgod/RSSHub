@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
+    const limit = Number(ctx.req.query('limit') ?? '50');
 
     const apiSlug = 'wp-json/wp/v2';
 
@@ -74,13 +74,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
         for (const media of mediaResponse) {
-            if (media.parent) {
-                const existing = mediaMap.get(media.parent);
-                if (existing) {
-                    existing.push(media);
-                } else {
-                    mediaMap.set(media.parent, [media]);
-                }
+            if (!media.parent) {
+                continue;
+            }
+
+            const existing = mediaMap.get(media.parent);
+            if (existing) {
+                existing.push(media);
+            } else {
+                mediaMap.set(media.parent, [media]);
             }
         }
     }

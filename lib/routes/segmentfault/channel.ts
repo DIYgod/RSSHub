@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { acw_sc__v2, host, parseItems, parseList } from './utils';
@@ -39,7 +38,7 @@ async function handler(ctx) {
             query: 'channel',
             slug: name,
             offset: 0,
-            size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20,
+            size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
             mode: 'scrollLoad',
         },
     });
@@ -49,9 +48,9 @@ async function handler(ctx) {
 
     const list = parseList(apiResponse.rows);
 
-    const acwScV2Cookie = await acw_sc__v2(list[0].link, cache.tryGet);
+    const acwScV2Cookie = await acw_sc__v2(list[0].link);
 
-    const items = await Promise.all(list.map((item) => parseItems(acwScV2Cookie, item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseItems(acwScV2Cookie, item)));
 
     return {
         title: `segmentfault - ${channelName}`,

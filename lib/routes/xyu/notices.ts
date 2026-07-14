@@ -63,7 +63,7 @@ async function handler() {
                 title,
                 link: new URL(link, baseUrl).href,
                 description: description || title,
-                pubDate: timezone(parseDate(dateText, 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(dateText, 'YYYY-MM-DD'), 8),
             };
         })
         .filter(Boolean);

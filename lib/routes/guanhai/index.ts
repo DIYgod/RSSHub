@@ -55,7 +55,7 @@ async function handler() {
                 const $ = load(response);
                 item.author = $('.source').text();
                 item.description = $('.article-content').html() ?? $('.video-content').html();
-                item.pubDate = item.pubDate ?? timezone(parseDate($('.date').text(), 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate ??= timezone(parseDate($('.date').text(), 'YYYY-MM-DD HH:mm'), 8);
                 return item;
             })
         )

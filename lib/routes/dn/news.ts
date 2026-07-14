@@ -42,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language, category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dn.com';
     const currentUrl = new URL(`/${language}/news/${category}`, rootUrl).href;
@@ -75,7 +75,7 @@ async function handler(ctx) {
                     .find('span.cat')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('span.time').text()), +8),
+                pubDate: timezone(parseDate(item.find('span.time').text()), 8),
             };
         });
 
@@ -100,7 +100,7 @@ async function handler(ctx) {
                         .toArray()
                         .map((c) => content(c).text()),
                 ];
-                item.pubDate = timezone(parseDate(content('span.date').text()), +8);
+                item.pubDate = timezone(parseDate(content('span.date').text()), 8);
 
                 return item;
             })

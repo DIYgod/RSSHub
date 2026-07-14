@@ -49,12 +49,12 @@ async function handler(ctx) {
     let currentRSSURL = `${rootURL}/?page=rss`;
     let currentLink = `${rootURL}/`;
     if (username !== undefined) {
-        currentRSSURL = `${currentRSSURL}&u=${encodeURI(username)}`;
-        currentLink = `${currentLink}user/${encodeURI(username)}`;
+        currentRSSURL += `&u=${encodeURI(username)}`;
+        currentLink += `user/${encodeURI(username)}`;
     }
     if (query !== undefined) {
-        currentRSSURL = `${currentRSSURL}&q=${encodeURI(query)}`;
-        currentLink = `${currentLink}?q=${encodeURI(query)}`;
+        currentRSSURL += `&q=${encodeURI(query)}`;
+        currentLink += `?q=${encodeURI(query)}`;
     }
 
     const feed = await parser.parseURL(currentRSSURL);
@@ -93,19 +93,18 @@ async function handler(ctx) {
             description: feed.description,
             item: items,
         };
-    } else {
-        feed.items.map((item) => {
-            item.description = item.content;
-            item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
-            item.enclosure_type = 'application/x-bittorrent';
-            return item;
-        });
-
-        return {
-            title: feed.title,
-            link: currentLink,
-            description: feed.description,
-            item: feed.items,
-        };
     }
+    feed.items.map((item) => {
+        item.description = item.content;
+        item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
+        item.enclosure_type = 'application/x-bittorrent';
+        return item;
+    });
+
+    return {
+        title: feed.title,
+        link: currentLink,
+        description: feed.description,
+        item: feed.items,
+    };
 }

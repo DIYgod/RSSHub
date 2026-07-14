@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://news.gamebase.com.tw';
     const targetUrl: string = new URL(`news${category === 'all' ? '' : `/newslist?type=${category}`}`, baseUrl).href;
@@ -98,7 +98,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                     link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                     category: categories,
                     author: authors,
@@ -110,7 +110,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     },
                     image,
                     banner: image,
-                    updated: updated ? timezone(parseDate(updated), +8) : undefined,
+                    updated: updated ? timezone(parseDate(updated), 8) : undefined,
                     language,
                 };
 

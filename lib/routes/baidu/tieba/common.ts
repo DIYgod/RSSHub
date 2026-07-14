@@ -130,6 +130,7 @@ export function normalizeUrl(href: string, base: string = 'https://tieba.baidu.c
 const TIEBA_CLIENT_SECRET = 'tiebaclient!!!';
 
 function computeSign(params: Record<string, string>): string {
+    // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const sortedKeys = Object.keys(params).toSorted();
     const raw = sortedKeys.map((key) => `${key}=${params[key]}`).join('') + TIEBA_CLIENT_SECRET;
     return createHash('md5').update(raw).digest('hex');

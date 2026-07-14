@@ -187,7 +187,7 @@ const builtinModules: Record<string, unknown> = {
 
 export function createRequire(_filename: string | URL) {
     return function require(id: string): unknown {
-        if (id in builtinModules) {
+        if (Object.hasOwn(builtinModules, id)) {
             return builtinModules[id];
         }
         // For non-builtin modules, throw an error

@@ -10,7 +10,7 @@ import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.78dm.net';
     const currentUrl = new URL(category.includes('/') ? `${category}.html` : category, rootUrl).href;
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate, 'YYYY.MM.DD HH:mm'), +8) : undefined,
+                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate, 'YYYY.MM.DD HH:mm'), 8) : undefined,
                 link: href?.startsWith('//') ? `https:${href}` : href,
                 category: [
                     ...new Set([
@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()), +8);
+                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()), 8);
                 item.author = $$('a.push-username').contents().first().text();
                 item.content = {
                     html: description,

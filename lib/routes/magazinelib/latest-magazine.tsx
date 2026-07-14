@@ -69,7 +69,7 @@ async function handler(ctx) {
 
     return {
         title: `MagazineLib - Latest Magazines${subtitle}`,
-        link: `{host}/?s=${query}`,
+        link: `${host}/?s=${query}`,
         description: `MagazineLib - Latest Magazines${subtitle}`,
         item: items.map((item) => ({
             title: item.title,

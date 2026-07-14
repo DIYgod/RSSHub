@@ -13,11 +13,11 @@ const pageType = (href) => {
     const url = new URL(href);
     if (url.hostname === 'mp.weixin.qq.com') {
         return 'wechat-mp';
-    } else if (url.hostname === 'www.nua.edu.cn') {
-        return 'nua';
-    } else {
-        return 'unknown';
     }
+    if (url.hostname === 'www.nua.edu.cn') {
+        return 'nua';
+    }
+    return 'unknown';
 };
 
 function arti_link(text, href) {
@@ -39,7 +39,7 @@ async function ProcessList(newsUrl, baseUrl, listName, listDate, webPageName) {
             return {
                 link: type === 'in-nua' ? baseUrl + href : href,
                 title: $(item).find('a').attr('title'),
-                pubDate: timezone(parseDate($(item).find(listDate).first().text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(item).find(listDate).first().text(), 'YYYY-MM-DD'), 8),
                 type,
             };
         });

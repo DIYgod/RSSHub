@@ -73,7 +73,7 @@ async function handler(ctx) {
             return {
                 title: item.text(),
                 link: rootUrl + item.attr('href'),
-                pubDate: timezone(parseDate(dateString[0]), +9),
+                pubDate: timezone(parseDate(dateString[0]), 9),
             };
         });
 
@@ -91,7 +91,7 @@ async function handler(ctx) {
                 const dateElem = $('.publish-time');
                 const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
                 dateElem.remove();
-                item.pubDate = dateString ? timezone(parseDate(dateString[0]), +9) : item.pubDate;
+                item.pubDate = dateString ? timezone(parseDate(dateString[0]), 9) : item.pubDate;
 
                 const description = fixDesc($, $('.article-content-body .content-wrapper'));
 

@@ -53,7 +53,7 @@ async function handler(ctx) {
                     description,
                     author,
                     link,
-                    pubDate: timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), +8),
+                    pubDate: timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), 8),
                 };
             });
         })

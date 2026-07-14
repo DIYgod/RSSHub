@@ -247,38 +247,37 @@ async function handler(ctx) {
                 },
             ],
         };
-    } else {
-        let items = $(struct[category].selector.list)
-            .toArray()
-            .map((item) => {
-                item = $(item);
-                return {
-                    title: item.find('a').text(),
-                    link: new URL(item.find('a').attr('href'), baseUrl).href,
-                    pubDate: parseDate(item.find('span').text()),
-                };
-            });
-
-        items = await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const detailResponse = await got(item.link, {
-                        headers: {
-                            referer: url,
-                        },
-                    });
-                    const content = load(detailResponse.data);
-                    content('.content-sxt').remove();
-                    item.description = content('[name="_newscontent_fromname"]').html();
-                    return item;
-                })
-            )
-        );
-
-        return {
-            title: $('title').text(),
-            link: url,
-            item: items,
-        };
     }
+    let items = $(struct[category].selector.list)
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            return {
+                title: item.find('a').text(),
+                link: new URL(item.find('a').attr('href'), baseUrl).href,
+                pubDate: parseDate(item.find('span').text()),
+            };
+        });
+
+    items = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got(item.link, {
+                    headers: {
+                        referer: url,
+                    },
+                });
+                const content = load(detailResponse.data);
+                content('.content-sxt').remove();
+                item.description = content('[name="_newscontent_fromname"]').html();
+                return item;
+            })
+        )
+    );
+
+    return {
+        title: $('title').text(),
+        link: url,
+        item: items,
+    };
 }

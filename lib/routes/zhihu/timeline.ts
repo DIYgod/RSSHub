@@ -108,7 +108,7 @@ async function handler(ctx) {
         }
         const link = buildLink(e);
         return {
-            title: `${e.action_text_tpl.replace('{}', buildActors(e))}: ${getOne([e.target.title, e.target.question ? e.target.question.title : ''])}`,
+            title: `${e.action_text_tpl.replace('{}', () => buildActors(e))}: ${getOne([e.target.title, e.target.question ? e.target.question.title : ''])}`,
             description: processImage(`<div>${getOne([e.target.content_html, getContent(e.target.content), e.target.detail, e.target.excerpt, ''])}</div>`),
             pubDate: parseDate(e.updated_time * 1000),
             link,
@@ -123,7 +123,7 @@ async function handler(ctx) {
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
-                const title = e.group_text.replace('{LIST_COUNT}', e.list.length);
+                const title = e.group_text.replace('{LIST_COUNT}', () => e.list.length);
                 const description =
                     e.list && Array.isArray(e.list)
                         ? e.list

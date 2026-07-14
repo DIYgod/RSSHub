@@ -67,7 +67,8 @@ export const route: Route = {
 
 function getMediaAreas(mediaAreas?: Api.TypeMediaArea[]) {
     let description = '';
-    for (const area of mediaAreas ?? []) {
+    const areas = mediaAreas ?? [];
+    for (const area of areas) {
         if (area instanceof Api.MediaAreaChannelPost) {
             // TODO: fetch area.msgId and display inline
         } else if ((area instanceof Api.MediaAreaGeoPoint || area instanceof Api.MediaAreaVenue) && area.geo instanceof Api.GeoPoint) {

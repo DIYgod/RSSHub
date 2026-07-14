@@ -78,14 +78,14 @@ async function handler(ctx) {
         const { text: content, images } = extractContent(thread.first_post_content || thread.abstract || []);
 
         const timestamp = Number(thread.create_time || 0);
-        const pubDate = timestamp > 0 ? timezone(new Date(timestamp * 1000), +8) : undefined;
+        const pubDate = timestamp > 0 ? timezone(new Date(timestamp * 1000), 8) : undefined;
 
         const authorName = authorMap.get(Number(thread.author_id)) || '';
 
         return {
             title: thread.title,
             link: `https://tieba.baidu.com/p/${thread.id || thread.tid}`,
-            ...(pubDate ? { pubDate } : {}),
+            ...(pubDate && { pubDate }),
             author: authorName,
             description: renderToString(
                 <>

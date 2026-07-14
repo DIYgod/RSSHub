@@ -20,7 +20,7 @@ import { NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, Rankin
 
 const getParameters = () => {
     // Generate options for sub parameter
-    const subOptions = Object.entries(SyosetuSub).map(([, value]) => ({
+    const subOptions = Object.values(SyosetuSub).map((value) => ({
         value,
         label: syosetuSubToJapanese[value],
     }));
@@ -55,7 +55,7 @@ const getParameters = () => {
 };
 
 const getBest5RadarItems = () =>
-    Object.entries(SyosetuSub).flatMap(([, domain]) =>
+    Object.values(SyosetuSub).flatMap((domain) =>
         Object.values(RankingPeriod).map((period) => ({
             title: `${syosetuSubToJapanese[domain]} ${periodToJapanese[period]}ランキング BEST5`,
             source: [`${domain === SyosetuSub.MOONLIGHT_BL ? SyosetuSub.MOONLIGHT : domain}.syosetu.com/rank/${domain === SyosetuSub.MOONLIGHT_BL ? 'bltop' : 'top'}`],
@@ -163,7 +163,7 @@ async function handler(ctx: Context): Promise<Data> {
         searchParams.type = novelType;
     }
 
-    if (!(sub in syosetuSubToNocgenre)) {
+    if (!Object.hasOwn(syosetuSubToNocgenre, sub)) {
         throw new InvalidParameterError(`Invalid subsite: ${sub}`);
     }
     const nocgenre = syosetuSubToNocgenre[sub];
@@ -176,7 +176,7 @@ async function handler(ctx: Context): Promise<Data> {
         link: `https://novel18.syosetu.com/${String(novel.ncode).toLowerCase()}`,
         description: renderDescription({ novel }),
         author: novel.writer,
-        category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
+        category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
     }));
 
     return {

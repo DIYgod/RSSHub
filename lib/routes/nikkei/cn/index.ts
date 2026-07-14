@@ -39,11 +39,11 @@ export const route: Route = {
             target: (params) => {
                 if (params.category && params.type) {
                     return `/nikkei/cn/cn/${params.category}/${params.type.replace('.html', '')}`;
-                } else if (params.category && !params.type) {
-                    return `/nikkei/cn/cn/${params.category.replace('.html', '')}`;
-                } else {
-                    return '/nikkei/cn/cn';
                 }
+                if (params.category && !params.type) {
+                    return `/nikkei/cn/cn/${params.category.replace('.html', '')}`;
+                }
+                return '/nikkei/cn/cn';
             },
         },
         {
@@ -52,11 +52,11 @@ export const route: Route = {
             target: (params) => {
                 if (params.category && params.type) {
                     return `/nikkei/cn/zh/${params.category}/${params.type.replace('.html', '')}`;
-                } else if (params.category && !params.type) {
-                    return `/nikkei/cn/zh/${params.category.replace('.html', '')}`;
-                } else {
-                    return '/nikkei/cn/zh';
                 }
+                if (params.category && !params.type) {
+                    return `/nikkei/cn/zh/${params.category.replace('.html', '')}`;
+                }
+                return '/nikkei/cn/zh';
             },
         },
     ],
@@ -133,10 +133,10 @@ async function handler(ctx) {
                 divs.first().remove();
                 divs.last().remove();
 
-                item.pubDate = timezone(parseDate(item.link.match(/\/\d+-(.*?)\.html/)[1], 'YYYY-MM-DD-HH-mm-ss'), +9);
+                item.pubDate = timezone(parseDate(item.link.match(/\/\d+-(.*?)\.html/)[1], 'YYYY-MM-DD-HH-mm-ss'), 9);
 
                 item.author = content('meta[name="author"]').attr('content');
-                item.title = item.title ?? content('meta[name="twitter:title"]').attr('content');
+                item.title ??= content('meta[name="twitter:title"]').attr('content');
                 item.description = content('#contentDiv').html()?.replaceAll('&nbsp;', '').replaceAll('<p></p>', '');
 
                 return item;

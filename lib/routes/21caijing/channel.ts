@@ -43,7 +43,7 @@ const processMenu = (data: any[]) => {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { name = '热点' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const domain = 'm.21jingji.com';
     const baseUrl = `https://${domain}`;
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDate ? timezone(parseRelativeDate(pubDate), +8) : undefined,
+                pubDate: pubDate ? timezone(parseRelativeDate(pubDate), 8) : undefined,
                 link: linkUrl,
                 category: categories,
                 author: authors,
@@ -141,13 +141,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                         category: categories,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : item.updated,
+                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                         language,
                     };
 

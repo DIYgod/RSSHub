@@ -53,7 +53,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) => {
             const title = info.title || 'tzgg';
-            const itemUrl = new URL(info.link, host).href.replace(/^([^\n\r\u2028\u2029]*)\?[^\n\r?\u2028\u2029]*$/, '$1');
+            const itemUrl = new URL(info.link, host).href.replace(/^([^\n\r\u{2028}\u{2029}]*)\?[^\n\r?\u{2028}\u{2029}]*$/u, '$1');
 
             return cache.tryGet(itemUrl, async () => {
                 const response = await got.get(itemUrl);
@@ -67,7 +67,7 @@ async function handler(ctx) {
                     title,
                     link: itemUrl,
                     description,
-                    pubDate: timezone(parseDate(date_value), +8),
+                    pubDate: timezone(parseDate(date_value), 8),
                 };
             });
         })

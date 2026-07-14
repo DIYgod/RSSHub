@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -54,7 +53,7 @@ async function handler(ctx) {
         };
     });
 
-    const results = await Promise.allSettled(list.map((item) => parseArticle(item, cache.tryGet)));
+    const results = await Promise.allSettled(list.map((item) => parseArticle(item)));
     const result = results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
 
     return {

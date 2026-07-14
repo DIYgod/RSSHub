@@ -22,7 +22,7 @@ async function handler(ctx) {
     if (!isValidHost(id)) {
         throw new InvalidParameterError('Invalid id');
     }
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = `http://${id}.m4.cn`;
     const currentUrl = new URL(category ? `/${category.replace(/\/$/, '')}/` : '/', rootUrl).href;
@@ -54,7 +54,7 @@ async function handler(ctx) {
                     .find('a.aclass')
                     .toArray()
                     .map((c) => $(c).text().replaceAll('[]', '').trim()),
-                pubDate: timezone(parseDate(item.find('span.atime').text()), +8),
+                pubDate: timezone(parseDate(item.find('span.atime').text()), 8),
             };
         });
 
@@ -74,7 +74,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => content(c).text())
                     .slice(1);
-                item.pubDate = timezone(parseDate(content('span.atime1, span.post-time').text()), +8);
+                item.pubDate = timezone(parseDate(content('span.atime1, span.post-time').text()), 8);
 
                 return item;
             })

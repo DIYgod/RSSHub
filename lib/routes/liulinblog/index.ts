@@ -14,7 +14,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const params = ctx.req.param('params');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://www.liulinblog.com';
     const currentUrl = params ? new URL(params, rootUrl).href : rootUrl;
@@ -48,7 +48,7 @@ async function handler(ctx) {
                     .map((c) => $(c).text()),
                 guid: `liulinblog-${item.prop('id')}`,
                 pubDate: parseDate(item.find('span.meta-date time').prop('datetime')),
-                comments: item.find('span.meta-comment').text() ? Number.parseInt(item.find('span.meta-comment').text().trim(), 10) : 0,
+                comments: item.find('span.meta-comment').text() ? Number(item.find('span.meta-comment').text().trim()) : 0,
             };
         });
 
@@ -77,11 +77,10 @@ async function handler(ctx) {
                 item.guid = `liulinblog-${content('article').first().prop('id')}`;
                 item.pubDate = parseDate(content('span.meta-date time').first().prop('datetime'));
                 item.comments = content('h3.comments-title').text()
-                    ? Number.parseInt(
+                    ? Number(
                           content('h3.comments-title')
                               .text()
-                              .match(/\((\d+)\)/),
-                          10
+                              .match(/\((\d+)\)/)
                       )
                     : 0;
 

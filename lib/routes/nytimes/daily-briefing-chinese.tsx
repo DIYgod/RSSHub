@@ -44,9 +44,8 @@ async function handler() {
     const listData = JSON.parse(response.data.match(/"initialState":(.*),"config"/)[1]);
 
     let items = [];
-    for (const key of Object.keys(listData)) {
-        if (key.startsWith('Article:') && listData[key].url) {
-            const item = listData[key];
+    for (const [key, item] of Object.entries(listData)) {
+        if (key.startsWith('Article:') && item.url) {
             items.push({
                 link: item.url,
                 pubDate: parseDate(item.firstPublished),

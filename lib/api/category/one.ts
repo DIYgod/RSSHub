@@ -1,28 +1,40 @@
 import type { RouteHandler } from '@hono/zod-openapi';
 import { createRoute, z } from '@hono/zod-openapi';
 
-import { namespaces } from '@/registry';
+import { ensureAllLoaded, namespaces } from '@/registry';
 
-const categoryList: Record<string, typeof namespaces> = {};
+let cachedCategoryList: Record<string, typeof namespaces> | undefined;
 
-for (const namespace in namespaces) {
-    for (const path in namespaces[namespace].routes) {
-        if (namespaces[namespace].routes[path].categories?.length) {
-            for (const category of namespaces[namespace].routes[path].categories!) {
-                if (!categoryList[category]) {
-                    categoryList[category] = {};
+const getCategoryList = async (): Promise<Record<string, typeof namespaces>> => {
+    if (cachedCategoryList) {
+        return cachedCategoryList;
+    }
+    await ensureAllLoaded();
+
+    const list: Record<string, typeof namespaces> = {};
+    for (const namespace in namespaces) {
+        for (const path in namespaces[namespace].routes) {
+            if (!namespaces[namespace].routes[path].categories?.length) {
+                continue;
+            }
+            const categories = namespaces[namespace].routes[path].categories!;
+            for (const category of categories) {
+                if (!Object.hasOwn(list, category)) {
+                    list[category] = {};
                 }
-                if (!categoryList[category][namespace]) {
-                    categoryList[category][namespace] = {
+                if (!Object.hasOwn(list[category], namespace)) {
+                    list[category][namespace] = {
                         ...namespaces[namespace],
                         routes: {},
                     };
                 }
-                categoryList[category][namespace].routes[path] = namespaces[namespace].routes[path];
+                list[category][namespace].routes[path] = namespaces[namespace].routes[path];
             }
         }
     }
-}
+    cachedCategoryList = list;
+    return cachedCategoryList;
+};
 
 const ParamsSchema = z.object({
     category: z.string().openapi({
@@ -58,7 +70,8 @@ const route = createRoute({
     },
 });
 
-const handler: RouteHandler<typeof route> = (ctx) => {
+const handler: RouteHandler<typeof route> = async (ctx) => {
+    const categoryList = await getCategoryList();
     const { categories, lang } = ctx.req.valid('query');
     const { category } = ctx.req.valid('param');
 

@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -19,12 +19,12 @@ const getRequestOptions = (referer: string) => ({
     },
 });
 const getAbsoluteUrl = (path: string | undefined) => (path ? new URL(path, ROOT_URL).href : undefined);
-const getArticleAuthor = ($: ReturnType<typeof load>) =>
+const getArticleAuthor = ($: CheerioAPI) =>
     $('#article .items p')
         .text()
         .match(/Posted by\s+(\S.*)$/)?.[1]
         ?.trim();
-const getArticleCategories = ($: ReturnType<typeof load>) => [
+const getArticleCategories = ($: CheerioAPI) => [
     ...new Set(
         $('#article .items p a[href*="/gsc_news/en/C"]')
             .toArray()
@@ -91,7 +91,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || DEFAULT_LIMIT;
+    const limit = Number(ctx.req.query('limit')) || DEFAULT_LIMIT;
 
     const html = await ofetch(LIST_URL, getRequestOptions(ROOT_URL));
     const $ = load(html);

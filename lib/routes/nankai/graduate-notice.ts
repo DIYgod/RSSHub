@@ -69,7 +69,7 @@ export const route: Route = {
 
                 // 提取日期
                 const dateStr = $timeDiv.text().trim();
-                const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD'), +8);
+                const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD'), 8);
 
                 return {
                     title,

@@ -56,7 +56,7 @@ async function handler(ctx) {
             return {
                 link: `${rootUrl}${item.attr('href')}`,
                 author: item.parent().parent().find('.text-dark').last().text(),
-                pubDate: timezone(parseDate(pubDate.includes('-') ? pubDate : `${today} ${pubDate}`), +8),
+                pubDate: timezone(parseDate(pubDate.includes('-') ? pubDate : `${today} ${pubDate}`), 8),
                 title: `${item.parent().parent().find('.align-middle').text()} ${item.text().replace(/ - SubHD/, '')}`,
             };
         });

@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -45,7 +45,7 @@ async function handler() {
                 try {
                     description = await cache.tryGet(guid, async () => {
                         const result = await got.get(`https://production-web.sekai.colorfulpalette.org/html/${path}.html`);
-                        const $ = cheerio.load(result.data);
+                        const $ = load(result.data);
                         return $.html();
                     });
                 } catch {
@@ -60,7 +60,7 @@ async function handler() {
             const item = {
                 title: post.title,
                 link,
-                pubDate: timezone(new Date(post.startAt), +8), // +8时区
+                pubDate: timezone(new Date(post.startAt), 8), // +8时区
                 description,
                 category: post.informationTag, // event,gacha,music,bug,information
                 guid,

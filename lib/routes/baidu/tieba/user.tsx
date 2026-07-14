@@ -76,7 +76,7 @@ async function handler(ctx) {
             // 时间
             const timeText = item.find('.post-num').text().trim();
             const parsedDate = timeText ? parseDate(timeText, ['YYYY-MM-DD']) : null;
-            const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
+            const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
 
             // 链接
             const link = normalizeUrl(item.find('a.thread-card-content').attr('href') || '');

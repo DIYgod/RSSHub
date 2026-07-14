@@ -1,4 +1,5 @@
-import * as cheerio from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,7 +35,7 @@ export const route: Route = {
 async function handler() {
     const response = await ofetch('https://m.sohu.com/limit');
     // 从HTML中提取JSON数据
-    const $ = cheerio.load(response);
+    const $ = load(response);
     const jsonScript = $('script:contains("WapHomeRenderData")').text();
     const jsonMatch = jsonScript?.match(/window\.WapHomeRenderData\s*=\s*(\{.*\})/s);
     if (!jsonMatch?.[1]) {
@@ -52,14 +53,14 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 try {
                     const detailResp = await ofetch(item.link);
-                    const $d = cheerio.load(detailResp);
+                    const $d = load(detailResp);
 
                     let description = '';
                     let pubDate = '';
                     if (item.link.includes('/xtopic/')) {
                         const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?', 1)[0]?.replace('www.sohu.com/', 'm.sohu.com/');
                         const response = await ofetch(`https:${fullArticleUrl}`);
-                        const $ = cheerio.load(response);
+                        const $ = load(response);
                         description = getDescription($);
                         pubDate = extractPubDate($);
                     }
@@ -85,29 +86,30 @@ async function handler() {
 
 function extractPlateBlockNewsLists(jsonData: any) {
     const result: any[] = [];
-    for (const key of Object.keys(jsonData)) {
-        if (key.startsWith('PlateBlock')) {
-            const plateBlock = jsonData[key];
-            // 处理新闻列表
-            if (plateBlock?.param?.newsData?.list) {
-                result.push(...plateBlock.param.newsData.list);
-            }
-            // 处理焦点图数据
-            if (plateBlock?.param?.focusData?.list) {
-                result.push(...plateBlock.param.focusData.list);
-            }
-            if (plateBlock?.param?.feedData0?.list) {
-                result.push(...plateBlock.param.feedData0.list);
-            }
-            if (plateBlock?.param?.feedData1?.list) {
-                result.push(...plateBlock.param.feedData1.list);
-            }
+    for (const [key, plateBlock] of Object.entries(jsonData)) {
+        if (!key.startsWith('PlateBlock')) {
+            continue;
+        }
+
+        // 处理新闻列表
+        if (plateBlock?.param?.newsData?.list) {
+            result.push(...plateBlock.param.newsData.list);
+        }
+        // 处理焦点图数据
+        if (plateBlock?.param?.focusData?.list) {
+            result.push(...plateBlock.param.focusData.list);
+        }
+        if (plateBlock?.param?.feedData0?.list) {
+            result.push(...plateBlock.param.feedData0.list);
+        }
+        if (plateBlock?.param?.feedData1?.list) {
+            result.push(...plateBlock.param.feedData1.list);
         }
     }
     return result;
 }
 
-function extractPubDate($: cheerio.CheerioAPI): string {
+function extractPubDate($: CheerioAPI): string {
     const timeElements = ['.time', '#videoPublicTime'];
     let date;
     for (const selector of timeElements) {
@@ -132,7 +134,7 @@ function extractPubDate($: cheerio.CheerioAPI): string {
     }
 }
 
-function getDescription($: cheerio.CheerioAPI): string | null {
+function getDescription($: CheerioAPI): string | null {
     const content = $('#articleContent');
     if (content.length) {
         return content.first().html()?.trim();

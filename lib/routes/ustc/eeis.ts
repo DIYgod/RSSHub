@@ -60,7 +60,7 @@ async function handler(ctx) {
             const title = item.find('h4 > a').eq(1).attr('title').trim();
             let link = item.find('h4 > a').attr('href');
             link = link.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate(item.find('.post-date > time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), +8);
+            const pubDate = timezone(parseDate(item.find('.post-date > time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
                 title,
                 pubDate,
@@ -71,10 +71,9 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let desc: string;
                 try {
                     const response = await got(item.link);
-                    desc = load(response.data)('div.wp_articlecontent').html();
+                    const desc: string = load(response.data)('div.wp_articlecontent').html();
                     item.description = desc;
                 } catch {
                     // intranet only contents

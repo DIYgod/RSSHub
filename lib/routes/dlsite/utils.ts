@@ -127,9 +127,9 @@ const ProcessItems = async (ctx) => {
 
         const detail = details[guid];
 
-        const pubDate = timezone(parseDate(detail.regist_date), +9);
+        const pubDate = timezone(parseDate(detail.regist_date), 9);
         const discountRate = detail.discount_rate;
-        const discountEndDate = detail.discount_end_date ? timezone(parseDate(detail.discount_end_date, 'MM/DD HH:mm'), +9) : undefined;
+        const discountEndDate = detail.discount_end_date ? timezone(parseDate(detail.discount_end_date, 'MM/DD HH:mm'), 9) : undefined;
         images = images.length === 0 ? [detail.work_image] : images;
 
         return {

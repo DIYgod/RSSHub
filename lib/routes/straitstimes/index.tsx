@@ -89,10 +89,12 @@ async function handler(ctx) {
     let slug = section && sections.has(`${category}-${section}-more/star`) ? `${category}-${section}-more/star` : undefined;
     if (section === undefined) {
         for (const section of ['latest', 'top-picks', 'top-stories']) {
-            if (sections.has(`${category}-${section}-more/star`)) {
-                slug = `${category}-${section}-more/star`;
-                break;
+            if (!sections.has(`${category}-${section}-more/star`)) {
+                continue;
             }
+
+            slug = `${category}-${section}-more/star`;
+            break;
         }
     }
     if (slug) {

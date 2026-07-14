@@ -42,7 +42,7 @@ async function handler() {
     const list = response.data.map((item) => ({
         title: item.title,
         link: item.url.replace('http://', 'https://'),
-        pubDate: timezone(parseDate(item.published, 'MM-DD HH:mm'), +8),
+        pubDate: timezone(parseDate(item.published, 'MM-DD HH:mm'), 8),
         category: item.cat,
     }));
 

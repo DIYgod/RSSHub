@@ -81,7 +81,7 @@ async function handler(ctx) {
                           return false;
                       }
                       const suffixes = ['et al', 'et al.'];
-                      return !suffixes.some((suffix) => author.toLowerCase().endsWith(suffix));
+                      return suffixes.every((suffix) => !author.toLowerCase().endsWith(suffix));
                   })
                   .map((author) => ({ name: author }))
             : [];

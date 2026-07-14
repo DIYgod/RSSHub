@@ -12,7 +12,7 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gzdt' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'http://www.gjs.moa.gov.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
@@ -68,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     let processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                         link: linkUrl ?? item.link,
                         category: categories,
                         author: authors,
@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : item.updated,
+                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                         language,
                     };
 
@@ -120,8 +120,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/moa/gjs/:category{.+}?',
-    name: '中华人民共和国农业农村部国际合作司',
+    path: '/gjs/:category{.+}?',
+    name: '国际合作司',
     url: 'www.gjs.moa.gov.cn',
     maintainers: ['nczitzk'],
     handler,
@@ -182,27 +182,27 @@ export const route: Route = {
         {
             title: '工作动态',
             source: ['www.gjs.moa.gov.cn/gzdt/'],
-            target: '/moa/gjs/gzdt',
+            target: '/gjs/gzdt',
         },
         {
             title: '通知公告',
             source: ['www.gjs.moa.gov.cn/tzgg/'],
-            target: '/moa/gjs/tzgg',
+            target: '/gjs/tzgg',
         },
         {
             title: '“一带一路”合作和农业走出去',
             source: ['www.gjs.moa.gov.cn/ydylhzhhnyzcq/'],
-            target: '/moa/gjs/ydylhzhhnyzcq',
+            target: '/gjs/ydylhzhhnyzcq',
         },
         {
             title: '农业国际贸易监测与展望',
             source: ['www.gjs.moa.gov.cn/ncpmy/'],
-            target: '/moa/gjs/ncpmy',
+            target: '/gjs/ncpmy',
         },
         {
             title: '多双边合作',
             source: ['www.gjs.moa.gov.cn/dsbhz/'],
-            target: '/moa/gjs/dsbhz',
+            target: '/gjs/dsbhz',
         },
     ],
     view: ViewType.Articles,

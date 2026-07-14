@@ -1,5 +1,6 @@
-import type { AnyNode, Cheerio } from 'cheerio';
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
@@ -103,7 +104,7 @@ function checkExternal(link: string): boolean {
  * @param element
  * @returns A list of RSS meta node.
  */
-function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
+function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
     const linkElement = element.find('a').first();
     const title = linkElement.text();
     const href = linkElement.attr('href');
@@ -116,7 +117,7 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     return {
         title,
         link,
-        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), +8),
+        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8),
         description: title,
         external,
     };
@@ -188,14 +189,14 @@ async function handlePostList(type: string, sub: string): Promise<DataItem[]> {
     const category = categoryMap[type];
     if (sub === 'all') {
         const subMap = category.sub;
-        urlList = Object.keys(subMap).map((key) => {
-            const subtype = subMap[key];
+        urlList = Object.values(subMap).map((value) => {
+            const subtype = value;
             return {
                 url: `${baseUrl}/${category.path}/${subtype.path}.htm`,
                 base: `${baseUrl}/${category.path}`,
             };
         });
-    } else if (sub in category.sub) {
+    } else if (Object.hasOwn(category.sub, sub)) {
         urlList.push({
             url: `${baseUrl}/${category.path}/${category.sub[sub].path}.htm`,
             base: `${baseUrl}/${category.path}`,

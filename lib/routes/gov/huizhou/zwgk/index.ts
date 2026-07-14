@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const rootURL = 'http://www.huizhou.gov.cn';
 
 export const route: Route = {
-    path: '/huizhou/zwgk/:category?',
+    path: '/zwgk/:category?',
     categories: ['government'],
     example: '/gov/huizhou/zwgk/jgdt',
     parameters: { category: '资讯类别，可以从网址中得到，默认为政务要闻' },
@@ -21,10 +21,26 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '惠州市人民政府',
+    radar: [
+        {
+            title: '政务公开 - 政务要闻',
+            source: ['www.huizhou.gov.cn/zwgk/hzsz/zwyw'],
+            target: '/zwgk/zwyw',
+        },
+        {
+            title: '政务公开 - 机关动态',
+            source: ['www.huizhou.gov.cn/zwgk/hzsz/jgdt'],
+            target: '/zwgk/jgdt',
+        },
+        {
+            title: '政务公开 - 县区要闻',
+            source: ['www.huizhou.gov.cn/zwgk/hzsz/xqyw'],
+            target: '/zwgk/xqyw',
+        },
+    ],
+    name: '政务公开',
     maintainers: ['Fatpandac'],
     handler,
-    description: '#### 政务公开 {#guang-dong-sheng-ren-min-zheng-fu-hui-zhou-shi-ren-min-zheng-fu-zheng-wu-gong-kai}',
 };
 
 async function handler(ctx) {
@@ -39,7 +55,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('a').text().trim(),
             link: $(item).find('a').attr('href'),
-            pubDate: timezone(parseDate($(item).find('li.li_art_date').text().trim()), +8),
+            pubDate: timezone(parseDate($(item).find('li.li_art_date').text().trim()), 8),
         }));
 
     const items = await Promise.all(
@@ -61,7 +77,7 @@ async function handler(ctx) {
                                 .text()
                                 .match(/时间：(.*)/)[1]
                         ),
-                        +8
+                        8
                     );
                 } catch {
                     item.description = '';

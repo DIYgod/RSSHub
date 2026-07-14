@@ -1,6 +1,7 @@
 import querystring from 'node:querystring';
 
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -195,8 +196,14 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         resourceUrl,
         async () => {
-            const _r = await ofetch(resourceUrl);
-            return _r;
+            try {
+                return await ofetch(resourceUrl);
+            } catch (error) {
+                if (error instanceof FetchError && error.statusCode) {
+                    throw error;
+                }
+                return await ofetch(resourceUrl.replace('https://t.me/', 'https://telegram.me/'));
+            }
         },
         config.cache.routeExpire,
         false
@@ -355,38 +362,37 @@ async function handler(ctx) {
                     const replyObj = item.find('.tgme_widget_message_reply');
                     if (replyObj.length === 0) {
                         return '';
-                    } else {
-                        const replyAuthorObj = replyObj.find('.tgme_widget_message_author_name');
-                        const replyAuthor = replyAuthorObj.length ? replyAuthorObj.text() : '';
-                        const viaBotObj = replyObj.find('.tgme_widget_message_via_bot');
-                        const viaBotText = viaBotObj.length ? ` via <b>${viaBotObj.text()}</b>` : '';
-                        const replyLinkHref = replyObj.attr('href');
-                        const replyLink = replyLinkHref.length ? replyLinkHref : '';
-                        const replyMetaTextObj = replyObj.find('.tgme_widget_message_metatext');
-                        const replyMetaText = replyMetaTextObj.length ? `<p><small>${replyMetaTextObj.html()}</small></p>` : '';
-                        const replyTextObj = replyObj.find('.tgme_widget_message_text');
-                        const replyText = replyTextObj.length ? `<p>${replyTextObj.html()}</p>` : '';
+                    }
+                    const replyAuthorObj = replyObj.find('.tgme_widget_message_author_name');
+                    const replyAuthor = replyAuthorObj.length ? replyAuthorObj.text() : '';
+                    const viaBotObj = replyObj.find('.tgme_widget_message_via_bot');
+                    const viaBotText = viaBotObj.length ? ` via <b>${viaBotObj.text()}</b>` : '';
+                    const replyLinkHref = replyObj.attr('href');
+                    const replyLink = replyLinkHref.length ? replyLinkHref : '';
+                    const replyMetaTextObj = replyObj.find('.tgme_widget_message_metatext');
+                    const replyMetaText = replyMetaTextObj.length ? `<p><small>${replyMetaTextObj.html()}</small></p>` : '';
+                    const replyTextObj = replyObj.find('.tgme_widget_message_text');
+                    const replyText = replyTextObj.length ? `<p>${replyTextObj.html()}</p>` : '';
 
-                        extra = {
-                            links: [
-                                {
-                                    type: 'reply',
-                                    url: replyLink,
-                                },
-                            ],
-                        };
-                        return replyLink === ''
-                            ? `<div class="rsshub-quote"><blockquote>
+                    extra = {
+                        links: [
+                            {
+                                type: 'reply',
+                                url: replyLink,
+                            },
+                        ],
+                    };
+                    return replyLink === ''
+                        ? `<div class="rsshub-quote"><blockquote>
                                     <p><b>${replyAuthor}</b>${viaBotText}:</p>
                                     ${replyMetaText}
                                     ${replyText}
                                 </blockquote></div>`
-                            : `<div class="rsshub-quote"><blockquote>
+                        : `<div class="rsshub-quote"><blockquote>
                                     <p><a href='${replyLink}'><b>${replyAuthor}</b>${viaBotText}:</a></p>
                                     ${replyMetaText}
                                     ${replyText}
                                 </blockquote></div>`;
-                    }
                 };
 
                 /* via bot */
@@ -396,9 +402,8 @@ async function handler(ctx) {
                         const userLink = viaBotObj.attr('href');
                         const userHtml = userLink ? `<a href="${userLink}">${viaBotObj.text()}</a>` : viaBotObj.text();
                         return `<p>via <b>${userHtml}</b></p>`;
-                    } else {
-                        return '';
                     }
+                    return '';
                 };
 
                 /* images and videos */
@@ -472,7 +477,7 @@ async function handler(ctx) {
                             let width = 0;
                             const widthStr = $node.css('width');
                             if (widthStr && widthStr.endsWith('px')) {
-                                width = Number.parseFloat(widthStr);
+                                width = Number(widthStr);
                             }
                             /*
                              * Height is present when the message is an album but does not exist in other cases.
@@ -482,7 +487,7 @@ async function handler(ctx) {
                             let height = 0;
                             const heightStr = $node.css('height');
                             if (heightStr && heightStr.endsWith('px')) {
-                                height = Number.parseFloat(heightStr);
+                                height = Number(heightStr);
                             }
                             /*
                              * Only calculate height when needed.
@@ -491,11 +496,15 @@ async function handler(ctx) {
                              */
                             const aspectRatioStr = $node.find('.tgme_widget_message_photo').css('padding-top');
                             if (height <= 0 && width > 0 && aspectRatioStr && aspectRatioStr.endsWith('%')) {
-                                height = (Number.parseFloat(aspectRatioStr) / 100) * width;
+                                height = (Number(aspectRatioStr) / 100) * width;
                             }
                             // Only set width/height when >32 to avoid invisible images.
-                            width > 32 && attrs.push(`width="${width}"`);
-                            height > 32 && attrs.push(`height="${height.toFixed(2).replace('.00', '')}"`);
+                            if (width > 32) {
+                                attrs.push(`width="${width}"`);
+                            }
+                            if (height > 32) {
+                                attrs.push(`height="${height.toFixed(2).replace('.00', '')}"`);
+                            }
                             tag_media += backgroundUrlSrc ? `<img ${attrs.join(' ')}>` : '';
                         }
                         if (tag_media) {
@@ -520,9 +529,8 @@ async function handler(ctx) {
                         const mapBackgroundUrlSrc = mapBackgroundUrl && mapBackgroundUrl[1];
                         const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0];
                         return locationLink ? `<a href="${locationLink}">${mapImgHtml}</a>` : mapImgHtml;
-                    } else {
-                        return '';
                     }
+                    return '';
                 };
 
                 /* voice */
@@ -548,13 +556,12 @@ async function handler(ctx) {
                         let second = 0,
                             minute = 1;
                         while (p.length > 0) {
-                            second += minute * Number.parseInt(p.pop(), 10);
+                            second += minute * Number(p.pop());
                             minute *= 60;
                         }
                         return second.toString();
-                    } else {
-                        return '';
                     }
+                    return '';
                 };
 
                 /* link preview */

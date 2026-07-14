@@ -79,7 +79,7 @@ async function handler(ctx) {
         title: item.desc,
         description: item.summ,
         link: item.link.replace('http://', 'https://'),
-        pubDate: timezone(parseDate(item.time), +8),
+        pubDate: timezone(parseDate(item.time), 8),
         category: item.keyword.split(' '),
         audio: item.audioUrl,
         audio_image_url: item.pict.imgs[0].url,

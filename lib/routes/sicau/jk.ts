@@ -112,7 +112,7 @@ export const route: Route = {
                     const { code, message, content } = await $post(`/getActDetail?actId=${item.id}`);
                     if (code === '0') {
                         item.author = content.groupName;
-                        item.pubDate = timezone(parseDate(content.startDate, 'YYYY-MM-DD HH:mm:ss'), +8);
+                        item.pubDate = timezone(parseDate(content.startDate, 'YYYY-MM-DD HH:mm:ss'), 8);
                         item.category = [content.typeName, content.levelName];
                         item.description = `<img src="${item.image}" alt="${item.title}" /><p style='white-space: pre-wrap'>${content.description}</p>`;
 

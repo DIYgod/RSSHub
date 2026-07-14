@@ -86,7 +86,7 @@ async function handler(ctx) {
             const timeMatch = timeText.match(/发布于\s+(\d{4}-\d{1,2}-\d{1,2})/);
             const time = timeMatch ? timeMatch[1] : '';
             const parsedDate = time ? parseDate(time, 'YYYY-M-D') : null;
-            const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
+            const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
 
             // 图片
             const medias = item

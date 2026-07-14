@@ -1,3 +1,6 @@
+import bbobHTML from '@bbob/html';
+import presetHTML5 from '@bbob/preset-html5';
+import type { BBobCoreTagNodeTree, NodeContent, PresetFactory, TagNodeObject } from '@bbob/types';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
@@ -6,6 +9,45 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+const attrValue = (node: TagNodeObject) => Object.keys(node.attrs ?? {})[0] ?? '';
+const childrenOf = (node: TagNodeObject) => node.content as NodeContent[];
+
+const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
+    ...tags,
+    // 简单样式
+    dice: (node) => ({ tag: 'b', content: ['ROLL : ', ...childrenOf(node)] }),
+    font: (node) => ({ tag: 'span', attrs: { style: `font-family:${attrValue(node)};` }, content: node.content }),
+    size: (node) => ({ tag: 'span', attrs: { style: `font-size:${attrValue(node)};` }, content: node.content }),
+    align: (node) => ({ tag: 'span', attrs: { style: `text-align:${attrValue(node)};` }, content: node.content }),
+    // 图片
+    img: (node, { render }) => {
+        const src = render(node.content ?? []);
+        return { tag: 'img', attrs: { src: src.startsWith('.') ? 'https://img.nga.178.com/attachments' + src.slice(1) : src }, content: null };
+    },
+    // 折叠
+    collapse: (node) => ({ tag: 'details', content: [{ tag: 'summary', content: [attrValue(node)] }, ...childrenOf(node)] }),
+    // 引用
+    uid: (node) => ({ tag: 'a', attrs: { href: `https://nga.178.com/nuke.php?func=ucp&uid=${attrValue(node)}` }, content: ['@', ...childrenOf(node)] }),
+    tid: (node) => ({ tag: 'a', attrs: { href: `https://nga.178.com/read.php?tid=${attrValue(node)}` }, content: node.content }),
+    pid: (node) => {
+        const [pid, tid, page] = attrValue(node).split(',');
+        return { tag: 'a', attrs: { href: `https://nga.178.com/read.php?tid=${tid}&page=${page}#pid${pid}Anchor` }, content: node.content };
+    },
+    // 分割线
+    h: (node) => ({ tag: 'h4', attrs: { style: 'font-size:1.17em;font-weight:bold;border-bottom:1px solid #aaa;clear:both;margin:1.33em 0 0.2em 0;' }, content: node.content }),
+}));
+
+const linkMention = (tree: BBobCoreTagNodeTree) =>
+    tree.walk((node) => {
+        if (typeof node === 'object' && node !== null && typeof node.tag === 'string' && node.tag.startsWith('@')) {
+            const username = node.tag.slice(1);
+            return { tag: 'a', attrs: { href: `https://nga.178.com/nuke.php?func=ucp&username=${username}` }, content: [`@${username}`] };
+        }
+        return node;
+    });
+
+const formatContent = (str) => bbobHTML(str, [customPreset(), linkMention]);
 
 export const route: Route = {
     path: '/post/:tid/:authorId?',
@@ -52,46 +94,6 @@ async function handler(ctx) {
         return match ? match[2] : 1;
     };
 
-    const deepReplace = (str, pattern, replace) => {
-        // 对于可能存在嵌套的样式一路 replace 到最深处
-        while (pattern.test(str)) {
-            str = str.replace(pattern, replace);
-        }
-        return str;
-    };
-
-    const formatContent = (str) => {
-        // 简单样式
-        str = deepReplace(str, /\[([bui]|del|code|sub|sup)\](.+?)\[\/\1\]/g, '<$1>$2</$1>');
-        str = str
-            .replaceAll(/\[dice\](.+?)\[\/dice\]/g, '<b>ROLL : $1</b>')
-            .replaceAll(/\[color=([^\]]+)\](.+?)\[\/color\]/g, '<span style="color:$1;">$2</span>')
-            .replaceAll(/\[font=([^\]]+)\](.+?)\[\/font\]/g, '<span style="font-family:$1;">$2</span>')
-            .replaceAll(/\[size=([^\]]+)\](.+?)\[\/size\]/g, '<span style="font-size:$1;">$2</span>')
-            .replaceAll(/\[align=([^\]]+)\](.+?)\[\/align\]/g, '<span style="text-align:$1;">$2</span>');
-        // 列表
-        str = deepReplace(str, /\[\*\](.+?)(?=\[\*\]|\[\/list\])/g, '<li>$1</li>');
-        str = deepReplace(str, /\[list\](.+?)\[\/list\]/g, '<ul>$1</ul>');
-        // 图片
-        str = str.replaceAll(/\[img\](.+?)\[\/img\]/g, (m, src) => `<img src='${src[0] === '.' ? 'https://img.nga.178.com/attachments' + src.slice(1) : src}'></img>`);
-        // 折叠
-        str = deepReplace(str, /\[collapse(?:=([^\]]+))?\](.+?)\[\/collapse\]/g, '<details><summary>$1</summary>$2</details>');
-        // 引用
-        str = deepReplace(str, /\[quote\](.+?)\[\/quote\]/g, '<blockquote>$1</blockquote>')
-            .replaceAll(/\[@(.+?)\]/g, '<a href="https://nga.178.com/nuke.php?func=ucp&username=$1">@$1</a>')
-            .replaceAll(/\[uid=(\d+)\](.+?)\[\/uid\]/g, '<a href="https://nga.178.com/nuke.php?func=ucp&uid=$1">@$2</a>')
-            .replaceAll(/\[tid=(\d+)\](.+?)\[\/tid\]/g, '<a href="https://nga.178.com/read.php?tid=$1">$2</a>')
-            .replaceAll(/\[pid=(\d+),(\d+),(\d+)\](.+?)\[\/pid\]/g, (m, pid, tid, page, str) => {
-                const url = `https://nga.178.com/read.php?tid=${tid}&page=${page}#pid${pid}Anchor`;
-                return `<a href="${url}">${str}</a>`;
-            });
-        // 链接
-        str = str.replaceAll(/\[url=([^\]]+)\](.+?)\[\/url\]/g, '<a href="$1">$2</a>');
-        // 分割线
-        str = str.replaceAll(/\[h\](.+?)\[\/h\]/g, '<h4 style="font-size:1.17em;font-weight:bold;border-bottom:1px solid #aaa;clear:both;margin:1.33em 0 0.2em 0;">$1</h4>');
-        return str;
-    };
-
     const tid = ctx.req.param('tid');
     const authorId = ctx.req.param('authorId') || undefined;
     const pageId = await getLastPageId(tid, authorId);
@@ -121,7 +123,7 @@ async function handler(ctx) {
             const description = formatContent(content.html());
             const postId = content.attr('id');
             const link = getPageUrl(tid, authorId, pageId, postId);
-            const pubDate = timezone(parseDate(post.find('.postInfo > span').first().text(), 'YYYY-MM-DD HH:mm'), +8);
+            const pubDate = timezone(parseDate(post.find('.postInfo > span').first().text(), 'YYYY-MM-DD HH:mm'), 8);
 
             return {
                 title: load(description).text(),

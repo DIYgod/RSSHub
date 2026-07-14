@@ -17,9 +17,8 @@ export default async function fetch(slug: string) {
     }
 
     // For `photography`, if it exists
-    let photographers: string;
     if (post.photographers) {
-        photographers = post.photographers
+        const photographers: string = post.photographers
             .map((photographer) => {
                 let title = '攝影 / ';
                 if (photographer.job_title) {

@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { baseUrl, getArticle, getSingleRecord } from './common';
 
@@ -20,7 +19,7 @@ export const route: Route = {
 
 async function handler() {
     const items = await getSingleRecord(host);
-    const out = await Promise.all(items.map((item) => getArticle(item, cache.tryGet)));
+    const out = await Promise.all(items.map((item) => getArticle(item)));
 
     return {
         title: '北大软微-通知公告',

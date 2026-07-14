@@ -112,11 +112,11 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Unknown region: ${region}`);
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     if (['hk', 'tw'].includes(region)) {
         const { categoryMap } = regionConfig[region];
-        if (category && !categoryMap[category]) {
+        if (category && !Object.hasOwn(categoryMap, category)) {
             throw new InvalidParameterError(`Unknown category for ${region}: ${category}`);
         }
         const tags = category ? categoryMap[category].tags : undefined;
@@ -132,17 +132,16 @@ async function handler(ctx) {
             image: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo-1200x1200.png',
             item: items,
         };
-    } else {
-        const rssUrl = `https://${region ? `${region}.` : ''}news.yahoo.com/rss/${category ? `${category}/` : ''}`;
-        const feed = await parser.parseURL(rssUrl);
-        const filteredItems = feed.items.filter((item) => item?.link && !item.link.includes('promotions') && new URL(item.link).hostname.match(/.*\.yahoo\.com$/));
-        const items = await Promise.all(filteredItems.map((item) => parseItem(item)));
-
-        return {
-            title: `Yahoo News ${region.toUpperCase()} - ${category ? category.toUpperCase() : 'All'}`,
-            link: feed.link,
-            description: feed.description,
-            item: items,
-        };
     }
+    const rssUrl = `https://${region ? `${region}.` : ''}news.yahoo.com/rss/${category ? `${category}/` : ''}`;
+    const feed = await parser.parseURL(rssUrl);
+    const filteredItems = feed.items.filter((item) => item?.link && !item.link.includes('promotions') && new URL(item.link).hostname.match(/.*\.yahoo\.com$/));
+    const items = await Promise.all(filteredItems.map((item) => parseItem(item)));
+
+    return {
+        title: `Yahoo News ${region.toUpperCase()} - ${category ? category.toUpperCase() : 'All'}`,
+        link: feed.link,
+        description: feed.description,
+        item: items,
+    };
 }

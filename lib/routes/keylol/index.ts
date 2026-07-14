@@ -72,7 +72,7 @@ async function handler(ctx) {
         authorNameMap = [];
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
@@ -151,7 +151,7 @@ async function handler(ctx) {
                 const pubDateText = pubDateEm.find('span').prop('title') ?? pubDateEm.text();
                 const pubDateMatches = pubDateText.match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
                 if (pubDateMatches) {
-                    item.pubDate = timezone(parseDate(pubDateMatches[1], 'YYYY-M-D HH:mm:ss'), +8);
+                    item.pubDate = timezone(parseDate(pubDateMatches[1], 'YYYY-M-D HH:mm:ss'), 8);
                 }
 
                 const updatedMatches =
@@ -159,10 +159,10 @@ async function handler(ctx) {
                         .text()
                         .match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
                 if (updatedMatches) {
-                    item.updated = timezone(parseDate(updatedMatches[1], 'YYYY-M-D HH:mm:ss'), +8);
+                    item.updated = timezone(parseDate(updatedMatches[1], 'YYYY-M-D HH:mm:ss'), 8);
                 }
 
-                item.comments = content('div.subforum_right_title_left_down').text() ? Number.parseInt(content('div.subforum_right_title_left_down').text(), 10) : 0;
+                item.comments = content('div.subforum_right_title_left_down').text() ? Number(content('div.subforum_right_title_left_down').text()) : 0;
 
                 return item;
             })

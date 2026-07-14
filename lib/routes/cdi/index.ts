@@ -69,7 +69,7 @@ async function handler(ctx) {
                             .match(/时间：(.*)/)[1]
                             .replaceAll(/年|月/g, '-')
                     ),
-                    +8
+                    8
                 );
 
                 return item;

@@ -49,7 +49,7 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $('em', elem).text().trim(),
-            pubDate: timezone(parseDate($('span', elem).text()), +8),
+            pubDate: timezone(parseDate($('span', elem).text()), 8),
             link: joinUrl('https://www.swpu.edu.cn/scs/index/', $('a', elem).attr('href')),
         }));
 
@@ -67,10 +67,12 @@ async function handler(ctx): Promise<Data> {
                         item.author = '计算机与软件学院';
                         item.description = $('.v_news_content').html()!;
                         for (const elem of $('.v_news_content p')) {
-                            if ($(elem).css('text-align') === 'right') {
-                                item.author = $(elem).text();
-                                break;
+                            if ($(elem).css('text-align') !== 'right') {
+                                continue;
                             }
+
+                            item.author = $(elem).text();
+                            break;
                         }
                     }
                     return item;

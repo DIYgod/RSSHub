@@ -2,14 +2,15 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.science.org';
 
-const fetchDesc = (list, context, tryGet) =>
+const fetchDesc = (list, context) =>
     Promise.all(
         list.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();

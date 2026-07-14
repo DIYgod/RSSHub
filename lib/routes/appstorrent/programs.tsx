@@ -98,7 +98,7 @@ async function handler(ctx?: Context): Promise<Data> {
 
     return {
         title: $('title').text(),
-        link: currentUrl.toString(),
+        link: currentUrl,
         allowEmpty: true,
         item: items,
     };

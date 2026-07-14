@@ -42,7 +42,7 @@ async function handler(ctx) {
     });
     const url = new URL('https://cn.bing.com/search');
     url.search = searchParams.toString();
-    const data = await parser.parseURL(url.toString());
+    const data = await parser.parseURL(url.href);
     return {
         title: data.title,
         link: data.link,

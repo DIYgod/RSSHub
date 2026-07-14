@@ -82,11 +82,12 @@ const parseDescriptionFromState = (rcState) => {
     const primer = news?.data?.newsStory?.primer?.replaceAll(String.raw`\n`, '') ?? '';
     const body = news?.data?.newsStory?.body?.html?.replaceAll(String.raw`\n`, '') ?? '';
     let bodyWithImg = body;
-    for (const [index, attachment] of (news?.data?.newsStory?.body?.attachments ?? []).entries()) {
+    const attachments = news?.data?.newsStory?.body?.attachments ?? [];
+    for (const [index, attachment] of attachments.entries()) {
         const placeholder = `<!--body:attachment:${index}-->`;
         const picture = attachment?.picture;
-        const imageUrl = picture?.pattern ? picture?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', attachment?.dimensionRatio ?? '16x9') : '';
-        bodyWithImg = bodyWithImg.replace(placeholder, `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>`);
+        const imageUrl = picture?.pattern ? picture?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', () => attachment?.dimensionRatio ?? '16x9') : '';
+        bodyWithImg = bodyWithImg.replace(placeholder, () => `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>`);
     }
     return header + primer + bodyWithImg;
 };

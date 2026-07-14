@@ -49,8 +49,9 @@ async function handler(ctx) {
     const endpoint = ctx.req.param('endpoint');
     const feed = await parser.parseURL(`https://www.economist.com/${endpoint}/rss.xml`);
 
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
     const items = await Promise.all(
-        feed.items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30).map(async (item) => {
+        feed.items.slice(0, limit).map(async (item) => {
             const path = item.link.slice(item.link.lastIndexOf('/') + 1);
             const isNotCollection = !/^\d{4}-\d{2}-\d{2}$/.test(path);
             const itemDetails = isNotCollection ? await getArticleDetail(item.link) : null;

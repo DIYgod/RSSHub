@@ -65,7 +65,7 @@ function getSearchPageUrl(type: CommunityEntryType) {
     url.searchParams.set('type', type);
     url.searchParams.set('sort', 'created');
 
-    return url.toString();
+    return url.href;
 }
 
 async function getSearchConfig(pageUrl: string): Promise<CommunitySearchConfig> {

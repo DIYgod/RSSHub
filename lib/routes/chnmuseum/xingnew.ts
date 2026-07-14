@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/zx/xingnew',
     categories: ['travel'],
-    example: '/zx/xingnew',
+    example: '/chnmuseum/zx/xingnew',
     parameters: {},
     features: {
         requireConfig: false,
@@ -31,17 +31,17 @@ export const route: Route = {
         const response = await ofetch('https://www.chnmuseum.cn/zx/xingnew/');
         const $ = load(response);
 
-        const list = $('ul.cj_xushuliebao_list li')
+        const list = $('ul.xly_list_ts li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a');
-                const dateText = item.find('span.date').text();
+                const $item = $(item);
+                const a = $item.find('a.titles');
+                const dateText = $item.find('.times span.sp').text();
 
                 return {
                     title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href'), 'https://www.chnmuseum.cn/zx/xingnew/').href,
-                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), +8),
+                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
                     // description: a.attr('title') || a.text(),
                 };
             });

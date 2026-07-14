@@ -11,7 +11,7 @@ export const resolveLocation = async (location: string) => {
     url.searchParams.append('query', location);
 
     // get url as string
-    const urlString = url.toString();
+    const urlString = url.href;
 
     // fetch location recommendations
     const res = await cache.tryGet(urlString, async () => await ofetch<Record<`_${number}`, string>>(urlString));

@@ -78,7 +78,7 @@ async function handler(ctx) {
 
                 item.author = content('.xs2').text();
                 item.description = content('#blog_article').html();
-                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), +8);
+                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), 8);
 
                 return item;
             })

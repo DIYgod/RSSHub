@@ -17,7 +17,7 @@ const columns = {
 };
 
 export const route: Route = {
-    path: '/mee/ywdt/:category?',
+    path: '/ywdt/:category?',
     categories: ['government'],
     example: '/gov/mee/ywdt/hjywnews',
     parameters: { category: '分类名，预设 `szyw`' },
@@ -32,7 +32,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.mee.gov.cn/ywdt/:category'],
-            target: '/mee/ywdt/:category',
+            target: '/ywdt/:category',
         },
     ],
     name: '要闻动态',
@@ -79,7 +79,7 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 try {
-                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')), +8);
+                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')), 8);
                     // 视频新闻规则不一样
                     if (cate === 'spxw') {
                         item.title = content('meta[name=ArticleTitle]').attr('content');
@@ -90,7 +90,7 @@ async function handler(ctx) {
                         const video_source = content('.neiright_JPZ_GK_CP source');
                         const video_href = video_source.attr('src');
                         const _title_href = item.link.split('/').at(-1);
-                        const _video_src = item.link.replace(_title_href, video_href.slice(2));
+                        const _video_src = item.link.replace(_title_href, () => video_href.slice(2));
                         video_source.attr('src', _video_src);
                     }
                     item.description = content('.neiright_JPZ_GK_CP').html();

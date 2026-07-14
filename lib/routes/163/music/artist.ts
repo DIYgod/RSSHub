@@ -38,7 +38,10 @@ async function handler(ctx) {
         description: `网易云音乐歌手专辑 - ${data.artist.name}`,
         image: data.artist.img1v1Url || data.artist.picUrl,
         item: data.hotAlbums.map((item) => {
-            const singer = item.artists.length === 1 ? item.artists[0].name : item.artists.reduce((prev, cur) => (prev.name || prev) + '/' + cur.name);
+            let singer = item.artists[0].name;
+            for (const artist of item.artists.slice(1)) {
+                singer += '/' + artist.name;
+            }
             return {
                 title: `${item.name} - ${singer}`,
                 description: renderPlaylistDescription({

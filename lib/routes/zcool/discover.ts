@@ -230,7 +230,7 @@ async function handler(ctx) {
 
     for (const q in queries) {
         if (q === 'city') {
-            queries[q] = queries[q] in locations ? locations[queries.city].toString() : (queries[q] = '0');
+            queries[q] = Object.hasOwn(locations, queries[q]) ? locations[queries.city].toString() : (queries[q] = '0');
         }
         query += `${q}=${queries[q]}&`;
     }

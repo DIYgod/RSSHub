@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -35,7 +35,7 @@ function getBuildId() {
         'famitsu:buildId',
         async () => {
             const data = await ofetch(baseUrl);
-            const $ = cheerio.load(data);
+            const $ = load(data);
             const nextData = JSON.parse($('#__NEXT_DATA__').text());
             return nextData.buildId;
         },

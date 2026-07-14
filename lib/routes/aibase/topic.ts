@@ -8,7 +8,7 @@ import { buildApiUrl, processItems, rootUrl } from './util';
 export const handler = async (ctx) => {
     const { id, filter = 'id' } = ctx.req.param();
 
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const currentUrl = new URL(id ? `topic/${id}` : 'discover', rootUrl).href;
 
@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
         data: { results: apiTagProcs },
     } = await ofetch(apiTagProcUrl, {
         query: {
-            ...(id ? { tag: id } : {}),
+            ...(id && { tag: id }),
             page: 1,
             pagesize: 20,
             f: filter,

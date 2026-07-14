@@ -119,7 +119,7 @@ async function handler(ctx) {
 
                 // 解析时间并验证有效性 - 使用完整的 descText 以支持 parseRelativeTime 能处理的所有格式
                 const parsedDate = descText ? parseRelativeTime(descText) : null;
-                const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
+                const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined;
 
                 // 尝试获取回复的唯一ID用于生成直接链接
                 const postId = item.attr('data-post-id') || item.attr('id') || '';

@@ -34,8 +34,10 @@ if (patchrightCoreFile) {
 }
 console.log('Total files need to be copied (touchable files in node_modules/):', fileList.length);
 console.log('Start copying files, destination:', resultFolder);
-await Promise.all(fileList.map((e) => fs.copy(path.join(projectRoot, e), path.join(resultFolder, e)))).catch((error) => {
+try {
+    await Promise.all(fileList.map((e) => fs.copy(path.join(projectRoot, e), path.join(resultFolder, e))));
+} catch (error) {
     // fix unhandled promise rejections
     console.error(error, error.stack);
     process.exit(1);
-});
+}

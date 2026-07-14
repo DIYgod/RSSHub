@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'Report' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const rootUrl = 'https://www.logclub.com';
     const currentUrl = new URL('lc_report', rootUrl).href;
@@ -55,7 +55,7 @@ async function handler(ctx) {
         author: item.author,
         category: [item.channel_name],
         guid: `logclub-report-${item.id}`,
-        pubDate: timezone(parseDate(item.release_time), +8),
+        pubDate: timezone(parseDate(item.release_time), 8),
     }));
 
     items = await Promise.all(

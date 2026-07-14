@@ -49,8 +49,8 @@ export const route: Route = {
 
         const filteredEls = $(`div.limit_style1[frag="${fragList[type].frag}"]`).find('table > tbody > tr > td').toArray();
         const links = filteredEls.map((el) => ({
-            pubDate: timezone(parseDate($(el).find('.data').text()), +8),
-            link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+            pubDate: timezone(parseDate($(el).find('.data').text()), 8),
+            link: new URL($(el).find('a').attr('href'), baseUrl).href,
             title: $(el).find('.news_title').text(),
         }));
         const items = await Promise.all(
@@ -65,16 +65,15 @@ export const route: Route = {
                             const attr = el.tagName === 'img' ? 'src' : 'href';
                             const val = $el.attr(attr);
                             if (val) {
-                                $el.attr(attr, new URL(val, baseUrl).toString());
+                                $el.attr(attr, new URL(val, baseUrl).href);
                             }
                         });
                         item.description = $read.html()?.trim();
                         return item;
-                    } else {
-                        // file to download
-                        item.description = '请到原网页访问';
-                        return item;
                     }
+                    // file to download
+                    item.description = '请到原网页访问';
+                    return item;
                 })
             )
         );

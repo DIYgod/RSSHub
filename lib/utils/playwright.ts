@@ -105,26 +105,23 @@ const launchBrowser = async (currentProxy?: ProxyState | null) => {
 const getBrowserlessEndpoint = (endpoint: string, launchOptions: BrowserlessLaunchOptions) => {
     const endpointURL = new URL(endpoint);
     endpointURL.searchParams.set('launch', JSON.stringify(launchOptions));
-    return endpointURL.toString();
+    return endpointURL.href;
 };
 
-const scheduleClose = (browser: Browser, timeout = 30000) => {
+const scheduleClose = (browser: Browser, timeout = 30000) =>
     setTimeout(() => {
         void browser.close();
     }, timeout);
-};
 
 /**
  * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
-const outPlaywright = async () => {
+export default async function outPlaywright() {
     const currentProxy = proxy.getCurrentProxy();
     const { browser, context } = await launchBrowser(currentProxy && proxy.proxyObj.url_regex === '.*' ? currentProxy : null);
     scheduleClose(browser);
     return context;
-};
-
-export default outPlaywright;
+}
 
 // No-op in Node.js environment (used by Worker build via alias)
 export const setBrowserBinding = (_binding: any) => {};
@@ -158,7 +155,12 @@ export const getPlaywrightPage = async (
     const currentProxyState = currentProxy && allowProxy ? currentProxy : null;
     const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
     const { browser, context } = await launchBrowser(currentProxyState);
-    scheduleClose(browser, instanceOptions.closeTimeout);
+    const closeTimer = scheduleClose(browser, instanceOptions.closeTimeout);
+    const destroy = async () => {
+        clearTimeout(closeTimer);
+        await browser.close();
+    };
+
     const page = await context.newPage();
 
     if (hasProxy && currentProxyState) {
@@ -176,17 +178,15 @@ export const getPlaywrightPage = async (
             if (hasProxy && currentProxyState && proxy.multiProxy) {
                 logger.warn(`Playwright navigation failed with proxy ${currentProxyState.uri}, marking as failed: ${error}`);
                 proxy.markProxyFailed(currentProxyState.uri);
-                throw error;
             }
+            await destroy();
             throw error;
         }
     }
 
     return {
         context,
-        destroy: async () => {
-            await context.close();
-        },
+        destroy,
         page,
     };
 };

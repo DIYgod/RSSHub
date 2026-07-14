@@ -6,7 +6,7 @@ import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const getNews = async (category) => {
+export const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
 
     const response = await got({
@@ -26,7 +26,7 @@ const getNews = async (category) => {
                 const item = {
                     title,
                     link: url,
-                    pubDate: timezone(parseDate(focus_date), +8),
+                    pubDate: timezone(parseDate(focus_date), 8),
                 };
                 const id = path.parse(url).name;
                 const unknownTip = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';
@@ -103,4 +103,3 @@ const getNews = async (category) => {
         item: resultItem,
     };
 };
-export default getNews;

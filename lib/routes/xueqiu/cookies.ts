@@ -11,7 +11,8 @@ export const parseToken = (link: string) =>
             const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
-                request.resourceType() === 'document' ? route.continue() : route.abort();
+                const type = request.resourceType();
+                type === 'document' || type === 'script' ? route.continue() : route.abort();
             });
             await page.goto(link, {
                 waitUntil: 'domcontentloaded',

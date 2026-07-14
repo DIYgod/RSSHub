@@ -72,10 +72,9 @@ async function handler(ctx) {
     // !!! double-check !!!
     if ((await cache.get('data258:lock', false)) === '1') {
         throw new RequestInProgressError('Another request is in progress, please try again later.');
-    } else {
-        // !!! here we acquire the lock because the jump page has crawler detection !!!
-        await cache.set('data258:lock', '1', 60);
     }
+    // !!! here we acquire the lock because the jump page has crawler detection !!!
+    await cache.set('data258:lock', '1', 60);
 
     // !!! here we must use a for-loop to ensure the concurrency is 1 !!!
     // !!! please do note that if you try to increase the concurrency, your IP will be banned for a long time !!!

@@ -73,7 +73,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateStr), +8),
+                    pubDate: timezone(parseDate(dateStr), 8),
                     author: publisher,
                 };
             })
@@ -91,7 +91,7 @@ export const route: Route = {
                               // 优化内容选择器逻辑，避免重复选择
                               let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
 
-                              description = description || item.title;
+                              description ||= item.title;
                               item.description = description;
                           } catch {
                               // 如果获取详细内容失败，返回基本信息

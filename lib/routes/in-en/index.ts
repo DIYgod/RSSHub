@@ -87,7 +87,7 @@ export const route: Route = {
                     pubDate: pubDateRaw ? parseRelativeDate(pubDateRaw) : undefined,
                 } as DataItem;
             })
-            .filter((item) => Boolean(item.title && item.link));
+            .filter((item) => item.title && item.link);
 
         const items = await Promise.all(
             list.map((item) =>

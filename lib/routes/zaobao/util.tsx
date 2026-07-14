@@ -52,7 +52,7 @@ export const parseList = async (
                     return {
                         title: isSingapore ? $item.text().trim() : ($item.attr('title')?.trim() as string),
                         link: $item.attr('href') as string,
-                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), +8),
+                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), 8),
                     };
                 }
                 const response = await ofetch.raw(new URL($item.attr('href') as string, origin).href);
@@ -122,7 +122,7 @@ export const parseList = async (
 };
 
 export const orderContent = (parent) => {
-    for (const [i, e] of parent
+    const sortedChildren = parent
         .children()
         .toArray()
         .toSorted((a, b) => {
@@ -144,8 +144,8 @@ export const orderContent = (parent) => {
                 )
             ).toString();
             return a - b;
-        })
-        .entries()) {
+        });
+    for (const [i, e] of sortedChildren.entries()) {
         parent.find((element) => e(element)).attr('s', i);
         parent.append(e);
     }

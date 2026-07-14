@@ -30,10 +30,10 @@ async function handler(ctx) {
     const packageVersionRes = await ofetch(packageVersionAPI);
 
     const packageVersion = packageVersionRes.time;
-    const packageVersionList = Object.keys(packageVersion)
-        .map((key) => ({
+    const packageVersionList = Object.entries(packageVersion)
+        .map(([key, value]) => ({
             version: key,
-            time: packageVersion[key],
+            time: value,
         }))
         .toReversed();
 

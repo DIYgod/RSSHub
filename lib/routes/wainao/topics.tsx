@@ -28,7 +28,7 @@ const renderDescription = (elements) =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'hotspot' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://www.wainao.me';
     const targetUrl: string = new URL(`topics/${id}`, baseUrl).href;

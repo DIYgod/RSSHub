@@ -5,7 +5,7 @@ import { ViewType } from '@/types';
 
 export const handler = (ctx: Context): Data | undefined => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
     ctx.set('redirect', `/iresearch/report/3${id ? `/${id}` : ''}?limit=${limit}`);
     return;

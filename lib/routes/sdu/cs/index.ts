@@ -90,7 +90,8 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
-                } else if (new URL(item.link).hostname !== 'www.cs.sdu.edu.cn') {
+                }
+                if (new URL(item.link).hostname !== 'www.cs.sdu.edu.cn') {
                     return item;
                 }
                 const response = await got(item.link);

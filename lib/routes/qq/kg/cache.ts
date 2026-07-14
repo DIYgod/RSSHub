@@ -19,7 +19,7 @@ export default {
             const itunes_item_image = data.detail.cover;
 
             const enclosure_url = data.detail.playurl;
-            ksong_mid = ksong_mid ?? data.detail.ksong_mid;
+            ksong_mid ??= data.detail.ksong_mid;
             const ctime = data.detail.ctime;
             const comments = data.detail.comments;
 

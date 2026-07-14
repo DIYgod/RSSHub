@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -44,9 +44,9 @@ async function handler() {
     const res = await page.evaluate(() => document.documentElement.innerHTML);
     await page.close();
 
-    const $ = cheerio.load(res);
+    const $ = load(res);
 
-    const items = $('div h3 a')
+    const list = $('div h3 a')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -56,8 +56,8 @@ async function handler() {
             };
         });
 
-    await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
@@ -68,7 +68,7 @@ async function handler() {
                     waitUntil: 'domcontentloaded',
                 });
                 const res = await page.evaluate(() => document.documentElement.innerHTML);
-                const $ = cheerio.load(res);
+                const $ = load(res);
                 await page.close();
 
                 item.description = $('div.article__body').html();

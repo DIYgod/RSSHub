@@ -10,12 +10,15 @@ updates:
           - dependencies
       ignore:
           # pin to version before it is sold to potential suspicious party
-          # https://github.com/goofychris/art-template/issues/660 the issue created from original author stating v4.13.3
+          # https://github.com/goofychris/art-template/issues/660 the issue created from original author stating v4.13.3 (March, 2025)
           # contains suspicious code and related issues (#658, #659) were deleted
           # related:
           # https://github.com/fastify/point-of-view/issues/463 https://github.com/fastify/point-of-view/pull/461#issuecomment-2718888986
           # https://github.com/cnpm/bug-versions/pull/266 https://github.com/cnpm/cnpmcore/issues/777
           # https://github.com/yoimiya-kokomi/Miao-Yunzai/pull/515 https://github.com/zhangfisher/flex-tools/commit/09b565dfe6e2932bb829613ddbe09f6d0acbccd4
+          # v4.13.5, v4.13.6 (May, 2026)
+          # https://web.archive.org/web/20260521024725/https://github.com/goofychris/art-template/issues/665
+          # https://safedep.io/art-template-npm-supply-chain-compromise/ https://github.com/ossf/malicious-packages/pull/1265
           - dependency-name: art-template
             versions: ['>=4.13.3']
       groups:
@@ -33,6 +36,7 @@ updates:
           oxc:
               patterns:
                   - '@oxlint/*'
+                  - 'oxc-parser'
                   - 'oxfmt'
                   - 'oxlint'
                   - 'oxlint-plugin-eslint'

@@ -26,8 +26,8 @@ export const route: Route = {
         const links = $('ul.news_list.list2 > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.news_date').text()), +8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+                pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
+                link: new URL($(el).find('a').attr('href'), baseUrl).href,
                 title: $(el).find('.news_title').text(),
             }));
         const items = await Promise.all(
@@ -41,7 +41,7 @@ export const route: Route = {
                         const attr = el.tagName === 'img' ? 'src' : 'href';
                         const val = $el.attr(attr);
                         if (val) {
-                            $el.attr(attr, new URL(val, baseUrl).toString());
+                            $el.attr(attr, new URL(val, baseUrl).href);
                         }
                     });
                     item.description = $read.html()?.trim();

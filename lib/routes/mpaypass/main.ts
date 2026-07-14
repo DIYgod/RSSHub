@@ -64,7 +64,7 @@ async function handler(ctx) {
                 return {
                     title: info.title,
                     link: info.link,
-                    pubDate: timezone(parseDate(info.time), +8),
+                    pubDate: timezone(parseDate(info.time), 8),
                     description: newsbody,
                     category: info.category,
                 };

@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -31,8 +32,8 @@ const parseRollNewsList = (data) =>
         updated: parseDate(item.mtime, 'X'),
     }));
 
-const parseArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const detailResponse = await got(item.link);
         const $ = load(detailResponse.data);
         $('#left_hzh_ad, .appendQr_wrap, .app-kaihu-qr, .tech-quotation').remove();
@@ -41,7 +42,7 @@ const parseArticle = (item, tryGet) =>
         const htmlPubDate = $('#pub_date, .date');
         const htmlDate = htmlPubDate.length ? timezone(parseDate(htmlPubDate.text(), ['YYYY年MM月DD日 HH:mm', 'YYYY年MM月DD日HH:mm']), 8) : null;
         const metaDate = metaPublishTime.length ? parseDate(metaPublishTime.attr('content')) : htmlDate; // 2023-05-08T08:39:31+08:00
-        item.pubDate = item.pubDate ?? metaDate;
+        item.pubDate ??= metaDate;
         item.author = $('meta[property="article:author"]').attr('content');
 
         if (item.link.startsWith('https://slide.sports.sina.com.cn/') || item.link.startsWith('https://slide.tech.sina.com.cn/')) {

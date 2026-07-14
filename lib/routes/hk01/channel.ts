@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiRootUrl, ProcessItems, rootUrl } from './utils';
@@ -27,7 +26,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const items = await ProcessItems(response.data.items, ctx.req.query('limit'), cache.tryGet);
+    const items = await ProcessItems(response.data.items, ctx.req.query('limit'));
 
     return {
         title: response.data.category ? `${response.data.category.publishName} | 香港01` : `Channel: ${id} | 香港01`,

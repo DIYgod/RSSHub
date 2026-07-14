@@ -74,7 +74,7 @@ describe('browser cookie utils', () => {
         await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'httpbingo.org')).split('; ').toSorted()).toEqual(['foo=bar', 'baz=qux'].toSorted());
+        expect((await getCookies(page, 'httpbingo.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(['foo=bar', 'baz=qux'].toSorted((a, b) => a.localeCompare(b)));
     }, 45000);
 
     it('setCookies httpbingo', async () => {
@@ -97,6 +97,6 @@ describe('browser cookie utils', () => {
         await page.goto('https://example.org', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'example.org')).split('; ').toSorted()).toEqual(cookieStrAll.split('; ').toSorted());
+        expect((await getCookies(page, 'example.org')).split('; ').toSorted((a, b) => a.localeCompare(b))).toEqual(cookieStrAll.split('; ').toSorted((a, b) => a.localeCompare(b)));
     }, 45000);
 });

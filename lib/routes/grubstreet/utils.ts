@@ -70,7 +70,7 @@ const getData = async (ctx, url, title, description) => {
     const data = response.data;
 
     // limit the list to only 25 articles, to make sure that load times remain reasonable
-    const list = data.articles.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 25);
+    const list = data.articles.slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25);
     const result = await ProcessFeed(list, cache);
 
     return {

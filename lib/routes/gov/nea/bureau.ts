@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/nea/sjzz/:bureau',
+    path: '/sjzz/:bureau',
     categories: ['government'],
     example: '/gov/nea/sjzz/ghs',
     parameters: {
@@ -42,7 +42,7 @@ export const route: Route = {
     radar: [
         {
             source: ['nea.gov.cn/sjzz/:bureau/index.htm'],
-            target: '/nea/sjzz/:bureau',
+            target: '/sjzz/:bureau',
         },
     ],
     name: '司工作进展',
@@ -53,7 +53,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { bureau } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 35;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 35;
 
     const rootUrl = 'https://www.nea.gov.cn';
     const link = `${rootUrl}/sjzz/${bureau}/index.htm`;
@@ -74,7 +74,7 @@ async function handler(ctx) {
         return {
             title,
             link: new URL(item.publishUrl, rootUrl).href,
-            pubDate: item.publishTime ? timezone(parseDate(item.publishTime), +8) : undefined,
+            pubDate: item.publishTime ? timezone(parseDate(item.publishTime), 8) : undefined,
             description: item.summary?.trim() || title,
             author: [...new Set([item.sourceText, item.author, item.editor, item.responsibleEditor].filter(Boolean))].map((author) => ({
                 name: author,
@@ -94,7 +94,7 @@ async function handler(ctx) {
                     item.description = $('#detailContent').html() || $('div.article-content').html() || item.description;
                     item.category = [...new Set([...(item.category ?? []), ...($('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
                     const detailPubDate = $('meta[name="PubDate"]').prop('content');
-                    item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), +8) : item.pubDate;
+                    item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), 8) : item.pubDate;
                 } catch {
                     //
                 }

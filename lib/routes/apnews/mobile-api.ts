@@ -72,20 +72,20 @@ async function handler(ctx) {
                     description: e.description,
                     guid: e.id,
                 };
-            } else if (e.__typename === 'VideoPlaylistItem') {
+            }
+            if (e.__typename === 'VideoPlaylistItem') {
                 return {
                     title: e.title,
                     link: e.url,
                     description: e.description,
                     guid: e.contentId,
                 };
-            } else {
-                return;
             }
+            return;
         })
         .filter(Boolean)
         .toSorted((a, b) => b.pubDate - a.pubDate)
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 

@@ -70,7 +70,8 @@ const parseObject = (reg: RegExp, str: string): Record<string, string> => {
     const obj = {};
     const match = reg.exec(str);
     if (match) {
-        for (const line of match[0].matchAll(/(\w+):\s?["']?([\s\S]+?)["']?[\n,}]/g)) {
+        const matchedLines = match[0].matchAll(/(\w+):\s?["']?([\s\S]+?)["']?[\n,}]/g);
+        for (const line of matchedLines) {
             obj[line[1]] = line[2];
         }
     }
@@ -86,14 +87,17 @@ const decrypt = (txt: string, articleid: string, chapterid: string, decryptionMa
     const lineMap = {};
     const articleKey = Number(articleid) + 3_061_711;
     const chapterKey = Number(chapterid) + 3_421_001;
-    for (const key of Object.keys(decryptionMap)) {
-        lineMap[(Number(key) ^ chapterKey) - articleKey] = (Number(decryptionMap[key]) ^ chapterKey) - articleKey;
+    for (const [key, value] of Object.entries(decryptionMap)) {
+        lineMap[(Number(key) ^ chapterKey) - articleKey] = (Number(value) ^ chapterKey) - articleKey;
     }
 
     return txt
-        .replaceAll(/\u2003|\n/g, '')
+        .replaceAll(/\u{2003}|\n/gu, '')
         .split('<br><br>')
-        .flatMap((line, index, array) => (lineMap[index] ? array[lineMap[index]] : line).split('<br>'))
+        .flatMap((line, index, array) => {
+            const mapped = lineMap[index];
+            return (mapped ? array[mapped] : line).split('<br>');
+        })
         .slice(1, -2)
         .join('<br><br>');
 };

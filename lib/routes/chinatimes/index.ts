@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const list = $('.articlebox-compact')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20)
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.title a');

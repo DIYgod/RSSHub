@@ -31,13 +31,13 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
                     item.title = $(contentSelector.title).text();
                     item.description = $(contentSelector.content)
                         .html()
-                        .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                        .replaceAll('href="/', `href="${new URL('.', host).href}`)
+                        .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
+                        .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                         .trim();
                     const preDate = $(contentSelector.date)
                         .text()
                         .match(/(\d{4}-\d{2}-\d{2})/)[1];
-                    item.pubDate = timezone(parseDate(preDate, 'YYYY-MM-DD'), +8);
+                    item.pubDate = timezone(parseDate(preDate, 'YYYY-MM-DD'), 8);
                 }
                 return item;
             })

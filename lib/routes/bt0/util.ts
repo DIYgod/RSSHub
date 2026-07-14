@@ -33,7 +33,7 @@ const genSize = (sizeStr) => {
         return 0;
     }
 
-    const value = Number.parseFloat(match[1]);
+    const value = Number(match[1]);
     const unit = match[3].toUpperCase();
 
     let bytes;

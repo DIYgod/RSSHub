@@ -80,7 +80,7 @@ export const route: Route = {
                         author: item.author,
                         category: item.label,
                         img: item.icon,
-                        pubDate: timezone(parseDate(item.dateline), +8),
+                        pubDate: timezone(parseDate(item.dateline), 8),
                         description: item.description,
                     };
                 })

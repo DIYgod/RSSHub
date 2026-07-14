@@ -47,7 +47,7 @@ async function handler(ctx) {
         title: item.title,
         summary: item.summary,
         link: `${rootUrl}/post/${item.entity_id}`,
-        pubDate: timezone(parseDate(item.published_at), +8),
+        pubDate: timezone(parseDate(item.published_at), 8),
     }));
 
     items = await Promise.all(

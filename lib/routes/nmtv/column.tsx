@@ -49,7 +49,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.content_url,
             author: item.column_name,
-            pubDate: timezone(parseDate(item.publish_time), +8),
+            pubDate: timezone(parseDate(item.publish_time), 8),
             description: renderToString(
                 item.type === 'audio' ? (
                     <audio controls="controls">

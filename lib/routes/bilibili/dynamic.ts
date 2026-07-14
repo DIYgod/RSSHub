@@ -346,14 +346,14 @@ async function handler(ctx) {
                             const emoji = node.emoji;
                             description = description.replaceAll(
                                 emoji.text,
-                                `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                () =>
+                                    `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
                             );
                         }
                         // 处理转发带图评论的情况
                         if (node?.pics?.length) {
                             const { pics, text } = node;
-                            description = description.replaceAll(
-                                text,
+                            description = description.replaceAll(text, () =>
                                 pics
                                     .map(
                                         (pic) =>

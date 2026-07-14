@@ -44,7 +44,7 @@ async function handler(ctx) {
             return {
                 title: item.text(),
                 link: new URL(item.parents('a').attr('href'), 'https://www.cna.com.tw').href,
-                pubDate: timezone(parseDate(item.next().text()), +8),
+                pubDate: timezone(parseDate(item.next().text()), 8),
             };
         });
 

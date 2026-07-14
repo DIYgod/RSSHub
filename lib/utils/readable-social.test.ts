@@ -11,7 +11,7 @@ describe('fallback', () => {
 
     test('应该返回默认值', () => {
         expect(fallback(undefined, null, 'default')).toBe('default');
-        expect(fallback(null, undefined, 3.14)).toBe(3.14);
+        expect(fallback(null, undefined, Math.PI)).toBe(Math.PI);
     });
 });
 
@@ -64,7 +64,7 @@ describe('queryToFloat', () => {
     });
 
     test('should process array input', () => {
-        expect(queryToFloat(['3.14'])).toBe(3.14);
+        expect(queryToFloat([String(Math.PI)])).toBe(Math.PI);
     });
 
     test('should handle empty array', () => {
@@ -76,6 +76,6 @@ describe('queryToFloat', () => {
     });
 
     test('should handle edge cases', () => {
-        expect(queryToFloat('3.1415926')).toBeCloseTo(3.141_592_6);
+        expect(queryToFloat(String(Math.PI))).toBeCloseTo(Math.PI);
     });
 });

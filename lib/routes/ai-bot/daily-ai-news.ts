@@ -1,12 +1,10 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-type CheerioInstance = ReturnType<typeof load>;
-type CheerioSelection = ReturnType<CheerioInstance>;
 
 interface DateContext {
     currentYear: number;
@@ -21,8 +19,8 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
         return undefined;
     }
 
-    const month = Number.parseInt(match[1], 10);
-    const day = Number.parseInt(match[2], 10);
+    const month = Number(match[1]);
+    const day = Number(match[2]);
 
     // 检测跨年：如果当前日期比上一个日期大，说明跨年了
     if (ctx.prevMonth > 0 && (month > ctx.prevMonth || (month === ctx.prevMonth && day > ctx.prevDay))) {
@@ -36,7 +34,7 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
     return timezone(parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`), 8);
 }
 
-function processNewsList($: CheerioInstance, $newsList: CheerioSelection, ctx: DateContext): DataItem[] {
+function processNewsList($: CheerioAPI, $newsList: Cheerio<Element>, ctx: DateContext): DataItem[] {
     let currentPubDate: Date | undefined;
 
     return $newsList

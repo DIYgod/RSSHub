@@ -13,7 +13,8 @@ const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
 const pageType = (href) => {
     if (href === undefined) {
         return 'unknown';
-    } else if (!href.startsWith('http')) {
+    }
+    if (!href.startsWith('http')) {
         return 'in-site';
     }
     const url = new URL(href);
@@ -92,49 +93,48 @@ async function handler(ctx) {
                 },
             ],
         };
-    } else {
-        const $ = load(iconv.decode(response.data, 'gbk'));
-        const list = $('td.table_left_right > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr')
-            .slice(1, -1)
-            .toArray()
-            .map((item) => {
-                const href = $('td > a', item).attr('href');
-                const type = pageType(href);
-                return {
-                    title: $('td > a', item).text(),
-                    link: type === 'in-site' ? yzb_base_url + path + href : href,
-                    pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), +8),
-                    type,
-                };
-            });
-
-        const items = await Promise.all(
-            list.map((item) => {
-                switch (item.type) {
-                    case 'tju-yzb':
-                    case 'in-site':
-                        return cache.tryGet(item.link, async () => {
-                            try {
-                                const detailResponse = await got(item.link, { responseType: 'buffer' });
-                                const content = load(iconv.decode(detailResponse.data, 'gbk'));
-                                content('.font_18_b').remove();
-                                content('.font_grey_en').remove();
-                                item.description = content('.nav_a10 > table > tbody').html();
-                            } catch {
-                                // ignore error handler
-                            }
-                            return item;
-                        });
-                    default:
-                        return item;
-                }
-            })
-        );
-
-        return {
-            title: '天津大学研究生招生网 - ' + subtitle,
-            link: yzb_base_url + path,
-            item: items,
-        };
     }
+    const $ = load(iconv.decode(response.data, 'gbk'));
+    const list = $('td.table_left_right > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr')
+        .slice(1, -1)
+        .toArray()
+        .map((item) => {
+            const href = $('td > a', item).attr('href');
+            const type = pageType(href);
+            return {
+                title: $('td > a', item).text(),
+                link: type === 'in-site' ? yzb_base_url + path + href : href,
+                pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), 8),
+                type,
+            };
+        });
+
+    const items = await Promise.all(
+        list.map((item) => {
+            switch (item.type) {
+                case 'tju-yzb':
+                case 'in-site':
+                    return cache.tryGet(item.link, async () => {
+                        try {
+                            const detailResponse = await got(item.link, { responseType: 'buffer' });
+                            const content = load(iconv.decode(detailResponse.data, 'gbk'));
+                            content('.font_18_b').remove();
+                            content('.font_grey_en').remove();
+                            item.description = content('.nav_a10 > table > tbody').html();
+                        } catch {
+                            // ignore error handler
+                        }
+                        return item;
+                    });
+                default:
+                    return item;
+            }
+        })
+    );
+
+    return {
+        title: '天津大学研究生招生网 - ' + subtitle,
+        link: yzb_base_url + path,
+        item: items,
+    };
 }

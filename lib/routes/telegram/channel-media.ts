@@ -73,7 +73,7 @@ function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
 }
 
 export async function* streamThumbnail(client: TelegramClient, doc: Api.Document) {
-    if (doc.thumbs?.length ?? 0 > 0) {
+    if ((doc.thumbs?.length ?? 0) > 0) {
         const size = chooseLargestThumb(doc.thumbs!);
         if (size instanceof Api.PhotoCachedSize || size instanceof Api.PhotoStrippedSize) {
             yield ExpandInlineBytes(size.bytes);
@@ -219,14 +219,13 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
                 ctx.header('Content-Disposition', `attachment; filename="${encodeURIComponent(getFilename(media))}"`);
             }
             return streamResponse(ctx, streamDocument(client, doc));
-        } else {
-            const [offset, limit] = range[0];
-            // console.log(`Range: ${rangeHeader}`);
-            ctx.status(206); // partial content
-            ctx.header('Content-Length', limit.subtract(offset).add(1).toString());
-            ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
-            return streamResponse(ctx, streamDocument(client, doc, '', offset, limit));
         }
+        const [offset, limit] = range[0];
+        // console.log(`Range: ${rangeHeader}`);
+        ctx.status(206); // partial content
+        ctx.header('Content-Length', limit.subtract(offset).add(1).toString());
+        ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
+        return streamResponse(ctx, streamDocument(client, doc, '', offset, limit));
     }
 
     return ctx.text(media.className, 415);

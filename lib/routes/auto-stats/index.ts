@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'xxkd' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.auto-stats.org.cn';
     const currentUrl = new URL(`${category}.asp`, rootUrl).href;
@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],
                 link: new URL(item.parent().prop('href'), rootUrl).href,
-                pubDate: timezone(parseDate(pubDate, 'YYYY/M/D H:mm:ss'), +8),
+                pubDate: timezone(parseDate(pubDate, 'YYYY/M/D H:mm:ss'), 8),
             };
         });
 

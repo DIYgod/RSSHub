@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 import { fetchFullArticles, rootUrl } from './utils';
@@ -37,8 +36,7 @@ async function handler() {
         fetchFullArticles(
             $('#breaknews a')
                 .toArray()
-                .map((e) => ({ link: new URL($(e).attr('href'), rootUrl).href, title: $(e).text() })),
-            cache.tryGet
+                .map((e) => ({ link: new URL($(e).attr('href'), rootUrl).href, title: $(e).text() }))
         )
     );
 

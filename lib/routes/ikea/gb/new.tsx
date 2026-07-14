@@ -44,9 +44,7 @@ async function handler() {
     });
 
     const {
-        data: {
-            moreProducts: { productWindow },
-        },
+        data: { moreProducts },
     } = await got('https://sik.search.blue.cdtapps.com/gb/en/special/more-products', {
         searchParams: {
             special: 'new_product',
@@ -58,6 +56,7 @@ async function handler() {
             // sort: 'RELEVANCE',
         },
     });
+    const { productWindow } = moreProducts;
 
     const products = [...specialPage.productWindow, ...productWindow];
 

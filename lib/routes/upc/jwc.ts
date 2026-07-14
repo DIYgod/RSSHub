@@ -30,7 +30,7 @@ const handler = async (ctx) => {
             return {
                 title: a.text(),
                 link: linkStr,
-                pubDate: timezone(parseDate(item.find('.news_meta').text()), +8), // 添加发布日期查询
+                pubDate: timezone(parseDate(item.find('.news_meta').text()), 8), // 添加发布日期查询
             };
         });
 

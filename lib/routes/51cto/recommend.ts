@@ -53,7 +53,7 @@ async function getFullcontent(item, cookie = '') {
     return {
         title: item.title,
         link: item.url,
-        pubDate: parseDate(item.pubdate, +8),
+        pubDate: parseDate(item.pubdate, 8),
         description: fullContent || item.abstract, // Return item.abstract if fullContent is null
     };
 }
@@ -65,7 +65,7 @@ async function handler(ctx) {
     const timestamp = Date.now();
     const params = {
         page: 1,
-        page_size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50,
+        page_size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50,
         limit_time: 0,
         name_en: '',
     };
