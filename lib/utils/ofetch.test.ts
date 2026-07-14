@@ -36,6 +36,15 @@ describe('ofetch', () => {
         expect(warnSpy).toHaveBeenCalled();
     });
 
+    it('surfaces the root cause in fetch error messages', async () => {
+        const { logger, ofetch } = await loadOfetchWithLogger();
+        vi.spyOn(logger, 'error').mockImplementation(() => logger);
+        const networkError = new TypeError('fetch failed', { cause: new Error('getaddrinfo ENOTFOUND t.me') });
+        vi.stubGlobal('fetch', vi.fn().mockRejectedValue(networkError));
+
+        await expect(ofetch('https://t.me/s/telegram', { retry: 0 })).rejects.toThrow('fetch failed (getaddrinfo ENOTFOUND t.me)');
+    });
+
     it('logs redirected responses', async () => {
         const { logger, ofetch } = await loadOfetchWithLogger();
         const httpSpy = vi.spyOn(logger, 'http').mockImplementation(() => logger);
