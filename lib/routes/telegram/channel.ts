@@ -1,6 +1,7 @@
 import querystring from 'node:querystring';
 
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -195,8 +196,14 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         resourceUrl,
         async () => {
-            const _r = await ofetch(resourceUrl);
-            return _r;
+            try {
+                return await ofetch(resourceUrl);
+            } catch (error) {
+                if (error instanceof FetchError && error.statusCode) {
+                    throw error;
+                }
+                return await ofetch(resourceUrl.replace('https://t.me/', 'https://telegram.me/'));
+            }
         },
         config.cache.routeExpire,
         false
