@@ -30,16 +30,22 @@ async function handler(ctx) {
     const list = response.data.map((item) => ({
         title: item.title,
         link: `https://www.dongqiudi.com/articles/${item.aid}.html`,
-        mobileLink: `https://m.dongqiudi.com/article/${item.aid}.html`,
         pubDate: parseDate(item.show_time, 'X'),
     }));
 
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.mobileLink);
-
-                utils.ProcessFeedType3(item, response);
+                try {
+                    const { data: response } = await got(item.link);
+                    const success = utils.ProcessFeedType2(item, response);
+                    if (!success) {
+                        throw new Error('No article data');
+                    }
+                } catch {
+                    const { data: mobileResponse } = await got(`https://m.dongqiudi.com/article/${item.link.match(/\d+/)[0]}.html`);
+                    utils.ProcessFeedType3(item, mobileResponse);
+                }
 
                 return item;
             })
