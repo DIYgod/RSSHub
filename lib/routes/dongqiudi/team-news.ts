@@ -6,7 +6,9 @@ export const route: Route = {
     path: '/team_news/:team',
     categories: ['sport'],
     example: '/dongqiudi/team_news/50001755',
-    parameters: { team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到' },
+    parameters: {
+        team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到',
+    },
     radar: [
         {
             source: ['www.dongqiudi.com/team/*team'],

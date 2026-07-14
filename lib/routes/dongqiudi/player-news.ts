@@ -6,7 +6,9 @@ export const route: Route = {
     path: '/player_news/:id',
     categories: ['sport'],
     example: '/dongqiudi/player_news/50000339',
-    parameters: { id: '球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到' },
+    parameters: {
+        id: '球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到',
+    },
     radar: [
         {
             source: ['www.dongqiudi.com/player/*id'],
@@ -21,5 +23,5 @@ export const route: Route = {
 async function handler(ctx) {
     const playerId = ctx.req.param('id');
 
-    await utils.ProcessFeed(ctx, 'player', playerId);
+    return await utils.ProcessFeed(ctx, 'player', playerId);
 }
