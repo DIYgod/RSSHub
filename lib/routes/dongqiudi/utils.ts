@@ -125,11 +125,11 @@ const ProcessFeedType2 = (item, response) => {
         runScripts: 'dangerously',
     });
 
-    const data = dom.window.__NUXT__.data[0].article;
+    const data = dom.window.__NUXT__?.data?.[0]?.article;
 
     // filter out undefined item
     if (!data) {
-        return;
+        return false;
     }
 
     const body = ProcessVideo(load(data.rawBody, null, false));
@@ -137,6 +137,7 @@ const ProcessFeedType2 = (item, response) => {
     ProcessImg(body('img'));
     item.description = body.html();
     item.author = data.author;
+    return true;
 };
 
 const ProcessFeedType3 = (item, response) => {
@@ -155,7 +156,7 @@ const ProcessFeedType3 = (item, response) => {
         return;
     }
 
-    if (Object.keys(initialState.articleContent).length) {
+    if (initialState?.articleContent && Object.keys(initialState.articleContent).length) {
         const data = Object.values(initialState.articleContent)[0] as Record<string, string>;
         const body = ProcessVideo(load(data.body, null, false));
         ProcessHref(body('a'));

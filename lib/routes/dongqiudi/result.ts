@@ -25,7 +25,16 @@ async function handler(ctx) {
     const link = `https://www.dongqiudi.com/team/${team}.html`;
 
     const { data: scheduleData } = await got(`https://api.dongqiudi.com/data/v1/team/schedule/${team}`);
-    const lastSeason = scheduleData.season_list.find((s) => !s.current) ?? scheduleData.season_list[1];
+    const lastSeason = scheduleData.season_list.find((s) => !s.current);
+
+    if (!lastSeason) {
+        return {
+            title: `${team} 比赛结果`,
+            link,
+            item: [],
+        };
+    }
+
     const { data: seasonResp } = await got(lastSeason.url);
     const resultData = seasonResp.data.filter((match) => match.fs_A && match.fs_B);
 
