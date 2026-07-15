@@ -1,7 +1,7 @@
 import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import undici, { Client, ProxyAgent } from 'undici';
+import undici, { ProxyAgent } from 'undici';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -25,9 +25,8 @@ const token2Cookie = async (token) => {
     try {
         const agent = proxy.proxyUri
             ? new ProxyAgent({
-                  factory: (origin, opts) => new Client(origin as string, opts).compose(HttpCookieAgentCookie({ jar })),
                   uri: proxy.proxyUri,
-              })
+              }).compose(HttpCookieAgentCookie({ jar }))
             : new CookieAgent({ cookies: { jar } });
         if (token) {
             await ofetch('https://x.com', {
@@ -112,9 +111,8 @@ export const twitterGot = async (
         const jar = CookieJar.deserializeSync(cookie as any);
         const agent = proxy.proxyUri
             ? new ProxyAgent({
-                  factory: (origin, opts) => new Client(origin as string, opts).compose(HttpCookieAgentCookie({ jar })),
                   uri: proxy.proxyUri,
-              })
+              }).compose(HttpCookieAgentCookie({ jar }))
             : new CookieAgent({ cookies: { jar } });
         if (proxy.proxyUri) {
             logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
