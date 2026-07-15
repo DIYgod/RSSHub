@@ -237,6 +237,7 @@
         "unicorn/no-magic-array-flat-depth": "error",
         "unicorn-js/no-mismatched-map-key": "error",
         "unicorn-js/no-misrefactored-assignment": "error",
+        "unicorn-js/no-multiple-promise-resolver-calls": "error",
         // "unicorn/no-named-default": "error", -> use import/no-named-default
         "unicorn-js/no-negated-array-predicate": "error",
         "unicorn-js/no-negated-comparison": "error",
@@ -257,12 +258,14 @@
         "unicorn-js/no-redundant-comparison": "error",
         "unicorn-js/no-return-array-push": "error",
         "unicorn-js/no-selector-as-dom-name": "error",
+        // "unicorn-js/no-shorthand-property-overrides": "error", // css
         "unicorn/no-single-promise-in-promise-methods": "error",
         "unicorn/no-static-only-class": "error",
         "unicorn-js/no-subtraction-comparison": "error",
         "unicorn/no-thenable": "error",
         "unicorn/no-this-assignment": "error",
         "unicorn-js/no-this-outside-of-class": "error",
+        // "unicorn-js/no-transition-all": "error", // css
         // "unicorn-js/no-top-level-assignment-in-function": "error", // unopinionated
         // "unicorn-js/no-top-level-side-effects": "error", // allows dayjs.extend()
         "unicorn/no-typeof-undefined": "error",
@@ -279,6 +282,7 @@
         "unicorn-js/no-unnecessary-polyfills": "error",
         "unicorn/no-unnecessary-slice-end": "error",
         "unicorn-js/no-unnecessary-splice": "error",
+        "unicorn-js/no-unnecessary-string-trim": "error",
         "unicorn/no-unreadable-array-destructuring": "error",
         "unicorn-js/no-unreadable-for-of-expression": "error",
         "unicorn/no-unreadable-iife": "error",
@@ -303,6 +307,7 @@
         "unicorn-js/no-useless-logical-operand": "error",
         "unicorn-js/no-useless-override": "error",
         "unicorn/no-useless-promise-resolve-reject": "error",
+        "unicorn-js/no-useless-re-export": "error",
         // "unicorn-js/no-useless-recursion": "error", unopinionated
         "unicorn/no-useless-spread": "error",
         // "unicorn/no-useless-switch-case": "error",
@@ -344,6 +349,7 @@
         "unicorn-js/prefer-direct-iteration": "error",
         "unicorn/prefer-dom-node-append": "error",
         "unicorn/prefer-dom-node-dataset": "error",
+        "unicorn-js/prefer-dom-node-html-methods": "error",
         "unicorn/prefer-dom-node-remove": "error",
         "unicorn-js/prefer-dom-node-replace-children": "error",
         "unicorn/prefer-dom-node-text-content": "error",
@@ -405,7 +411,7 @@
         "unicorn-js/prefer-set-methods": "error",
         "unicorn/prefer-set-size": "error",
         "unicorn-js/prefer-short-arrow-method": "warn",
-        "unicorn-js/prefer-simple-condition-first": "error",
+        // "unicorn-js/prefer-simple-condition-first": "error", // unopinionated
         "unicorn-js/prefer-simple-sort-comparator": "error",
         "unicorn-js/prefer-simplified-conditions": "error",
         "unicorn-js/prefer-single-array-predicate": "error",
@@ -426,6 +432,7 @@
         "unicorn/prefer-structured-clone": "error",
         // "unicorn/prefer-switch": "error",
         "unicorn/prefer-ternary": "error",
+        "unicorn-js/prefer-then-catch": "error",
         "unicorn-js/prefer-toggle-attribute": "error",
         // "unicorn/prefer-top-level-await": "error",
         "unicorn/prefer-type-error": "error",
