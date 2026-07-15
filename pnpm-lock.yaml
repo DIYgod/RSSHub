@@ -50,8 +50,8 @@ importers:
         specifier: 2.0.9
         version: 2.0.9(hono@4.12.30)
       '@hono/zod-openapi':
-        specifier: 1.5.0
-        version: 1.5.0(hono@4.12.30)(zod@4.4.3)
+        specifier: 1.5.1
+        version: 1.5.1(hono@4.12.30)(zod@4.4.3)
       '@jocmp/mercury-parser':
         specifier: 3.0.9
         version: 3.0.9
@@ -1098,17 +1098,17 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@1.5.0':
-    resolution: {integrity: sha512-/clSBZWBht7G4SItlTo+4ElbdIUw+987kZYttaUUJWksJoqK905z1pBNTwoJm/P1ibA2ka8nNbqb39eOlreH2g==}
+  '@hono/zod-openapi@1.5.1':
+    resolution: {integrity: sha512-ZaDdEIkn6PEGjIYHXJeyByg6yhvLzI+UXn968pWtahpwcQ6HMjQYXI3zNffTl0Wl9QZ79nUnGqiN1erEIu23fA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.10.0'
       zod: ^4.0.0
 
-  '@hono/zod-validator@0.8.0':
-    resolution: {integrity: sha512-5uS4S1/LKtZQYvD4BtpPUFkOv8d1wNxHHrChm26buMiEYc1FrHWvDUaKVBwkiVtvSExHSpLGDvcnpI2Copyj9w==}
+  '@hono/zod-validator@0.9.0':
+    resolution: {integrity: sha512-n0ZSXmCiHVIp4Y5wlOOyZCeTd/rsawA/qW1cipB8QOYKZ9N8Tk0nZUZCXho9cu374AN4JpDNKioNKBJ/W+LBug==}
     peerDependencies:
-      hono: '>=4.10.0'
+      hono: '>=4.11.2'
       zod: ^3.25.0 || ^4.0.0
 
   '@humanfs/core@0.19.2':
@@ -6916,15 +6916,15 @@ snapshots:
     dependencies:
       hono: 4.12.30
 
-  '@hono/zod-openapi@1.5.0(hono@4.12.30)(zod@4.4.3)':
+  '@hono/zod-openapi@1.5.1(hono@4.12.30)(zod@4.4.3)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.5.0(zod@4.4.3)
-      '@hono/zod-validator': 0.8.0(hono@4.12.30)(zod@4.4.3)
+      '@hono/zod-validator': 0.9.0(hono@4.12.30)(zod@4.4.3)
       hono: 4.12.30
       openapi3-ts: 4.6.0
       zod: 4.4.3
 
-  '@hono/zod-validator@0.8.0(hono@4.12.30)(zod@4.4.3)':
+  '@hono/zod-validator@0.9.0(hono@4.12.30)(zod@4.4.3)':
     dependencies:
       hono: 4.12.30
       zod: 4.4.3
