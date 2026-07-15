@@ -69,7 +69,7 @@ async function handler(ctx) {
                         for (const index in labelsList) {
                             const label = labelsList[index];
                             const count = dataList[index];
-                            const [key, percent] = label.split(' ');
+                            const [key, percent] = label.split(' ', 2);
                             tableData.push({
                                 key,
                                 count,

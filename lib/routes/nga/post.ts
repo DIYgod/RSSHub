@@ -31,7 +31,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     uid: (node) => ({ tag: 'a', attrs: { href: `https://nga.178.com/nuke.php?func=ucp&uid=${attrValue(node)}` }, content: ['@', ...childrenOf(node)] }),
     tid: (node) => ({ tag: 'a', attrs: { href: `https://nga.178.com/read.php?tid=${attrValue(node)}` }, content: node.content }),
     pid: (node) => {
-        const [pid, tid, page] = attrValue(node).split(',');
+        const [pid, tid, page] = attrValue(node).split(',', 3);
         return { tag: 'a', attrs: { href: `https://nga.178.com/read.php?tid=${tid}&page=${page}#pid${pid}Anchor` }, content: node.content };
     },
     // 分割线

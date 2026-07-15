@@ -58,7 +58,7 @@ async function handler(ctx: Context): Promise<Data> {
         waitUntil: 'domcontentloaded',
     });
 
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     await context.close();
 
     const $ = load(response);

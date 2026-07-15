@@ -53,7 +53,7 @@ async function handler() {
         await page.waitForSelector('#main-block .grid-cell');
 
         const bodyHandle = await page.$('body');
-        html = await page.evaluate((body) => body.innerHTML, bodyHandle);
+        html = await page.evaluate((body) => body.getHTML(), bodyHandle);
     } catch {
         throw new Error('Access denied (403)');
     }

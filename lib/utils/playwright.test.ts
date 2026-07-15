@@ -112,7 +112,7 @@ describe('playwright', () => {
             waitUntil: 'domcontentloaded',
         });
 
-        const html = await page.evaluate(() => document.body.innerHTML);
+        const html = await page.evaluate(() => document.body.getHTML());
         expect(html.length).toBeGreaterThan(0);
 
         expect(browser?.isConnected()).toBe(true);
@@ -128,7 +128,7 @@ describe('playwright', () => {
         const browser = context.browser();
         const startTime = Date.now();
 
-        const html = await page.evaluate(() => document.body.innerHTML);
+        const html = await page.evaluate(() => document.body.getHTML());
         expect(html.length).toBeGreaterThan(0);
 
         expect(browser?.isConnected()).toBe(true);

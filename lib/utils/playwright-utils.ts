@@ -26,7 +26,7 @@ const parseCookieArray = (cookies, domainFilter?: string | RegExp) => {
  */
 const constructCookieArray = (cookieStr, domain) =>
     cookieStr.split('; ').map((item) => {
-        const [name, value] = item.split('=');
+        const [name, value] = item.split('=', 2);
         return value === undefined ? { name: '', value: name, domain, path: '/' } : { name, value, domain, path: '/' };
     });
 

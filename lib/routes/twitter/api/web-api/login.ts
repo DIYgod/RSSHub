@@ -54,7 +54,7 @@ async function login({ username, password, authenticationSecret }) {
                 const message = data?.data?.home?.home_timeline_urt?.instructions?.[0]?.entries?.[0]?.entryId;
                 if (message === 'messageprompt-suspended-prompt') {
                     logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
-                    resolve('');
+                    return resolve('');
                 }
                 const cookies = await page.context().cookies();
                 for (const cookie of cookies) {

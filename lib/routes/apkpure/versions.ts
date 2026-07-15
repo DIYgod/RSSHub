@@ -39,7 +39,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
 
-    const r = await page.evaluate(() => document.documentElement.innerHTML);
+    const r = await page.evaluate(() => document.documentElement.getHTML());
     await context.close();
 
     const $ = load(r);

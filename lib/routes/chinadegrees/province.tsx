@@ -93,7 +93,7 @@ async function handler(ctx) {
             });
             await page.waitForSelector('.datalist');
 
-            const html = await page.evaluate(() => document.documentElement.innerHTML);
+            const html = await page.evaluate(() => document.documentElement.getHTML());
             await context.close();
 
             const $ = load(html);

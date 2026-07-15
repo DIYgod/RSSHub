@@ -47,7 +47,7 @@ async function handler(ctx) {
     const $mainSections = $('main .Layout-main').children();
 
     const $subheading = $mainSections.eq(0);
-    const [periodFrom, periodTo] = $subheading.find('h2').text().split('–');
+    const [periodFrom, periodTo] = $subheading.find('h2').text().split('–', 2);
 
     const $overview = $mainSections.eq(1);
     const overviewItems = $overview
