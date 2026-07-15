@@ -27,7 +27,7 @@ export const route: Route = {
         const response = await got(apiUrl);
         const $ = load(response.data);
 
-        const list = $('a[href^="/cn/col"]')
+        const list = $('.ULLIST li a[href^="/cn/col"]')
             .toArray()
             .map((el) => {
                 const $item = $(el);
