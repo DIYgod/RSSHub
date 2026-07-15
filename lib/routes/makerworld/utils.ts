@@ -19,7 +19,7 @@ const fetchViaBrowser = async (url: string, type: 'html' | 'json' = 'html') => {
         },
     });
     try {
-        return (await page.evaluate(type === 'html' ? () => document.documentElement.innerHTML : () => document.documentElement.textContent)) ?? '';
+        return (await page.evaluate(type === 'html' ? () => document.documentElement.getHTML() : () => document.documentElement.textContent)) ?? '';
     } finally {
         await destroy();
     }

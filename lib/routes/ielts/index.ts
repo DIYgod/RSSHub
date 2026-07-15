@@ -39,7 +39,7 @@ async function handler() {
             });
             await page.waitForSelector('div.container');
 
-            const html = await page.evaluate(() => document.documentElement.innerHTML);
+            const html = await page.evaluate(() => document.documentElement.getHTML());
             await context.close();
             return html;
         },

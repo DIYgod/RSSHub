@@ -41,7 +41,7 @@ async function handler() {
     await page.goto(pageUrl, {
         waitUntil: 'domcontentloaded',
     });
-    const res = await page.evaluate(() => document.documentElement.innerHTML);
+    const res = await page.evaluate(() => document.documentElement.getHTML());
     await page.close();
 
     const $ = load(res);
@@ -67,7 +67,7 @@ async function handler() {
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
-                const res = await page.evaluate(() => document.documentElement.innerHTML);
+                const res = await page.evaluate(() => document.documentElement.getHTML());
                 const $ = load(res);
                 await page.close();
 
