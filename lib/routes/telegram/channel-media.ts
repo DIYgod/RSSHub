@@ -116,7 +116,7 @@ function parseRange(range: string, length: bigInt.BigInteger) {
     if (!range) {
         return [];
     }
-    const [typ, segstr] = range.split('=');
+    const [typ, segstr] = range.split('=', 2);
     if (typ !== 'bytes') {
         throw new InvalidParameterError(`unsupported range: ${typ}`);
     }

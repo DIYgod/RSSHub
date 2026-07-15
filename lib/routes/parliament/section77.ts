@@ -41,7 +41,7 @@ async function handler(ctx) {
     let title = 'ร่างพระราชบัญญัติที่เปิดรับฟังความคิดเห็นตามมาตรา 77 ของรัฐธรรมนูญ';
 
     if (type) {
-        const [presenter, isMonetaryAct = ''] = type.split('-');
+        const [presenter, isMonetaryAct = ''] = type.split('-', 2);
 
         title +=
             {
@@ -125,7 +125,7 @@ async function handler(ctx) {
                 item.description = $('.des').first().html();
 
                 // Act draft status
-                const [, presenter, monetaryType] = $('.type77 h5').text().split(' ');
+                const [, presenter, monetaryType] = $('.type77 h5').text().split(' ', 3);
                 item.category = [
                     ...item.category,
                     $('.container-fluid .bg-status .col-md-8.p-0 h5 span,a')

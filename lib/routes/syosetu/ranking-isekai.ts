@@ -9,7 +9,7 @@ import { renderDescription } from './templates/description';
 import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, periodToPointField, RankingPeriod } from './types/ranking';
 
 export function parseIsekaiRankingType(type: string): { period: RankingPeriod; category: IsekaiCategory; novelType: NovelType } {
-    const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_');
+    const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_', 3);
 
     const period = periodStr as RankingPeriod;
     const category = categoryStr as IsekaiCategory;

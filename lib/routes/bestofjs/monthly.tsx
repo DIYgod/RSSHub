@@ -34,12 +34,12 @@ export const route: Route = {
         const targetMonths = getLastSixMonths();
         const allNeededMonthlyRankings = await Promise.all(
             targetMonths.map((data) => {
-                const [year, month] = data.split('-');
+                const [year, month] = data.split('-', 2);
                 return getMonthlyRankings(year, month);
             })
         );
         const items = allNeededMonthlyRankings.flatMap((oneMonthlyRankings, i) => {
-            const [year, month] = targetMonths[i].split('-');
+            const [year, month] = targetMonths[i].split('-', 2);
             const description = renderToString(
                 <ul>
                     {oneMonthlyRankings.map((item, index) => (

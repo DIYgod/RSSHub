@@ -121,7 +121,7 @@ For example: \`daily_total\`, \`weekly_r\`, \`monthly_er\`
 };
 
 function parseRankingType(type: string): { period: RankingPeriod; novelType: NovelType } {
-    const [periodStr, novelTypeStr] = type.split('_');
+    const [periodStr, novelTypeStr] = type.split('_', 2);
 
     const period = periodStr as RankingPeriod;
     const novelType = novelTypeStr as NovelType;
