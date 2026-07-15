@@ -36,7 +36,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
 
-    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    const html = await page.evaluate(() => document.documentElement.getHTML());
     await page.close();
     const $ = load(html);
     const items = $('div.l-box.l-box--no-border.card__text')

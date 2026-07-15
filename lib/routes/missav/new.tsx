@@ -48,7 +48,7 @@ async function handler() {
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     });
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     await context.close();
 
     // const response = await ofetch(`${baseUrl}/dm397/new`, {

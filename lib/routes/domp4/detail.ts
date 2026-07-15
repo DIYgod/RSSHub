@@ -45,7 +45,7 @@ export function getItemList($, detailUrl, second) {
     const { downurls } = second && data.Data.length > 1 ? data.Data[1] : data.Data[0];
 
     return downurls.map((item) => {
-        const [title, downurl] = item.split('$');
+        const [title, downurl] = item.split('$', 2);
         const urlType = getUrlType(downurl);
         // only magnet need compose trackers
         const enclosureUrl = urlType === 'magnet' ? composeMagnetUrl(downurl) : downurl;

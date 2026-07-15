@@ -30,7 +30,7 @@ async function handler(ctx) {
         request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(currentUrl);
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     await page.close();
 
     const $ = load(response);
@@ -55,7 +55,7 @@ async function handler(ctx) {
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
                 await page.goto(item.link);
-                const detailResponse = await page.evaluate(() => document.documentElement.innerHTML);
+                const detailResponse = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
                 const content = load(detailResponse);
 

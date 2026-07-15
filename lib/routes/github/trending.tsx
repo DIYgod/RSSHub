@@ -84,7 +84,7 @@ async function handler(ctx) {
 
     const articles = $('article');
     const trendingRepos = articles.toArray().map((item) => {
-        const [owner, name] = $(item).find('h2').text().split('/');
+        const [owner, name] = $(item).find('h2').text().split('/', 2);
         return {
             name: name.trim(),
             owner: owner.trim(),

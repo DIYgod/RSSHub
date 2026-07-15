@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    const html = await page.evaluate(() => document.documentElement.getHTML());
     const $ = load(html);
     const language = $('html').attr('lang') ?? 'en';
 
@@ -112,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 // Navigate to the item link
                 await contentPage.goto(item.link!, { waitUntil: 'domcontentloaded' });
 
-                const contentHtml = await contentPage.evaluate(() => document.documentElement.innerHTML);
+                const contentHtml = await contentPage.evaluate(() => document.documentElement.getHTML());
                 await contentPage.close();
 
                 const $content = load(contentHtml);

@@ -65,7 +65,7 @@ const parsePage = async (path, context: BrowserContext, ctx) => {
     });
 
     await page.waitForSelector('.caption');
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     await page.close();
     const $ = load(response);
 
@@ -100,7 +100,7 @@ const parseItems = (list, context: BrowserContext) =>
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
-                const response = await page.evaluate(() => document.documentElement.innerHTML);
+                const response = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
                 const $ = load(response);
 

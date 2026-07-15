@@ -71,7 +71,7 @@ async function handler(ctx) {
                 });
                 await page.waitForSelector('.core-container');
 
-                const res = await page.evaluate(() => document.documentElement.innerHTML);
+                const res = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
 
                 const $ = load(res);

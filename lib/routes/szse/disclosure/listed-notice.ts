@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     };
     if (query) {
         for (const pair of query.split('&')) {
-            const [key, value] = pair.split('=');
+            const [key, value] = pair.split('=', 2);
             if (key) {
                 queries[key] = value;
             }

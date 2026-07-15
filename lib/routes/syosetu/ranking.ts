@@ -181,7 +181,7 @@ When multiple works have the same points, their order may differ from syosetu's 
 };
 
 function parseGeneralRankingType(type: string): { period: RankingPeriod; novelType: NovelType } {
-    const [periodStr, novelTypeStr] = type.split('_');
+    const [periodStr, novelTypeStr] = type.split('_', 2);
 
     const period = periodStr as RankingPeriod;
     const novelType = novelTypeStr as NovelType;
@@ -196,7 +196,7 @@ function parseGeneralRankingType(type: string): { period: RankingPeriod; novelTy
 }
 
 function parseGenreRankingType(type: string): { period: RankingPeriod; genre: number; novelType: NovelType } {
-    const [periodStr, genreStr, novelTypeStr = NovelType.TOTAL] = type.split('_');
+    const [periodStr, genreStr, novelTypeStr = NovelType.TOTAL] = type.split('_', 3);
 
     const period = periodStr as RankingPeriod;
     const genre = Number(genreStr) as Genre;
