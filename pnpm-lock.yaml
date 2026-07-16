@@ -47,8 +47,8 @@ importers:
         specifier: 6.14.0
         version: 6.14.0
       '@hono/node-server':
-        specifier: 2.0.9
-        version: 2.0.9(hono@4.12.30)
+        specifier: 2.0.10
+        version: 2.0.10(hono@4.12.30)
       '@hono/zod-openapi':
         specifier: 1.5.1
         version: 1.5.1(hono@4.12.30)(zod@4.4.3)
@@ -56,8 +56,8 @@ importers:
         specifier: 3.0.9
         version: 3.0.9
       '@notionhq/client':
-        specifier: 5.23.1
-        version: 5.23.1
+        specifier: 5.23.2
+        version: 5.23.2
       '@opentelemetry/api':
         specifier: 1.9.1
         version: 1.9.1
@@ -83,8 +83,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.11.9
-        version: 0.11.9(hono@4.12.30)
+        specifier: 0.11.10
+        version: 0.11.10(hono@4.12.30)
       '@sentry/node':
         specifier: 10.65.0
         version: 10.65.0(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.220.0(@opentelemetry/api@1.9.1))
@@ -295,10 +295,10 @@ importers:
         version: 1.3.0
       '@cloudflare/vitest-pool-workers':
         specifier: 0.18.5
-        version: 0.18.5(@cloudflare/workers-types@5.20260715.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(bufferutil@4.1.0)(utf-8-validate@5.0.10)(vitest@4.1.10)
+        version: 0.18.5(@cloudflare/workers-types@5.20260716.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(bufferutil@4.1.0)(utf-8-validate@5.0.10)(vitest@4.1.10)
       '@cloudflare/workers-types':
-        specifier: 5.20260715.1
-        version: 5.20260715.1
+        specifier: 5.20260716.1
+        version: 5.20260716.1
       '@eslint/eslintrc':
         specifier: 3.3.6
         version: 3.3.6
@@ -369,8 +369,8 @@ importers:
         specifier: 4.1.10
         version: 4.1.10(vitest@4.1.10)
       discord-api-types:
-        specifier: 0.38.49
-        version: 0.38.49
+        specifier: 0.38.50
+        version: 0.38.50
       domhandler:
         specifier: 6.0.1
         version: 6.0.1
@@ -475,7 +475,7 @@ importers:
         version: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.1.1)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.15.0(@types/node@26.1.1)(@typescript/typescript6@6.0.2))(vite@7.3.1(@types/node@26.1.1)(lightningcss@1.32.0)(tsx@4.23.1)(yaml@2.9.0))
       wrangler:
         specifier: 4.111.0
-        version: 4.111.0(@cloudflare/workers-types@5.20260715.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
+        version: 4.111.0(@cloudflare/workers-types@5.20260716.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
       yaml-eslint-parser:
         specifier: 2.1.0
         version: 2.1.0
@@ -644,8 +644,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@5.20260715.1':
-    resolution: {integrity: sha512-saxo/nMqQJ1dKDUXp1a2y/+IjKENFVD9+QRefHg5EjJZY20OG3xcEge4PGljbqZiF3AiU4o5ZLS3Vm7cayQIxg==}
+  '@cloudflare/workers-types@5.20260716.1':
+    resolution: {integrity: sha512-LqQPmGAvdpQxzZGAMlDI6fnCsTlr8nRQibWsREaERqD0PucwFl25aXpUskSob70uSY2n6K1sp6Te9xkmzSFgaw==}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -1096,8 +1096,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  '@hono/node-server@2.0.9':
-    resolution: {integrity: sha512-cNMw3ziCdDcx0+ldta60zvUL5XO0OLt521n2hjPp0PB0ugczDCEczXsf33qQbkKIXWGFQ03f0LC85u6YK8pCLA==}
+  '@hono/node-server@2.0.10':
+    resolution: {integrity: sha512-ZcnNVhKTmyDJeg0UlnZjvM73JBsTAuhrH/J4fjwGOw59PwOW51r4J+p6CsKZWXdKSme4MFqU62CZMOsdDrU4CA==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4
@@ -1467,8 +1467,8 @@ packages:
     resolution: {integrity: sha512-y3SvzjuY1ygnzWA4Krwx/WaJAsTMP11DN+e21A8Fa8PW1oDtVB5NSRW7LWurAiS2oKRkuCgcjTYMkBuBkcPCRg==}
     engines: {node: '>=12.4.0'}
 
-  '@notionhq/client@5.23.1':
-    resolution: {integrity: sha512-Y0jhh0ulft1x1c3uHFzBMHHQZzdfpCUV5JNFAZxzmjKEIkephQ0fle0g0ZqxTmHl1vP1ZOjzq0v47Ao4udBevw==}
+  '@notionhq/client@5.23.2':
+    resolution: {integrity: sha512-iyD5VU9MoNxCR0GespotyrMlBpO4kLG+BaZK2JpZW1yfFqrmOYmZGb3wl4xqfq3n1Z9eekFwNcZD6t63SaESig==}
     engines: {node: '>=18'}
 
   '@octokit/auth-token@6.0.0':
@@ -2453,30 +2453,30 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.3.2':
-    resolution: {integrity: sha512-HXgfSnSQSLaTZupSmN2w4O1Gv0wXdFl+GtrZHQEoNQ4HSzgCtk9fKcmSVxaZiPjyx6eon/x3Ic+Ka5T4tXskyA==}
+  '@scalar/client-side-rendering@0.3.3':
+    resolution: {integrity: sha512-QMTKZdwtSSV619jV1jKeRCOd358cgJqRBTHQ663CF7EUCZ354qH4js883K3RYg5/eO4oWxOuka308KIj0sZ/Kg==}
     engines: {node: '>=22'}
 
-  '@scalar/helpers@0.9.0':
-    resolution: {integrity: sha512-M34CLRCttqC1bXthI/QSzQj0s5C6nrU2PFWf/vOT3RpycbiGDGQbqR+5RfFzpOIQvRqbHfNdcRbeiZBw+vCbkQ==}
+  '@scalar/helpers@0.9.1':
+    resolution: {integrity: sha512-UKSLIPfN++f+zzbsZ+F6I0lNrR4yX4PtokjHgGwGiHapxT5VJqAF4zFTIP2KCd27XG7KnAIA7qq62O4xRBxc6w==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.11.9':
-    resolution: {integrity: sha512-/Rx/kozi18sfWLP6y9qK/xhjO68i667o2aFXWnRfxW0TKL2D6A+LGtWCHQTgTONPKZe0TX9iSMSWf0vy0UOsbA==}
+  '@scalar/hono-api-reference@0.11.10':
+    resolution: {integrity: sha512-LluYDOie3F8NqLiAuZ0ESWmtWotSMV9A2/AxIB3NwQk/3JJ+5S9rnIWVY61o7QIDWlwwy6uZ8KqRSV83qmnhZA==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.7.2':
-    resolution: {integrity: sha512-6Ble6WcbiKgD3ypIva+wgZv1qIClmeEjXA6jrOo1bKpYUu6sh4e89LZxDK+LULa2jQl/2O5GEaa6aZ0ImlpkHg==}
+  '@scalar/schemas@0.7.3':
+    resolution: {integrity: sha512-B6S/zUptiRfMsmMy92u/LefpULus1h0q3od9l5xgZc+pslkfFhfFns+QsU0UJX3Lqp3tTsf64c3tIRqH7cZgVA==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.16.2':
-    resolution: {integrity: sha512-QAlCtDVRsX/UV1N9ctLqPsKQy84eceFf4dMnTZM0JhaRfwS/Ovwp8oFf3POSpqQILNiqLFZLE6IV6p/5rNoAag==}
+  '@scalar/types@0.16.3':
+    resolution: {integrity: sha512-8TVNlK8AdvIekrapAoEVwy+IVRbMTSDYnpprskAJV4XanmZ52Kru6RmS6d+tbEBfMo2dTgQ9cV9P0kqsAu/AuA==}
     engines: {node: '>=22'}
 
-  '@scalar/validation@0.6.0':
-    resolution: {integrity: sha512-tpmmG+/xRE2Kn9RpflU3AIyZv08v10+E1ZrJCx7z6+/91zHVxy0M73kC1LT4/8PbYNt85ywyC8+n+D99JdMcGA==}
+  '@scalar/validation@0.6.1':
+    resolution: {integrity: sha512-XeJ+pvxag0rguuRT6hxNSXIsxleB8Gcs6WQ55vFRkB4qo2CCO+wIli+uipzM3pILu5cP7agcL3pgADiZzd1ZNg==}
     engines: {node: '>=20'}
 
   '@scure/base@2.2.0':
@@ -3589,11 +3589,11 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
-  discord-api-types@0.38.49:
-    resolution: {integrity: sha512-XnqcWmnFZFAE8ZM8SHAw9DIV8D3Or00rMQ8iQLotrEA2PmXhl+ykaf6L6q4l474hrSUH1JaYcv+iOMRWp2p6Tg==}
+  discord-api-types@0.38.50:
+    resolution: {integrity: sha512-J2n/bpIETX3DQ6AJ7/0xbsTLmYiJQtO/LKcXKC1YDbB56OUwtDbdXOFE8Q4g8jVGHBR2VAy1+D4ngaIgkMNV9w==}
 
   dom-serializer@1.4.1:
     resolution: {integrity: sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==}
@@ -6595,7 +6595,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260710.1
 
-  '@cloudflare/vitest-pool-workers@0.18.5(@cloudflare/workers-types@5.20260715.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(bufferutil@4.1.0)(utf-8-validate@5.0.10)(vitest@4.1.10)':
+  '@cloudflare/vitest-pool-workers@0.18.5(@cloudflare/workers-types@5.20260716.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(bufferutil@4.1.0)(utf-8-validate@5.0.10)(vitest@4.1.10)':
     dependencies:
       '@vitest/runner': 4.1.10
       '@vitest/snapshot': 4.1.10
@@ -6603,7 +6603,7 @@ snapshots:
       esbuild: 0.28.1
       miniflare: 4.20260710.0(bufferutil@4.1.0)(utf-8-validate@5.0.10)
       vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.1.1)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1(@noble/hashes@2.2.0))(msw@2.15.0(@types/node@26.1.1)(@typescript/typescript6@6.0.2))(vite@7.3.1(@types/node@26.1.1)(lightningcss@1.32.0)(tsx@4.23.1)(yaml@2.9.0))
-      wrangler: 4.111.0(@cloudflare/workers-types@5.20260715.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
+      wrangler: 4.111.0(@cloudflare/workers-types@5.20260716.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
       zod: 3.25.76
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -6625,7 +6625,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260710.1':
     optional: true
 
-  '@cloudflare/workers-types@5.20260715.1': {}
+  '@cloudflare/workers-types@5.20260716.1': {}
 
   '@colors/colors@1.6.0': {}
 
@@ -6924,7 +6924,7 @@ snapshots:
       '@types/aws-lambda': 8.10.162
       '@types/express': 5.0.6
 
-  '@hono/node-server@2.0.9(hono@4.12.30)':
+  '@hono/node-server@2.0.10(hono@4.12.30)':
     dependencies:
       hono: 4.12.30
 
@@ -7234,7 +7234,7 @@ snapshots:
 
   '@nolyfill/side-channel@1.0.44': {}
 
-  '@notionhq/client@5.23.1': {}
+  '@notionhq/client@5.23.2': {}
 
   '@octokit/auth-token@6.0.0': {}
 
@@ -7890,32 +7890,32 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.3.2':
+  '@scalar/client-side-rendering@0.3.3':
     dependencies:
-      '@scalar/schemas': 0.7.2
-      '@scalar/types': 0.16.2
-      '@scalar/validation': 0.6.0
+      '@scalar/schemas': 0.7.3
+      '@scalar/types': 0.16.3
+      '@scalar/validation': 0.6.1
 
-  '@scalar/helpers@0.9.0': {}
+  '@scalar/helpers@0.9.1': {}
 
-  '@scalar/hono-api-reference@0.11.9(hono@4.12.30)':
+  '@scalar/hono-api-reference@0.11.10(hono@4.12.30)':
     dependencies:
-      '@scalar/client-side-rendering': 0.3.2
+      '@scalar/client-side-rendering': 0.3.3
       hono: 4.12.30
 
-  '@scalar/schemas@0.7.2':
+  '@scalar/schemas@0.7.3':
     dependencies:
-      '@scalar/helpers': 0.9.0
-      '@scalar/validation': 0.6.0
+      '@scalar/helpers': 0.9.1
+      '@scalar/validation': 0.6.1
 
-  '@scalar/types@0.16.2':
+  '@scalar/types@0.16.3':
     dependencies:
-      '@scalar/helpers': 0.9.0
+      '@scalar/helpers': 0.9.1
       nanoid: 5.1.16
       type-fest: 5.8.0
       zod: 4.4.3
 
-  '@scalar/validation@0.6.0': {}
+  '@scalar/validation@0.6.1': {}
 
   '@scure/base@2.2.0': {}
 
@@ -8917,7 +8917,7 @@ snapshots:
     dependencies:
       heap: 0.2.7
 
-  discord-api-types@0.38.49: {}
+  discord-api-types@0.38.50: {}
 
   dom-serializer@1.4.1:
     dependencies:
@@ -12073,7 +12073,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260710.1
       '@cloudflare/workerd-windows-64': 1.20260710.1
 
-  wrangler@4.111.0(@cloudflare/workers-types@5.20260715.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10):
+  wrangler@4.111.0(@cloudflare/workers-types@5.20260716.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260710.1)
@@ -12084,7 +12084,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260710.1
     optionalDependencies:
-      '@cloudflare/workers-types': 5.20260715.1
+      '@cloudflare/workers-types': 5.20260716.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
