@@ -26,22 +26,22 @@ const Index: FC<{
                     <p className="message">
                         Error Message:
                         <br />
-                        <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details whitespace-pre-line">{message}</code>
+                        <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 dark:bg-zinc-800 align-bottom w-fit details whitespace-pre-line">{message}</code>
                     </p>
                     <p className="message">
-                        Route: <code className="ml-2 bg-zinc-100">{errorRoute}</code>
+                        Route: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{errorRoute}</code>
                     </p>
                     <p className="message">
-                        Full Route: <code className="ml-2 bg-zinc-100">{requestPath}</code>
+                        Full Route: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{requestPath}</code>
                     </p>
                     <p className="message">
-                        Node Version: <code className="ml-2 bg-zinc-100">{nodeVersion}</code>
+                        Node Version: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{nodeVersion}</code>
                     </p>
                     <p className="message">
-                        Git Hash: <code className="ml-2 bg-zinc-100">{gitHash}</code>
+                        Git Hash: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{gitHash}</code>
                     </p>
                     <p className="message">
-                        Git Date: <code className="ml-2 bg-zinc-100">{gitDate?.toUTCString()}</code>
+                        Git Date: <code className="ml-2 bg-zinc-100 dark:bg-zinc-800">{gitDate?.toUTCString()}</code>
                     </p>
                 </div>
                 <div>
@@ -107,7 +107,10 @@ const Index: FC<{
         <div className="mt-4 pb-8 text-center w-full text-sm font-medium space-y-2">
             <p className="space-x-4">
                 <a target="_blank" href="https://github.com/DIYgod/RSSHub">
-                    <img className="inline" src="https://icons.ly/github/_/fff" alt="github" width="20" height="20" />
+                    <picture>
+                        <source srcset="https://icons.ly/github/_/fff" media="(prefers-color-scheme: dark)" />
+                        <img className="inline" src="https://icons.ly/github" alt="github" width="20" height="20" />
+                    </picture>
                 </a>
                 <a target="_blank" href="https://t.me/rsshub">
                     <img className="inline" src="https://icons.ly/telegram" alt="telegram group" width="20" height="20" />
@@ -116,7 +119,10 @@ const Index: FC<{
                     <img className="inline" src="https://icons.ly/telegram" alt="telegram channel" width="20" height="20" />
                 </a>
                 <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
-                    <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
+                    <picture>
+                        <source srcset="https://icons.ly/x/_/fff" media="(prefers-color-scheme: dark)" />
+                        <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
+                    </picture>
                 </a>
             </p>
             <p className="!mt-6">
