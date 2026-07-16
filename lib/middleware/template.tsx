@@ -20,7 +20,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     }
 
     const data: Data = ctx.get('data');
-    const outputType = ctx.req.query('format') || 'rss';
+    const outputType = ctx.req.query('format') || config.format;
 
     // only enable when debugInfo=true
     if (config.debugInfo) {
