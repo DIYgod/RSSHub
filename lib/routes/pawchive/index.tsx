@@ -17,7 +17,7 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
 
     $('audio source, video source').each((_, el) => {
         const src = $(el).attr('src');
-        if (!src) return;
+        if (!src) {return};
 
         const extension = src.replace(/.*\./, '').toLowerCase();
         const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
