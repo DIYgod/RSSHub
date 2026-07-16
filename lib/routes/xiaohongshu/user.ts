@@ -98,14 +98,17 @@ async function getUserFeeds(url: string, category: string) {
 
     const renderNote = (notes) =>
         notes.flatMap((n) =>
-            n.map(({ id, noteCard }) => ({
-                title: noteCard.displayTitle,
-                link: new URL(noteCard.noteId || id, url).href,
-                guid: noteCard.displayTitle,
-                description: `<img src="${noteCard.cover.infoList.pop().url}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
-                author: noteCard.user.nickname,
-                upvotes: noteCard.interactInfo.likedCount,
-            }))
+            n.map(({ noteCard }) => {
+                const coverUrl = noteCard.cover.infoList.pop().url;
+                return {
+                    title: noteCard.displayTitle,
+                    link: coverUrl,
+                    guid: noteCard.displayTitle,
+                    description: `<img src="${coverUrl}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
+                    author: noteCard.user.nickname,
+                    upvotes: noteCard.interactInfo.likedCount,
+                };
+            })
         );
     const renderCollect = (collect) => {
         if (!collect) {
