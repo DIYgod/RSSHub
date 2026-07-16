@@ -83,8 +83,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.11.9
-        version: 0.11.9(hono@4.12.30)
+        specifier: 0.11.10
+        version: 0.11.10(hono@4.12.30)
       '@sentry/node':
         specifier: 10.65.0
         version: 10.65.0(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.220.0(@opentelemetry/api@1.9.1))
@@ -2453,30 +2453,30 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.3.2':
-    resolution: {integrity: sha512-HXgfSnSQSLaTZupSmN2w4O1Gv0wXdFl+GtrZHQEoNQ4HSzgCtk9fKcmSVxaZiPjyx6eon/x3Ic+Ka5T4tXskyA==}
+  '@scalar/client-side-rendering@0.3.3':
+    resolution: {integrity: sha512-QMTKZdwtSSV619jV1jKeRCOd358cgJqRBTHQ663CF7EUCZ354qH4js883K3RYg5/eO4oWxOuka308KIj0sZ/Kg==}
     engines: {node: '>=22'}
 
-  '@scalar/helpers@0.9.0':
-    resolution: {integrity: sha512-M34CLRCttqC1bXthI/QSzQj0s5C6nrU2PFWf/vOT3RpycbiGDGQbqR+5RfFzpOIQvRqbHfNdcRbeiZBw+vCbkQ==}
+  '@scalar/helpers@0.9.1':
+    resolution: {integrity: sha512-UKSLIPfN++f+zzbsZ+F6I0lNrR4yX4PtokjHgGwGiHapxT5VJqAF4zFTIP2KCd27XG7KnAIA7qq62O4xRBxc6w==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.11.9':
-    resolution: {integrity: sha512-/Rx/kozi18sfWLP6y9qK/xhjO68i667o2aFXWnRfxW0TKL2D6A+LGtWCHQTgTONPKZe0TX9iSMSWf0vy0UOsbA==}
+  '@scalar/hono-api-reference@0.11.10':
+    resolution: {integrity: sha512-LluYDOie3F8NqLiAuZ0ESWmtWotSMV9A2/AxIB3NwQk/3JJ+5S9rnIWVY61o7QIDWlwwy6uZ8KqRSV83qmnhZA==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.7.2':
-    resolution: {integrity: sha512-6Ble6WcbiKgD3ypIva+wgZv1qIClmeEjXA6jrOo1bKpYUu6sh4e89LZxDK+LULa2jQl/2O5GEaa6aZ0ImlpkHg==}
+  '@scalar/schemas@0.7.3':
+    resolution: {integrity: sha512-B6S/zUptiRfMsmMy92u/LefpULus1h0q3od9l5xgZc+pslkfFhfFns+QsU0UJX3Lqp3tTsf64c3tIRqH7cZgVA==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.16.2':
-    resolution: {integrity: sha512-QAlCtDVRsX/UV1N9ctLqPsKQy84eceFf4dMnTZM0JhaRfwS/Ovwp8oFf3POSpqQILNiqLFZLE6IV6p/5rNoAag==}
+  '@scalar/types@0.16.3':
+    resolution: {integrity: sha512-8TVNlK8AdvIekrapAoEVwy+IVRbMTSDYnpprskAJV4XanmZ52Kru6RmS6d+tbEBfMo2dTgQ9cV9P0kqsAu/AuA==}
     engines: {node: '>=22'}
 
-  '@scalar/validation@0.6.0':
-    resolution: {integrity: sha512-tpmmG+/xRE2Kn9RpflU3AIyZv08v10+E1ZrJCx7z6+/91zHVxy0M73kC1LT4/8PbYNt85ywyC8+n+D99JdMcGA==}
+  '@scalar/validation@0.6.1':
+    resolution: {integrity: sha512-XeJ+pvxag0rguuRT6hxNSXIsxleB8Gcs6WQ55vFRkB4qo2CCO+wIli+uipzM3pILu5cP7agcL3pgADiZzd1ZNg==}
     engines: {node: '>=20'}
 
   '@scure/base@2.2.0':
@@ -7890,32 +7890,32 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.3.2':
+  '@scalar/client-side-rendering@0.3.3':
     dependencies:
-      '@scalar/schemas': 0.7.2
-      '@scalar/types': 0.16.2
-      '@scalar/validation': 0.6.0
+      '@scalar/schemas': 0.7.3
+      '@scalar/types': 0.16.3
+      '@scalar/validation': 0.6.1
 
-  '@scalar/helpers@0.9.0': {}
+  '@scalar/helpers@0.9.1': {}
 
-  '@scalar/hono-api-reference@0.11.9(hono@4.12.30)':
+  '@scalar/hono-api-reference@0.11.10(hono@4.12.30)':
     dependencies:
-      '@scalar/client-side-rendering': 0.3.2
+      '@scalar/client-side-rendering': 0.3.3
       hono: 4.12.30
 
-  '@scalar/schemas@0.7.2':
+  '@scalar/schemas@0.7.3':
     dependencies:
-      '@scalar/helpers': 0.9.0
-      '@scalar/validation': 0.6.0
+      '@scalar/helpers': 0.9.1
+      '@scalar/validation': 0.6.1
 
-  '@scalar/types@0.16.2':
+  '@scalar/types@0.16.3':
     dependencies:
-      '@scalar/helpers': 0.9.0
+      '@scalar/helpers': 0.9.1
       nanoid: 5.1.16
       type-fest: 5.8.0
       zod: 4.4.3
 
-  '@scalar/validation@0.6.0': {}
+  '@scalar/validation@0.6.1': {}
 
   '@scure/base@2.2.0': {}
 
