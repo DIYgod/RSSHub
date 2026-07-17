@@ -1816,6 +1816,7 @@ export type RoutePath =
   | `/lrepacks/:category?`
   | `/lsnu/jiaowc/tzgg/:category?`
   | `/ltaaa/article`
+  | `/ltn/def/:channel{.+}?`
   | `/luma/:url`
   | `/luogu/contest`
   | `/luogu/daily/:id?`

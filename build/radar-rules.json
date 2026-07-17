@@ -26341,6 +26341,27 @@
       }
     ]
   },
+  "ltn.com.tw": {
+    "_name": "自由時報",
+    "def": [
+      {
+        "title": "自由軍武頻道",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:channel"
+        ],
+        "target": "/ltn/def/:channel"
+      },
+      {
+        "title": "自由軍武頻道",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/list/:id"
+        ],
+        "target": "/ltn/def/list/:id"
+      }
+    ]
+  },
   "luogu.com": {
     "_name": "洛谷",
     ".": [
