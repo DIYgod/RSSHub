@@ -83,8 +83,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.11.10
-        version: 0.11.10(hono@4.12.30)
+        specifier: 0.11.11
+        version: 0.11.11(hono@4.12.30)
       '@sentry/node':
         specifier: 10.65.0
         version: 10.65.0(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.220.0(@opentelemetry/api@1.9.1))
@@ -2453,30 +2453,30 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.3.3':
-    resolution: {integrity: sha512-QMTKZdwtSSV619jV1jKeRCOd358cgJqRBTHQ663CF7EUCZ354qH4js883K3RYg5/eO4oWxOuka308KIj0sZ/Kg==}
+  '@scalar/client-side-rendering@0.3.4':
+    resolution: {integrity: sha512-kb3B+FGjvAUr2DU0fe9dVKBLwot1TjOO+iHCTmY8r8FUJySmYKGQYCicRzzilOyTjvKspiZBCEr03PWaWW+1gw==}
     engines: {node: '>=22'}
 
-  '@scalar/helpers@0.9.1':
-    resolution: {integrity: sha512-UKSLIPfN++f+zzbsZ+F6I0lNrR4yX4PtokjHgGwGiHapxT5VJqAF4zFTIP2KCd27XG7KnAIA7qq62O4xRBxc6w==}
+  '@scalar/helpers@0.9.2':
+    resolution: {integrity: sha512-hjyMpMZjTBZQhyByZmz5oUgRKUQJO5V5AOiJxsVEGbUmgA7sJRQeTrXLB+BEwzaKS5nm2opJeNyMBYLFNK4hiQ==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.11.10':
-    resolution: {integrity: sha512-LluYDOie3F8NqLiAuZ0ESWmtWotSMV9A2/AxIB3NwQk/3JJ+5S9rnIWVY61o7QIDWlwwy6uZ8KqRSV83qmnhZA==}
+  '@scalar/hono-api-reference@0.11.11':
+    resolution: {integrity: sha512-yvJ2oqyG9MC4C55/Xvi/Jny5qBYDxDvoVleABhgNG24A93u9ar17qsdSppli94sQOUdX31Qw/yCTm89LHbBRiQ==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.7.3':
-    resolution: {integrity: sha512-B6S/zUptiRfMsmMy92u/LefpULus1h0q3od9l5xgZc+pslkfFhfFns+QsU0UJX3Lqp3tTsf64c3tIRqH7cZgVA==}
+  '@scalar/schemas@0.7.4':
+    resolution: {integrity: sha512-Or31zxR+ceGGhkVU5XBO2Zv7oyGDtjsJOjM2Rr0WRZ1/tRsQc2/FsVv+9kPmCA7sqFL8BKWlNfTXcPITI7WRHw==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.16.3':
-    resolution: {integrity: sha512-8TVNlK8AdvIekrapAoEVwy+IVRbMTSDYnpprskAJV4XanmZ52Kru6RmS6d+tbEBfMo2dTgQ9cV9P0kqsAu/AuA==}
+  '@scalar/types@0.16.4':
+    resolution: {integrity: sha512-fLf0ANAC3iQq0sIVdmH6aGM+pFSLyD8GfGBxSWcLpI0jE0iFAzX2A3p0qVZm7vqBT4TQnn0fSwg5U+h+FZ52BA==}
     engines: {node: '>=22'}
 
-  '@scalar/validation@0.6.1':
-    resolution: {integrity: sha512-XeJ+pvxag0rguuRT6hxNSXIsxleB8Gcs6WQ55vFRkB4qo2CCO+wIli+uipzM3pILu5cP7agcL3pgADiZzd1ZNg==}
+  '@scalar/validation@0.6.2':
+    resolution: {integrity: sha512-Sc1TkcwGV6aVCO51AyKeaGiP8gpwAHxEtO5d3tZzPV+KsnlC/YokQxFxwBrbIXw73k9hmcExnJyGu3k5i6n6VA==}
     engines: {node: '>=20'}
 
   '@scure/base@2.2.0':
@@ -3589,7 +3589,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.50:
@@ -7890,32 +7890,32 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.3.3':
+  '@scalar/client-side-rendering@0.3.4':
     dependencies:
-      '@scalar/schemas': 0.7.3
-      '@scalar/types': 0.16.3
-      '@scalar/validation': 0.6.1
+      '@scalar/schemas': 0.7.4
+      '@scalar/types': 0.16.4
+      '@scalar/validation': 0.6.2
 
-  '@scalar/helpers@0.9.1': {}
+  '@scalar/helpers@0.9.2': {}
 
-  '@scalar/hono-api-reference@0.11.10(hono@4.12.30)':
+  '@scalar/hono-api-reference@0.11.11(hono@4.12.30)':
     dependencies:
-      '@scalar/client-side-rendering': 0.3.3
+      '@scalar/client-side-rendering': 0.3.4
       hono: 4.12.30
 
-  '@scalar/schemas@0.7.3':
+  '@scalar/schemas@0.7.4':
     dependencies:
-      '@scalar/helpers': 0.9.1
-      '@scalar/validation': 0.6.1
+      '@scalar/helpers': 0.9.2
+      '@scalar/validation': 0.6.2
 
-  '@scalar/types@0.16.3':
+  '@scalar/types@0.16.4':
     dependencies:
-      '@scalar/helpers': 0.9.1
+      '@scalar/helpers': 0.9.2
       nanoid: 5.1.16
       type-fest: 5.8.0
       zod: 4.4.3
 
-  '@scalar/validation@0.6.1': {}
+  '@scalar/validation@0.6.2': {}
 
   '@scure/base@2.2.0': {}
 
