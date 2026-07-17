@@ -59,12 +59,15 @@ async function handler(ctx) {
         `iwara:ranking:${type}:${sort}:${rating}`,
         async () => {
             const { page, destroy } = await getPlaywrightPage(rootUrl, {
-                noGoto: true,
+                closeTimeout: 90 * 1000,
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
                         const type = route.request().resourceType();
                         ['document', 'script', 'xhr', 'fetch'].includes(type) ? route.continue() : route.abort();
                     });
+                },
+                gotoConfig: {
+                    waitUntil: 'domcontentloaded',
                 },
             });
 
