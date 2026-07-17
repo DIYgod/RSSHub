@@ -1,8 +1,8 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
 
 import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
 
@@ -32,7 +32,6 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen233'],
     handler,
     features: {
-        requirePuppeteer: true,
         nsfw: true,
     },
     radar: [
@@ -58,33 +57,20 @@ async function handler(ctx) {
     const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}`,
         async () => {
-            const { page, destroy } = await getPlaywrightPage(url, {
-                onBeforeLoad: async (page) => {
-                    await page.route('**/*', (route) => {
-                        const request = route.request();
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
-                    });
-                },
-                gotoConfig: {
-                    waitUntil: 'networkidle',
+            const response = await ofetch(url, {
+                headers: {
+                    'user-agent': config.trueUA,
                 },
             });
 
-            try {
-                const content = await page.evaluate(() => document.querySelector('pre')?.textContent || document.body.textContent);
-                const response = JSON.parse(content || '{}');
-
-                return response.results.map((item) => ({
-                    title: item.title,
-                    author: item.user.name,
-                    link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
-                    category: item.tags?.map((i) => i.id) || [],
-                    description: parseThumbnail(type, item),
-                    pubDate: parseDate(item.createdAt),
-                }));
-            } finally {
-                await destroy();
-            }
+            return response.results.map((item) => ({
+                title: item.title,
+                author: item.user.name,
+                link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
+                category: item.tags?.map((i) => i.id) || [],
+                description: parseThumbnail(type, item),
+                pubDate: parseDate(item.createdAt),
+            }));
         },
         config.cache.routeExpire,
         false

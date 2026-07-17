@@ -56,8 +56,8 @@ async function handler(ctx) {
     const items = list.map((item) => ({
         title: item.title,
         author: username,
-        link: `${rootUrl}/${type}/${item.id}/${item.slug}`,
-        category: item.tags.map((i) => i.id),
+        link: `${rootUrl}/${type}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
+        category: item.tags?.map((i) => i.id) || [],
         description: parseThumbnail(type, item),
         pubDate: parseDate(item.createdAt),
     }));
