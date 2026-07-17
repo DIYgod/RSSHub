@@ -188,7 +188,6 @@
         "husky": "9.1.7",
         "js-beautify": "2.0.3",
         "lint-staged": "17.0.8",
-        "magic-string": "0.30.21",
         "mockdate": "3.0.5",
         "msw": "2.15.0",
         "node-network-devtools": "1.0.30",
@@ -229,7 +228,7 @@
     "engines": {
         "node": "^22.20.0 || ^24"
     },
-    "packageManager": "pnpm@10.34.4+sha512.8768be55200ae3f2226b6527fcca2687e14bc4e5f12d7721a0f25da3df47915177058648db4177baf348120fa0ba2752d8d8d93f6beaf1fe64ae18da8de961af",
+    "packageManager": "pnpm@10.34.5+sha512.a4ee05f2f73658255bd6a89859c065a45c28a57daefae2c893a168ee2b73168c37b91e83e57ea67654ad03f03031746430e8bce38e362e042605fb8abc80192e",
     "pnpm": {
         "onlyBuiltDependencies": [
             "bufferutil",
