@@ -43,6 +43,12 @@ async function handler(ctx) {
         apiUrl,
         async () => {
             const { page, destroy } = await getPlaywrightPage(rootUrl, {
+                onBeforeLoad: async (page) => {
+                    await page.route('**/*', (route) => {
+                        const type = route.request().resourceType();
+                        ['document', 'script', 'xhr', 'fetch'].includes(type) ? route.continue() : route.abort();
+                    });
+                },
                 gotoConfig: {
                     waitUntil: 'domcontentloaded',
                 },
