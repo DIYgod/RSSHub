@@ -3,13 +3,9 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
-
-const apiUrlMap = {
-    video: `${apiRootUrl}/videos`,
-    image: `${apiRootUrl}/images`,
-};
 
 export const route: Route = {
     path: '/users/:username/:type?',
@@ -22,6 +18,7 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     features: {
+        requirePuppeteer: true,
         nsfw: true,
     },
 };
@@ -39,15 +36,31 @@ async function handler(ctx) {
     });
 
     const id = profile.id;
+
+    const apiUrl = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?user=${id}`;
+
     const list = await cache.tryGet(
-        `${apiUrlMap[type]}?user=${id}`,
+        apiUrl,
         async () => {
-            const response = await ofetch(`${apiUrlMap[type]}?user=${id}`, {
-                headers: {
-                    'user-agent': config.trueUA,
+            const { page, destroy } = await getPlaywrightPage(rootUrl, {
+                gotoConfig: {
+                    waitUntil: 'domcontentloaded',
                 },
             });
-            return response.results;
+
+            try {
+                const response = await page.evaluate(async (url) => {
+                    const res = await fetch(url);
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                }, apiUrl);
+
+                return response.results;
+            } finally {
+                await destroy();
+            }
         },
         config.cache.routeExpire,
         false

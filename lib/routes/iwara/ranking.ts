@@ -1,10 +1,10 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 
-import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
+import { parseThumbnail, rootUrl, typeMap } from './utils';
 
 const sortMap = {
     date: 'Latest',
@@ -32,6 +32,7 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen233'],
     handler,
     features: {
+        requirePuppeteer: true,
         nsfw: true,
     },
     radar: [
@@ -52,25 +53,37 @@ async function handler(ctx) {
     const { type = 'video', sort = 'date', rating = 'ecchi' } = ctx.req.param();
 
     const limit = ctx.req.query('limit') || 32;
-    const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
+    const apiUrl = `https://api.iwara.tv/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
 
     const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}`,
         async () => {
-            const response = await ofetch(url, {
-                headers: {
-                    'user-agent': config.trueUA,
+            const { page, destroy } = await getPlaywrightPage(rootUrl, {
+                gotoConfig: {
+                    waitUntil: 'domcontentloaded',
                 },
             });
 
-            return response.results.map((item) => ({
-                title: item.title,
-                author: item.user.name,
-                link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
-                category: item.tags?.map((i) => i.id) || [],
-                description: parseThumbnail(type, item),
-                pubDate: parseDate(item.createdAt),
-            }));
+            try {
+                const response = await page.evaluate(async (url) => {
+                    const res = await fetch(url);
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                }, apiUrl);
+
+                return response.results.map((item) => ({
+                    title: item.title,
+                    author: item.user.name,
+                    link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
+                    category: item.tags?.map((i) => i.id) || [],
+                    description: parseThumbnail(type, item),
+                    pubDate: parseDate(item.createdAt),
+                }));
+            } finally {
+                await destroy();
+            }
         },
         config.cache.routeExpire,
         false
