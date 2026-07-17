@@ -189,7 +189,8 @@ async function handler() {
 
                     // The new API returns `file` (single object) for videos and `files` (array) for images
                     const files = response.files || (response.file ? [response.file] : []);
-                    description = renderSubscriptionImages(files.filter((f) => f.type === 'image').map((f) => `${imageRootUrl}/image/original/${f.id}/${f.name}`));
+                    const imageFiles = files.filter((f) => f.type === 'image');
+                    description = imageFiles.length > 0 ? renderSubscriptionImages(imageFiles.map((f) => `${imageRootUrl}/image/original/${f.id}/${f.name}`)) : renderSubscriptionImages([item.imageUrl]);
 
                     const body = response.body ? md.render(response.body) : '';
                     description += body;
