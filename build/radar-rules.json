@@ -17088,6 +17088,14 @@
           "/detail/:id"
         ],
         "target": "/comic-walker/manga/:id"
+      },
+      {
+        "title": "漫画详情",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/detail/:id/episodes/:episodeId"
+        ],
+        "target": "/comic-walker/manga/:id"
       }
     ]
   },
