@@ -37,7 +37,7 @@ export const route: Route = {
     1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)
     2.  打开控制台，切换到 Network 面板，刷新
     3.  点击 dynamic_new 请求，找到 Cookie
-    4.  视频和专栏，UP 主粉丝及关注只要求 \`SESSDATA\` 字段，动态需复制整段 Cookie`,
+    4.  复制整段 Cookie，删掉其中的 \`bili_ticket\` 和 \`bili_ticket_expires\` 字段来延长有效期`,
             },
         ],
         requirePuppeteer: false,
