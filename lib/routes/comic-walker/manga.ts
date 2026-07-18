@@ -24,6 +24,10 @@ export const route: Route = {
             source: ['comic-walker.com/detail/:id'],
             target: '/manga/:id',
         },
+        {
+            source: ['comic-walker.com/detail/:id/episodes/:episodeId'],
+            target: '/manga/:id',
+        },
     ],
     name: '漫画详情',
     maintainers: ['xiaobailoves'],
