@@ -4998,6 +4998,9 @@
   "/ltaaa/article": [
     "nczitzk"
   ],
+  "/ltn/def/:channel{.+}?": [
+    "TonyRL"
+  ],
   "/luogu/user/feed/:uid": [
     "solstice23"
   ],
