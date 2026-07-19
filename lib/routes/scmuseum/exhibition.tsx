@@ -30,7 +30,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.scmuseum.cn/Visit/Exhibition'],
-            target: '/Visit/Exhibition',
+            target: '/exhibition',
         },
     ],
     handler: async (ctx) => {
