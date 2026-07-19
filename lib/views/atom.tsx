@@ -25,6 +25,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 <id>{item.guid || item.link || item.title}</id>
                 {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}
                 <updated>{new Date(item.updated || item.pubDate || new Date()).toISOString()}</updated>
+                {item.summary && <summary>{item.summary}</summary>}
                 {item.author && (
                     <author>
                         <name>{item.author}</name>
