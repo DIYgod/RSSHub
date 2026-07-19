@@ -50,6 +50,7 @@ export type DataItem = {
         html: string;
         text: string;
     };
+    summary?: string;
     image?: string;
     banner?: string;
     updated?: number | string | Date;
