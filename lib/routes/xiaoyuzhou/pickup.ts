@@ -42,6 +42,7 @@ const ProcessFeed = async () => {
             ...headers,
             'x-jike-access-token': token_updated.data['x-jike-access-token'],
         },
+        json: {},
     });
 
     const data = response.data.data;
