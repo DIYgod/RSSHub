@@ -8,11 +8,11 @@ import timezone from '@/utils/timezone';
 
 const FALLBACK_DESCRIPTION = '该通知无法直接预览，请点击原文链接↑查看';
 
-export interface NoticeItem extends DataItem {
+interface NoticeItem extends DataItem {
     link: string;
 }
 
-export interface DetailSelectors {
+interface DetailSelectors {
     title: string;
     content: string;
     date?: string;
@@ -34,7 +34,7 @@ export function parseNoticeList($: CheerioAPI, pageUrl: string, rowSelector: str
         .toArray()
         .map((el) => {
             const $row = $(el);
-            const $link = $row.find('a').first();
+            const $link = $row.find('a');
             const href = $link.attr('href');
             if (!href) {
                 return null;
@@ -57,10 +57,7 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
         return { ...item, description: FALLBACK_DESCRIPTION };
     }
 
-    const $content = $(selectors.content).first();
-    if ($content.length === 0) {
-        return { ...item, description: FALLBACK_DESCRIPTION };
-    }
+    const $content = $(selectors.content);
 
     $content.find('a').each((_, el) => {
         const $a = $(el);
@@ -77,7 +74,7 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
         }
     });
 
-    const title = $(selectors.title).first().text().trim();
+    const title = $(selectors.title).text().trim();
     const pubDate = selectors.date ? parsePubDate($(selectors.date).text()) : undefined;
 
     return {
@@ -88,19 +85,15 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
     };
 }
 
-// Fall back to the list-page data when a single article fails to load, so one bad page does not break the whole feed; content of off-site links is not fetched
+// Content of off-site links (e.g. notices reposted from other sites) is not fetched
 export function resolveArticles(list: NoticeItem[], pageUrl: string, selectors: DetailSelectors): Promise<DataItem[]> {
     const pageHost = new URL(pageUrl).host;
     return Promise.all(
-        list.map(async (item) => {
+        list.map((item) => {
             if (new URL(item.link).host !== pageHost) {
                 return { ...item, description: FALLBACK_DESCRIPTION };
             }
-            try {
-                return (await cache.tryGet(item.link, () => fetchArticle(item, selectors))) as DataItem;
-            } catch {
-                return item;
-            }
+            return cache.tryGet(item.link, () => fetchArticle(item, selectors)) as Promise<DataItem>;
         })
     );
 }

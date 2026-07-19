@@ -57,6 +57,6 @@ async function handler() {
     return {
         title: '南京晓庄学院 -- 图书馆通知公告',
         link: pageUrl,
-        item: await resolveArticles(list, pageUrl),
+        item: await resolveArticles(list),
     };
 }

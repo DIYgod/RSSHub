@@ -40,13 +40,13 @@ async function handler() {
         .toArray()
         .map((el) => {
             const $item = $(el);
-            const $link = $item.find('a').first();
+            const $link = $item.find('a');
             const href = $link.attr('href');
             if (!href) {
                 return null;
             }
             return {
-                title: $link.attr('title') || $link.text().trim(),
+                title: $link.text().trim(),
                 link: new URL(href, pageUrl).href,
                 pubDate: parsePubDate($item.find('span').text()),
             };

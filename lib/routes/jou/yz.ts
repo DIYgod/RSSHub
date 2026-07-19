@@ -38,8 +38,8 @@ async function handler() {
     const list = parseNoticeList($, pageUrl, 'table.winstyle207638 tr[height="20"]', '.timestyle207638');
     const items = await resolveArticles(list, pageUrl, {
         title: '.titlestyle207543',
-        date: '.timestyle207543',
         content: '.v_news_content',
+        date: '.timestyle207543',
     });
 
     return {

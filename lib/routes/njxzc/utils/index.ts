@@ -6,10 +6,9 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const FALLBACK_DESCRIPTION = '该通知无法直接预览，请点击原文链接↑查看';
 const INTRANET_NOTICE = '您当前ip并非校内地址，该信息仅允许校内地址访问';
 
-export interface NoticeItem extends DataItem {
+interface NoticeItem extends DataItem {
     link: string;
 }
 
@@ -33,9 +32,6 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
     }
 
     const $content = $('.wp_articlecontent');
-    if ($content.length === 0) {
-        return { ...item, description: FALLBACK_DESCRIPTION };
-    }
 
     $content.find('.wp_pdf_player').each((_, el) => {
         const $player = $(el);
@@ -72,14 +68,10 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
     };
 }
 
-// Fall back to the list-page data when a single article fails to load, so one bad page does not break the whole feed; content of off-site links is not fetched
-export function resolveArticles(list: NoticeItem[], pageUrl: string): Promise<DataItem[]> {
-    const pageHost = new URL(pageUrl).host;
+// Fall back to the list-page item when an article fails to load: some /_redirect links 302 to plain-http subdomains that are unreachable from off-campus, and one such page must not break the whole feed
+export function resolveArticles(list: NoticeItem[]): Promise<DataItem[]> {
     return Promise.all(
         list.map(async (item) => {
-            if (new URL(item.link).host !== pageHost) {
-                return { ...item, description: FALLBACK_DESCRIPTION };
-            }
             try {
                 return (await cache.tryGet(item.link, () => fetchArticle(item))) as DataItem;
             } catch {

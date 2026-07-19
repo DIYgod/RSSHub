@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((el) => {
             const $item = $(el);
-            const $link = $item.find('a').first();
+            const $link = $item.find('a');
             const href = $link.attr('href');
             if (!href) {
                 return null;
@@ -56,6 +56,6 @@ async function handler() {
     return {
         title: '南京晓庄学院 -- 通知公告',
         link: pageUrl,
-        item: await resolveArticles(list, pageUrl),
+        item: await resolveArticles(list),
     };
 }
