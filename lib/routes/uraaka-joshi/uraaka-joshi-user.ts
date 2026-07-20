@@ -63,7 +63,7 @@ async function handler(ctx) {
                 await page.waitForSelector('#pickup04 .grid-cell');
                 await page.waitForSelector('#main-block .grid-cell');
 
-                html = await page.evaluate(() => document.documentElement.innerHTML);
+                html = await page.evaluate(() => document.documentElement.getHTML());
             } catch {
                 throw new Error('Access denied (403)');
             }

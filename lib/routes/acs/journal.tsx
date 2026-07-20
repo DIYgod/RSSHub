@@ -42,7 +42,7 @@ async function handler(ctx) {
             });
             await page.waitForSelector('.toc');
 
-            const html = await page.evaluate(() => document.documentElement.innerHTML);
+            const html = await page.evaluate(() => document.documentElement.getHTML());
             await page.close();
 
             const $ = load(html);

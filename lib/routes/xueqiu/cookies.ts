@@ -17,7 +17,7 @@ export const parseToken = (link: string) =>
             await page.goto(link, {
                 waitUntil: 'domcontentloaded',
             });
-            await page.evaluate(() => document.documentElement.innerHTML);
+            await page.evaluate(() => document.documentElement.getHTML());
             const cookies = await getCookies(page);
             return cookies;
         },

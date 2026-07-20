@@ -25,7 +25,7 @@ describe('api/namespace/one', () => {
 
     it('returns a nested namespace', async () => {
         expect(nestedKey).toBeDefined();
-        const [namespace, sub] = nestedKey.split('/');
+        const [namespace, sub] = nestedKey.split('/', 2);
         const result = await oneHandler(createCtx({ namespace, sub }), noopNext);
         expect(result).toBe(namespaces[nestedKey]);
     });

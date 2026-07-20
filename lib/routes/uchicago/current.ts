@@ -45,7 +45,7 @@ async function handler(ctx) {
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     const cookies = await getCookies(page);
     await page.close();
     const $ = load(response);
@@ -68,7 +68,7 @@ async function handler(ctx) {
                     waitUntil: 'domcontentloaded',
                     referer: link,
                 });
-                const response = await page.evaluate(() => document.documentElement.innerHTML);
+                const response = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
 
                 const $ = load(response);

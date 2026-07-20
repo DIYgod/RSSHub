@@ -140,9 +140,9 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 <h1 className="text-4xl font-bold">
                     Welcome to <span className="text-[#F5712C]">RSSHub</span>!
                 </h1>
-                <p className="text-xl font-medium text-zinc-600">The world's largest RSS Network.</p>
-                <p className="text-zinc-500">If you see this page, the RSSHub is successfully installed and working.</p>
-                <p className="max-w-xl text-center text-zinc-500">
+                <p className="text-xl font-medium text-zinc-600 dark:text-zinc-300">The world's largest RSS Network.</p>
+                <p className="text-zinc-500 dark:text-zinc-400">If you see this page, the RSSHub is successfully installed and working.</p>
+                <p className="max-w-xl text-center text-zinc-500 dark:text-zinc-400">
                     Pair your feeds with{' '}
                     <a target="_blank" href="https://folo.is/" className="text-[#F5712C]">
                         Folo
@@ -158,10 +158,10 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                         <button className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full transition-colors">Home</button>
                     </a>
                     <a target="_blank" href="https://folo.is/">
-                        <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full transition-colors">Try Folo</button>
+                        <button className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 py-2 px-4 rounded-full transition-colors">Try Folo</button>
                     </a>
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
-                        <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full transition-colors">GitHub</button>
+                        <button className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 py-2 px-4 rounded-full transition-colors">GitHub</button>
                     </a>
                 </div>
                 {info.showDebug ? (
@@ -180,7 +180,10 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             <div className="text-center pt-4 pb-8 w-full text-sm font-medium space-y-2">
                 <p className="space-x-4">
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
-                        <img className="inline" src="https://icons.ly/github/_/fff" alt="github" width="20" height="20" />
+                        <picture>
+                            <source srcset="https://icons.ly/github/_/fff" media="(prefers-color-scheme: dark)" />
+                            <img className="inline" src="https://icons.ly/github" alt="github" width="20" height="20" />
+                        </picture>
                     </a>
                     <a target="_blank" href="https://t.me/rsshub">
                         <img className="inline" src="https://icons.ly/telegram" alt="telegram group" width="20" height="20" />
@@ -189,7 +192,10 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                         <img className="inline" src="https://icons.ly/telegram" alt="telegram channel" width="20" height="20" />
                     </a>
                     <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
-                        <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
+                        <picture>
+                            <source srcset="https://icons.ly/x/_/fff" media="(prefers-color-scheme: dark)" />
+                            <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
+                        </picture>
                     </a>
                 </p>
                 <p className="!mt-6">

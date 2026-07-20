@@ -177,7 +177,7 @@ async function handler(ctx) {
                             delete el.attribs.style;
                         }
                     }
-                    if (el.attribs.class && el.attribs.class.trim().startsWith('Mso')) {
+                    if (el.attribs.class && el.attribs.class.trimStart().startsWith('Mso')) {
                         delete el.attribs.class;
                     }
                     if (el.attribs.lang) {

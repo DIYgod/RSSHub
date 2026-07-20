@@ -48,7 +48,7 @@ async function handler(ctx: Context) {
         .toArray()
         .map((element) => {
             const dateCategory = $(element).find('.search-result__eyebrow').text().trim();
-            const [date, category] = dateCategory.split(' / ');
+            const [date, category] = dateCategory.split(' / ', 2);
             const titleElement = $(element).find('.search-result__title a');
             const title = titleElement.text().trim();
             const link = titleElement.attr('href');

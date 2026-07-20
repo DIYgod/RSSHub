@@ -35,6 +35,11 @@ const rofetch = createFetch({ fetch: (input: Parameters<typeof fetch>[0], init?:
     },
     onRequestError({ request, error }) {
         logger.error(`Request ${request} fail: ${error.cause} ${error}`);
+        for (let cause: unknown = error.cause; cause instanceof Error; cause = cause.cause) {
+            if (cause.message) {
+                error.message += ` (${cause.message})`;
+            }
+        }
     },
     onResponse({ request, response }) {
         if (response.redirected) {

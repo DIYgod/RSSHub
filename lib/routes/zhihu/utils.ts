@@ -1,9 +1,14 @@
+import { Script } from 'node:vm';
+
 import { load } from 'cheerio';
+import { JSDOM, VirtualConsole } from 'jsdom';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';
+import { generateHeaders } from '@/utils/header-generator';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
+import wait from '@/utils/wait';
 
 import { encrypt as g_encrypt } from './execlib/x-zse-96-v3';
 
@@ -58,87 +63,187 @@ export const processImage = (content: string) => {
     return $.html();
 };
 
-export const getCookieValueByKey = (key: string) =>
-    config.zhihu.cookies
+const getCookieValueFrom = (cookieStr: string | undefined, key: string) =>
+    cookieStr
         ?.split(';')
         .map((e) => e.trim())
         .find((e) => e.startsWith(key + '='))
         ?.slice(key.length + 1) || '';
 
-export const getSignedHeader = async (url: string, apiPath: string) => {
-    if (config?.zhihu?.cookies) {
-        const dc0 = getCookieValueByKey('d_c0');
+export const getCookieValueByKey = (key: string) => getCookieValueFrom(config.zhihu.cookies as string | undefined, key);
 
-        const xzse93 = '101_3_3.0';
-        const f = `${xzse93}+${apiPath}+${dc0}`;
-        const xzse96 = '2.0_' + g_encrypt(md5(f));
+let isUnreachableRuntimeErrorGuarded = false;
+const pendingZseCredentials = new Map<string, Promise<{ dc0: string; zseCk: string; ua: string }>>();
 
-        // If __zse_ck is absent from ZHIHU_COOKIES, fetch it automatically from
-        // Zhihu's public static JS. The value is site-wide (not user-specific)
-        // and requires no login, but it expires and must be kept up to date.
-        let cookieStr = config.zhihu.cookies;
-        if (!getCookieValueByKey('__zse_ck')) {
-            const zseCk = await cache.tryGet('zhihu:zse_ck', async () => {
-                const response = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
-                const script = await response._data.text();
-                return script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1] || '';
-            });
-            if (zseCk) {
-                cookieStr += `; __zse_ck=${zseCk}`;
-            }
-        }
-
-        return {
-            cookie: cookieStr,
-            'x-zse-96': xzse96,
-            'x-app-za': 'OS=Web',
-            'x-zse-93': xzse93,
-        };
+const preventUnreachableRuntimeError = () => {
+    if (isUnreachableRuntimeErrorGuarded) {
+        return;
     }
-    // NOTICE: this method is out of date.
-    // Because the API of zhihu.com has changed, we must use the value of `d_c0` (extracted from cookies) to calculate
-    // `x-zse-96`. So first get `d_c0`, then get the actual data of a ZhiHu question. In this way, we don't need to
-    // require users to set the cookie in environmental variables anymore.
-
-    // fisrt: get cookie(dc_0) from zhihu.com
-    const { dc0, zseCk } = await cache.tryGet('zhihu:cookies:d_c0', async () => {
-        if (getCookieValueByKey('d_c0') && getCookieValueByKey('__zse_ck')) {
-            return { dc0: getCookieValueByKey('d_c0'), zseCk: getCookieValueByKey('__zse_ck') };
+    isUnreachableRuntimeErrorGuarded = true;
+    process.on('unhandledRejection', (reason) => {
+        const error = reason as { name?: string; message?: string } | undefined;
+        if (error?.name === 'RuntimeError' && error.message === 'unreachable') {
+            return;
         }
-        const response1 = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
-        const script = await response1._data.text();
-        const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*)",_=/)?.[1];
-        const response2 = zseCk
-            ? await ofetch.raw(url, {
-                  headers: {
-                      cookie: `${response1.headers
-                          .getSetCookie()
-                          .map((s) => s.split(';', 1)[0])
-                          .join('; ')}; __zse_ck=${zseCk}`,
-                  },
-              })
-            : null;
+        throw reason;
+    });
+};
 
-        const dc0 =
-            (response2 || response1).headers
-                .getSetCookie()
-                .find((s) => s.startsWith('d_c0='))
+const generateZseCk = async (url: string, apiPath: string, configuredDc0: string) => {
+    preventUnreachableRuntimeError();
+
+    // `__zse_ck` is checked against the user-agent that generated it.
+    const ua = generateHeaders()['user-agent'];
+    const headers = { 'user-agent': ua };
+
+    let dc0 = configuredDc0;
+    if (!dc0) {
+        const seed = await ofetch.raw('https://www.zhihu.com/explore', {
+            headers,
+            redirect: 'manual',
+            ignoreResponseError: true,
+        });
+        dc0 =
+            (seed.headers.getSetCookie?.() ?? [])
+                .find((line) => line.startsWith('d_c0='))
                 ?.split(';', 1)[0]
-                .trim()
                 .slice('d_c0='.length) || '';
+    }
+    if (!dc0) {
+        throw new Error('zhihu: failed to obtain a guest d_c0 cookie');
+    }
 
-        return { dc0, zseCk };
+    const challenge = await ofetch.raw(`https://www.zhihu.com${apiPath}`, {
+        headers: {
+            ...headers,
+            cookie: `d_c0=${dc0}; __zse_ck=005_x-x`,
+            referer: url,
+            'x-requested-with': 'fetch',
+        },
+        ignoreResponseError: true,
+    });
+    const html = challenge._data as string;
+    const meta = html.match(/id="zh-zse-ck"[^>]*content="([^"]*)"/)?.[1];
+    const hash = html.match(/zse-ck\/v4\/([a-f0-9]+)\.js/)?.[1];
+    if (!meta || !hash) {
+        throw new Error('zhihu: challenge page did not contain an URL to __zse_ck meta/script');
+    }
+
+    const vmScript = await ofetch<string>(`https://static.zhihu.com/zse-ck/v4/${hash}.js`, {
+        headers,
+        parseResponse: (text) => text,
+    });
+    const dom = new JSDOM(`<!doctype html><html><head><meta id="zh-zse-ck" content="${meta}"><script data-assets-tracker-config='{"appName":"zse_ck"}'></script></head><body></body></html>`, {
+        url,
+        referrer: 'https://www.zhihu.com/',
+        runScripts: 'outside-only',
+        pretendToBeVisual: true,
+        virtualConsole: new VirtualConsole(),
+    });
+    const { window } = dom;
+    Object.defineProperties(window.navigator, {
+        userAgent: { value: ua, configurable: true },
+        webdriver: { value: false, configurable: true },
+    });
+    window.TextEncoder = TextEncoder;
+    window.TextDecoder = TextDecoder as typeof window.TextDecoder;
+    window.atob = (value: string) => Buffer.from(value, 'base64').toString('binary');
+    window.btoa = (value: string) => Buffer.from(value, 'binary').toString('base64');
+    Object.assign(window, { __g: {} });
+
+    const cookieDescriptor = Object.getOwnPropertyDescriptor(window.Document.prototype, 'cookie');
+    if (!cookieDescriptor?.get || !cookieDescriptor.set) {
+        window.close();
+        throw new Error('zhihu: JSDOM did not provide document.cookie accessors');
+    }
+    const tokenPromise = new Promise<string>((resolve) => {
+        Object.defineProperty(window.document, 'cookie', {
+            configurable: true,
+            get: cookieDescriptor.get,
+            set(value: string) {
+                Reflect.apply(cookieDescriptor.set, window.document, [value]);
+                const token = value.match(/__zse_ck=([^;]+)/)?.[1];
+                if (token?.includes('-')) {
+                    resolve(token);
+                }
+            },
+        });
     });
 
-    // calculate x-zse-96, refer to https://github.com/srx-2000/spider_collection/issues/18
+    let zseCk: string | undefined;
+    try {
+        // Zhihu's challenge is intentionally delivered as executable JavaScript.
+        new Script(vmScript).runInContext(dom.getInternalVMContext());
+        zseCk = (await Promise.race([tokenPromise, wait(3000)])) as string | undefined;
+    } finally {
+        window.close();
+    }
+    if (!zseCk) {
+        throw new Error('zhihu: WASM VM did not produce a __zse_ck');
+    }
+    return { dc0, zseCk, ua };
+};
+
+const getGeneratedZseCredentials = (url: string, apiPath: string, configuredDc0: string) => {
+    const cacheKey = `zhihu:zse-ck:v4:${configuredDc0 ? md5(configuredDc0) : 'guest'}`;
+    const pending = pendingZseCredentials.get(cacheKey);
+    if (pending) {
+        return pending;
+    }
+
+    const created = (async () => {
+        try {
+            return await cache.tryGet(cacheKey, () => generateZseCk(url, apiPath, configuredDc0), config.cache.contentExpire, false);
+        } finally {
+            pendingZseCredentials.delete(cacheKey);
+        }
+    })();
+    pendingZseCredentials.set(cacheKey, created);
+    return created;
+};
+
+const mergeGeneratedCookies = (configured: string, dc0: string, zseCk: string) => {
+    const remaining = configured
+        .split(';')
+        .map((pair) => pair.trim())
+        .filter((pair) => {
+            const name = pair.split('=', 1)[0];
+            return name && name !== 'd_c0' && name !== '__zse_ck';
+        });
+    return [`__zse_ck=${zseCk}`, `d_c0=${dc0}`, ...remaining].join('; ');
+};
+
+export const getSignedHeader = async (url: string, apiPath: string) => {
+    const configured = (config?.zhihu?.cookies as string | undefined) || '';
+
+    const configuredDc0 = getCookieValueFrom(configured, 'd_c0');
+    const configuredZseCk = getCookieValueFrom(configured, '__zse_ck');
+
+    // A configured pair may have been generated with a different user-agent, so
+    // preserve the previous behavior and trust it as-is. Generated credentials
+    // always return their matching user-agent.
+    let cookieStr: string;
+    let ua: string | undefined;
+    if (configuredDc0 && configuredZseCk) {
+        cookieStr = configured;
+    } else {
+        const credentials = await getGeneratedZseCredentials(url, apiPath, configuredDc0);
+        // Login cookies only belong to the configured d_c0 session. Do not mix
+        // an isolated z_c0 with a newly-created guest session.
+        cookieStr = configuredDc0 ? mergeGeneratedCookies(configured, credentials.dc0, credentials.zseCk) : `__zse_ck=${credentials.zseCk}; d_c0=${credentials.dc0}`;
+        ua = credentials.ua;
+    }
+
+    // Sign with the same `d_c0` that is sent, otherwise the backend rejects the
+    // request. Refer to https://github.com/srx-2000/spider_collection/issues/18
+    const dc0 = getCookieValueFrom(cookieStr, 'd_c0');
     const xzse93 = '101_3_3.0';
     const f = `${xzse93}+${apiPath}+${dc0}`;
     const xzse96 = '2.0_' + g_encrypt(md5(f));
 
-    const zc0 = getCookieValueByKey('z_c0');
-
     return {
-        cookie: `__zse_ck=${zseCk}; d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,
+        cookie: cookieStr,
+        ...(ua && { 'user-agent': ua }),
         'x-zse-96': xzse96,
         'x-app-za': 'OS=Web',
         'x-zse-93': xzse93,
