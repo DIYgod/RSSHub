@@ -1,9 +1,11 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
-import { getNoticeList } from './utils';
+import { parseNoticeList, resolveArticles } from './utils';
 
-const url = 'https://ai.gxmzu.edu.cn/index/tzgg.htm';
-const host = 'https://ai.gxmzu.edu.cn';
+const pageUrl = 'https://ai.gxmzu.edu.cn/index/tzgg.htm';
 
 export const route: Route = {
     path: '/aitzgg',
@@ -13,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -29,8 +31,12 @@ export const route: Route = {
     url: 'ai.gxmzu.edu.cn/index/tzgg.htm',
 };
 
-async function handler(ctx) {
-    const out = await getNoticeList(ctx, url, host, 'a', '.timestyle55267', {
+async function handler() {
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
+
+    const list = parseNoticeList($, pageUrl, 'table.winstyle55267 tr[height="20"]', '.timestyle55267');
+    const items = await resolveArticles(list, pageUrl, {
         title: '.titlestyle55269',
         content: '#vsb_newscontent',
         date: '.timestyle55269',
@@ -38,7 +44,7 @@ async function handler(ctx) {
 
     return {
         title: '广西民族大学人工智能学院 -- 通知公告',
-        link: url,
-        item: out,
+        link: pageUrl,
+        item: items,
     };
 }

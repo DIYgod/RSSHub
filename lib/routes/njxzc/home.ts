@@ -1,9 +1,11 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
-import { getNoticeList } from './utils';
+import { parsePubDate, resolveArticles } from './utils';
 
-const url = 'https://www.njxzc.edu.cn/89/list.htm';
-const host = 'https://www.njxzc.edu.cn';
+const pageUrl = 'https://www.njxzc.edu.cn/89/list.htm';
 
 export const route: Route = {
     path: '/tzgg',
@@ -13,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -29,24 +31,30 @@ export const route: Route = {
     url: 'www.njxzc.edu.cn/89/list.htm',
 };
 
-async function handler(ctx) {
-    const out = await getNoticeList(
-        ctx,
-        url,
-        host,
-        'a',
-        '.news_meta',
-        {
-            title: '.arti_title',
-            content: '.wp_articlecontent',
-            date: '.arti_update',
-        },
-        '.news_list .news'
-    );
+async function handler() {
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
+
+    const list = $('.news_list .news')
+        .toArray()
+        .map((el) => {
+            const $item = $(el);
+            const $link = $item.find('a');
+            const href = $link.attr('href');
+            if (!href) {
+                return null;
+            }
+            return {
+                title: $link.attr('title') || $link.text().trim(),
+                link: new URL(href, pageUrl).href,
+                pubDate: parsePubDate($item.find('.news_meta').text()),
+            };
+        })
+        .filter((item) => item !== null);
 
     return {
         title: '南京晓庄学院 -- 通知公告',
-        link: url,
-        item: out,
+        link: pageUrl,
+        item: await resolveArticles(list),
     };
 }

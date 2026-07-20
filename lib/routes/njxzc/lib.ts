@@ -1,13 +1,11 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
-const url = 'https://lib.njxzc.edu.cn/pxyhd/list.htm';
-const host = 'https://lib.njxzc.edu.cn';
+import { parsePubDate, resolveArticles } from './utils';
+
+const pageUrl = 'https://lib.njxzc.edu.cn/pxyhd/list.htm';
 
 export const route: Route = {
     path: '/libtzgg',
@@ -17,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -34,76 +32,30 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await ofetch(url);
-    if (!response) {
-        return {
-            title: '南京晓庄学院 -- 图书馆通知公告',
-            link: url,
-            item: [],
-        };
-    }
+    const response = await ofetch(pageUrl);
     const $ = load(response);
 
     const list = $('a.btt-2')
         .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const href = $item.attr('href') || '';
-            const link = href.startsWith('http') ? href : new URL(href, host).href;
-            const day = $item.find('.tm-1').text().trim();
-            const yearMonth = $item.find('.tm-2').text().trim();
-            const dateStr = `${yearMonth}-${day}`;
+        .map((el) => {
+            const $link = $(el);
+            const href = $link.attr('href');
+            if (!href) {
+                return null;
+            }
+            const day = $link.find('.tm-1').text().trim();
+            const yearMonth = $link.find('.tm-2').text().trim();
             return {
-                title: $item.find('.btt-4').text().trim(),
-                link,
-                pubDate: timezone(parseDate(dateStr, 'YYYY-MM-DD'), 8),
+                title: $link.find('.btt-4').text().trim(),
+                link: new URL(href, pageUrl).href,
+                pubDate: parsePubDate(`${yearMonth}-${day}`),
             };
-        });
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-
-                if ($('.wp_error_msg').length > 0) {
-                    item.description = '您当前ip并非校内地址，该信息仅允许校内地址访问';
-                } else {
-                    const $content = $('.wp_articlecontent');
-                    // Convert wp_pdf_player iframes to download links
-                    $content.find('.wp_pdf_player').each((_, el) => {
-                        const $iframe = $(el);
-                        const pdfSrc = $iframe.attr('pdfsrc') || '';
-                        const pdfUrl = pdfSrc.startsWith('http') ? pdfSrc : new URL(pdfSrc, host).href;
-                        $iframe.replaceWith(`<p><a href="${pdfUrl}">附件下载</a></p>`);
-                    });
-                    // Fix relative URLs
-                    $content.find('a').each((_, el) => {
-                        const $a = $(el);
-                        const href = $a.attr('href');
-                        if (href && !href.startsWith('http')) {
-                            $a.attr('href', new URL(href, host).href);
-                        }
-                    });
-                    item.description = $content.html() || '';
-                    const title = $('.arti_title').text().trim();
-                    if (title) {
-                        item.title = title;
-                    }
-                    const dateText = $('.arti_update').text().replace('发布时间：', '').trim();
-                    if (dateText) {
-                        item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), 8);
-                    }
-                }
-
-                return item;
-            })
-        )
-    );
+        })
+        .filter((item) => item !== null);
 
     return {
         title: '南京晓庄学院 -- 图书馆通知公告',
-        link: url,
-        item: out,
+        link: pageUrl,
+        item: await resolveArticles(list),
     };
 }
