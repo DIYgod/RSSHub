@@ -187,7 +187,7 @@
         "globals": "17.7.0",
         "husky": "9.1.7",
         "js-beautify": "2.0.3",
-        "lint-staged": "17.0.8",
+        "lint-staged": "17.1.0",
         "mockdate": "3.0.5",
         "msw": "2.15.0",
         "node-network-devtools": "1.0.30",
