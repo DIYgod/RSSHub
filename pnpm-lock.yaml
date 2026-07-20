@@ -44,8 +44,8 @@ importers:
         specifier: 33.0.0
         version: 33.0.0
       '@honeybadger-io/js':
-        specifier: 6.14.0
-        version: 6.14.0
+        specifier: 6.15.0
+        version: 6.15.0
       '@hono/node-server':
         specifier: 2.0.10
         version: 2.0.10(hono@4.12.31)
@@ -1084,12 +1084,12 @@ packages:
     resolution: {integrity: sha512-PW3SdoZ8ULzW0We0lgplyZHjuXJtOdRvU5RL6ErNUlcTeSqjoHtk1pWdHKTwk3brPuIiqUB26K7fX84VroDqRg==}
     engines: {node: '>=12.0.0'}
 
-  '@honeybadger-io/core@6.9.0':
-    resolution: {integrity: sha512-nHkTigMgqABQ6XuhZ4/2cVIArwImctdWfmu/ckWLoF5E4JlATe9WUL3hMRL8UZPmu/ThmbojxkLwDgHts1LyUA==}
+  '@honeybadger-io/core@6.10.0':
+    resolution: {integrity: sha512-U3hVsd/l55SCV5s7pkYZeOZcMx5dRevnrPcF99AZyjGxsnIbT4+GcCdmd5vfrvzw23SFM/0U40zwd5shR3ohsw==}
     engines: {node: '>=14'}
 
-  '@honeybadger-io/js@6.14.0':
-    resolution: {integrity: sha512-ZQGop/Ik7vyRJzW/wzE1CL4611fz9+5arrMdS0ivrzDmm/4BQeK4OKZlwfMZqEZtODwfnl32ngh0ayW/jahoSg==}
+  '@honeybadger-io/js@6.15.0':
+    resolution: {integrity: sha512-MYBdQuaq/8tJ+w75+H9CnVRZrZKl0DiBSvu3hkS7w6tGVqJaIW6uDptg9MC/ltOgIvEECQWCy5Db9j+sXxcScg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3681,7 +3681,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.50:
@@ -7018,14 +7018,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@honeybadger-io/core@6.9.0':
+  '@honeybadger-io/core@6.10.0':
     dependencies:
       json-nd: 1.0.0
       stacktrace-parser: 0.1.11
 
-  '@honeybadger-io/js@6.14.0':
+  '@honeybadger-io/js@6.15.0':
     dependencies:
-      '@honeybadger-io/core': 6.9.0
+      '@honeybadger-io/core': 6.10.0
       '@types/aws-lambda': 8.10.162
       '@types/express': 5.0.6
 
