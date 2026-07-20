@@ -1,9 +1,11 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
-import { getNoticeList } from './utils';
+import { parseNoticeList, resolveArticles } from './utils';
 
-const url = 'https://yjs.gxmzu.edu.cn/tzgg/zsgg.htm';
-const host = 'https://yjs.gxmzu.edu.cn';
+const pageUrl = 'https://yjs.gxmzu.edu.cn/tzgg/zsgg.htm';
 
 export const route: Route = {
     path: '/yjszsgg',
@@ -13,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -29,8 +31,13 @@ export const route: Route = {
     url: 'yjs.gxmzu.edu.cn/tzgg/zsgg.htm',
 };
 
-async function handler(ctx) {
-    const out = await getNoticeList(ctx, url, host, 'a', '.timestyle55267', {
+async function handler() {
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
+
+    // The graduate school shares the same Boda CMS template with the AI college, so the list and article style IDs are identical
+    const list = parseNoticeList($, pageUrl, 'table.winstyle55267 tr[height="20"]', '.timestyle55267');
+    const items = await resolveArticles(list, pageUrl, {
         title: '.titlestyle55269',
         content: '#vsb_newscontent',
         date: '.timestyle55269',
@@ -38,7 +45,7 @@ async function handler(ctx) {
 
     return {
         title: '广西民族大学研究生院 -- 招生公告',
-        link: url,
-        item: out,
+        link: pageUrl,
+        item: items,
     };
 }

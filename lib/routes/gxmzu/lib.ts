@@ -1,13 +1,11 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch'; // 使用ofetch库代替got
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
 
-const url = 'https://library.gxmzu.edu.cn/news/news_list.jsp?urltype=tree.TreeTempUrl&wbtreeid=1010';
-const host = 'https://library.gxmzu.edu.cn';
+import { parsePubDate, resolveArticles } from './utils';
+
+const pageUrl = 'https://library.gxmzu.edu.cn/news/news_list.jsp?urltype=tree.TreeTempUrl&wbtreeid=1010';
 
 export const route: Route = {
     path: '/libzxxx',
@@ -17,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -31,50 +29,38 @@ export const route: Route = {
     maintainers: ['real-jiakai'],
     handler,
     url: 'library.gxmzu.edu.cn/news/news_list.jsp',
+    description: '部分消息发布于微信公众号等站外页面，此类消息仅输出标题与原文链接。',
 };
 
 async function handler() {
-    const response = await ofetch(url);
-    if (!response) {
-        return;
-    }
+    const response = await ofetch(pageUrl);
     const $ = load(response);
 
     const list = $('#newslist ul li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((el) => {
+            const $item = $(el);
+            const $link = $item.find('a');
+            const href = $link.attr('href');
+            if (!href) {
+                return null;
+            }
             return {
-                title: item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), host).href,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                title: $link.text().trim(),
+                link: new URL(href, pageUrl).href,
+                pubDate: parsePubDate($item.find('span').text()),
             };
-        });
+        })
+        .filter((item) => item !== null);
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link && !item.link.startsWith('https://library.gxmzu.edu.cn/')) {
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
-                    return item;
-                }
-
-                const response = await ofetch(item.link);
-                if (!response || (response.status >= 300 && response.status < 400)) {
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
-                } else {
-                    const $ = load(response);
-                    item.title = $('h2').text();
-                    item.description = $('.v_news_content').html();
-                }
-                return item;
-            })
-        )
-    );
+    const items = await resolveArticles(list, pageUrl, {
+        title: 'h2',
+        content: '.v_news_content',
+    });
 
     return {
         title: '广西民族大学图书馆 -- 最新消息',
-        link: url,
-        item: out,
+        link: pageUrl,
+        item: items,
     };
 }
