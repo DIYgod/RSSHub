@@ -107,7 +107,7 @@ jobs:
                   restore-keys: agentscan-cache-
 
             - name: AgentScan
-              uses: MatteoGabriele/agentscan-action@c7d61446e7aece6bdd3edcee4558bbfc0392615e # v2.0.1
+              uses: MatteoGabriele/agentscan-action@e02ef270c024bfad3541b2a71619c3c9f20b3312 # v2.2.0
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   trusted-author-associations: 'collaborator,member,owner'
