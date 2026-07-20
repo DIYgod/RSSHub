@@ -37,7 +37,7 @@ export const route: Route = {
         const { id } = ctx.req.param();
 
         const comicUrl = `https://manga.nicovideo.jp/comic/${id}`;
-        const rssUrl = `https://manga.nicovideo.jp/rss/manga/${id}`; // 目前现有rss源不完整，剩余アプリで読める[应用读取]部分可能需要在网页抓取
+        const rssUrl = `https://manga.nicovideo.jp/rss/manga/${id}`; // The official RSS feed is incomplete; remaining "read in app" chapters may need scraping from the web page
 
         const [htmlResponse, rssResponse] = await Promise.all([
             cache.tryGet(`nicovideo:manga:${id}:html`, () => ofetch<string>(comicUrl, { responseType: 'text', dispatcher: proxy.dispatcher ?? undefined }), config.cache.routeExpire, false),
@@ -73,14 +73,17 @@ export const route: Route = {
                 const titleLink = $el.find('.title a');
                 const thumbLink = $el.find('.thumb a');
                 const title = titleLink.text().trim() || $el.find('.thumb img').attr('alt') || '';
-                const link = titleLink.attr('href') || thumbLink.attr('href') || '';
-                const fullLink = link.startsWith('http') ? link : `https://manga.nicovideo.jp${link}`;
+                const href = titleLink.attr('href') || thumbLink.attr('href') || '';
+                if (!href) {
+                    return null;
+                }
+                const fullLink = href.startsWith('http') ? href : `https://manga.nicovideo.jp${href}`;
 
                 const thumb = $el.find('.thumb img').attr('data-original') || $el.find('.thumb img').attr('src') || '';
                 const pageCount = $el.find('.mg_status').text().trim();
                 const counter = $el.find('.counter').text().trim();
 
-                const pubDateStr = dateMap.get(link);
+                const pubDateStr = dateMap.get(href);
                 const pubDate = pubDateStr ? parseDate(pubDateStr) : undefined;
 
                 let descHtml = '';
@@ -101,7 +104,8 @@ export const route: Route = {
                     description: descHtml,
                 };
             })
-            .toReversed(); // 这里倒序可能有点争议，我发现后面没pubDate部分的顺序是倒着的，所以才有这里的reverse....
+            .filter(Boolean)
+            .toReversed(); // Reverse so items without pubDate keep chronological order
 
         return {
             title: mangaTitle ? `${mangaTitle} - ニコニコ漫画` : $rss('channel > title').text(),
