@@ -22,7 +22,7 @@ const json = (data: Data) => {
             // content_html and content_text are each optional strings — but one or both must be present
             content_html: (item.content && item.content.html) || item.description || item.title,
             content_text: item.content && item.content.text,
-            summary: item.description,
+            summary: item.summary,
             image: item.image || item.itunes_item_image,
             banner_image: item.banner,
             date_published: item.pubDate,

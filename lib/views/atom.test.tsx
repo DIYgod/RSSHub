@@ -22,6 +22,7 @@ describe('Atom view', () => {
                             description: 'Entry One',
                             pubDate: '2024-01-01T00:00:00Z',
                             updated: '2024-01-02T00:00:00Z',
+                            summary: 'Entry One',
                             author: 'Author One',
                             category: 'News',
                             media: {
