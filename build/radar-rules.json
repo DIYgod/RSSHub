@@ -21849,6 +21849,42 @@
       }
     ]
   },
+  "gxmzu.edu.cn": {
+    "_name": "广西民族大学",
+    "ai": [
+      {
+        "title": "人工智能学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm",
+          "/"
+        ],
+        "target": "/gxmzu/aitzgg"
+      }
+    ],
+    "library": [
+      {
+        "title": "图书馆最新消息",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news/news_list.jsp",
+          "/"
+        ],
+        "target": "/gxmzu/libzxxx"
+      }
+    ],
+    "yjs": [
+      {
+        "title": "研究生院招生公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/zsgg.htm",
+          "/"
+        ],
+        "target": "/gxmzu/yjszsgg"
+      }
+    ]
+  },
   "gzhu.edu.cn": {
     "_name": "广州大学",
     "yjsy": [
@@ -25201,6 +25237,31 @@
           "/news/articleList.html"
         ],
         "target": "/joins/chinese/S1N12"
+      }
+    ]
+  },
+  "jou.edu.cn": {
+    "_name": "江苏海洋大学",
+    "www": [
+      {
+        "title": "官网通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm",
+          "/"
+        ],
+        "target": "/jou/tzgg"
+      }
+    ],
+    "yz": [
+      {
+        "title": "研招网通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/zxgg.htm",
+          "/"
+        ],
+        "target": "/jou/yztzgg"
       }
     ]
   },
@@ -30735,6 +30796,31 @@
           "/:type/list.htm"
         ],
         "target": "/njust/gs/:type"
+      }
+    ]
+  },
+  "njxzc.edu.cn": {
+    "_name": "南京晓庄学院",
+    "www": [
+      {
+        "title": "官网通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/89/list.htm",
+          "/"
+        ],
+        "target": "/njxzc/tzgg"
+      }
+    ],
+    "lib": [
+      {
+        "title": "图书馆通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/pxyhd/list.htm",
+          "/"
+        ],
+        "target": "/njxzc/libtzgg"
       }
     ]
   },
@@ -48117,42 +48203,6 @@
       }
     ]
   },
-  "gxmzu.edu.cn": {
-    "_name": "广西民族大学",
-    "library": [
-      {
-        "title": "图书馆最新消息",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/news/news_list.jsp",
-          "/"
-        ],
-        "target": "/gxmzu/libzxxx"
-      }
-    ],
-    "ai": [
-      {
-        "title": "人工智能学院通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/index/tzgg.htm",
-          "/"
-        ],
-        "target": "/gxmzu/aitzgg"
-      }
-    ],
-    "yjs": [
-      {
-        "title": "研究生院招生公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/tzgg/zsgg.htm",
-          "/"
-        ],
-        "target": "/gxmzu/yjszsgg"
-      }
-    ]
-  },
   "hdu.edu.cn": {
     "_name": "杭州电子科技大学",
     "computer": [
@@ -48601,31 +48651,6 @@
           "/"
         ],
         "target": "/joshwcomeau/popular"
-      }
-    ]
-  },
-  "jou.edu.cn": {
-    "_name": "江苏海洋大学",
-    "www": [
-      {
-        "title": "官网通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/index/tzgg.htm",
-          "/"
-        ],
-        "target": "/jou/tzgg"
-      }
-    ],
-    "yz": [
-      {
-        "title": "研招网通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/index/zxgg.htm",
-          "/"
-        ],
-        "target": "/jou/yztzgg"
       }
     ]
   },
@@ -49117,31 +49142,6 @@
           "/"
         ],
         "target": "/njucm/grabszs"
-      }
-    ]
-  },
-  "njxzc.edu.cn": {
-    "_name": "南京晓庄学院",
-    "lib": [
-      {
-        "title": "图书馆通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/pxyhd/list.htm",
-          "/"
-        ],
-        "target": "/njxzc/libtzgg"
-      }
-    ],
-    "www": [
-      {
-        "title": "官网通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/89/list.htm",
-          "/"
-        ],
-        "target": "/njxzc/tzgg"
       }
     ]
   },
