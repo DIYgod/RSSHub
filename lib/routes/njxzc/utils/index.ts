@@ -6,8 +6,6 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const INTRANET_NOTICE = '您当前ip并非校内地址，该信息仅允许校内地址访问';
-
 interface NoticeItem extends DataItem {
     link: string;
 }
@@ -26,10 +24,6 @@ export function parsePubDate(text?: string): Date | undefined {
 async function fetchArticle(item: NoticeItem): Promise<DataItem> {
     const response = await ofetch(item.link);
     const $ = load(response);
-
-    if ($('.wp_error_msg').length > 0) {
-        return { ...item, description: INTRANET_NOTICE };
-    }
 
     const $content = $('.wp_articlecontent');
 
@@ -68,15 +62,6 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
     };
 }
 
-// Fall back to the list-page item when an article fails to load: some /_redirect links 302 to plain-http subdomains that are unreachable from off-campus, and one such page must not break the whole feed
 export function resolveArticles(list: NoticeItem[]): Promise<DataItem[]> {
-    return Promise.all(
-        list.map(async (item) => {
-            try {
-                return (await cache.tryGet(item.link, () => fetchArticle(item))) as DataItem;
-            } catch {
-                return item;
-            }
-        })
-    );
+    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item)) as Promise<DataItem>));
 }

@@ -85,15 +85,6 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
     };
 }
 
-// Content of off-site links (e.g. notices reposted from other sites) is not fetched
-export function resolveArticles(list: NoticeItem[], pageUrl: string, selectors: DetailSelectors): Promise<DataItem[]> {
-    const pageHost = new URL(pageUrl).host;
-    return Promise.all(
-        list.map((item) => {
-            if (new URL(item.link).host !== pageHost) {
-                return { ...item, description: FALLBACK_DESCRIPTION };
-            }
-            return cache.tryGet(item.link, () => fetchArticle(item, selectors)) as Promise<DataItem>;
-        })
-    );
+export function resolveArticles(list: NoticeItem[], selectors: DetailSelectors): Promise<DataItem[]> {
+    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item, selectors)) as Promise<DataItem>));
 }

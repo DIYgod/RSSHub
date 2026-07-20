@@ -29,7 +29,6 @@ export const route: Route = {
     maintainers: ['real-jiakai'],
     handler,
     url: 'www.njxzc.edu.cn/89/list.htm',
-    description: '部分通知仅限校内 IP 访问，此类通知仅输出标题与原文链接。',
 };
 
 async function handler() {
