@@ -56,30 +56,41 @@ function getHeaders(referer = refererUrl) {
     };
 }
 
+function parsePubDateMeta(content?: string) {
+    if (!content) {
+        return;
+    }
+    // Some pages concatenate two datetimes in one PubDate meta; keep the first full timestamp.
+    const match = content.match(/\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?/);
+    if (!match) {
+        return;
+    }
+    return timezone(parseDate(match[0]), 8);
+}
+
 function parseListPage(html: string, baseUrl: string, limit: number, listSelector = 'ul.list li') {
     const $ = load(html);
-    const items: DataItem[] = [];
 
-    $(listSelector).each((_, element) => {
-        if (items.length >= limit) {
-            return false;
-        }
-        const item = $(element);
-        const anchor = item.find('a').first();
-        const href = anchor.attr('href');
-        const title = anchor.attr('title')?.trim() || anchor.text().trim();
-        if (!href || !title) {
-            return;
-        }
-        const dateText = item.find('span').last().text().trim();
-        items.push({
-            title,
-            link: new URL(href, baseUrl).href,
-            pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
+    return $(listSelector)
+        .toArray()
+        .slice(0, limit)
+        .flatMap((element) => {
+            const item = $(element);
+            const anchor = item.find('a');
+            const href = anchor.attr('href');
+            const title = anchor.attr('title')?.trim() || anchor.text().trim();
+            if (!href || !title) {
+                return [];
+            }
+            const dateText = item.find('span').text().trim();
+            return [
+                {
+                    title,
+                    link: new URL(href, baseUrl).href,
+                    pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
+                },
+            ];
         });
-    });
-
-    return items;
 }
 
 async function fetchWebApiItems(webApiId: string, referer: string, limit: number) {
@@ -97,7 +108,7 @@ async function fetchWebApiItems(webApiId: string, referer: string, limit: number
     return resultList.map((item) => ({
         title: item.DRETITLE,
         link: item.URL,
-        pubDate: item.DREDATE ? timezone(parseDate(item.DREDATE.slice(0, 10), 'YYYY-MM-DD'), 8) : undefined,
+        pubDate: item.DREDATE ? timezone(parseDate(item.DREDATE), 8) : undefined,
     }));
 }
 
@@ -115,12 +126,15 @@ async function fetchDeclareItems(limit: number) {
 
     const list = response.data?.data?.list ?? [];
 
-    return list.map((item) => ({
-        title: item.name,
-        link: `${zhengceRootUrl}/#/declare/detail/${item.id}`,
-        pubDate: item.startDate ? timezone(parseDate(item.startDate, 'YYYY-MM-DD'), 8) : undefined,
-        description: item.endDate ? `<p>申报截止：${item.endDate.slice(0, 10)}</p>` : undefined,
-    }));
+    return list.map((item) => {
+        const endDate = item.endDate ? String(item.endDate).slice(0, 10) : undefined;
+        return {
+            title: item.name,
+            link: `${zhengceRootUrl}/#/declare/detail/${item.id}`,
+            pubDate: item.createdAt ? parseDate(item.createdAt) : undefined,
+            description: endDate ? `<p>申报截止：${endDate}</p>` : undefined,
+        };
+    });
 }
 
 async function fetchPolicyItems(limit: number) {
@@ -131,7 +145,7 @@ async function fetchPolicyItems(limit: number) {
             pageSize: limit,
             funType: 1,
             enabled: 'Y',
-            isSort: 'N',
+            sort: 11,
         },
     });
 
@@ -140,7 +154,7 @@ async function fetchPolicyItems(limit: number) {
     return list.map((item) => ({
         title: item.title,
         link: `${zhengceRootUrl}/policy/detail/${item.id}`,
-        pubDate: item.publishDate ? timezone(parseDate(item.publishDate, 'YYYY-MM-DD'), 8) : undefined,
+        pubDate: item.createdAt ? parseDate(item.createdAt) : item.publishDate ? timezone(parseDate(item.publishDate, 'YYYY-MM-DD'), 8) : undefined,
     }));
 }
 
@@ -177,30 +191,23 @@ async function fetchZhaopinItems(limit: number) {
         .filter((item) => item.termId && item.title)
         .map((item) => {
             const { termBasicInfo = {} } = item;
-            const startDate = termBasicInfo.l2;
             const endDate = termBasicInfo.l1;
             const area = termBasicInfo.l7;
-            let description = item.content || item.remark || '';
-            if (endDate) {
-                description += `<p>报名时间至：${endDate.slice(0, 10)}</p>`;
-            }
+            const description = item.contentHtml || item.content || item.remark || '';
+            const deadline = endDate ? `<p>报名时间至：${String(endDate).slice(0, 10)}</p>` : '';
 
             return {
                 title: item.title,
                 link: `${rootUrl}/fwcj/quickQuery/page/zhaopin/detail.html?id=${item.termId}`,
-                description: description || undefined,
-                pubDate: startDate ? timezone(parseDate(startDate.slice(0, 10), 'YYYY-MM-DD'), 8) : undefined,
+                description: description || deadline ? description + deadline : undefined,
+                pubDate: item.publishTime ? parseDate(item.publishTime) : item.createTime ? parseDate(item.createTime) : undefined,
                 category: area ? [area] : undefined,
             };
         });
 }
 
 function isSameHost(link: string, base: string) {
-    try {
-        return new URL(link).hostname === new URL(base).hostname;
-    } catch {
-        return false;
-    }
+    return new URL(link).hostname === new URL(base).hostname;
 }
 
 async function enrichHtmlItems(items: DataItem[], referer: string) {
@@ -212,9 +219,9 @@ async function enrichHtmlItems(items: DataItem[], referer: string) {
                 });
                 const $ = load(detailResponse.data);
 
-                const pubDate = $('meta[name="PubDate"]').attr('content');
+                const pubDate = parsePubDateMeta($('meta[name="PubDate"]').attr('content'));
                 if (pubDate) {
-                    item.pubDate = timezone(parseDate(pubDate.slice(0, 10), 'YYYY-MM-DD'), 8);
+                    item.pubDate = pubDate;
                 }
 
                 item.author = $('meta[name="ContentSource"]').attr('content');
@@ -243,45 +250,10 @@ async function enrichPolicyItems(items: DataItem[]) {
                     return item;
                 }
                 item.description = info.content ?? info.shortContent ?? item.description;
-                if (info.publishDate) {
+                if (info.createdAt) {
+                    item.pubDate = parseDate(info.createdAt);
+                } else if (info.publishDate) {
                     item.pubDate = timezone(parseDate(info.publishDate, 'YYYY-MM-DD'), 8);
-                }
-                return item;
-            })
-        )
-    );
-}
-
-async function enrichDeclareItems(items: DataItem[]) {
-    return await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const id = item.link.split('/').pop();
-                if (!id) {
-                    return item;
-                }
-                const response = await got(`${zhengceApiUrl}/theme/info`, {
-                    headers: getHeaders(`${zhengceRootUrl}/#/declare`),
-                    searchParams: { id },
-                });
-                const info = response.data?.data;
-                if (!info) {
-                    return item;
-                }
-                const parts = [];
-                if (info.requestDescribe) {
-                    parts.push(info.requestDescribe);
-                } else if (info.policyText) {
-                    parts.push(info.policyText);
-                }
-                if (info.endDate) {
-                    parts.push(`<p>申报截止：${info.endDate.slice(0, 10)}</p>`);
-                }
-                if (parts.length) {
-                    item.description = parts.join('');
-                }
-                if (info.startDate) {
-                    item.pubDate = timezone(parseDate(info.startDate, 'YYYY-MM-DD'), 8);
                 }
                 return item;
             })
@@ -367,7 +339,6 @@ async function handler(ctx) {
         }
         case 'declare':
             items = await fetchDeclareItems(limit);
-            items = await enrichDeclareItems(items);
             break;
         case 'policy':
             items = await fetchPolicyItems(limit);
