@@ -19266,7 +19266,7 @@
           "/creators/:creators/newest" ],
         target:"/xhamster/:creators" } ] },
   "xiaoyuzhoufm.com":{ _name:"小宇宙",
-    ".":[ { title:"Unknown",
+    ".":[ { title:"发现",
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/" ],
         target:"/xiaoyuzhou/" },
