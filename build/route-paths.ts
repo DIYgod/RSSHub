@@ -1103,6 +1103,8 @@ export type RoutePath =
   | `/gcores/users/:id/radios`
   | `/gcores/users/:id/talks`
   | `/gcores/videos`
+  | `/gdmuseum/exhibition/:type?`
+  | `/gdmuseum/information`
   | `/gdsrx/:id?`
   | `/gdufs/news`
   | `/gdufs/xwxy/:category?`

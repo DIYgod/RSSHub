@@ -3942,6 +3942,12 @@
   "/gc.ca/pm/:language?": [
     "elibroftw"
   ],
+  "/gdmuseum/exhibition/:type?": [
+    "magazian"
+  ],
+  "/gdmuseum/information": [
+    "magazian"
+  ],
   "/gdsrx/:id?": [],
   "/gdufs/news": [
     "gz4zzxc"
