@@ -29,7 +29,9 @@ export interface PostListResponse {
 }
 
 export interface PostDetailResponse {
-    body: PostDetail;
+    body: {
+        post: PostDetail;
+    };
 }
 
 export interface PostItem {
