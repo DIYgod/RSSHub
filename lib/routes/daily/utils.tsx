@@ -46,29 +46,21 @@ const render = ({ image, content }: { image?: string; content?: string }) =>
         </>
     );
 
-export const getList = (edges, innerSharedContent: boolean, dateSort: boolean) =>
+export const getList = (edges, dateSort: boolean) =>
     edges.map(({ node }) => {
-        let link: string;
-        let title: string;
-        if (innerSharedContent && node.type === 'share') {
-            link = node.sharedPost.permalink;
-            title = node.sharedPost.title;
-        } else {
-            link = node.commentsPermalink ?? node.permalink;
-            title = node.title;
-        }
+        const post = node.type === 'share' ? node.sharedPost : node;
 
         return {
             id: node.id,
-            title,
-            link,
+            title: post.title,
+            link: node.commentsPermalink ?? node.permalink,
             guid: node.permalink,
             description: render({
-                image: node.image,
-                content: node.contentHtml?.replaceAll('\n', '<br>') ?? node.summary,
+                image: post.image?.includes('/public/Placeholder') ? undefined : post.image,
+                content: node.contentHtml?.replaceAll('\n', '<br>') ?? post.summary,
             }),
             author: node.author?.name,
-            itunes_item_image: node.image,
+            itunes_item_image: post.image,
             pubDate: dateSort ? parseDate(node.createdAt) : '',
             upvotes: node.numUpvotes,
             comments: node.numComments,
