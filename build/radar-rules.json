@@ -4942,27 +4942,6 @@
       }
     ]
   },
-  "pawchive.st": {
-    "_name": "Pawchive",
-    ".": [
-      {
-        "title": "Posts",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/pawchive/:service/:id"
-      },
-      {
-        "title": "Posts",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/:service/user/:id"
-        ],
-        "target": "/pawchive/:service/:id"
-      }
-    ]
-  },
   "pixabay.com": {
     "_name": "Pixabay",
     ".": [
@@ -34339,6 +34318,27 @@
           "/articles.html"
         ],
         "target": "/paulgraham/"
+      }
+    ]
+  },
+  "pawchive.pw": {
+    "_name": "Pawchive",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/pawchive/:service/:id"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:service/user/:id"
+        ],
+        "target": "/pawchive/:service/:id"
       }
     ]
   },
