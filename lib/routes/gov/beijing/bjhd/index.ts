@@ -96,57 +96,45 @@ function stripHtml(html: string) {
 }
 
 function parseDocumentWriteArticles(html: string) {
-    const items: DataItem[] = [];
     const seen = new Set<string>();
     const pattern = /document\.write\('<a href="(https?:\/\/(?:zyk\.)?bjhd\.gov\.cn[^"]+\.shtml)"[^>]*>(.*)<\/a>'\)/;
 
-    for (const line of html.split('\n')) {
-        const match = line.match(pattern);
-        if (!match) {
-            continue;
-        }
-        const link = match[1];
-        if (seen.has(link) || !/\/t20\d{6}_\d+\.shtml/.test(link)) {
-            continue;
-        }
-        seen.add(link);
-        const title = stripHtml(match[2]);
-        if (!title) {
-            continue;
-        }
-        items.push({
-            title,
-            link,
-            pubDate: pubDateFromArticleUrl(link),
-        });
-    }
-
-    return items;
+    return html
+        .split('\n')
+        .map((line) => line.match(pattern))
+        .filter((match): match is RegExpMatchArray => Boolean(match))
+        .map((match) => {
+            const link = match[1];
+            if (seen.has(link) || !/\/t20\d{6}_\d+\.shtml/.test(link)) {
+                return;
+            }
+            seen.add(link);
+            const title = stripHtml(match[2]);
+            if (!title) {
+                return;
+            }
+            return {
+                title,
+                link,
+                pubDate: pubDateFromArticleUrl(link),
+            } as DataItem;
+        })
+        .filter((item): item is DataItem => Boolean(item));
 }
 
 function parseZcjdList(html: string) {
-    const items: DataItem[] = [];
-    const lines = html.split('\n');
+    const $ = load(html);
+    const data = JSON.parse($('abbr#json').text() || '[]') as Array<{
+        title: string;
+        time: string;
+        url: string;
+    }>;
 
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const linkMatch = line.match(/document\.write\('<a href="(https:\/\/zyk\.bjhd\.gov\.cn\/zwdt\/zcjd\/[^"]+\.shtml)"/);
-        if (!linkMatch) {
-            continue;
-        }
-        const titleMatch = line.match(/<\/i>([^<]+)<\/a>/);
-        const dateMatch = lines[i + 1]?.match(/\[(\d{4}-\d{2}-\d{2})\]/);
-        if (!titleMatch) {
-            continue;
-        }
-        items.push({
-            title: titleMatch[1].trim(),
-            link: linkMatch[1],
-            pubDate: dateMatch ? timezone(parseDate(dateMatch[1], 'YYYY-MM-DD'), 8) : undefined,
-        });
-    }
-
-    return items;
+    return data.map((item) => ({
+        title: item.title,
+        link: item.url,
+        pubDate: item.time ? timezone(parseDate(item.time, 'YYYY-MM-DD'), 8) : undefined,
+    }));
 }
 
 async function fetchZcmlItems(limit: number) {
@@ -183,29 +171,27 @@ async function fetchZcmlItems(limit: number) {
 
 function fetchGfxwjItems(html: string, limit: number) {
     const $ = load(html);
-    const items: DataItem[] = [];
 
-    $('ul.yjcgkList li').each((_, element) => {
-        if (items.length >= limit) {
-            return false;
-        }
-        const item = $(element);
-        const anchor = item.find('a').first();
-        const href = anchor.attr('href');
-        const title = anchor.text().trim();
-        if (!href || !title) {
-            return;
-        }
-        const link = new URL(href, `${rootUrl}/zwdt/ygk/gfxwj/`).href;
-        const period = item.find('p').first().text().trim();
-        items.push({
-            title,
-            link,
-            description: period || undefined,
-        });
-    });
-
-    return items;
+    return $('ul.yjcgkList li')
+        .toArray()
+        .slice(0, limit)
+        .map((element) => {
+            const item = $(element);
+            const anchor = item.find('a');
+            const href = anchor.attr('href');
+            const title = anchor.text().trim();
+            if (!href || !title) {
+                return;
+            }
+            const link = new URL(href, `${rootUrl}/zwdt/ygk/gfxwj/`).href;
+            const period = item.find('p').contents().first().text().trim();
+            return {
+                title,
+                link,
+                description: period || undefined,
+            } as DataItem;
+        })
+        .filter((item): item is DataItem => Boolean(item));
 }
 
 async function enrichItems(items: DataItem[], referer: string) {
