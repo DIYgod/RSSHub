@@ -26,7 +26,7 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
 
     const $ = load(response.data);
 
-    return $('.news_list li')
+    return $('.news_list #wp_news_w12 li')
         .toArray()
         .map((item) => {
             const element = $(item);
