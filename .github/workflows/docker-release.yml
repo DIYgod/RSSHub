@@ -61,7 +61,7 @@ jobs:
                   echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
             - name: Checkout
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
             - name: Extract repository name
               id: repo-name
@@ -277,7 +277,7 @@ jobs:
         if: needs.check-env.outputs.check-docker == 'true'
         timeout-minutes: 5
         steps:
-            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
             - name: Docker Hub Description
               uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0
