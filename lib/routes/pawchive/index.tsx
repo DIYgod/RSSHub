@@ -1,3 +1,4 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -7,8 +8,33 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { apiBaseUrl, baseUrl, fileUrl, thumbnailUrl } from './const';
+import { apiBaseUrl, baseUrl, fileUrl, MIME_TYPE_MAP, thumbnailUrl } from './const';
 import type { PawchiveFile, PawchivePost } from './types';
+
+function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; enclosure_type?: string } {
+    const $ = load(htmlContent);
+    let enclosureInfo = {};
+
+    $('audio source, video source').each((_, el) => {
+        const src = $(el).attr('src');
+        if (!src) {
+            return;
+        }
+
+        const extension = src.replace(/.*\./, '').toLowerCase();
+        const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
+
+        if (mimeType) {
+            enclosureInfo = {
+                enclosure_url: src,
+                enclosure_type: mimeType,
+            };
+            return false;
+        }
+    });
+
+    return enclosureInfo;
+}
 
 export const route: Route = {
     path: '/:service/:id',
@@ -29,11 +55,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['pawchive.st/'],
+            source: ['pawchive.pw/'],
             target: '',
         },
         {
-            source: ['pawchive.st/:service/user/:id'],
+            source: ['pawchive.pw/:service/user/:id'],
             target: '/:service/:id',
         },
     ],
@@ -119,14 +145,18 @@ async function handler(ctx: Context) {
         return data.name || 'Unknown User';
     })) as Promise<string>;
 
-    const items = response.map((post) => ({
-        title: post.title || 'Untitled Post',
-        description: render(post, processPostFiles(post)),
-        author,
-        pubDate: parseDate(post.published),
-        link: `${baseUrl}/${post.service}/user/${post.user}/post/${post.id}`,
-        guid: `pawchive:${post.service}:${post.user}:post:${post.id}`,
-    }));
+    const items = response.map((post) => {
+        const description = render(post, processPostFiles(post));
+        return {
+            title: post.title || 'Untitled Post',
+            description,
+            author,
+            pubDate: parseDate(post.published),
+            link: `${baseUrl}/${post.service}/user/${post.user}/post/${post.id}`,
+            guid: `pawchive:${post.service}:${post.user}:post:${post.id}`,
+            ...generateEnclosureInfo(description),
+        };
+    });
 
     return {
         title: `Posts of ${author} from ${service} | Pawchive`,
