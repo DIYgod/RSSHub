@@ -5423,7 +5423,7 @@
         "source": [
           "/discussed"
         ],
-        "target": "/daily/discussed/:period?/:innerSharedContent?/:dateSort?"
+        "target": "/daily/discussed/:period?/:dateSort?"
       },
       {
         "title": "Popular",
@@ -5431,7 +5431,7 @@
         "source": [
           "/popular"
         ],
-        "target": "/daily/popular/:innerSharedContent?/:dateSort?"
+        "target": "/daily/popular/:dateSort?"
       },
       {
         "title": "Source Posts",
@@ -5439,7 +5439,7 @@
         "source": [
           "/sources/:sourceId"
         ],
-        "target": "/daily/source/:sourceId/:innerSharedContent?"
+        "target": "/daily/source/:sourceId"
       },
       {
         "title": "Squads",
@@ -5447,7 +5447,7 @@
         "source": [
           "/squads/:squads"
         ],
-        "target": "/daily/squads/:squads/:innerSharedContent?"
+        "target": "/daily/squads/:squads"
       },
       {
         "title": "Most upvoted",
@@ -5455,7 +5455,7 @@
         "source": [
           "/upvoted"
         ],
-        "target": "/daily/upvoted/:period?/:innerSharedContent?/:dateSort?"
+        "target": "/daily/upvoted/:period?/:dateSort?"
       },
       {
         "title": "User Posts",
@@ -5464,7 +5464,7 @@
           "/:userId/posts",
           "/:userId"
         ],
-        "target": "/daily/user/:userId/:innerSharedContent?"
+        "target": "/daily/user/:userId"
       }
     ]
   },
