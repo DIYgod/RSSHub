@@ -140,30 +140,4 @@ const ProcessFeedType2 = (item, response) => {
     return true;
 };
 
-const ProcessFeedType3 = (item, response) => {
-    const $ = load(response);
-    const match = $('script:contains("window.__INITIAL_STATE__")')
-        .text()
-        .match(/window\.__INITIAL_STATE__\s*=\s*((?:\S.*?)??);\(/);
-    if (!match) {
-        return;
-    }
-
-    const initialState = JSON.parse(match[1]);
-
-    // filter out undefined item
-    if (!initialState) {
-        return;
-    }
-
-    if (initialState?.articleContent && Object.keys(initialState.articleContent).length) {
-        const data = Object.values(initialState.articleContent)[0] as Record<string, string>;
-        const body = ProcessVideo(load(data.body, null, false));
-        ProcessHref(body('a'));
-        ProcessImg(body('img'));
-        item.description = body.html();
-        item.author = data.writer;
-    }
-};
-
-export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessFeedType3, ProcessHref, ProcessImg };
+export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessHref, ProcessImg };

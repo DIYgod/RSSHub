@@ -36,17 +36,8 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const { data: response } = await got(item.link);
-                    const success = utils.ProcessFeedType2(item, response);
-                    if (!success) {
-                        throw new Error('No article data');
-                    }
-                } catch {
-                    const { data: mobileResponse } = await got(`https://m.dongqiudi.com/article/${item.link.match(/\d+/)[0]}.html`);
-                    utils.ProcessFeedType3(item, mobileResponse);
-                }
-
+                const { data: response } = await got(item.link);
+                utils.ProcessFeedType2(item, response);
                 return item;
             })
         )
