@@ -99,27 +99,28 @@ function parseDocumentWriteArticles(html: string) {
     const seen = new Set<string>();
     const pattern = /document\.write\('<a href="(https?:\/\/(?:zyk\.)?bjhd\.gov\.cn[^"]+\.shtml)"[^>]*>(.*)<\/a>'\)/;
 
-    return html
-        .split('\n')
-        .map((line) => line.match(pattern))
-        .filter((match): match is RegExpMatchArray => Boolean(match))
-        .map((match) => {
-            const link = match[1];
-            if (seen.has(link) || !/\/t20\d{6}_\d+\.shtml/.test(link)) {
-                return;
-            }
-            seen.add(link);
-            const title = stripHtml(match[2]);
-            if (!title) {
-                return;
-            }
-            return {
+    return html.split('\n').flatMap((line) => {
+        const match = line.match(pattern);
+        if (!match) {
+            return [];
+        }
+        const link = match[1];
+        if (seen.has(link) || !/\/t20\d{6}_\d+\.shtml/.test(link)) {
+            return [];
+        }
+        seen.add(link);
+        const title = stripHtml(match[2]);
+        if (!title) {
+            return [];
+        }
+        return [
+            {
                 title,
                 link,
                 pubDate: pubDateFromArticleUrl(link),
-            } as DataItem;
-        })
-        .filter((item): item is DataItem => Boolean(item));
+            },
+        ];
+    });
 }
 
 function parseZcjdList(html: string) {
@@ -175,23 +176,24 @@ function fetchGfxwjItems(html: string, limit: number) {
     return $('ul.yjcgkList li')
         .toArray()
         .slice(0, limit)
-        .map((element) => {
+        .flatMap((element) => {
             const item = $(element);
             const anchor = item.find('a');
             const href = anchor.attr('href');
             const title = anchor.text().trim();
             if (!href || !title) {
-                return;
+                return [];
             }
             const link = new URL(href, `${rootUrl}/zwdt/ygk/gfxwj/`).href;
             const period = item.find('p').contents().first().text().trim();
-            return {
-                title,
-                link,
-                description: period || undefined,
-            } as DataItem;
-        })
-        .filter((item): item is DataItem => Boolean(item));
+            return [
+                {
+                    title,
+                    link,
+                    description: period || undefined,
+                },
+            ];
+        });
 }
 
 async function enrichItems(items: DataItem[], referer: string) {
