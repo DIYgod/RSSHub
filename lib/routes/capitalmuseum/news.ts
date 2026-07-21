@@ -34,7 +34,7 @@ export const route: Route = {
         const targetType = typeMap[typeParam];
 
         const baseUrl = 'https://www.capitalmuseum.org.cn';
-        const apiUrl = `${baseUrl}/news#b`;
+        const apiUrl = `${baseUrl}/news`;
         const museumName = namespace.zh?.name || namespace.name;
 
         const response = await got({
@@ -43,7 +43,7 @@ export const route: Route = {
         });
 
         const $ = load(response.data);
-        const nuxtDataStr = $('#__NUXT_DATA__').html() || '{}'; // use __NUXT_DATA__ to get the data structure of the page
+        const nuxtDataStr = $('#__NUXT_DATA__').text() || '{}'; // use __NUXT_DATA__ to get the data structure of the page
         const nuxtData = JSON.parse(nuxtDataStr);
         // get all the links of the news items by section name
         const getLinksBySection = (sectionName: string) => {

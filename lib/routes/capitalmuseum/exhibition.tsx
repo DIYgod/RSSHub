@@ -67,7 +67,7 @@ export const route: Route = {
         });
 
         const $ = load(response.data);
-        const nuxtDataStr = $('#__NUXT_DATA__').html() || ''; // use __NUXT_DATA__ to get the data structure of the page
+        const nuxtDataStr = $('#__NUXT_DATA__').text() || ''; // use __NUXT_DATA__ to get the data structure of the page
         const nuxtData = JSON.parse(nuxtDataStr);
         const targetType = typeMap[typeParam];
 
@@ -109,7 +109,7 @@ export const route: Route = {
                     });
 
                     const detail$ = load(detailResponse.data);
-                    const detailNuxtDataStr = detail$('#__NUXT_DATA__').html() || '';
+                    const detailNuxtDataStr = detail$('#__NUXT_DATA__').text() || '';
                     const detailNuxtData = JSON.parse(detailNuxtDataStr);
 
                     const detailObj = detailNuxtData.find((obj: any) => typeof obj === 'object' && 'address' in obj);
