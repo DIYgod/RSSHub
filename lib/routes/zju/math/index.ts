@@ -57,7 +57,7 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<NewsItem[]>
                 intranetOnly,
             };
         })
-        .filter((item): item is NewsItem => Boolean(item));
+        .filter(Boolean) as NewsItem[];
 }
 
 async function enrichNewsItemWithDetails(item: NewsItem, refererUrl: string): Promise<DataItem> {
