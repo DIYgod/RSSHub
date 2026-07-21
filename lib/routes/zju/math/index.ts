@@ -8,6 +8,11 @@ import timezone from '@/utils/timezone';
 
 const base = 'http://www.math.zju.edu.cn/';
 
+type NewsItem = {
+    item: DataItem;
+    intranetOnly: boolean;
+};
+
 const categoryMap = new Map([
     [0, { id: 'zytz/list.htm', title: '浙江大学数学科学院-重要通知' }],
     [1, { id: 'bkstz/list.htm', title: '浙江大学数学科学院-本科生' }],
@@ -18,7 +23,7 @@ const categoryMap = new Map([
     [6, { id: 'gs/list.htm', title: '浙江大学数学科学院-公示' }],
 ]);
 
-async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]> {
+async function fetchNewsItemsByCategory(categoryId: string): Promise<NewsItem[]> {
     const response = await got({
         method: 'get',
         url: new URL(categoryId, base).href,
@@ -28,31 +33,45 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
 
     return $('.news_list #wp_news_w12 li')
         .toArray()
-        .map((item) => {
+        .map((item): NewsItem | null => {
             const element = $(item);
             const link = element.find('a[href]').first().attr('href');
-            const title = element.find('.title').text().trim() || element.find('a[href]').first().attr('title');
+            const titleNode = element.find('.title');
+            // if the title node contains an image with src "/_images/news/icon/unopen.gif",
+            // it indicates that the news item is only accessible from the intranet
+            const intranetOnly = titleNode.find('img[src="/_images/news/icon/unopen.gif"]').length > 0;
+            const title = titleNode.text().trim() || element.find('a[href]').first().attr('title');
             const dateText = `${element.find('.date .y').text().trim()}-${element.find('.date .d').text().trim()}`;
 
+            // If the title or link is missing, we skip this item as it is likely not a valid news entry.
+            if (!(title && link)) {
+                return null;
+            }
+
             return {
-                title,
-                link: link ? new URL(link, base).href : undefined,
-                pubDate: timezone(parseDate(dateText), 8),
+                item: {
+                    title,
+                    link: new URL(link, base).href,
+                    pubDate: timezone(parseDate(dateText), 8),
+                },
+                intranetOnly,
             };
         })
-        .filter((item): item is DataItem => Boolean(item.title && item.link));
+        .filter((item): item is NewsItem => Boolean(item));
 }
 
-async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Promise<DataItem> {
-    if (!item.link) {
-        return item;
+async function enrichNewsItemWithDetails(item: NewsItem, refererUrl: string): Promise<DataItem> {
+    const dataItem = item.item as DataItem;
+
+    if (item.intranetOnly || !dataItem.link) {
+        return dataItem;
     }
 
-    return await cache.tryGet(item.link, async () => {
+    return await cache.tryGet(dataItem.link, async () => {
         try {
             const response = await got({
                 method: 'get',
-                url: item.link,
+                url: dataItem.link,
                 headers: {
                     Referer: refererUrl,
                 },
@@ -64,20 +83,20 @@ async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Pr
             const [, author, pubDate] = infoText.match(/来源：([\s\S]*?)发布时间：(\d{4}-\d{2}-\d{2})/) ?? [];
 
             if (description) {
-                item.description = description;
+                dataItem.description = description;
             }
 
             if (author) {
-                item.author = author;
+                dataItem.author = author;
             }
 
             if (pubDate) {
-                item.pubDate = timezone(parseDate(pubDate), 8);
+                dataItem.pubDate = timezone(parseDate(pubDate), 8);
             }
 
-            return item;
+            return dataItem;
         } catch {
-            return item;
+            return dataItem;
         }
     });
 }
