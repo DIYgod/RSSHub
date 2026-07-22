@@ -2855,6 +2855,8 @@ export type RoutePath =
   | `/tingshuitz/yangjiang`
   | `/tingtingfm/program/:programId`
   | `/tisi/latest`
+  | `/tjbwg/exhibition`
+  | `/tjbwg/news`
   | `/tju/cic/:type?`
   | `/tju/news/:type?`
   | `/tju/oaa/:type?`
