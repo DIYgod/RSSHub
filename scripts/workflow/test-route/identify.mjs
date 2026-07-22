@@ -102,6 +102,10 @@ export default async function identify({ github, context, core }, body, number, 
     };
 
     if (isPR) {
+        if (issue.labels.some((e) => e.name === 'spam')) {
+            core.info('PR labeled as spam, skipping');
+            return;
+        }
         if (issue.state === 'closed') {
             await updatePrState('open');
         }
