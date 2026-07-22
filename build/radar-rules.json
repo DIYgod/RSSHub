@@ -8240,6 +8240,19 @@
       }
     ]
   },
+  "3gmuseum.cn": {
+    "_name": "Chongqing China Three Gorges Museum",
+    "www": [
+      {
+        "title": "Temporary Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/web/column/col5009287.html"
+        ],
+        "target": "/3gmuseum/tempexhibition"
+      }
+    ]
+  },
   "423down.com": {
     "_name": "423Down",
     ".": [
