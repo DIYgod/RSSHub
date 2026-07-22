@@ -107,6 +107,7 @@ const query = /* GraphQL */ `
         sharedPost {
             id
             title
+            summary
             image
             readTime
             permalink
@@ -188,19 +189,9 @@ const query = /* GraphQL */ `
 `;
 
 export const route: Route = {
-    path: '/squads/:squads/:innerSharedContent?',
+    path: '/squads/:squads',
     example: '/daily/squads/watercooler',
     view: ViewType.Articles,
-    parameters: {
-        innerSharedContent: {
-            description: 'Where to Fetch inner Shared Posts instead of original',
-            default: 'false',
-            options: [
-                { value: 'false', label: 'False' },
-                { value: 'true', label: 'True' },
-            ],
-        },
-    },
     radar: [
         {
             source: ['app.daily.dev/squads/:squads'],
@@ -214,7 +205,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
-    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const squads = ctx.req.param('squads');
 
     const link = `${baseUrl}/squads/${squads}`;
@@ -239,7 +229,7 @@ async function handler(ctx) {
             first: limit,
         },
     });
-    const items = getList(data, innerSharedContent, true);
+    const items = getList(data, true);
 
     return {
         title: `${name} - daily.dev`,
