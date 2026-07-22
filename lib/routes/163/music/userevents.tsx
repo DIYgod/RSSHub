@@ -23,6 +23,12 @@ const renderDescription = ({ description, pics }) => {
 export const route: Route = {
     path: '/music/user/events/:id',
     categories: ['multimedia'],
+    radar: [
+        {
+            source: ['music.163.com/user/event'],
+            target: '/music/user/events/:id',
+        },
+    ],
     name: '用户动态',
     maintainers: ['Master-Hash'],
     handler,
