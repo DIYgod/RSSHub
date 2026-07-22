@@ -61,6 +61,15 @@ describe('config', () => {
         delete process.env.MEDIUM_COOKIE_34;
     });
 
+    it('substack cookie', async () => {
+        process.env.SUBSTACK_COOKIE = 'substack.sid=session';
+
+        const { config } = await import('./config');
+        expect(config.substack.cookie).toBe('substack.sid=session');
+
+        delete process.env.SUBSTACK_COOKIE;
+    });
+
     it('discourse config', async () => {
         process.env.DISCOURSE_CONFIG_12 = JSON.stringify({ a: 1 });
         process.env.DISCOURSE_CONFIG_34 = JSON.stringify({ b: 2 });

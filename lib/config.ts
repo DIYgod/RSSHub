@@ -197,6 +197,7 @@ type ConfigEnvKeys =
     | 'SPOTIFY_CLIENT_SECRET'
     | 'SPOTIFY_REFRESHTOKEN'
     | 'SSPAI_BEARERTOKEN'
+    | 'SUBSTACK_COOKIE'
     | 'TELEGRAM_TOKEN'
     | 'TELEGRAM_SESSION'
     | 'TELEGRAM_API_ID'
@@ -615,6 +616,9 @@ export type Config = {
     };
     sspai: {
         bearertoken?: string;
+    };
+    substack: {
+        cookie?: string;
     };
     telegram: {
         token?: string;
@@ -1118,6 +1122,9 @@ const calculateValue = () => {
         },
         sspai: {
             bearertoken: envs.SSPAI_BEARERTOKEN,
+        },
+        substack: {
+            cookie: envs.SUBSTACK_COOKIE,
         },
         telegram: {
             token: envs.TELEGRAM_TOKEN,
