@@ -81,6 +81,7 @@ jobs:
         timeout-minutes: 5
         steps:
             - name: Check if PR author is denounced
+              id: vouch
               uses: mitchellh/vouch/action/check-pr@d66fa29a64600490892131ad87597c30c91fcac4 # v1.5.0
               with:
                   pr-number: ${{ github.event.pull_request.number }}
@@ -88,6 +89,12 @@ jobs:
                   require-vouch: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Label denounced PR as spam
+              if: ${{ steps.vouch.outputs.status == 'closed' }}
+              run: gh pr edit ${{ github.event.pull_request.number }} --add-label spam
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_REPO: ${{ github.repository }}
 
     agentscan:
         name: AgentScan
