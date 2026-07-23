@@ -32,7 +32,7 @@ export const route: Route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.chinasilkmuseum.com/zz/list_17.aspx'],
+            source: ['chinasilkmuseum.com/zz/list_17.aspx'],
             target: '/zz',
         },
     ],
