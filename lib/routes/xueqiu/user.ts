@@ -1,5 +1,5 @@
-import sanitizeHtml from 'sanitize-html';
 import pMap from 'p-map';
+import sanitizeHtml from 'sanitize-html';
 
 import { parseToken } from '@/routes/xueqiu/cookies';
 import type { Route } from '@/types';
@@ -154,7 +154,7 @@ async function handler(ctx) {
                 return buildListItem(item);
             }
         },
-        { concurrency: 3 },
+        { concurrency: 3 }
     );
 
     const user = data[0]?.user;
