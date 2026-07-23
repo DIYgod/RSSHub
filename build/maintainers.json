@@ -1278,6 +1278,9 @@
   "/rattibha/user/:user": [
     "yshalsager"
   ],
+  "/scmuseum/exhibition/:type?": [
+    "magazian"
+  ],
   "/sctv/programme/:id?/:limit?/:isFull?": [
     "nczitzk"
   ],

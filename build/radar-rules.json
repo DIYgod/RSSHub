@@ -5018,6 +5018,19 @@
       }
     ]
   },
+  "scmuseum.cn": {
+    "_name": "Sichuan Museum",
+    "www": [
+      {
+        "title": "Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/Visit/Exhibition"
+        ],
+        "target": "/scmuseum/exhibition"
+      }
+    ]
+  },
   "seekingalpha.com": {
     "_name": "Seeking Alpha",
     ".": [

@@ -2486,6 +2486,7 @@ export type RoutePath =
   | `/scmp/:category_id`
   | `/scmp/coronavirus`
   | `/scmp/topics/:topic`
+  | `/scmuseum/exhibition/:type?`
   | `/scnu/cs/match`
   | `/scnu/jw`
   | `/scnu/library`
