@@ -1,32 +1,26 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 
-export async function getNoticeContent(item: any) {
+type NoticeItem = DataItem & { link: string };
+
+export async function getNoticeContent(item: NoticeItem): Promise<NoticeItem> {
     const response = await got(item.link);
     const $ = load(response.body);
-
-    const pageTitle = $('title').text().trim();
-    const lastDash = pageTitle.lastIndexOf('-');
-    if (lastDash > 0) {
-        item.title = pageTitle.slice(0, lastDash).trim();
-    }
+    const pageTitle = $('title').text();
 
     const $content = $('.v_news_content');
-    if ($content.length) {
-        $content.find('script, style, .vsbcontent_end, iframe').remove();
-        $content.find('img[src], a[href]').each((_, el) => {
-            const $el = $(el);
-            const attr = el.tagName === 'img' ? 'src' : 'href';
-            const val = $el.attr(attr);
-            if (val) {
-                $el.attr(attr, new URL(val, item.link).href);
-            }
-        });
-        item.description = $content.html() || item.title;
-    } else {
-        item.description = item.title;
-    }
+    $content.find('script, style, .vsbcontent_end').remove();
+    $content.find('img[src], a[href]').each((_, element) => {
+        const $element = $(element);
+        const attribute = element.tagName === 'img' ? 'src' : 'href';
+        $element.attr(attribute, new URL($element.attr(attribute)!, item.link).href);
+    });
 
-    return item;
+    return {
+        ...item,
+        title: pageTitle.slice(0, pageTitle.lastIndexOf('-')).trim(),
+        description: $content.html()!,
+    };
 }

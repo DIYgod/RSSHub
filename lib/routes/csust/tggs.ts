@@ -1,49 +1,33 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { getNoticeContent } from './utils';
 
 const baseUrl = 'https://www.csust.edu.cn';
 const listPath = '/tggs.htm';
 
-async function handler() {
+async function handler(): Promise<Data> {
     const response = await got(`${baseUrl}${listPath}`);
     const $ = load(response.body);
 
-    const items = $('.list ul li')
+    const items: Array<DataItem & { link: string }> = $('.list ul li')
         .toArray()
         .map((li) => {
             const $li = $(li);
-            const linkRaw = $li.find('a').attr('href');
-            const dateText = $li.find('.data1').text().trim();
 
-            if (!linkRaw) {
-                return null;
-            }
+            return {
+                title: $li.find('.newTitle').text().trim(),
+                link: new URL($li.find('a').attr('href')!, baseUrl).href,
+                pubDate: timezone(parseDate($li.find('.data1').text().trim(), '发布时间 : YYYY-MM-DD'), 8),
+            };
+        });
 
-            const dateMatch = dateText.match(/发布时间\s*[:：]\s*(\d{4}-\d{1,2}-\d{1,2})/);
-            const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
-            const link = linkRaw.startsWith('http') ? linkRaw : new URL(linkRaw, baseUrl).href;
-
-            return { link, pubDate };
-        })
-        .filter((i) => i !== null);
-
-    const enrichedItems = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    return await getNoticeContent(item);
-                } catch {
-                    return item;
-                }
-            })
-        )
-    );
+    const enrichedItems = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
 
     return {
         title: '长沙理工大学 - 通告公示',
@@ -57,14 +41,8 @@ export const route: Route = {
     path: '/tggs',
     categories: ['university'],
     example: '/csust/tggs',
-    parameters: {},
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        supportRadar: true,
     },
     radar: [
         {
