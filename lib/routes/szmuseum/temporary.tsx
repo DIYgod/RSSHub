@@ -1,13 +1,40 @@
-import tls from 'node:tls';
-
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
+import { Agent, buildConnector } from 'undici';
 
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { namespace } from './namespace';
+
+// szmuseum.com responds with a malformed `Cache Control: no-cache` header
+// (space instead of hyphen), which makes Node.js's strict HTTP parser throw.
+// Patch the bytes on the socket before the parser sees them.
+const connect = buildConnector({});
+const dispatcher = new Agent({
+    connect(opts, cb) {
+        connect(opts, (err, socket) => {
+            if (err || !socket) {
+                cb(err, null);
+                return;
+            }
+            const read = socket.read.bind(socket);
+            socket.read = (...args) => {
+                const chunk = read(...args);
+                if (Buffer.isBuffer(chunk)) {
+                    const index = chunk.indexOf('\r\nCache Control:');
+                    if (index !== -1) {
+                        chunk.write('-', index + 7);
+                    }
+                }
+                return chunk;
+            };
+            cb(null, socket);
+        });
+    },
+});
 
 export const route: Route = {
     path: '/temporary',
@@ -26,30 +53,7 @@ export const route: Route = {
         const apiUrl = `${baseUrl}/Exhibition/Temporary`;
         const museumName = namespace.zh?.name || namespace.name;
 
-        // Bypass Node.js's native fetch strict HTTP header validation. The target server returns a non-compliant
-        // `Cache-Control: no-cache ` header with a trailing space, which causes `fetch` and `got` to fail.
-        const content = await new Promise<string>((resolve, reject) => {
-            const socket = tls.connect(
-                443,
-                'www.szmuseum.com',
-                {
-                    servername: 'www.szmuseum.com',
-                },
-                () => {
-                    socket.write('GET /Exhibition/Temporary HTTP/1.1\r\nHost: www.szmuseum.com\r\nConnection: close\r\n\r\n');
-                }
-            );
-            let data = Buffer.from([]);
-            socket.on('data', (chunk) => {
-                data = Buffer.concat([data, Buffer.from(chunk)]);
-            });
-            socket.on('end', () => {
-                const str = data.toString('utf-8');
-                const bodyIndex = str.indexOf('\r\n\r\n');
-                resolve(str.slice(bodyIndex + 4));
-            });
-            socket.on('error', reject);
-        });
+        const content = await ofetch<string>(apiUrl, { dispatcher, parseResponse: (txt) => txt });
 
         const $ = load(content);
 
