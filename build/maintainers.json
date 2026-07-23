@@ -7013,6 +7013,9 @@
   "/szftedu/gonggao": [
     "valuex"
   ],
+  "/szmuseum/temporary": [
+    "magazian"
+  ],
   "/szse/inquire/:category?/:select?/:keyword?": [
     "Jeason0228",
     "nczitzk"

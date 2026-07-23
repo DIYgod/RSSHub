@@ -39311,6 +39311,19 @@
       }
     ]
   },
+  "szmuseum.com": {
+    "_name": "Suzhou Museum",
+    "www": [
+      {
+        "title": "Special Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/Exhibition/Temporary"
+        ],
+        "target": "/szmuseum/temporary"
+      }
+    ]
+  },
   "szse.cn": {
     "_name": "深圳证券交易所",
     ".": [
