@@ -11,7 +11,7 @@ import { namespace } from './namespace';
 
 // Generate a dynamic token using AES-256-ECB with a static key and timestamp
 function getToken() {
-    const key = 'TYYY3OT3TOCBW7OWT33QMVJ32IUUVC22'; // this key is used for AES-256-ECB encryption, and it is hardcoded in the original code in https://www.scmuseum.cn/js/index.2af39792.chunk.js
+    const key = 'TYYY3OT3-TOCBW7OW-T33QMVJ3-2IUUVC22'.replaceAll('-', ''); // this key is used for AES-256-ECB encryption, and it is hardcoded in the original code in https://www.scmuseum.cn/js/index.2af39792.chunk.js
     const t = (Math.random() + '').slice(-6) + Date.now();
     const cipher = crypto.createCipheriv('aes-256-ecb', Buffer.from(key, 'utf8'), null);
     cipher.setAutoPadding(true);
@@ -77,8 +77,8 @@ export const route: Route = {
                     const itemLink = isBase ? `https://www.scmuseum.cn/Visit/Exhibition/BaseExhibition/${linkId}` : `https://www.scmuseum.cn/Visit/Exhibition/ExhibitiomReview/${linkId}`;
 
                     const pubDate = item.startTime ? timezone(parseDate(item.startTime), 8) : undefined;
-                    const startDate = item.startTime ? String(item.startTime).split(' ', 1)[0] : '';
-                    const endDate = item.endTime ? String(item.endTime).split(' ', 1)[0] : '';
+                    const startDate = item.startTime ? item.startTime.split(' ', 1)[0] : '';
+                    const endDate = item.endTime ? item.endTime.split(' ', 1)[0] : '';
                     const location = isBase ? item.basePlace : item.tempPlace;
                     const imgUrl = `https://www.scmuseum.cn/file/${item.thumb}`;
 
