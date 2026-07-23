@@ -143,8 +143,8 @@ importers:
         specifier: 0.7.3
         version: 0.7.3
       imapflow:
-        specifier: 1.4.8
-        version: 1.4.8
+        specifier: 1.5.0
+        version: 1.5.0
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -3676,7 +3676,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.50:
@@ -4345,8 +4345,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.4.8:
-    resolution: {integrity: sha512-cHa23g7h0X04a2v+H9luLg0GWMQ0vApmQ+UxL5swglOgBypNpqxurLMa1JS9mjpTekCsQhKrCZwaziPRBbHp8Q==}
+  imapflow@1.5.0:
+    resolution: {integrity: sha512-ayj2xIpRpXT9nXlAQQDhfm694faQxEmfAzRYL881q3YGRR5ofyIWsG3l3Lf7oSThxgLwZ/EQ5kh/nLnKBud3LQ==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -9817,7 +9817,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.4.8:
+  imapflow@1.5.0:
     dependencies:
       '@zone-eu/mailsplit': 5.4.14
       encoding-japanese: 2.2.0
