@@ -1,25 +1,48 @@
-import type { Route } from '@/types';
+import { load } from 'cheerio';
 
-import { createCsustHandler } from './utils';
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
-const handler = createCsustHandler({
-    listPath: '/xkxs.htm',
-    feedTitle: '长沙理工大学 - 学科学术',
-    feedDescription: '长沙理工大学学科学术',
-});
+import { getNoticeContent } from './utils';
+
+const baseUrl = 'https://www.csust.edu.cn';
+const listPath = '/xkxs.htm';
+
+async function handler(): Promise<Data> {
+    const response = await got(`${baseUrl}${listPath}`);
+    const $ = load(response.body);
+
+    const items: Array<DataItem & { link: string }> = $('.list ul li')
+        .toArray()
+        .map((li) => {
+            const $li = $(li);
+
+            return {
+                title: $li.find('.newTitle').text().trim(),
+                link: new URL($li.find('a').attr('href')!, baseUrl).href,
+                pubDate: timezone(parseDate($li.find('.data1').text().trim(), '发布时间 : YYYY-MM-DD'), 8),
+            };
+        });
+
+    const enrichedItems = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
+
+    return {
+        title: '长沙理工大学 - 学科学术',
+        link: `${baseUrl}${listPath}`,
+        description: '长沙理工大学学科学术',
+        item: enrichedItems,
+    };
+}
 
 export const route: Route = {
     path: '/xkxs',
     categories: ['university'],
     example: '/csust/xkxs',
-    parameters: {},
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        supportRadar: true,
     },
     radar: [
         {
