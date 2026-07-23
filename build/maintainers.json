@@ -2601,6 +2601,12 @@
   "/canada.ca/news/:lang/:department?": [
     "elibroftw"
   ],
+  "/capitalmuseum/exhibition/:type?": [
+    "magazian"
+  ],
+  "/capitalmuseum/news/:type?": [
+    "magazian"
+  ],
   "/cartoonmad/comic/:id": [
     "KellyHwong"
   ],

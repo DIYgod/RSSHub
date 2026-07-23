@@ -456,6 +456,8 @@ export type RoutePath =
   | `/cankaoxiaoxi/column/:id?`
   | `/capitalmind/insights`
   | `/capitalmind/podcasts`
+  | `/capitalmuseum/exhibition/:type?`
+  | `/capitalmuseum/news/:type?`
   | `/cara/likes/:user`
   | `/cara/portfolio/:user`
   | `/cara/timeline/:user`

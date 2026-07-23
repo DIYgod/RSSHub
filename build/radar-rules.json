@@ -13868,6 +13868,27 @@
       }
     ]
   },
+  "capitalmuseum.org.cn": {
+    "_name": "Capital Museum",
+    "www": [
+      {
+        "title": "Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/exhibition"
+        ],
+        "target": "/capitalmuseum/exhibition"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/news"
+        ],
+        "target": "/capitalmuseum/news"
+      }
+    ]
+  },
   "cartoonmad.com": {
     "_name": "動漫狂",
     ".": [
