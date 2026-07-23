@@ -19,10 +19,17 @@ export const route: Route = {
         ],
         requirePuppeteer: false,
         antiCrawler: true,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['music.163.com/playlist'],
+            target: '/music/playlist/:id',
+        },
+    ],
     name: '歌单歌曲',
     maintainers: ['DIYgod'],
     handler,

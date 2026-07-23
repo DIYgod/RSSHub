@@ -31,10 +31,17 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['music.163.com/user/home'],
+            target: '/music/user/playlist/:id',
+        },
+    ],
     name: '用户歌单',
     maintainers: ['DIYgod'],
     handler,

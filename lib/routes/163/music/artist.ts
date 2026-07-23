@@ -12,10 +12,17 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['music.163.com/artist/album'],
+            target: '/music/artist/:id',
+        },
+    ],
     name: '歌手专辑',
     maintainers: ['metowolf'],
     handler,

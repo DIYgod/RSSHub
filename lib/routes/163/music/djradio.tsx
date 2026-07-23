@@ -15,10 +15,17 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['music.163.com/djradio'],
+            target: '/music/djradio/:id',
+        },
+    ],
     name: '电台节目',
     maintainers: ['magic-akari'],
     handler,
