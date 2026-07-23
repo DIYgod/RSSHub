@@ -129,7 +129,7 @@ const ProcessFeedType2 = (item, response) => {
 
     // filter out undefined item
     if (!data) {
-        return false;
+        return;
     }
 
     const body = ProcessVideo(load(data.rawBody, null, false));
@@ -137,7 +137,6 @@ const ProcessFeedType2 = (item, response) => {
     ProcessImg(body('img'));
     item.description = body.html();
     item.author = data.author;
-    return true;
 };
 
 export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessHref, ProcessImg };
