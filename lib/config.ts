@@ -83,6 +83,7 @@ type ConfigEnvKeys =
     | 'FOLLOW_PRICE'
     | 'FOLLOW_USER_LIMIT'
     // Route-specific (dynamic cookies with prefixes)
+    | 'BAIDU_COOKIE'
     | `BILIBILI_COOKIE_${string}`
     | 'BILIBILI_DM_IMG_LIST'
     | 'BILIBILI_DM_IMG_INTER'
@@ -360,6 +361,9 @@ export type Config = {
     };
 
     // Route-specific Configurations
+    baidu: {
+        cookie?: string;
+    };
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
@@ -863,6 +867,9 @@ const calculateValue = () => {
         },
 
         // Route-specific Configurations
+        baidu: {
+            cookie: envs.BAIDU_COOKIE,
+        },
         bilibili: {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
