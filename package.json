@@ -200,7 +200,7 @@
         "remark-gfm": "4.0.1",
         "remark-pangu": "2.2.0",
         "remark-parse": "11.0.0",
-        "tsdown": "0.22.13",
+        "tsdown": "0.22.14",
         "typescript": "npm:@typescript/typescript6@6.0.2",
         "typescript-7": "npm:typescript@7.0.2",
         "unified": "11.0.5",
