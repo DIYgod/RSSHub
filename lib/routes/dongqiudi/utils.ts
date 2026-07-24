@@ -68,17 +68,19 @@ const ProcessFeed = async (ctx, type, id) => {
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
 
-    let name;
-
     const { window } = new JSDOM(response, {
         runScripts: 'dangerously',
     });
 
-    const typeInfo = window.__NUXT__.data[0][`${type}Detail`].base_info;
+    const nuxtData = window.__NUXT__.data[0];
+    let name;
+    let image;
     if (type === 'team') {
-        name = typeInfo.team_name;
-    } else if (type === 'player') {
-        name = typeInfo.person_name;
+        name = nuxtData.teamInfo.name;
+        image = nuxtData.teamInfo.logo;
+    } else {
+        name = nuxtData.detail.base_info.person_name;
+        image = nuxtData.detail.base_info.person_logo;
     }
 
     const { data } = await got(apiUrl, {
@@ -95,7 +97,7 @@ const ProcessFeed = async (ctx, type, id) => {
         title: article.title,
         link: `https://www.dongqiudi.com/articles/${article.id}.html`,
         category: [article.category, ...(article.secondary_category ?? [])],
-        pubDate: parseDate(article.show_time),
+        pubDate: parseDate(article.show_time, 'X'),
     }));
 
     const out = await Promise.all(
@@ -113,7 +115,7 @@ const ProcessFeed = async (ctx, type, id) => {
     return {
         title: `${name} - 相关新闻`,
         link,
-        image: type === 'team' ? typeInfo.team_logo : typeInfo.person_logo,
+        image,
         item: out,
     };
 };
@@ -123,44 +125,18 @@ const ProcessFeedType2 = (item, response) => {
         runScripts: 'dangerously',
     });
 
-    const data = dom.window.__NUXT__.data[0].newData;
+    const data = dom.window.__NUXT__?.data?.[0]?.article;
 
     // filter out undefined item
     if (!data) {
         return;
     }
 
-    if (Object.keys(data).length > 0) {
-        const body = ProcessVideo(load(data.body, null, false));
-        ProcessHref(body('a'));
-        ProcessImg(body('img'));
-        item.description = body.html();
-        item.author = data.writer;
-        item.pubDate = parseDate(data.show_time, 'X');
-    }
+    const body = ProcessVideo(load(data.rawBody, null, false));
+    ProcessHref(body('a'));
+    ProcessImg(body('img'));
+    item.description = body.html();
+    item.author = data.author;
 };
 
-const ProcessFeedType3 = (item, response) => {
-    const $ = load(response);
-    const initialState = JSON.parse(
-        $('script:contains("window.__INITIAL_STATE__")')
-            .text()
-            .match(/window\.__INITIAL_STATE__\s*=\s*((?:\S.*?)??);\(/)[1]
-    );
-
-    // filter out undefined item
-    if (!initialState) {
-        return;
-    }
-
-    if (Object.keys(initialState.articleContent).length) {
-        const data = Object.values(initialState.articleContent)[0];
-        const body = ProcessVideo(load(data.body, null, false));
-        ProcessHref(body('a'));
-        ProcessImg(body('img'));
-        item.description = body.html();
-        item.author = data.writer;
-    }
-};
-
-export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessFeedType3, ProcessHref, ProcessImg };
+export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessHref, ProcessImg };
