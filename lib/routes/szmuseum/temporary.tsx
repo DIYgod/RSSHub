@@ -64,7 +64,7 @@ export const route: Route = {
                 const a = $item.find('h1 a');
                 const title = a.text();
                 const linkStr = new URL(a.attr('href') || '', baseUrl);
-                linkStr.search = ''; // remove dyanmic date stamp from the link
+                linkStr.search = ''; // remove dynamic date stamp from the link
                 const link = linkStr.href;
                 const imgUrl = new URL($item.find('.aleftimg img').attr('src') || '', baseUrl).href;
 
