@@ -1,3 +1,4 @@
+import pMap from 'p-map';
 import sanitizeHtml from 'sanitize-html';
 
 import { parseToken } from '@/routes/xueqiu/cookies';
@@ -115,36 +116,45 @@ async function handler(ctx) {
 
     const data = response.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
 
-    const items = await Promise.all(
-        data.map((item) =>
-            cache.tryGet(item.target, async () => {
-                // legal_user_visible 为 true 时列表已含完整内容，无需再请求详情
-                if (item.legal_user_visible) {
-                    return buildListItem(item);
-                }
+    // Use p-map to limit concurrency and avoid triggering Xueqiu show.json rate limiting.
+    const items = await pMap(
+        data,
+        async (item) => {
+            try {
+                return await cache.tryGet(item.target, async () => {
+                    // legal_user_visible 为 true 时列表已含完整内容，无需再请求详情
+                    if (item.legal_user_visible) {
+                        return buildListItem(item);
+                    }
 
-                try {
-                    const detail = await ofetch(`${apiUrl}/statuses/show.json`, {
-                        query: {
-                            id: item.id,
-                        },
-                        headers: {
-                            Cookie: cookie,
-                            Referer: link,
-                        },
-                    });
+                    try {
+                        const detail = await ofetch(`${apiUrl}/statuses/show.json`, {
+                            query: { id: item.id },
+                            headers: { Cookie: cookie, Referer: link },
+                        });
 
-                    return {
-                        title: buildTitle(item, detail),
-                        description: buildDescription(detail),
-                        pubDate: parseDate(item.created_at),
-                        link: rootUrl + item.target,
-                    };
-                } catch {
-                    return buildListItem(item);
-                }
-            })
-        )
+                        return {
+                            title: buildTitle(item, detail),
+                            description: buildDescription(detail),
+                            pubDate: parseDate(item.created_at),
+                            link: rootUrl + item.target,
+                        };
+                    } catch (error: any) {
+                        // Permanent failures (post deleted / not found): cache the fallback.
+                        const data = error.response?._data || error.data;
+                        if (data && typeof data === 'object' && data.error_code) {
+                            return buildListItem(item);
+                        }
+                        // Transient failures (rate limit / WAF): throw to skip caching, retry next request.
+                        throw error;
+                    }
+                });
+            } catch {
+                // Transient failure: provide a fallback item without caching, retry next request.
+                return buildListItem(item);
+            }
+        },
+        { concurrency: 3 }
     );
 
     const user = data[0]?.user;
