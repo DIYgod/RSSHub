@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.r_time').text(), 'YYYY/M/D HH:mm'), 8);
+                item.pubDate = timezone(parseDate($$('.article_top .time, div.r_time').first().text().trim(), 'YYYY/M/D HH:mm'), 8);
                 item.author = $$('div.author').first().text().trim();
                 item.content = {
                     html: description,
