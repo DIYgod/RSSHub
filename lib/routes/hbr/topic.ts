@@ -6,19 +6,18 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/topic/:topic?/:type?',
+    path: ['/topic/subject/:topic/:type?', '/topic/:topic?/:type?'],
     categories: ['new-media'],
-    example: '/hbr/topic/Leadership/Popular',
+    example: '/hbr/topic/subject/decision-making-and-problem-solving',
     parameters: {
-        topic: 'Topic, can be found in URL, Leadership by default',
+        topic: 'Topic slug, can be found in the URL. HBR now serves topics under `hbr.org/topic/subject/<slug>`, so use the part after `subject/` (e.g. `decision-making-and-problem-solving`). Leadership by default.',
         type: {
-            description: 'Type, see below, Popular by default',
+            description: 'Stream, see below, Latest by default',
             options: [
-                { value: 'Popular', label: 'Popular' },
+                { value: 'Latest', label: 'Latest' },
                 { value: 'From the Store', label: 'From the Store' },
-                { value: 'For You', label: 'For You' },
             ],
-            default: 'Popular',
+            default: 'Latest',
         },
     },
     features: {
@@ -31,43 +30,54 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hbr.org/topic/:topic?', 'hbr.org/'],
+            source: ['hbr.org/topic/subject/:topic', 'hbr.org/topic/:topic?', 'hbr.org/'],
         },
     ],
     name: 'Topic',
     maintainers: ['nczitzk', 'pseudoyu'],
     handler,
-    description: `| POPULAR | FROM THE STORE | FOR YOU |
-| ------- | -------------- | ------- |
-| Popular | From the Store | For You |
+    description: `| Latest | From the Store |
+| ------ | -------------- |
+| Latest | From the Store |
 
 ::: tip
-Click here to view [All Topics](https://hbr.org/topics)
+HBR now serves topics under \`hbr.org/topic/subject/<slug>\`. Copy the part after \`subject/\` as the \`topic\` parameter. Click here to view [All Topics](https://hbr.org/topics).
 :::`,
 };
 
 async function handler(ctx) {
-    const topic = ctx.req.param('topic') ?? 'Leadership';
-    const type = ctx.req.param('type') ?? 'Popular';
+    const topic = ctx.req.param('topic') ?? 'leadership';
+    const type = ctx.req.param('type') ?? 'Latest';
 
     const rootUrl = 'https://hbr.org';
-    const currentUrl = `${rootUrl}/topic/${topic}`;
+    // Mirror HBR's own URL layout: current pages live under /topic/subject/<slug>,
+    // legacy ones under /topic/<slug>. Detect which form was requested.
+    const isSubject = ctx.req.path.includes('/topic/subject/');
+    const currentUrl = `${rootUrl}/topic/${isSubject ? 'subject/' : ''}${topic}`;
 
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
 
-    const list = $(`stream-content[data-stream-name="${type}"]`)
+    // Each tab is a <stream-content data-stream-name="..."> block. Fall back to
+    // the first stream when the requested name is absent, so the route keeps
+    // working if HBR renames or reorders the tabs.
+    const matched = $(`stream-content[data-stream-name="${type}"]`);
+    const container = matched.length ? matched : $('stream-content').first();
+
+    const list = container
         .find('.stream-item')
         .toArray()
         .map((item) => {
             item = $(item);
 
+            const url = item.attr('data-url') ?? '';
+
             return {
                 title: item.attr('data-title'),
                 author: item.attr('data-authors'),
                 category: item.attr('data-topic'),
-                link: `${rootUrl}${item.attr('data-url')}`,
+                link: url.startsWith('http') ? url : `${rootUrl}${url}`,
             };
         });
 
