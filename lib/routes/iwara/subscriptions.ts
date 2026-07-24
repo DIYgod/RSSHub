@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 
 import { renderSubscriptionImages } from './templates/subscriptions';
-import { apiqRootUrl, imageRootUrl, rootUrl } from './utils';
+import { apiRootUrl, imageRootUrl, rootUrl } from './utils';
 
 const md = MarkdownIt({
     html: true,
@@ -96,7 +96,7 @@ async function handler() {
         const refreshHeaders = await cache.tryGet(
             'iwara:token',
             async () => {
-                const result = await fetchApi(`${apiqRootUrl}/user/login`, {
+                const result = await fetchApi(`${apiRootUrl}/user/login`, {
                     method: 'POST',
                     headers: apiHeaders,
                     body: { email: username, password },
@@ -111,7 +111,7 @@ async function handler() {
         const authHeaders = await cache.tryGet(
             'iwara:authToken',
             async () => {
-                const result = await fetchApi(`${apiqRootUrl}/user/token`, {
+                const result = await fetchApi(`${apiRootUrl}/user/token`, {
                     method: 'POST',
                     headers: {
                         ...apiHeaders,
@@ -131,8 +131,8 @@ async function handler() {
 
         // fetch subscriptions
         const [videoResponse, imageResponse] = await Promise.all([
-            fetchApi(`${apiqRootUrl}/videos?rating=all&page=0&limit=24&subscribed=true`, { headers: authedHeaders }),
-            fetchApi(`${apiqRootUrl}/images?rating=all&page=0&limit=24&subscribed=true`, { headers: authedHeaders }),
+            fetchApi(`${apiRootUrl}/videos?rating=all&page=0&limit=24&subscribed=true`, { headers: authedHeaders }),
+            fetchApi(`${apiRootUrl}/images?rating=all&page=0&limit=24&subscribed=true`, { headers: authedHeaders }),
         ]);
 
         const videoList = videoResponse.results.map((item) => {
@@ -182,12 +182,15 @@ async function handler() {
                         };
                     }
 
-                    const apiUrl = item.link.replace('www.iwara.tv', 'apiq.iwara.tv');
+                    const apiUrl = item.link.replace('www.iwara.tv', 'api.iwara.tv');
                     const response = await fetchApi(apiUrl, {
                         headers: authedHeaders,
                     });
 
-                    description = renderSubscriptionImages(response.files ? response.files.filter((f) => f.type === 'image').map((f) => `${imageRootUrl}/image/original/${f.id}/${f.name}`) : [item.imageUrl]);
+                    // The new API returns `file` (single object) for videos and `files` (array) for images
+                    const files = response.files || (response.file ? [response.file] : []);
+                    const imageFiles = files.filter((f) => f.type === 'image');
+                    description = imageFiles.length > 0 ? renderSubscriptionImages(imageFiles.map((f) => `${imageRootUrl}/image/original/${f.id}/${f.name}`)) : renderSubscriptionImages([item.imageUrl]);
 
                     const body = response.body ? md.render(response.body) : '';
                     description += body;
