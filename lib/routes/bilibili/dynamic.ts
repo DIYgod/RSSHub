@@ -4,13 +4,15 @@ import { config } from '@/config';
 import CaptchaError from '@/errors/types/captcha';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import { extractBilibiliOpusImages, extractBilibiliOpusImagesFromHtml, normalizeBilibiliImageUrl, renderBilibiliImages } from '@/utils/bilibili-opus';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDuration } from '@/utils/helpers';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-import type { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
+import type { BilibiliWebDynamicResponse, Item2, Modules, Orig } from './api-interface';
 import cacheIn from './cache';
 import utils, { getLiveUrl, getVideoUrl } from './utils';
 
@@ -46,7 +48,7 @@ export const route: Route = {
             },
         ],
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -178,10 +180,55 @@ const getImgs = (data?: Modules) => {
             url: major[type]?.cover,
         });
     }
-    return imgUrls
-        .filter(Boolean)
-        .map((img) => `<img src="${img.url}" ${img.width ? `width="${img.width}"` : ''} ${img.height ? `height="${img.height}"` : ''}>`)
-        .join('');
+    return renderBilibiliImages(imgUrls);
+};
+
+const getItemImages = async (item: Item2 | Orig | undefined, cookie: string) => {
+    const images = getImgs(item?.modules);
+    const majorType = item?.modules.module_dynamic?.major?.type;
+    const isOpus = majorType === 'MAJOR_TYPE_OPUS' || item?.type === 'DYNAMIC_TYPE_DRAW' || item?.type === 'DYNAMIC_TYPE_ARTICLE';
+    const hasInlineOpusImages = Boolean(item?.modules.module_dynamic?.major?.opus?.pics?.length);
+
+    if (!item?.id_str || !isOpus || hasInlineOpusImages) {
+        return images;
+    }
+
+    const pageUrl = `https://www.bilibili.com/opus/${item.id_str}`;
+    const headers = {
+        Referer: pageUrl,
+        'User-Agent': config.ua,
+        ...(cookie && { Cookie: cookie }),
+    };
+
+    try {
+        const detail = await cache.tryGet(`bilibili:dynamic:opus:v2:${item.id_str}`, async () => {
+            try {
+                const response = await got({
+                    method: 'get',
+                    url: `https://api.bilibili.com/x/polymer/web-dynamic/v1/opus/detail?id=${encodeURIComponent(item.id_str)}`,
+                    headers,
+                });
+                if (response.data?.code === 0) {
+                    const images = extractBilibiliOpusImages(response.data);
+                    if (images.length) {
+                        return { images };
+                    }
+                }
+            } catch {
+                // Fall back to the public Opus page below.
+            }
+
+            const page = await got({ method: 'get', url: pageUrl, headers });
+            return {
+                images: extractBilibiliOpusImagesFromHtml(page.data as string),
+            };
+        });
+
+        return renderBilibiliImages(detail.images) || images;
+    } catch (error) {
+        logger.warn(`[bilibili/dynamic] Failed to fetch Opus images for ${item.id_str}: ${error instanceof Error ? error.message : String(error)}`);
+        return images;
+    }
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
@@ -347,7 +394,7 @@ async function handler(ctx) {
                             description = description.replaceAll(
                                 emoji.text,
                                 () =>
-                                    `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                    `<img alt="${emoji.text}" src="${normalizeBilibiliImageUrl(emoji.icon_url)}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="">`
                             );
                         }
                         // 处理转发带图评论的情况
@@ -357,7 +404,7 @@ async function handler(ctx) {
                                 pics
                                     .map(
                                         (pic) =>
-                                            `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                            `<img alt="${text}" src="${normalizeBilibiliImageUrl(pic.src)}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="">`
                                     )
                                     .join('<br>')
                             );
@@ -417,10 +464,12 @@ async function handler(ctx) {
                     originDescription += `<br>${originDes}`;
                 }
 
+                const [itemImages, originImages] = await Promise.all([getItemImages(item, cookie), getItemImages(item.orig, cookie)]);
+
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-                const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
+                const descriptions = [title, description, getIframe(data, embed), itemImages, urlText, originDescription, getIframe(origin, embed), originImages, originUrlText]
                     .map((e) => e?.trim())
                     .filter(Boolean)
                     .join('<br>');
