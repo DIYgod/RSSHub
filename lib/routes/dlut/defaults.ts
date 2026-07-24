@@ -7,6 +7,10 @@ export default {
     // 默认 -> 新闻快递 http://teach.dlut.edu.cn/xwkd/xwkd.htm
     teach: 'xwkd/xwkd',
 
+    // 软件学院：https://ss.dlut.edu.cn
+    // 默认 -> 本科生通知 https://ss.dlut.edu.cn/rcpy/bkspy/bkstz.htm
+    ss: 'rcpy/bkspy/bkstz',
+
     // 人事处：http://perdep.dlut.edu.cn
     // 默认 -> 通知公告 http://perdep.dlut.edu.cn/tzgg/tzgg.htm
     perdep: 'tzgg/tzgg',

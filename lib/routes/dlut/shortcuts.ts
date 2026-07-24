@@ -11,8 +11,16 @@ export default {
     },
     teach: {
         xwkd: 'xwkd/xwkd',
-        zytg: 'zytg/zytg',
+        zytg: 'index',
         bhgs: 'zytg/bhgs',
+    },
+    ss: {
+        bkstz: 'rcpy/bkspy/bkstz',
+        cxsjhdtz: 'rcpy/cxsj/hdtz',
+        gjjl: 'gjhzjl/gjjl',
+        gjjltzgg: 'gjhzjl/tzgg',
+        xsgztzgg: 'xsgz/tzgg',
+        xshd: 'xsgz/xshd',
     },
     perdep: {
         tzgg: 'tzgg/tzgg',
