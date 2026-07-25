@@ -1,11 +1,50 @@
+import { createHash } from 'node:crypto';
+
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+const solveChallenge = (prefix: string, leadingZeroBits: number) => {
+    for (let count = 0; count < 100_000_000; count++) {
+        const suffix = count.toString(16);
+        const hash = createHash('sha1')
+            .update(prefix + suffix)
+            .digest();
+        if (hash.readUInt32BE(0) >>> (32 - leadingZeroBits) === 0) {
+            return suffix;
+        }
+    }
+    throw new Error('Failed to solve the SafeLine challenge of weather.cma.cn');
+};
+
+const fetchPageWithChallenge = async (url: string) => {
+    const response = await ofetch.raw<string>(url);
+    const html = response._data ?? '';
+    const challenge = response.headers
+        .getSetCookie()
+        .find((cookie) => cookie.startsWith('safeline_bot_challenge='))
+        ?.split(';', 1)[0];
+    const prefix = html.match(/var prefix = '(\w+)';/)?.[1];
+    const leadingZeroBits = Number(html.match(/var leading_zero_bit = (\d+);/)?.[1]);
+
+    if (!challenge || !prefix || !leadingZeroBits) {
+        return html;
+    }
+
+    const answer = challenge.replace('safeline_bot_challenge=', 'safeline_bot_challenge_ans=') + solveChallenge(prefix, leadingZeroBits);
+
+    return await ofetch<string>(url, {
+        headers: {
+            Cookie: `${challenge}; ${answer}`,
+        },
+    });
+};
 
 export const route: Route = {
     path: '/channel/:id?',
@@ -69,7 +108,7 @@ async function handler(ctx) {
 
     data.image = data.image?.replace(/\?.*$/, '') ?? undefined;
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await fetchPageWithChallenge(currentUrl);
 
     const $ = load(currentResponse);
 
