@@ -53,8 +53,7 @@ export const route: Route = {
                 const rawHref = $titleLink.attr('href') ?? '';
                 const link = new URL(rawHref, baseUrl).href;
 
-                const $img = $el.find('a > img').first();
-                const rawSrc = $img.attr('src') ?? '';
+                const rawSrc = $el.find('a > img').attr('src') ?? '';
                 const imgUrl = new URL(rawSrc, baseUrl).href;
 
                 return { title, link, imgUrl };
