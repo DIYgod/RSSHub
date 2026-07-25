@@ -15,7 +15,7 @@ const fmtExhibitionDate = (raw: string | undefined) => {
         return;
     }
     const d = dayjs(raw.trim(), 'YYYY年M月D日');
-    return d.format('YYYY-MM-DD');
+    return d.isValid() ? d.format('YYYY-MM-DD') : undefined;
 };
 
 // used for 2026年6月24日 - 2026年9月1日
@@ -32,7 +32,7 @@ export const route: Route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['chinasilkmuseum.com/zz/list_17.aspx'],
+            source: ['www.chinasilkmuseum.com/zz/list_17.aspx'],
             target: '/zz',
         },
     ],
@@ -75,15 +75,15 @@ export const route: Route = {
                             <br />
                             <p>
                                 <b>地点：</b>
-                                {location ?? '参考详情'}
+                                {location || '参考详情'}
                             </p>
                             <p>
                                 <b>开展：</b>
-                                {startDate ?? '未定/常设'}
+                                {startDate || '未定/常设'}
                             </p>
                             <p>
                                 <b>闭展：</b>
-                                {endDate ?? '未定/常设'}
+                                {endDate || '未定/常设'}
                             </p>
                             {fullDuration && (
                                 <p>
