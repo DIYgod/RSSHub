@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -36,7 +37,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const response = await ofetch<NewsletterResponse>('https://forwardfuture.com/api/newsletter');
+    const response = await cache.tryGet('forwardfuture:api:newsletter', () => ofetch<NewsletterResponse>('https://forwardfuture.com/api/newsletter'));
     const posts = response.posts.slice(0, limit);
 
     const items: DataItem[] = posts.map((post) => ({

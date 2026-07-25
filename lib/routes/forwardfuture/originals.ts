@@ -1,8 +1,7 @@
-import { info } from 'node:console';
-
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -115,31 +114,31 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const html = await ofetch<string>('https://forwardfuture.com/originals');
+    const posts = await cache.tryGet('forwardfuture:originals', async () => {
+        const html = await ofetch<string>('https://forwardfuture.com/originals');
 
-    const pushRegex = /__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)/g;
-    let match: RegExpExecArray | null;
-    let posts: OriginalPost[] = [];
+        const pushRegex = /__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)/g;
+        let match: RegExpExecArray | null;
 
-    while ((match = pushRegex.exec(html)) !== null) {
-        const payload = match[1];
-        if (!payload.includes('posts')) {
-            continue;
-        }
-
-        const unescaped = unescapeJsString(payload);
-        const arrayStr = extractPostsArray(unescaped);
-        if (arrayStr) {
-            try {
-                posts = JSON.parse(arrayStr) as OriginalPost[];
-                break;
-            } catch {
+        while ((match = pushRegex.exec(html)) !== null) {
+            const payload = match[1];
+            if (!payload.includes('posts')) {
                 continue;
             }
-        }
-    }
 
-    info(posts[0].thumbnail);
+            const unescaped = unescapeJsString(payload);
+            const arrayStr = extractPostsArray(unescaped);
+            if (arrayStr) {
+                try {
+                    return JSON.parse(arrayStr) as OriginalPost[];
+                } catch {
+                    continue;
+                }
+            }
+        }
+
+        return [];
+    });
 
     const items: DataItem[] = posts.slice(0, limit).map((post) => ({
         title: post.title,
