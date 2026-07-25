@@ -25,7 +25,9 @@ export interface UserInfoResponse {
 }
 
 export interface PostListResponse {
-    body: PostItem[];
+    body: {
+        posts: PostItem[];
+    };
 }
 
 export interface PostDetailResponse {
