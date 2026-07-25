@@ -63,7 +63,9 @@ export const route: Route = {
                 const $item = $(item);
                 const a = $item.find('h1 a');
                 const title = a.text();
-                const link = new URL(a.attr('href') || '', baseUrl).href;
+                const linkStr = new URL(a.attr('href') || '', baseUrl);
+                linkStr.search = ''; // remove dynamic date stamp from the link
+                const link = linkStr.href;
                 const imgUrl = new URL($item.find('.aleftimg img').attr('src') || '', baseUrl).href;
 
                 const fullDuration = $item.find('.activity_r_detail p:nth-child(1) span:nth-child(2)').text().trim();
