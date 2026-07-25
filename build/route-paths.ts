@@ -548,6 +548,7 @@ export type RoutePath =
   | `/chinanews/`
   | `/chinania/:category{.+}?`
   | `/chinaratings/CreditResearch/:category{.+}?`
+  | `/chinasilkmuseum/zz`
   | `/chinathinktanks/:id`
   | `/chinatimes/:category?`
   | `/chinaventure/news/:id?`

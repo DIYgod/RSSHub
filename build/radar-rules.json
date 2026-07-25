@@ -15969,6 +15969,19 @@
       }
     ]
   },
+  "chinasilkmuseum.com": {
+    "_name": "China National Silk Museum",
+    "www": [
+      {
+        "title": "Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zz/list_17.aspx"
+        ],
+        "target": "/chinasilkmuseum/zz"
+      }
+    ]
+  },
   "chinatimes.com": {
     "_name": "中時新聞網",
     "www": [

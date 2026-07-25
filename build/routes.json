@@ -42572,6 +42572,37 @@
     ],
     "description": ""
   },
+  "chinasilkmuseum": {
+    "routes": {
+      "/zz": {
+        "path": "/zz",
+        "categories": [
+          "travel"
+        ],
+        "example": "/chinasilkmuseum/zz",
+        "name": "Exhibition",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.chinasilkmuseum.com/zz/list_17.aspx"
+            ],
+            "target": "/zz"
+          }
+        ],
+        "location": "zz.tsx",
+        "module": "() => import('@/routes/chinasilkmuseum/zz.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "China National Silk Museum",
+    "url": "www.chinasilkmuseum.com",
+    "zh": {
+      "name": "中国丝绸博物馆"
+    }
+  },
   "chinathinktanks": {
     "routes": {
       "/:id": {
