@@ -68,7 +68,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     for (const a of item.author) {
                         a.name = collapseWhitespace(a.name) || '';
                     }
-                    if (outputType !== 'json') {
+                    if (outputType === 'rss') {
                         item.author = item.author.map((a: { name: string }) => a.name).join(', ');
                     }
                 }

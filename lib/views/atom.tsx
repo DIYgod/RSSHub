@@ -26,10 +26,16 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}
                 <updated>{new Date(item.updated || item.pubDate || new Date()).toISOString()}</updated>
                 {item.summary && <summary>{item.summary}</summary>}
-                {item.author && (
+                {typeof item.author === 'string' ? (
                     <author>
                         <name>{item.author}</name>
                     </author>
+                ) : (
+                    item.author?.map((a) => (
+                        <author>
+                            <name>{a.name}</name>
+                        </author>
+                    ))
                 )}
                 {typeof item.category === 'string' ? <category term={item.category}></category> : item.category?.map((c) => <category term={c}></category>)}
                 {item.media &&
