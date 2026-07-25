@@ -44,7 +44,7 @@ export const route: Route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['szmuseum.com/Exhibition/Temporary'],
+            source: ['www.szmuseum.com/Exhibition/Temporary'],
             target: '/temporary',
         },
     ],
