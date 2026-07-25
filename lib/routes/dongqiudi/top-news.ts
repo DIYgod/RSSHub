@@ -42,7 +42,7 @@ async function handler(ctx) {
         title: item.title,
         link: `https://www.dongqiudi.com/articles/${item.id}.html`,
         category: [item.category, ...(item.secondary_category ?? [])],
-        pubDate: parseDate(item.show_time),
+        pubDate: parseDate(item.show_time, 'X'),
     }));
 
     const out = await Promise.all(
