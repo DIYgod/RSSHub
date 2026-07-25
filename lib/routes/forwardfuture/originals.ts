@@ -1,7 +1,6 @@
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -18,81 +17,46 @@ interface OriginalPost {
     categories: string[];
 }
 
-function unescapeJsString(input: string): string {
-    const result: string[] = [];
-    let i = 0;
-    while (i < input.length) {
-        const c = input[i];
-        if (c === '\\' && i + 1 < input.length) {
-            const next = input[i + 1];
-            switch (next) {
-                case '"':
-                    result.push('"');
-                    i += 2;
-                    break;
-                case '\\':
-                    result.push('\\');
-                    i += 2;
-                    break;
-                case 'n':
-                    result.push('\n');
-                    i += 2;
-                    break;
-                case 't':
-                    result.push('\t');
-                    i += 2;
-                    break;
-                case '/':
-                    result.push('/');
-                    i += 2;
-                    break;
-                default:
-                    result.push(c);
-                    i++;
-            }
-        } else {
-            result.push(c);
-            i++;
+function extractPostsArray(rscPayload: string): OriginalPost[] | null {
+    let searchStart = 0;
+    while (searchStart < rscPayload.length) {
+        const postsIdx = rscPayload.indexOf('"posts":', searchStart);
+        if (postsIdx === -1) {
+            return null;
         }
-    }
-    return result.join('');
-}
 
-function extractPostsArray(input: string): string | null {
-    const start = input.indexOf('"posts":');
-    if (start === -1) {
-        return null;
-    }
+        const arrayStart = postsIdx + '"posts":'.length;
+        if (rscPayload[arrayStart] !== '[') {
+            searchStart = arrayStart;
+            continue;
+        }
 
-    const arrayStart = start + '"posts":'.length;
-    if (input[arrayStart] !== '[') {
-        return null;
-    }
-
-    let depth = 0;
-    let inString = false;
-    let escape = false;
-
-    for (let i = arrayStart; i < input.length; i++) {
-        const c = input[i];
-        if (escape) {
-            escape = false;
-        } else if (c === '\\' && inString) {
-            escape = true;
-        } else if (c === '"' && !escape) {
-            inString = !inString;
-        } else if (!inString) {
-            if (c === '[') {
-                depth++;
-            } else if (c === ']') {
-                depth--;
-                if (depth === 0) {
-                    return input.slice(arrayStart, i + 1);
+        let depth = 0;
+        let inString = false;
+        let escape = false;
+        let i = arrayStart;
+        for (; i < rscPayload.length; i++) {
+            const c = rscPayload[i];
+            if (escape) {
+                escape = false;
+            } else if (c === '\\' && inString) {
+                escape = true;
+            } else if (c === '"' && !escape) {
+                inString = !inString;
+            } else if (!inString) {
+                if (c === '[') {
+                    depth++;
+                } else if (c === ']') {
+                    depth--;
+                    if (depth === 0) {
+                        return JSON.parse(rscPayload.slice(arrayStart, i + 1)) as OriginalPost[];
+                    }
                 }
             }
         }
-    }
 
+        searchStart = arrayStart + 1;
+    }
     return null;
 }
 
@@ -114,37 +78,35 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const posts = await cache.tryGet('forwardfuture:originals', async () => {
-        const html = await ofetch<string>('https://forwardfuture.com/originals');
+    const html = await ofetch<string>('https://forwardfuture.com/originals');
 
-        const pushRegex = /__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)/g;
-        let match: RegExpExecArray | null;
+    const pushRegex = /__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)/g;
+    let match: RegExpExecArray | null;
+    let posts: OriginalPost[] = [];
 
-        while ((match = pushRegex.exec(html)) !== null) {
-            const payload = match[1];
-            if (!payload.includes('posts')) {
-                continue;
-            }
-
-            const unescaped = unescapeJsString(payload);
-            const arrayStr = extractPostsArray(unescaped);
-            if (arrayStr) {
-                try {
-                    return JSON.parse(arrayStr) as OriginalPost[];
-                } catch {
-                    continue;
-                }
-            }
+    while ((match = pushRegex.exec(html)) !== null) {
+        const payload = match[1];
+        if (!payload.includes('posts')) {
+            continue;
         }
 
-        return [];
-    });
+        const decoded = JSON.parse(`"${payload}"`);
+        const extracted = extractPostsArray(decoded);
+        if (extracted) {
+            posts = extracted;
+            break;
+        }
+    }
+
+    if (posts.length === 0) {
+        throw new Error('Failed to extract posts from the Next.js RSC payload');
+    }
 
     const items: DataItem[] = posts.slice(0, limit).map((post) => ({
         title: post.title,
-        description: post.summary || post.title,
+        description: post.summary || undefined,
         link: post.url,
-        pubDate: parseDate(post.date, 'MMM D, YYYY'),
+        pubDate: parseDate(post.dateUnix, 'X'),
         author: post.authors.join(', '),
         image: post.thumbnail,
         category: post.categories.length > 0 ? post.categories : post.category === 'General' ? undefined : [post.category],
