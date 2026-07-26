@@ -71286,11 +71286,11 @@
         "maintainers": [
           "nczitzk"
         ],
-        "example": "/lhratings/research/1",
+        "example": "/lhratings/research/92",
         "parameters": {
-          "type": "分类，默认为 `1`，即宏观经济，可在对应分类页 URL 中找到"
+          "type": "分类，默认为 `92`，即宏观经济，可在对应分类页 URL 中找到"
         },
-        "description": "::: tip\n若订阅 [宏观经济](https://www.lhratings.com/research.html?type=1)，网址为 `https://www.lhratings.com/research.html?type=1`，请截取 `https://www.lhratings.com/research.html?type=` 到末尾的部分 `1` 作为 `type` 参数填入，此时目标路由为 [`/lhratings/research/1`](https://rsshub.app/lhratings/research/1)。\n:::\n\n| 宏观经济 | 债券市场 | 行业研究 | 评级理论与方法 | 国际债券市场与评级 | 评级表现 |\n| -------- | -------- | -------- | -------------- | ------------------ | -------- |\n| 1        | 2        | 3        | 4              | 5                  | 6        |",
+        "description": "::: tip\n若订阅 [宏观经济](https://www.lhratings.com/research.html?type=92)，网址为 `https://www.lhratings.com/research.html?type=92`，请截取 `https://www.lhratings.com/research.html?type=` 到末尾的部分 `92` 作为 `type` 参数填入，此时目标路由为 [`/lhratings/research/92`](https://rsshub.app/lhratings/research/92)。\n:::\n\n| 宏观经济 | 债券市场 | 行业研究 | 每日资讯 | 其他 |\n| -------- | -------- | -------- | -------- | ---- |\n| 92       | 93       | 94       | 95       | 96   |",
         "categories": [
           "finance"
         ],
@@ -71312,44 +71312,37 @@
           {
             "title": "宏观经济",
             "source": [
-              "www.lhratings.com/research.html?type=1"
+              "www.lhratings.com/research.html?type=92"
             ],
-            "target": "/research/1"
+            "target": "/research/92"
           },
           {
             "title": "债券市场",
             "source": [
-              "www.lhratings.com/research.html?type=2"
+              "www.lhratings.com/research.html?type=93"
             ],
-            "target": "/research/2"
+            "target": "/research/93"
           },
           {
             "title": "行业研究",
             "source": [
-              "www.lhratings.com/research.html?type=3"
+              "www.lhratings.com/research.html?type=94"
             ],
-            "target": "/research/3"
+            "target": "/research/94"
           },
           {
-            "title": "评级理论与方法",
+            "title": "每日资讯",
             "source": [
-              "www.lhratings.com/research.html?type=4"
+              "www.lhratings.com/research.html?type=95"
             ],
-            "target": "/research/4"
+            "target": "/research/95"
           },
           {
-            "title": "国际债券市场与评级",
+            "title": "其他",
             "source": [
-              "www.lhratings.com/research.html?type=5"
+              "www.lhratings.com/research.html?type=96"
             ],
-            "target": "/research/5"
-          },
-          {
-            "title": "评级表现",
-            "source": [
-              "www.lhratings.com/research.html?type=6"
-            ],
-            "target": "/research/6"
+            "target": "/research/96"
           }
         ],
         "view": 0,

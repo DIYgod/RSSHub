@@ -26204,49 +26204,41 @@
         "title": "宏观经济",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/research.html?type=1"
+          "/research.html?type=92"
         ],
-        "target": "/lhratings/research/1"
+        "target": "/lhratings/research/92"
       },
       {
         "title": "债券市场",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/research.html?type=2"
+          "/research.html?type=93"
         ],
-        "target": "/lhratings/research/2"
+        "target": "/lhratings/research/93"
       },
       {
         "title": "行业研究",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/research.html?type=3"
+          "/research.html?type=94"
         ],
-        "target": "/lhratings/research/3"
+        "target": "/lhratings/research/94"
       },
       {
-        "title": "评级理论与方法",
+        "title": "每日资讯",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/research.html?type=4"
+          "/research.html?type=95"
         ],
-        "target": "/lhratings/research/4"
+        "target": "/lhratings/research/95"
       },
       {
-        "title": "国际债券市场与评级",
+        "title": "其他",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/research.html?type=5"
+          "/research.html?type=96"
         ],
-        "target": "/lhratings/research/5"
-      },
-      {
-        "title": "评级表现",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/research.html?type=6"
-        ],
-        "target": "/lhratings/research/6"
+        "target": "/lhratings/research/96"
       }
     ]
   },
