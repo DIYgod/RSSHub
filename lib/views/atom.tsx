@@ -34,6 +34,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                     item.author?.map((a) => (
                         <author>
                             <name>{a.name}</name>
+                            {a.url && <uri>{a.url}</uri>}
                         </author>
                     ))
                 )}
