@@ -32,7 +32,7 @@ export type Category =
 // rss
 export type DataItem = {
     title: string;
-    description?: string;
+    description?: string | null;
     pubDate?: number | string | Date;
     link?: string;
     category?: string[];

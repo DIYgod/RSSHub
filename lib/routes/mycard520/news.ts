@@ -72,7 +72,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     $$pageBox.find('h2, div.date, .the_champ_sharing_container').remove();
 
-                    const description: string | undefined = $$pageBox.html() ?? item.description;
+                    const description: string | null | undefined = $$pageBox.html() ?? item.description;
 
                     const processedItem: DataItem = {
                         title,

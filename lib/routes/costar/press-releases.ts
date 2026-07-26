@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.coh-heading').text();
-                const description: string | undefined = $$('div.coh-body').html() ?? item.description;
+                const description: string | null | undefined = $$('div.coh-body').html() ?? item.description;
                 const pubDateStr: string | undefined = detailResponse.match(/"datePublished": "(.*?)",/)?.[1];
                 const upDatedStr: string | undefined = detailResponse.match(/"dateModified": "(.*?)",/)?.[1];
 
