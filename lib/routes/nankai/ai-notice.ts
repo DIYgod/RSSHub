@@ -100,31 +100,12 @@ export const route: Route = {
             list.map((item) =>
                 item
                     ? cache.tryGet(item.link, async () => {
-                          try {
-                              const { data: response } = await got(item.link);
-                              const $ = load(response);
+                          const { data: response } = await got(item.link);
+                          const $ = load(response);
 
-                              const $description = $('.v_news_content');
+                          const $description = $('.v_news_content');
 
-                              // 处理相对链接，转换为绝对链接
-                              if ($description.length > 0) {
-                                  // 处理图片
-                                  $description.find('img').each((i, el) => {
-                                      const $el = $(el);
-                                      let src = $el.attr('src');
-
-                                      if (src && !src.startsWith('http')) {
-                                          src = `${baseUrl}${src}`;
-                                          $el.attr('src', src);
-                                      }
-                                  });
-                              }
-
-                              item.description = $description.html() || item.title;
-                          } catch {
-                              // 如果获取详细内容失败，返回基本信息
-                              item.description = item.title + ' (获取详细内容失败)';
-                          }
+                          item.description = $description.html() || item.title;
                           return item;
                       })
                     : null
