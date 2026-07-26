@@ -40,22 +40,22 @@ export const route: Route = {
 
 | Category                                                         | \`:category\`                        |
 | ---------------------------------------------------------------- | ---------------------------------- |
-| WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | \`54c0ca4ca013a92cc9cf95bd4004c61a\` |
-| Latest News (default)                                            | \`1ee9bdb7186944f765208f34ecfb5407\` |
-| Top News                                                         | \`5394b80bdae203fadef02522cfb578c0\` |
-| Home News                                                        | \`b2b3bcc1b0a4406ab0c36e45d5db58db\` |
-| Documents                                                        | \`a8754921399857ebdbb97a98a1e741f5\` |
-| World                                                            | \`593143484cf15d48ce85c26139582395\` |
-| Society-Life                                                     | \`93102e5a735d03979bc58a3a7aefb75a\` |
-| External                                                         | \`0f98b4623a3ef82aeea78df45c423fd0\` |
+| WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | \`b0721b9f23054ddc7fe56c2811a12715\` |
+| Latest News (default)                                            | \`a666dda1282180e0ee1b4427b0574ae7\` |
+| Top News                                                         | \`6a47505ba5268fd7749c0fe11e4b24b4\` |
+| Home News                                                        | \`2f7d854121ccbbfbe6feae9fdcc3556e\` |
+| Documents                                                        | \`1afa96195f9b303902490a126ab7285f\` |
+| World                                                            | \`ecc14533d88be93068af4178946b1b05\` |
+| Society-Life                                                     | \`680e40b40899891bbe75a7072e3285e7\` |
+| External                                                         | \`e2f336db98b5e69c75e0da264e037e8d\` |
 | News Commentary                                                  | \`12c03a49f7dbe829bceea8ac77088c21\` |`,
 };
 
 async function handler(ctx) {
-    const { lang, category = '1ee9bdb7186944f765208f34ecfb5407' } = ctx.req.param();
+    const { lang, category = 'a666dda1282180e0ee1b4427b0574ae7' } = ctx.req.param();
 
     const rootUrl = 'http://www.kcna.kp';
-    const pageUrl = `${rootUrl}/${lang}/category/articles/q/${category}.kcmsf`;
+    const pageUrl = `${rootUrl}/${lang}/article/list/${category}`;
 
     const response = await got(pageUrl);
     const $ = load(response.data);
@@ -63,11 +63,11 @@ async function handler(ctx) {
     // fix <nobr><span class="fSpecCs">???</span></nobr>
     const title = sanitizeHtml($('head > title').text(), { allowedTags: [], allowedAttributes: {} });
 
-    const list = $('.article-link li a')
+    const list = $('.article a')
         .toArray()
         .map((item) => {
             item = $(item);
-            const dateElem = item.find('.publish-time');
+            const dateElem = item.next();
             const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
             dateElem.remove();
             return {
@@ -86,29 +86,20 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                item.title = $('article-main-title').text() || item.title;
 
-                const dateElem = $('.publish-time');
-                const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
-                dateElem.remove();
-                item.pubDate = dateString ? timezone(parseDate(dateString[0]), 9) : item.pubDate;
-
-                const description = fixDesc($, $('.article-content-body .content-wrapper'));
+                const description = $('.container p').toArray().map((e) => $(e).html()).join("<br />");
 
                 // add picture and video
-                const media = $('.media-icon a')
-                    .toArray()
-                    .map((elem) => rootUrl + elem.attribs.href);
                 let photo, video;
-                await Promise.all(
-                    media.map(async (medium) => {
-                        if (medium.includes('/photo/')) {
-                            photo = await fetchPhoto(ctx, medium);
-                        } else if (medium.includes('/video/')) {
-                            video = await fetchVideo(ctx, medium);
-                        }
-                    })
-                );
+                if ($('.gallery_button').length !== 0) {
+                    const mediaURL = new URL($('.gallery_button').attr("href"), rootUrl).href;
+                    const mediaResponse = await got(mediaURL)
+                    const $media = load(mediaResponse.data);
+                    const media = $media(".item img")
+                        .toArray()
+                        .map((elem) => new URL($media(elem).attr('src'), rootUrl).href);
+                    photo = media.map((e) => e.includes("/photo/") ? `<img src="${e}">` : null).filter(Boolean).join("<br />");
+                }
 
                 item.description = renderToString(
                     <>
