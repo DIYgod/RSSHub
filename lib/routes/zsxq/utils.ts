@@ -1,9 +1,13 @@
+import JSONbig from 'json-bigint';
+
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import type { BasicResponse, ResponseData, Topic, TopicImage } from './types';
+
+const jsonBig = JSONbig({ storeAsString: true });
 
 export async function customFetch<T extends BasicResponse<ResponseData>>(path: string, retryCount = 0): Promise<T['resp_data']> {
     const apiUrl = 'https://api.zsxq.com/v2';
@@ -13,7 +17,7 @@ export async function customFetch<T extends BasicResponse<ResponseData>>(path: s
             cookie: `zsxq_access_token=${config.zsxq.accessToken};`,
         },
     });
-    const { succeeded, code, resp_data } = response.data as T;
+    const { succeeded, code, resp_data } = jsonBig.parse(response.body) as T;
     if (succeeded) {
         return resp_data;
     }
