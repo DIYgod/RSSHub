@@ -98,7 +98,7 @@ async function handler(ctx) {
                     const media = $media('.item img')
                         .toArray()
                         .map((elem) => new URL($media(elem).attr('src'), rootUrl).href);
-                    photo = media.map((e) => e.includes("/photo/") ? `<img src="${e}">` : null).filter(Boolean).join('<br />');
+                    photo = media.map((e) => e.includes("/photo/") ? `<img src='${e}'>` : null).filter(Boolean).join('<br />');
                 }
 
                 item.description = renderToString(
