@@ -42,7 +42,7 @@ async function handler(ctx) {
         item: list.toArray().map((item) => {
             item = $(item);
             return {
-                title: item.find('.archive_up a').first().text(),
+                title: item.find('.archive_up a').text(),
                 description: `描述：${item.find('.imgdown p').text()}`,
                 link: item.find('.archive_up a').attr('href'),
             };

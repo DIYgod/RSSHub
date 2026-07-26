@@ -50,7 +50,7 @@ async function handler(ctx: Context): Promise<Data> {
         .map((item) => {
             const handle = $(item).attr('data-app-card-handle-value');
 
-            const appInfo = $(item).find('div.tw-self-stretch').clone();
+            const appInfo = $(item).find('div.tw-self-stretch');
 
             const rattingMatch = appInfo
                 .find('span')

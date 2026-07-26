@@ -53,7 +53,7 @@ export const route: Route = {
             throw new Error('无法解析页面 Props 数据');
         }
 
-        const mangaTitle = $('title').text().trim();
+        const mangaTitle = $('title').text();
         const mangaAuthor = pageProps.authorships?.map((item: any) => item.author?.authorName).join(', ') || '';
         const mangaDescription = pageProps.manga?.longDescription || '';
 

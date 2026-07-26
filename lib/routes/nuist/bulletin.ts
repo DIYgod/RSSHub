@@ -80,7 +80,7 @@ async function handler(ctx) {
             const item = $(element);
 
             // 从内部找 a 标签
-            const a = item.find('.btt a').first();
+            const a = item.find('.btt a');
             const href = a.attr('href');
 
             if (!href) {

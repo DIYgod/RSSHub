@@ -54,8 +54,8 @@ async function handler() {
             const linkElement = $item.find('.w-list-link');
             const imgElement = $item.find('.w-listpic-in');
 
-            const title = titleElement.text().trim() || '';
-            const dateText = dateElement.text().trim() || '';
+            const title = titleElement.text() || '';
+            const dateText = dateElement.text() || '';
             const href = linkElement.attr('href') || '';
             const imgSrc = imgElement.attr('src') || '';
 

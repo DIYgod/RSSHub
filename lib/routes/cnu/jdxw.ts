@@ -46,7 +46,7 @@ async function handler() {
             return {
                 title: item.find('span.listTitle').text().trim(),
                 link: linkUrl,
-                pubDate: parseDate(item.find('span.listDate').text().trim(), 'YYYY-MM-DD'),
+                pubDate: parseDate(item.find('span.listDate').text(), 'YYYY-MM-DD'),
                 description: '',
             };
         });

@@ -69,8 +69,8 @@ export const route: Route = {
             throw new Error('成功获取数据对象，但未找到作品基本信息');
         }
 
-        const mangaTitle = work.title || $('title').text().trim();
-        const mangaAuthor = work.authors?.map((author: any) => author.name).join(', ') || '';
+        const mangaTitle = work.title || $('title').text();
+        const mangaAuthor = work.authors?.map((author: any) => author.name).join(', ');
         const mangaDescription = work.summary || '';
         const coverImage = work.bookCover || work.thumbnail;
 

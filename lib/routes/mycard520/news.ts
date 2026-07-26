@@ -67,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$pageBox: Cheerio<Element> = $$('div.page_box');
 
                     const title: string = $$pageBox.find('h2').text();
-                    const pubDateStr: string | undefined = $$('div.date').first().text();
+                    const pubDateStr: string | undefined = $$('div.date').text();
                     const upDatedStr: string | undefined = pubDateStr;
 
                     $$pageBox.find('h2, div.date, .the_champ_sharing_container').remove();

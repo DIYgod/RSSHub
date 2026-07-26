@@ -68,7 +68,7 @@ export const route: Route = {
                 link = link && !link.startsWith('http') ? `${baseUrl}${link}` : link;
 
                 // 提取日期
-                const dateStr = $timeDiv.text().trim();
+                const dateStr = $timeDiv.text();
                 const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD'), 8);
 
                 return {
@@ -94,19 +94,6 @@ export const route: Route = {
 
                         // 处理相对链接，转换为绝对链接
                         if ($description.length > 0) {
-                            // 处理链接
-                            $description.find('a').each((i, el) => {
-                                const $el = $(el);
-                                const href = $el.attr('href');
-                                if (href && !href.startsWith('http')) {
-                                    if (href.startsWith('/')) {
-                                        $el.attr('href', `${baseUrl}${href}`);
-                                    } else {
-                                        $el.attr('href', `${baseUrl}/${href}`);
-                                    }
-                                }
-                            });
-
                             // 处理图片
                             $description.find('img').each((i, el) => {
                                 const $el = $(el);

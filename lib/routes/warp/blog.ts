@@ -34,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const feed = await parser.parseURL('https://www.warp.dev/blog/rss.xml');
+    const feed = await parser.parseURL('https://www.warp.dev/blog/feed.xml');
 
     const items = await Promise.all(
         feed.items.map((item) =>
@@ -50,7 +50,6 @@ async function handler() {
                 main.find('[class]').removeAttr('class');
                 main.find('[id]').removeAttr('id');
                 main.find('[preload]').removeAttr('preload');
-                main.find('script').remove();
                 main.find('figcaption').remove();
 
                 // remove title, time and button

@@ -70,7 +70,7 @@ function processDescription(description: string): string {
     return $('body')
         .children()
         .toArray()
-        .map((el) => $(el).clone().wrap('<div>').parent().html())
+        .map((el) => $.html(el))
         .join('');
 }
 

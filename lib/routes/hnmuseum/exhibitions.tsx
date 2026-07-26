@@ -30,7 +30,7 @@ const formatStr = (dateStr: string | undefined): string | undefined => {
         return undefined;
     }
 
-    const match = dateStr.trim().match(/(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
+    const match = dateStr.match(/(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
 
     if (match) {
         const year = match[1];
@@ -111,7 +111,7 @@ export const route: Route = {
                 selector: '#block-views-a784821b4fd9f41563c7164fd2a2f96e .views-row',
                 type: 'permanent' as const,
                 extra: ($item: Cheerio<Element>) => ({
-                    location: $item.find('.views_zhanting .field-content').text().trim(),
+                    location: $item.find('.views_zhanting .field-content').text(),
                     fullDuration: $item.find('.views_startdate .field-content').text().trim(),
                 }),
             },
@@ -119,7 +119,7 @@ export const route: Route = {
                 selector: '#block-views-chen-lie-block .views-row',
                 type: 'special' as const,
                 extra: ($item: Cheerio<Element>) => ({
-                    location: $item.find('.views_zhanting .field-content').text().trim(),
+                    location: $item.find('.views_zhanting .field-content').text(),
                 }),
             },
             {

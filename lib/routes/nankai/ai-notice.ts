@@ -72,18 +72,18 @@ export const route: Route = {
 
                 // 提取标题和链接
                 const $titleLink = titleCell.find('a');
-                const title = $titleLink.text().trim();
+                const title = $titleLink.text();
                 let link = $titleLink.attr('href') || '';
 
                 // 处理相对链接
                 link = link && !link.startsWith('http') ? `${baseUrl}/${link}` : link;
 
                 // 提取日期
-                const dateStr = dateCell.text().trim();
+                const dateStr = dateCell.text();
                 const pubDate = dateStr.includes('/') ? timezone(parseDate(dateStr, 'YYYY/MM/DD'), 8) : timezone(parseDate(dateStr), 8);
 
                 // 提取来源
-                const source = sourceCell.text().trim();
+                const source = sourceCell.text();
 
                 return {
                     title,

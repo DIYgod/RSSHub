@@ -87,8 +87,7 @@ async function handler() {
                 .find('a[href]')
                 .contents()
                 .filter((index, element) => element.nodeType === 3)
-                .text()
-                .trim();
+                .text();
             const newsLink = host + item.find('a[href]').attr('href');
             const newsPubDate = parseDate(date);
 

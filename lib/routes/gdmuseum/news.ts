@@ -36,8 +36,8 @@ export const route: Route = {
                 const itemLink = new URL(rawLink, baseUrl).href;
 
                 const title = $item.find('h3.h3.qui-dot').text();
-                const day = $item.find('time b').text().trim();
-                const yearMonth = $item.find('time i').text().trim();
+                const day = $item.find('time b').text();
+                const yearMonth = $item.find('time i').text();
 
                 const pubDate = timezone(parseDate(`${yearMonth}-${day}`), 8);
 

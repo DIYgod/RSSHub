@@ -31,7 +31,7 @@ export const route: Route = {
         const list = articles.toArray().map((elem) => {
             const a = $(elem).find('.post-title a'); // 获取标题链接
             return {
-                title: a.text().trim(), // 标题
+                title: a.text(), // 标题
                 link: a.attr('href'), // 链接
                 category: [], // 分类
             };
@@ -51,7 +51,7 @@ export const route: Route = {
                         // 获取分类信息
                         const categories = $('.post-labels a')
                             .toArray()
-                            .map((el) => $(el).text().trim());
+                            .map((el) => $(el).text());
                         item.category = categories; // 添加多个分类信息
 
                         return item; // 返回带有描述和分类的文章对象

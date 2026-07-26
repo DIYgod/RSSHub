@@ -50,12 +50,12 @@ async function handler(ctx) {
         .slice(0, 14)
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a').first();
+            const $link = $element.find('a');
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.attr('title') || $link.text();
 
             // 获取发布时间
-            const pubDateText = $element.find('span').text().trim();
+            const pubDateText = $element.find('span').text();
 
             return {
                 title,

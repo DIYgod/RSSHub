@@ -74,7 +74,7 @@ async function handler(ctx) {
                 const coverImage = $('.crayons-article__cover img').attr('src');
 
                 // Extract article content
-                const content = $('.crayons-article__body').html() || '';
+                const content = $('.crayons-article__body').html();
 
                 return {
                     title: item.title,

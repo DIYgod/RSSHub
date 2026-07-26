@@ -55,8 +55,8 @@ async function handler() {
 
             const title = currentItem.find('.list-tx h3').text().trim();
             const description = currentItem.find('.list-tx p').text().trim();
-            const day = currentItem.find('.date p').text().trim();
-            const yearMonth = currentItem.find('.date span').text().trim();
+            const day = currentItem.find('.date p').text();
+            const yearMonth = currentItem.find('.date span').text();
             const dateText = `${yearMonth}-${day.padStart(2, '0')}`;
 
             return {
@@ -88,13 +88,6 @@ async function handler() {
 
                     if (content) {
                         const $content = load(content);
-                        $content('a').each((_, el) => {
-                            const a = $(el);
-                            const href = a.attr('href');
-                            if (href && !href.startsWith('http')) {
-                                a.attr('href', new URL(href, baseUrl).href);
-                            }
-                        });
                         item.description = $content.html();
                     }
 

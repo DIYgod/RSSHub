@@ -37,7 +37,7 @@ export const route: Route = {
             .map((item) => {
                 const $item = $(item);
                 const $time = $item.find('.time');
-                const day = $time.find('.time-d').text().trim();
+                const day = $time.find('.time-d').text();
                 const monthYear = $time.contents().last().text().trim();
                 const pubDate = timezone(parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD'), 8);
 
@@ -46,7 +46,7 @@ export const route: Route = {
                 href = href.startsWith('http') ? href : new URL(href, baseUrl).href;
 
                 return {
-                    title: $link.text().trim(),
+                    title: $link.text(),
                     link: href,
                     pubDate,
                 };
@@ -64,7 +64,7 @@ export const route: Route = {
                             const $detail = load(detailResponse);
 
                             // 提取正文内容
-                            const content = $detail('.wp_articlecontent').html() || '';
+                            const content = $detail('.wp_articlecontent').html();
                             item.description = content;
                         }
                     } catch {

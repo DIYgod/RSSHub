@@ -111,7 +111,7 @@ async function handler(ctx) {
     items = items.filter((item) => item !== null);
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link,
         item: items,
     };

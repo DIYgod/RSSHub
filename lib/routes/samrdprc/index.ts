@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
-            const $aEl: Cheerio<Element> = $el.find('a').first();
+            const $aEl: Cheerio<Element> = $el.find('a');
 
             const title: string = $aEl.text();
             const pubDateStr: string | undefined = $el.find('span').text();

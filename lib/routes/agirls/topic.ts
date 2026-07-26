@@ -41,7 +41,7 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             return {
-                title: item.text().trim(),
+                title: item.text(),
                 link: `${baseUrl}${item.attr('href')}`,
             };
         });
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseArticle(item))));
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         link,
         description: ldJson['@graph'][0].description,
         item: items,

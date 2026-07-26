@@ -75,7 +75,7 @@ export const route: Route = {
                     return {
                         title: `[${item.status}] | ${item.name} - ${item.last_update_chapter_name}`,
                         author: item.authors,
-                        category: [item.status, ...item.types.split('/').map((type) => type.trim())],
+                        category: [item.status, ...item.types.split('/')],
                         image: item.cover,
                         link: `${baseUrl}/view/${comicPy}/${comicId}/${lastUpdateChapterId}`,
                         pubDate: parseDate(item.last_updatetime * 1000),

@@ -25,7 +25,7 @@ export const route: Route = {
             .toArray()
             .map((eleItem) => {
                 const item = $(eleItem);
-                const a = item.find('a').first();
+                const a = item.find('a');
                 return {
                     title: a.find('.headline-5').text(),
                     link: `${baseUrl}${a.attr('href')}`,

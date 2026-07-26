@@ -34,9 +34,9 @@ async function handler(ctx) {
             const $e = $(element);
             const href = $e.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const pubDate = $e.find('div[class*="date"]').text().trim();
+            const pubDate = $e.find('div[class*="date"]').text();
             return {
-                title: $e.find('h2, h3').text().trim(),
+                title: $e.find('h2, h3').text(),
                 link: fullLink,
                 pubDate,
             };
@@ -64,7 +64,7 @@ async function handler(ctx) {
                     }
                 });
 
-                item.description = content.html() ?? undefined;
+                item.description = content.html();
 
                 return item;
             }),

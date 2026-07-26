@@ -41,7 +41,7 @@ async function handler() {
             item = $(item);
 
             const link = item.attr('href') || '';
-            const title = item.text() || '';
+            const title = item.text();
             const pubDate = extractDateFromURL(link);
 
             return {

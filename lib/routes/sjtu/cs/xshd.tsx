@@ -1,4 +1,3 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -76,21 +75,6 @@ function renderDescription(item: ListItem): string {
     );
 }
 
-function rewriteRelativeUrls($: CheerioAPI, item: Cheerio<any>): void {
-    item.find('img').each((_, e) => {
-        const src = $(e).attr('src') || $(e).attr('_src');
-        if (src) {
-            $(e).attr('src', absolutize(src));
-        }
-    });
-    item.find('a').each((_, e) => {
-        const href = $(e).attr('href');
-        if (href) {
-            $(e).attr('href', absolutize(href));
-        }
-    });
-}
-
 function extractWechatUrl(finalUrl: string): string {
     const url = new URL(finalUrl);
     return url.searchParams.get('target_url') || finalUrl;
@@ -129,7 +113,6 @@ function enrichItem(item: ListItem): Promise<DataItem> {
             const $body = $('.xw-cont');
             if ($body.length > 0) {
                 const $txt = $body.find('.txt');
-                rewriteRelativeUrls($, $txt);
                 description += `<hr>${$txt.html() ?? ''}`;
 
                 const publishedText = $body.find('.jj p').first().text();

@@ -59,7 +59,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const elem = $(item);
-            const title = elem.find('.Article_Title > a').attr('title').trim();
+            const title = elem.find('.Article_Title > a').attr('title');
             let link = elem.find('.Article_Title > a').attr('href');
             link = link.startsWith('/') ? host + link : link;
             // Assume that the articles are published at 12:00 UTC+8

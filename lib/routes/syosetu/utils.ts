@@ -38,7 +38,7 @@ export async function fetchChapterContent(chapterUrl: string, chapter?: number):
         const $ = load(response);
 
         const title = `${chapter ? `#${chapter} ` : ''}${$('.p-novel__title').html() || ''}`;
-        const description = $('.p-novel__body').html() || '';
+        const description = $('.p-novel__body').html();
         const pubDate = $('meta[name=WWWC]').attr('content');
 
         return {

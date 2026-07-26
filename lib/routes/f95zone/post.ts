@@ -56,7 +56,7 @@ Note: This route does not support Radar auto-detection because the post ID is in
         const title = $('h1.p-title-value').text().trim();
         const post = $(`article[data-content="${postId}"]`);
         const content = post.find('.bbWrapper').html() || '';
-        const author = post.attr('data-author') || '';
+        const author = post.attr('data-author');
         const postDate = post.find('time.u-dt').first().attr('datetime');
         const tags = $('a.tagItem')
             .toArray()

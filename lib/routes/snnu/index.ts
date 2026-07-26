@@ -36,12 +36,12 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) => {
                 const $item = $(item);
-                const $link = $item.find('a').first();
+                const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
-                const pubDate = parseDate($item.find('.date.date2').first().text());
+                const pubDate = parseDate($item.find('.date.date2').text());
 
-                let title = $item.find('a .txt h3').first().text();
+                let title = $item.find('a .txt h3').text();
                 if (!title) {
                     title = $link.text();
                 }
@@ -50,7 +50,7 @@ export const route: Route = {
                     try {
                         const detailResponse = await ofetch(link);
                         const $$ = load(detailResponse);
-                        const description = $$('.v_news_content').html() || $$('#vsb_content').html() || '';
+                        const description = $$('.v_news_content').html() || $$('#vsb_content').html();
 
                         return {
                             title,

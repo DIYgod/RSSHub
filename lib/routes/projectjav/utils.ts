@@ -20,7 +20,7 @@ const processItems = async (currentUrl: string) => {
             const item = $(element);
             const link = item.find('a').attr('href');
             return {
-                title: item.find('div.name span').text() || '',
+                title: item.find('div.name span').text(),
                 link: link?.startsWith('http') ? link : `${rootUrl}${link}`,
             };
         })
@@ -80,7 +80,7 @@ const processItems = async (currentUrl: string) => {
                 }
 
                 // Get description
-                item.description = mainContent.html() || '';
+                item.description = mainContent.html();
 
                 return item;
             })

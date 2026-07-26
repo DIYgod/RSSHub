@@ -46,8 +46,7 @@ async function handler(ctx) {
     const bigTitle = $('div [class=lanmuInnerMiddleBigClass_right]')
         .find('div [portletmode=simpleColumnAttri]')
         .text()
-        .replaceAll(/[\s·]/g, '')
-        .trim();
+        .replaceAll(/[\s·]/g, '');
 
     const list = $('li.list_item')
         .toArray()

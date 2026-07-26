@@ -25,7 +25,7 @@ export async function fetchArticles(data) {
                 const $ = load(response.data);
                 return {
                     title: subject,
-                    description: $('div.nfzm-content__content').html() ?? '',
+                    description: $('div.nfzm-content__content').html(),
                     pubDate: timezone(publish_time, 8).toUTCString(),
                     link,
                     author,

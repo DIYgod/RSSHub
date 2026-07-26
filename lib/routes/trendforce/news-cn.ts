@@ -33,10 +33,10 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('h3 a.title-link');
             return {
-                title: a.find('strong').text().trim(),
+                title: a.find('strong').text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 description: $item.find('p').text()?.trim(),
-                pubDate: parseDate($item.find('h4').text().trim()),
+                pubDate: parseDate($item.find('h4').text()),
             };
         });
 
@@ -54,8 +54,8 @@ async function handler() {
                     .parent()
                     .find('a')
                     .toArray()
-                    .map((a) => $(a).text().trim());
-                item.author = tagRow.find('.fa-user').parent().find('a').text().trim();
+                    .map((a) => $(a).text());
+                item.author = tagRow.find('.fa-user').parent().find('a').text();
 
                 pressCenter.find('h1, .tag-row, .press-choose-post, hr').remove();
 
@@ -67,7 +67,7 @@ async function handler() {
     );
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         description: $('meta[name="description"]').attr('content'),
         link,
         language: $('html').attr('lang'),

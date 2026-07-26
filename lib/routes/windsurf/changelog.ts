@@ -18,7 +18,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    const title: string = $('title').first().text();
+    const title: string = $('title').text();
     const author: string | undefined = title.split(/\|/).pop()?.trim();
 
     const items: DataItem[] = $('div[aria-label="changelog-layout"]')

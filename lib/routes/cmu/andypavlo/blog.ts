@@ -18,9 +18,9 @@ async function getArticles() {
             const $description = $item.find('p');
 
             return {
-                title: $title.text().trim(),
+                title: $title.text(),
                 link: $title.attr('href'),
-                description: $description.text().trim(),
+                description: $description.text(),
                 pubDate: parseDate($date.attr('title')),
                 guid: $title.attr('href'),
             };

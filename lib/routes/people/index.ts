@@ -55,7 +55,7 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
 
-            const link = item.attr('href').trim();
+            const link = item.attr('href');
 
             return {
                 title: item.text(),

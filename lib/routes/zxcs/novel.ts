@@ -80,7 +80,7 @@ async function handler(ctx) {
                 const $ = load(response);
                 const links = String(item.link).split('/');
                 item.category = [types[String(links.at(-2))]];
-                item.description = String($('.intro').first().html());
+                item.description = String($('.intro').html());
                 item.image = baseUrl + String($('.book-cover img').attr('src'));
                 item.author = $('.author').text();
                 return item;

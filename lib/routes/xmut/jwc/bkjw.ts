@@ -37,7 +37,7 @@ async function handler(ctx) {
                 link = resLink;
             }
             const title = $('a', res).attr('title');
-            const pubDate = parseDate(resDate.text().trim());
+            const pubDate = parseDate(resDate.text());
             return {
                 title,
                 link,

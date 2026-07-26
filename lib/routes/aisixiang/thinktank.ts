@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const title = `${$('h2').first().text().trim()}${type}`;
+    const title = `${$('h2').first().text()}${type}`;
 
     let items = [];
 

@@ -142,7 +142,7 @@ function extractGlobalSearchList($: CheerioAPI, limit: number): DataItem[] {
                 .trim()
                 .replaceAll(/[【】]/g, '');
             const title = $pElements.filter('.lf').eq(1).text().trim();
-            const dateText = $pElements.filter('.lr').text().trim();
+            const dateText = $pElements.filter('.lr').text();
 
             return {
                 title: title || $link.text().trim(),

@@ -68,7 +68,7 @@ export const route: Route = {
                 thumb = `${imgUrl}${thumb}`;
             }
 
-            const rawDate = item.updatedDate ? item.updatedDate.replace(/\s*発売/, '').trim() : '';
+            const rawDate = item.updatedDate ? item.updatedDate.replace(/\s*発売/, '') : '';
 
             return {
                 title: `${magazineTitle} - ${item.magazineIssueName}`,

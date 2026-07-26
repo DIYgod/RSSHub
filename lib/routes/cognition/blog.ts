@@ -89,17 +89,10 @@ export async function handler(ctx) {
             const dataItem: DataItem = {
                 title,
                 link,
+                description: summary,
                 pubDate: parseDate(dateText),
+                author: splitAuthors(authorText),
             };
-
-            if (summary) {
-                dataItem.description = summary;
-            }
-
-            const authors = splitAuthors(authorText);
-            if (authors) {
-                dataItem.author = authors;
-            }
 
             return dataItem;
         })

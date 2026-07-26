@@ -46,7 +46,7 @@ async function handler(ctx) {
                 ?.match(/url\((.*?)\)/)?.[1];
             const info = $item.find('small.grey').text();
             return {
-                title: $item.find('.title').text().trim(),
+                title: $item.find('.title').text(),
                 link,
                 description: `<img src="${imageUrl}"><br>${info}`,
             };

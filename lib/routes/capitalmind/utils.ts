@@ -30,7 +30,7 @@ export async function fetchArticles(path) {
                 // Fetch full article content
                 const articleResponse = await ofetch(link);
                 const $articlePage = load(articleResponse);
-                const $article = $articlePage('article').clone();
+                const $article = $articlePage('article');
 
                 // Extract tags from footer
                 const tags: string[] = $article
@@ -52,7 +52,7 @@ export async function fetchArticles(path) {
                     pubDate = $time.attr('datetime') || $time.text().trim();
                 }
 
-                const $content = $article.find('section[aria-label="Post content"]').clone();
+                const $content = $article.find('section[aria-label="Post content"]');
 
                 // Remove footer
                 $content.find('footer').remove();
@@ -98,9 +98,6 @@ export async function fetchArticles(path) {
                         if (urlMatch && urlMatch[1]) {
                             const originalUrl = decodeURIComponent(urlMatch[1]);
                             $img.attr('src', originalUrl);
-                        } else if (src.startsWith('/')) {
-                            // Handle other relative URLs
-                            $img.attr('src', baseUrl + src);
                         }
                     }
                 });

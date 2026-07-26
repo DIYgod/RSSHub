@@ -35,9 +35,9 @@ async function handler() {
         .toArray()
         .map((item) => {
             item = $(item);
-            const title = item.find('h4').first().text();
-            const time = item.find('h6').first().text();
-            const a = item.find('a').first().attr('href');
+            const title = item.find('h4').text();
+            const time = item.find('h6').text();
+            const a = item.find('a').attr('href');
             const fullUrl = new URL(a, host).href;
 
             return {
@@ -53,7 +53,7 @@ async function handler() {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                item.description = $('.v_news_content').first().html();
+                item.description = $('.v_news_content').html();
 
                 return item;
             })

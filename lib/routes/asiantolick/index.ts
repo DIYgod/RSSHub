@@ -86,7 +86,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.title = content('h1').first().text();
+                item.title = content('h1').text();
                 item.description = renderDescription({
                     description: content('#metadata_qrcode').html(),
                     images: content('div.miniatura')

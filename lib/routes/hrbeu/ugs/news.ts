@@ -157,7 +157,7 @@ async function handler(ctx) {
                     const response = await got(item.link);
                     const $ = load(response.data);
 
-                    item.description = $('.wp_articlecontent').html().trim();
+                    item.description = $('.wp_articlecontent').html();
                 } else {
                     item.description = '此链接为文件，请点击下载';
                 }

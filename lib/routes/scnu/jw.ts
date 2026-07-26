@@ -42,7 +42,7 @@ async function handler() {
     const list = $('.notice_01').find('li');
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link: url,
         description: '华南师范大学教务处 - 通知公告',
         item:

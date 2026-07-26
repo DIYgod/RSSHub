@@ -56,7 +56,7 @@ async function handler(ctx: Context): Promise<Data> {
         .toArray()
         .map((item) => {
             item = $(item);
-            const title = item.find('a').first();
+            const title = item.find('a');
             return {
                 // 文章标题
                 title: title.text(),
@@ -74,7 +74,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 // 主题正文
-                item.description = $('.trs_editor_view').first().html();
+                item.description = $('.trs_editor_view').html();
                 return item;
             })
         )

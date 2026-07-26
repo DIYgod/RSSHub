@@ -60,29 +60,15 @@ async function handler(ctx) {
 
                 content('.m-interstitial, .m-em-quote svg, .o-self-promo').remove();
 
-                // Reason: pages may have multiple ld+json script tags; iterating separately
-                // avoids concatenation that produces invalid JSON like "{...}{...}"
-                let ldJson;
-                for (const el of content('script[type="application/ld+json"]').toArray()) {
-                    try {
-                        const parsed = JSON.parse(content(el).text());
-                        const candidates = Array.isArray(parsed) ? parsed : [parsed];
-                        ldJson = candidates.find((x) => x['@type'] === 'NewsArticle');
-                        if (ldJson) {
-                            break;
-                        }
-                    } catch {
-                        // skip malformed ld+json blocks
-                    }
-                }
+                const ldJson = JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle")').text());
 
                 item.description = content('.t-content__chapo').prop('outerHTML') + content('.t-content__main-media').prop('outerHTML') + content('.t-content__body').html();
-                item.pubDate = ldJson?.datePublished ? parseDate(ldJson.datePublished) : undefined;
-                item.updated = ldJson?.dateModified ? parseDate(ldJson.dateModified) : undefined;
-                item.author = ldJson?.author?.map((author) => author.name).join(', ');
-                item.category = ldJson?.keywords;
+                item.pubDate = ldJson.datePublished ? parseDate(ldJson.datePublished) : undefined;
+                item.updated = ldJson.dateModified ? parseDate(ldJson.dateModified) : undefined;
+                item.author = ldJson.author?.map((author) => author.name).join(', ');
+                item.category = ldJson.keywords;
 
-                if (ldJson?.audio) {
+                if (ldJson.audio) {
                     item.itunes_item_image = ldJson.audio.thumbnailUrl;
                     // TODO: Use Temporal.Duration when https://tc39.es/proposal-temporal/ is GA
                     const durationMatch = ldJson.audio.duration?.match(/P0DT(\d+)H(\d+)M(\d+)S/);
