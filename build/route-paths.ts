@@ -1037,6 +1037,8 @@ export type RoutePath =
   | `/forklog/news`
   | `/fortnite/news/:options?`
   | `/fortunechina/:category?`
+  | `/forwardfuture/daily`
+  | `/forwardfuture/originals`
   | `/fosshub/:id`
   | `/free/`
   | `/freebuf/articles/:type`

@@ -2294,6 +2294,58 @@ export default {
     "url": "app.follow.is",
     "lang": "en"
   },
+  "forwardfuture": {
+    "routes": {
+      "/daily": {
+        "name": "Daily Newsletter",
+        "categories": [
+          "other"
+        ],
+        "path": "/daily",
+        "example": "/forwardfuture/daily",
+        "radar": [
+          {
+            "source": [
+              "forwardfuture.com/newsletter/daily",
+              "forwardfuture.com/"
+            ]
+          }
+        ],
+        "maintainers": [
+          "ovo-Tim"
+        ],
+        "description": "Daily AI newsletter from Forward Future.",
+        "location": "daily.ts",
+        "module": () => import('@/routes/forwardfuture/daily.ts')
+      },
+      "/originals": {
+        "name": "Originals",
+        "categories": [
+          "other"
+        ],
+        "path": "/originals",
+        "example": "/forwardfuture/originals",
+        "radar": [
+          {
+            "source": [
+              "forwardfuture.com/originals",
+              "forwardfuture.com/"
+            ]
+          }
+        ],
+        "maintainers": [
+          "ovo-Tim"
+        ],
+        "description": "Original essays, columns, and analysis on AI from Forward Future contributors.",
+        "location": "originals.ts",
+        "module": () => import('@/routes/forwardfuture/originals.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Forward Future",
+    "url": "forwardfuture.com",
+    "lang": "en"
+  },
   "freebuf": {
     "routes": {
       "/articles/:type": {

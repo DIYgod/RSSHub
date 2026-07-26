@@ -594,6 +594,29 @@
       }
     ]
   },
+  "forwardfuture.com": {
+    "_name": "Forward Future",
+    ".": [
+      {
+        "title": "Daily Newsletter",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/newsletter/daily",
+          "/"
+        ],
+        "target": "/forwardfuture/daily"
+      },
+      {
+        "title": "Originals",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/originals",
+          "/"
+        ],
+        "target": "/forwardfuture/originals"
+      }
+    ]
+  },
   "freebuf.com": {
     "_name": "FreeBuf",
     ".": [
