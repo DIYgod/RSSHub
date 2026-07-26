@@ -31,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const h1: string | undefined = $el.find('article h1').text()?.trim();
 
             const title: string = [version, h1].filter(Boolean).join(' ');
-            const description: string | undefined = $el.find('article div').first()?.html() ?? undefined;
+            const description = $el.find('article div').first()?.html();
             const pubDateStr: string | undefined = $el.find('header div').last().text()?.trim();
             const guid: string = version ? `windsurf-${version}` : '';
             const image: string | undefined = $el.find('article img').attr('src');

@@ -160,7 +160,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const pubDateStr: string | undefined = $el.find('div.cell2').text();
 
             const title: string = version;
-            const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
+            const description = $el.find('ul.cell3').html();
 
             const linkUrl: string = targetUrl;
             const guid = `bandisoft-${id}-${language}-${version}`;

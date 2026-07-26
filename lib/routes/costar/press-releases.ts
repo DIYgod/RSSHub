@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('a.coh-link').first();
 
             const title: string = $aEl.text();
-            const description: string | undefined = $el.find('div.coh-container').eq(3).html() ?? undefined;
+            const description = $el.find('div.coh-container').eq(3).html();
             const pubDateStr: string | undefined = $el.find('div.coh-container').eq(4).text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.coh-style-tags a').toArray();

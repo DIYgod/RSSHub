@@ -30,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('a');
 
             const title: string = $el.find('div.text_box p').text();
-            const description: string | undefined = $aEl.html() ?? undefined;
+            const description = $aEl.html();
             const pubDateStr: string | undefined = $el.find('div.date').text().trim();
             const linkUrl: string | undefined = $aEl.attr('href');
             const image: string | undefined = $el.find('div.img_box img').attr('src');
@@ -42,8 +42,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl,
                 content: {
-                    html: description ?? '',
-                    text: description ?? '',
+                    html: description,
+                    text: description,
                 },
                 image,
                 banner: image,

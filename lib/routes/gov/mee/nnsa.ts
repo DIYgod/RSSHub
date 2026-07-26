@@ -50,7 +50,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('meta[name="ArticleTitle"]').attr('content') ?? item.title;
-                const description: string | undefined = $$('div.Custom_UnionStyle').html() ?? undefined;
+                const description = $$('div.Custom_UnionStyle').html();
                 const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
                 const categoryEls: Array<Cheerio<Element>> = [$$('meta[name="ColumnName"]'), $$('meta[name="ColumnType"]'), $$('meta[name="ContentSource"]'), $$('meta[name="source"]')];
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el)?.attr('content') ?? '').filter(Boolean))];

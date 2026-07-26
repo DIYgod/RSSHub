@@ -42,7 +42,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid = `cursor-changelog-${versionLabel}`;
             }
 
-            const description: string = $el.find('.prose').html() || '';
+            const description = $el.find('.prose').html();
 
             const processedItem: DataItem = {
                 title,
