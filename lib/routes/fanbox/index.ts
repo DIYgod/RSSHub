@@ -81,7 +81,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     let items: DataItem[];
     try {
-        items = await Promise.all(postListResponse.body.map((i) => parseItem(page, i)));
+        items = await Promise.all(postListResponse.body.posts.map((i) => parseItem(page, i)));
     } finally {
         await page.close();
         await context.close();

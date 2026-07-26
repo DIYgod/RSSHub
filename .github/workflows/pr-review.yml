@@ -90,6 +90,7 @@ jobs:
                   display_report: 'true'
                   claude_args: |
                       --model ${{ vars.OPENCODE_MODEL }}
+                      ${{ vars.CLAUDE_EFFORT && format('--effort {0}', vars.CLAUDE_EFFORT) || '' }}
                       --allowedTools "Bash(base64:*),Bash(cat:*),Bash(echo:*),Bash(gh api:*),Bash(gh auth:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh repo view:*),Bash(gh search:*),Bash(git diff:*),Bash(git log:*),Bash(git show:*),Bash(git status:*),Bash(grep:*),Bash(head:*),Bash(ls:*),Bash(rg:*),Bash(sed:*),Bash(tail:*),Bash(wc:*),${{ github.event_name == 'workflow_dispatch' && 'WebFetch,WebSearch' || 'WebFetch(domain:docs.rsshub.app)' }}"
                       ${{ github.event_name != 'workflow_dispatch' && '--disallowedTools "WebSearch"' || '' }}
                   prompt: |
