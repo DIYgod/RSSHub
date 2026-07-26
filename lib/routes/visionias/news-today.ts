@@ -79,7 +79,7 @@ async function processCurrentNews(currentUrl) {
         .toArray()
         .map((item) => {
             const link = $(item).attr('href');
-            const title = $(item).clone().children('span').remove().end().text().trim();
+            const title = $(item).children('span').remove().end().text().trim();
             return {
                 title,
                 link: title === 'Also in News' ? link : `${baseUrl}${link}`,

@@ -74,7 +74,6 @@ async function handler(ctx) {
                 const pubDate = timezone(parseDate(dateText), 8);
 
                 const description = content('div.art-body.wow.fadeInUp')
-                    .clone() // 创建副本防止修改原始内容
                     .find('ul li') // 定位到附件列表项
                     .each((_, el) => {
                         const $li = $(el);

@@ -81,9 +81,12 @@ export async function handler(ctx) {
 
             const summary = linkElement.find('p.o-blog-preview__intro').text().trim();
 
-            const dateNode = linkElement.find('.o-blog-preview__meta-date').clone();
-            dateNode.find('.o-blog-preview__meta').remove();
-            const dateText = dateNode.text().trim();
+            const dateText = linkElement
+                .find('.o-blog-preview__meta-date')
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text()
+                .trim();
             const authorText = linkElement.find('.o-blog-preview__meta-author').text().trim();
 
             const dataItem: DataItem = {
