@@ -70,7 +70,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         return {
             title: item.title,
             link: item.link,
-            description: $txt.html() ?? '',
+            description: $txt.html(),
             pubDate: pubDate ?? timezone(parseDate(item.date, 'YYYY-MM-DD'), 8),
         };
     }) as Promise<DataItem>;

@@ -52,7 +52,7 @@ async function handler(): Promise<{
                 });
                 const single: DataItem = {
                     title: item.title || '',
-                    description: $('.entry').html() || '',
+                    description: $('.entry').html(),
                     pubDate: item.pubDate,
                     link: item.link,
                     author: item['dc:creator'],

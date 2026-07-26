@@ -78,7 +78,7 @@ async function enrichNewsItemWithDetails(item: NewsItem, refererUrl: string): Pr
             });
 
             const $ = load(response.data);
-            const description = $('.wp_articlecontent').html() ?? undefined;
+            const description = $('.wp_articlecontent').html();
             const infoText = $('.item_info').text();
             const [, author, pubDate] = infoText.match(/来源：([\s\S]*?)发布时间：(\d{4}-\d{2}-\d{2})/) ?? [];
 

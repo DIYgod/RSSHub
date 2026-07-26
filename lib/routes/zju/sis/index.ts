@@ -86,7 +86,7 @@ async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Pr
             const $ = load(response.data);
 
             // Extract and set the full article content as description
-            const description = $('.wp_articlecontent').html() ?? undefined;
+            const description = $('.wp_articlecontent').html();
             item.description = description;
 
             // Extract and clean the author information

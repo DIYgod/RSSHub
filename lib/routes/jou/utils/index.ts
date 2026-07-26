@@ -66,7 +66,7 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
         ...item,
         title: title || item.title,
         pubDate: pubDate ?? item.pubDate,
-        description: $content.html() ?? undefined,
+        description: $content.html(),
     };
 }
 
