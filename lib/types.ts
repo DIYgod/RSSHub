@@ -41,6 +41,7 @@ export type DataItem = {
         | Array<{
               name: string;
               url?: string;
+              email?: string;
               avatar?: string;
           }>;
     doi?: string;

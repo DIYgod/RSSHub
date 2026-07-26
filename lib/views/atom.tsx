@@ -35,6 +35,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                         <author>
                             <name>{a.name}</name>
                             {a.url && <uri>{a.url}</uri>}
+                            {a.email && <email>{a.email}</email>}
                         </author>
                     ))
                 )}
