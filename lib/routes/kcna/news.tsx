@@ -87,18 +87,18 @@ async function handler(ctx) {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
-                const description = $('.container p').toArray().map((e) => $(e).html()).join("<br />");
+                const description = $('.container p').toArray().map((e) => $(e).html()).join('<br />');
 
                 // add picture and video
                 let photo, video;
                 if ($('.gallery_button').length !== 0) {
-                    const mediaURL = new URL($('.gallery_button').attr("href"), rootUrl).href;
-                    const mediaResponse = await got(mediaURL)
+                    const mediaURL = new URL($('.gallery_button').attr('href'), rootUrl).href;
+                    const mediaResponse = await got(mediaURL);
                     const $media = load(mediaResponse.data);
-                    const media = $media(".item img")
+                    const media = $media('.item img')
                         .toArray()
                         .map((elem) => new URL($media(elem).attr('src'), rootUrl).href);
-                    photo = media.map((e) => e.includes("/photo/") ? `<img src="${e}">` : null).filter(Boolean).join("<br />");
+                    photo = media.map((e) => e.includes("/photo/") ? `<img src="${e}">` : null).filter(Boolean).join('<br />');
                 }
 
                 item.description = renderToString(
