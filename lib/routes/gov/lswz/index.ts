@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
             return {
                 title: $item.find('a').text(),
                 pubDate: parseDate($item.find('span').text()),
-                link: new URL($item.find('a').prop('href'), rootUrl).href,
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
 
@@ -61,7 +61,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.lsj-index-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.lsj-index-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

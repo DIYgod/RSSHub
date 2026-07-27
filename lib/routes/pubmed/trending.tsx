@@ -49,7 +49,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.doi = content('meta[name="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="citation_date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="citation_date"]').attr('content')!);
                 item.description = renderToString(
                     <>
                         {content('.authors-list').html() ? raw(content('.authors-list').html()) : null}

@@ -83,7 +83,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href'), currentUrl).href,
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 

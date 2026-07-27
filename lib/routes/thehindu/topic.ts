@@ -54,14 +54,14 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 $('.position-relative, .articleblock-container, .article-ad, .comments-shares').remove();
                 item.description = $('.sub-title').prop('outerHTML') + $('div.article-picture').html() + $('div[itemprop="articleBody"]').html();
-                item.pubDate = parseDate($('meta[itemprop="datePublished"]').attr('content'));
-                item.updated = parseDate($('meta[itemprop="dateModified"]').attr('content'));
+                item.pubDate = parseDate($('meta[itemprop="datePublished"]').attr('content')!);
+                item.updated = parseDate($('meta[itemprop="dateModified"]').attr('content')!);
                 item.category = $('meta[property="article:tag"]')
                     .toArray()
                     .map((item) => $(item).attr('content'));

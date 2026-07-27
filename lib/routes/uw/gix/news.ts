@@ -76,7 +76,7 @@ async function handler(ctx) {
 
     const itemContent = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const descriptionResponse = await got(item.link);
 
                 const content = load(descriptionResponse.data);

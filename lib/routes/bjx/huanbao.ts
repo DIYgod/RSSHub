@@ -79,7 +79,7 @@ const fetchPage = (link) =>
                 if (!/^\d+$/.test($a.text().trim())) {
                     continue;
                 }
-                const sublink = new URL($a.attr('href'), link).href;
+                const sublink = new URL($a.attr('href')!, link).href;
                 /* eslint-disable no-await-in-loop */
                 const result = await got(sublink);
                 pages.push(load(result.data));

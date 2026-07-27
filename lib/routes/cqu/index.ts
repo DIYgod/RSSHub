@@ -47,7 +47,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('a.no-wrap');
-            const link = new URL(a.attr('href'), url).href;
+            const link = new URL(a.attr('href')!, url).href;
             return {
                 title: a.attr('title'),
                 link,

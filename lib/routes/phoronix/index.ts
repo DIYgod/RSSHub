@@ -173,7 +173,7 @@ async function handler(ctx) {
                     .slice(0, -2)
                     .toArray()
                     .map((e) => $(e).text());
-                const category = [];
+                const category: string[] = [];
                 if (item.link.includes('/news/')) {
                     category.push('News');
                 } else if (item.link.includes('/review/')) {
@@ -227,7 +227,7 @@ async function handler(ctx) {
                                 const html = response.data;
                                 const $$ = load(html);
                                 const page = $$('.content');
-                                return page.html();
+                                return page.html() ?? '';
                             })
                         )
                     );

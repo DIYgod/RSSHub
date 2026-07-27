@@ -82,7 +82,7 @@ async function handler(ctx) {
             const $item = $(item);
             const $date = $item.find("li[class='span2 y']").text();
             const $linkLi = $item.find('li>a');
-            const $url = new URL($linkLi.attr('href'), baseUrl).href;
+            const $url = new URL($linkLi.attr('href')!, baseUrl).href;
             return {
                 title: $linkLi.text(),
                 pubDate: parseDate($date, 'YYYY-MM-DD'),

@@ -69,8 +69,8 @@ async function handler(ctx) {
             const category = $item.find('.department').text().trim();
             return {
                 title: $item.find('.title a').text().trim(),
-                link: new URL($item.find('a').attr('href'), host).href,
-                pubDate: parseDate($item.find('.date-display-single').attr('content')),
+                link: new URL($item.find('a').attr('href')!, host).href,
+                pubDate: parseDate($item.find('.date-display-single').attr('content')!),
                 category,
                 author: category,
             };

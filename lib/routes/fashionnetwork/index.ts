@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                link: new URL($item.find('h2.family-title a').prop('href'), rootUrl).href,
+                link: new URL($item.find('h2.family-title a').prop('href')!, rootUrl).href,
                 image,
                 banner: image,
                 language,
@@ -88,7 +88,7 @@ export const handler = async (ctx) => {
     );
 
     const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/, 1)?.[0]?.trim() ?? '';
-    const image = new URL($('div.header__fnw-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.header__fnw-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${label}${$('title').text()}`,

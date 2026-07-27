@@ -30,7 +30,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 pubDate: parseDate($item.find('div.crq').text()),
-                link: new URL(a.prop('href'), currentUrl).href,
+                link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
         });
@@ -48,7 +48,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('div.connewstis-time').text().split(/：/).pop());
+                item.pubDate = parseDate($$('div.connewstis-time').text().split(/：/).pop()!);
                 item.content = {
                     html: description,
                     text: $$('div.concrczw').text(),

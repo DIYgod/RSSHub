@@ -90,7 +90,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((a) => content(a).text().trim())
                     .join(', ');
-                item.pubDate = parseDate(content('meta[name="citation_publication_date"]').attr('content'), 'YYYY/MM');
+                item.pubDate = parseDate(content('meta[name="citation_publication_date"]').attr('content')!, 'YYYY/MM');
                 item.description = renderToString(
                     <AeawebDescription
                         description={content('meta[name="twitter:description"]')

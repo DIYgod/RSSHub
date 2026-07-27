@@ -74,7 +74,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 item.title = $('head title').text();
-                item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content'));
+                item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content')!);
                 item.doi = $('head meta[scheme="doi"]').attr('content');
                 item.author = $('.author-name span')
                     .toArray()

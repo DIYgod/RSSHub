@@ -99,7 +99,7 @@ async function handler(ctx) {
             switch (item.type) {
                 case 'tju-cic':
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         try {
                             const detailResponse = await got(item.link);
                             const content = load(detailResponse.data);

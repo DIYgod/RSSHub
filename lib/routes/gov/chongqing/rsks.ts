@@ -43,7 +43,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')) ?? item.pubDate;
+                item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')!) ?? item.pubDate;
                 item.description = $('.view.TRS_UEDITOR.trs_paper_default.trs_word').first().html();
                 return item;
             })

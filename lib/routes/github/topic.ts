@@ -59,7 +59,7 @@ async function handler(ctx) {
                     .find('.topic-tag')
                     .toArray()
                     .map((item) => $(item).text());
-                const pubDate = parseDate($item.find('relative-time').attr('datetime'));
+                const pubDate = parseDate($item.find('relative-time').attr('datetime')!);
 
                 return {
                     title,

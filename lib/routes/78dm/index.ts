@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()), 8);
+                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()!), 8);
                 item.author = $$('a.push-username').contents().first().text();
                 item.content = {
                     html: description,
@@ -118,7 +118,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('a.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('a.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${title} | ${$('div.actived').text()}`,

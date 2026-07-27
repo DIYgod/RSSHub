@@ -29,8 +29,8 @@ async function handler() {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.title = ($('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text()).replace(' - 香港手機遊戲網 GameApps.hk', '');
@@ -54,7 +54,7 @@ async function handler() {
                     </>
                 );
                 item.guid = item.guid.slice(0, item.link.lastIndexOf('/'));
-                item.pubDate = parseDate(item.pubDate);
+                item.pubDate = parseDate(item.pubDate!);
                 item.enclosure_url = $('div.introduction.media.news-intro div.media-left').find('img').attr('src');
                 item.enclosure_type = 'image/jpeg';
 

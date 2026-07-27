@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -70,7 +70,7 @@ async function handler(ctx) {
 
                 item.title = content('title').text();
                 item.author = content('.author-links').text();
-                item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content')!);
                 item.category = content('a.category_link, a[rel="tag"]')
                     .toArray()
                     .map((c) => content(c).text().replaceAll(' · ', ''));

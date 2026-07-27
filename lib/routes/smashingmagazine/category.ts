@@ -84,7 +84,7 @@ async function handler(ctx) {
                 .text();
             const author = $item.find('span.article--post__author-name a').text();
             const time = $('p.article--post__teaser time').attr('datetime');
-            const pubDate = parseDate(time, 'YYYY-MM-DD');
+            const pubDate = parseDate(time!, 'YYYY-MM-DD');
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,

@@ -85,7 +85,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), currentUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, currentUrl).href;
 
     return {
         item: items,

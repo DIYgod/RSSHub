@@ -53,7 +53,7 @@ async function handler() {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -62,7 +62,7 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 item.description = content('article').html();
-                item.pubDate = parseDate(content('meta[name="DC.Date"]').attr('datetime'));
+                item.pubDate = parseDate(content('meta[name="DC.Date"]').attr('datetime')!);
 
                 return item;
             })

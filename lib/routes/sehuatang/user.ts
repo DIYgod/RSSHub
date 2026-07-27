@@ -113,7 +113,7 @@ async function handler(ctx) {
                 const datetimeString = `${datestampString} ${timestampString}`;
                 const timestamp = new Date(datetimeString).getTime();
 
-                info.pubDate = $('.authi em span').length > 0 ? parseDate($('.authi em span').attr('title')) : parseDate(timestamp);
+                info.pubDate = $('.authi em span').length > 0 ? parseDate($('.authi em span').attr('title')!) : parseDate(timestamp);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
@@ -121,7 +121,7 @@ async function handler(ctx) {
 
                 const hasEnclosureUrl = isMag || torrent !== undefined;
                 if (hasEnclosureUrl) {
-                    const enclosureUrl = isMag ? magnet : new URL(torrent, baseUrl).href;
+                    const enclosureUrl = isMag ? magnet : new URL(torrent!, baseUrl).href;
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }

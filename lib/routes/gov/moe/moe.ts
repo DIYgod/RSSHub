@@ -68,7 +68,7 @@ async function handler(ctx) {
                 const $item = $(item);
 
                 const firstA = $item.find('a');
-                const itemUrl = new URL(firstA.attr('href'), moeUrl).href;
+                const itemUrl = new URL(firstA.attr('href')!, moeUrl).href;
 
                 // some live pages have no content, just return the liva page url
                 const infos = itemUrl.includes('/live/')

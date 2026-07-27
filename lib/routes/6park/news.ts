@@ -65,9 +65,9 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items
-            .filter((item) => /6parknews\.com/.test(item.link))
+            .filter((item) => /6parknews\.com/.test(item.link!))
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     try {
                         const detailResponse = await got({
                             method: 'get',

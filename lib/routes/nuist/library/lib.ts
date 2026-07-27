@@ -34,7 +34,7 @@ async function handler() {
             return {
                 title: $item.find('a').attr('title'),
                 category: '通知',
-                link: new URL($item.find('a').attr('href'), link).href,
+                link: new URL($item.find('a').attr('href')!, link).href,
             };
         });
 

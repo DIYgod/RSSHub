@@ -112,7 +112,7 @@ async function handler(ctx) {
         list.map((i, item) => {
             const $item = $(item);
 
-            const url = new URL($item.attr('href'));
+            const url = new URL($item.attr('href')!);
             const link = url.href;
 
             const pubDate = timezone(parseDate($('a[href="' + link + '"] ~ .time').text()), 8);

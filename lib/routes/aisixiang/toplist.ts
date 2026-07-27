@@ -38,7 +38,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
+                link: new URL(a.prop('href')!, rootUrl).href,
                 author: $item.find('div.name').text(),
                 pubDate: parseDate($item.find('div.times').text()),
             };

@@ -74,7 +74,7 @@ async function handler(ctx) {
     );
 
     const description = $('meta[name="description"]').prop('content');
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

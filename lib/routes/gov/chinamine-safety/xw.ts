@@ -74,7 +74,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.prop('href'), currentUrl).href,
+                link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.parent().find('span').text()), 8),
             };
         });

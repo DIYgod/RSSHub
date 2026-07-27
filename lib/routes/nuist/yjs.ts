@@ -36,7 +36,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), currentUrl).href,
+                link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.next().text(), 'YYYY年MM月DD日'),
             };
         });

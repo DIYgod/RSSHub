@@ -488,7 +488,7 @@ const parseRouteParams = (routeParams) => {
 };
 
 export const excludeRetweet = function (tweets) {
-    const excluded = [];
+    const excluded: any[] = [];
     for (const t of tweets) {
         if (t.retweeted_status) {
             continue;

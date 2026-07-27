@@ -56,7 +56,7 @@ async function handler(ctx) {
         item: list.toArray().map((item) => {
             const $item = $(item);
             const date = $item.find('time').attr('datetime');
-            const pubDate = parseDate(date);
+            const pubDate = parseDate(date!);
             return {
                 title: $item.find('h2 a').text(),
                 link: $item.find('h2 a').attr('href'),

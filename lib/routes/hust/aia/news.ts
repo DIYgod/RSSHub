@@ -45,7 +45,7 @@ async function handler() {
                     title: $item.find('a h2').text(),
                     description: $item.find('a div').text() || '华科人工智能和自动化学院新闻',
                     pubDate: parseDate($item.find('.date3').text(), 'DDYYYY-MM'),
-                    link: new URL($item.find('a').attr('href'), link).href,
+                    link: new URL($item.find('a').attr('href')!, link).href,
                 };
             }),
     };

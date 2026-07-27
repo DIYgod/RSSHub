@@ -54,8 +54,8 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 item.description = item.link.startsWith('https://mp.weixin.qq.com/') ? $('div.rich_media_content section').html() : $('div.wp_articlecontent').html();
                 return item;

@@ -53,7 +53,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const element = $(item);
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span').text().trim();
             const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {

@@ -63,9 +63,9 @@ async function handler(ctx) {
             return {
                 title: h2.find('a').text(),
                 description: h2.find('.description').text(),
-                link: new URL(h2.find('a').attr('href'), 'https://greasyfork.org').href,
-                pubDate: parseDate($item.find('.script-list-created-date relative-time').attr('datetime')),
-                updated: parseDate($item.find('.script-list-updated-date relative-time').attr('datetime')),
+                link: new URL(h2.find('a').attr('href')!, 'https://greasyfork.org').href,
+                pubDate: parseDate($item.find('.script-list-created-date relative-time').attr('datetime')!),
+                updated: parseDate($item.find('.script-list-updated-date relative-time').attr('datetime')!),
                 author: $item
                     .find('.script-list-author a')
                     .toArray()

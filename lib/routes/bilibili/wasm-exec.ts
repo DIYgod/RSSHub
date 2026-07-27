@@ -598,7 +598,7 @@
 
             const argc = this.argv.length;
 
-            const argvPtrs = [];
+            const argvPtrs: number[] = [];
             for (const arg of this.argv) {
                 argvPtrs.push(strPtr(arg));
             }

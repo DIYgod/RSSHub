@@ -50,7 +50,7 @@ async function handler(ctx) {
                 item.description = content('.text-long').html();
                 item.title = content('meta[name="cXenseParse:mdc-title"]').attr('content');
                 item.author = content('meta[name="cXenseParse:author"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="cXenseParse:recs:publishtime"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="cXenseParse:recs:publishtime"]').attr('content')!);
                 item.category = content('meta[name="cXenseParse:mdc-keywords"]')
                     .toArray()
                     .map((keyword) => content(keyword).attr('content'));

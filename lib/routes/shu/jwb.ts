@@ -40,7 +40,7 @@ async function handler(ctx) {
         .toArray()
         .map((ele) => ({
             title: $(ele).find('a').text(),
-            link: new URL($(ele).find('a').attr('href'), host).href,
+            link: new URL($(ele).find('a').attr('href')!, host).href,
             date: $(ele).children('span').text(),
         }));
 

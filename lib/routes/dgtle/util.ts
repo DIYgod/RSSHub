@@ -76,7 +76,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
             delete item.live_status;
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 $$('div.logo').remove();

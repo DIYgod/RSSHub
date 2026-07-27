@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('meta[property="og:image"]').attr('content') ? new URL($('meta[property="og:image"]').attr('content'), baseUrl).href : undefined,
+        image: $('meta[property="og:image"]').attr('content') ? new URL($('meta[property="og:image"]').attr('content')!, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
         language: language as Language,
         id: $('meta[property="og:url"]').attr('content'),

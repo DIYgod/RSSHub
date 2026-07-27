@@ -99,7 +99,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('a.navbar-brand img').prop('src'), rootUrl).href;
+    const image = new URL($('a.navbar-brand img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

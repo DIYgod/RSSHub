@@ -73,7 +73,7 @@ const encode = (param) => {
 };
 
 const preProcess = (md5Str) => {
-    const md5CharCodeAtArr = [];
+    const md5CharCodeAtArr: any[] = [];
     for (let i = 0; i < md5Str.length; i++) {
         md5CharCodeAtArr.push(md5Str.charCodeAt(i));
     }
@@ -86,7 +86,7 @@ const preProcess = (md5Str) => {
 
     const md5CharCodeAtFrontArr = md5CharCodeAtArr.slice(0, 16);
     const fixArr = [48, 53, 57, 48, 53, 51, 102, 55, 100, 49, 53, 101, 48, 49, 100, 55];
-    const new_md5_charCodeAt_arr = [];
+    const new_md5_charCodeAt_arr: number[] = [];
     for (const [i, element] of md5CharCodeAtFrontArr.entries()) {
         new_md5_charCodeAt_arr.push(element ^ fixArr[i] ^ 42);
     }

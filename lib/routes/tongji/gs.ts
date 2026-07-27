@@ -53,7 +53,7 @@ async function handler() {
             return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
         });
 
-    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
+    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link!, () => getNoticeContent(item))));
 
     return {
         title: '同济大学研究生院',

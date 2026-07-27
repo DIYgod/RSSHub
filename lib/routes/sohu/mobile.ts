@@ -128,7 +128,7 @@ function extractPubDate($: CheerioAPI): string {
         .toArray()
         .map((i) => $(i).attr('src'))
         .find((i) => i.includes('images01'));
-    date = img ? parseDate(img?.match(/images01\/(\d{8})\//i)?.[1]) : '';
+    date = img ? parseDate(img.match(/images01\/(\d{8})\//i)![1]) : '';
     if (date) {
         return date;
     }

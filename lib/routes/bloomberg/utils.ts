@@ -151,7 +151,7 @@ const parseArticle = (item) =>
     });
 
 const parseAudioPage = async (res, api, item) => {
-    const audio_json = JSON.parse(load(res.data)(api.sel).html()).props.pageProps;
+    const audio_json = JSON.parse(load(res.data)(api.sel).html() ?? '').props.pageProps;
     const episode = audio_json.episode;
     const rss_item = {
         title: episode.title || item.title,
@@ -203,7 +203,7 @@ const parsePhotoEssaysPage = async (res, api, item) => {
     const $ = load(res.data.html);
     const article_json = {};
     for (const e of $(api.sel).toArray()) {
-        Object.assign(article_json, JSON.parse($(e).html()));
+        Object.assign(article_json, JSON.parse($(e).html() ?? ''));
     }
     const rss_item = {
         title: article_json.headline || item.title,

@@ -48,7 +48,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href'), currentUrl).href,
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
@@ -93,8 +93,8 @@ async function handler(ctx) {
         description: $('meta[name="description"]').attr('content'),
         link: currentUrl,
         image: $('meta[property="og:image"]').attr('content'),
-        icon: new URL($('link[rel="apple-touch-icon"]').attr('href'), currentUrl).href,
-        logo: new URL($('link[rel="apple-touch-icon"]').attr('href'), currentUrl).href,
+        icon: new URL($('link[rel="apple-touch-icon"]').attr('href')!, currentUrl).href,
+        logo: new URL($('link[rel="apple-touch-icon"]').attr('href')!, currentUrl).href,
         item: items,
         language: $('html').attr('lang'),
     };

@@ -73,14 +73,14 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link, {
                         headers: getHeaders(),
                     });
                     const $ = load(response.data);
                     item.description = $('article').html();
-                    item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')), 8);
+                    item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')!), 8);
                     item.author = $('meta[property="og:author"]').attr('content');
                 } catch {
                     // 404

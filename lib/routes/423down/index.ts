@@ -29,7 +29,7 @@ export const handler = async (ctx) => {
             const link = $item.find('h2 a').prop('href');
             const isAdItem = $item.find('span.cat').text().includes('423Down');
 
-            return new RegExp(domain).test(link) && !isAdItem;
+            return new RegExp(domain).test(link!) && !isAdItem;
         })
         .slice(0, limit)
         .map((item) => {
@@ -73,7 +73,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

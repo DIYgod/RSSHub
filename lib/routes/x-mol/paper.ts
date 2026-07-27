@@ -46,7 +46,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.magazine-text-title a').text().trim(),
-                link: new URL($item.find('.magazine-model-btn a').first().attr('href'), utils.host).href,
+                link: new URL($item.find('.magazine-model-btn a').first().attr('href')!, utils.host).href,
                 pubDate: timezone(
                     parseDate(
                         $item

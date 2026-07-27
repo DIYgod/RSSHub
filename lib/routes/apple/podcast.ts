@@ -50,7 +50,7 @@ async function handler(ctx) {
     const bearerToken = await cache.tryGet(
         'apple:podcast:bearer',
         async () => {
-            const moduleAddress = new URL($('head script[type="module"]').attr('src'), baseUrl).href;
+            const moduleAddress = new URL($('head script[type="module"]').attr('src')!, baseUrl).href;
             const modulesResponse = await ofetch(moduleAddress, {
                 parseResponse: (txt) => txt,
             });

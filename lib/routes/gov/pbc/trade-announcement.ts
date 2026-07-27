@@ -45,7 +45,7 @@ async function handler() {
             const a = $item.find('a[title]');
             return {
                 title: a.attr('title'),
-                link: new URL(a.attr('href'), 'http://www.pbc.gov.cn').href,
+                link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
             };
         });
 

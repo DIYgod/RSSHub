@@ -82,8 +82,8 @@ async function handler(ctx) {
         ),
     ].join(' > ');
     const descriptionHtml = $('div.xml').html();
-    const image = new URL($('li.active a img').prop('src'), rootUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const image = new URL($('li.active a img').prop('src')!, rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     const items = data
         ? [

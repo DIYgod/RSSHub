@@ -15,7 +15,7 @@ async function getArticles() {
             title: a.find('h2').text(),
             description: a.find('p').text(),
             link: a.attr('href'),
-            pubDate: parseDate($(elem).find('footer').find('time').attr('datetime')),
+            pubDate: parseDate($(elem).find('footer').find('time').attr('datetime')!),
             category: $(elem)
                 .find('header div a')
                 .toArray()

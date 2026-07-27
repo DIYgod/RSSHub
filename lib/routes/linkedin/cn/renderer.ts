@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/prefer-code-point */
+/* oxlint-disable unicorn/prefer-code-point */
 const text_tag = {
     LINE_BREAK: 0,
     INLINE_CODE: 1,
@@ -30,7 +30,7 @@ class Ucs2Text {
         } else {
             this.string = text;
             const k = text.length;
-            const d = [];
+            const d: any[] = [];
 
             let l,
                 e,
@@ -143,7 +143,7 @@ const parseAttr = (description) => {
             node.text = m.slice(node.start, node.end);
             return renderSingle(node);
         }
-        const res = [];
+        const res: any[] = [];
         let s = node.start;
         for (const child of node.children) {
             if (s < child.start) {
@@ -160,7 +160,7 @@ const parseAttr = (description) => {
         return renderSingle(node);
     };
 
-    const q = [];
+    const q: any[] = [];
     let p = 0;
     for (const e of n) {
         // BFS render

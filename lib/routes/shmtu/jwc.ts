@@ -68,7 +68,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.views-field-nothing a').attr('title').trim(),
-                link: new URL($item.find('a').attr('href'), host).href,
+                link: new URL($item.find('a').attr('href')!, host).href,
                 pubDate: timezone(parseDate($item.find('.pubdate').text()), 8),
                 category: $item.find('.views-field-field-xxlb').text(),
                 author: $item.find('.views-field-field-xxly').text(),

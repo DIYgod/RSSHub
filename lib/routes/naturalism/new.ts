@@ -30,7 +30,7 @@ async function handler() {
             const a = $(element);
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
             };
         });
 

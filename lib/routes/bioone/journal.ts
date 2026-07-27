@@ -63,7 +63,7 @@ async function handler(ctx) {
                 item.title = content('meta[name="dc.Title"]').attr('content');
                 item.author = content('meta[name="dc.Creator"]').attr('content');
                 item.doi = content('meta[name="dc.Identifier"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content')!);
 
                 return item;
             })

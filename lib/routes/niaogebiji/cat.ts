@@ -46,7 +46,7 @@ async function handler(ctx) {
                 title: $item.find('.articleTitle').text(),
                 description: $item.find('.articleContentInner').text(),
                 author: $item.find('.author').text(),
-                link: new URL($item.find('a').first().attr('href'), link).href,
+                link: new URL($item.find('a').first().attr('href')!, link).href,
                 category: [
                     ...$item
                         .find('.art_tag')

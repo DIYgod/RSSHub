@@ -104,7 +104,7 @@ async function handler(ctx) {
     const $ = load(currentResponse);
 
     const title = $('div.this_nav').text().trim();
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
 
     return {
@@ -113,7 +113,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh',
-        image: new URL($('div.logo_img img').prop('src'), rootUrl).href,
+        image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),

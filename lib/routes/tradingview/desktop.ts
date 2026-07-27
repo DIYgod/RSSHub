@@ -71,7 +71,7 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const titleSplits = title.split(/—/);
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

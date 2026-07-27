@@ -38,7 +38,7 @@ async function handler(ctx) {
 
                 let desc = '';
                 if (isBundle) {
-                    const bundle = JSON.parse($el.attr('data-ds-bundle-data'));
+                    const bundle = JSON.parse($el.attr('data-ds-bundle-data')!);
                     desc += 'Bundle\n';
                     if (bundle.m_bRestrictGifting) {
                         desc += 'Restrict gifting\n';

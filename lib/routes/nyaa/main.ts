@@ -75,8 +75,8 @@ async function handler(ctx) {
         const limit = Number.parseInt(ctx.req.query('limit')) || 6; // prevent 429 rate limiting
         const items = await Promise.all(
             feed.items.slice(0, limit).map((item) =>
-                cache.tryGet(item.guid, async () => {
-                    const response = await ofetch(item.guid);
+                cache.tryGet(item.guid!, async () => {
+                    const response = await ofetch(item.guid!);
                     const $ = load(response);
 
                     item.description = md.render($('div#torrent-description.panel-body[markdown-text]').text());

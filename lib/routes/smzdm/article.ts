@@ -64,13 +64,13 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link, {
                     headers: getHeaders(),
                 });
                 const $ = load(response.data);
                 item.description = $('.m-contant article').html();
-                item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')!, 'YYYY-MM-DD HH:mm:ss'), 8);
                 item.author = $('meta[property="og:author"]').attr('content');
 
                 return item;

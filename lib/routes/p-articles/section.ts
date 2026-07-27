@@ -30,7 +30,7 @@ async function handler(ctx) {
     const $ = load(response);
     const topInfo = {
         title: $('div.inner_top_title_01 > h1 > a').text(),
-        link: new URL($('div.inner_top_title_01 > h1 > a').prop('href'), rootUrl).href,
+        link: new URL($('div.inner_top_title_01 > h1 > a').prop('href')!, rootUrl).href,
     };
 
     const list = $('div.contect_box_04 > a')
@@ -38,7 +38,7 @@ async function handler(ctx) {
         .map((element) => {
             const info = {
                 title: $(element).find('h1').text().trim(),
-                link: new URL($(element).attr('href'), rootUrl).href,
+                link: new URL($(element).attr('href')!, rootUrl).href,
             };
             return info;
         });

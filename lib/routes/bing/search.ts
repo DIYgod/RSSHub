@@ -51,7 +51,7 @@ async function handler(ctx) {
         item: data.items.map((e) => ({
             ...e,
             description: e.content,
-            pubDate: parseDate(e.pubDate, 'dddd, DD MMM YYYY HH:mm:ss [GMT]', 'zh-cn'),
+            pubDate: parseDate(e.pubDate!, 'dddd, DD MMM YYYY HH:mm:ss [GMT]', 'zh-cn'),
         })),
     };
 }

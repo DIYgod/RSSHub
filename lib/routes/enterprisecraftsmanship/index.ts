@@ -35,7 +35,7 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const title = $item.find('.title a').text().trim();
-            const link = new URL($item.find('.title a').attr('href'), currentUrl).href;
+            const link = new URL($item.find('.title a').attr('href')!, currentUrl).href;
             const dateStr = $item.find('.date').text().trim();
             const pubDate = parseDate(dateStr);
 

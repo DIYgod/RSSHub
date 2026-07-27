@@ -27,7 +27,7 @@ async function handler(ctx) {
             const resLink = $('a', res).attr('href');
             let link;
             if (resLink.startsWith('../../')) {
-                const parsedUrl = new URL(resLink, xmut);
+                const parsedUrl = new URL(resLink!, xmut);
                 link = parsedUrl.href;
             } else {
                 link = resLink;

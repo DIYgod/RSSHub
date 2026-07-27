@@ -32,7 +32,7 @@ async function handler() {
             return {
                 title: a.attr('title'),
                 link: `https://daoxuan.cc${a.attr('href')}`,
-                pubDate: parseDate(timeElement.attr('datetime')),
+                pubDate: parseDate(timeElement.attr('datetime')!),
                 description: a.attr('title'),
             };
         });

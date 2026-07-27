@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const [detailResponse, finalUrl] = await getFinalContentAndUrl(item.link);
+                const [detailResponse, finalUrl] = await getFinalContentAndUrl(item.link!);
 
                 const $$: CheerioAPI = load(detailResponse);
 

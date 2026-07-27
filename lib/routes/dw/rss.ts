@@ -45,7 +45,7 @@ async function handler(ctx) {
             item.id = item['dwsyn:contentID'];
             item.pubDate = item.isoDate;
             item.description = item.content;
-            const link = new URL(item.link);
+            const link = new URL(item.link!);
             link.search = '';
             item.link = link.href;
             item.type = link.pathname.slice(link.pathname.lastIndexOf('/') + 1).startsWith('live-') ? 'liveblog' : 'article'; // dw rss feed only includes liveblogs and articles

@@ -39,7 +39,7 @@ export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTi
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const content = await newsContent(item.link, baseDeparment);
 
                 item.pubDate = content.pubDate;

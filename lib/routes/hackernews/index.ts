@@ -76,7 +76,7 @@ async function handler(ctx) {
                 title: $thing.find('.titleline').children('a').text(),
                 category: $thing.find('.sitestr').text(),
                 author: $thing.next().find('.hnuser').text(),
-                pubDate: parseDate($thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title')),
+                pubDate: parseDate(($thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title'))!),
 
                 link: '',
                 origin: $thing.find('.titleline').children('a').attr('href'),
@@ -98,7 +98,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 if (item.comments !== 'discuss' && type === 'comments') {
                     const detailResponse = await got({
                         method: 'get',

@@ -64,8 +64,8 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang');
     const themeEl = $('link[rel="modulepreload"]')
         .toArray()
-        .findLast((l) => /theme\..*\.js$/.test($(l).prop('href')));
-    const themeUrl = themeEl ? new URL($(themeEl).prop('href'), rootUrl).href : undefined;
+        .findLast((l) => /theme\..*\.js$/.test($(l).prop('href')!));
+    const themeUrl = themeEl ? new URL($(themeEl).prop('href')!, rootUrl).href : undefined;
 
     const { data: themeResponse } = await got(themeUrl);
 
@@ -132,7 +132,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('img.logo').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').first().text(),

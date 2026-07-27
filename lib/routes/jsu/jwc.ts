@@ -52,7 +52,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((item) => {
             const $item = $(item);
-            const link = new URL($item.attr('href'), baseUrl).href;
+            const link = new URL($item.attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const description = await getPageItemAndDate(
                     '#vsb_content',

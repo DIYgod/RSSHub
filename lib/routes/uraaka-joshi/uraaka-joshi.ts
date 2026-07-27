@@ -101,8 +101,8 @@ async function handler() {
                 title: $item.find('.account-group').text() + ` - ${title}`,
                 description: $item.html(),
                 link: $item.find('.account-group-link-row').attr('href'),
-                pubDate: parseDate($item.find('.profile-char').attr('datetime')),
-                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')).getTime(),
+                pubDate: parseDate($item.find('.profile-char').attr('datetime')!),
+                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime(),
             };
         }),
     };

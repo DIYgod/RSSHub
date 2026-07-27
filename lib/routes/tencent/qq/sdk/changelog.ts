@@ -46,8 +46,8 @@ async function handler(ctx) {
         .children('p')
         .filter((_, element) => $(element).text() !== '');
 
-    const pList = [];
-    const titleIndex = [];
+    const pList: string[] = [];
+    const titleIndex: number[] = [];
 
     // 遍历文本 p 标签，并且获取标题索引
     contents.each((index, element) => {

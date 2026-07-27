@@ -48,7 +48,7 @@ async function handler(ctx) {
             const a = $item.find('.article-title a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.card__meta__date').text()),
             };
         });

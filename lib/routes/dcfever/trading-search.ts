@@ -34,7 +34,7 @@ async function handler(ctx) {
             $item.find('.optional').remove();
             return {
                 title: $item.find('.trade_title').text(),
-                link: new URL($item.attr('href'), link.href).href,
+                link: new URL($item.attr('href')!, link.href).href,
                 author: $item.find('.trade_info').text(),
             };
         });

@@ -68,7 +68,7 @@ async function handler(ctx) {
                     const response = await got.get(item.link);
                     const $ = load(response.data);
                     const desc = $('div.words > div.graybg.ail > div').html();
-                    return desc;
+                    return desc ?? '';
                 });
             }
             item.description = desc;

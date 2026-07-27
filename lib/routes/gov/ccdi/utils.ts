@@ -39,7 +39,7 @@ const parseNewsList = async (url, selector, ctx) => {
             const $item = $(item);
             return {
                 title: $item.find('a').first().text().trim(),
-                link: new URL($item.find('a').first().attr('href'), url).href,
+                link: new URL($item.find('a').first().attr('href')!, url).href,
                 pubDate: parseDate($item.find('.more').text(), 'YYYY-MM-DD'),
             };
         });
@@ -80,7 +80,7 @@ const parseArticle = async (item) => {
         $('.content, .bom-box')
             .find('img')
             .each((_, el) => {
-                $(el).attr('src', new URL($(el).attr('src'), item.link).href);
+                $(el).attr('src', new URL($(el).attr('src')!, item.link).href);
                 // oldsrc is causing freshrss imageproxy not to work correctly
                 $(el).removeAttr('oldsrc').removeAttr('alt');
             });

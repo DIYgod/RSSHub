@@ -52,7 +52,7 @@ async function handler(ctx) {
     }
     const items = await Promise.all(
         links.map((link) =>
-            cache.tryGet(link, async () => {
+            cache.tryGet(link!, async () => {
                 const detailResponse = await got(link);
                 const content = load(detailResponse.data);
 

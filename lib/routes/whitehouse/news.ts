@@ -53,14 +53,14 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate($item.find('time').attr('datetime')),
+                pubDate: parseDate($item.find('time').attr('datetime')!),
                 category: [$item.find('a[rel^=tag]').first().text()],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,

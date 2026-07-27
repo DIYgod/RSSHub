@@ -38,7 +38,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 'all';
 
     const link = `${host}/co/topic/list` + types[type];
-    let data = [];
+    let data: any[] = [];
     if (type === 'all') {
         await Promise.all(
             Object.values(types).map(async (type) => {

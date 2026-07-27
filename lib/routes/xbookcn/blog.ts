@@ -41,8 +41,8 @@ export const route: Route = {
             list.map(
                 async (item) =>
                     // 使用缓存以避免重复请求
-                    await cache.tryGet(item.link, async () => {
-                        const response = await ofetch(item.link); // 请求文章链接
+                    await cache.tryGet(item.link!, async () => {
+                        const response = await ofetch(item.link!); // 请求文章链接
                         const $ = load(response); // 加载文章页面
 
                         // 获取文章的完整描述

@@ -23,7 +23,7 @@ export const handler = async (ctx) => {
             const $item = $(item);
 
             const title = $item.find('font').text() || $item.text();
-            const link = new URL($item.prop('href'), rootUrl).href;
+            const link = new URL($item.prop('href')!, rootUrl).href;
 
             return {
                 title,
@@ -35,7 +35,7 @@ export const handler = async (ctx) => {
             };
         });
 
-    const image = new URL($('div.m-headerLogo img').first().prop('src'), rootUrl).href;
+    const image = new URL($('div.m-headerLogo img').first().prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

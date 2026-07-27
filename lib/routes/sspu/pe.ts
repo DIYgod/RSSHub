@@ -37,7 +37,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: parseDate($item.prev().text()),
             };
         });
@@ -65,7 +65,7 @@ async function handler(ctx) {
 
     const author = '上海第二工业大学';
     const subtitle = $('title').text();
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

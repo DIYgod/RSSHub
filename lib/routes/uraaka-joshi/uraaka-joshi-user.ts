@@ -112,7 +112,7 @@ async function handler(ctx) {
                 .toArray()
                 .map((c) => $(c).text().trim());
             const link = $item.find('.account-group-link-row').attr('href');
-            const date = parseDate($item.find('.profile-char').attr('datetime'));
+            const date = parseDate($item.find('.profile-char').attr('datetime')!);
             const guid = $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id');
 
             $item.find('.grow-room').remove();

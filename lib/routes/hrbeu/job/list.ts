@@ -67,12 +67,12 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 if (item.link.includes('HrbeuJY')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('.article').html();
-                } else if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                } else if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
                     await finishArticleItem(item);
                 } else {
                     item.description = '本文需跳转，请点击标题后阅读';

@@ -667,7 +667,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.prop('title') || $item.text(),
-                link: new URL($item.prop('href'), currentUrl).href,
+                link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: parseDate($item.next().text(), 'YYYY/MM/DD'),
             };
         });

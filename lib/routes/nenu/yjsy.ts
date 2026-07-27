@@ -38,14 +38,14 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
+                link: link.startsWith('http') ? link : new URL(link!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/yjsy\.nenu\.edu\.cn/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (/yjsy\.nenu\.edu\.cn/.test(item.link!)) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

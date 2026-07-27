@@ -25,7 +25,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('a').text(),
-                link: new URL($item.find('a').attr('href'), response.url).href,
+                link: new URL($item.find('a').attr('href')!, response.url).href,
                 pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
             };
         });

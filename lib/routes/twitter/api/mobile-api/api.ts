@@ -129,8 +129,8 @@ const listTweets = (listId, params = {}) =>
     );
 
 function gatherLegacyFromData(entries, filterNested?, userId?) {
-    const tweets = [];
-    const filteredEntries = [];
+    const tweets: any[] = [];
+    const filteredEntries: any[] = [];
     for (const entry of entries) {
         const entryId = entry.entryId;
         if (entryId) {
@@ -197,7 +197,7 @@ const getUserTweetByStatus = async (id, params = {}) => gatherLegacyFromData(awa
 const getListById = async (id, params = {}) => gatherLegacyFromData(await listTweets(id, params));
 
 const excludeRetweet = function (tweets) {
-    const excluded = [];
+    const excluded: any[] = [];
     for (const t of tweets) {
         if (t.retweeted_status) {
             continue;

@@ -42,8 +42,8 @@ const handler = async (ctx) => {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const $ = load(detailResponse);
 
                 item.author = $('a[itemprop="author"]').eq(0).text();

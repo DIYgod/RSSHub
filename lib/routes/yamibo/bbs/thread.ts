@@ -40,7 +40,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const tid = ctx.req.param('tid');
 
-    const { data, link } = await fetchThread(tid, { ordertype: '1' });
+    const { data, link } = await fetchThread(tid!, { ordertype: '1' });
 
     if (!data) {
         return {

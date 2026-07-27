@@ -47,7 +47,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 

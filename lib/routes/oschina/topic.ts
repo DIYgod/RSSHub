@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     const resultItem = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const content = await loadContent(item.link);
                     content('.ad-wrap').remove();

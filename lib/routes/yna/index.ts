@@ -63,8 +63,8 @@ async function handler(ctx) {
     const feed = await parser.parseURL(url);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                item.pubDate = lang === 'ko' ? parseDate(item.pubDate) : timezone(parseDate(item.pubDate), 9); // Timezone is only included in the pubDate of the Korean language RSS
+            cache.tryGet(item.link!, async () => {
+                item.pubDate = lang === 'ko' ? parseDate(item.pubDate!) : timezone(parseDate(item.pubDate!), 9); // Timezone is only included in the pubDate of the Korean language RSS
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.author =

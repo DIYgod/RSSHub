@@ -69,14 +69,14 @@ async function handler() {
                 case 'wechat-mp':
                     return finishArticleItem(item);
                 case 'pku-news':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.pageArticle > div.col.lf').html();
                         return item;
                     });
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.article').html();

@@ -40,7 +40,7 @@ async function handler(ctx) {
         feed.items
             .filter((i) => i.link && !i.link.startsWith('https://www.cnbc.com/select/'))
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
 

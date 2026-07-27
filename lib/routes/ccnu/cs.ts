@@ -46,7 +46,7 @@ async function handler() {
                 return {
                     title: a.attr('title'),
                     description: $item.find('.overfloat-dot-2').text(),
-                    link: new URL(a.attr('href'), link).href,
+                    link: new URL(a.attr('href')!, link).href,
                     pubDate: parseDate($item.find('.time').text(), 'DDYYYY-MM'),
                 };
             }),

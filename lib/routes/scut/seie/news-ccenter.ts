@@ -51,7 +51,7 @@ async function handler() {
 
     const items = await Promise.all(
         articleList.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(`${rootUrl}${item.link}`);
                 const content = load(detailResponse.data);
 

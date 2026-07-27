@@ -43,7 +43,7 @@ export const handler = async (ctx) => {
                 title,
                 description,
                 pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
-                link: new URL(a.prop('href'), currentUrl).href,
+                link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
                     text: $item.find('p').text(),
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title,

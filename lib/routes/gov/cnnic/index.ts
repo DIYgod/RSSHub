@@ -51,7 +51,7 @@ async function handler(ctx) {
 
             return {
                 title: link.text(),
-                link: new URL(link.attr('href'), currentUrl).href,
+                link: new URL(link.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.contents().last().text().trim()),
             };
         });

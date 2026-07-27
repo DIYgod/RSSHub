@@ -62,7 +62,7 @@ async function handler(ctx) {
         .map((e) => {
             const element = $(e);
             const title = element.find('a').text().trim();
-            const link = new URL(element.find('a').attr('href'), url).href;
+            const link = new URL(element.find('a').attr('href')!, url).href;
             return {
                 title,
                 link,

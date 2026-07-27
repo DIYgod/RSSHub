@@ -97,8 +97,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!, {
                     headers,
                 });
                 const $ = load(response);

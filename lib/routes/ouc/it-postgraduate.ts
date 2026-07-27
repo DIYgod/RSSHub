@@ -45,7 +45,7 @@ async function handler() {
                 const a = $item.find('a');
                 return {
                     title: a.attr('title'),
-                    link: new URL(a.attr('href'), link).href,
+                    link: new URL(a.attr('href')!, link).href,
                     pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
                 };
             }),

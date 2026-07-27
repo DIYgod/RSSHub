@@ -72,7 +72,7 @@ async function handler(ctx) {
         .map((item) => {
             const title = $(item).find('div.focusTitle > span').text();
             const link = rootUrl + $(item).find('a:nth-child(1)').attr('href');
-            const pubDate = parseDate($(item).attr('edittime'), 'YYYYMMDDHHmmss');
+            const pubDate = parseDate($(item).attr('edittime')!, 'YYYYMMDDHHmmss');
 
             return {
                 title,

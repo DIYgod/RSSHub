@@ -32,7 +32,7 @@ async function handler(ctx) {
 
     const items = feed.items.map((item) => ({
         title: item.title,
-        pubDate: parseDate(item.pubDate),
+        pubDate: parseDate(item.pubDate!),
         link: item.link,
         author: '量子位',
         category: item.categories,

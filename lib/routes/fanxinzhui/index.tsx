@@ -42,7 +42,7 @@ async function handler(ctx) {
 
             const season = $item.find('span.season').text();
             const name = $item.find('span.name').text();
-            const link = new URL($item.prop('href'), rootUrl).href;
+            const link = new URL($item.prop('href')!, rootUrl).href;
 
             return {
                 title: `${season} ${name}`,
@@ -115,7 +115,7 @@ async function handler(ctx) {
     );
 
     const title = $('title').text();
-    const image = new URL($('img.logo').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo').prop('src')!, rootUrl).href;
 
     return {
         item: items,

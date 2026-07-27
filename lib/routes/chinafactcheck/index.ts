@@ -34,7 +34,7 @@ async function handler() {
 
     const articles = await Promise.all(
         articlesLink.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { title, author, pubDate, description, category } = await utils.getArticleDetail(item.link);
 
                 item.title = title;

@@ -32,7 +32,7 @@ async function handler(ctx) {
         .map((item) => {
             let link = $(item).find('a').attr('href');
             if (link.includes('info') && id !== '') {
-                link = new URL(link, rootUrl).href;
+                link = new URL(link!, rootUrl).href;
             }
             if (link.includes('info') && id === '') {
                 link = `${rootUrl}/${link}`;
@@ -46,7 +46,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 if (item.link.includes('info')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);

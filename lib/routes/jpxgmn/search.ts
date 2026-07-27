@@ -30,7 +30,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('b').text(),
-            link: new URL($(item).find('a').attr('href'), baseUrl).href,
+            link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             pubDate: parseDate($(item).next().next().next().find('span').first().text()),
         }))
         .filter((item) => item.title.length !== 0);

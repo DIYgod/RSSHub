@@ -41,7 +41,7 @@ export const handler = async (ctx) => {
                     : undefined,
                 intro: $item.find('p.card__excerpt').text(),
             });
-            const link = new URL(a.prop('href'), rootUrl).href;
+            const link = new URL(a.prop('href')!, rootUrl).href;
             const guid = `infoq-${$item.prop('data-path').replace(/^\//, '')}`;
             const length = $item.find('div.card__length').text() || undefined;
 

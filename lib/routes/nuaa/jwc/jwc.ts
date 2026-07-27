@@ -69,7 +69,7 @@ async function handler(ctx) {
         list.map(async (info) => {
             const title = info.title || 'tzgg';
             const date = info.date;
-            const itemUrl = new URL(info.link, host).href;
+            const itemUrl = new URL(info.link!, host).href;
             let description = title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
 
             if (getDescription) {
@@ -81,6 +81,7 @@ async function handler(ctx) {
                         const $ = load(response.data);
                         return $('.wp_articlecontent').html() + '<br><hr /><a href="' + itemUrl + '" target="_blank">查看原文</a>';
                     }
+                    return '';
                 });
             }
 

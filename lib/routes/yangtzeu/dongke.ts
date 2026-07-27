@@ -32,7 +32,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
@@ -65,7 +65,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         language: 'zh-cn',
-        image: new URL($('#head-img a img').prop('src'), rootUrl).href,
+        image: new URL($('#head-img a img').prop('src')!, rootUrl).href,
         author: '长江大学动物科学学院',
     };
 }

@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('a.hourranktitle').text(),
-            link: new URL($(item).find('a.hourranktitle').attr('href'), host).href,
+            link: new URL($(item).find('a.hourranktitle').attr('href')!, host).href,
         }));
 
     const items = await Promise.all(

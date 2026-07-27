@@ -40,7 +40,7 @@ async function handler() {
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.map(async (item) => {
-            const { description, author, category } = await cache.tryGet(item.link, async () => {
+            const { description, author, category } = await cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     headers: {
                         referer: 'https://www.onet.pl/', // for some reason onet.pl will redirect to the main page if referer is not set
@@ -65,7 +65,7 @@ async function handler() {
                 description,
                 author,
                 category,
-                pubDate: parseDate(item.pubDate),
+                pubDate: parseDate(item.pubDate!),
                 guid: item.id,
             };
         })

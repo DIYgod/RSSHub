@@ -63,13 +63,13 @@ async function handler(ctx) {
 
             return {
                 title: $item.prop('title') ?? $item.find('h4.eclips').text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: parseDate($item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
                 description: renderDescription({
                     description: $item.find('div.txt p').html(),
                     image: image.prop('src')
                         ? {
-                              src: new URL(image.prop('src'), rootUrl).href,
+                              src: new URL(image.prop('src')!, rootUrl).href,
                               alt: image.prop('alt'),
                           }
                         : undefined,
@@ -83,7 +83,7 @@ async function handler(ctx) {
     const siteName = getMeta(meta, 'SiteName');
     const columnName = getMeta(meta, 'ColumnName');
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
@@ -91,7 +91,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: getMeta(meta, 'description'),
         language: $('html').prop('lang'),
-        image: new URL($('div.logo img').prop('src'), rootUrl).href,
+        image: new URL($('div.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: columnName,

@@ -26,7 +26,7 @@ export const handler = async (ctx) => {
             return {
                 title: $item.find('a').text().trim(),
                 pubDate: parseDate($item.find('span').text().trim()),
-                link: new URL($item.find('a').prop('href'), rootUrl).href,
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
 
@@ -54,7 +54,7 @@ export const handler = async (ctx) => {
                               $$('meta[name="others"]')
                                   .prop('content')
                                   .split(/时间\s/)
-                                  .pop()
+                                  .pop()!
                           ),
                           8
                       )

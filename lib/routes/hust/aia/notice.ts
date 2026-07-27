@@ -45,7 +45,7 @@ async function handler(ctx) {
                     title: $item.find('a h2').text(),
                     description: $item.find('a div').text() || title,
                     pubDate: parseDate($item.find('.date3').text(), 'DDYYYY-MM'),
-                    link: new URL($item.find('a').attr('href'), link).href,
+                    link: new URL($item.find('a').attr('href')!, link).href,
                 };
             }),
     };

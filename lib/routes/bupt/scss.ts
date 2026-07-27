@@ -52,7 +52,7 @@ async function handler() {
                 return null;
             }
 
-            const link = new URL($link.attr('href'), rootUrl).href;
+            const link = new URL($link.attr('href')!, rootUrl).href;
             const rawDate = $item.find('span').text().replace('发布时间：', '').trim();
 
             return {

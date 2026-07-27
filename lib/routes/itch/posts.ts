@@ -54,7 +54,7 @@ async function handler(ctx) {
                 description: description.html(),
                 title: `${author}: ${description.text()}`,
                 link: $item.find('.post_date a').attr('href'),
-                pubDate: parseDate($item.find('.post_date').attr('title')),
+                pubDate: parseDate($item.find('.post_date').attr('title')!),
             };
         });
 

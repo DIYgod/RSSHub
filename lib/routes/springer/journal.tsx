@@ -129,8 +129,8 @@ async function handler(ctx) {
         );
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response3 = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const response3 = await ofetch(item.link!, {
                     headers: {
                         cookie: authorizeCookie,
                     },

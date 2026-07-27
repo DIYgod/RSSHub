@@ -31,7 +31,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate($item.find('time').attr('datetime')),
+                pubDate: parseDate($item.find('time').attr('datetime')!),
             };
         });
 

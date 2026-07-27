@@ -15,7 +15,7 @@ export async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const token = encodeURI($('meta[name="csrf-token"]').attr('content'));
+    const token = encodeURI($('meta[name="csrf-token"]').attr('content')!);
     const apiUrl = `${rootUrl}/home/more?&type=${$('div[data-type]').data('type')}&page=1&_csrf=${token}&_=${Date.now()}`;
 
     response = await got(apiUrl);

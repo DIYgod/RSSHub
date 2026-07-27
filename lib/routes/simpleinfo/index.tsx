@@ -65,11 +65,11 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const result = await got(item.link);
                 const content = load(result.data);
                 item.author = content('meta[property="article:author"]').attr('content');
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
                 item.description = renderDescription({
                     image: content('meta[property="og:image"]').attr('content'),
                     description: content('.article-content').first().html(),

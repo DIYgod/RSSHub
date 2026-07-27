@@ -682,7 +682,7 @@ async function handler(ctx) {
                 }
 
                 /* pubDate */
-                const pubDate = parseDate($item.find('.tgme_widget_message_date time').attr('datetime'));
+                const pubDate = parseDate($item.find('.tgme_widget_message_date time').attr('datetime')!);
 
                 /* ----- finished parsing ----- */
 

@@ -55,7 +55,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate($story.find('time').attr('datetime')),
+                pubDate: parseDate($story.find('time').attr('datetime')!),
                 description: $story.find('.story__content-inner').html(),
                 author: $story.find('.user__nick').text(),
             };

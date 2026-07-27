@@ -67,7 +67,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -79,7 +79,7 @@ async function handler(ctx) {
 
                 item.description = content('#contentleft').html();
                 item.author = content('meta[itemprop="author"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
 
                 return item;
             })

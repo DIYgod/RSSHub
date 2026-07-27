@@ -50,14 +50,14 @@ async function handler(ctx) {
 
             return {
                 title: a.prop('title') || a.text(),
-                link: link.startsWith('http') ? link : new URL(link, currentUrl).href,
+                link: link.startsWith('http') ? link : new URL(link!, currentUrl).href,
                 pubDate: parseDate($item.find('span').text().replaceAll(/\(|\)/g, '')),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link);
 
@@ -85,8 +85,8 @@ async function handler(ctx) {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), currentUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), currentUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, currentUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, currentUrl).href;
 
     return {
         item: items,

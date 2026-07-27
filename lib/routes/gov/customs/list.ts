@@ -74,7 +74,7 @@ async function handler(ctx) {
                     const $item = $(item);
                     return {
                         title: $item.find('a').attr('title'),
-                        link: new URL($item.find('a').attr('href'), host).href,
+                        link: new URL($item.find('a').attr('href')!, host).href,
                         date: parseDate($item.find('span').text()),
                     };
                 });

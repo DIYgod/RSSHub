@@ -52,7 +52,7 @@ async function handler(ctx) {
             const date = parseDate($item.find('div.item-date').text());
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: date,
             };
         });

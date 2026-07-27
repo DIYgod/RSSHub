@@ -64,7 +64,7 @@ async function handler(ctx) {
             const $article = load(article);
 
             const author = $article('footer p').text();
-            const pubDate = parseDate($article('footer time').attr('datetime'));
+            const pubDate = parseDate($article('footer time').attr('datetime')!);
 
             const title = $article('a[aria-label]').prop('aria-label');
             const href = $article('a[aria-label]').attr('href');

@@ -61,7 +61,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.author = content('meta[name="ContentSource"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!);
                 item.description = content('.TRS_Editor, .content').html();
 
                 return item;

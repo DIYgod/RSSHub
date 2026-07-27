@@ -43,7 +43,7 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title'),
-                link: new URL($item.find('a').attr('href'), baseUrl).href,
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'),
             };
         });

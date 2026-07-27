@@ -41,7 +41,7 @@ async function handler(ctx) {
     const bookInfoEl = bookEl.parent();
 
     const bookName = bookEl.text();
-    const bookUrl = new URL(bookEl.prop('href'), rootUrl).href;
+    const bookUrl = new URL(bookEl.prop('href')!, rootUrl).href;
     const bookStatus = bookInfoEl.find('font').first().text();
     const bookWords = bookInfoEl.find('font').eq(1).text();
     const bookUpdatedTime = bookInfoEl.parent().contents().last().text().trim();

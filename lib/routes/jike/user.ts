@@ -48,7 +48,7 @@ async function handler(ctx) {
     const html = response.data;
     const $ = load(html);
     const raw = $('[type = "application/json"]').html();
-    const data = JSON.parse(raw).props.pageProps;
+    const data = JSON.parse(raw ?? '').props.pageProps;
 
     const getLink = (id, type) => {
         switch (type) {

@@ -44,7 +44,7 @@ async function handler(ctx: Context) {
             const $item = $(item);
             return {
                 title: $item.find('th em').text() + ' ' + $item.find('span a').eq(0).text(),
-                link: new URL($item.find('span a').eq(0).attr('href'), `${config.sis001.baseUrl}/forum/`).href,
+                link: new URL($item.find('span a').eq(0).attr('href')!, `${config.sis001.baseUrl}/forum/`).href,
                 author: $item.find('.author a').text(),
             };
         });

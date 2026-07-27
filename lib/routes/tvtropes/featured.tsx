@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const item = $(`div#featured-tropes div.${categories[category]}`);
 
-    const link = new URL(item.find('h2.entry-title a').prop('href'), rootUrl).href;
+    const link = new URL(item.find('h2.entry-title a').prop('href')!, rootUrl).href;
 
     const { data: detailResponse } = await got(link);
 
@@ -71,7 +71,7 @@ async function handler(ctx) {
         },
     ];
 
-    const image = new URL($('img.logo-big').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo-big').prop('src')!, rootUrl).href;
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
     return {

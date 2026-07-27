@@ -39,7 +39,7 @@ async function handler(ctx) {
     $(config.list)
         .slice(0, 10)
         .each((i, e) => {
-            const temp = new URL($(e).attr('href'), link);
+            const temp = new URL($(e).attr('href')!, link);
             if (temp.hostname === hostname) {
                 list.push(temp);
             }

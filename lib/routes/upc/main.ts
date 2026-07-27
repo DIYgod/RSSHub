@@ -66,7 +66,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         // ### 遍历列表，筛选出自己想要的内容
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 if (!item.link.startsWith(`${baseUrl}/`) || item.link.includes('content.jsp')) {
                     return item;
                 }

@@ -62,7 +62,7 @@ async function handler(ctx) {
             const itemLink = $('.topic-title-wrap').attr('href');
 
             const title = $('.topic-title').text().trim();
-            const content = await cache.tryGet(itemLink, async () => {
+            const content = await cache.tryGet(itemLink!, async () => {
                 const result = await got.get(itemLink);
 
                 return load(result.data);
@@ -92,7 +92,7 @@ async function handler(ctx) {
                 ),
                 category: categoryName,
                 link: itemLink,
-                pubDate: parseDate($('.timeago').attr('title'), 'YYYY/MM/DD'),
+                pubDate: parseDate($('.timeago').attr('title')!, 'YYYY/MM/DD'),
             };
         })
     );

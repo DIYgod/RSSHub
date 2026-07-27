@@ -57,7 +57,7 @@ async function handler(ctx) {
     if (needDetails) {
         items = await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -67,7 +67,7 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="title"]').attr('content');
                     item.author = content('.username').text();
-                    item.pubDate = parseDate(content('time').attr('datetime'));
+                    item.pubDate = parseDate(content('time').attr('datetime')!);
                     item.category = content('.tagname')
                         .toArray()
                         .map((tag) => content(tag).text());

@@ -27,7 +27,7 @@ async function handler(ctx) {
     let items = ($('main div.inner').find('a').length === 0 ? $('body') : $('main div.inner'))
         .find('a')
         .toArray()
-        .filter((item) => /(?:\/\d{4}){2}\/\w+-\w+\.html/.test($(item).prop('href')))
+        .filter((item) => /(?:\/\d{4}){2}\/\w+-\w+\.html/.test($(item).prop('href')!))
         .slice(0, limit)
         .map((item) => {
             const $item = $(item);
@@ -36,13 +36,13 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL($item.prop('href'), rootUrl).href,
+                link: link.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link);
 
@@ -81,7 +81,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl);
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl);
 
     return {
         item: items,
@@ -89,7 +89,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh-cn',
-        image: new URL($('h1.logo a img').prop('src'), rootUrl).href,
+        image: new URL($('h1.logo a img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),

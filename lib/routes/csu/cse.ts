@@ -46,7 +46,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((item) => {
             const $ = load(item);
-            const address = new URL($('a').attr('href'), url).href;
+            const address = new URL($('a').attr('href')!, url).href;
             const title = $('a').text();
             const pubDate = $('span').text();
             return cache.tryGet(address, async () => {

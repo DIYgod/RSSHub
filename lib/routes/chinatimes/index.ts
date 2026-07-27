@@ -55,7 +55,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}?chdtv`,
                 guid: `${baseUrl}${a.attr('href')}`,
-                pubDate: timezone(parseDate($item.find('time').attr('datetime')), 8),
+                pubDate: timezone(parseDate($item.find('time').attr('datetime')!), 8),
                 category: $item
                     .find('.category a')
                     .toArray()

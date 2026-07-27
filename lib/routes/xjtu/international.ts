@@ -27,7 +27,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('a').attr('title');
             const pubDate = parseDate($item.find('p.list-time').text());
-            const link = new URL($item.find('a').attr('href'), base).href;
+            const link = new URL($item.find('a').attr('href')!, base).href;
             return {
                 title,
                 pubDate,

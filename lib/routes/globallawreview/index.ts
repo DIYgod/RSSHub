@@ -26,7 +26,7 @@ async function handler(ctx) {
 
     let $ = load(firstResponse);
 
-    const currentUrl = new URL($('p.tabBtn span a').prop('href'), rootUrl).href;
+    const currentUrl = new URL($('p.tabBtn span a').prop('href')!, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('p.p1 a');
-            const link = new URL(a.prop('href'), rootUrl).href;
+            const link = new URL(a.prop('href')!, rootUrl).href;
 
             return {
                 title: a.text(),

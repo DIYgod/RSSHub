@@ -93,8 +93,8 @@ async function handler(ctx) {
 
             return {
                 title: `${id} ${size}`,
-                pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
-                link: new URL($item.find('a').first().attr('href'), rootUrl).href,
+                pubDate: parseDate(pubDate!, 'YYYY/MM/DD'),
+                link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
                 description: renderToString(<JavDescription image={image} id={id} size={size} pubDate={pubDate} description={description} actresses={actresses} tags={tags} magnet={magnet} link={link} />),
                 author: actresses.join(', '),
                 category: [...tags, ...actresses],

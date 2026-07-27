@@ -25,11 +25,11 @@ export const handler = async (ctx) => {
             const $item = $(item);
 
             const title = $item.find('p.txt').text();
-            const image = new URL($item.find('img').prop('src'), rootUrl).href;
+            const image = new URL($item.find('img').prop('src')!, rootUrl).href;
 
             return {
                 title,
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: parseDate(title, 'YYYY年MM期'),
                 author,
                 image,
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
 
                 const current = $$('ol.breadcrumb li a').first().text();
                 const pubDate = parseDate($$('div.title').text(), 'YYYY年MM月DD日');
-                const image = new URL($$('div.coverline img').prop('src'), rootUrl).href;
+                const image = new URL($$('div.coverline img').prop('src')!, rootUrl).href;
 
                 return $$('a.txt')
                     .toArray()
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
                         return {
                             title,
                             pubDate,
-                            link: new URL($i.prop('href'), item.link).href,
+                            link: new URL($i.prop('href')!, item.link).href,
                             category: [
                                 current,
                                 $i
@@ -94,7 +94,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.img-box img').prop('src'), rootUrl).href;
+    const image = new URL($('div.img-box img').prop('src')!, rootUrl).href;
 
     return {
         title,

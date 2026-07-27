@@ -32,7 +32,7 @@ async function handler(ctx) {
                 const date = $item.find('.box-date');
                 return {
                     title: a.text(),
-                    link: new URL(a.attr('href'), currentUrl).href,
+                    link: new URL(a.attr('href')!, currentUrl).href,
                     pubDate: parseDate(date.text(), 'YYYY-MM-DD'),
                 };
             });
@@ -45,7 +45,7 @@ async function handler(ctx) {
                 const date = $item.find('.right').first();
                 return {
                     title: a.text(),
-                    link: new URL(a.attr('href'), currentUrl).href,
+                    link: new URL(a.attr('href')!, currentUrl).href,
                     pubDate: parseDate(date.text(), 'YYYY-MM-DD'),
                 };
             });
@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const date = $item.find('.col-news-date');
                 return {
                     title: a.text(),
-                    link: new URL(a.attr('href'), currentUrl).href,
+                    link: new URL(a.attr('href')!, currentUrl).href,
                     pubDate: parseDate(date.text(), 'YYYY.MM.DD'),
                 };
             });

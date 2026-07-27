@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                link: new URL($item.find('a').first().prop('href'), rootUrl).href,
+                link: new URL($item.find('a').first().prop('href')!, rootUrl).href,
                 author: $item.find('a.new-list-p, div.author').text().trim(),
                 image,
                 banner: image,
@@ -115,7 +115,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text().trim();
-    const image = new URL($('div.nav-logo a img').prop('src'), rootUrl).href;
+    const image = new URL($('div.nav-logo a img').prop('src')!, rootUrl).href;
 
     return {
         title,

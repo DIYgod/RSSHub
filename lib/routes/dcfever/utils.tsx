@@ -61,7 +61,7 @@ const parseItem = (item) =>
         const pageLinks = $('.article_multi_page a')
             .not('.selected')
             .toArray()
-            .map((i) => ({ link: new URL($(i).attr('href'), item.link).href }));
+            .map((i) => ({ link: new URL($(i).attr('href')!, item.link).href }));
 
         if (pageLinks.length) {
             const pages = await Promise.all(
@@ -95,7 +95,7 @@ const parseItem = (item) =>
         });
 
         item.description = content.html();
-        item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content'));
+        item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
 
         return item;
     });

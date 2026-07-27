@@ -25,7 +25,7 @@ const categories = {
  */
 const convertToQueryString = (path) => {
     const parts = path.split('/');
-    const queryStringParams = [];
+    const queryStringParams: string[] = [];
 
     for (let i = 0; i < parts.length; i += 2) {
         const key = parts[i];
@@ -50,7 +50,7 @@ const getInfo = (url, range) =>
 
         const $ = load(response);
 
-        const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href'), rootUrl).href;
+        const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href')!, rootUrl).href;
         const image = `https:${$('div.logo a img').prop('src')}`;
         const ranges = $('div.hottime a')
             .toArray()

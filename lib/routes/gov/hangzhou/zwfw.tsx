@@ -236,7 +236,7 @@ async function handler() {
             const title = $item.find('a').first().text();
             const time = timezone(parseDate($item.find('span').first().text(), 'YYYY-MM-DD'), 8);
             const a = $item.find('a').first().attr('href');
-            const fullUrl = new URL(a, host).href;
+            const fullUrl = new URL(a!, host).href;
 
             return {
                 title,

@@ -56,7 +56,7 @@ async function handler(ctx) {
 
                 item.description = content('#divARTICLECONTENTTop').html();
                 item.doi = content('meta[name="dc.Identifier"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content')!);
 
                 return item;
             })

@@ -73,7 +73,7 @@ async function handler(ctx) {
 
                 item.title = content('.h1-adjust').text();
                 item.author = content('.avatar-link a').attr('title');
-                item.pubDate = parseDate(content('time').first().attr('datetime'));
+                item.pubDate = parseDate(content('time').first().attr('datetime')!);
                 item.description = content('header').next('.row').html();
 
                 return item;

@@ -66,7 +66,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map(async (info) => {
             const title = info.title;
-            const itemUrl = new URL(info.link, host).href;
+            const itemUrl = new URL(info.link!, host).href;
 
             const cacheIn = await cache.get(itemUrl);
             if (cacheIn) {

@@ -41,7 +41,7 @@ const parseArticle = (item) =>
         const metaPublishTime = $('meta[property="article:published_time"]');
         const htmlPubDate = $('#pub_date, .date');
         const htmlDate = htmlPubDate.length ? timezone(parseDate(htmlPubDate.text(), ['YYYY年MM月DD日 HH:mm', 'YYYY年MM月DD日HH:mm']), 8) : null;
-        const metaDate = metaPublishTime.length ? parseDate(metaPublishTime.attr('content')) : htmlDate; // 2023-05-08T08:39:31+08:00
+        const metaDate = metaPublishTime.length ? parseDate(metaPublishTime.attr('content')!) : htmlDate; // 2023-05-08T08:39:31+08:00
         item.pubDate ??= metaDate;
         item.author = $('meta[property="article:author"]').attr('content');
 

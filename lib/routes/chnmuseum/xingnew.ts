@@ -40,7 +40,7 @@ export const route: Route = {
 
                 return {
                     title: a.attr('title') || a.text(),
-                    link: new URL(a.attr('href'), 'https://www.chnmuseum.cn/zx/xingnew/').href,
+                    link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn/zx/xingnew/').href,
                     pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
                     // description: a.attr('title') || a.text(),
                 };

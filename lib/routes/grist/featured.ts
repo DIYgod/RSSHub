@@ -44,7 +44,7 @@ async function handler() {
                 link,
             };
         });
-    const itemData = await Promise.all(listItems.map((item) => cache.tryGet(item.link, async () => (await getData(`https://grist.org/wp-json/wp/v2/posts?slug='${item.link}'&_embed`))[0])));
+    const itemData = await Promise.all(listItems.map((item) => cache.tryGet(item.link!, async () => (await getData(`https://grist.org/wp-json/wp/v2/posts?slug='${item.link}'&_embed`))[0])));
     const items = await getList(itemData);
 
     return {

@@ -44,7 +44,7 @@ async function handler(ctx) {
             const a = $item.find('.entry-header a').first();
             return {
                 title: a.attr('title'),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('.entry-date span').eq(1).text(), 'YYYY/MM/DD HH:mm'), 8),
             };
         })

@@ -57,7 +57,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.aw-mod-head h1').text();

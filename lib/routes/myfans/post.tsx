@@ -53,7 +53,7 @@ async function handler(ctx) {
 
     const items = posts.map((p) => ({
         title: p.body?.replaceAll('\r\n', ' ').trim().split(' ', 1)[0],
-        description: renderDescription(p.post_images, p.body?.replaceAll('\r\n', '<br>')),
+        description: renderDescription(p.post_images, p.body!.replaceAll('\r\n', '<br>')),
         pubDate: parseDate(p.published_at),
         link: `${baseUrl}/posts/${p.id}`,
         author: p.user.name,

@@ -84,7 +84,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got({ method: 'get', url: item.link });
                 const content = load(res.data);
                 const post = content('#paragraph');

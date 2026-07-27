@@ -196,7 +196,7 @@ async function handler(ctx) {
                     }
                 });
 
-                return node.html();
+                return node.html() ?? '';
             });
             return data;
         },

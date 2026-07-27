@@ -125,7 +125,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('div.logo-txt').first().text(),
         language: 'zh-cn',
-        image: new URL($('div.logo-txt img').prop('src'), rootUrl).href,
+        image: new URL($('div.logo-txt img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         author: title,

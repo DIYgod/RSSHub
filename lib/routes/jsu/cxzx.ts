@@ -53,7 +53,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((item) => {
             const $item = $(item);
-            const link = new URL($item.find('td:nth-child(2) > a').attr('href'), baseUrl).href;
+            const link = new URL($item.find('td:nth-child(2) > a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const title = $item.find('td:nth-child(2) > a').text() || '无标题';
 

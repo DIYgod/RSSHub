@@ -114,7 +114,7 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const image = $('meta[property="og:image"]').prop('content');
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href')!, rootUrl).href;
     const author = title.split(/\|/, 1)[0].trim();
 
     return {

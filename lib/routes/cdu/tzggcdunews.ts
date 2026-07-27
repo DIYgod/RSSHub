@@ -50,7 +50,7 @@ async function handler() {
             return {
                 title,
                 // 处理相对路径链接
-                link: link.startsWith('http') ? link : new URL(link, baseUrl).href,
+                link: link.startsWith('http') ? link : new URL(link!, baseUrl).href,
                 pubDate,
                 author: '成都大学官网通知公告',
             };
@@ -58,7 +58,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got.get(item.link);
                 const $ = load(response.data);
 

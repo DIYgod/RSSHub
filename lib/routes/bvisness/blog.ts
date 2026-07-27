@@ -30,8 +30,8 @@ async function handler() {
             const a = $item.find('a').first();
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), 'https://bvisness.me/').href,
-                pubDate: parseDate($item.find('time').attr('datetime')),
+                link: new URL(a.attr('href')!, 'https://bvisness.me/').href,
+                pubDate: parseDate($item.find('time').attr('datetime')!),
             };
         });
 

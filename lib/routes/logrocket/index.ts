@@ -46,8 +46,8 @@ async function handler(ctx) {
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 //
                 $('div.content-max-width .sidebar-container div.code-block').remove();

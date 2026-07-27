@@ -55,7 +55,7 @@ async function handler() {
             const $item = $(item);
             let pubDate = parseDate($item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text(), 'D MMMM YYYY', 'en');
             pubDate = timezone(pubDate, 0);
-            const category = [];
+            const category: string[] = [];
             if ($item.find('div.widget__pin').length !== 0) {
                 category.push('pinned');
             }

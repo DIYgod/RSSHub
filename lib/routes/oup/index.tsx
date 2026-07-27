@@ -46,7 +46,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('a.at-articleLink').text(),
-            link: new URL($(item).find('a.at-articleLink').attr('href'), rootUrl).href,
+            link: new URL($(item).find('a.at-articleLink').attr('href')!, rootUrl).href,
         }));
 
     const items = await Promise.all(

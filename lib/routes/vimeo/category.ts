@@ -69,7 +69,7 @@ async function handler(ctx) {
             url: feedlink + (staffpicks ? feedlinkstaffpicks : ''),
         });
         const description = load(response.data);
-        return description('meta[name="description"]').attr('content');
+        return description('meta[name="description"]').attr('content') ?? '';
     });
 
     return {

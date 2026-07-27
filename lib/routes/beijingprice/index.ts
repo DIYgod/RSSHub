@@ -42,7 +42,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 pubDate: parseDate($item.contents().last().text()),
-                link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link, rootUrl).href),
+                link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link!, rootUrl).href),
                 language,
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureType,
@@ -86,7 +86,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('a.header-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('a.header-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

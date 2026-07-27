@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
             };
         });
 
-    const image = new URL($('img.themedlogo').prop('src'), rootUrl).href;
+    const image = new URL($('img.themedlogo').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

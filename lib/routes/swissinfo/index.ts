@@ -60,7 +60,7 @@ async function handler(ctx) {
             return {
                 link: `${rootUrl}${$item.attr('href')}`,
                 title: $item.find('.si-teaser__title').text(),
-                pubDate: parseDate($item.find('.si-teaser__date').attr('datetime')),
+                pubDate: parseDate($item.find('.si-teaser__date').attr('datetime')!),
             };
         });
 

@@ -340,7 +340,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('span.block-title').text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
@@ -395,7 +395,7 @@ async function handler(ctx) {
 
     const author = $('meta[property="og:site_name"]').prop('content');
     const title = $('meta[property="og:title"]').prop('content');
-    const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

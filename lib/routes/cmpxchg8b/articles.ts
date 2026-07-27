@@ -42,7 +42,7 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $item.find('li').text(),
-                link: new URL($item.find('li a').attr('href'), baseUrl).href,
+                link: new URL($item.find('li a').attr('href')!, baseUrl).href,
                 author,
             };
         });

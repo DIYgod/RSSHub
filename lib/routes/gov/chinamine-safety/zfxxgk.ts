@@ -226,7 +226,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.contents().first().text(),
-                link: new URL($item.prop('href'), currentUrl).href,
+                link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: parseDate($item.parent().find('span').text()),
             };
         });

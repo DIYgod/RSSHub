@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: $item.find('.li-tt-title').text(),
                 description: $item.find('.intro').text(),
-                link: new URL(a.attr('href'), link).href,
+                link: new URL(a.attr('href')!, link).href,
                 pubDate: parseDate(date, 'YYYY-MM-DD'),
             };
         }),

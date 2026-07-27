@@ -49,7 +49,7 @@ async function handler(ctx) {
         list.map((item) => {
             const $ = load(item);
             const link = $('a').attr('href');
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link!, async () => {
                 const result = await got({
                     method: 'get',
                     url: link,

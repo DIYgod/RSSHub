@@ -52,7 +52,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), utils.host).href,
+                link: new URL(a.attr('href')!, utils.host).href,
                 description: renderToString(
                     <>
                         {$element.find('img').attr('src') ? (

@@ -224,7 +224,7 @@ async function handler(ctx: Context) {
 
     const uid = ctx.req.param('uid');
     const embed = !ctx.req.param('embed');
-    const data = await getVideoList(uid);
+    const data = await getVideoList(uid!);
     const videos = data.list?.vlist ?? [];
 
     let name = videos[0]?.author || uid;

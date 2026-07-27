@@ -71,7 +71,7 @@ async function handler(ctx) {
         const onclickValue = $('.button').first().attr('onclick');
         const targetUrl = onclickValue?.match(/window\.open\('([^']+)'/)?.[1];
 
-        return { url: new URL(targetUrl, 'https://2048.info').href };
+        return { url: new URL(targetUrl!, 'https://2048.info').href };
     });
     // 获取重定向后的url
     const redirectResponse = await ofetch.raw(domainInfo.url);
@@ -143,7 +143,7 @@ async function handler(ctx) {
                 });
 
                 item.author = content('.fl.black').first().text();
-                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')), 8);
+                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')!), 8);
 
                 const readTpc = content('#read_tpc').first();
                 const copyLink = content('#copytext')?.first()?.text();

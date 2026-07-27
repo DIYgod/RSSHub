@@ -55,10 +55,10 @@ const FetchGoItems = async (ctx, rewriteId) => {
 
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('.timeago').first().attr('title')), 8);
+                item.pubDate = timezone(parseDate(content('.timeago').first().attr('title')!), 8);
 
                 try {
-                    item.description = md.render(content('.content').html());
+                    item.description = md.render(content('.content').html() ?? '');
                 } catch {
                     // no-empty
                 }

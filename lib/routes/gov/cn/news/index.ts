@@ -80,15 +80,15 @@ async function handler(ctx) {
             list.toArray().map((item) => {
                 const $item = $(item);
                 let contentUrl = $item.find('a').attr('href');
-                contentUrl = contentUrl.startsWith('http') ? contentUrl : new URL(contentUrl, url).href;
-                return cache.tryGet(contentUrl, async () => {
+                contentUrl = contentUrl.startsWith('http') ? contentUrl : new URL(contentUrl!, url).href;
+                return cache.tryGet(contentUrl!, async () => {
                     let description;
                     let fullTextData;
                     let fullTextGet;
                     let pubDate;
                     let author;
                     let category;
-                    if (/dysMiddleResultConItemTitle/.test($item.html())) {
+                    if (/dysMiddleResultConItemTitle/.test($item.html() ?? '')) {
                         if (contentUrl.includes('content')) {
                             fullTextGet = await got.get(contentUrl);
                             fullTextData = load(fullTextGet.data);
@@ -105,7 +105,7 @@ async function handler(ctx) {
                         pubDate = timezone(parseDate(fullTextData('meta[name="firstpublishedtime"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);
                         author = fullTextData('meta[name="author"]').attr('content');
                         category = fullTextData('meta[name="keywords"]').attr('content').split(/[,;]/);
-                        if (/zhengceku/.test(contentUrl)) {
+                        if (/zhengceku/.test(contentUrl!)) {
                             // 政策文件库
                             description = fullTextData('.pages_content').html();
                         } else {

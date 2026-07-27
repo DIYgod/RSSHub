@@ -43,7 +43,7 @@ async function handler(ctx) {
         (item) => {
             const $item = $(item);
             const link = $item.attr('href');
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link!, async () => {
                 const response = await got(link);
                 const $ = load(response.data);
                 const author = $('.artical-content p:eq(0)').text().trim();
@@ -54,7 +54,7 @@ async function handler(ctx) {
                     author,
                     description: $('.artical-content').html(),
                     category: $('meta[property="article:section"]').attr('content'),
-                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
                     link,
                 };
             });

@@ -36,7 +36,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
+                link: new URL(a.prop('href')!, rootUrl).href,
                 description: renderDescription({
                     image: {
                         src: image,
@@ -121,7 +121,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
     const author = subtitle.split(/,/, 1)[0];
 
@@ -131,7 +131,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh',
-        image: new URL($('div.logo_img img').prop('src'), rootUrl).href,
+        image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),

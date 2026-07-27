@@ -84,7 +84,7 @@ async function handler(ctx) {
                     item.title = content('.headline').text();
                     const pictures = /myfigurecollection\.net\/picture\//.test(item.link)
                         ? [{ src: content('meta[property="og:image"]').attr('content') }]
-                        : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content')));
+                        : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content')!));
                     item.description = renderDescription(
                         pictures,
                         content('.form-field')

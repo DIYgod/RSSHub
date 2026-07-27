@@ -91,13 +91,13 @@ async function handler(ctx) {
             const link = $item.find('a[title="Download .torrent"]').attr('href');
             const onErrorAttr = $item.find('.image').attr('onerror');
             const backupImageRegex = /this\.src='(.*?)'/;
-            const match = backupImageRegex.exec(onErrorAttr);
+            const match = backupImageRegex.exec(onErrorAttr!);
             const image = match ? match[1] : $item.find('.image').attr('src');
 
             return {
                 title: `${id} ${size}`,
-                pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
-                link: new URL($item.find('a').first().attr('href'), rootUrl).href,
+                pubDate: parseDate(pubDate!, 'YYYY/MM/DD'),
+                link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
                 description: renderToString(
                     <>
                         {image ? <img src={image} /> : null}

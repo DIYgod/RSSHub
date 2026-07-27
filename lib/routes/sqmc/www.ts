@@ -53,7 +53,7 @@ async function handler(ctx) {
             list.map(async (item) => {
                 const $item = $(item);
 
-                const link = new URL($item.find('dt a').attr('href'), rootUrl).href;
+                const link = new URL($item.find('dt a').attr('href')!, rootUrl).href;
                 const pubDate = parseDate($item.find('dd').eq(0).text(), 'YYYY-MM-DD');
 
                 const cacheIn = await cache.tryGet(link, async () => {

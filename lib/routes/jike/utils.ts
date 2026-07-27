@@ -154,7 +154,7 @@ const constructTopicEntry = async (ctx, url) => {
             const html = resp.data;
             const $ = load(html);
             const raw = $('[type = "application/json"]').html();
-            const data = JSON.parse(raw).props.pageProps;
+            const data = JSON.parse(raw ?? '').props.pageProps;
             data.posts = await Promise.all(
                 data.posts.map(async (item) => {
                     if (!item.video) {

@@ -91,7 +91,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h3').text().trim(),
-                link: new URL($item.prop('href'), currentUrl).href,
+                link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('em').text()), 8),
             };
         });
@@ -124,7 +124,7 @@ async function handler(ctx) {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo_cs a img').prop('src'), currentUrl).href;
+    const image = new URL($('div.logo_cs a img').prop('src')!, currentUrl).href;
     const icon = new URL('favicon.ico', rootUrl).href;
 
     return {

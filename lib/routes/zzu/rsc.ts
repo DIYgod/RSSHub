@@ -51,7 +51,7 @@ async function handler(ctx) {
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a');
-            const link = new URL($link.attr('href'), typeDict[type][1]).href;
+            const link = new URL($link.attr('href')!, typeDict[type][1]).href;
             const title = $link.attr('title') || $link.text();
 
             // 获取发布时间

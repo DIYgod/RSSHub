@@ -52,7 +52,7 @@ async function handler(ctx) {
                 title: $item.find('h2').text().trim(),
                 description: $item.find('p').text().trim(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                pubDate: parseDate(info.shift(), 'YYYY-MM-DD'),
+                pubDate: parseDate(info.shift()!, 'YYYY-MM-DD'),
                 category: info,
             };
         });

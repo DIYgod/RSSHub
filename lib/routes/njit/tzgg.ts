@@ -53,7 +53,7 @@ async function handler() {
 
     const out = await Promise.all(
         urlList.map((itemUrl, index) => {
-            itemUrl = new URL(itemUrl, host).href;
+            itemUrl = new URL(itemUrl!, host).href;
             if (itemUrl.includes('content.jsp')) {
                 const single = {
                     title: titleList[index],

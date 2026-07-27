@@ -28,7 +28,7 @@ export const route: Route = {
 async function handler() {
     // feed the data to rss
     const items = await getNotifList();
-    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getArticle(item))));
+    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link!, () => getArticle(item))));
 
     return {
         title: '四川大学匹兹堡学院',

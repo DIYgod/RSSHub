@@ -67,7 +67,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate($item.find('time').attr('datetime')), 9),
+                    pubDate: timezone(parseDate($item.find('time').attr('datetime')!), 9),
                     locked: $item.find('.icon-locked').length,
                 };
             });
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')), 9),
+                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')!), 9),
                     locked: parent.find('.c-list-member-only').length,
                 };
             });
@@ -105,8 +105,8 @@ async function handler(ctx) {
                 });
 
                 item.description = mainContent.html();
-                item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')); // 2023-05-17T22:33:00+09:00
-                item.updated = parseDate($('meta[property="article:modified_time"]').attr('content'));
+                item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!); // 2023-05-17T22:33:00+09:00
+                item.updated = parseDate($('meta[property="article:modified_time"]').attr('content')!);
 
                 const tag = $('.p-header-category-breadcrumbs li a').last().text();
                 item.category = tag;

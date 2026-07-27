@@ -17,7 +17,7 @@ const ProcessFeed = (list, cache, current) =>
             })
             .map((item) => {
                 let $ = load(item, null, false);
-                const $url = new URL($('a').attr('href'), current.url).href;
+                const $url = new URL($('a').attr('href')!, current.url).href;
                 return cache.tryGet($url, async () => {
                     // 加载新闻内容页面
                     const response = await got($url);

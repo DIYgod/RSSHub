@@ -29,7 +29,7 @@ export const fetchFeed = async (ctx, currentUrl) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -40,7 +40,7 @@ export const fetchFeed = async (ctx, currentUrl) => {
                 content('.entry-copyright').remove();
 
                 content('.entry-content div').each((_, el) => {
-                    if (/^ruanc-\d+/.test(content(el).attr('id'))) {
+                    if (/^ruanc-\d+/.test(content(el).attr('id')!)) {
                         content(el).remove();
                     }
                 });
@@ -53,7 +53,7 @@ export const fetchFeed = async (ctx, currentUrl) => {
                 item.category = content('.entry-info a[rel="category tag"]')
                     .toArray()
                     .map((c) => content(c).text());
-                item.pubDate = parseDate(content('.entry-info .entry-date').attr('datetime'));
+                item.pubDate = parseDate(content('.entry-info .entry-date').attr('datetime')!);
 
                 return item;
             })

@@ -23,7 +23,7 @@ async function getPost(id, lz = 0, pn = 7e6) {
         },
     });
     const $ = load(data);
-    const max = Number.parseInt($('[max-page]').attr('max-page'));
+    const max = Number.parseInt($('[max-page]').attr('max-page')!);
     if (max > pn) {
         return getPost(id, max);
     }

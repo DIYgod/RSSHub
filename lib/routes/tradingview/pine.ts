@@ -41,7 +41,7 @@ async function handler(ctx) {
 
             const id = $item.prop('id');
             const title = $item.find('a.toc-backref').first().text();
-            const link = new URL($item.find('a.headerlink').prop('href'), currentUrl).href;
+            const link = new URL($item.find('a.headerlink').prop('href')!, currentUrl).href;
 
             $item.children().first().remove();
 

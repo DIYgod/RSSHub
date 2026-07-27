@@ -23,7 +23,7 @@ async function handler(ctx) {
             const $elem = $(elem);
             return {
                 title: $elem.find('b').text(),
-                link: new URL($elem.attr('href'), baseUrl).href,
+                link: new URL($elem.attr('href')!, baseUrl).href,
                 pubDate: parseDate($elem.next().next('small').text().split('.', 1)[0]),
             };
         })

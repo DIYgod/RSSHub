@@ -36,7 +36,7 @@ async function handler(ctx) {
     });
 
     const days = response.data.data.vo.days;
-    const items = [];
+    const items: any[] = [];
     for (const day of days) {
         items.push(...day.presaleItems);
     }

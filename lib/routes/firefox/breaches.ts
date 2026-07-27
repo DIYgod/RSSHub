@@ -43,7 +43,7 @@ async function handler() {
             return {
                 title: $item.find('h3 span').last().text(),
                 description: $item.find('.breach-main').html(),
-                link: new URL($item.attr('href'), baseUrl).href,
+                link: new URL($item.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('.breach-main div dd').first().text()), 0),
                 category: $item
                     .find('.breach-main div dd')

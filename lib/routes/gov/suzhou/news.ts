@@ -154,7 +154,7 @@ async function handler(ctx) {
                 const a = $item.find('a');
                 return {
                     title: a.attr('title'),
-                    link: new URL(a.attr('href'), rootUrl).href,
+                    link: new URL(a.attr('href')!, rootUrl).href,
                     pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
                 };
             });

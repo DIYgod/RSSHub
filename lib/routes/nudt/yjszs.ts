@@ -75,7 +75,7 @@ async function handler(ctx) {
     const items = content.toArray().map((elem) => {
         const $elem = $(elem);
         return {
-            link: new URL($elem.find('a').attr('href'), host).href,
+            link: new URL($elem.find('a').attr('href')!, host).href,
             title: $elem.find('h3').text().trim(),
             pubDate: timezone(parseDate($elem.find('.time').text(), 'YYYY-MM-DD'), -8),
         };

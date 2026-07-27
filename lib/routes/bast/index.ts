@@ -55,8 +55,8 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/bast\.net\.cn/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (/bast\.net\.cn/.test(item.link!)) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -66,7 +66,7 @@ async function handler(ctx) {
 
                     item.title = content('meta[name="ArticleTitle"]').attr('content');
                     item.author = content('meta[name="contentSource"]').attr('content');
-                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')), 8);
+                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')!), 8);
                     item.category = [content('meta[name="ColumnName"]').attr('content')];
 
                     item.description = content('.arccont').html();

@@ -72,7 +72,7 @@ async function handler(): Promise<Data> {
     // 添加全文
     items = await Promise.all(
         items.map((item: DataItem) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.body);
                 item.description = content('.tab-content').html();

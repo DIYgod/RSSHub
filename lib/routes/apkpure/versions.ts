@@ -43,7 +43,7 @@ async function handler(ctx) {
     await context.close();
 
     const $ = load(r);
-    const img = new URL($('.ver-top img').attr('src'));
+    const img = new URL($('.ver-top img').attr('src')!);
     img.searchParams.delete('w'); // get full resolution icon
 
     const items = $('.ver li')

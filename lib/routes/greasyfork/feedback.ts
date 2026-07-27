@@ -48,7 +48,7 @@ async function handler(ctx) {
                 return {
                     title: discussionTitle.text().trim(),
                     author: metaItem.find('a').text(),
-                    pubDate: parseDate(metaItem.find('gf-relative-time').attr('datetime')),
+                    pubDate: parseDate(metaItem.find('gf-relative-time').attr('datetime')!),
                     link: rootUrl + discussionTitle.attr('href'),
                 };
             }),

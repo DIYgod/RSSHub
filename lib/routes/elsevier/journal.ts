@@ -63,7 +63,7 @@ async function handler(ctx) {
     const renderDesc = (item) => renderDescription(item);
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response3 = await got(`${host}/science/article/pii/${item.id}`, {
                     cookieJar,
                 });

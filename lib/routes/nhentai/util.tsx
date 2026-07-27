@@ -147,7 +147,7 @@ const getDetail = async (simple) => {
 
     const galleryImgs = $('.gallerythumb img')
         .toArray()
-        .map((ele) => new URL($(ele).attr('data-src'), baseUrl).href)
+        .map((ele) => new URL($(ele).attr('data-src')!, baseUrl).href)
         .map((src) => src.replace(/(.+)(\d)t\.(.+)/, (_, p1, p2, p3) => `${p1}${p2}.${p3}`)) // thumb to high-quality
         .map((src) => src.replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net'))
         .map((src) => src.replace(/\.(jpg|png|gif)\.webp$/, '.$1')) // 移除重複的.webp後綴
@@ -156,7 +156,7 @@ const getDetail = async (simple) => {
     return {
         ...simple,
         title: $('div#info > h2').text() || $('div#info > h1').text(),
-        pubDate: parseDate($('time').attr('datetime')),
+        pubDate: parseDate($('time').attr('datetime')!),
         description: renderDescription(galleryImgs.length, galleryImgs),
     };
 };

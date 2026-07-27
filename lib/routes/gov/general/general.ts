@@ -217,8 +217,8 @@ const gdgov = async (info, ctx) => {
                     link,
                     title,
                     description,
-                    pubDate: timezone(parseDate(pubDate, pubDate_format), 8),
-                    author: /本/.test(author) ? authorisme : author,
+                    pubDate: timezone(parseDate(pubDate!, pubDate_format), 8),
+                    author: /本/.test(author!) ? authorisme : author,
                 };
             });
         })

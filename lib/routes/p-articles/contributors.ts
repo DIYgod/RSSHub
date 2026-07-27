@@ -32,7 +32,7 @@ async function handler(ctx) {
         .map((element) => {
             const info = {
                 title: $(element).find('h3').text(),
-                link: new URL($(element).attr('href'), rootUrl).href,
+                link: new URL($(element).attr('href')!, rootUrl).href,
             };
             return info;
         });

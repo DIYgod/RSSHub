@@ -87,11 +87,11 @@ async function handler(ctx) {
 
     item = await Promise.all(
         item.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+            cache.tryGet(item.link!, async () => {
+                if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
                 }
-                if (new URL(item.link).hostname !== 'www.cs.sdu.edu.cn') {
+                if (new URL(item.link!).hostname !== 'www.cs.sdu.edu.cn') {
                     return item;
                 }
                 const response = await got(item.link);

@@ -156,7 +156,7 @@ async function handler(ctx) {
     if ($(maxPageSelector)) {
         const pageLink = new URLSearchParams($(maxPageSelector).attr('href'));
         const actualNum = pageLink.get('page'); // 获取最大页数
-        if (Number.parseInt(pagelimit) >= Number.parseInt(actualNum)) {
+        if (Number.parseInt(pagelimit) >= Number.parseInt(actualNum ?? '')) {
             pagelimit = actualNum;
         }
     } else {
@@ -166,7 +166,7 @@ async function handler(ctx) {
     const responseList = [response];
     // 将第一页的数据加入数组
     // 创建不含第一页链接的数组
-    const Links = [];
+    const Links: string[] = [];
     for (let i = 1; i < pagelimit; i++) {
         Links.push(`${userUrl}&page=${i + 1}`);
     }

@@ -86,7 +86,7 @@ async function handler(ctx) {
 
                 $('.notFloated_n1oadkwi').remove();
 
-                item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
                 const description = $('section[class^=container_]').html();
                 item.description = renderToString(
                     <>

@@ -36,7 +36,7 @@ async function handler() {
             const result = fullTitle.match(/([^.]+)\.\D+([\d-]+)/);
             const ret = {
                 title: fullTitle,
-                link: new URL($(item).find('a').attr('href'), baseUrl).href,
+                link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             };
             if (result !== null) {
                 ret.title = result[1];

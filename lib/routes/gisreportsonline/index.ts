@@ -33,8 +33,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const html = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const html = await ofetch(item.link!);
                 const content = load(html);
                 const ldjson = JSON.parse(content('script.rank-math-schema-pro').text())['@graph'].find((e) => e['@type'] === 'NewsArticle');
 

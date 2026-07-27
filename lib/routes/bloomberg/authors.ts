@@ -25,7 +25,7 @@ const parseAuthorNewsList = async (slug) => {
             title: headline.text(),
             pubDate: $item.attr('data-updated-at'),
             guid: `bloomberg:${$item.attr('data-id')}`,
-            link: new URL(headline.attr('href'), baseURL).href,
+            link: new URL(headline.attr('href')!, baseURL).href,
         };
     });
 };

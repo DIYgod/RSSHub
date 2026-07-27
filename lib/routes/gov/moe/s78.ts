@@ -43,7 +43,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title'),
-                link: new URL($item.find('a').attr('href'), link).href,
+                link: new URL($item.find('a').attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
         });

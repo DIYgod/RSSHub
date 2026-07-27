@@ -37,7 +37,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href'), link).href,
+                link: new URL($item.attr('href')!, link).href,
             };
         })
         .filter((item, index, arr) => arr.findIndex((i) => i.link === item.link) === index);

@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('.h5').text(),
                 author: $item.find('.mt-1 a').text(),
-                pubDate: parseDate($item.find('relative-time').attr('datetime')),
+                pubDate: parseDate($item.find('relative-time').attr('datetime')!),
                 link: `${baseUrl}${$item.find('.text-mono a').attr('href')}`,
             };
         });

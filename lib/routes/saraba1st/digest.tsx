@@ -49,7 +49,7 @@ async function handler(ctx) {
             const floorUrl = $each.find('th.new a.s.xst').attr('href');
             return {
                 title: `${title}:${floor}`,
-                link: new URL(floorUrl, `${host}/2b/`).href,
+                link: new URL(floorUrl!, `${host}/2b/`).href,
                 author: $each.find('td.by cite').text(),
                 pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
             };

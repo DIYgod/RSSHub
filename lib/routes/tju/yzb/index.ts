@@ -111,7 +111,7 @@ async function handler(ctx) {
             switch (item.type) {
                 case 'tju-yzb':
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         try {
                             const detailResponse = await got(item.link, { responseType: 'buffer' });
                             const content = load(iconv.decode(detailResponse.data, 'gbk'));

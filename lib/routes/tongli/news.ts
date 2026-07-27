@@ -49,15 +49,15 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: res } = await got(item.link);
                 const $ = load(res);
 
                 if (item.link.startsWith('https://tonglinv.pixnet.net/')) {
                     item.description = $('.article-content-inner').html();
-                } else if (/^https?:\/\/blog\.xuite\.net\//.test(item.link)) {
+                } else if (/^https?:\/\/blog\.xuite\.net\//.test(item.link!)) {
                     item.description = $('#content_all').html();
-                } else if (/TNews_View\.aspx/.test(item.link)) {
+                } else if (/TNews_View\.aspx/.test(item.link!)) {
                     item.description = $('#ContentPlaceHolder1_TNewsContent').html();
                 } else {
                     item.description = '';

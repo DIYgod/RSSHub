@@ -49,7 +49,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href'), rootUrl).href,
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
@@ -66,7 +66,7 @@ async function handler(ctx) {
                 const info = content('div.laylist-r em').text();
 
                 item.description = content('.txt').html();
-                item.pubDate = parseDate(info.split('发布时间：').pop());
+                item.pubDate = parseDate(info.split('发布时间：').pop()!);
 
                 return item;
             })

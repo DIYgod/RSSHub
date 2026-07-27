@@ -79,7 +79,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.description = content('.article-body, article[itemprop="description"]').html();
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
 
                 return item;
             })

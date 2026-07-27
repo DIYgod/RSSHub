@@ -41,7 +41,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('a').eq(1).text(),
-                link: new URL($item.find('a').eq(1).attr('href'), baseUrl).href,
+                link: new URL($item.find('a').eq(1).attr('href')!, baseUrl).href,
                 category: $item.find('a').eq(0).text(),
                 pubDate: parseDate($($item).find('.gridlinedate').text(), 'YYYY年MM月DD日'),
             };

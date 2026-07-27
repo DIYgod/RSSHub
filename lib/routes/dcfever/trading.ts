@@ -37,7 +37,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.lazyloadx').attr('alt'),
-                link: new URL($item.attr('href'), link.href).href,
+                link: new URL($item.attr('href')!, link.href).href,
                 author: $item.find('.trade_info div span').eq(1).text(),
             };
         });

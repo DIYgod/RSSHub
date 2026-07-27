@@ -52,7 +52,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.attr('title'),
-                link: new URL($item.attr('href'), currentUrl).href,
+                link: new URL($item.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.find('span').text()),
             };
         });

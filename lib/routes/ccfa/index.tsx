@@ -29,7 +29,7 @@ export const handler = async (ctx) => {
             return {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'),
-                link: new URL(a.prop('href'), currentUrl).href,
+                link: new URL(a.prop('href')!, currentUrl).href,
             };
         });
 
@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
                               .toArray()
                               .find((a) => $$(a).prop('href')?.includes('downFiles.do'));
 
-                item.enclosure_url = attachmentEl ? new URL($$(attachmentEl).prop('href'), rootUrl) : undefined;
+                item.enclosure_url = attachmentEl ? new URL($$(attachmentEl).prop('href')!, rootUrl) : undefined;
                 item.enclosure_title = attachmentEl ? $$(attachmentEl).text() : undefined;
 
                 return item;
@@ -87,7 +87,7 @@ export const handler = async (ctx) => {
     );
 
     const description = $('li.page_tit').contents().last().text().split(/>/).pop();
-    const image = new URL($('div.logo img').prop('src'), currentUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, currentUrl).href;
     const author = $('title').text();
 
     return {

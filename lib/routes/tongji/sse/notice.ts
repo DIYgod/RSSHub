@@ -54,7 +54,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.data-list-time').text(), 'YYYY-MM-DD'),
             };
         });

@@ -55,7 +55,7 @@ async function handler() {
 
                 item.description = $('.article-content').html();
                 item.author = $('dd.addWidth:nth-child(3) div').text().trim();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
                 item.category = $('.OwnerDept font')
                     .toArray()
                     .map((item) => $(item).text().trim());

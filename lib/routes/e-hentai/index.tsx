@@ -77,7 +77,7 @@ async function handler(ctx) {
                             const $t = torrent(t);
                             return { link: $t.attr('href'), title: $t.text() };
                         });
-                    cache.set(item.enclosure_url, torrents);
+                    cache.set(item.enclosure_url, torrents ?? '');
                 }
                 item.description += forms;
                 item.enclosure_url = torrents[0].link;
@@ -85,7 +85,7 @@ async function handler(ctx) {
             }
 
             if (needImages) {
-                let images = await cache.get(item.link);
+                let images = await cache.get(item.link!);
 
                 if (!images) {
                     const imageResponse = await got({
@@ -99,7 +99,7 @@ async function handler(ctx) {
                         content('.gdtm a')
                             .toArray()
                             .map((i) =>
-                                cache.tryGet(content(i).attr('href'), async () => {
+                                cache.tryGet(content(i).attr('href')!, async () => {
                                     const imageResponse = await got({
                                         method: 'get',
                                         url: content(i).attr('href'),
@@ -111,7 +111,7 @@ async function handler(ctx) {
                                 })
                             )
                     );
-                    cache.set(item.link, images);
+                    cache.set(item.link!, images);
                 }
                 item.description += renderToString(
                     <>

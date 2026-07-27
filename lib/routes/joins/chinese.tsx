@@ -29,8 +29,8 @@ export const handler = async (ctx) => {
 
             return {
                 title: $item.find('strong').text(),
-                pubDate: timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()), 8),
-                link: new URL($item.find('a.links').prop('href'), rootUrl).href,
+                pubDate: timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()!), 8),
+                link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
                 author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,
             };
@@ -86,7 +86,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.user-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.user-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${$(`a[data-code="${category}"]`)?.text() || $('ul#user-menu a').first().text()} - ${$('title').text()}`,

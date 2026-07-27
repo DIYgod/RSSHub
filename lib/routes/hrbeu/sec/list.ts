@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 if (item.link.includes('page.htm')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);

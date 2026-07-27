@@ -42,7 +42,7 @@ async function handler() {
                 title: $item.find('.information a').text(),
                 description: $item.find('.description').html(),
                 link: $item.find('.information a').attr('href'),
-                pubDate: parseDate($item.find('time[itemprop=dateCreated]').attr('datetime')),
+                pubDate: parseDate($item.find('time[itemprop=dateCreated]').attr('datetime')!),
             };
         });
 

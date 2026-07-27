@@ -89,7 +89,7 @@ async function handler(ctx) {
         }
     }
 
-    const fullData = [];
+    const fullData: any[] = [];
 
     async function fetchNextPage(url) {
         const response = await ofetch(url, {

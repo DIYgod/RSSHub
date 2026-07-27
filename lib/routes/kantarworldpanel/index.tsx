@@ -62,13 +62,13 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 // The URL similar to the example below is the file download URL.
                 // eg. https://www.kantarworldpanel.com/dwl.php?sn=publications&id=1632.
                 if (item.link === currentUrl || !item.link.startsWith(rootUrl)) {
                     return item;
                 }
-                if (/dwl\.php/.test(item.link)) {
+                if (/dwl\.php/.test(item.link!)) {
                     item.enclosure_url = item.link;
                     item.enclosure_type = 'application/pdf';
 

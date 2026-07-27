@@ -72,7 +72,7 @@ const getUserInfo = async (username, cookieJar) => {
             webProfileInfo = response._data.data.user;
             id = webProfileInfo.id;
 
-            await cache.set(`instagram:getIdByUsername:${username}`, id, 31_536_000); // 1 year since it will never change
+            await cache.set(`instagram:getIdByUsername:${username}`, id ?? '', 31_536_000); // 1 year since it will never change
             await cache.set(`instagram:userInfo:${id}`, webProfileInfo);
         } catch (error) {
             if (error.message.includes("Cookie not in this host's domain")) {

@@ -39,11 +39,11 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const isDownload = /檔案下載/.test($item.attr('title'));
+            const isDownload = /檔案下載/.test($item.attr('title')!);
             const title = isDownload ? $item.text().trim() : $item.attr('title');
             return {
                 title,
-                link: new URL($item.attr('href'), baseUrl).href,
+                link: new URL($item.attr('href')!, baseUrl).href,
                 isDownload,
             };
         });
@@ -55,7 +55,7 @@ async function handler(ctx) {
                     const response = await got(item.link);
                     const $ = load(response.data);
 
-                    item.pubDate = timezone(parseDate($('.info time').attr('datetime'), 'YYYY-MM-DD HH:mm:ss'), 8);
+                    item.pubDate = timezone(parseDate($('.info time').attr('datetime')!, 'YYYY-MM-DD HH:mm:ss'), 8);
                     $('.info, button').remove();
                     item.description = $('.cp').html() + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '') + ($('.file_download').length ? $('.file_download').html() : '');
                 }

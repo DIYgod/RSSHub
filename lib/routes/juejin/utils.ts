@@ -49,7 +49,7 @@ export const getArticle = async (link) => {
         const cs = $('script:contains("_wafchallengeid")')
             .text()
             .match(/cs="(.*?)",c/)?.[1];
-        const cookie = solveWafChallenge(cs);
+        const cookie = solveWafChallenge(cs!);
 
         response = await ofetch(link, {
             headers: {

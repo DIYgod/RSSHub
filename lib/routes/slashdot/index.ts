@@ -70,10 +70,10 @@ async function handler(ctx) {
                 pubDate: parseDate(
                     details
                         .find('time')
-                        .attr('datetime')
-                        ?.replace(/on\s\w+?day\s/, '')
-                        ?.replace('@', '')
-                        ?.replace(/(\d{2}:\d{2})(\w{2})$/, '$1 $2')
+                        .attr('datetime')!
+                        .replace(/on\s\w+?day\s/, '')
+                        .replace('@', '')
+                        .replace(/(\d{2}:\d{2})(\w{2})$/, '$1 $2')
                 ),
             };
         });

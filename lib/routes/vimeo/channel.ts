@@ -59,7 +59,7 @@ async function handler(ctx) {
         list.toArray().map((item) => {
             const $item = $(item);
             const link = $item.find('.more').attr('href');
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link!, async () => {
                 const response2 = await got({
                     method: 'get',
                     url: `https://vimeo.com${link}/description?breeze=1`,
@@ -88,7 +88,7 @@ async function handler(ctx) {
                     videoUrl: $item.find('.more').attr('href'),
                     vdescription: description[index] || '',
                 }),
-                pubDate: parseDate($item.find('time').attr('datetime')),
+                pubDate: parseDate($item.find('time').attr('datetime')!),
                 link: `https://vimeo.com${$item.find('.more').attr('href')}`,
                 author,
             };

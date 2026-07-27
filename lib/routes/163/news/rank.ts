@@ -150,14 +150,14 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     let link;
                     if (['auto', 'house', 'travel'].includes(category)) {
                         const category = item.link.split('.163.com', 1)[0].split('//').pop().split('.').pop();
                         link = `https://3g.163.com/${category}/article/${item.link.split('/').pop()}`;
                     } else {
-                        const pathname = new URL(item.link).pathname;
+                        const pathname = new URL(item.link!).pathname;
                         link = `https://3g.163.com${pathname}`;
                     }
 
@@ -176,7 +176,7 @@ async function handler(ctx) {
                     });
 
                     item.title = content('meta[property="og:title"]').attr('content').replace('_手机网易网', '');
-                    item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content'));
+                    item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content')!);
                     item.description = content('.article-body').html();
                 } catch {
                     return '';

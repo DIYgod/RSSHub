@@ -44,7 +44,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.prop('title') || $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 author: $item.find('.author').text(),
                 pubDate: parseDate($item.parent().find('span.time').text().trim()),
             };
@@ -69,7 +69,7 @@ async function handler(ctx) {
 
     const author = $('meta[name="SiteName"]').prop('content');
     const subtitle = $('meta[name="ColumnName"]').prop('content');
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         item: items,

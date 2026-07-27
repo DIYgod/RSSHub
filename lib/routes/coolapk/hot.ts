@@ -111,7 +111,7 @@ async function handler(ctx) {
         headers: utils.getHeaders(),
     });
     const data = r.data.data;
-    const t = [];
+    const t: any[] = [];
     for (const i of data) {
         if (i.entityType === 'card') {
             for (const k of i.entities) {

@@ -77,7 +77,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
@@ -85,7 +85,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
         language: 'zh',
-        image: new URL($('#imag').prop('src'), rootUrl).href,
+        image: new URL($('#imag').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('meta[name="ColumnName"]').prop('content'),

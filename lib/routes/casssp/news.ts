@@ -45,7 +45,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
@@ -65,7 +65,7 @@ async function handler(ctx) {
     );
 
     const image = $('img[la="la"]').first().prop('src');
-    const icon = new URL($('link[rel="shortcut icon "]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon "]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

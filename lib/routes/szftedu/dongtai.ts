@@ -42,7 +42,7 @@ async function handler() {
 
     const items = await Promise.all(
         lists.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const thisUrl = item.link;
                 const trueLink = thisUrl.includes('http') ? thisUrl : baseLink + thisUrl;
                 const response = await got(trueLink);

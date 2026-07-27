@@ -44,7 +44,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href'), link).href,
+            link: new URL($(item).find('a').attr('href')!, link).href,
             pubDate: parseDate($(item).find('span').text().slice(1, -1)),
         }));
 

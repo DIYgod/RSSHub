@@ -73,7 +73,7 @@ async function handler(ctx) {
                 list.map((index, item) => {
                     const $item = $(item);
                     const link = $item.find('a').attr('href');
-                    return cache.tryGet(link, async () => {
+                    return cache.tryGet(link!, async () => {
                         const rssitem = {
                             title: $item.find('h4').text(),
                             link,

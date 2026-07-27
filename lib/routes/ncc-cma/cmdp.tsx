@@ -11,7 +11,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const ids = id?.split(/\//) ?? [];
-    const titles = [];
+    const titles: string[] = [];
 
     const rootUrl = 'http://cmdp.ncc-cma.net';
     const currentUrl = new URL('cn/index.htm', rootUrl).href;
@@ -34,7 +34,7 @@ export const handler = async (ctx) => {
 
             const id = $item.prop('id');
             const title = $(`li[data-id="${id}"]`).text() || undefined;
-            const image = new URL($item.prop('src'), currentUrl).href;
+            const image = new URL($item.prop('src')!, currentUrl).href;
             const date =
                 image
                     .match(/_(\d{4})(\d{2})(\d{2})_/)

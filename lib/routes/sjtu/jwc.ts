@@ -110,7 +110,7 @@ async function handler(ctx) {
             .map((e) => {
                 const info = $(e).find('.wz');
                 const relativeLink = info.find('a').attr('href');
-                const link = new URL(relativeLink, sectionLink).href;
+                const link = new URL(relativeLink!, sectionLink).href;
                 const title = info.find('a > h2').text();
                 const timeElement = $(e).find('.sj');
                 const day = timeElement.find('h2').text();

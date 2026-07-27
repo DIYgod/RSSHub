@@ -30,7 +30,7 @@ async function handler() {
             const a = $item.find('a.text-xl').first();
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), 'https://aschmelyun.com/blog/').href,
+                link: new URL(a.attr('href')!, 'https://aschmelyun.com/blog/').href,
                 pubDate: parseDate($item.find('span.text-sm').text()),
                 category: $item
                     .find('a.rounded-full')

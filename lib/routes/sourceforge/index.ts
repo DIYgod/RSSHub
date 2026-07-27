@@ -43,7 +43,7 @@ async function handler(ctx) {
             const title = item.find('.result-heading-title').text().trim();
             const link = `${baseURL}${item.find('.result-heading-title').attr('href')}`;
             const description = item.find('.result-heading-texts').html();
-            const pubDate = parseDate(item.find('time').attr('datetime'), 'YYYY-MM-DD');
+            const pubDate = parseDate(item.find('time').attr('datetime')!, 'YYYY-MM-DD');
 
             return {
                 title,

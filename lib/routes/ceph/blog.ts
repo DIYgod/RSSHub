@@ -43,10 +43,10 @@ async function handler(ctx: Context): Promise<Data> {
         .map((e) => {
             const element = $(e);
             const title = element.find('a').text();
-            const pubDate = parseDate(element.find('time').attr('datetime'));
+            const pubDate = parseDate(element.find('time').attr('datetime')!);
             return {
                 title,
-                link: new URL(element.find('a').attr('href'), 'https://ceph.io').href,
+                link: new URL(element.find('a').attr('href')!, 'https://ceph.io').href,
                 pubDate,
             };
         });

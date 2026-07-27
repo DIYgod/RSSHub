@@ -82,7 +82,7 @@ async function handler(ctx) {
             const match = pubDateText.match(/\b(\d{4}-\d{2}-\d{2})\b/);
             return {
                 title: $item.find('a').attr('title') || $item.find('h3').text() || $item.find('a').text(),
-                link: new URL($item.find('a').attr('href'), host).href,
+                link: new URL($item.find('a').attr('href')!, host).href,
                 pubDate: match ? parseDate(match[0], 'YYYY-MM-DD') : null,
             };
         })

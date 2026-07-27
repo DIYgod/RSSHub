@@ -52,7 +52,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const link = $(item).find('a').attr('href');
-            const absoluteLink = new URL(link, currentUrl).href;
+            const absoluteLink = new URL(link!, currentUrl).href;
             return {
                 title: $(item).find('a').text().trim(),
                 pubDate: parseDate($(item).find('span').text()),

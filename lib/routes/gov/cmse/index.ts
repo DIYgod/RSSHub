@@ -28,7 +28,7 @@ export async function handler(ctx) {
             const $item = $(item);
 
             const pubDate = $item.next().text();
-            const link = new URL($item.attr('href'), currentUrl).href;
+            const link = new URL($item.attr('href')!, currentUrl).href;
 
             return {
                 title: $item.text(),

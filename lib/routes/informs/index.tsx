@@ -76,7 +76,7 @@ async function handler(ctx) {
                     },
                 });
                 const detail = load(detailResponse.data);
-                item.description = renderDescription(detail('div.accordion-tabbed.loa-accordion').text(), detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html());
+                item.description = renderDescription(detail('div.accordion-tabbed.loa-accordion').text(), detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html() ?? '');
 
                 return item;
             })

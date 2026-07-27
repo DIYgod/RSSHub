@@ -129,7 +129,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(`https://www.malaysiakini.com/api/content/${item.guid}`);
                 if (response.data.stories.content) {
                     item.description = response.data.stories.content;

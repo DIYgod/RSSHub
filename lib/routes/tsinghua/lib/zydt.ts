@@ -27,7 +27,7 @@ export const handler = async (ctx) => {
             return {
                 title: $item.find('div.notice-list-tt a').text(),
                 pubDate: parseDate($item.find('div.notice-date').text(), 'YYYY/MM/DD'),
-                link: new URL($item.find('div.notice-list-tt a').prop('href'), rootUrl).href,
+                link: new URL($item.find('div.notice-list-tt a').prop('href')!, rootUrl).href,
                 category: $item
                     .find('div.notice-label')
                     .toArray()
@@ -60,7 +60,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo a img').prop('href'), rootUrl).href;
+    const image = new URL($('div.logo a img').prop('href')!, rootUrl).href;
 
     return {
         title,

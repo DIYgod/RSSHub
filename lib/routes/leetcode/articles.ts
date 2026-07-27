@@ -50,7 +50,7 @@ async function handler() {
             const info = {
                 title: $(item).find('h4.media-heading').text().trim(),
                 author: $(item).find('.text-500').text(),
-                link: new URL($(item).attr('href'), host).href,
+                link: new URL($(item).attr('href')!, host).href,
                 pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
             };
             return info;

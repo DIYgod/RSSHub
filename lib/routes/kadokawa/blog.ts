@@ -43,7 +43,7 @@ export const handler = async (ctx) => {
                 title,
                 description,
                 pubDate: parseDate($item.find('span.primary-border-color-after').text()),
-                link: new URL($item.find('a').prop('href'), rootUrl).href,
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 content: {
                     html: description,
                     text: $item.find('div.List-item-preview').text(),

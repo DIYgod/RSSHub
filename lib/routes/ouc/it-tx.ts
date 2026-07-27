@@ -49,7 +49,7 @@ async function handler(ctx) {
             const a = $e.find('a');
             return {
                 title: a.attr('title'),
-                link: new URL(a.attr('href'), host).href,
+                link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
             };
         });

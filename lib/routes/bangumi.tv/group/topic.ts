@@ -41,7 +41,7 @@ async function handler(ctx) {
         $('.topic_list .topic')
             .toArray()
             .map((elem) => {
-                const link = new URL($('.subject a', elem).attr('href'), baseUrl).href;
+                const link = new URL($('.subject a', elem).attr('href')!, baseUrl).href;
                 return cache.tryGet(link, async () => {
                     const html = await ofetch(link);
                     const $ = load(html);

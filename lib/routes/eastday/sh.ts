@@ -58,7 +58,7 @@ async function handler() {
                     });
                     // 解析html内容
                     const $ = load(article.body);
-                    return $('.article_wrapper .mainLayer .content').html() || $('.contentBox .article .detail').html();
+                    return $('.article_wrapper .mainLayer .content').html() || $('.contentBox .article .detail').html() || '';
                 });
             } catch (error) {
                 logger.error(error);

@@ -34,7 +34,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
+                link: new URL(a.prop('href')!, rootUrl).href,
                 pubDate: parseDate($item.find('td').last().text()),
             };
         });
@@ -51,7 +51,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
         language: $('html').prop('lang'),
-        image: new URL($('div.top-logo img').prop('src'), rootUrl).href,
+        image: new URL($('div.top-logo img').prop('src')!, rootUrl).href,
         subtitle: columnName,
         author: siteName,
         allowEmpty: true,

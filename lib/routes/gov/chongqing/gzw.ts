@@ -81,7 +81,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
         language: $('html').prop('lang'),
-        image: new URL($('div.logo img').prop('src'), rootUrl).href,
+        image: new URL($('div.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('meta[name="ColumnKeywords"]').prop('content'),

@@ -39,7 +39,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const links = [];
+    const links: string[] = [];
 
     function pushLinks(index, item) {
         const link = item.attribs.href;

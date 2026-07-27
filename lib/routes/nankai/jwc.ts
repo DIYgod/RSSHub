@@ -65,7 +65,7 @@ export const route: Route = {
         // 获取每个通知的详细内容
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     try {
                         const { data: response } = await got(item.link);
                         const $ = load(response);

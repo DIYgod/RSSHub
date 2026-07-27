@@ -364,7 +364,7 @@ async function requestServerFunction<T>(session: string, id: string, key: string
         throw new Error(`Unable to access the Locals server function (${response.status}).`);
     }
 
-    return parseUnknownResponse<T>(response._data, key);
+    return parseUnknownResponse<T>(response._data!, key);
 }
 
 function fetchCommunityInfo(community: string, session: string) {

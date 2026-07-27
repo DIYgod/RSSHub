@@ -65,14 +65,14 @@ async function handler(ctx) {
             const link = $item.find('a').attr('href');
             return {
                 title: $item.find('p').text(),
-                link: link.startsWith('http') ? link : new URL(link, host).href,
+                link: link.startsWith('http') ? link : new URL(link!, host).href,
                 pubDate: parseDate($item.find('span').text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detail = await got(item.link);
                     const content = load(detail.data);
@@ -88,13 +88,13 @@ async function handler(ctx) {
                     content('form[name=_newscontent_fromname] img').each((_, i) => {
                         const $i = $(i);
                         if ($i.attr('src').startsWith('/')) {
-                            $i.attr('src', new URL($i.attr('src'), host).href);
+                            $i.attr('src', new URL($i.attr('src')!, host).href);
                         }
                     });
                     content('form[name=_newscontent_fromname] ul li a').each((_, a) => {
                         const $a = $(a);
                         if ($a.attr('href').startsWith('/')) {
-                            $a.attr('href', new URL($a.attr('href'), host).href);
+                            $a.attr('href', new URL($a.attr('href')!, host).href);
                         }
                     });
 

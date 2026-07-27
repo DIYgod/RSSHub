@@ -34,7 +34,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('p.new-article-title > a').text(),
-            link: new URL($(item).find('p.new-article-title > a').attr('href'), rootUrl).href,
+            link: new URL($(item).find('p.new-article-title > a').attr('href')!, rootUrl).href,
             pubDate: parseDate($(item).find('p.new-article-date > span.left-span').text()),
             category: $(item).find('p.new-article-date > span:nth-child(1)').text(),
         }));

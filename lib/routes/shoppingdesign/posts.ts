@@ -40,7 +40,7 @@ async function handler() {
         (item) => {
             const $item = $(item);
             const link = $item.attr('url');
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link!, async () => {
                 const response = await got(`${link}?sn_f=1`);
                 const $ = load(response.data);
                 const article = $('.left article .htmlview');
@@ -53,7 +53,7 @@ async function handler() {
                     author: $('meta[name="my:author"]').attr('content'),
                     description: article.html(),
                     category: $('meta[name="my:category"]').attr('content'),
-                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')),
+                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')!),
                     link,
                 };
             });

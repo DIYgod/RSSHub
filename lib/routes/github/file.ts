@@ -44,7 +44,7 @@ async function handler(ctx) {
         headers,
     });
     const list = res.data;
-    const count = [];
+    const count: number[] = [];
     for (let i = 0; i < Math.min(list.length, 10); i++) {
         count.push(i);
     }

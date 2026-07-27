@@ -34,7 +34,7 @@ const parseArticleList = ($: CheerioAPI, limit: number) =>
                 description: $item.find('div.wznr').html(),
             });
             const pubDate = $item.find('div.subcat span.y').contents()?.eq(2)?.text().trim() ?? undefined;
-            const link = new URL($item.find('div.wzbt a').prop('href'), rootUrl).href;
+            const link = new URL($item.find('div.wzbt a').prop('href')!, rootUrl).href;
 
             return {
                 title,
@@ -94,7 +94,7 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
             return {
                 title: aEl.text().trim(),
                 pubDate: pubDate ? parseDate(pubDate) : undefined,
-                link: new URL(aEl.prop('href'), rootUrl).href,
+                link: new URL(aEl.prop('href')!, rootUrl).href,
                 author: $item.find('a.author_t').text().trim(),
             };
         });

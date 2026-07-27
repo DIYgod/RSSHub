@@ -46,7 +46,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('td.title2').text(),
-            link: new URL($(item).find('td.title2 > a').attr('href'), rootUrl).href,
+            link: new URL($(item).find('td.title2 > a').attr('href')!, rootUrl).href,
             author: $(item).find('td.author').text(),
             pubDate: timezone(parseDate($(item).find('td.dateline').text(), 'YYYY-M-D HH:mm'), 8),
             category: $(item).find('td.forum').text(),

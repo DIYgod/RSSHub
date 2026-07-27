@@ -72,7 +72,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 const apiUrl = `${apiRootUrl}/works/${item.doi}`;
 
                 const detailResponse = await got({

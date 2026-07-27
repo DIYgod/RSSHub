@@ -25,7 +25,7 @@ const fetchItems = async (limit, currentUrl) => {
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
+                link: new URL(a.prop('href')!, rootUrl).href,
                 author: $item.find('span').last().text(),
             };
         });
@@ -59,7 +59,7 @@ const fetchItems = async (limit, currentUrl) => {
                                               .text()
                                               .trim()
                                         : {
-                                              href: new URL(as.first().prop('href'), rootUrl).href,
+                                              href: new URL(as.first().prop('href')!, rootUrl).href,
                                               text: as.first().text().trim(),
                                           },
                             };
@@ -71,7 +71,7 @@ const fetchItems = async (limit, currentUrl) => {
                     item.description = renderDescription({
                         images: [
                             {
-                                src: new URL(content('a.mohe-imgs img').prop('src'), rootUrl).href,
+                                src: new URL(content('a.mohe-imgs img').prop('src')!, rootUrl).href,
                                 alt: item.title,
                             },
                         ],

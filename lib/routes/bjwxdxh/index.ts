@@ -44,7 +44,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('div.title > a').text(),
-                link: new URL($item.find('div.title > a').attr('href'), baseUrl).href,
+                link: new URL($item.find('div.title > a').attr('href')!, baseUrl).href,
                 // pubDate: parseDate(item.find('div.time').text(), 'YYYY-MM-DD'),
             };
         });

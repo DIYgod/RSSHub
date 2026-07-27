@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
@@ -56,7 +56,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((tag) => $(tag).text());
                 $('.social_block, .tags').remove();
-                item.pubDate = parseDate($('.postDate').attr('content'));
+                item.pubDate = parseDate($('.postDate').attr('content')!);
                 item.description = $('.entry').html();
 
                 return item;

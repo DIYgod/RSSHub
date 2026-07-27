@@ -42,7 +42,7 @@ async function handler(ctx) {
                     const $item = $(item);
                     return {
                         category: $item.text(),
-                        url: new URL($item.attr('href'), baseUrl).href,
+                        url: new URL($item.attr('href')!, baseUrl).href,
                     };
                 }),
             ...$('a.aqvwYd') // Home
@@ -51,7 +51,7 @@ async function handler(ctx) {
                     const $item = $(item);
                     return {
                         category: $item.text(),
-                        url: new URL($item.attr('href'), baseUrl).href,
+                        url: new URL($item.attr('href')!, baseUrl).href,
                     };
                 }),
         ];
@@ -89,9 +89,9 @@ async function handler(ctx) {
         return {
             title,
             description: renderDescription($item.find('img.Quavad').attr('src'), title),
-            pubDate: parseDate($item.find('time').attr('datetime')),
+            pubDate: parseDate($item.find('time').attr('datetime')!),
             author: authors,
-            link: new URL($item.find('a.WwrzSb').first().attr('href'), baseUrl).href,
+            link: new URL($item.find('a.WwrzSb').first().attr('href')!, baseUrl).href,
         };
     });
 

@@ -56,7 +56,7 @@ async function handler(ctx) {
             const a = $e.find('.news_title a');
             return {
                 title: a.attr('title'),
-                link: new URL(a.attr('href'), host).href,
+                link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($e.find('.news_meta').text()),
             };
         });

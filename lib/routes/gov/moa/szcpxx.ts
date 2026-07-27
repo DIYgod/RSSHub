@@ -28,8 +28,8 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.prop('title'),
-                pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop(), 'YYYY.MM.DD'),
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop()!, 'YYYY.MM.DD'),
+                link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
         });
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
     );
 
     const title = `${$('title').text()} - ${$('li.now').text()}`;
-    const image = new URL($('img.leftLogo').prop('src'), currentUrl).href;
+    const image = new URL($('img.leftLogo').prop('src')!, currentUrl).href;
 
     return {
         title,

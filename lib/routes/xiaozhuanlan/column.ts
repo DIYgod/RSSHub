@@ -47,9 +47,9 @@ async function handler(ctx) {
             $item.find('.topic-has-suggested-item').remove();
             return {
                 title: $item.find('h3').text().trim(),
-                link: new URL($item.find('.topic-body-link').attr('href'), baseUrl).href,
+                link: new URL($item.find('.topic-body-link').attr('href')!, baseUrl).href,
                 author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
-                pubDate: parseDate($item.find('.topic-header .timeago').attr('title')),
+                pubDate: parseDate($item.find('.topic-header .timeago').attr('title')!),
             };
         });
 
@@ -59,7 +59,7 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = md.render($('.hidden_markdown_body').attr('data-summary'));
+                item.description = md.render($('.hidden_markdown_body').attr('data-summary')!);
                 if ($('.topic-tags')) {
                     item.category = $('.topic-tags label')
                         .toArray()

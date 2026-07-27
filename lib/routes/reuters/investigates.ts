@@ -40,13 +40,13 @@ async function handler() {
         }));
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
                 item.title = content('title').text();
                 item.description = content('article.special-report').html();
-                item.pubDate = parseDate(content('time[itemprop="datePublished"]').attr('datetime'));
+                item.pubDate = parseDate(content('time[itemprop="datePublished"]').attr('datetime')!);
                 item.author = content('meta[property="og:article:publisher"]').attr('content');
 
                 return item;

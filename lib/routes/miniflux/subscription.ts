@@ -76,8 +76,8 @@ async function handler(ctx) {
     });
 
     const subscription = [];
-    const categories = [];
-    const feeds = [];
+    const categories: any[] = [];
+    const feeds: any[] = [];
     const feedsList = response.data;
 
     const parameters = ctx.req

@@ -52,7 +52,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -68,7 +68,7 @@ async function handler() {
                 });
 
                 item.description = content('.elementor-widget-theme-post-content').html();
-                item.pubDate = parseDate(content('meta[property="article:modified_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:modified_time"]').attr('content')!);
 
                 return item;
             })

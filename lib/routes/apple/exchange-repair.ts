@@ -44,7 +44,7 @@ async function handler(ctx) {
             const a = $item.find('.icon-chevronright').parent();
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), host).href,
+                link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($item.find('.note').text(), ['MMMM D, YYYY', 'D MMMM YYYY', 'YYYY 年 M 月 D 日']),
             };
         });

@@ -41,7 +41,7 @@ const ProcessFeed = (base, list, caches) =>
 
             const $title = $('a');
             // 还原相对链接为绝对链接
-            const itemUrl = new URL($title.attr('href'), base).href; // 感谢@hoilc指导
+            const itemUrl = new URL($title.attr('href')!, base).href; // 感谢@hoilc指导
 
             // 解析日期
             const pubDate = timezone(

@@ -44,7 +44,7 @@ async function handler(ctx) {
     const title = $('ul.gnb').find('[class="on"]').length > 0 ? $('ul.gnb').find('[class="on"]').text() : $('div.nav_area > a.category').text();
     const list = $('article.recent_news > ul.news_list > li')
         .toArray()
-        .map((item) => new URL($(item).find('a').attr('href'), baseUrl).href);
+        .map((item) => new URL($(item).find('a').attr('href')!, baseUrl).href);
     const items = await Promise.all(
         list.map((url) =>
             cache.tryGet(url, async () => {

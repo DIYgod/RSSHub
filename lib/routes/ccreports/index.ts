@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('p.new-title').text(),
-            link: new URL($(item).find('a').attr('href'), rootUrl).href,
+            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
             author: $(item)
                 .find('p.new-desc')
                 .text()

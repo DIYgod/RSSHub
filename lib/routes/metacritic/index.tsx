@@ -140,7 +140,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop(), rootUrl).href;
+    const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop()!, rootUrl).href;
 
     return {
         item: items,

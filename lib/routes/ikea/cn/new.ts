@@ -40,7 +40,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const allProductSummaries = [];
+    const allProductSummaries: any[] = [];
 
     const loadMoreRequest = async ({ moreToken }) => {
         const response = await request({ moreToken });

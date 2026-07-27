@@ -47,7 +47,7 @@ async function handler(ctx) {
             const items = feed.items.map((item) => ({
                 title: item.title,
                 description: item.content,
-                pubDate: parseDate(item.pubDate),
+                pubDate: parseDate(item.pubDate!),
                 link: item.link,
                 author: item.author,
             }));

@@ -48,7 +48,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), currentUrl).href,
+                link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.find('span').first().text(), 'DDYYYY-MM'),
             };
         });

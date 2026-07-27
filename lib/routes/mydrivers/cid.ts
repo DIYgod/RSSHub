@@ -217,7 +217,7 @@ async function handler(ctx) {
         author: item.creator,
         category: item.categories,
         guid: item.guid.match(/\/(\d+)\.htm/)[1],
-        pubDate: parseDate(item.isoDate),
+        pubDate: parseDate(item.isoDate!),
     }));
 
     if (id) {

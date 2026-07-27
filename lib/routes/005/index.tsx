@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
                 title,
                 description,
                 pubDate: parseDate($item.find('span.time').text()),
-                link: new URL($item.find('h3 a').prop('href'), rootUrl).href,
+                link: new URL($item.find('h3 a').prop('href')!, rootUrl).href,
                 content: {
                     html: description,
                     text: $item.find('div.p-row').text(),

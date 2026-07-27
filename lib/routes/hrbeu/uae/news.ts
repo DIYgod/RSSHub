@@ -64,16 +64,16 @@ async function handler(ctx) {
 
     const item = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'uae.hrbeu.edu.cn') {
+            cache.tryGet(item.link!, async () => {
+                if (new URL(item.link!).hostname === 'uae.hrbeu.edu.cn') {
                     const resp = await got(item.link);
                     const $1 = load(resp.data);
                     item.description = $1('div.art-body').html();
-                } else if (new URL(item.link).hostname === 'news.hrbeu.edu.cn') {
+                } else if (new URL(item.link!).hostname === 'news.hrbeu.edu.cn') {
                     const resp = await got(item.link);
                     const $1 = load(resp.data);
                     item.description = $1('div#print').html();
-                } else if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                } else if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
                     await finishArticleItem(item);
                 } else {
                     item.description = '本文需跳转，请点击标题后阅读';

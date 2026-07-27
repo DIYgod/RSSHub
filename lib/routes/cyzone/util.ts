@@ -20,8 +20,8 @@ const getInfo = (url) =>
         const $ = load(response);
 
         const avatar = $('img.avatar')?.prop('src')?.split('?', 1)[0] ?? undefined;
-        const icon = new URL($('link[rel="icon"]')?.prop('href'), rootUrl).href;
-        const image = new URL($('div.logo img')?.prop('src'), rootUrl).href;
+        const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+        const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
         return {
             title: $('title').text(),

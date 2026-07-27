@@ -46,7 +46,7 @@ async function handler() {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
                 author: $item.find('.name').text(),
-                pubDate: timezone(parseDate($item.find('.time').attr('title')), 9),
+                pubDate: timezone(parseDate($item.find('.time').attr('title')!), 9),
             };
         });
 

@@ -61,7 +61,7 @@ async function handler(ctx) {
                 description: '',
                 category: $(element).find('[itemprop="category"]').attr('content'),
             };
-            let imgUrl = new URL($(element).find('[itemprop="image"]').attr('content'));
+            let imgUrl = new URL($(element).find('[itemprop="image"]').attr('content')!);
             imgUrl = extractSfrmUrl(imgUrl);
 
             const price = $(element).find('[itemprop="price"]').eq(0).text();

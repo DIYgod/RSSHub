@@ -34,8 +34,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const html = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const html = await ofetch(item.link!);
                 const content = load(html);
                 const ldjson = JSON.parse(content('[type="application/ld+json"]:not([data-schema])').text());
 

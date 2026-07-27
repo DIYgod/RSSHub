@@ -99,7 +99,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang'),
-        image: new URL($('img').first().prop('src'), rootUrl).href,
+        image: new URL($('img').first().prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle,

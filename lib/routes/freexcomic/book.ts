@@ -10,7 +10,7 @@ const getLatestAddress = () =>
     cache.tryGet('freexcomic:getLatestAddress', async () => {
         const portalResponse = await ofetch('https://www.freexcomic.com');
         const $portal = load(portalResponse);
-        const portalUrl = new URL($portal('.alert-btn').attr('href')).href.replace('http:', 'https:');
+        const portalUrl = new URL($portal('.alert-btn').attr('href')!).href.replace('http:', 'https:');
 
         const addressList = await ofetch(portalUrl);
         const $address = load(addressList);
@@ -37,8 +37,8 @@ const handler = async (ctx) => {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href'), addresses[Math.floor(Math.random() * addresses.length)]).href,
-                guid: new URL($item.attr('href'), jjmhw).href,
+                link: new URL($item.attr('href')!, addresses[Math.floor(Math.random() * addresses.length)]).href,
+                guid: new URL($item.attr('href')!, jjmhw).href,
             };
         });
 

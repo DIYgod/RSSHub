@@ -63,7 +63,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('div.md > a').text(),
-            link: new URL($(item).find('div.md > a').attr('href'), rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
+            link: new URL($(item).find('div.md > a').attr('href')!, rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
         }));
 
     const items = await Promise.all(
@@ -72,12 +72,12 @@ async function handler(ctx) {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('time').attr('datetime')), 8);
+                item.pubDate = timezone(parseDate(content('time').attr('datetime')!), 8);
                 item.author = content('a.author').text();
                 const link = content('h2.title > a.title').attr('href');
                 item.description =
-                    new URL(link, item.link).hostname === 'instant.lvv2.com'
-                        ? await cache.tryGet(link, async () => {
+                    new URL(link!, item.link).hostname === 'instant.lvv2.com'
+                        ? await cache.tryGet(link!, async () => {
                               const articleResponse = await got(link);
                               const article = load(articleResponse.data);
 
@@ -87,7 +87,7 @@ async function handler(ctx) {
 
                               return description;
                           })
-                        : renderOutlink(link);
+                        : renderOutlink(link!);
 
                 return item;
             })

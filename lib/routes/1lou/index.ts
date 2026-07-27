@@ -35,7 +35,7 @@ export const handler = async (ctx) => {
             return {
                 title: subjectEl.text(),
                 pubDate: timezone(parseDate($item.find('span.date').text()), 8),
-                link: new URL(subjectEl.prop('href'), rootUrl).href,
+                link: new URL(subjectEl.prop('href')!, rootUrl).href,
                 category: [
                     $item.find('a.text-secondary').text().replaceAll('[]', ''),
                     ...$item
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
 
                 if (title) {
                     const description = $$('div.message.break-all').html();
-                    const image = new URL($$('img').first().prop('src'), rootUrl).href;
+                    const image = new URL($$('img').first().prop('src')!, rootUrl).href;
 
                     item.title = title;
                     item.description = description;
@@ -80,7 +80,7 @@ export const handler = async (ctx) => {
                     if (torrents.length > 0) {
                         const torrent = torrents.first();
 
-                        item.enclosure_url = new URL(torrent.prop('href'), rootUrl).href;
+                        item.enclosure_url = new URL(torrent.prop('href')!, rootUrl).href;
                         item.enclosure_type = 'application/x-bittorrent';
                         item.enclosure_title = torrent.text();
                     }
@@ -92,7 +92,7 @@ export const handler = async (ctx) => {
     );
 
     const author = 'BT 之家 1LOU 站';
-    const image = new URL($('img.logo-2').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo-2').prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text().split(/-/, 1)[0]} - ${author}`,

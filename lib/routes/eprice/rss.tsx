@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
 
                 const $ = load(response.data);
@@ -97,7 +97,7 @@ async function handler(ctx) {
 
                 // tw || tw || hk || hk || hk
                 item.description = $('div.user-comment-block').html() || $('div.content').html() || $('li.inner').html() || $('div.section-content').html() || $('.article__content').html();
-                item.pubDate = parseDate(item.pubDate);
+                item.pubDate = parseDate(item.pubDate!);
 
                 return item;
             })

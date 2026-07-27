@@ -31,7 +31,7 @@ export const handler = async (ctx) => {
             return {
                 title: $item.find('h6 a').text(),
                 pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
-                link: new URL($item.find('h6 a').prop('href'), rootUrl).href,
+                link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
                 author: $item.find('div.new_list_author').text().trim(),
                 language,
             };
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.top2-1 a img').prop('src'), rootUrl).href;
+    const image = new URL($('div.top2-1 a img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

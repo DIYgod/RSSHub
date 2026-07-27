@@ -61,7 +61,7 @@ async function handler(ctx: Context): Promise<Data> {
                 // 文章标题
                 title: title.text(),
                 // 文章链接
-                link: new URL(title.attr('href'), sydwgkzpUrl).href,
+                link: new URL(title.attr('href')!, sydwgkzpUrl).href,
                 // 文章发布日期
                 pubDate: parseDate($item.find('span').text()),
             };

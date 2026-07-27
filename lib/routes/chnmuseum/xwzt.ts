@@ -36,7 +36,7 @@ export const route: Route = {
 
                 return {
                     title: a.attr('title') || a.text(),
-                    link: new URL(a.attr('href'), 'https://www.chnmuseum.cn').href,
+                    link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn').href,
                 };
             });
 

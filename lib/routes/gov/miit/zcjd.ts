@@ -48,7 +48,7 @@ async function handler() {
             const $item = list(item);
             return {
                 title: $item.find('a').attr('title'),
-                link: new URL($item.find('a').attr('href'), baseUrl).href,
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.fr').text(), 'YYYY-MM-DD'),
             };
         });

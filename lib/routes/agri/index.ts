@@ -30,7 +30,7 @@ export const handler = async (ctx) => {
             const a = $item.find('a').first();
 
             const title = a.text();
-            const image = $item.find('img').first().prop('src') ? new URL($item.find('img').first().prop('src'), rootUrl).href : undefined;
+            const image = $item.find('img').first().prop('src') ? new URL($item.find('img').first().prop('src')!, rootUrl).href : undefined;
             const description = renderDescription({
                 intro: $item.find('p.con_text').text() || undefined,
                 images: image
@@ -47,7 +47,7 @@ export const handler = async (ctx) => {
                 title,
                 description,
                 pubDate: parseDate($item.find('span.con_date_span').text() || `${$item.find('div.com_time_p2').text().trim()}${$item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
-                link: new URL(a.prop('href'), currentUrl).href,
+                link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
                     text: $item.find('p.con_text').text() || undefined,
@@ -89,7 +89,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

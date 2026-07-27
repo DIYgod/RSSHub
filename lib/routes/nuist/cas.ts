@@ -43,7 +43,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.Title').text(),
-                link: new URL($item.find('.Title').attr('href'), baseUrl).href,
+                link: new URL($item.find('.Title').attr('href')!, baseUrl).href,
                 pubDate: parseDate(
                     $item
                         .find('td')

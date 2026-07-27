@@ -43,7 +43,7 @@ async function handler() {
         .map((e) => {
             const $e = $(e);
             return {
-                link: new URL($e.find('a').attr('href'), link).href,
+                link: new URL($e.find('a').attr('href')!, link).href,
                 pubDate: $e.find('span').text().replace('[', '').replace(']', ''),
             };
         });

@@ -127,8 +127,8 @@ async function handler(ctx) {
         return item;
     }
 
-    const entriesID = [];
-    const feedsName = [];
+    const entriesID: any[] = [];
+    const feedsName: any[] = [];
     const articles: DataItem[] = [];
 
     // MiniFlux will only preserve the *first* valid filter option

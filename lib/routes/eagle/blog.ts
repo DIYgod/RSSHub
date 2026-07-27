@@ -66,7 +66,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             title: $(item).find('div.title').text(),
-            link: new URL($(item).find('a').attr('href'), host).href,
+            link: new URL($(item).find('a').attr('href')!, host).href,
             pubDate: parseDate($(item).find('div.metas > a > span').text().replace('・', '')),
         }));
 

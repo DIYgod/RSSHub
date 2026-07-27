@@ -46,7 +46,7 @@ async function handler(ctx) {
                 return {
                     title: versionNumberLink.text(),
                     description: $item.find('.version-changelog').text().trim(),
-                    pubDate: parseDate($item.find('gf-relative-time').attr('datetime')),
+                    pubDate: parseDate($item.find('gf-relative-time').attr('datetime')!),
                     link: versionNumberLink.attr('href'),
                 };
             }),

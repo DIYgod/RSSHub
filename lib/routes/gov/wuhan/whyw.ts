@@ -44,7 +44,7 @@ async function handler() {
             const a = $item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), currentUrl).href,
+                link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('.time').text()), 8),
             };
         });

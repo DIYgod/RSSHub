@@ -41,7 +41,7 @@ async function loadContent(link) {
     // 视频相对链接处理，替换原有播放方法 showVsbVideo
     $('.vsbcontent_video').each((_, el) => {
         const u1 = $(el).find('script').attr('vurl');
-        videoUrl = new URL(u1, baseUrl).href;
+        videoUrl = new URL(u1!, baseUrl).href;
         $(el)
             .html('<video width="100%" src="' + videoUrl + '"></video>')
             .html();
@@ -77,7 +77,7 @@ async function handler(ctx) {
             const $ = load(item);
             const $a1 = $('li>a');
             const $originUrl = $a1.attr('href');
-            const $itemUrl = new URL($originUrl, baseUrl).href;
+            const $itemUrl = new URL($originUrl!, baseUrl).href;
             return {
                 title: $a1.attr('title'),
                 description: await cache.tryGet($itemUrl, () => loadContent($itemUrl)),

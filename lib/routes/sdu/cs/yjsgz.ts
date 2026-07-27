@@ -60,8 +60,8 @@ async function handler(ctx) {
 
     item = await Promise.all(
         item.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const hostname = new URL(item.link).hostname;
+            cache.tryGet(item.link!, async () => {
+                const hostname = new URL(item.link!).hostname;
                 if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
                 }

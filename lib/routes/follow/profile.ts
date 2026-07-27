@@ -44,7 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
     const searchParams = new URLSearchParams({ handle });
 
     if (isBizId(handle || '')) {
-        searchParams.append('id', handle);
+        searchParams.append('id', handle!);
     }
 
     const profile = await ofetch<FollowResponse<Profile>>(`${host}/profiles?${searchParams.toString()}`);

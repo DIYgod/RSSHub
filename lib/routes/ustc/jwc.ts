@@ -66,7 +66,7 @@ async function handler(ctx) {
         items
             .filter((item) => item.link)
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
                     // www.teach ?? pms.cmet ?? news

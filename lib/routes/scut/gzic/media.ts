@@ -47,9 +47,9 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
-                    const response = await ofetch(item.link);
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
                     item.description = $('div.wp_articlecontent').html();
                 } catch (error) {

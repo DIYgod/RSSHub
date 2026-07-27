@@ -65,7 +65,7 @@ async function handler(ctx) {
                 } else {
                     item.description = $('.art-con').html() || /* xwfb/xwztfbh */ $('.textlive').html();
                 }
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content'), 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
 
                 return item;
             })

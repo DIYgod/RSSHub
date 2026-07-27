@@ -76,7 +76,7 @@ async function handler(ctx) {
             }
             return {
                 title: `${company.text()} | ${title.text()}`,
-                link: new URL(title.attr('href'), rootUrl).href,
+                link: new URL(title.attr('href')!, rootUrl).href,
                 pubDate: date.toUTCString(),
             };
         });

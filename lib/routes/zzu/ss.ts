@@ -46,7 +46,7 @@ async function handler(ctx) {
         .slice(0, 10)
         .map((element) => {
             const $element = $(element);
-            const link = new URL($element.attr('href'), typeDict[type][1]).href;
+            const link = new URL($element.attr('href')!, typeDict[type][1]).href;
             const title = $element.find('h3').text().trim();
 
             // 获取发布时间

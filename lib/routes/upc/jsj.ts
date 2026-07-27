@@ -73,7 +73,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         // ### 遍历列表，筛选出自己想要的内容
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 // 获取详情页面的介绍
                 const detail_response = await got({
                     method: 'get',

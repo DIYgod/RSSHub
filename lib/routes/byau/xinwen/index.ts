@@ -43,7 +43,7 @@ async function handler(ctx) {
             const originalItemUrl = $$('a').attr('href');
             // 因为学校要闻的头两个像是固定了跳转专栏页面的，不能相同处理
             const startsWithHttp = originalItemUrl.startsWith('http');
-            const itemUrl = startsWithHttp ? originalItemUrl : new URL(originalItemUrl, baseUrl).href;
+            const itemUrl = startsWithHttp ? originalItemUrl : new URL(originalItemUrl!, baseUrl).href;
 
             return {
                 title: $$('a').text(),
@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 

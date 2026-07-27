@@ -57,7 +57,7 @@ async function handler() {
                 });
 
                 item.doi = content('meta[name="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published"]').attr('content')!);
                 item.description = content('d-article')
                     .children()
                     .toArray()

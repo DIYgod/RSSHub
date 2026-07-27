@@ -54,7 +54,7 @@ async function handler(ctx) {
             const a = $elem.find('td a');
             return {
                 title: a.attr('title'),
-                link: new URL(a.attr('href'), host).href,
+                link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($elem.find('td div').text()),
             };
         });

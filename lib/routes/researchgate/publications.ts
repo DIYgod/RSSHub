@@ -48,19 +48,19 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
-                await page.goto(item.link);
+                await page.goto(item.link!);
                 const detailResponse = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
                 const content = load(detailResponse);
 
                 item.doi = content('meta[property="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="citation_publication_date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="citation_publication_date"]').attr('content')!);
 
                 const authors = [];
 

@@ -44,7 +44,7 @@ async function handler() {
                 link = base_url + link;
             }
 
-            const cacheIn = await cache.get(link);
+            const cacheIn = await cache.get(link!);
             if (cacheIn) {
                 return JSON.parse(cacheIn);
             }
@@ -60,7 +60,7 @@ async function handler() {
                 link,
             };
 
-            cache.set(link, JSON.stringify(single));
+            cache.set(link!, JSON.stringify(single));
             return single;
         })
     );

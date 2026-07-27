@@ -64,7 +64,7 @@ const getArticle = (item) =>
             item.author = meta.content.contentInfo.authors.join(', ');
             item.pubDate = parseDate(meta.content.contentInfo.publishedAt, 'X') || item.pubDate;
         } else {
-            const meta = JSON.parse($('script[type="application/ld+json"]').html());
+            const meta = JSON.parse($('script[type="application/ld+json"]').html() ?? '');
             const freeAccess = meta.mainEntity.isAccessibleForFree;
             let description;
 

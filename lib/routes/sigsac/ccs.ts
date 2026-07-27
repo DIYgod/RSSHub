@@ -39,7 +39,7 @@ async function handler() {
         })
         .filter(Boolean);
 
-    const responses = await Promise.allSettled(urlList.map((url) => ofetch(url)));
+    const responses = await Promise.allSettled(urlList.map((url) => ofetch(url!)));
 
     const items = responses.flatMap((response, i) => {
         if (response.status !== 'fulfilled') {

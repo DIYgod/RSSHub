@@ -71,7 +71,7 @@ async function handler(ctx) {
                 author: $1.find('a').eq(1).text(),
                 link: $1.find('.title a').attr('href'),
             };
-            return cache.tryGet(result.link, async () => {
+            return cache.tryGet(result.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',

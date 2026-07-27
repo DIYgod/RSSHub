@@ -66,7 +66,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -97,7 +97,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh-cn',
-        image: new URL($('h1.site-title a img').prop('src'), rootUrl).href,
+        image: new URL($('h1.site-title a img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),

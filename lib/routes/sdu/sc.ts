@@ -43,7 +43,7 @@ async function handler(ctx) {
             const $e = $(e);
             const a = $e.find('a');
             let link = a.attr('href');
-            link = new URL(link, host).href;
+            link = new URL(link!, host).href;
             return {
                 title: a.text().trim(),
                 link,

@@ -70,7 +70,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         detailsUrls.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailsResponse = await got(item.link);
                 const $d = load(detailsResponse.data);
                 return {

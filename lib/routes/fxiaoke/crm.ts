@@ -58,7 +58,7 @@ async function handler(ctx) {
         });
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const resp = await got(item.link);
                 const $ = load(resp.data);
                 const firstViewBox = $('.body-wrapper-article');

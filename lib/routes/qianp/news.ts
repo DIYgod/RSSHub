@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     headers,
                 });
@@ -49,7 +49,7 @@ async function handler(ctx) {
 
                 item.category = [...new Set($('meta[name=keywords]').attr('content').split('，'))];
                 item.author = $('meta[name=author]').attr('content');
-                item.pubDate = parseDate($('meta[property="bytedance:published_time"]').attr('content'));
+                item.pubDate = parseDate($('meta[property="bytedance:published_time"]').attr('content')!);
 
                 item.description = $('.news_center').html();
 

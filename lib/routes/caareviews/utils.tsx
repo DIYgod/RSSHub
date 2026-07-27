@@ -15,7 +15,7 @@ const getList = async (url) => {
         .toArray()
         .map((item) => ({
             title: $(item).find('div.title').text().trim(),
-            link: new URL($(item).find('div.title > em > a').attr('href'), rootUrl).href,
+            link: new URL($(item).find('div.title > em > a').attr('href')!, rootUrl).href,
             author: $(item).find('div.contributors').text().trim(),
         }));
 
@@ -29,7 +29,7 @@ const getItems = (ctx, list) =>
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                const coverUrl = new URL($('div.cover > a').attr('href'), rootUrl).href;
+                const coverUrl = new URL($('div.cover > a').attr('href')!, rootUrl).href;
                 const content = $('div.content.full-review').html();
                 item.description = renderToString(
                     <>

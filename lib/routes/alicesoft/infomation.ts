@@ -66,7 +66,7 @@ async function handler(ctx) {
             if (!item.link.startsWith(`${baseUrl}/information/`)) {
                 return item;
             }
-            return cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link!, async () => {
                 const contentResponse = await got(item.link);
 
                 const content = load(contentResponse.data);

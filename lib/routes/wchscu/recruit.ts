@@ -18,7 +18,7 @@ const handler = async () => {
             return {
                 title: $item.find('span.s1').text(),
                 pubDate: parseDate($item.find('span.s2').text()),
-                link: new URL($item.find('a').prop('href'), rootUrl).href,
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
 

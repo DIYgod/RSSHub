@@ -58,7 +58,7 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -96,7 +96,7 @@ async function handler(ctx) {
         { concurrency: 3 }
     );
 
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

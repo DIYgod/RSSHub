@@ -73,7 +73,7 @@ async function handler(ctx) {
                 $('.js_img_placeholder').remove();
                 $('amp-img').each((_, e) => {
                     const $e = $(e);
-                    $e.replaceWith(`<img src="${new URL($e.attr('src'), item.link).href}" width="${$e.attr('width')}" height="${$e.attr('height')}" decoding="async">`);
+                    $e.replaceWith(`<img src="${new URL($e.attr('src')!, item.link).href}" width="${$e.attr('width')}" height="${$e.attr('height')}" decoding="async">`);
                 });
                 $('amp-video').each((_, e) => {
                     const $e = $(e);

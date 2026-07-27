@@ -41,7 +41,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.tit').text(),
-                link: new URL($item.attr('href'), listUrl).href,
+                link: new URL($item.attr('href')!, listUrl).href,
                 pubDate: parseDate($item.find('.date .mon').text() + '-' + $item.find('.date .day').text()),
             };
         });

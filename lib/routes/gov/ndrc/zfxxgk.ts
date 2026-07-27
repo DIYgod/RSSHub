@@ -30,7 +30,7 @@ export const handler = async (ctx) => {
             return {
                 title: a.text(),
                 pubDate: parseDate($item.find('td').last().text()),
-                link: new URL(a.prop('href'), currentUrl).href,
+                link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
         });
@@ -54,7 +54,7 @@ export const handler = async (ctx) => {
                     text: $$('div.article').text(),
                 };
                 item.language = language;
-                item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href'), currentUrl).href;
+                item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href')!, currentUrl).href;
                 item.enclosure_title = item.enclosure_url ? $$('table.enclosure a.xxgk_list1').first().text() : undefined;
 
                 return item;
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.zwgklogo img').prop('src'), currentUrl).href;
+    const image = new URL($('div.zwgklogo img').prop('src')!, currentUrl).href;
 
     return {
         title: `${$('meta[name="SiteName"]').prop('content')} - ${$('div.zwgktoptitle').text()}`,

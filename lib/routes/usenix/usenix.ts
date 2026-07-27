@@ -44,7 +44,7 @@ async function handler() {
         .filter((r) => r.status === 'fulfilled' && r.value)
         .flatMap((response) => {
             const $ = load(response.value);
-            const pubDate = parseDate($('meta[property=article:modified_time]').attr('content'));
+            const pubDate = parseDate($('meta[property=article:modified_time]').attr('content')!);
             return $('article.node-paper')
                 .toArray()
                 .map((item) => {

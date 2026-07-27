@@ -43,7 +43,7 @@ async function handler() {
                 e.attribs.src = e.attribs.src.split('?', 1)[0];
                 delete e.attribs.srcset;
             });
-            const link = new URL($e.find('pub-hide-empty-link a').attr('href'));
+            const link = new URL($e.find('pub-hide-empty-link a').attr('href')!);
             const { searchParams, href } = link;
             searchParams.delete('itm_content');
             searchParams.delete('itm_element');
@@ -70,7 +70,7 @@ async function handler() {
                 delete e.attribs.srcset;
             });
 
-            const link = new URL(next.find('a').attr('href'));
+            const link = new URL(next.find('a').attr('href')!);
             const { searchParams, href } = link;
             searchParams.delete('itm_content');
             searchParams.delete('itm_element');

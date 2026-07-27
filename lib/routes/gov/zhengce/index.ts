@@ -54,16 +54,16 @@ export async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL(link, currentUrl).href,
+                link: link.startsWith('http') ? link : new URL(link!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items
-            .filter((item) => /https?:\/\/www\.gov\.cn\/zhengce.*content_\d+\.htm/.test(item.link))
+            .filter((item) => /https?:\/\/www\.gov\.cn\/zhengce.*content_\d+\.htm/.test(item.link!))
             .slice(0, limit)
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { data: detailResponse } = await got(item.link);
 
                     const content = load(detailResponse);
@@ -107,8 +107,8 @@ export async function handler(ctx) {
             )
     );
 
-    const image = new URL($('img.wordlogo').prop('src'), rootUrl).href;
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const image = new URL($('img.wordlogo').prop('src')!, rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="lanmu"]').prop('content');
     const author = $('div.header_logo a[aria-label]').prop('aria-label');
 

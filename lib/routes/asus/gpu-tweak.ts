@@ -50,7 +50,7 @@ async function handler() {
     return {
         title: $('head title').text(),
         description: $('meta[name=description]').attr('content'),
-        image: new URL($('head link[rel="shortcut icon"]').attr('href'), pageUrl).href,
+        image: new URL($('head link[rel="shortcut icon"]').attr('href')!, pageUrl).href,
         link: pageUrl,
         item: items,
         language: $('html').attr('lang'),

@@ -68,7 +68,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('a p').text().trim(),
                 pubDate: parseDate($item.find('span').text()),
-                link: new URL($item.find('a').attr('href'), link).href,
+                link: new URL($item.find('a').attr('href')!, link).href,
             };
         });
 
@@ -94,7 +94,7 @@ async function handler(ctx) {
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     if ($e.attr('orisrc')) {
-                        const newUrl = new URL($e.attr('orisrc'), 'https://cs.whu.edu.cn');
+                        const newUrl = new URL($e.attr('orisrc')!, 'https://cs.whu.edu.cn');
                         $e.attr('src', newUrl.href);
                         $e.removeAttr('orisrc');
                         $e.removeAttr('vurl');
@@ -102,7 +102,7 @@ async function handler(ctx) {
                 });
 
                 item.description = content.html();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), 8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8) : item.pubDate;
 
                 return item;
             })

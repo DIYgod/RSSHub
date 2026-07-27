@@ -51,7 +51,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const title = $item.find('p.name').text();
-            const link = new URL($item.prop('href'), rootUrl).href;
+            const link = new URL($item.prop('href')!, rootUrl).href;
             const pubDateMatches = link.match(/\/\d{8}\//);
 
             return {

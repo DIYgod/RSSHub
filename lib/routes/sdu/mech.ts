@@ -56,7 +56,7 @@ async function handler(ctx) {
                 if (isFromMech) {
                     item.link = new URL(item.link.slice('3'), host).href;
                 }
-                return cache.tryGet(item.link, async () => {
+                return cache.tryGet(item.link!, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
 

@@ -51,7 +51,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('div.xn-d, div.t-e').text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: parseDate($item.find('div.xn-time, div.t-f').text()),
             };
         });

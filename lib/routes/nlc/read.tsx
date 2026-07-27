@@ -81,7 +81,7 @@ async function handler(ctx) {
         });
 
     const image = new URL('static/style/css/images/YMH_home_main_logo.png', rootUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,

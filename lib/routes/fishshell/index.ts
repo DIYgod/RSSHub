@@ -35,7 +35,7 @@ async function handler() {
                 const date = title.match(/\(released (.+?)\)/)?.[1];
                 return {
                     title,
-                    link: new URL($(item).find('a').attr('href'), link).href,
+                    link: new URL($(item).find('a').attr('href')!, link).href,
                     pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
                     description: $(item).html(),
                 };

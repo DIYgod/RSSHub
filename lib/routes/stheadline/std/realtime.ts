@@ -34,7 +34,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('.title').text(),
-                link: new URL($item.attr('href'), 'https://www.stheadline.com').href,
+                link: new URL($item.attr('href')!, 'https://www.stheadline.com').href,
             };
         });
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
                 return {
                     ...item,
                     description: $('.content-body').html(),
-                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
                     category: $("meta[name='keyword']").attr('content').split(','),
                     guid: item.link.slice(0, item.link.lastIndexOf('/')),
                 };

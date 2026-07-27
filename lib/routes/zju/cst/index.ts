@@ -35,7 +35,7 @@ async function getPage(id) {
         return {
             title: $item.find('a').text(),
             pubDate: parseDate($item.find('.fr').text()),
-            link: new URL($item.find('a').attr('href'), host).href,
+            link: new URL($item.find('a').attr('href')!, host).href,
         };
     });
 }

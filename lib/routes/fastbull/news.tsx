@@ -54,7 +54,7 @@ async function handler() {
                 link: `${rootUrl}${$item.attr('href')}`,
                 author: $item.find('.resource').text(),
                 description: $item.find('.tips').text(),
-                pubDate: parseDate(Number.parseInt($item.find('.new_time').attr('data-date'))),
+                pubDate: parseDate(Number.parseInt($item.find('.new_time').attr('data-date')!)),
             };
         });
 

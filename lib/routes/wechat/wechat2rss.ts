@@ -30,7 +30,7 @@ async function handler(ctx) {
 
     const items = item.map((i) => ({
         title: i.title,
-        pubDate: parseDate(i.isoDate),
+        pubDate: parseDate(i.isoDate!),
         link: i.link,
         description: i['content:encoded'] || i.content,
     }));

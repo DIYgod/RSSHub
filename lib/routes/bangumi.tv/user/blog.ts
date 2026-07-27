@@ -44,7 +44,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), 'https://bgm.tv').href,
+                link: new URL(a.attr('href')!, 'https://bgm.tv').href,
                 pubDate: timezone(parseDate($item.parent().find('small.time').text()), 0),
             };
         });

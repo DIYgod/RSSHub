@@ -39,7 +39,7 @@ async function handler() {
     const out = await Promise.all(
         list.map((item) => {
             const $item = $(item);
-            const link = new URL($item.find('a').attr('href'), baseUrl).href;
+            const link = new URL($item.find('a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const description = await getPageItemAndDate('#right_con > form > div.articleInfo', link, '#right_con > form > div.articleTitle', '#right_con > form > div.articleAuthor > span:nth-child(1)');
                 const pubDate = parseDate(description.date, 'YYYY年MM月DD日 HH:mm');

@@ -43,7 +43,7 @@ async function handler(ctx) {
             const time = $item.find('.notice-date').text();
             const a = $item.find('a').attr('href');
 
-            const fullUrl = new URL(a, host).href;
+            const fullUrl = new URL(a!, host).href;
 
             return {
                 title,

@@ -69,7 +69,7 @@ const getSafeId = () =>
             const safeId = $('script:contains("safeid")')
                 .text()
                 .match(/safeid\s*=\s*'(.+)';/)?.[1];
-            return safeId;
+            return safeId ?? '';
         },
         config.cache.routeExpire,
         false
@@ -99,7 +99,7 @@ async function handler(ctx) {
             return {
                 title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
                 link: host + $item.find('a.xst').attr('href'),
-                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')),
+                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
                 author: $item.find('td.by cite a').first().text(),
             };
         });
@@ -137,7 +137,7 @@ async function handler(ctx) {
                 $('em[onclick]').remove();
 
                 info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
-                info.pubDate = timezone(parseDate($('.authi em span').attr('title')), 8);
+                info.pubDate = timezone(parseDate($('.authi em span').attr('title')!), 8);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
@@ -145,7 +145,7 @@ async function handler(ctx) {
 
                 const hasEnclosureUrl = isMag || torrent !== undefined;
                 if (hasEnclosureUrl) {
-                    const enclosureUrl = isMag ? magnet : new URL(torrent, host).href;
+                    const enclosureUrl = isMag ? magnet : new URL(torrent!, host).href;
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }

@@ -61,7 +61,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h2.ellipse2').text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 description: renderDescription({
                     image: image
                         ? {
@@ -116,7 +116,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang'),
-        image: new URL($('a.logo img').prop('src'), rootUrl).href,
+        image: new URL($('a.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('title').text(),

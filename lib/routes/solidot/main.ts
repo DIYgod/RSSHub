@@ -74,7 +74,7 @@ async function handler(ctx) {
     const urls = Array.from(a, (element) => $(element).attr('href'));
 
     // get articles
-    const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u, () => get_article(u))));
+    const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u!, () => get_article(u))));
 
     // feed the data
     return {

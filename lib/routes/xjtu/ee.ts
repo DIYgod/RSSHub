@@ -48,7 +48,7 @@ async function handler(ctx) {
             const date = parseDate($item.find('span').text());
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(date, 8),
             };
         });

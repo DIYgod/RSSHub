@@ -33,7 +33,7 @@ const handler = async (ctx) => {
                 const $item = $(item);
                 return {
                     title: $item.text().trim(),
-                    link: new URL($item.attr('href'), currentUrl).href,
+                    link: new URL($item.attr('href')!, currentUrl).href,
                 };
             }),
         ...$('div.list-item > div > div:nth-child(2) > a')
@@ -42,7 +42,7 @@ const handler = async (ctx) => {
                 const $item = $(item);
                 return {
                     title: $item.text().trim(),
-                    link: new URL($item.attr('href'), currentUrl).href,
+                    link: new URL($item.attr('href')!, currentUrl).href,
                 };
             }),
     ]

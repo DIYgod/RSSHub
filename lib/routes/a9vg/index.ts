@@ -32,7 +32,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 description: renderDescription({
                     images: image
                         ? [

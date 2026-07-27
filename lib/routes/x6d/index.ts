@@ -105,7 +105,7 @@ export async function handler(ctx) {
 
                 const title = $$('h1.article-title').text();
                 const description = $$('div.article-content').html();
-                const image = new URL($$('div.article-content img').first().prop('src'), rootUrl).href;
+                const image = new URL($$('div.article-content img').first().prop('src')!, rootUrl).href;
 
                 item.title = title;
                 item.description = description;

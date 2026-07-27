@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     await Promise.all(
         searchLinks.map(async (e) => {
-            const link = new URL(e, link_base).href;
+            const link = new URL(e!, link_base).href;
             const single = await cache.tryGet(link, async () => {
                 const res = await utils.request(link, cache);
                 const content = load(res.data);

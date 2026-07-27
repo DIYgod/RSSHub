@@ -101,7 +101,7 @@ async function handler(ctx) {
                     // !!! as long as cache hits, the link will not be crawled and consume the limit !!!
                     // !!! so that's not a big problem if the RSSHub instance is self-hosted !!!
                     err = new got.RequestError(response.data, {}, response.request);
-                    return null;
+                    return '';
                 }
                 const $ = load(response.data);
                 const jmpJS = $('script')
@@ -110,7 +110,7 @@ async function handler(ctx) {
                 return jmpJS.match(/location\.href='([^']+)'/)[1];
             } catch (error) {
                 err = error;
-                return null;
+                return '';
             }
         });
         if (realLink) {

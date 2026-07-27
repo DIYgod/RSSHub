@@ -77,7 +77,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('div.news_title').text(),
-                link: new URL($item.find('div.news_title span.newst a').prop('href'), rootUrl).href,
+                link: new URL($item.find('div.news_title span.newst a').prop('href')!, rootUrl).href,
                 description: renderToString(
                     <>
                         {$item.find('a.newsimg img').prop('src') ? (

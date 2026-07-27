@@ -35,7 +35,7 @@ export const route: Route = {
 
                 const title = a.find('.article-title').text();
                 const link = `${baseUrl}${a.attr('href')}`;
-                const pubDate = parseDate(a.find('time').attr('datetime'));
+                const pubDate = parseDate(a.find('time').attr('datetime')!);
 
                 return {
                     title,

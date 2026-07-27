@@ -26,7 +26,7 @@ export const handler = async (ctx) => {
             return {
                 title: $item.find('h1.news.detail').text(),
                 pubDate: parseDate($item.find('p.date').text(), 'YYYY.MM.DD'),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
@@ -56,7 +56,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('a.site-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('a.site-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

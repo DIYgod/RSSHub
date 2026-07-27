@@ -92,8 +92,8 @@ const parseArticle = (item) =>
 
         return {
             title: item.title,
-            pubDate: parseDate(publishedAt),
-            updated: parseDate(updatedAt),
+            pubDate: parseDate(publishedAt!),
+            updated: parseDate(updatedAt!),
             author,
             link: item.link,
             summary,

@@ -70,7 +70,7 @@ async function handler(ctx) {
                       return {
                           title: $item.find('a b.am-text-truncate').text().trim(),
                           pubDate: $item.find('a i').text(),
-                          link: new URL($item.find('a').attr('href'), baseUrl).href,
+                          link: new URL($item.find('a').attr('href')!, baseUrl).href,
                       };
                   })
             : $('div.list_txt.am-fr ul.am-list li')
@@ -80,7 +80,7 @@ async function handler(ctx) {
                       return {
                           title: $item.find('a span').text().trim(),
                           pubDate: $item.find('a i').text(),
-                          link: new URL($item.find('a').attr('href'), baseUrl).href,
+                          link: new URL($item.find('a').attr('href')!, baseUrl).href,
                       };
                   });
 

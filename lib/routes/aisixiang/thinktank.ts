@@ -56,7 +56,7 @@ async function handler(ctx) {
 
         return {
             title: $item.text().split('：').pop(),
-            link: new URL($item.prop('href'), rootUrl).href,
+            link: new URL($item.prop('href')!, rootUrl).href,
         };
     });
 

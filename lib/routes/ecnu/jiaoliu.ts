@@ -27,7 +27,7 @@ export const route: Route = {
             .toArray()
             .map((el) => ({
                 pubDate: timezone(parseDate($(el).find('div[style="white-space:nowrap"]').text()), 8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).href,
+                link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
         const items = await Promise.all(

@@ -55,7 +55,7 @@ async function handler(ctx) {
         .map((item: any) => {
             const $item = $(item);
             const title = $item.find('a').text();
-            const link = new URL($item.find('a').attr('href'), base).href;
+            const link = new URL($item.find('a').attr('href')!, base).href;
             return {
                 title,
                 link,

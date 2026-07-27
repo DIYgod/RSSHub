@@ -85,9 +85,9 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item: DataItem) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
-                    const response = await ofetch(item.link);
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
 
                     item.title = $('meta[name="ArticleTitle"]').prop('content') || item.title;

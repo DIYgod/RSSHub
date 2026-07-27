@@ -36,7 +36,7 @@ const pixivGot = got.extend({
                     return;
                 }
                 let hostname: string | null = null;
-                const isIP = ipRegex({ exact: true }).test(config.pixiv.bypassCdnHostname);
+                const isIP = ipRegex({ exact: true }).test(config.pixiv.bypassCdnHostname!);
                 if (isIP) {
                     hostname = config.pixiv.bypassCdnHostname;
                 } else {

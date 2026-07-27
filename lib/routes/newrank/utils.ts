@@ -44,7 +44,7 @@ const decrypt_douyin_detail_xyz = (nonce) => {
 };
 
 const flatten = (arr) => {
-    const result = [];
+    const result: any[] = [];
     for (const val of arr) {
         if (Array.isArray(val)) {
             result.push(...flatten(val));
@@ -106,7 +106,7 @@ async function getCookie() {
                 }
             }
         }
-        cache.set(newrank_cookie_token, token, 600);
+        cache.set(newrank_cookie_token, token ?? '', 600);
         // We have acquired new cookie. It may due to cache timeout.
         // Force update counter and don't wait it finished.
         shouldUpdateCookie(true);

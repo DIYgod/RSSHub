@@ -73,7 +73,7 @@ async function handler(ctx) {
         // 遍历此前获取的数据
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     //  下面的if判断是否属于外链，使用切片的方式来判断，并不优雅，先用着吧
                     if (item.link.slice(0, 16) === 'http://renshichu') {
                         // 不属于外链

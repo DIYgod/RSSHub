@@ -32,7 +32,7 @@ export const handler = async (ctx) => {
             return {
                 title: $item.find('p').text(),
                 pubDate: parseDate($item.find('span.date').text()),
-                link: new URL($item.find('a.clearfix').prop('href'), rootUrl).href,
+                link: new URL($item.find('a.clearfix').prop('href')!, rootUrl).href,
             };
         });
 

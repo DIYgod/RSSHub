@@ -33,7 +33,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL(a.prop('href'), currentUrl).href,
+                link: new URL(a.prop('href')!, currentUrl).href,
                 pubDate: parseDate(a.find('span.time').text(), '[YYYY.MM.DD]'),
             };
         });

@@ -154,7 +154,7 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const image = $('div.logo a img').prop('src');
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
