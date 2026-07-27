@@ -41,7 +41,7 @@ async function handler(ctx) {
 
                 item.author = $('.content_source')
                     .text()
-                    .match(/责任编辑：(.*)\(点击/)[1];
+                    .match(/责任编辑：(.*)\(点击/)![1];
                 item.description = $('.content_con').html();
                 return item;
             })

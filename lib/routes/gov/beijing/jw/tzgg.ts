@@ -50,7 +50,7 @@ async function handler() {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : `${rootUrl}${link.replace(/^\./, '/tzgg')}`,
+                link: link!.startsWith('http') ? link : `${rootUrl}${link!.replace(/^\./, '/tzgg')}`,
                 pubDate: parseDate($item.parent().find('span').text()),
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],

@@ -31,12 +31,12 @@ async function handler(ctx) {
                 $item.find('span').length === 0
                     ? $item
                           .find('a')
-                          .attr('title')
-                          .match(/(\d{4}年\d{1,2}月\d{1,2})/)[1]
+                          .attr('title')!
+                          .match(/(\d{4}年\d{1,2}月\d{1,2})/)![1]
                     : $item
                           .find('span')
                           .text()
-                          .match(/((\d{4}-\d{2}-\d{2})(\s\d{2}:\d{2}:\d{2})?)/)[1];
+                          .match(/((\d{4}-\d{2}-\d{2})(\s\d{2}:\d{2}:\d{2})?)/)![1];
             return {
                 title: $item.find('a').attr('title')!,
                 link: host + $item.find('a').attr('href'),

@@ -17,7 +17,7 @@ async function getFullArticle(link) {
     if (content.length === 0) {
         return null;
     }
-    return content.html() + ($('.Newslist2').length ? $('.Newslist2').html() : '');
+    return content.html()! + ($('.Newslist2').length ? $('.Newslist2').html() : '')!;
 }
 
 export const route: Route = {

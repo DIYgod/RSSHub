@@ -48,10 +48,10 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             let link = $item.attr('href');
-            if (link.indexOf('../../..') === 0) {
-                link = `${rootUrl}${link.replace('../../..', '')}`;
-            } else if (link.indexOf('.') === 0) {
-                link = `${currentUrl}${link.replace('.', '')}`;
+            if (link!.startsWith('../../..')) {
+                link = `${rootUrl}${link!.replace('../../..', '')}`;
+            } else if (link!.startsWith('.')) {
+                link = `${currentUrl}${link!.replace('.', '')}`;
             }
             return {
                 title: $item.text(),

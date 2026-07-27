@@ -52,7 +52,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('h4 a');
-            const pubDate = $item.find('span.text-color-999').not('.pull-right').first().text().split('•').pop().trim();
+            const pubDate = $item.find('span.text-color-999').not('.pull-right').first().text().split('•').pop()!.trim();
 
             return {
                 title: a.text(),

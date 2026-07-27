@@ -361,7 +361,7 @@ const processBody = async (body_html, story_json) => {
                 alt = attachment?.alt || $(e).find('img').attr('alt')?.trim();
                 src = attachment?.baseUrl;
             } else {
-                alt = $(e).find('img').attr('alt').trim();
+                alt = $(e).find('img').attr('alt')!.trim();
                 src = $(e).find('img').data('native-src');
             }
             const caption = $(e).find('[class$="text"], .caption, .photo-essay__text').html()?.trim() ?? '';

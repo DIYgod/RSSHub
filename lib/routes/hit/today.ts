@@ -50,7 +50,7 @@ async function handler(ctx) {
             link: new URL($('span span a', e).attr('href')!, host).href,
             title: $('span span a', e).text(),
             author: $('div a', e).attr('hreflang', 'zh-hans').text(),
-            pubDate: timezone(parseDate($('span span a', e).attr('href').split('/').slice(-4, -1).join(','), 'YYYYMMDD'), 8),
+            pubDate: timezone(parseDate($('span span a', e).attr('href')!.split('/').slice(-4, -1).join(','), 'YYYYMMDD'), 8),
             description: undefined as DataItem['description'],
         }));
 

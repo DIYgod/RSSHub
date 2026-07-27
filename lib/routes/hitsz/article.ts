@@ -50,7 +50,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link);
                 const $ = load(response.data);
-                item.description = $('div.edittext').html().trim();
+                item.description = $('div.edittext').html()!.trim();
                 item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
                 return item;
             })

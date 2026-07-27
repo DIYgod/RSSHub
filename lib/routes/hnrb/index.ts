@@ -68,7 +68,7 @@ async function handler(ctx) {
         .eq(1)
         .find('a')
         .toArray()
-        .map((a) => `${link}/${$(a).attr('href').replace(/\.\//, '')}`)
+        .map((a) => `${link}/${$(a).attr('href')!.replace(/\.\//, '')}`)
         .filter((a) => a.endsWith('div=-1'));
 
     if (!id) {
@@ -76,7 +76,7 @@ async function handler(ctx) {
             $('#pageLink')
                 .slice(1)
                 .toArray()
-                .map((p) => `${link}/${$(p).attr('href').replace(/\.\//, '')}`)
+                .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`)
                 .map(async (p) => {
                     const pageResponse = await got({
                         method: 'get',
@@ -90,7 +90,7 @@ async function handler(ctx) {
                             .eq(1)
                             .find('a')
                             .toArray()
-                            .map((a) => `${link}/${page(a).attr('href').replace(/\.\//, '')}`)
+                            .map((a) => `${link}/${page(a).attr('href')!.replace(/\.\//, '')}`)
                             .filter((a) => a.endsWith('div=-1'))
                     );
                 })

@@ -216,7 +216,7 @@ async function handler(ctx) {
         description: item.content,
         author: item.creator,
         category: item.categories,
-        guid: item.guid.match(/\/(\d+)\.htm/)[1],
+        guid: item.guid!.match(/\/(\d+)\.htm/)![1],
         pubDate: parseDate(item.isoDate!),
     }));
 
@@ -228,6 +228,6 @@ async function handler(ctx) {
         ...(await getInfo(currentUrl)),
 
         item: items,
-        title: `${title} - ${feed.title.split(/_/).pop() || categories.zhibo}`,
+        title: `${title} - ${feed.title!.split(/_/).pop() || categories.zhibo}`,
     };
 }

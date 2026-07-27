@@ -42,16 +42,16 @@ async function handler(ctx) {
                 link: $item.find('guid').text(),
                 author: $item
                     .find(String.raw`dc\:creator`)
-                    .html()
-                    .match(/CDATA\[(.*?)\]/)[1],
+                    .html()!
+                    .match(/CDATA\[(.*?)\]/)![1],
                 category: $item
                     .find('category')
                     .toArray()
                     .map(
                         (c) =>
                             $(c)
-                                .html()
-                                .match(/CDATA\[(.*?)\]/)[1]
+                                .html()!
+                                .match(/CDATA\[(.*?)\]/)![1]
                     ),
                 pubDate: parseDate($item.find('pubDate').text()),
                 description: undefined as DataItem['description'],

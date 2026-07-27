@@ -113,7 +113,7 @@ async function handler(ctx) {
 
                     return {
                         title: $item.text(),
-                        link: `${link.indexOf('http') === 0 ? '' : rootUrl}${link.replace(/\.shtml/, '_s.shtml')}`,
+                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!.replace(/\.shtml/, '_s.shtml')}`,
                     };
                 });
 

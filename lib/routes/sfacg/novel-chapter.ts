@@ -73,7 +73,7 @@ async function handler(ctx) {
         title: `SF轻小说 ${$('h1.story-title').text()}`,
         link: `${baseUrl}/Novel/${id}`,
         description: $i('p.introduce').text(),
-        image: $i('div.summary-pic img').attr('src').replace('http://', 'https://'),
+        image: $i('div.summary-pic img').attr('src')!.replace('http://', 'https://'),
         item: items,
     };
 }

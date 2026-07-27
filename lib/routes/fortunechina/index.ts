@@ -53,7 +53,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.indexOf('http') === 0 ? link : `${currentUrl}/${$item.attr('href')}`,
+                link: link!.startsWith('http') ? link : `${currentUrl}/${$item.attr('href')}`,
                 pubDate: undefined as DataItem['pubDate'],
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],
@@ -84,15 +84,15 @@ async function handler(ctx) {
 
                 content('.mod-info, .title, .eval-zan, .eval-pic, .sae-more, .ugo-kol, .word-text .word-box .word-cn').remove();
 
-                item.description = content(item.link.includes('content') ? '.contain .text' : '.contain .top').html();
-                if (item.link.includes('jingxuan')) {
-                    item.description += content('.eval-mod_ugo').html();
-                } else if (item.link.includes('events')) {
-                    const eventDetails = await ofetch(`https://www.bagevent.com/event/${item.link.match(/\d+/)[0]}`);
+                item.description = content(item.link!.includes('content') ? '.contain .text' : '.contain .top').html();
+                if (item.link!.includes('jingxuan')) {
+                    item.description! += content('.eval-mod_ugo').html()!;
+                } else if (item.link!.includes('events')) {
+                    const eventDetails = await ofetch(`https://www.bagevent.com/event/${item.link!.match(/\d+/)![0]}`);
                     const $event = load(eventDetails);
                     item.description = $event('.page_con').html();
-                } else if (item.link.includes('zhuanlan')) {
-                    item.description += content('.mod-word').html();
+                } else if (item.link!.includes('zhuanlan')) {
+                    item.description! += content('.mod-word').html()!;
                 }
 
                 return item;

@@ -80,7 +80,7 @@ async function handler(ctx) {
                               const article = load(articleResponse.data);
 
                               const description = article('#_tl_editor')
-                                  .html()
+                                  .html()!
                                   .replaceAll(/src=["'|]data.*?["'|]/g, '')
                                   .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
 

@@ -95,7 +95,7 @@ async function handler(ctx) {
     );
 
     const icon = $('link[rel="apple-touch-icon"]')
-        .prop('href')
+        .prop('href')!
         .replace(/-\d+x\d+/, '');
 
     return {

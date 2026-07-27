@@ -53,8 +53,8 @@ async function handler() {
                 description: `<img src="${
                     $item
                         .find('.show-thumb-image')
-                        .attr('style')
-                        .match(/background-image: url\((.*)\);/)[1]
+                        .attr('style')!
+                        .match(/background-image: url\((.*)\);/)![1]
                 }">`,
             };
         });

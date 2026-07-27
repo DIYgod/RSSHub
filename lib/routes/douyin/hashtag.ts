@@ -64,7 +64,7 @@ async function handler(ctx) {
                 waitUntil: 'networkidle',
             });
             await page.waitForSelector('#RENDER_DATA');
-            const html = await page.evaluate(() => document.querySelector('#RENDER_DATA').textContent);
+            const html = await page.evaluate(() => document.querySelector('#RENDER_DATA')!.textContent);
             await context.close();
 
             const renderData = JSON.parse(decodeURIComponent(html));

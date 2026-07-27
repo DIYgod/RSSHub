@@ -58,7 +58,7 @@ async function handler(ctx) {
             return cache.tryGet(itemUrl, async () => {
                 const result = await got(itemUrl);
                 const $ = load(result.data);
-                const description = $('article').html().trim();
+                const description = $('article').html()!.trim();
                 return {
                     title: item.title,
                     link: itemUrl,

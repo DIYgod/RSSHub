@@ -41,7 +41,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
                 author: undefined as DataItem['author'],
                 pubDate: undefined as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
@@ -62,7 +62,7 @@ async function handler(ctx) {
                 item.author = content('meta[property="article:publisher"]').attr('content');
 
                 try {
-                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content').split(', ').pop()!, 'MM/DD/YYYY - HH:mm');
+                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!.split(', ').pop()!, 'MM/DD/YYYY - HH:mm');
                 } catch {
                     item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
                 }

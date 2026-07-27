@@ -37,7 +37,7 @@ const ProcessFeed = (list, cache, current) =>
 
                     const single = {
                         title,
-                        description: $(current.selector.content).html() + ($('ul[style]').length ? $('ul[style]').html() : ''),
+                        description: $(current.selector.content).html()! + ($('ul[style]').length ? $('ul[style]').html() : '')!,
                         link: $url,
                         pubDate: dateMatch ? timezone(parseDate(dateMatch[0], 'YYYY-MM-DD HH:mm'), 8) : undefined, // 混有发表时间和点击量，取出时间
                         author: '深圳大学研究生招生网',

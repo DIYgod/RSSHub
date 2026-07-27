@@ -26,7 +26,7 @@ async function loadContent(link) {
     }
 
     // 提取内容
-    const description = ($('.template-body').length ? $('.template-body').html() : '') + ($('.template-tail').length ? $('.template-tail').html() : '');
+    const description = ($('.template-body').length ? $('.template-body').html() : '')! + ($('.template-tail').length ? $('.template-tail').html() : '')!;
 
     // 返回解析的结果
     return { description };

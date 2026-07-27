@@ -32,7 +32,7 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
                 } else {
                     const $ = load(response.data);
                     item.title = $(contentSelector.title).text();
-                    item.description = $(contentSelector.content).html().trim();
+                    item.description = $(contentSelector.content).html()!.trim();
                     item.pubDate = timezone(parseDate($(contentSelector.date).text()), 8);
                 }
                 return item;

@@ -92,7 +92,7 @@ async function handler(ctx) {
                 dual = false;
 
             if (lang === 'dual') {
-                link = link.replace('/?utm_source=RSS', '') + '/dual';
+                link = link!.replace('/?utm_source=RSS', '') + '/dual';
 
                 try {
                     response = await cache.tryGet(`nyt: ${link}`, async () => {
@@ -120,7 +120,7 @@ async function handler(ctx) {
                     const $ = load(response);
                     if ($('.dual-btn').length > 0) {
                         hasEnVersion = true;
-                        link = $('.dual-btn a').last().attr().href;
+                        link = $('.dual-btn a').last().attr()!.href;
 
                         response = await utils.PuppeterGetter(ctx, context, link);
                     }

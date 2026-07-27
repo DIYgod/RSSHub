@@ -39,7 +39,7 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $item.find('li a').text(),
-                link: $item.find('li a').attr('href').replace('http:', 'https:'),
+                link: $item.find('li a').attr('href')!.replace('http:', 'https:'),
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };

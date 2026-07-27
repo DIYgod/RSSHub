@@ -52,7 +52,7 @@ async function handler(ctx) {
         $('#pageLink')
             .toArray()
             .filter((p) => (id ? $(p).text().split('：').pop() === id : true))
-            .map((p) => `${link}/${$(p).attr('href').replace(/\.\//, '')}`)
+            .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`)
             .map(async (p) => {
                 const pageResponse = await got({
                     method: 'get',
@@ -88,12 +88,12 @@ async function handler(ctx) {
                     enclosure_url: `${rootUrl}${
                         content('.ban_t a')
                             .first()
-                            .attr('href')
-                            .match(/(\/images.*)/)[1]
+                            .attr('href')!
+                            .match(/(\/images.*)/)![1]
                     }`,
                     description: renderToString(
                         <>
-                            {content('#reslist').html() ? raw(content('#reslist').html().replaceAll('display:none;', '')) : null}
+                            {content('#reslist').html() ? raw(content('#reslist').html()!.replaceAll('display:none;', '')) : null}
                             {content('founder-content').html() ? raw(content('founder-content').html()) : null}
                         </>
                     ),

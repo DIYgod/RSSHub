@@ -50,7 +50,7 @@ async function handler() {
             return {
                 title: a.text(),
                 pubDate: parseDate($item.find('.Article_PublishDate').text()),
-                link: `${a.attr('href').startsWith('http') ? '' : rootUrl}${a.attr('href')}`,
+                link: `${a.attr('href')!.startsWith('http') ? '' : rootUrl}${a.attr('href')}`,
                 description: undefined as DataItem['description'],
             };
         });

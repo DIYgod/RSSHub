@@ -94,7 +94,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.title ??= content('div.article-header-title').text();
-                item.description = content('#select-main').html().replaceAll('<p><br></p>', '');
+                item.description = content('#select-main').html()!.replaceAll('<p><br></p>', '');
                 item.author = content('div.article-header-author div.author-link a.label').first().text();
                 item.category = item.category.filter(Boolean);
                 item.guid = `latepost-${item.guid}`;

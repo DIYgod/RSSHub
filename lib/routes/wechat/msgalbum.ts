@@ -38,7 +38,7 @@ async function handler(ctx) {
     const mptitle = $('.album__author-name').text() + '|' + $('.album__label-title').text();
     const articledata = await Promise.all(
         list.map((item) => {
-            const link = $(item).attr('data-link').replace('http://', 'https://');
+            const link = $(item).attr('data-link')!.replace('http://', 'https://');
             const title = $(item).attr('data-title');
             const single = {
                 title,

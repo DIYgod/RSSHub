@@ -52,7 +52,7 @@ async function handler(ctx) {
                         $item
                             .find('.magazine-text-atten')
                             .text()
-                            .match(/\d{4}-\d{2}-\d{2}/)[0],
+                            .match(/\d{4}-\d{2}-\d{2}/)![0],
                         8 as unknown as string
                     )
                 ),

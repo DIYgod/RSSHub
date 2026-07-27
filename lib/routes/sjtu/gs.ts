@@ -69,7 +69,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('.title').text().trim(),
-                link: `${$item.attr('href').startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
+                link: `${$item.attr('href')!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
                 pubDate: timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), 8),
                 description: undefined as DataItem['description'],
             };

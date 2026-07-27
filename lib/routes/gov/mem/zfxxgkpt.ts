@@ -52,7 +52,7 @@ async function handler(ctx) {
             const aLabel = $(item).find('a[href]');
             const href = aLabel.attr('href');
             if (href) {
-                const link = currentUrl + aLabel.attr('href').replaceAll('..', '');
+                const link = currentUrl + aLabel.attr('href')!.replaceAll('..', '');
                 return {
                     title: aLabel.contents().first().text(),
                     link,

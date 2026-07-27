@@ -71,7 +71,7 @@ async function handler(ctx) {
 
                 const ldJson = JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle")').text());
 
-                item.description = content('.t-content__chapo').prop('outerHTML') + content('.t-content__main-media').prop('outerHTML') + content('.t-content__body').html();
+                item.description = content('.t-content__chapo').prop('outerHTML')! + content('.t-content__main-media').prop('outerHTML')! + content('.t-content__body').html();
                 item.pubDate = ldJson.datePublished ? parseDate(ldJson.datePublished) : undefined;
                 item.updated = ldJson.dateModified ? parseDate(ldJson.dateModified) : undefined;
                 item.author = ldJson.author?.map((author) => author.name).join(', ');

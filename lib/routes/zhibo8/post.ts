@@ -37,13 +37,13 @@ async function handler(ctx) {
         const $item = $(item);
         const author = $item.find('.topic-left > div > a').text();
         const floor = $item.find('p.topic-foot span:nth-child(2)').text();
-        const description = $item.find('.detail_ent').html().replaceAll('src="', 'src="https:');
+        const description = $item.find('.detail_ent').html()!.replaceAll('src="', 'src="https:');
         const pubDate = timezone(
             parseDate(
                 $item
                     .find('p.topic-foot')
                     .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)[0],
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)![0],
                 'YYYY-MM-DD HH:mm'
             ),
             8

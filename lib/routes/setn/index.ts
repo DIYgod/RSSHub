@@ -102,7 +102,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const a = $item.find('a').last();
-            const link = a.attr('href').replaceAll(/(\?|&)utm_campaign=.*/g, '');
+            const link = a.attr('href')!.replaceAll(/(\?|&)utm_campaign=.*/g, '');
 
             return {
                 title: a.text(),

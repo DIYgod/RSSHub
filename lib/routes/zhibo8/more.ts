@@ -67,7 +67,7 @@ async function handler(ctx) {
                     title: a.text(),
                     link: `https:${a.attr('href')}`,
                     pubDate: timezone(parseDate($item.find('span.postTime').text()), 8),
-                    category: $item.attr('data-label').split(',').filter(Boolean),
+                    category: $item.attr('data-label')!.split(',').filter(Boolean),
                 };
             });
     } else {

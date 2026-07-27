@@ -140,6 +140,6 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: $('meta[name="Keywords"]').prop('content'),
-        author: title.split('-').pop().trim(),
+        author: title.split('-').pop()!.trim(),
     };
 }

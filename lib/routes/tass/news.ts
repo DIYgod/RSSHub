@@ -39,12 +39,12 @@ async function handler(ctx) {
     const $ = load(categoryPage);
 
     const sectionId = $('.container .section-page')
-        .attr('ng-init')
+        .attr('ng-init')!
         .match(/sectionId\s*=\s*(\d+);/);
 
     const { data: response } = await got.post('https://tass.com/userApi/categoryNewsList', {
         json: {
-            sectionId: sectionId[1],
+            sectionId: sectionId![1],
             limit: 20,
             type: 'all',
         },

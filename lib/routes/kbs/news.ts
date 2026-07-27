@@ -60,13 +60,13 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 category: $item.find('.cate').text(),
-                link: `${rootUrl}/service${a.attr('href').replace('./', '/')}`,
+                link: `${rootUrl}/service${a.attr('href')!.replace('./', '/')}`,
                 pubDate: timezone(
                     parseDate(
                         $item
                             .find('.date')
                             .text()
-                            .match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)[1]
+                            .match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)![1]
                     ),
                     9
                 ),

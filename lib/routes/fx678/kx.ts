@@ -49,8 +49,8 @@ async function handler() {
                 const res = await got.get(itemUrl);
                 const $ = load(res.data);
 
-                const contentPart = $('.article-main .content').html().trim();
-                const forewordPart = $('.article-main .foreword').html().trim();
+                const contentPart = $('.article-main .content').html()!.trim();
+                const forewordPart = $('.article-main .foreword').html()!.trim();
                 const datetimeString = $('.article-cont .details i').text().trim();
                 const articlePubDate = timezone(parseDate(datetimeString, 'YYYY-MM-DD HH:mm:ss'), 8);
 

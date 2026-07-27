@@ -46,7 +46,7 @@ async function handler(ctx) {
         .contents()
         .filter((e: any) => e.nodeType === '8');
 
-    const $ = load(threadListHTML.prevObject[0].data);
+    const $ = load(threadListHTML.prevObject![0].data);
     const list = $('#thread_list > .j_thread_list[data-field]')
         .toArray()
         .map((element) => {

@@ -77,7 +77,7 @@ async function handler(ctx) {
 
             const id = $item.find('.title a').text();
             const size = $item.find('.title span').text();
-            const pubDate = $item.find('.subtitle a').attr('href').split('/date/').pop();
+            const pubDate = $item.find('.subtitle a').attr('href')!.split('/date/').pop();
             const description = $item.find('.has-text-grey-dark').text();
             const actresses = $item
                 .find('.panel-block')

@@ -73,7 +73,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#js_content')
-                    .html()
+                    .html()!
                     .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
 
                 return item;

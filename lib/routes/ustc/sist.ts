@@ -59,7 +59,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('.card-title > a').attr('title');
             let link = $item.find('.card-title > a').attr('href');
-            link = link.startsWith('/') ? host + link : link;
+            link = link!.startsWith('/') ? host + link : link;
             const pubDate = timezone(parseDate($item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
                 title: title!,

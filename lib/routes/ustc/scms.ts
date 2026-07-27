@@ -62,9 +62,9 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const elem = $(item);
-            const title = elem.find('.Article_Title > a').attr('title').trim();
+            const title = elem.find('.Article_Title > a').attr('title')!.trim();
             let link = elem.find('.Article_Title > a').attr('href');
-            link = link.startsWith('/') ? host + link : link;
+            link = link!.startsWith('/') ? host + link : link;
             // Assume that the articles are published at 12:00 UTC+8
             const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), -4);
             return {

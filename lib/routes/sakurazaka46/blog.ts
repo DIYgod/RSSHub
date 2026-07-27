@@ -85,7 +85,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 author: $item.find('.name').text(),
-                link: `${rootUrl}${$item.attr('href').split('?', 1)[0]}`,
+                link: `${rootUrl}${$item.attr('href')!.split('?', 1)[0]}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };

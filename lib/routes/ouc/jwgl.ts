@@ -42,8 +42,8 @@ async function handler() {
             const $e = $(e);
             const noticeId = $e
                 .find('a')
-                .attr('onclick')
-                .match(/viewNotice\('(.+?)'\)/)[1];
+                .attr('onclick')!
+                .match(/viewNotice\('(.+?)'\)/)![1];
             const tds = $e.find('td');
             return {
                 title: tds.eq(2).text(),

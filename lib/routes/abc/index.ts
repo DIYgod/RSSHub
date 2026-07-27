@@ -110,11 +110,11 @@ async function handler(ctx) {
                         .children()
                         .each((_, el) => {
                             const element = content(el);
-                            if (element.prop('tagName').toLowerCase() === 'figure') {
+                            if (element.prop('tagName')!.toLowerCase() === 'figure') {
                                 element.replaceWith(
                                     renderDescription({
                                         image: {
-                                            src: element.find('img').prop('src').split(/\?/, 1)[0],
+                                            src: element.find('img').prop('src')!.split(/\?/, 1)[0],
                                             alt: element.find('figcaption').text().trim(),
                                         },
                                     })

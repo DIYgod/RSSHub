@@ -32,7 +32,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const url = newsUrl + $item.find('a').attr('href').slice(2);
+            const url = newsUrl + $item.find('a').attr('href')!.slice(2);
             const title = $item.find('a').text();
             const publishTime = parseDate($item.find('span').text());
             return {

@@ -44,12 +44,12 @@ async function handler(ctx) {
     const reg = /日期：(.*?(?:\s\(.*?\))?)\s/;
     const list = lists.toArray().map((item) => {
         const $item = $(item).find('div');
-        let date: string | Date = reg.exec($item.find('div.r > p.other').text())[1];
+        let date: string | Date = reg.exec($item.find('div.r > p.other').text())![1];
         if (date.includes('周') || date.includes('月')) {
-            date = /\((.*?)\)/.exec(date)[1];
+            date = /\((.*?)\)/.exec(date)![1];
             date = parseDate(date, 'MM-DD');
         } else if (date.includes('年')) {
-            date = /\((.*?)\)/.exec(date)[1];
+            date = /\((.*?)\)/.exec(date)![1];
             date = parseDate(date, 'YYYY-MM-DD');
         } else {
             date = parseRelativeDate(date);

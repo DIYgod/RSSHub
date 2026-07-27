@@ -68,7 +68,7 @@ const webFetchCb = (response) => {
         icon: 'https://www.phoronix.com/android-chrome-192x192.png',
         image: 'https://www.phoronix.com/android-chrome-192x192.png',
         logo: 'https://www.phoronix.com/phxcms7-css/phoronix.png',
-        category: $('meta[name="keywords"]').attr('content').split(', '),
+        category: $('meta[name="keywords"]').attr('content')!.split(', '),
     };
 };
 

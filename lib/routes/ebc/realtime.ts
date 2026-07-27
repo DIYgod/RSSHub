@@ -80,7 +80,7 @@ async function handler(ctx) {
                     link: url,
                     pubDate: parseDate(metadata.datePublished),
                     author: metadata.author.name,
-                    description: cover.html() + content.html(),
+                    description: cover.html()! + content.html()!,
                     category: metadata.keywords ? [metadata.articleSection, ...metadata.keywords.split(',')] : [metadata.articleSection],
                 };
             })

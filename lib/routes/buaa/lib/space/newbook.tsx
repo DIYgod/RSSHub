@@ -116,8 +116,8 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const path = ctx.req.param('path');
-    const i = path.indexOf('/');
-    const params = i === -1 ? '' : path.slice(i + 1);
+    const i = path!.indexOf('/');
+    const params = i === -1 ? '' : path!.slice(i + 1);
     const searchParams = new URLSearchParams(params);
     const dcpCode = searchParams.get('dcpCode'); // Filter by subject (discipline code)
     const clsNo = searchParams.get('clsNo'); // Filter by class (Chinese Library Classification)

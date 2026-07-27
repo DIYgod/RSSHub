@@ -69,7 +69,7 @@ async function handler(ctx) {
                     parseDate(
                         content('.head p')
                             .text()
-                            .match(/时间：(.*)/)[1]
+                            .match(/时间：(.*)/)![1]
                             .replaceAll(/年|月/g, '-')
                     ),
                     8

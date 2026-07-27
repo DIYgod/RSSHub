@@ -46,7 +46,7 @@ async function handler(ctx) {
         .map((item) => {
             const title = $(item).find('a').attr('title');
             let link = $(item).find('a').attr('href');
-            if (!link.startsWith('http')) {
+            if (!link!.startsWith('http')) {
                 link = `${host}/${link}`;
             }
             const pubDate = parseDate(

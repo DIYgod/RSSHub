@@ -141,7 +141,7 @@ async function handler(ctx) {
                         content(el).attr(
                             'href',
                             `${rootUrl}/${content(el)
-                                .attr('href')
+                                .attr('href')!
                                 .replace(/^attach-dialog/, 'attach-download')}`
                         );
                     });

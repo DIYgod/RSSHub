@@ -42,7 +42,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 pubDate: parseDate($item.contents().last().text()),
-                link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link!, rootUrl).href),
+                link: enclosureUrl ?? (link!.startsWith('http') ? link : new URL(link!, rootUrl).href),
                 language: language as Language,
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureType,

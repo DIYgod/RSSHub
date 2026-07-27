@@ -56,7 +56,7 @@ async function handler() {
 
                 content('.card').find('div, h2').remove();
 
-                item.guid = item.link.split('/').pop();
+                item.guid = item.link!.split('/').pop();
                 item.description = content('.card').html();
                 item.pubDate = parseDate(detailResponse.data.match(/<br \/>(\d+-\d+-\d+)<\/div><\/a>/)[1]);
 

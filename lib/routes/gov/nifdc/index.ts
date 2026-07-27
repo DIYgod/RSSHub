@@ -50,7 +50,7 @@ async function handler(ctx) {
 
             return {
                 title: a.prop('title') || a.text(),
-                link: link.startsWith('http') ? link : new URL(link!, currentUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
                 pubDate: parseDate($item.find('span').text().replaceAll(/\(|\)/g, '')),
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],

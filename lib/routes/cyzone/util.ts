@@ -91,7 +91,7 @@ const processItems = async (apiUrl, limit, ...params) => {
 
                 content('img').each((_, el) => {
                     if (content(el).prop('src')) {
-                        content(el).prop('src', content(el).prop('src').split('?', 1)[0]);
+                        content(el).prop('src', content(el).prop('src')!.split('?', 1)[0]);
                     } else {
                         content(el).remove();
                     }

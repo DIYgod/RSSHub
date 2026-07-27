@@ -62,7 +62,7 @@ async function handler(ctx) {
 
                 const $2 = load(response2.data);
                 $2('.section-title').remove();
-                item.doi = $2('.doi').attr('href').replace('https://doi.org/', '');
+                item.doi = $2('.doi').attr('href')!.replace('https://doi.org/', '');
                 item.abstract = $2('.abstract.author').text();
                 item.description = renderDesc(item);
                 return item;

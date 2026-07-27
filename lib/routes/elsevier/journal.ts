@@ -35,9 +35,9 @@ async function handler(ctx) {
     const issueUrl = `${host}${$('.link-anchor.u-clr-black').attr('href')}`;
     let issue = '';
     if (issueUrl.match('suppl') !== null) {
-        issue = 'Volume ' + issueUrl.match('vol/(.*)/suppl')[1];
+        issue = 'Volume ' + issueUrl.match('vol/(.*)/suppl')![1];
     } else if (issueUrl.match('issue') !== null) {
-        issue = 'Volume ' + issueUrl.match('vol/(.*)/issue')[1] + ' Issue ' + issueUrl.match('/issue/(.*)')[1];
+        issue = 'Volume ' + issueUrl.match('vol/(.*)/issue')![1] + ' Issue ' + issueUrl.match('/issue/(.*)')![1];
     }
 
     const response2 = await got(issueUrl, {
@@ -72,7 +72,7 @@ async function handler(ctx) {
                 });
                 const $3 = load(response3.data);
                 $3('.section-title').remove();
-                item.doi = $3('.doi').attr('href').replace('https://doi.org/', '');
+                item.doi = $3('.doi').attr('href')!.replace('https://doi.org/', '');
                 item.abstract = $3('.abstract.author').text();
                 item.description = renderDesc(item);
                 return item;

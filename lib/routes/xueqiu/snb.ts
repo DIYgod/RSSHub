@@ -37,7 +37,7 @@ async function handler(ctx) {
     const data = response.data;
     const pattern = /SNB.cubeInfo = \{(.+)\}/;
     const info = pattern.exec(data);
-    const obj = JSON.parse('{' + info[1] + '}');
+    const obj = JSON.parse('{' + info![1] + '}');
     const rebalancing_histories = obj.sell_rebalancing.rebalancing_histories;
     const snb_title = obj.name + ' 的调仓历史';
     const snb_description = obj.description;

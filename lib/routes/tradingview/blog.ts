@@ -41,7 +41,7 @@ async function handler(ctx) {
                     image: {
                         src: $item
                             .find('div.articles-grid-img img')
-                            .prop('src')
+                            .prop('src')!
                             .replace(/-\d+x\d+\./, '.'),
                         alt: title,
                     },
@@ -71,7 +71,7 @@ async function handler(ctx) {
                             renderDescription({
                                 image: {
                                     src: content(e)
-                                        .prop('src')
+                                        .prop('src')!
                                         .replace(/-\d+x\d+\./, '.'),
                                 },
                             })

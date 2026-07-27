@@ -56,7 +56,7 @@ async function handler(ctx) {
                 }),
         ];
     });
-    const categoryUrl = categoryUrls.find((item) => item.category === category).url;
+    const categoryUrl = categoryUrls.find((item) => item.category === category)!.url;
 
     const data = await ofetch(categoryUrl);
     const $ = load(data);

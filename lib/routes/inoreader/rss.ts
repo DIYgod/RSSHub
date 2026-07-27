@@ -30,7 +30,7 @@ async function handler(ctx) {
     const rssUrl = `${rootUrl}/user/${user}/tag/${tag}`;
     const feed = await parser.parseURL(rssUrl);
     feed.items = feed.items.map((item) => {
-        if (item && item.enclosure && item.enclosure.type.includes('audio')) {
+        if (item && item.enclosure && item.enclosure.type!.includes('audio')) {
             // output podcast rss
             // get first image in content
             let firstImgSrc = '';

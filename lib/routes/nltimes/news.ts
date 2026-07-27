@@ -48,7 +48,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top-stories';
-    const suffix = map.get(category).suffix;
+    const suffix = map.get(category)!.suffix;
 
     const rootUrl = 'https://www.nltimes.nl';
     const apiUrl = rootUrl + suffix;
@@ -110,10 +110,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(category).title,
+        title: map.get(category)!.title,
         language: 'en' as Language,
         link: apiUrl,
-        description: map.get(category).title,
+        description: map.get(category)!.title,
         item: items,
     };
 }

@@ -41,7 +41,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href').replace('http://', 'https://'),
+                link: $item.attr('href')!.replace('http://', 'https://'),
             };
         });
 

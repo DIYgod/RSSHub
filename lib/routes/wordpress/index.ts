@@ -50,9 +50,9 @@ async function handler(ctx) {
 
                 const src = $el.prop('src');
 
-                if (src.startsWith('/')) {
+                if (src!.startsWith('/')) {
                     $el.prop('src', `${cdn}${item.link}${src}`);
-                } else if (src.startsWith('http:')) {
+                } else if (src!.startsWith('http:')) {
                     $el.prop('src', `${cdn}${src}`);
                 }
             });
@@ -95,9 +95,9 @@ async function handler(ctx) {
 
                 const src = $el.prop('src');
 
-                if (src.startsWith('/')) {
+                if (src!.startsWith('/')) {
                     $el.prop('src', `${cdn}${item.link}${src}`);
-                } else if (src.startsWith('http:')) {
+                } else if (src!.startsWith('http:')) {
                     $el.prop('src', `${cdn}${src}`);
                 }
             });

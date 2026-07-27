@@ -81,7 +81,7 @@ async function handler(ctx) {
                 item.pubDate = timezone(parseDate(content('.e-date').first().text()), 9);
                 item.category = content('.c-hashTagList-item')
                     .toArray()
-                    .map((t) => content(t).text().split('#').pop().trim());
+                    .map((t) => content(t).text().split('#').pop()!.trim());
 
                 return item;
             })

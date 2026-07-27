@@ -48,7 +48,7 @@ async function handler(ctx) {
     const summary$ = load(summaryHTML);
     const mainsrc = summary$('script')
         .toArray()
-        .find((item) => (item.attribs.src || '').startsWith('/new/static/js/main.')).attribs.src;
+        .find((item) => (item.attribs.src || '').startsWith('/new/static/js/main.'))!.attribs.src;
     const { data: mainScript } = await got({
         method: 'get',
         url: `https://www.newrank.cn${mainsrc}`,

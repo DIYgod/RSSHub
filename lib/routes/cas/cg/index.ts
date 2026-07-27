@@ -52,7 +52,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             return {
                 title: a.text(),
-                link: `${rootUrl}/cg/${caty}${a.attr('href').replace('.', '')}`,
+                link: `${rootUrl}/cg/${caty}${a.attr('href')!.replace('.', '')}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };

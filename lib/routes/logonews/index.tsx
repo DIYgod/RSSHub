@@ -68,7 +68,7 @@ async function handler(ctx) {
                     content(el).attr(
                         'src',
                         content(el)
-                            .attr('data-src')
+                            .attr('data-src')!
                             .replace(/_logonews/, '')
                     );
                 });

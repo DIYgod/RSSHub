@@ -51,7 +51,7 @@ async function handler(ctx) {
             .toReversed()
             .slice(0, limit)
             .map((item) => {
-                const source = consumer.sourceContentFor(item).replaceAll(/\s\n/g, '');
+                const source = consumer.sourceContentFor(item)!.replaceAll(/\s\n/g, '');
 
                 const processedSource = source.replaceAll(/(\w+)=\{+([^{}]+)\}+/g, (match, key, value) => {
                     const processedValue = value.slice(1, -1).replaceAll('"', "'").trim();
@@ -63,7 +63,7 @@ async function handler(ctx) {
                 return {
                     title: content('title').text(),
                     pubDate: parseDate(content('p[className="App-essay-article"]').last().find('b').first().text(), 'MMM YYYY'),
-                    link: new URL(`essay/${item.match(/\/(\w+)\.js/)[1].toLowerCase()}`, currentUrl).href,
+                    link: new URL(`essay/${item.match(/\/(\w+)\.js/)![1].toLowerCase()}`, currentUrl).href,
                     description: content('p[className="App-essay-article"]')
                         .toArray()
                         .map((p) => content(p).html())

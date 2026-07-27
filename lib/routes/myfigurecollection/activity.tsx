@@ -103,8 +103,8 @@ async function handler(ctx) {
                         .toArray()
                         .map((image) =>
                             $(image)
-                                .html()
-                                .match(/url\((.*)\)/)[1]
+                                .html()!
+                                .match(/url\((.*)\)/)![1]
                                 .replace(/\/thumbnails/, '')
                         )
                 ),

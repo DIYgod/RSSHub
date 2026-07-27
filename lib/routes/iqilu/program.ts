@@ -50,7 +50,7 @@ async function handler(ctx) {
                         .find('dd')
                         .last()
                         .text()
-                        .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                        .match(/(\d{4}-\d{2}-\d{2})/)![1]
                 ),
                 itunes_item_image: image.prop('src'),
                 enclosure_url: undefined as DataItem['enclosure_url'],

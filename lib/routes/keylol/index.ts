@@ -65,7 +65,7 @@ async function handler(ctx) {
     try {
         const feed = await parser.parseURL(`https://keylol.com/forum.php?mod=rss&fid=${queryParams.fid}&auth=0`);
         authorNameMap = feed.items.map((item) => ({
-            threadId: item.link.match(threadIdRegex)[1],
+            threadId: item.link!.match(threadIdRegex)![1],
             author: item.author,
         }));
     } catch {
@@ -93,7 +93,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('a.xst').text(),
-                link: new URL($item.find(' a.xst').prop('href').split('&extra=', 1)[0], rootUrl).href,
+                link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
                 pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
                 description: undefined as DataItem['description'],
@@ -106,7 +106,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const threadId = threadIdRegex.test(item.link) ? item.link.match(threadIdRegex)[1] : queryString.parseUrl(item.link).query.tid;
+                const threadId = threadIdRegex.test(item.link) ? item.link.match(threadIdRegex)![1] : queryString.parseUrl(item.link).query.tid;
                 const { data: detailResponse } = await got({
                     method: 'get',
                     url: item.link,
@@ -121,7 +121,7 @@ async function handler(ctx) {
                     // post with page
                     const postId = content('div.t_fsz > script')
                         .text()
-                        .match(/show_threadindex\((\d+),/)[1];
+                        .match(/show_threadindex\((\d+),/)![1];
                     descriptionList = await Promise.all(
                         indexDiv.find('a').map((i, a) => {
                             const pageTitle = $(a).text();

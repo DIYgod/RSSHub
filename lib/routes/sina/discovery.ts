@@ -37,8 +37,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const lid = map.get(type).id;
-    const title = map.get(type).title;
+    const lid = map.get(type)!.id;
+    const title = map.get(type)!.title;
     const pageid = '207';
     const { limit = '50' } = ctx.req.query();
 

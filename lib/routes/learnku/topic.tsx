@@ -108,7 +108,7 @@ async function handler(ctx) {
         ['', { name: '最新' }],
     ]);
     return {
-        title: `LearnKu - ${title} - ${categoryTitle.get(category).name}`,
+        title: `LearnKu - ${title} - ${categoryTitle.get(category)!.name}`,
         link: url,
         description,
         item: item.filter((item) => item !== ''),

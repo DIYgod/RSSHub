@@ -125,7 +125,7 @@ async function handler(ctx) {
                                 parseDate(
                                     content('.contentTime')
                                         .text()
-                                        .match(/\d{4}-\d{2}-\d{2}/)[0],
+                                        .match(/\d{4}-\d{2}-\d{2}/)![0],
                                     'YYYY-MM-DD'
                                 ),
                                 8

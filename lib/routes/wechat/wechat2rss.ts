@@ -39,7 +39,7 @@ async function handler(ctx) {
         title: title!,
         link,
         description,
-        image: image.url,
+        image: image!.url,
         item: items,
     };
 }

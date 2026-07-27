@@ -105,7 +105,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text().trim(),
-                link: baseUrl + $item.attr('href').slice(0, $item.attr('href').lastIndexOf('/')),
+                link: baseUrl + $item.attr('href')!.slice(0, $item.attr('href')!.lastIndexOf('/')),
                 category: undefined as DataItem['category'],
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],

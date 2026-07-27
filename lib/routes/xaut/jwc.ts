@@ -54,7 +54,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const link = $item
-                .attr('href')
+                .attr('href')!
                 .replace(/^\.\./, () => rootUrl)
                 .replace(/^(info)/, () => rootUrl + 'info');
             return {

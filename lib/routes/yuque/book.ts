@@ -46,7 +46,7 @@ async function handler(ctx) {
         cookieJar,
     });
     const $ = load(bookHtml);
-    const appData = JSON.parse(decodeURIComponent($('script').text().match(APP_DATA_REGEX)[1]));
+    const appData = JSON.parse(decodeURIComponent($('script').text().match(APP_DATA_REGEX)![1]));
 
     const bookId = appData.book.id;
 
@@ -99,7 +99,7 @@ async function handler(ctx) {
                 for await (const v of $('video').toArray()) {
                     const $v = $(v);
                     const src = $v.attr('src');
-                    if (src.startsWith('inputs')) {
+                    if (src!.startsWith('inputs')) {
                         const { data } = await got(`${baseUrl}/api/video`, {
                             searchParams: {
                                 video_id: src,

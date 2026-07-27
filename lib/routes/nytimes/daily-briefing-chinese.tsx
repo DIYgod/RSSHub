@@ -80,7 +80,7 @@ async function handler() {
                 });
 
                 item.title = content('meta[property="og:title"]').attr('content');
-                item.author = content('meta[name="byl"]').attr('content').replace(/By /, '');
+                item.author = content('meta[name="byl"]').attr('content')!.replace(/By /, '');
                 item.description = content('section[name="articleBody"]').html();
 
                 return item;

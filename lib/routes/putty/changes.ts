@@ -50,7 +50,7 @@ async function handler() {
                 title: title!,
                 link: `${rootUrl}/~sgtatham/putty/${$item.attr('href')}`,
                 description: $item.parent().next().html(),
-                pubDate: parseDate(title.match(/\(released (.*)\)/)[1]),
+                pubDate: parseDate(title!.match(/\(released (.*)\)/)![1]),
             };
         });
 

@@ -47,7 +47,7 @@ async function handler() {
                     .eq(0)
                     .find('img')
                     .toArray()
-                    .map((e) => $(e).attr('alt').replace('Avatar of ', ''))
+                    .map((e) => $(e).attr('alt')!.replace('Avatar of ', ''))
                     .join(', '),
             };
         });

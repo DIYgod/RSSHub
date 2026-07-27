@@ -57,7 +57,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: new URL(link!, rootUrl).href,
-                guid: link.match(/\/(\d+)\.html?/)[1],
+                guid: link!.match(/\/(\d+)\.html?/)![1],
             };
         });
 

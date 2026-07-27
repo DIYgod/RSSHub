@@ -59,7 +59,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.indexOf('http') === 0 ? link : new URL(link.replace(/^\.\./, ''), rootUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!.replace(/^\.\./, ''), rootUrl).href,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };

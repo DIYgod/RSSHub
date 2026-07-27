@@ -56,7 +56,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const text = $item.text();
-            const version = text.match(/\(ver (.*?)\)/)[1];
+            const version = text.match(/\(ver (.*?)\)/)![1];
 
             return {
                 title: `[${text.startsWith('dmg') ? 'macOS' : 'Windows'}] ${text}`,

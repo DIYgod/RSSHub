@@ -16,7 +16,7 @@ export const getComments = async (subjectID, minLength) => {
             const $rateEl = $el.find('.starlight');
             let rate: string | null = null;
             if ($rateEl.length > 0) {
-                rate = $rateEl.attr('class').match(/stars(\d)/)[1];
+                rate = $rateEl.attr('class')!.match(/stars(\d)/)![1];
             }
 
             const dateString = $el.find('small.grey').text().slice(2);

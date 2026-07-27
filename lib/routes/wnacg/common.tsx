@@ -46,7 +46,7 @@ export async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const href = $item.find('a').attr('href');
-            const aid = href.match(/^\/photos-index-aid-(\d+)\.html$/)[1];
+            const aid = href!.match(/^\/photos-index-aid-(\d+)\.html$/)![1];
             return {
                 title: $item.find('a').attr('title')!,
                 link: `${baseUrl}${href}`,
@@ -89,7 +89,7 @@ export async function handler(ctx) {
 
                 const imgListMatch = $('script')
                     .text()
-                    .match(/var imglist = (\[.*\]);"\);/)[1];
+                    .match(/var imglist = (\[.*\]);"\);/)![1];
 
                 const imgList = JSON.parse(imgListMatch.replaceAll('url:', '"url":').replaceAll('caption:', '"caption":').replaceAll('fast_img_host+\\', '').replaceAll('\\', ''));
 

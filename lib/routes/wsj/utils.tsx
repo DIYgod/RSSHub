@@ -28,7 +28,7 @@ const parseArticle = (item) =>
         const author = $('.author > a[rel="author"]').text();
 
         const categories = $('meta[name="keywords"]')
-            .attr('content')
+            .attr('content')!
             .split(',')
             .map((c) => c.trim());
 

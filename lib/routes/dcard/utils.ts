@@ -20,7 +20,7 @@ const ProcessFeed = async (items, cookies, context, limit, cache) => {
                     await page.context().addCookies(cookies);
                     await page.goto(url);
                     await page.waitForSelector('body > pre');
-                    const response = await page.evaluate(() => document.querySelector('body > pre').textContent);
+                    const response = await page.evaluate(() => document.querySelector('body > pre')!.textContent);
                     newCookies = await page.context().cookies();
                     await page.close();
 

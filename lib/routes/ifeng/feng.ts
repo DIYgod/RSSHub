@@ -46,7 +46,7 @@ async function handler(ctx) {
     const { sockpuppetInfo: allData } = JSON.parse(
         $('script')
             .text()
-            .match(/var allData = (.*?);/)[1]
+            .match(/var allData = (.*?);/)![1]
     );
     const { data: contentData } = JSON.parse(contentResponse.match(/getListData\((.*)\)/)[1]);
     const { weMediaName: mediaName, honorDesc, description, logo } = allData;
@@ -67,7 +67,7 @@ async function handler(ctx) {
                 const _allData = JSON.parse(
                     $('script')
                         .text()
-                        .match(/var allData = (\{.*?\});/)[1]
+                        .match(/var allData = (\{.*?\});/)![1]
                 );
                 if (type === 'doc') {
                     item.description = extractDoc(_allData.docData.contentData.contentList);

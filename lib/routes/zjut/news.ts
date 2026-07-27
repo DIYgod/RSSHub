@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) => {
-            if (item.link.startsWith('http')) {
+            if (item.link!.startsWith('http')) {
                 item.description = `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>`;
                 return item;
             }

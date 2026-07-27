@@ -23,8 +23,8 @@ const handler = async (ctx) => {
             const a = $item.find('a').first();
             let linkStr = a.attr('href');
             // 改为https访问并补全站内链接
-            linkStr = linkStr.replace('http://', 'https://');
-            if (!a.attr('href').startsWith('https://')) {
+            linkStr = linkStr!.replace('http://', 'https://');
+            if (!a.attr('href')!.startsWith('https://')) {
                 linkStr = `${baseUrl}${a.attr('href')}`;
             }
             return {
@@ -56,8 +56,8 @@ const handler = async (ctx) => {
                                 dataObj = JSON.parse(dataStr);
                             }
                         }
-                        item.description = dataObj.content;
-                        item.author = dataObj.author;
+                        item.description = dataObj!.content;
+                        item.author = dataObj!.author;
                     } else {
                         // 选择类名为“comment-body”的第一个元素
                         item.description = $('.read').first().html() || '无法获取正文内容，请手动访问';

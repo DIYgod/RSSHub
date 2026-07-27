@@ -157,8 +157,8 @@ async function handler(ctx) {
                 try {
                     let link;
                     if (['auto', 'house', 'travel'].includes(category)) {
-                        const category = item.link.split('.163.com', 1)[0].split('//').pop().split('.').pop();
-                        link = `https://3g.163.com/${category}/article/${item.link.split('/').pop()}`;
+                        const category = item.link!.split('.163.com', 1)[0].split('//').pop()!.split('.').pop();
+                        link = `https://3g.163.com/${category}/article/${item.link!.split('/').pop()}`;
                     } else {
                         const pathname = new URL(item.link!).pathname;
                         link = `https://3g.163.com${pathname}`;
@@ -178,7 +178,7 @@ async function handler(ctx) {
                         elem.attribs.src = elem.attribs['data-src'] ?? elem.attribs.src;
                     });
 
-                    item.title = content('meta[property="og:title"]').attr('content').replace('_手机网易网', '');
+                    item.title = content('meta[property="og:title"]').attr('content')!.replace('_手机网易网', '');
                     item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content')!);
                     item.description = content('.article-body').html();
                 } catch {

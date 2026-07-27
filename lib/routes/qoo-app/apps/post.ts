@@ -44,7 +44,7 @@ async function handler(ctx) {
                 // description: item.find('.img-list').html() + item.find('.text-view').html(),
                 pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
                 author: $item.find('cite.name').text(),
-                postId: a.attr('href').split('/').pop(),
+                postId: a.attr('href')!.split('/').pop(),
                 description: undefined as DataItem['description'],
             };
         });

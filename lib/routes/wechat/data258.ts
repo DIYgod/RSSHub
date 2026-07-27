@@ -105,9 +105,9 @@ async function handler(ctx) {
                 }
                 const $ = load(response.data);
                 const jmpJS = $('script')
-                    .filter((_, e) => $(e).html().includes('location.href'))
+                    .filter((_, e) => $(e).html()!.includes('location.href'))
                     .html();
-                return jmpJS.match(/location\.href='([^']+)'/)[1];
+                return jmpJS!.match(/location\.href='([^']+)'/)![1];
             } catch (error) {
                 err = error;
                 return '';

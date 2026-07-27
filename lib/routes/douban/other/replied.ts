@@ -37,8 +37,8 @@ async function handler(ctx) {
             const p = $item.find('p');
             const nid = p
                 .find('a')
-                .attr('href')
-                .match(/%2Fnote%2F(.*?)%2F&type=note/)[1];
+                .attr('href')!
+                .match(/%2Fnote%2F(.*?)%2F&type=note/)![1];
             const title = p.find('a').text();
             p.remove();
 

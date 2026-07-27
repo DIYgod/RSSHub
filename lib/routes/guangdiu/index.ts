@@ -49,7 +49,7 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = $('#dabstract').html() + $('a.dgotobutton').html('前往购买');
+                item.description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
                 item.pubDate = parseRelativeDate($('span.latesttime').text());
 
                 return item;

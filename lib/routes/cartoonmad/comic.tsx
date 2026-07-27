@@ -85,8 +85,8 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${baseUrl}${$item.attr('href')}`,
-                chapter: $item.text().match(/\d+/)[0],
-                pages: $item.next('font').text().match(/\d+/)[0],
+                chapter: $item.text().match(/\d+/)![0],
+                pages: $item.next('font').text().match(/\d+/)![0],
             };
         })
         .toReversed();

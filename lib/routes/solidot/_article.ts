@@ -35,7 +35,7 @@ export default async function get_article(url) {
     $('div.ct_tittle').remove();
     $('div.talk_time').remove();
     const description = $('div.block_m')
-        .html()
+        .html()!
         .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, '$1$2')
         // Preserve the not extremely disturbing donation ad
         // to support the site.

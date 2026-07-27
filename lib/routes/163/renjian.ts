@@ -61,7 +61,7 @@ async function handler(ctx) {
 
     if (urls) {
         items = urls.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) => ({
-            link: item.match(/url:"(.*)",/)[1],
+            link: item.match(/url:"(.*)",/)![1],
         })) as DataItem[];
     } else {
         const $ = load(data);
@@ -89,7 +89,7 @@ async function handler(ctx) {
                 item.title = content('h1').text();
                 item.author = content('script')
                     .text()
-                    .match(/renjian_author = '(.*)'/)[1];
+                    .match(/renjian_author = '(.*)'/)![1];
                 item.description = content('#endText').html() ?? content('#content').html();
                 item.pubDate = timezone(parseDate(content('.pub_time').text() ?? content('.post_info').text().split('来源:', 1)[0].trim()), 8);
 

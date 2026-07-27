@@ -173,7 +173,7 @@ async function handler(ctx) {
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
                 item.pubDate = parseDate(item.pubDate!) as unknown as string;
-                item.guid = item.link.includes('?') ? item.link : item.link.slice(0, item.link.lastIndexOf('/'));
+                item.guid = item.link!.includes('?') ? item.link : item.link!.slice(0, item.link!.lastIndexOf('/'));
 
                 return item;
             })
@@ -185,7 +185,7 @@ async function handler(ctx) {
         link: feed.link,
         description: feed.description,
         item: items as DataItem[],
-        image: feed.image.url,
+        image: feed.image!.url,
         language: feed.language,
     };
 }

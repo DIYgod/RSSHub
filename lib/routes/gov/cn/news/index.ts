@@ -82,7 +82,7 @@ async function handler(ctx) {
             list.toArray().map((item) => {
                 const $item = $(item);
                 let contentUrl = $item.find('a').attr('href');
-                contentUrl = contentUrl.startsWith('http') ? contentUrl : new URL(contentUrl!, url).href;
+                contentUrl = contentUrl!.startsWith('http') ? contentUrl : new URL(contentUrl!, url).href;
                 return cache.tryGet(contentUrl!, async () => {
                     let description;
                     let fullTextData;
@@ -91,7 +91,7 @@ async function handler(ctx) {
                     let author;
                     let category;
                     if (/dysMiddleResultConItemTitle/.test($item.html() ?? '')) {
-                        if (contentUrl.includes('content')) {
+                        if (contentUrl!.includes('content')) {
                             fullTextGet = await got.get(contentUrl);
                             fullTextData = load(fullTextGet.data);
                             fullTextData('.shuzi').remove(); // 移除videobg的图片
@@ -100,7 +100,7 @@ async function handler(ctx) {
                         } else {
                             description = $item.find('a').text(); // 忽略获取吹风会的全文
                         }
-                    } else if (contentUrl.includes('content')) {
+                    } else if (contentUrl!.includes('content')) {
                         fullTextGet = await got.get(contentUrl);
                         fullTextData = load(fullTextGet.data);
                         const $1 = fullTextData.html();

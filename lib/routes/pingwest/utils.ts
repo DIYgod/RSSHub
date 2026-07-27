@@ -25,7 +25,7 @@ const statusListParser = ($) => {
                 .replace(/展开全文$/, '');
             return {
                 title: content,
-                link: link.startsWith('http') ? link : `https:${link}`,
+                link: link!.startsWith('http') ? link : `https:${link}`,
                 description: [content, imgsStr].filter((s) => !!s).join('<br>'),
                 pubDate: new Date(timestamp * 1000).toUTCString(),
             };

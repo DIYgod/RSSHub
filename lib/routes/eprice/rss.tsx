@@ -42,7 +42,7 @@ async function handler(ctx) {
     const feed = await parser.parseURL(`https://www.eprice.com.${region}/news/rss.xml`);
 
     for (const e of feed.items) {
-        e.link = e.link.replace(/^http:\/\//i, 'https://');
+        e.link = e.link!.replace(/^http:\/\//i, 'https://');
     }
 
     const items = await Promise.all(
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 // fix lazyload image
                 $('a').each((_, e) => {
                     const $e = $(e);
-                    if ($e.attr('href') && $e.attr('href').endsWith('.jpg')) {
+                    if ($e.attr('href') && $e.attr('href')!.endsWith('.jpg')) {
                         $e.after(
                             renderToString(
                                 <figure>
@@ -109,7 +109,7 @@ async function handler(ctx) {
         link: feed.link,
         description: feed.description,
         item: items as DataItem[],
-        image: feed.image.url,
+        image: feed.image!.url,
         language: feed.language,
     };
 

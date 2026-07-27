@@ -68,7 +68,7 @@ async function handler(ctx) {
                 title: item.find('h2.title').text().trim(),
                 description: item.find('div.excerpt').text().trim(),
                 pubDate: parseRelativeDate(item.find('.author li:nth-child(2)').text().replace('发布于', '').trim()),
-                link: item.find('h2.title a').attr('href').trim(),
+                link: item.find('h2.title a').attr('href')!.trim(),
                 author: item.find('.author li:nth-child(1)').text().trim(),
             };
 

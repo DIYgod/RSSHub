@@ -75,10 +75,10 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const itemsResponse = await got(item.link);
+            cache.tryGet(item!.link, async () => {
+                const itemsResponse = await got(item!.link);
                 const $ = load(itemsResponse.data);
-                item.description = $('div[style="line-height:27px;"]').html() ?? '';
+                item!.description = $('div[style="line-height:27px;"]').html() ?? '';
 
                 return item!;
             })

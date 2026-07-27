@@ -58,7 +58,7 @@ async function handler() {
                 cache.tryGet(item.link, async () => {
                     const res = await got(item.link);
                     const content = load(res.data);
-                    item.description = content('#vsb_content').html() + (content('form ul').length > 0 ? content('form ul').html() : '');
+                    item.description = content('#vsb_content').html()! + (content('form ul').length > 0 ? content('form ul').html() : '')!;
                     return item;
                 })
             )

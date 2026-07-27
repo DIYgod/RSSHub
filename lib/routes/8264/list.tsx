@@ -110,7 +110,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL(link!, rootUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 category: undefined as DataItem['category'],
@@ -131,7 +131,7 @@ async function handler(ctx) {
                 content('i.pstatus').remove();
                 content('div.crly').remove();
 
-                const pubDate = content('span.pub-time').text() || content('span.fby span').first().prop('title') || content('span.fby').first().text().split('发表于').pop().trim();
+                const pubDate = content('span.pub-time').text() || content('span.fby span').first().prop('title') || content('span.fby').first().text().split('发表于').pop()!.trim();
 
                 content('img').each((_, el) => {
                     content(el).replaceWith(

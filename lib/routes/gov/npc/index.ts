@@ -54,7 +54,7 @@ async function handler(ctx) {
                 const title = $('title').text().replace('_中国人大网', '');
                 const time = $('script:contains("fbrq")')
                     .text()
-                    .match(/fbrq = "(.*?)"/)[1];
+                    .match(/fbrq = "(.*?)"/)![1];
                 const description = $('#Zoom').html();
 
                 return {

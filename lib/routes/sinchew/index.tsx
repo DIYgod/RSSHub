@@ -43,7 +43,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.attr('data-title')!,
-                link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
                 pubDate: timezone(parseDate($item.text()), 8),
                 description: undefined as DataItem['description'],
             };

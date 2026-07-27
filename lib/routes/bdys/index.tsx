@@ -125,7 +125,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const link = $item.attr('href').split(';jsessionid=');
+            const link = $item.attr('href')!.split(';jsessionid=');
             jsessionid = link[1];
             const next = $item.next();
             return {

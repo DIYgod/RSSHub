@@ -53,7 +53,7 @@ async function getThread(cookie: string, item: DataItem) {
             $('.postinfo')
                 .eq(0)
                 .text()
-                .match(/发表于 (.*)(?:[\n\r\u{2028}\u{2029}]\s*)?只看该作者/u)[1],
+                .match(/发表于 (.*)(?:[\n\r\u{2028}\u{2029}]\s*)?只看该作者/u)![1],
             'YYYY-M-D HH:mm'
         ),
         8

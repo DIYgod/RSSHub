@@ -104,7 +104,7 @@ async function handler(ctx) {
                 item.pubDate = parseDate(
                     content('div.line_xilan')
                         .text()
-                        .match(/日期 (\d{4}-\d{2}-\d{2})/)[1]
+                        .match(/日期 (\d{4}-\d{2}-\d{2})/)![1]
                 );
 
                 return item;

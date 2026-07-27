@@ -41,7 +41,7 @@ async function handler(ctx) {
             const anchor = $item.find('a');
             const title = anchor.attr('title');
             const href = anchor.attr('href');
-            const link = href.startsWith('http') ? href : baseUrl + href;
+            const link = href!.startsWith('http') ? href : baseUrl + href;
             const { description, author, exactDate } = await cache.tryGet<Record<string, any>>(link!, () => extractor(link));
             const span = $item.find('span');
             const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD');

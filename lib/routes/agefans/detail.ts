@@ -43,7 +43,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             return {
                 title: a.text(),
-                link: a.attr('href').replace('http://', 'https://'),
+                link: a.attr('href')!.replace('http://', 'https://'),
             };
         })
         .toReversed();

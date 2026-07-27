@@ -41,7 +41,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const link = $item.find('a').attr('href').replace('http://', 'https://');
+            const link = $item.find('a').attr('href')!.replace('http://', 'https://');
             return {
                 title: $item.text(),
                 link,

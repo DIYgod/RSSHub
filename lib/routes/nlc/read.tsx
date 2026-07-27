@@ -50,7 +50,7 @@ async function handler(ctx) {
 
             return {
                 title,
-                link: $item.prop('onclick').match(/openOutRes\('1','(.*?)','1',/)[1],
+                link: $item.prop('onclick').match(/openOutRes\('1','(.*?)','1',/)![1],
                 description: renderToString(
                     <>
                         {$item
@@ -75,7 +75,7 @@ async function handler(ctx) {
                     $item
                         .prev()
                         .prop('onclick')
-                        .match(/\('(\d+)'\)/)[1]
+                        .match(/\('(\d+)'\)/)![1]
                 }`,
             };
         });

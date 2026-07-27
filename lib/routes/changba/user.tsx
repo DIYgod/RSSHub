@@ -76,7 +76,7 @@ async function handler(ctx) {
                 }
                 const mp3 = `https://upscuw.changba.com/${workid}.mp3`;
                 const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
-                const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(', 2)[1];
+                const itunes_item_image = $('div.work-cover').attr('style')!.replace(')', '').split('url(', 2)[1];
                 return {
                     title: $('.work-title').text(),
                     description,

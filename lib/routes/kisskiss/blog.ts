@@ -52,7 +52,7 @@ async function handler(ctx) {
                         body
                             .find('div.blog_data div.data_r')
                             .text()
-                            .match(/\d+年\d+月\d+日 \(\d+:\d+\)/)[0],
+                            .match(/\d+年\d+月\d+日 \(\d+:\d+\)/)![0],
                         'YYYY年M月D日 (HH:mm)'
                     ),
                     9

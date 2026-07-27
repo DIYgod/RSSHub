@@ -47,7 +47,7 @@ async function handler(ctx) {
         title: data.title!,
         link: data.link,
         description: data.description + ' - ' + data.copyright,
-        image: data.image.url,
+        image: data.image!.url,
         item: data.items.map((e) => ({
             ...e,
             description: e.content,

@@ -61,8 +61,8 @@ async function handler(ctx) {
                 });
                 const content = load(detailResponse.data);
                 const date = content('head')
-                    .html()
-                    .match(/publishDate ="(.*) ";/)[1];
+                    .html()!
+                    .match(/publishDate ="(.*) ";/)![1];
                 item.pubDate = date ? parseDate(date, 'YYYYMMDDHHmmss') : null;
 
                 item.description = content('.tujitop').html();

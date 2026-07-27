@@ -80,7 +80,7 @@ export const handler = async (ctx) => {
                   const title = $item.find('div.detail h2').text();
                   const description = $item.find('div.detail').html();
                   const guid = `meishichina-${$item.prop('data-id')}`;
-                  const image = $item.find('div.pic img').prop('src').split(/\?/, 1)[0];
+                  const image = $item.find('div.pic img').prop('src')!.split(/\?/, 1)[0];
 
                   return {
                       title,

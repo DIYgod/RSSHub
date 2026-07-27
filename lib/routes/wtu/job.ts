@@ -67,8 +67,8 @@ async function handler(ctx) {
     // 获取参数 type
     const type = ctx.req.param('type');
     const mapItem = typeMap.get(type);
-    const msgTitle = `${mapItem.title} - 武汉纺织大学就业信息`;
-    const link = mapItem.url;
+    const msgTitle = `${mapItem!.title} - 武汉纺织大学就业信息`;
+    const link = mapItem!.url;
 
     // 请求网页
     const resp = await got.get(link);

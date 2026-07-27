@@ -56,7 +56,7 @@ async function handler() {
                     title,
                     author: $item.find('p').text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
                     link: `${link}#${title}`,
-                    pubDate: parseDate(link.match(/CCS(\d{4})/)[1], 'YYYY'),
+                    pubDate: parseDate(link!.match(/CCS(\d{4})/)![1], 'YYYY'),
                 };
             });
         const paperTable = $('tbody tr')
@@ -69,7 +69,7 @@ async function handler() {
                     title,
                     author: $item.find('td').eq(1).text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
                     link: `${link}#${title}`,
-                    pubDate: parseDate(link.match(/CCS(\d{4})/)[1], 'YYYY'),
+                    pubDate: parseDate(link!.match(/CCS(\d{4})/)![1], 'YYYY'),
                 };
             });
         return paperSection.length ? paperSection : paperTable;

@@ -34,7 +34,7 @@ async function handler(ctx) {
         .find('li')
         .find('a')
         .toArray()
-        .filter((item) => $(item).attr('href').startsWith('/novel/'))
+        .filter((item) => $(item).attr('href')!.startsWith('/novel/'))
         .map((item) => ({
             title: $(item).text(),
             author,

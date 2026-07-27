@@ -51,7 +51,7 @@ async function handler() {
                 };
             }),
         ...recommand,
-    ].filter((item) => item.link.startsWith('http'));
+    ].filter((item) => item.link!.startsWith('http'));
 
     const items = await Promise.all(
         list.map((item) =>

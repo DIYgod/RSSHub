@@ -72,7 +72,7 @@ async function handler(ctx) {
     const yearListRes = await got.get(yearListUrl);
     const $yearList = load(yearListRes.data);
     const code = $yearList('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('value');
-    const date = parseDate($yearList('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('id').replace('yq', ''), 'YYYYMM');
+    const date = parseDate($yearList('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('id')!.replace('yq', ''), 'YYYYMM');
 
     const yearIssueUrl = `${rootUrl}/knavi/journals/${name}/papers?yearIssue=${code}&pageIdx=0&pcode=CJFD,CCJD`;
     const response = await got.post(yearIssueUrl);

@@ -64,7 +64,7 @@ async function handler(ctx) {
 
                 item.author = $('.article-submit')
                     .text()
-                    .match(/发布人：(.*)/)[1];
+                    .match(/发布人：(.*)/)![1];
                 item.description = $('div[data-block-plugin-id="entity_field:node:body"]').html() + ($('div[data-block-plugin-id="entity_field:node:attachments"]').html() ?? '');
                 return item;
             })

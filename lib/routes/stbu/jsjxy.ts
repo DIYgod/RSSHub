@@ -64,7 +64,7 @@ async function handler() {
                     responseType: 'buffer',
                 });
                 const $ = load(gbk2utf8(response));
-                item.description = $('.content14').first().html().trim();
+                item.description = $('.content14').first().html()!.trim();
                 item.pubDate = timezone(parseDate($('.article .source').text().split('日期：', 2)[1].replace('\n', '').trim()), 8);
                 return item;
             })

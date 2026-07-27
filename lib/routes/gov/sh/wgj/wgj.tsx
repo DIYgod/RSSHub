@@ -51,7 +51,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.prop('innerText').replaceAll(/\s/g, ''),
+                title: $item.prop('innerText')!.replaceAll(/\s/g, ''),
                 link: $item.attr('href'),
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],

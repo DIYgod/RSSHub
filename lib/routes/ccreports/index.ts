@@ -44,7 +44,7 @@ async function handler() {
             author: $(item)
                 .find('p.new-desc')
                 .text()
-                .match(/作者：(.*?)\s/)[1],
+                .match(/作者：(.*?)\s/)![1],
             description: undefined as DataItem['description'],
             pubDate: undefined as DataItem['pubDate'],
         }));

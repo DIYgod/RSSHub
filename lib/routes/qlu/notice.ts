@@ -47,10 +47,10 @@ async function handler() {
             const itemTitle = $item.find('.news_title').children().text();
             const itemDate = $item.find('.news_year').text() + $item.find('.news_days').text();
             const path = $item.find('.news_title').children().attr('href');
-            const itemUrl = path.startsWith('https') ? path : host + path;
+            const itemUrl = path!.startsWith('https') ? path : host + path;
             return cache.tryGet(itemUrl!, async () => {
                 let description: string;
-                if (path.startsWith('https')) {
+                if (path!.startsWith('https')) {
                     description = itemTitle;
                 } else {
                     const result = await got(itemUrl);

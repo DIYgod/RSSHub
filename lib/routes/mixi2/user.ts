@@ -12,14 +12,14 @@ const handler = async (ctx: Context) => {
     const name = ctx.req.param('name');
     const mediaOnly = ctx.req.param('media') === 'media';
 
-    if (!name.startsWith('@')) {
+    if (!name!.startsWith('@')) {
         throw new InvalidParameterError('ユーザー名は@で始まる必要があります');
     }
 
     const client = getClient();
 
     const userInfo = await client.getPersonaByName({
-        name: name.slice(1),
+        name: name!.slice(1),
     });
 
     const persona = userInfo.persona;

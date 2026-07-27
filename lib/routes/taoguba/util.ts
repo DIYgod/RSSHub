@@ -36,7 +36,7 @@ const renderPostDetail = async (item) =>
             parseDate(
                 content('.article-data > span:nth-child(2)')
                     .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)[0]
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)![0]
             ),
             8
         );

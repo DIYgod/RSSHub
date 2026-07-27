@@ -74,7 +74,7 @@ async function handler(ctx) {
         .map((item) => {
             const title = $(item).find('h3.app-card-open__heading').find('a').text().trim();
             const link = $(item).find('h3.app-card-open__heading').find('a').attr('href');
-            const doi = link.replace('https://link.springer.com/article/', '');
+            const doi = link!.replace('https://link.springer.com/article/', '');
             const img = $(item).find('img').attr('src');
             const authors = $(item)
                 .find('li')
@@ -83,7 +83,7 @@ async function handler(ctx) {
                 .join('; ');
             return {
                 title,
-                link: link.startsWith('http') ? link : `${host}${link}`,
+                link: link!.startsWith('http') ? link : `${host}${link}`,
                 doi,
                 issue,
                 img,

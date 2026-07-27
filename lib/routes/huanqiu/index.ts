@@ -87,7 +87,7 @@ async function handler(ctx) {
                 item.description = content('textarea.article-content').text();
                 item.author = content('span', '.source').text();
                 item.pubDate = parseDate(Number.parseInt(content('textarea.article-time').text()));
-                item.category = content('meta[name="keywords"]').attr('content').split(',');
+                item.category = content('meta[name="keywords"]').attr('content')!.split(',');
 
                 return item;
             })

@@ -88,7 +88,7 @@ async function handler(ctx) {
                     },
                 });
                 const $ = load(response.data);
-                item.description = $('.new_detail_content').html() + $('.relatedNews').html();
+                item.description = $('.new_detail_content').html()! + $('.relatedNews').html()!;
                 return item;
             })
         )

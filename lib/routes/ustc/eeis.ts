@@ -57,9 +57,9 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const title = $item.find('h4 > a').eq(1).attr('title').trim();
+            const title = $item.find('h4 > a').eq(1).attr('title')!.trim();
             let link = $item.find('h4 > a').attr('href');
-            link = link.startsWith('/') ? host + link : link;
+            link = link!.startsWith('/') ? host + link : link;
             const pubDate = timezone(parseDate($item.find('.post-date > time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
                 title,

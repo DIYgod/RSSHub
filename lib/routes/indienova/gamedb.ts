@@ -65,7 +65,7 @@ async function handler(ctx) {
                 const article = $('.row article');
                 article.find('#showHiddenText').remove();
 
-                item.description = $('.cover-image').prop('outerHTML') + $('.tab-container').html() + article.html();
+                item.description = $('.cover-image').prop('outerHTML')! + $('.tab-container').html()! + article.html();
                 item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), 8) : item.pubDate;
 
                 return item;

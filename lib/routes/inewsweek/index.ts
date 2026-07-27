@@ -61,7 +61,7 @@ async function handler(ctx) {
                     const time = timezone(
                         parseDate(
                             $('div.editor')
-                                .html()
+                                .html()!
                                 .split(/(\s{2,})/, 3)[2]
                         ),
                         8

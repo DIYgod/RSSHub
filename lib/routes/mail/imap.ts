@@ -95,7 +95,7 @@ async function handler(ctx) {
                     title: item.envelope.subject,
                     description,
                     pubDate: parseDate(item.envelope.date),
-                    author: parsed.from.text,
+                    author: parsed.from!.text,
                     guid: `mail:${email}:${item.envelope.messageId}`,
                 };
             })

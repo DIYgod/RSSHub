@@ -56,7 +56,7 @@ async function handler(ctx) {
         .map((e) => {
             const $e = $(e);
             const a = $e.find('a');
-            const link = a.attr('href').startsWith('info/') || a.attr('href').startsWith('content') ? host + a.attr('href') : a.attr('href');
+            const link = a.attr('href')!.startsWith('info/') || a.attr('href')!.startsWith('content') ? host + a.attr('href') : a.attr('href');
             return {
                 title: a.text().trim(),
                 link,

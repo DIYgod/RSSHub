@@ -129,7 +129,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const projectId = item.guid.replace(/^oshwhub-/, '');
+                const projectId = item.guid!.replace(/^oshwhub-/, '');
                 const detailUrl = new URL(`api/project/${projectId}`, baseUrl).href;
                 const detailResponse = await ofetch(detailUrl);
 

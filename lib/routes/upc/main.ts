@@ -58,7 +58,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 description: $item.find('.li-right-zy a').text(),
-                link: link.startsWith('http') ? link : `${baseUrl}/${link}`,
+                link: link!.startsWith('http') ? link : `${baseUrl}/${link}`,
                 pubDate: parseDate($item.find('.li-left').text(), 'DDYYYY-MM'),
             };
         });
@@ -67,7 +67,7 @@ async function handler(ctx) {
         // ### 遍历列表，筛选出自己想要的内容
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (!item.link.startsWith(`${baseUrl}/`) || item.link.includes('content.jsp')) {
+                if (!item.link!.startsWith(`${baseUrl}/`) || item.link!.includes('content.jsp')) {
                     return item;
                 }
                 // 获取详情页面的介绍

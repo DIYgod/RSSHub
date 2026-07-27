@@ -74,7 +74,7 @@ async function handler(ctx) {
                     content = data.data.content;
                 }
 
-                item.description = $('.cons-photo').prop('outerHTML') + content;
+                item.description = $('.cons-photo').prop('outerHTML')! + content!;
 
                 return item;
             })

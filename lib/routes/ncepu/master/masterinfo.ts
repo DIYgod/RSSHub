@@ -74,7 +74,7 @@ async function handler(ctx) {
             const itemData = await cache.tryGet(item.link, async () => (await got(item.link)).data);
             const content = load(itemData);
 
-            const articleAuthor = content('.articleAuthor').html().replace('作者：&nbsp;&nbsp;', '').replace('来源：&nbsp;&nbsp;', '');
+            const articleAuthor = content('.articleAuthor').html()!.replace('作者：&nbsp;&nbsp;', '').replace('来源：&nbsp;&nbsp;', '');
             const eDescription = content('.article').html();
             const files = content('.Annex').html() || '';
 

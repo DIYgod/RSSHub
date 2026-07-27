@@ -127,7 +127,7 @@ function extractPubDate($: CheerioAPI): string {
     const img = $('meta[name="share_img"]')
         .toArray()
         .map((i) => $(i).attr('src'))
-        .find((i) => i.includes('images01'));
+        .find((i) => i!.includes('images01'));
     date = img ? parseDate(img.match(/images01\/(\d{8})\//i)![1]) : '';
     if (date) {
         return date;

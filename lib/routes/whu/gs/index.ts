@@ -65,7 +65,7 @@ async function handler(ctx) {
             const link = $item.find('a').attr('href');
             return {
                 title: $item.find('p').text(),
-                link: link.startsWith('http') ? link : new URL(link!, host).href,
+                link: link!.startsWith('http') ? link : new URL(link!, host).href,
                 pubDate: parseDate($item.find('span').text()),
                 description: undefined as DataItem['description'],
             };
@@ -88,13 +88,13 @@ async function handler(ctx) {
 
                     content('form[name=_newscontent_fromname] img').each((_, i) => {
                         const $i = $(i);
-                        if ($i.attr('src').startsWith('/')) {
+                        if ($i.attr('src')!.startsWith('/')) {
                             $i.attr('src', new URL($i.attr('src')!, host).href);
                         }
                     });
                     content('form[name=_newscontent_fromname] ul li a').each((_, a) => {
                         const $a = $(a);
-                        if ($a.attr('href').startsWith('/')) {
+                        if ($a.attr('href')!.startsWith('/')) {
                             $a.attr('href', new URL($a.attr('href')!, host).href);
                         }
                     });

@@ -64,17 +64,17 @@ async function handler() {
                 .eq(0)
                 .text()
                 .trim()
-                .match(/Volume (\d+)/)[1];
+                .match(/Volume (\d+)/)![1];
             const issue = $item
                 .find('.row li')
                 .eq(1)
                 .text()
                 .trim()
-                .match(/Issue (\d+)/)[1];
+                .match(/Issue (\d+)/)![1];
             const date = $item.find('.row li').eq(2).text().trim();
             const coverUrl = `${baseUrl}${$item.find('.cover-image__popup-moving-cover').attr('data-cover-src')}`;
             const content = $('.cover-image__popup-view__caption-wrapper').html();
-            const link = $('.browse-journals__item__links a').eq(0).attr('href').replace('/current', '');
+            const link = $('.browse-journals__item__links a').eq(0).attr('href')!.replace('/current', '');
 
             return {
                 title: `${name} | Volume ${volume} Issue ${issue}`,

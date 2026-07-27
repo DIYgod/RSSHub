@@ -64,7 +64,7 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const a = $(item);
-                const rawLink = a.attr('href').split('?', 1)[0];
+                const rawLink = a.attr('href')!.split('?', 1)[0];
                 return {
                     title: config.titleExtractor(a),
                     link: rawLink.startsWith('http') ? rawLink : `${rootUrl}${rawLink}`,
@@ -104,7 +104,7 @@ async function handler(ctx) {
                     .join('');
 
                 item.description = mainImage + articleBodyHtml;
-                item.category = content('meta[name="news_keywords"]').attr('content').split(',');
+                item.category = content('meta[name="news_keywords"]').attr('content')!.split(',');
 
                 return item;
             })

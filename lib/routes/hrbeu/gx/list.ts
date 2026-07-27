@@ -31,10 +31,10 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             let link = $(item).find('a').attr('href');
-            if (link.includes('info') && id !== '') {
+            if (link!.includes('info') && id !== '') {
                 link = new URL(link!, rootUrl).href;
             }
-            if (link.includes('info') && id === '') {
+            if (link!.includes('info') && id === '') {
                 link = `${rootUrl}/${link}`;
             }
             return {
@@ -48,7 +48,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (item.link.includes('info')) {
+                if (item.link!.includes('info')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('div.v_news_content').html();

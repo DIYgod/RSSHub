@@ -79,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = $$('h2').first().text()?.trim() || item.title;
                     const description = $$('div.content').html();
-                    const pubDateStr: string | undefined = item.link.split(/monthly\//).pop();
+                    const pubDateStr: string | undefined = item.link!.split(/monthly\//).pop();
                     const authorEls: Element[] = $$('div.block p').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
                         const $$authorEl: Cheerio<Element> = $$(authorEl);

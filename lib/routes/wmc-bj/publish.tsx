@@ -40,7 +40,7 @@ async function handler(ctx) {
             description: renderToString(
                 img.prop('src') ? (
                     <figure>
-                        <img src={img.prop('src').replace(/\/medium\//, '/')} />
+                        <img src={img.prop('src')!.replace(/\/medium\//, '/')} />
                     </figure>
                 ) : null
             ),

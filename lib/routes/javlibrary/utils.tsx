@@ -47,12 +47,12 @@ const ProcessItems = async (language, currentUrl) => {
     let items = $('.videotextlist, #video_comments')
         .find('a')
         .toArray()
-        .filter((i) => $(i).parent().hasClass('video') || $(i).parent().get(0).tagName === 'strong')
+        .filter((i) => $(i).parent().hasClass('video') || $(i).parent().get(0)!.tagName === 'strong')
         .map((item) => {
             const $item = $(item);
 
             const table = $item.parentsUntil('table');
-            const link = `${rootUrl}/${language}/${$item.attr('href').replace(/^\.\//, '')}`;
+            const link = `${rootUrl}/${language}/${$item.attr('href')!.replace(/^\.\//, '')}`;
 
             return {
                 link, // url to target content.
@@ -94,11 +94,11 @@ const ProcessItems = async (language, currentUrl) => {
                     .filter((tag) => tag !== '');
                 item.description = renderDescription({
                     cover: content('#video_jacket_img').attr('src'),
-                    info: content('#video_info').html().replaceAll('span><span', 'span>,&nbsp;<span'),
+                    info: content('#video_info').html()!.replaceAll('span><span', 'span>,&nbsp;<span'),
                     comment: item.description?.replaceAll('[img]', '<img src="')?.replaceAll('[/img]', '"/>'),
                     thumbs: content('.previewthumbs img')
                         .toArray()
-                        .map((img) => content(img).attr('src').replaceAll('-', 'jp-')),
+                        .map((img) => content(img).attr('src')!.replaceAll('-', 'jp-')),
                     videos: [...new Set(detailResponse.data.match(/(http[^"[\]]+\.mp4)/g))],
                 });
                 item.pubDate = item.pubDate.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;

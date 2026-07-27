@@ -62,7 +62,7 @@ async function handler() {
                 title,
                 description,
                 link: `${logUrl}#${title.replaceAll(/\s+/g, '-').replaceAll('.', '')}`,
-                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)[1]),
+                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)![1]),
             };
         });
 

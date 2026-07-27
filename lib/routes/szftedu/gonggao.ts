@@ -45,10 +45,10 @@ async function handler() {
         lists.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const thisUrl = item.link;
-                const trueLink = thisUrl.includes('http') ? thisUrl : host + thisUrl.slice(1);
+                const trueLink = thisUrl!.includes('http') ? thisUrl : host + thisUrl!.slice(1);
                 const response = await got(trueLink);
                 const $ = load(response.data);
-                item.description = thisUrl.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();
+                item.description = thisUrl!.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();
                 item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
                 return item;
             })

@@ -63,7 +63,7 @@ async function handler() {
                 title,
                 link: currentUrl,
                 description,
-                pubDate: parseDate(title.match(/\((.*)\)/)[1], ['D MMMM YYYY', 'D MMM YYYY']),
+                pubDate: parseDate(title.match(/\((.*)\)/)![1], ['D MMMM YYYY', 'D MMM YYYY']),
                 guid: title,
             };
         });

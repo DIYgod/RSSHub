@@ -48,7 +48,7 @@ async function handler(ctx) {
                 category: $item
                     .find('div.gt')
                     .toArray()
-                    .map((tag) => $(tag).attr('title').replace(/^:/, '')),
+                    .map((tag) => $(tag).attr('title')!.replace(/^:/, '')),
                 description: needImages ? '' : `<img src="${$item.find('div.glthumb div img').attr('data-src') ?? $item.find('div.glthumb div img').attr('src')}">`,
                 enclosure_url: needTorrents && $item.find('div.gldown a img[title="Show torrents"]').length > 0 ? $item.find('.gldown a').attr('href') : undefined,
                 enclosure_type: undefined as DataItem['enclosure_type'],

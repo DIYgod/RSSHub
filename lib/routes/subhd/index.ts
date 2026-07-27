@@ -75,7 +75,7 @@ async function handler(ctx) {
                 content('.rounded-circle').remove();
                 content('.view-text').last().remove();
 
-                item.description = content('.view-text').html() + content('.bg-white').first().html();
+                item.description = content('.view-text').html()! + content('.bg-white').first().html()!;
 
                 return item;
             })

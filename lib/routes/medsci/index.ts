@@ -90,7 +90,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href').replace(/;jsessionid=[\dA-Z]+/, '')}`,
+                link: `${rootUrl}${$item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, '')}`,
                 pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],

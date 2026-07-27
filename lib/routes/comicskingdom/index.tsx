@@ -60,7 +60,7 @@ async function handler(ctx) {
                 const image = content('meta[property="og:image"]').attr('content');
                 const description = renderToString(<img src={image} />);
                 // Pull the date out of the URL
-                const pubDate = parseDate(link.slice(link.lastIndexOf('/') + 1), 'YYYY-MM-DD');
+                const pubDate = parseDate(link!.slice(link!.lastIndexOf('/') + 1), 'YYYY-MM-DD');
 
                 return {
                     title: title!,

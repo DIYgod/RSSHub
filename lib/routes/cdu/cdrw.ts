@@ -50,7 +50,7 @@ async function handler() {
             return {
                 title,
                 // 处理相对路径链接
-                link: link.startsWith('http') ? link : new URL(link!, baseUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, baseUrl).href,
                 pubDate,
                 author: '成都大学新闻网',
                 description: undefined as DataItem['description'],

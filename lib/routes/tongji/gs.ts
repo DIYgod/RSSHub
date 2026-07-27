@@ -48,7 +48,7 @@ async function handler() {
         .map((item) => {
             const title = $(item).find('a').attr('title');
             const linkRaw = $(item).find('a').attr('href');
-            const link = linkRaw.startsWith('http') ? linkRaw : `${baseUrl}/${linkRaw}`;
+            const link = linkRaw!.startsWith('http') ? linkRaw : `${baseUrl}/${linkRaw}`;
             const pubDate = $(item).find('span').text();
             return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
         });

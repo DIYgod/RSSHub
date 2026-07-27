@@ -63,7 +63,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 $('.position-relative, .articleblock-container, .article-ad, .comments-shares').remove();
-                item.description = $('.sub-title').prop('outerHTML') + $('div.article-picture').html() + $('div[itemprop="articleBody"]').html();
+                item.description = $('.sub-title').prop('outerHTML')! + $('div.article-picture').html()! + $('div[itemprop="articleBody"]').html();
                 item.pubDate = parseDate($('meta[itemprop="datePublished"]').attr('content')!);
                 item.updated = parseDate($('meta[itemprop="dateModified"]').attr('content')!);
                 item.category = $('meta[property="article:tag"]')

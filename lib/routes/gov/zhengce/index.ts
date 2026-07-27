@@ -54,7 +54,7 @@ export async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL(link!, currentUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 category: undefined as DataItem['category'],
@@ -74,7 +74,7 @@ export async function handler(ctx) {
 
                     const content = load(detailResponse);
 
-                    const processElementText = (el) => content(el).text().split(/：/).pop().trim() || content(el).next().text().trim();
+                    const processElementText = (el) => content(el).text().split(/：/).pop()!.trim() || content(el).next().text().trim();
 
                     const author = content('meta[name="author"]').prop('content');
 

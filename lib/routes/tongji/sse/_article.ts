@@ -14,7 +14,7 @@ export default async function getArticle(item) {
     const content = $('#vsb_content').html();
 
     item.title = title;
-    item.description = content + ($('ul[style]').length ? $('ul[style]').html() : '');
+    item.description = content! + ($('ul[style]').length ? $('ul[style]').html() : '')!;
 
     return item;
 }

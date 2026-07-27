@@ -56,7 +56,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${link.indexOf('..') === 0 ? link.replace(/\.\./, '') : `/${category}/${link}`}`,
+                link: `${rootUrl}${link!.startsWith('..') ? link!.replace(/\.\./, '') : `/${category}/${link}`}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };

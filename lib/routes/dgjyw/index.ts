@@ -33,7 +33,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${link.startsWith('http') ? '' : `${rootUrl}/`}${link}`,
+                link: `${link!.startsWith('http') ? '' : `${rootUrl}/`}${link}`,
                 pubDate: parseDate($item.next().text()),
                 description: undefined as DataItem['description'],
             };

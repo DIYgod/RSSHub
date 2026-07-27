@@ -56,7 +56,7 @@ export const handler = async (ctx) => {
                     .map((i) => {
                         const $i = $(i);
 
-                        const id = $i.prop('href').match(/c\/(\d+)\.shtml/)?.[1] ?? undefined;
+                        const id = $i.prop('href')!.match(/c\/(\d+)\.shtml/)?.[1] ?? undefined;
 
                         if (!id) {
                             return;

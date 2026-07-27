@@ -69,7 +69,7 @@ async function handler() {
                 });
 
                 const contentHTML = content('.wp_articlecontent').html();
-                item.description = contentHTML.replaceAll(/^(<br>)+|(<br>)+$/g, '').trim();
+                item.description = contentHTML!.replaceAll(/^(<br>)+|(<br>)+$/g, '').trim();
                 return item;
             })
         )

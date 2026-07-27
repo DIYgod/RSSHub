@@ -54,7 +54,7 @@ async function handler() {
 
     const items = await Promise.all(
         versionList.map((item) => {
-            const _version = item.version.slice(1);
+            const _version = item.version!.slice(1);
             const url = `https://tiddlywiki.com/static/Release%2520${_version}.html`;
             return cache.tryGet(url, async () => {
                 const response = await got({

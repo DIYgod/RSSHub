@@ -40,7 +40,7 @@ async function handler() {
             const $ = load(item);
             const $a = $('a');
             let link = $a.attr('href');
-            if (link.startsWith('..')) {
+            if (link!.startsWith('..')) {
                 link = base_url + link;
             }
 

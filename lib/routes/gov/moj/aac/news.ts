@@ -59,7 +59,7 @@ async function handler(ctx) {
 
                     item.pubDate = timezone(parseDate($('.info time').attr('datetime')!, 'YYYY-MM-DD HH:mm:ss'), 8);
                     $('.info, button').remove();
-                    item.description = $('.cp').html() + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '') + ($('.file_download').length ? $('.file_download').html() : '');
+                    item.description = $('.cp').html()! + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '')! + ($('.file_download').length ? $('.file_download').html() : '');
                 }
                 delete item.isDownload;
                 return item;

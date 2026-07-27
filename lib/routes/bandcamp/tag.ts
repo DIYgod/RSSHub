@@ -58,7 +58,7 @@ async function handler(ctx) {
 
                 item.title = content('.trackTitle').eq(0).text();
                 item.author = content('h3 span a').text();
-                item.description = content('#tralbumArt').html() + content('#trackInfo').html();
+                item.description = content('#tralbumArt').html()! + content('#trackInfo').html()!;
 
                 return item;
             })

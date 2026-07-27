@@ -51,8 +51,8 @@ async function handler() {
                 const $item = $(item);
                 const itemPicUrl = $item
                     .find('.u-pic div')
-                    .attr('style')
-                    .match(/url\('(.+?)'\)/)[1];
+                    .attr('style')!
+                    .match(/url\('(.+?)'\)/)![1];
                 const itemPubdate = $item.find('.mobi').text();
                 return {
                     pubDate: parseDate(itemPubdate, 'YYYY-MM-DD'),

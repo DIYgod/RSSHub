@@ -58,7 +58,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const title = $item.find('a').text();
-            const link = $item.find('a').attr('href').startsWith('/article') ? host + $item.find('a').attr('href') : $item.find('a').attr('href');
+            const link = $item.find('a').attr('href')!.startsWith('/article') ? host + $item.find('a').attr('href') : $item.find('a').attr('href');
             const pubDate = timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD'), 8);
             return {
                 title,

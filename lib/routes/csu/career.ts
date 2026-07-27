@@ -58,7 +58,7 @@ async function handler() {
 
                 const zipped = $('script[type="text/javascript"]')
                     .text()
-                    .match(/Base64\.decode\(unzip\("(.*)"\)\./)[1];
+                    .match(/Base64\.decode\(unzip\("(.*)"\)\./)![1];
                 const { slice1, slice2 } = $('script[type="text/javascript"]')
                     .text()
                     .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)!.groups as any;

@@ -49,7 +49,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             // link原来长这样：'../info/1196/13990.htm'
-            const link = $item.find('a').attr('href').replace(/^\.\./, 'http://www.xaut.edu.cn');
+            const link = $item.find('a').attr('href')!.replace(/^\.\./, 'http://www.xaut.edu.cn');
             const pubDate = timezone(parseDate($item.find('div.time').text()), 8);
             const title = $item.find('h5').text();
 

@@ -64,7 +64,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) => {
-            if (!item.link.startsWith(`${baseUrl}/information/`)) {
+            if (!item.link!.startsWith(`${baseUrl}/information/`)) {
                 return item;
             }
             return cache.tryGet(item.link!, async () => {

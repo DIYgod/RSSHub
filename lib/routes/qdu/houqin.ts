@@ -61,7 +61,7 @@ async function handler() {
                             $('.article_body')
                                 .find('div > h4')
                                 .text()
-                                .match(/发布时间：(.*)编辑：/)[1]
+                                .match(/发布时间：(.*)编辑：/)![1]
                                 .trim(),
                             'YYYY年MM月DD日 HH:mm'
                         ),

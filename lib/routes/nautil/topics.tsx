@@ -63,7 +63,7 @@ async function handler(ctx) {
         $('img').each((_, e) => {
             const $e = $(e);
             $e.attr('src', $e.attr('data-src') ?? $e.attr('srcset'));
-            $e.attr('src', $e.attr('src').split('?', 1)[0]);
+            $e.attr('src', $e.attr('src')!.split('?', 1)[0]);
             $e.removeAttr('data-src');
             $e.removeAttr('srcset');
         });

@@ -41,12 +41,12 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.attr('title')!,
-                link: $item.attr('href').startsWith('http') ? $item.attr('href') : `${baseUrl}${$item.attr('href')}`,
+                link: $item.attr('href')!.startsWith('http') ? $item.attr('href') : `${baseUrl}${$item.attr('href')}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };
         })
-        .filter((i) => !i.link.includes('m.0818tuan.com/tb1111.php') && !i.link.includes('www.0818tuan.com/pdd/zudui.php'));
+        .filter((i) => !i.link!.includes('m.0818tuan.com/tb1111.php') && !i.link!.includes('www.0818tuan.com/pdd/zudui.php'));
 
     const items = await Promise.all(
         list.map((item) =>

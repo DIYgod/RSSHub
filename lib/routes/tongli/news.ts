@@ -42,7 +42,7 @@ async function handler(ctx) {
             const a = $item.find('.title a');
             return {
                 title: a.text(),
-                link: a.attr('href').startsWith('http') ? a.attr('href') : baseURL + a.attr('href'),
+                link: a.attr('href')!.startsWith('http') ? a.attr('href') : baseURL + a.attr('href'),
                 pubDate: parseDate($item.find('.date').text(), 'YYYY.MM.DD'),
                 description: undefined as DataItem['description'],
             };
@@ -54,7 +54,7 @@ async function handler(ctx) {
                 const { data: res } = await got(item.link);
                 const $ = load(res);
 
-                if (item.link.startsWith('https://tonglinv.pixnet.net/')) {
+                if (item.link!.startsWith('https://tonglinv.pixnet.net/')) {
                     item.description = $('.article-content-inner').html();
                 } else if (/^https?:\/\/blog\.xuite\.net\//.test(item.link!)) {
                     item.description = $('#content_all').html();

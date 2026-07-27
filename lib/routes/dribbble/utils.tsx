@@ -55,7 +55,7 @@ async function loadContent(link) {
                     $img.removeAttr('data-src');
                 }
 
-                $img.attr('src', $img.attr('src').split('?', 1)[0]);
+                $img.attr('src', $img.attr('src')!.split('?', 1)[0]);
                 $img.removeAttr('srcset');
                 $img.removeAttr('data-srcset');
             });

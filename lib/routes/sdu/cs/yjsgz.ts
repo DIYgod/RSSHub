@@ -53,7 +53,7 @@ async function handler(ctx) {
             const a = $e.find('a');
             return {
                 title: a.text().trim(),
-                link: a.attr('href').startsWith('info/') ? host + a.attr('href') : a.attr('href'),
+                link: a.attr('href')!.startsWith('info/') ? host + a.attr('href') : a.attr('href'),
                 pubDate: parseDate($e.find('span').text().trim(), 'YYYY-MM-DD'),
                 description: undefined as DataItem['description'],
             };

@@ -63,7 +63,7 @@ async function handler(ctx) {
             const pubDate = nexFtdate.find('span').length > 0 ? nexFtdate.find('span').attr('title') : nexFtdate.text().replace('发表于', '');
             return {
                 title: nexForumtitTopA.text().trim(),
-                pubDate: parseDate(pubDate.trim()),
+                pubDate: parseDate(pubDate!.trim()),
                 category: nexAuthorBtms.find('em a').text().trim(),
                 link: baseUrl + '/' + nexForumtitTopA.attr('href'),
                 author: $item.find('.nex_threads_author').find('a').text().trim(),

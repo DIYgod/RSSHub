@@ -38,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const tag = map.get(type).tag;
+    const tag = map.get(type)!.tag;
     const url = `${host}${tag}/list.htm`;
     const res = await got(url);
 
@@ -56,7 +56,7 @@ async function handler(ctx) {
     });
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link: `${host}${tag}/list.htm`,
         item: items,
     };

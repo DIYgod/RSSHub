@@ -71,13 +71,13 @@ async function handler(ctx) {
                     item.author = content('div.info_fbt')
                         .find('span.ly')
                         .text()
-                        .match(/来源：(.*)/)[1];
+                        .match(/来源：(.*)/)![1];
                     item.pubDate = timezone(
                         parseDate(
                             content('div.info_fbt')
                                 .find('span.time')
                                 .text()
-                                .match(/时间：(.*)/)[1]
+                                .match(/时间：(.*)/)![1]
                         ),
                         8
                     );

@@ -39,7 +39,7 @@ const getItems = (ctx, list) =>
                 );
                 $('div.review_heading').remove();
                 item.pubDate = parseDate($('div.header-text > div.clearfix').text());
-                item.doi = $('div.crossref > a').attr('href').replace('http://dx.doi.org/', '');
+                item.doi = $('div.crossref > a').attr('href')!.replace('http://dx.doi.org/', '');
 
                 return item;
             })

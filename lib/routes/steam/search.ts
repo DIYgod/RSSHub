@@ -27,7 +27,7 @@ async function handler(ctx) {
     return {
         title: 'Steam search result',
         description: `Query: ${query.toString()}`,
-        link: /g_strUnfilteredURL\s=\s'(.*)'/.exec(html)[1],
+        link: /g_strUnfilteredURL\s=\s'(.*)'/.exec(html)![1],
         item: $('#search_result_container a')
             .toArray()
             .map((a) => {

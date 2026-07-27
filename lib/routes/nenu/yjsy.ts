@@ -38,7 +38,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL(link!, rootUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };
@@ -60,7 +60,7 @@ async function handler(ctx) {
                     item.pubDate = parseDate(
                         content('h3')
                             .text()
-                            .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                            .match(/(\d{4}-\d{2}-\d{2})/)![1]
                     );
                 }
 

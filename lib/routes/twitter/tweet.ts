@@ -54,14 +54,14 @@ async function handler(ctx) {
     await api.init();
     const userInfo = await api.getUser(id);
     const data = await api.getUserTweet(id, params);
-    const profileImageUrl = userInfo.profile_image_url || userInfo.profile_image_url_https;
+    const profileImageUrl = userInfo!.profile_image_url || userInfo!.profile_image_url_https;
     const item = original && config.isPackage ? data : utils.ProcessFeed(ctx, { data: data as any });
 
     return {
-        title: `Twitter @${userInfo.name}`,
-        link: `https://x.com/${userInfo.screen_name}/status/${status}`,
+        title: `Twitter @${userInfo!.name}`,
+        link: `https://x.com/${userInfo!.screen_name}/status/${status}`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
-        description: userInfo.description,
+        description: userInfo!.description,
         item: item as DataItem[],
     };
 }

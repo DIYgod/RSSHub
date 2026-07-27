@@ -57,7 +57,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: $item.attr('href').replace(/^\./, () => currentUrl),
+                link: $item.attr('href')!.replace(/^\./, () => currentUrl),
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
                 category: undefined as DataItem['category'],

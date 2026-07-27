@@ -63,7 +63,7 @@ const ProcessFeed = async (type, id, order) => {
                 return {
                     title: $_item.find('.hpoi-detail-grid-title a').text(),
                     link: host + '/' + $_item.find('a').attr('href'),
-                    description: `<img src="${$_item.find('img').attr('src').replace('/s/', '/n/')}">${$_item.find('.hpoi-detail-grid-info').html().replaceAll('span>', 'p>')}`,
+                    description: `<img src="${$_item.find('img').attr('src')!.replace('/s/', '/n/')}">${$_item.find('.hpoi-detail-grid-info').html()!.replaceAll('span>', 'p>')}`,
                 };
             }),
     };

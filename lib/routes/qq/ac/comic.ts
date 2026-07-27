@@ -45,7 +45,7 @@ async function handler(ctx) {
                 author,
                 title: $item.text(),
                 description: `<img src="${$item.find('.cover-image').attr('src')}">`,
-                link: `${rootUrl}${$item.attr('href').replace(/chapter/, 'ComicView')}`,
+                link: `${rootUrl}${$item.attr('href')!.replace(/chapter/, 'ComicView')}`,
             };
         });
 

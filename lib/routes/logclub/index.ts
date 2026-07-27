@@ -116,7 +116,7 @@ async function handler(ctx) {
                               )
                                   .text()
                                   .split(/：/)
-                                  .pop()
+                                  .pop()!
                                   .trim()
                           )
                         : parseDate(content('span.aritlceIn-time').text().trim());

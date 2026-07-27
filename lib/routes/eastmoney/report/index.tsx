@@ -73,7 +73,7 @@ async function handler(ctx) {
     const initData = JSON.parse(
         $('script')
             .text()
-            .match(/var initdata(.=?)(.*?);/)[2]
+            .match(/var initdata(.=?)(.*?);/)![2]
     );
 
     const list = initData.data.map((item) => {

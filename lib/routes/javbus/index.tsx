@@ -151,7 +151,7 @@ async function handler(ctx) {
                         .toArray()
                         .map((i) => {
                             const thumbSrc = content(i).attr('href');
-                            return thumbSrc.startsWith('http') ? thumbSrc : `${rootUrl}${thumbSrc}`;
+                            return thumbSrc!.startsWith('http') ? thumbSrc : `${rootUrl}${thumbSrc}`;
                         }),
                 };
 

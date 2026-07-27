@@ -54,8 +54,8 @@ async function handler() {
                 author: 'Nintendo',
                 description: update_infos,
                 link: url,
-                guid: `${url}#${matched_version[0]}`,
-                pubDate: new Date(Number.parseInt(matched_date[1]), Number.parseInt(matched_date[2]) - 1, Number.parseInt(matched_date[3])),
+                guid: `${url}#${matched_version![0]}`,
+                pubDate: new Date(Number.parseInt(matched_date![1]), Number.parseInt(matched_date![2]) - 1, Number.parseInt(matched_date![3])),
             };
         }),
     };

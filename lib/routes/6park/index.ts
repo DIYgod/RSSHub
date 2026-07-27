@@ -73,7 +73,7 @@ async function handler(ctx) {
                 item.author = detailResponse.data.match(/送交者:[^>]*>([^<]*)<\/a>/)[1].trim();
                 item.pubDate = timezone(parseDate(detailResponse.data.match(/于 (.*) 已读/)[1], 'YYYY-MM-DD h:m'), 8);
                 item.description = content('pre')
-                    .html()
+                    .html()!
                     .replaceAll('<p></p>', '')
                     .replaceAll(/<font color="#E6E6DD">6park.com<\/font>/g, '');
 

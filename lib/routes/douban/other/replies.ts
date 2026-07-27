@@ -37,10 +37,10 @@ async function handler(ctx) {
             const p = $item.find('p');
             const match = p
                 .find('a')
-                .attr('href')
+                .attr('href')!
                 .match(/%2Fnote%2F(.*?)%2F%23(.*?)&type=note/);
-            const nid = match[1];
-            const cid = match[2];
+            const nid = match![1];
+            const cid = match![2];
             p.remove();
             return {
                 link: `https://www.douban.com/note/${nid}/#${cid}`,

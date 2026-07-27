@@ -47,7 +47,7 @@ async function handler() {
             const a = $(li).find('a');
             const pubDate = $(li).find('div.rightData').text();
             const href = a.prop('href');
-            const link = href.startsWith('http') ? href : new URL(href!, currentUrl).href;
+            const link = href!.startsWith('http') ? href : new URL(href!, currentUrl).href;
             return {
                 title: a.text(),
                 link,

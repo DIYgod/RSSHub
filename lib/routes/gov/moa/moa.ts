@@ -167,7 +167,7 @@ async function dealNormalPage(link, item) {
     const exactTime = $(metaElements[0]).text();
     const dateMatch = /\d{4}-\d{2}-\d{2}/.exec(exactTime);
     const timeMatch = /\d{2}:\d{2}/.exec(exactTime);
-    item.pubDate = parseRelativeDate(`${dateMatch[0]} ${timeMatch[0]}`);
+    item.pubDate = parseRelativeDate(`${dateMatch![0]} ${timeMatch![0]}`);
 
     item.description = $('.arc_body').html();
 

@@ -36,9 +36,9 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: `${currentUrl}v/${a.attr('href').split('/v/').pop()}`,
-                pubDate: parseDate(a.text().match(/(\d{8})$/)[1], 'YYYYMMDD'),
-                description: renderToString(<ZyshowDescription date={$item.find('td').first().text()} subject={$item.find('td').eq(1).text()} guests={guests} link={`${currentUrl}v/${a.attr('href').split('/v/').pop()}`} />),
+                link: `${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`,
+                pubDate: parseDate(a.text().match(/(\d{8})$/)![1], 'YYYYMMDD'),
+                description: renderToString(<ZyshowDescription date={$item.find('td').first().text()} subject={$item.find('td').eq(1).text()} guests={guests} link={`${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`} />),
                 category: guests.split(/,|;/),
             };
         });

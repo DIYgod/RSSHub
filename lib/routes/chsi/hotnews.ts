@@ -46,7 +46,7 @@ async function handler() {
                 if (path) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
-                    description = $('#article_dnull').html() ? $('#article_dnull').html().trim() : itemTitle;
+                    description = $('#article_dnull').html() ? $('#article_dnull').html()!.trim() : itemTitle;
                     if ($('.news-time').text()) {
                         itemDate = $('.news-time').text();
                     }

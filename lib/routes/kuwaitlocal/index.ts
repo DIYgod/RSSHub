@@ -62,7 +62,7 @@ async function handler(ctx) {
                     .map((item) => $(item).text().trim());
                 $('[id^=div-gpt-ad]').remove();
                 $('.tags_sec2, .tags_sec, .comment').remove();
-                item.description = $('.single_news_img').html() + $('#news_description').html();
+                item.description = $('.single_news_img').html()! + $('#news_description').html()!;
 
                 return item;
             })
@@ -71,7 +71,7 @@ async function handler(ctx) {
 
     return {
         title: $('head title').text().trim(),
-        description: $('head meta[name="description"]').attr('content').trim(),
+        description: $('head meta[name="description"]').attr('content')!.trim(),
         link: url,
         item: items,
         language: 'en' as Language,

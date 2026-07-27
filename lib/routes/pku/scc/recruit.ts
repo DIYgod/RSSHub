@@ -70,7 +70,7 @@ async function handler(ctx) {
                     const detail = load(detailPage.data);
                     const script = detail('div#content-div script').html();
                     if (script !== null) {
-                        const content_route = script.match(/\$\("#content-div"\).load\("(\S+)"\)/)[1];
+                        const content_route = script.match(/\$\("#content-div"\).load\("(\S+)"\)/)![1];
                         const content = await got(new URL(content_route, baseUrl).href);
                         item.description = content.data;
                     }

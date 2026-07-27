@@ -73,7 +73,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const newsTitle = $item.find('a').attr('title');
-            const newsLink = baseUrl + $item.find('a').attr('href').slice(3);
+            const newsLink = baseUrl + $item.find('a').attr('href')!.slice(3);
             const newsPubDate = parseDate($item.find('span').text().slice(1, -1));
 
             return {

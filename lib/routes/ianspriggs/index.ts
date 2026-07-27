@@ -55,7 +55,7 @@ async function handler(ctx) {
                     images: image?.prop('src')
                         ? [
                               {
-                                  src: image.prop('src').replace(/_thumbnail\./, '.'),
+                                  src: image.prop('src')!.replace(/_thumbnail\./, '.'),
                                   alt: image.prop('alt'),
                               },
                           ]
@@ -81,7 +81,7 @@ async function handler(ctx) {
                         const $item = content(item);
 
                         return {
-                            src: $item.prop('src').replace(/-\d+x\d+\./, '.'),
+                            src: $item.prop('src')!.replace(/-\d+x\d+\./, '.'),
                             alt: $item.prop('alt'),
                         };
                     });

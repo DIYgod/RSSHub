@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     if (params.includes('as_q=')) {
         const reg = /as_q=(.*?)&/;
-        query = reg.exec(params)[1];
+        query = reg.exec(params)![1];
         description = `Google Scholar Monitor Advanced Query: ${query}`;
     } else {
         params = 'q=' + params;

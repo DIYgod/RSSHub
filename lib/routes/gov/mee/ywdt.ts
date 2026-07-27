@@ -59,10 +59,10 @@ async function handler(ctx) {
             const href = $(item).find('a').attr('href');
 
             let absolute_path;
-            if (href.search(String.raw`\./`) === 0) {
-                absolute_path = `${url}${href.slice(2)}`;
-            } else if (href.search(String.raw`\./`) === 1) {
-                absolute_path = `${baseUrl}${href.slice(3)}`;
+            if (href!.search(String.raw`\./`) === 0) {
+                absolute_path = `${url}${href!.slice(2)}`;
+            } else if (href!.search(String.raw`\./`) === 1) {
+                absolute_path = `${baseUrl}${href!.slice(3)}`;
             } else {
                 absolute_path = href;
             }
@@ -92,7 +92,7 @@ async function handler(ctx) {
                         const video_source = content('.neiright_JPZ_GK_CP source');
                         const video_href = video_source.attr('src');
                         const _title_href = item.link.split('/').at(-1);
-                        const _video_src = item.link.replace(_title_href, () => video_href.slice(2));
+                        const _video_src = item.link.replace(_title_href, () => video_href!.slice(2));
                         video_source.attr('src', _video_src);
                     }
                     item.description = content('.neiright_JPZ_GK_CP').html();

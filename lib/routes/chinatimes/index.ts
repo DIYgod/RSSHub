@@ -92,7 +92,7 @@ async function handler(ctx) {
 
                 $('.ad, #donate-form-container, .promote-word, .google-news-promote, .article-hash-tag').remove();
 
-                item.description = $('.main-figure').html() + $('.article-body').html();
+                item.description = $('.main-figure').html()! + $('.article-body').html()!;
 
                 return item;
             })

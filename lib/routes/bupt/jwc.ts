@@ -88,10 +88,10 @@ async function handler(ctx: Context) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet<any>(item.link, async () => {
+            cache.tryGet<any>(item!.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
-                    url: item.link,
+                    url: item!.link,
                 });
 
                 const content = load(detailResponse.data);
@@ -117,8 +117,8 @@ async function handler(ctx: Context) {
                 const cleanedDescription = newsContent.text().trim();
 
                 // 提取并格式化发布时间
-                item.description = cleanedDescription;
-                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), 8);
+                item!.description = cleanedDescription;
+                item!.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), 8);
 
                 return item;
             })

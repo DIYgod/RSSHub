@@ -34,7 +34,7 @@ async function handler(ctx) {
     const publicPlurks = JSON.parse(
         $('body script[type]')
             .text()
-            .match(/PUBLIC_PLURKS = (.*);\nPINNED_PLURK/)[1]
+            .match(/PUBLIC_PLURKS = (.*);\nPINNED_PLURK/)![1]
             .replaceAll(/new Date\((.*?)\)/g, '$1')
             .replaceAll('null', '""')
     );

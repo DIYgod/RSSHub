@@ -93,7 +93,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                     .toArray()
                     .map((v) => content(v).text());
                 item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
-                item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
+                item.description = content('.cover-container, .column-video-cover').html()! + content('.movie-panel-info').html()! + content('#magnets-content').html() + content('.preview-images').html();
 
                 await page.close();
 

@@ -36,7 +36,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
+                link: link!.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 category: undefined as DataItem['category'],
@@ -58,7 +58,7 @@ async function handler(ctx) {
 
                     item.title = content('#newstit').text() || content('h6.end_tit').text();
                     item.description = content('div.end_article').html();
-                    item.author = info ? info.match(/\|(.*)\d{4}/)[1].trim() : '';
+                    item.author = info ? info.match(/\|(.*)\d{4}/)![1].trim() : '';
                     item.category = [
                         ...new Set(
                             [
@@ -68,7 +68,7 @@ async function handler(ctx) {
                                     .map((c) => content(c).text()),
                                 info
                                     ? info
-                                          .match(/^(.*)\|/)[1]
+                                          .match(/^(.*)\|/)![1]
                                           .replaceAll('来源：', '')
                                           .trim()
                                     : undefined,

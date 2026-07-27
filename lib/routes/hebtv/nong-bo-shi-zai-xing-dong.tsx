@@ -95,7 +95,7 @@ async function handler(ctx) {
                 const { data: detailResponse } = await got(item.link);
 
                 const tenantId = detailResponse.match(/tenantid = '(\w+)';/)[1];
-                const articleId = item.link.match(/\/nbszxd\/(\d+)/)[1];
+                const articleId = item.link.match(/\/nbszxd\/(\d+)/)![1];
 
                 const { data: apiResponse } = await got(apiUrl, {
                     searchParams: {

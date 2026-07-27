@@ -63,7 +63,7 @@ async function handler(ctx) {
             return {
                 title: titleMap[caty] + ': ' + $item.find('.name').text(),
                 link: 'https://www.hpoi.net/' + $item.find('.name').attr('href'),
-                description: `<img src="${$item.find('img').attr('src').replace('/s/', '/n/')}"><br>${$item.find('.pay').text()}<br>${$item.find('.score').text()}`,
+                description: `<img src="${$item.find('img').attr('src')!.replace('/s/', '/n/')}"><br>${$item.find('.pay').text()}<br>${$item.find('.score').text()}`,
             };
         });
 

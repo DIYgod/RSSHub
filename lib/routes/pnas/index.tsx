@@ -82,7 +82,7 @@ async function handler(ctx) {
                 const PNASdataLayer = JSON.parse(
                     $('script')
                         .text()
-                        .match(/PNASdataLayer =(.*?);/)[1]
+                        .match(/PNASdataLayer =(.*?);/)![1]
                 );
 
                 $('.signup-alert-ad, .citations-truncation button').remove();

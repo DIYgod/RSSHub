@@ -45,7 +45,7 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href').replace('http://', 'https://'),
+                link: $item.attr('href')!.replace('http://', 'https://'),
                 pubDate: undefined as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],

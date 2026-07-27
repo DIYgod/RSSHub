@@ -82,7 +82,7 @@ async function handler(ctx) {
                         content('.jj')
                             .text()
                             .trim()
-                            .match(/日期：([\d-]+) /)[1]
+                            .match(/日期：([\d-]+) /)![1]
                     ),
                     8
                 );

@@ -77,7 +77,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 item.description = content('div.news_cont_d_wrap').html();
                 if (content('div.fjdown').html() !== null) {
-                    item.description += content('div.fjdown').html();
+                    item.description! += content('div.fjdown').html()!;
                 }
                 item.pubDate = timezone(
                     parseDate(

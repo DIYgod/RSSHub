@@ -109,7 +109,7 @@ async function handler(ctx) {
 
             return {
                 title: '[' + tag + ']' + aLabelNode.text(),
-                link: aLabelNode.attr('href').replace('//', 'https://'),
+                link: aLabelNode.attr('href')!.replace('//', 'https://'),
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 pubDate: undefined as DataItem['pubDate'],

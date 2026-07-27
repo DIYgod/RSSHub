@@ -63,9 +63,9 @@ async function handler(ctx) {
                 const info = content('div.info')
                     .text()
                     .match(/作者：(\S*)\s+发布于：(\S*\s+.*?)\s/);
-                item.author = info[1];
-                item.pubDate = timezone(parseDate(info[2], 'YYYY-MM-DD HH:mm:ss'), 8);
-                item.description = content('div#con').html().replaceAll('\n', '');
+                item.author = info![1];
+                item.pubDate = timezone(parseDate(info![2], 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.description = content('div#con').html()!.replaceAll('\n', '');
                 return item;
             })
         )

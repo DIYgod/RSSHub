@@ -75,7 +75,7 @@ async function handler(ctx) {
 
             const response = await got.get(itemUrl);
             const $ = load(response.data);
-            const description = $('div.d2txt_con.clearfix').html().trim();
+            const description = $('div.d2txt_con.clearfix').html()!.trim();
 
             const single = {
                 title,

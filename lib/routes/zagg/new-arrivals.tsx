@@ -53,7 +53,7 @@ async function handler(ctx) {
             data.link = $(element).find('.product-item-link').eq(0).attr('href');
             data.title = $(element).find('.product-item-link').text();
             const regex = /(https.*?)\?/;
-            const imgUrl = $(element).find('img').eq(0).attr('data-src').match(regex)[1];
+            const imgUrl = $(element).find('img').eq(0).attr('data-src')!.match(regex)![1];
             const img = renderToString(
                 <div>
                     <img src={imgUrl} />

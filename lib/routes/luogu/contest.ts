@@ -62,7 +62,7 @@ async function handler() {
         decodeURIComponent(
             $('script')
                 .text()
-                .match(/decodeURIComponent\("(.*)"\)/)[1]
+                .match(/decodeURIComponent\("(.*)"\)/)![1]
         )
     );
 
@@ -76,7 +76,7 @@ async function handler() {
                     decodeURIComponent(
                         $('script')
                             .text()
-                            .match(/decodeURIComponent\("(.*)"\)/)[1]
+                            .match(/decodeURIComponent\("(.*)"\)/)![1]
                     )
                 );
 

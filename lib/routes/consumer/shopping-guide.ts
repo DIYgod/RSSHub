@@ -68,11 +68,11 @@ async function handler(ctx) {
                     const $ele = $(ele);
                     if ($ele.attr('src') && $ele.attr('srcset')) {
                         $ele.removeAttr('srcset');
-                        $ele.attr('src', $ele.attr('src').replace(/\/\d+c\d+\//, '/0p0/'));
+                        $ele.attr('src', $ele.attr('src')!.replace(/\/\d+c\d+\//, '/0p0/'));
                     }
                 });
 
-                item.description = header.html() + $('article .ckec').html();
+                item.description = header.html()! + $('article .ckec').html()!;
 
                 return item;
             })

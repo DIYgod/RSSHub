@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: title.attr('title')!,
                 link: title.attr('href'),
-                pubDate: timezone(parseDate(time.attr('data-timestamp') * 1000), 0),
+                pubDate: timezone(parseDate(time.attr('data-timestamp')! * 1000), 0),
                 category: tag.text(),
                 author: 'Wargaming',
                 description: content.html(),

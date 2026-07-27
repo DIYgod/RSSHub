@@ -70,7 +70,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };
@@ -100,7 +100,7 @@ async function handler(ctx) {
 
                 return {
                     title: $item.text(),
-                    link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
+                    link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
                     description: undefined as DataItem['description'],
                     pubDate: undefined as DataItem['pubDate'],
                 };

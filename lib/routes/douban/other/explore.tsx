@@ -44,8 +44,8 @@ async function handler() {
             const itemPic = $item.find('a.cover').attr('style')
                 ? $item
                       .find('a.cover')
-                      .attr('style')
-                      .match(/\('(.*?)'\)/)[1]
+                      .attr('style')!
+                      .match(/\('(.*?)'\)/)![1]
                 : '';
             const author = $item.find('.usr-pic a').last().text();
             const link = $item.find('.title a').attr('href') ?? $item.find('.icon-topic a').attr('href');

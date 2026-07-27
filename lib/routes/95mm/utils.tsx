@@ -28,7 +28,7 @@ const ProcessItems = async (ctx, title, currentUrl) => {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                guid: a.attr('href').replace('95mm.vip', '95mm.org'),
+                guid: a.attr('href')!.replace('95mm.vip', '95mm.org'),
                 description: undefined as DataItem['description'],
             };
         });

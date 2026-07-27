@@ -59,7 +59,7 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                link: link.startsWith('http') ? link : `${rootUrl}/${link.startsWith('view') ? `newspark/${link}` : link}`,
+                link: link!.startsWith('http') ? link : `${rootUrl}/${link!.startsWith('view') ? `newspark/${link}` : link}`,
                 author: undefined as DataItem['author'],
                 pubDate: undefined as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
@@ -84,7 +84,7 @@ async function handler(ctx) {
                         item.title = content('h2').text();
                         item.author = matches[1].trim();
                         item.pubDate = timezone(parseDate(matches[2], 'YYYY-MM-DD h:m'), 8);
-                        item.description = content('#shownewsc').html().replaceAll('<p></p>', '');
+                        item.description = content('#shownewsc').html()!.replaceAll('<p></p>', '');
                     } catch {
                         // no-empty
                     }

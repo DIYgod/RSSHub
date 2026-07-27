@@ -194,7 +194,7 @@ async function handler(ctx) {
             return {
                 title: $item.prop('title') ?? $item.text(),
                 link: new URL(`gxportal/xfgl/portal/${$item.prop('href')}`, rootUrl).href,
-                guid: $item.prop('href').match(/articleId=(\w+)/)[1],
+                guid: $item.prop('href')!.match(/articleId=(\w+)/)![1],
                 pubDate: parseDate($item.parent().find('span.times').text().replaceAll('[]', '')),
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],

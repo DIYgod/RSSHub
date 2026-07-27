@@ -47,7 +47,7 @@ async function handler(ctx) {
 
         return {
             title: $item.attr('title')!,
-            link: `${link.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
+            link: `${link!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
             description: undefined as DataItem['description'],
             pubDate: undefined as DataItem['pubDate'],
             category: undefined as DataItem['category'],

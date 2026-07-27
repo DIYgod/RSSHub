@@ -47,7 +47,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href').replace('..', '')}`,
+                link: `${rootUrl}${$item.attr('href')!.replace('..', '')}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
                 author: undefined as DataItem['author'],

@@ -32,7 +32,7 @@ async function handler() {
     const $ = load(response.data);
     const buildStatic = $('script[parseType=buildstatic]');
     const requestUrl = buildStatic.attr('url');
-    const queryData = JSON.parse(buildStatic.attr('querydata').replaceAll("'", '"'));
+    const queryData = JSON.parse(buildStatic.attr('querydata')!.replaceAll("'", '"'));
 
     const { data } = await got(`${baseUrl}${requestUrl}`, {
         headers: {
@@ -63,7 +63,7 @@ async function handler() {
 
                 item.author = $('.cinfo')
                     .text()
-                    .match(/来源：(.*)/)[1];
+                    .match(/来源：(.*)/)![1];
                 item.pubDate = timezone(parseDate($('#con_time').text(), 'YYYY-MM-DD HH:mm'), 8);
                 item.description = $('.ccontent').html();
 

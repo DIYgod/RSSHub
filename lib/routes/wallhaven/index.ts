@@ -48,10 +48,10 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
         .toArray()
         .map((item) => ({
-            title: $(item).find('img.lazyload').attr('data-src').split('/').pop()!,
+            title: $(item).find('img.lazyload').attr('data-src')!.split('/').pop()!,
             description: $(item)
-                .html()
-                .match(/<img.*?>/)[0],
+                .html()!
+                .match(/<img.*?>/)![0],
             link: $(item).find('a.preview').attr('href'),
             author: undefined as DataItem['author'],
             pubDate: undefined as DataItem['pubDate'],

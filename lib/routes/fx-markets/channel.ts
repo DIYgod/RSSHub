@@ -57,7 +57,7 @@ async function handler(ctx) {
                 // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}
                 const dateScript = (doc('script[type="application/ld+json"]').toArray()[0].children[0] as Text).data;
                 const re = /"datePublished": "(?<dateTimePub>.*)"/;
-                const dateStr = re.exec(dateScript).groups.dateTimePub;
+                const dateStr = re.exec(dateScript)!.groups!.dateTimePub;
                 const pubDateTime = parseDate(dateStr, 'YYYY-MM-DDTHH:mm:ssZ');
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();

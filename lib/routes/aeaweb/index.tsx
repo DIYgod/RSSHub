@@ -68,7 +68,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                link: `${rootUrl}${$item.attr('href').split('&', 1)[0]}`,
+                link: `${rootUrl}${$item.attr('href')!.split('&', 1)[0]}`,
                 doi: undefined as DataItem['doi'],
                 guid: undefined as DataItem['guid'],
                 title: undefined as unknown as DataItem['title'],
@@ -100,7 +100,7 @@ async function handler(ctx) {
                 item.description = renderToString(
                     <AeawebDescription
                         description={content('meta[name="twitter:description"]')
-                            .attr('content')
+                            .attr('content')!
                             .replace(/\(\w+ \d+\)( - )?/, '')}
                     />
                 );

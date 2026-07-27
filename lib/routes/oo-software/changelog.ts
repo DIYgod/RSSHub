@@ -52,7 +52,7 @@ async function handler(ctx) {
                 title,
                 link: `${currentUrl}#${title.split(' – ', 1)[0]}`,
                 description: $item.next().html(),
-                pubDate: parseDate(title.match(/released (on )?(.*)$/)[2], 'MMMM DD, YYYY'),
+                pubDate: parseDate(title.match(/released (on )?(.*)$/)![2], 'MMMM DD, YYYY'),
                 enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });

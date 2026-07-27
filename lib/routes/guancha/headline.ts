@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: $item.text(),
                 description: $item.parent().next().html(),
-                link: `${rootUrl}${$item.attr('href').replace(/\.shtml$/, '_s.shtml')}`,
+                link: `${rootUrl}${$item.attr('href')!.replace(/\.shtml$/, '_s.shtml')}`,
                 pubDate: timezone(parseDate($item.parents('div').first().find('span').text()), 8),
             };
         });
@@ -63,7 +63,7 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                item.description += content('.all-txt').html();
+                item.description! += content('.all-txt').html()!;
 
                 return item;
             })

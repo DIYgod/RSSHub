@@ -39,7 +39,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const link = $item.find('.small-tease__link').attr('href').split('/').at(-2);
+            const link = $item.find('.small-tease__link').attr('href')!.split('/').at(-2);
             return {
                 link,
             };

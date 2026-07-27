@@ -49,7 +49,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: new URL(
-                    a.prop('href').replace(/^\./, () => category),
+                    a.prop('href')!.replace(/^\./, () => category),
                     rootUrl
                 ).href,
                 pubDate: parseDate($item.find('span').text()),

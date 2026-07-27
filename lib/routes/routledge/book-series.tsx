@@ -49,7 +49,7 @@ async function handler(ctx) {
                 title: title.text(),
                 link: title.attr('href'),
                 description: description.text(),
-                pubDate: parseDate(meta.pop().trim(), 'MMMM DD, YYYY'),
+                pubDate: parseDate(meta.pop()!.trim(), 'MMMM DD, YYYY'),
                 author: meta
                     .map((i) => i.trim())
                     .filter(Boolean)

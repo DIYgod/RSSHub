@@ -166,7 +166,7 @@ async function handler(ctx) {
                 const description = $$('div.nex_drama_intros').html();
                 const picture =
                     $$('div.nex_drama_pic')
-                        .html()
+                        .html()!
                         .match(/background:url\((.*?)\)/)?.[1] ?? '';
 
                 const details = $$('li.nex_drama_Detail_li, li.nex_drama_Detail_lis dd')

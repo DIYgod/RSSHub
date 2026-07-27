@@ -140,7 +140,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.pubDate = parseDate(content('a[data-unixtime]').attr('data-unixtime') * 1000);
+                item.pubDate = parseDate(content('a[data-unixtime]').attr('data-unixtime')! * 1000);
 
                 item.category = content('.tag__text')
                     .toArray()

@@ -55,7 +55,7 @@ async function handler(ctx) {
                         ) : null}
                     </>
                 ),
-                guid: link.startsWith(rootUrl) ? `${link}#${title}` : link,
+                guid: link!.startsWith(rootUrl) ? `${link}#${title}` : link,
                 pubDate: parseDate($item.find('p.medGrey').text(), 'DD/MM/YYYY'),
                 enclosure_url: undefined as DataItem['enclosure_url'],
                 enclosure_type: undefined as DataItem['enclosure_type'],
@@ -68,7 +68,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 // The URL similar to the example below is the file download URL.
                 // eg. https://www.kantarworldpanel.com/dwl.php?sn=publications&id=1632.
-                if (item.link === currentUrl || !item.link.startsWith(rootUrl)) {
+                if (item.link === currentUrl || !item.link!.startsWith(rootUrl)) {
                     return item;
                 }
                 if (/dwl\.php/.test(item.link!)) {

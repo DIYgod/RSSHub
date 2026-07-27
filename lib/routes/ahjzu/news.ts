@@ -50,7 +50,7 @@ async function handler() {
 
             // 置顶链接自带http前缀，其他不带，需要手动判断
             const a = $item.find('a').attr('href');
-            const link = a.slice(0, 4) === 'http' ? a : rootUrl + a;
+            const link = a!.startsWith('http') ? a : rootUrl + a;
             return {
                 title: $item.find('a').attr('title')!,
                 link,

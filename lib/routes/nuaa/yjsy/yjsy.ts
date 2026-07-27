@@ -39,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const suffix = map.get(type).suffix;
+    const suffix = map.get(type)!.suffix;
     const getDescription = Boolean(ctx.req.param('getDescription'));
     const link = new URL(suffix, host).href;
     const cookie = await getCookie(host);
@@ -93,7 +93,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link,
         description: '南京航空航天大学研究生院RSS',
         item: out,

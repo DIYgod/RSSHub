@@ -20,7 +20,7 @@ const parseArticle = (item) =>
             content('.taglist, .J_ndlogo, .zan-shang, .sourcelist-box, #shareContain, .buyCopyright, .article-info, .icon, .special').remove();
             item.description +=
                 content('.post-cont')
-                    .html()
+                    .html()!
                     .replaceAll(/data:image\S*=="\s*original="/g, '') ?? '';
             if (!item.pubDate) {
                 item.pubDate = timezone(parseDate(content('.introduce').text().split() as unknown as string), 8);

@@ -78,7 +78,7 @@ async function handler(ctx) {
                         content('.xq-head')
                             .find('span')
                             .text()
-                            .match(/发布时间：\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}/)[0],
+                            .match(/发布时间：\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}/)![0],
                         'YYYY-MM-DD HH:mm'
                     ),
                     8

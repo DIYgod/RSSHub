@@ -59,7 +59,7 @@ async function handler(ctx) {
 
     await page.goto(`${api}&limit=100`);
     await page.waitForSelector('body > pre');
-    const response = await page.evaluate(() => document.querySelector('body > pre').textContent);
+    const response = await page.evaluate(() => document.querySelector('body > pre')!.textContent);
     const cookies = await cache.tryGet('dcard:cookies', () => page.context().cookies(), 3600, false);
     await page.close();
 

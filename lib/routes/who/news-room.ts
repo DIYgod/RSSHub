@@ -75,7 +75,7 @@ async function handler(ctx) {
             const link = $item.attr('href');
 
             return {
-                link: `${link.indexOf('http') === 0 ? '' : rootUrl}${$item.attr('href')}`,
+                link: `${link!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
             };
         });
     }

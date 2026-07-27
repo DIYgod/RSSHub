@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const items = data.map((item) => {
         const enclosure_url = `${hostUrl}/${item.target_path}${item.target_filename}`;
-        const enclosure_type = `${item.type}/${enclosure_url.match(/\.(\w+)$/)[1]}`;
+        const enclosure_type = `${item.type}/${enclosure_url.match(/\.(\w+)$/)![1]}`;
 
         return {
             title: item.title,

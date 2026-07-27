@@ -49,7 +49,7 @@ const parseArticle = (item) =>
             const slideData = JSON.parse(
                 $('script')
                     .text()
-                    .match(/var slide_data = (\{.*?\})\s/)[1]
+                    .match(/var slide_data = (\{.*?\})\s/)![1]
             );
             item.description = renderToString(
                 <>
@@ -61,7 +61,7 @@ const parseArticle = (item) =>
         } else if (item.link.startsWith('https://video.sina.com.cn/')) {
             const videoId = $('script')
                 .text()
-                .match(/video_id:'?(.*?)'?,/)[1];
+                .match(/video_id:'?(.*?)'?,/)![1];
 
             const { data: videoResponse } = await got('https://api.ivideo.sina.com.cn/public/video/play', {
                 searchParams: {
@@ -100,7 +100,7 @@ const parseArticle = (item) =>
             item.pubDate = parseDate(videoData.create_time, 'X');
         } else if (item.link.startsWith('https://news.sina.com.cn/') || item.link.startsWith('https://mil.news.sina.com.cn/')) {
             item.description = $('#article').html();
-            item.category = $('meta[name="keywords"]').attr('content').split(',');
+            item.category = $('meta[name="keywords"]').attr('content')!.split(',');
         } else {
             // https://ent.sina.com.cn
             // https://finance.sina.com.cn

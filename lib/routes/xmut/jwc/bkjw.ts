@@ -26,7 +26,7 @@ async function handler(ctx) {
             const resDate = $('td', row).eq(1);
             const resLink = $('a', res).attr('href');
             let link;
-            if (resLink.startsWith('../../')) {
+            if (resLink!.startsWith('../../')) {
                 const parsedUrl = new URL(resLink!, xmut);
                 link = parsedUrl.href;
             } else {

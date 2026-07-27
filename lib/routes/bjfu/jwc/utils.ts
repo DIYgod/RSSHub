@@ -14,7 +14,7 @@ async function loadContent(link) {
     const $ = load(data);
 
     // 提取内容
-    const description = ($('#con_c').length ? $('#con_c').html() : '') + ($('#con_fujian').length ? $('#con_fujian').html() : '');
+    const description = ($('#con_c').length ? $('#con_c').html() : '')! + ($('#con_fujian').length ? $('#con_fujian').html() : '')!;
 
     // 返回解析的结果
     return { description };

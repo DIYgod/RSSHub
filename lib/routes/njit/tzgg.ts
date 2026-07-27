@@ -70,7 +70,7 @@ async function handler() {
                     title: $('title').text(),
                     link: itemUrl,
                     description: $('.v_news_content')
-                        .html()
+                        .html()!
                         .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
                         .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                         .trim(),

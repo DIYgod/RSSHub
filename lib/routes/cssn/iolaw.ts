@@ -33,7 +33,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const url = `http://${domain}` + $item.find('a').attr('href').slice(1);
+            const url = `http://${domain}` + $item.find('a').attr('href')!.slice(1);
             const title = $item.find('a div.title').text();
             const publish_time = parseDate($item.find('a p').text());
             return {

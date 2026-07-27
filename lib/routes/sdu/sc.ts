@@ -65,7 +65,7 @@ async function handler(ctx) {
                         $('.pr')
                             .text()
                             .trim()
-                            .match(/作者：(.*)/)[1] || '山东大学软件学院';
+                            .match(/作者：(.*)/)![1] || '山东大学软件学院';
                     $('h3, .pr').remove();
                     item.description = $('.content').html();
 

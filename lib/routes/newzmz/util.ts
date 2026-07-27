@@ -66,7 +66,7 @@ const getItemInfo = (itemUrl) =>
                 content('span.duration')
                     .first()
                     .text()
-                    .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                    .match(/(\d{4}-\d{2}-\d{2})/)![1]
             ),
             description: {
                 image: content('div.details-bg img').prop('src'),

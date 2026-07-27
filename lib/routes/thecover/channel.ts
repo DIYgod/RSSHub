@@ -57,7 +57,7 @@ async function handler(ctx) {
     const $ = load(resp.data);
     const list = $('a.link-to-article')
         .toArray()
-        .filter((item) => $(item).attr('href').startsWith('/'))
+        .filter((item) => $(item).attr('href')!.startsWith('/'))
         .map((item) => ({
             link: rootUrl + $(item).attr('href'),
             title: undefined as unknown as DataItem['title'],

@@ -368,7 +368,7 @@ async function handler(ctx) {
                     const viaBotObj = replyObj.find('.tgme_widget_message_via_bot');
                     const viaBotText = viaBotObj.length ? ` via <b>${viaBotObj.text()}</b>` : '';
                     const replyLinkHref = replyObj.attr('href');
-                    const replyLink = replyLinkHref.length ? replyLinkHref : '';
+                    const replyLink = replyLinkHref!.length ? replyLinkHref : '';
                     const replyMetaTextObj = replyObj.find('.tgme_widget_message_metatext');
                     const replyMetaText = replyMetaTextObj.length ? `<p><small>${replyMetaTextObj.html()}</small></p>` : '';
                     const replyTextObj = replyObj.find('.tgme_widget_message_text');
@@ -624,7 +624,7 @@ async function handler(ctx) {
                         const wrapNext = $wrap.next('.tgme_widget_message_text');
                         if (wrapNext.length) {
                             const captionHtml = wrapNext.html();
-                            if (captionHtml.length) {
+                            if (captionHtml!.length) {
                                 attachmentHtml += `<p>${captionHtml}</p>`;
                             }
                             // remove them, avoid being duplicated

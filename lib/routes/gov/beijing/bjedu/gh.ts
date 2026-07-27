@@ -49,7 +49,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text().trim(),
-                link: $item.attr('href').startsWith('http') ? $item.attr('href').replace(/^http:/, 'https:') : new URL($item.attr('href')!, link).href,
+                link: $item.attr('href')!.startsWith('http') ? $item.attr('href')!.replace(/^http:/, 'https:') : new URL($item.attr('href')!, link).href,
                 pubDate: $item.prev().length ? timezone(parseDate($item.prev().text(), 'YYYY-MM-DD'), 8) : null,
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],

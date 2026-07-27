@@ -88,7 +88,7 @@ async function handler(ctx) {
 
                 item.author = content('.tw-inline').text().replace('·', '');
                 item.description = content('#zx-material-marker-root')
-                    .html()
+                    .html()!
                     .replaceAll(/(<img.*?) src(=.*?>)/g, '$1 data$2')
                     .replaceAll(/(<img.*?) data-src(=.*?>)/g, '$1 src$2');
 

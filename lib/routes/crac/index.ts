@@ -63,7 +63,7 @@ async function handler(ctx) {
                 });
                 const content = load(response.data);
                 item.title = content('div.r_d_cont_title > h3').text();
-                item.description = content('div.r_d_cont').html().trim().replaceAll('\n', '');
+                item.description = content('div.r_d_cont').html()!.trim().replaceAll('\n', '');
                 return item;
             })
         )

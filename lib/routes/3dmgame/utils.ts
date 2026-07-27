@@ -14,7 +14,7 @@ const parseArticle = (item) =>
             const lis = $('.patchtop .lis');
             const [, category, pubDate, author] = lis.text().match(/补丁类型：([^\n]*)\n.*整理时间：([^\n]*)\n.*补丁制作：([^\n]*)\n/s);
 
-            item.description = lis.html() + $('.L_title').html() + $('.GmL_1').html();
+            item.description = lis.html()! + $('.L_title').html()! + $('.GmL_1').html();
             item.category = category;
             item.pubDate = timezone(parseDate(pubDate), 8);
             item.author = author;

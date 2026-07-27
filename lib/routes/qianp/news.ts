@@ -51,7 +51,7 @@ async function handler(ctx) {
                 });
                 const $ = load(response);
 
-                item.category = [...new Set($('meta[name=keywords]').attr('content').split('，'))];
+                item.category = [...new Set($('meta[name=keywords]').attr('content')!.split('，'))];
                 item.author = $('meta[name=author]').attr('content');
                 item.pubDate = parseDate($('meta[property="bytedance:published_time"]').attr('content')!);
 

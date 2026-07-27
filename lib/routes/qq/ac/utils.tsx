@@ -24,7 +24,7 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
             return {
                 title: $item.text(),
                 guid: `${rootUrl}${$item.attr('href')}`,
-                link: `${mobileRootUrl}${$item.attr('href').replace(/Comic\/ComicInfo/, 'comic/index')}`,
+                link: `${mobileRootUrl}${$item.attr('href')!.replace(/Comic\/ComicInfo/, 'comic/index')}`,
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],
             };

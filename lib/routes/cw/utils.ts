@@ -116,10 +116,10 @@ const parseItems = (list, context: BrowserContext) =>
                 });
 
                 item.title = $('head title').text();
-                item.category = $('meta[name=keywords]').attr('content').split(',');
+                item.category = $('meta[name=keywords]').attr('content')!.split(',');
                 item.pubDate = parseDate(meta.datePublished);
                 item.author = Array.isArray(meta.author) ? meta.author : meta.author.name;
-                item.description = $('.article__head .container').html() + $('.article__content').html();
+                item.description = $('.article__head .container').html()! + $('.article__content').html()!;
 
                 return item;
             })

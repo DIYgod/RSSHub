@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
             return {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.time').text()),
-                link: link.startsWith('http') ? link : new URL(link!, rootUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
                 description: undefined as DataItem['description'],
                 content: undefined as DataItem['content'],
             };

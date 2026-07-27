@@ -67,8 +67,8 @@ async function handler(ctx) {
             const imageUrl = new URL(
                 $item
                     .find('.map-wrapper')
-                    .attr('style')
-                    .match(/url\('(.*)'\);/)[1]
+                    .attr('style')!
+                    .match(/url\('(.*)'\);/)![1]
             ).href;
 
             const title = $item.find('.title').text();

@@ -63,7 +63,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const link = host + map.get(type).id;
+    const link = host + map.get(type)!.id;
     let items: any[] = [];
     if (type === 0) {
         const tasks = Array.from(map.values(), (value) => getPage(value.id));
@@ -72,7 +72,7 @@ async function handler(ctx) {
             items = [...items, ...result];
         }
     } else {
-        items = await getPage(map.get(type).id);
+        items = await getPage(map.get(type)!.id);
     }
 
     const out = await Promise.all(
@@ -93,7 +93,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link,
         item: out,
     };

@@ -66,8 +66,8 @@ const ProcessItems = async (ctx) => {
                 (item) =>
                     $(item)
                         .find('a')
-                        .attr('href')
-                        .match(/_id\/(.*?)\.html/)[1]
+                        .attr('href')!
+                        .match(/_id\/(.*?)\.html/)![1]
             )
             .join(',')
     );
@@ -79,7 +79,7 @@ const ProcessItems = async (ctx) => {
 
         const title = a.text();
         const link = a.attr('href');
-        const guid = link.match(/_id\/(.*?)\.html/)[1];
+        const guid = link!.match(/_id\/(.*?)\.html/)![1];
 
         const description = $item.find('.work_text').text();
         const authors = $item
@@ -89,7 +89,7 @@ const ProcessItems = async (ctx) => {
                 name: $(a).text(),
                 link: $(a).attr('href'),
             }));
-        let images = $item.find('div[data-samples]').length === 0 ? [] : JSON.parse($item.find('div[data-samples]').attr('data-samples').replaceAll("'", '"')).map((s) => s.thumb);
+        let images = $item.find('div[data-samples]').length === 0 ? [] : JSON.parse($item.find('div[data-samples]').attr('data-samples')!.replaceAll("'", '"')).map((s) => s.thumb);
 
         const workCategories = $item
             .find('.work_category')

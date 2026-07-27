@@ -44,7 +44,7 @@ async function handler(ctx) {
             const dateText = dateElement.text();
             dateElement.remove();
             const href = anchor.attr('href');
-            const link = href.startsWith('http') ? href : baseUrl + href;
+            const link = href!.startsWith('http') ? href : baseUrl + href;
             const title = $item.text();
             const { description, author: exactAuthor, exactDate } = (await cache.tryGet(link!, () => extractor(link))) as Record<string, any>;
             const author = exactAuthor ?? '教务处';

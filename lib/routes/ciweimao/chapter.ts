@@ -40,7 +40,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     const firstChapterUrl = $('ul.catalogue-list li a').attr('href');
-    const firstChapterId = firstChapterUrl.slice(firstChapterUrl.lastIndexOf('/') + 1);
+    const firstChapterId = firstChapterUrl!.slice(firstChapterUrl!.lastIndexOf('/') + 1);
 
     const { data: chapters } = await got(`${chapterUrl}/chapter/${id}/${firstChapterId}`);
     const $c = load(chapters);

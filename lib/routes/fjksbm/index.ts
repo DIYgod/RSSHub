@@ -51,7 +51,7 @@ async function handler(ctx) {
 
         return {
             title: $item.text(),
-            link: link.startsWith('//') ? (link.startsWith('https') ? link : `https:${link}`) : `${rootUrl}${link}/news/bulletin`,
+            link: link!.startsWith('//') ? (link!.startsWith('https') ? link : `https:${link}`) : `${rootUrl}${link}/news/bulletin`,
             description: undefined as DataItem['description'],
             pubDate: undefined as DataItem['pubDate'],
         };

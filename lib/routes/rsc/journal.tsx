@@ -76,7 +76,7 @@ async function handler(ctx) {
             const isOpenAccess = !!$item.find('span.capsule__context img.ver-t').prop('alt');
             const isManuscript = !!$item.find('span.capsule__context span').text();
 
-            const enclosureUrl = new URL($item.find('div.capsule__action--buttons a').prop('href').split('?').pop()!, rootUrl).href;
+            const enclosureUrl = new URL($item.find('div.capsule__action--buttons a').prop('href')!.split('?').pop()!, rootUrl).href;
 
             return {
                 title: $item.find('h3.capsule__title').text(),
