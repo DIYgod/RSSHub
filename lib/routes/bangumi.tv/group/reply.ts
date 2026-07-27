@@ -62,8 +62,8 @@ async function handler(ctx) {
     const postTopic = {
         title,
         description: $('.postTopic .topic_content').html(),
-        author: $('.postTopic .inner strong a').first().text(),
-        pubDate: timezone(parseDate($('.postTopic .re_info small').text().trim().slice(5)), 8),
+        author: $('.postTopic .inner strong a').text(),
+        pubDate: timezone(parseDate($('.postTopic .re_info small').text().slice(5)), 8),
         link,
     };
 

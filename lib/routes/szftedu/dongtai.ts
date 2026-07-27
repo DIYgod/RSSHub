@@ -35,7 +35,7 @@ async function handler() {
     const lists = $('div.pagenews04 div ul li')
         .toArray()
         .map((el) => ({
-            title: $('a', el).text().trim(),
+            title: $('a', el).text(),
             link: $('a', el).attr('href'),
             pubDate: timezone(parseDate($('span[class=canedit]', el).text()), 8),
         }));

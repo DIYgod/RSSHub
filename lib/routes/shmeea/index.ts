@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: item.find('a').attr('title') || item.find('a').text(),
                 link: new URL(item.find('a').attr('href'), baseURL).href,
-                pubDate: parseDate(item.find('.listTime').text().trim(), 'YYYY-MM-DD'),
+                pubDate: parseDate(item.find('.listTime').text(), 'YYYY-MM-DD'),
             };
         });
 
@@ -63,7 +63,7 @@ async function handler(ctx) {
                 const $ = load(result.data);
 
                 const description = $('#ivs_content').html();
-                const pbTimeText = $('#ivs_title .PBtime').text().trim();
+                const pbTimeText = $('#ivs_title .PBtime').text();
 
                 item.description = description;
                 item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;

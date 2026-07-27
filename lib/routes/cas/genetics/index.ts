@@ -29,7 +29,7 @@ async function handler(ctx) {
             .map((item) => {
                 item = $(item);
                 const a = item.find('a').first();
-                const date = item.find('.box-date').first();
+                const date = item.find('.box-date');
                 return {
                     title: a.text(),
                     link: new URL(a.attr('href'), currentUrl).href,
@@ -55,7 +55,7 @@ async function handler(ctx) {
             .map((item) => {
                 item = $(item);
                 const a = item.find('a').first();
-                const date = item.find('.col-news-date').first();
+                const date = item.find('.col-news-date');
                 return {
                     title: a.text(),
                     link: new URL(a.attr('href'), currentUrl).href,

@@ -52,11 +52,10 @@ async function handler(ctx): Promise<Data> {
             const [date, author] = item
                 .find('span')
                 .text()
-                .trim()
                 .split('|')
                 .map((s) => s.trim());
             return {
-                title: item.find('h3.tit').text().trim(),
+                title: item.find('h3.tit').text(),
                 link: new URL(item.attr('href') as string, rootUrl).href,
                 pubDate: timezone(parseDate(date), 8),
                 author,
@@ -68,7 +67,7 @@ async function handler(ctx): Promise<Data> {
             cache.tryGet(item.link as string, async () => {
                 const { data: detailResponse } = await got(item.link as string);
                 const content = load(detailResponse);
-                item.description = content('div.postbody').html() ?? '';
+                item.description = content('div.postbody').html();
                 return item;
             })
         )

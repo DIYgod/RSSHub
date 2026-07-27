@@ -34,15 +34,12 @@ async function handler() {
     const res = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(res.data);
     const list = $('.notice_01').find('li');
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link: url,
         description: '华南师范大学教务处 - 通知公告',
         item:

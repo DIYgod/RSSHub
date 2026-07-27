@@ -74,7 +74,7 @@ async function handler(ctx) {
                 content('section').last().remove();
                 content('#app').children().slice(0, 2).remove();
 
-                const pubDate = content('.text-secondary a').not('.text-secondary').first().text()?.trim().replaceAll(/\s*/g, '') || content('div.note-text').find('span').eq(3).text();
+                const pubDate = content('.text-secondary a').not('.text-secondary').first().text()?.replaceAll(/\s*/g, '') || content('div.note-text').find('span').eq(3).text();
 
                 item.author = content('.user-link').first().text();
                 item.description = content('div[data-info="动作信息"]').html() ?? content('#app').html() ?? content('.row').eq(1).html();

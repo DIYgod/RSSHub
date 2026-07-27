@@ -55,7 +55,7 @@ async function handler() {
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);
-                        description = $('.wp_articlecontent').first().html() ?? '';
+                        description = $('.wp_articlecontent').html();
                     } catch {
                         description = '';
                     }

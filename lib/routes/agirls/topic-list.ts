@@ -42,14 +42,14 @@ async function handler() {
         .map((item) => {
             item = $(item);
             return {
-                title: item.find('.ag-topic__link').text().trim(),
-                description: item.find('.ag-topic__summery').text().trim(),
+                title: item.find('.ag-topic__link').text(),
+                description: item.find('.ag-topic__summery').text(),
                 link: `${baseUrl}${item.find('.ag-topic__link').attr('href')}`,
             };
         });
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         link,
         description: $('head meta[name=description]').attr('content'),
         item: items,

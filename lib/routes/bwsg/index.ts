@@ -43,7 +43,7 @@ RSS feed might not get all items.
                 const $el = $(el);
                 const link = el.attribs.href;
                 const image = $el.find('.res_immobiliensuche__immobilien__item__thumb > img').attr('src');
-                const title = $el.find('.res_immobiliensuche__immobilien__item__content__title').text().trim();
+                const title = $el.find('.res_immobiliensuche__immobilien__item__content__title').text();
                 const location = $el.find('.res_immobiliensuche__immobilien__item__content__meta__location').text().trim();
                 const price = $el.find('.res_immobiliensuche__immobilien__item__content__meta__preis').text().trim();
                 const metadata = $el.find('.res_immobiliensuche__immobilien__item__content__meta__row_1').text().trim();

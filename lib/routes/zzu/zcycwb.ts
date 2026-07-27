@@ -49,12 +49,12 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a').first();
+            const $link = $element.find('a');
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
             const title = $link.attr('title') || $link.text().trim();
 
             // 获取发布时间 (格式: [yyyy-mm-dd])
-            const pubDateText = $element.find('i').text().trim().replaceAll(/[[\]]/g, '');
+            const pubDateText = $element.find('i').text().replaceAll(/[[\]]/g, '');
 
             return {
                 title,

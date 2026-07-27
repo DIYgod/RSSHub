@@ -55,7 +55,7 @@ async function handler(ctx) {
         .find('.mobile_none li , .mobile_clear li')
         .toArray()
         .map((item) => {
-            const title = $(item).find('a.cjcx_biaob').text().trim();
+            const title = $(item).find('a.cjcx_biaob').text();
             const href = $(item).find('a').attr('href');
 
             let absolute_path;

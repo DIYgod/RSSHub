@@ -78,7 +78,6 @@ async function handler(ctx) {
 
                 // Remove ads
                 $content.find('.googleBanner').remove();
-                $content.find('script').remove();
                 $content.find('style').remove();
 
                 if ($content.length > 0) {

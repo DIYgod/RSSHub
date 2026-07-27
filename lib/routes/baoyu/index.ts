@@ -38,7 +38,7 @@ async function handler() {
                 const $ = load(response);
 
                 const container = $('.container');
-                const content = container.find('.prose').html() || '';
+                const content = container.find('.prose').html();
 
                 return {
                     title: item.title,

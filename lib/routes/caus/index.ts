@@ -45,8 +45,7 @@ async function handler(ctx) {
 
     const query: Record<string, string | number> = {
         per_page: 20,
-        // Reason: using _embed=1 with many posts produces responses too large for ofetch to parse as JSON
-        _embed: 'author,wp:term',
+        _embed: '',
     };
     if (cat.id) {
         query.categories = cat.id;

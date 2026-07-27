@@ -26,7 +26,7 @@ export const handler = async (ctx) => {
         .map((item) => {
             item = $(item);
 
-            const title = item.find('h3.new-list-h3, h3.title-font').first().text().trim();
+            const title = item.find('h3.new-list-h3, h3.title-font').text().trim();
 
             const src = item.find('img').first().prop('src');
             const image = src ? new URL(src, rootUrl).href : undefined;

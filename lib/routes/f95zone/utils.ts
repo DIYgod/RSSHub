@@ -67,5 +67,5 @@ export const processContent = (html: string): string => {
         .filter((_, el) => !$(el).html()?.trim())
         .remove();
 
-    return $.html() || '';
+    return $.html();
 };

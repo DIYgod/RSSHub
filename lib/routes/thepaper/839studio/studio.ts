@@ -29,7 +29,7 @@ async function handler() {
         item: list.toArray().map((item) => {
             item = $(item);
             return {
-                title: item.find('.imgup a').first().text(),
+                title: item.find('.imgup a').text(),
                 description: `描述：${item.find('.imgdown p').text()}`,
                 link: item.find('.imgup a').attr('href'),
             };

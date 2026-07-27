@@ -227,11 +227,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'home_tzgg1' } = ctx.req.param();
     const url = `${baseUrl}/${struct[category].path}.htm`;
-    const response = await got(url, {
-        headers: {
-            referer: baseUrl,
-        },
-    });
+    const response = await got(url);
 
     const $ = load(response.data);
 

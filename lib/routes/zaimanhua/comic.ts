@@ -50,7 +50,6 @@ async function handler(ctx) {
 
     const headers: Record<string, string> = {
         'user-agent': config.trueUA,
-        referer: baseUrl,
     };
 
     const token = config.zaimanhua.token;

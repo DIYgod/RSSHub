@@ -44,13 +44,13 @@ async function handler(ctx) {
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('.card_blog_list_title').text().trim();
+            const title = $el.find('.card_blog_list_title').text();
             const href = $el.find('a.clickable_link').attr('href') ?? '';
-            const pubDateText = $el.find('[fs-list-fieldtype="date"][fs-list-field="date"]').text().trim();
+            const pubDateText = $el.find('[fs-list-fieldtype="date"][fs-list-field="date"]').text();
             const category = $el
                 .find('[fs-list-field="category"]')
                 .toArray()
-                .map((c) => $(c).text().trim())
+                .map((c) => $(c).text())
                 .filter(Boolean);
 
             return {
@@ -70,9 +70,9 @@ async function handler(ctx) {
 
                 const content = $('.blog_post_content_wrap');
 
-                content.find('style, script').remove();
+                content.find('style').remove();
 
-                item.description = content.html() ?? undefined;
+                item.description = content.html();
 
                 return item;
             }),

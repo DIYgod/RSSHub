@@ -161,9 +161,7 @@ async function handler(ctx) {
                 if (response.data.stories.author) {
                     item.author = response.data.stories.author;
                 }
-                if (response.data.stories.tags) {
-                    item.category = response.data.stories.tags;
-                }
+                item.category = response.data.stories.tags;
                 return item;
             })
         )

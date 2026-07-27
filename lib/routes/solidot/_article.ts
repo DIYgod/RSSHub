@@ -17,7 +17,10 @@ export default async function get_article(url) {
     const data = response.data;
     const $ = load(data);
 
-    const date_raw = $('div.talk_time').clone().children().remove().end().text();
+    const date_raw = $('div.talk_time')
+        .contents()
+        .filter((_, node) => node.type === 'text')
+        .text();
     const date_str_zh = date_raw.replaceAll(/^[^`]*发表于(?=(.*分))\1[^`]*$/g, '$1'); // use [^`] to match \n
     const date_str = date_str_zh
         .replaceAll(/[年月]/g, '-')
@@ -34,7 +37,6 @@ export default async function get_article(url) {
     const description = $('div.block_m')
         .html()
         .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, '$1$2')
-        .replaceAll('href="/', () => 'href="' + domain + '/')
         // Preserve the not extremely disturbing donation ad
         // to support the site.
         .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, '<br><br>$1');

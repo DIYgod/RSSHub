@@ -40,7 +40,7 @@ async function handler(ctx) {
 
                 item.title = content('h4.fnt_56').last().text();
                 item.description = content('div.news_body').html();
-                item.pubDate = parseDate(content('div.news_date').first().text(), 'YYYY  年  MM  月  DD  日');
+                item.pubDate = parseDate(content('div.news_date').text(), 'YYYY  年  MM  月  DD  日');
 
                 return item;
             })

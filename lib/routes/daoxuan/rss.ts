@@ -27,8 +27,8 @@ async function handler() {
         .toArray()
         .map((item) => {
             item = $(item);
-            const a = item.find('a.article-title').first();
-            const timeElement = item.find('time').first();
+            const a = item.find('a.article-title');
+            const timeElement = item.find('time');
             return {
                 title: a.attr('title'),
                 link: `https://daoxuan.cc${a.attr('href')}`,

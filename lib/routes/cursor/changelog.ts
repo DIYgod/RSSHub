@@ -29,11 +29,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const timeEl = $el.find('time').first();
-            const pubDateStr = timeEl.attr('datetime') || timeEl.text().trim();
-            const versionLabel = timeEl.closest('a').find('.label').text().trim();
+            const pubDateStr = timeEl.attr('datetime') || timeEl.text();
+            const versionLabel = timeEl.closest('a').find('.label').text();
 
-            const linkEl = $el.find('h1 a').first();
-            const titleText = linkEl.length ? linkEl.text().trim() : $el.find('h1').first().text().trim();
+            const linkEl = $el.find('h1 a');
+            const titleText = linkEl.length ? linkEl.text() : $el.find('h1').text();
             const title: string = versionLabel ? `[${versionLabel}] ${titleText}` : titleText;
 
             const linkUrl: string | undefined = linkEl.attr('href');
@@ -42,7 +42,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid = `cursor-changelog-${versionLabel}`;
             }
 
-            const description: string = $el.find('.prose').html() || '';
+            const description = $el.find('.prose').html();
 
             const processedItem: DataItem = {
                 title,

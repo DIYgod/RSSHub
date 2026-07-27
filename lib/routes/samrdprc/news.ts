@@ -57,7 +57,7 @@ export const route: Route = {
                     const detail = await got(link);
                     const $ = load(detail.body);
 
-                    const articleHTML = $('div.main > div.box1 > div.box_main > div.boxl.fl > div.show_txt > div.TRS_Editor > div').html() || '';
+                    const articleHTML = $('div.main > div.box1 > div.box_main > div.boxl.fl > div.show_txt > div.TRS_Editor > div').html();
 
                     return {
                         title,

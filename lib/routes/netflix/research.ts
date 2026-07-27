@@ -38,7 +38,7 @@ const resolveArticle = (data, store) => {
         return target === undefined ? null : resolveArticle(target, store);
     }
 
-    const out = Array.isArray(data) ? [] : {};
+    const out = {};
     for (const [k, v] of Object.entries(data)) {
         out[k] = resolveArticle(v, store);
     }

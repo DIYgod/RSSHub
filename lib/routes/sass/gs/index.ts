@@ -52,7 +52,7 @@ async function handler(ctx) {
                 if (itemUrl) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
-                    description = $('.read .wp_articlecontent').length ? $('.read .wp_articlecontent').html().trim() : itemTitle;
+                    description = $('.read .wp_articlecontent').length ? $('.read .wp_articlecontent').html() : itemTitle;
                 } else {
                     description = itemTitle;
                 }

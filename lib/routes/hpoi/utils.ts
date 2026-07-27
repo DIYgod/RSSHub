@@ -28,9 +28,6 @@ const ProcessFeed = async (type, id, order) => {
     let response = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: host,
-        },
     });
     let $ = load(response.data);
 
@@ -39,9 +36,6 @@ const ProcessFeed = async (type, id, order) => {
         const overviewResponse = await got({
             method: 'get',
             url: overviewLink,
-            headers: {
-                Referer: host,
-            },
         });
         const $overview = load(overviewResponse.data);
 
@@ -53,9 +47,6 @@ const ProcessFeed = async (type, id, order) => {
                 response = await got({
                     method: 'get',
                     url: link,
-                    headers: {
-                        Referer: host,
-                    },
                 });
                 $ = load(response.data);
             }

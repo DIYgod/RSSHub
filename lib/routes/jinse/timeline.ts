@@ -75,7 +75,7 @@ async function handler(ctx) {
 
         // Reason: API returns mixed domains (jinse.com, m.jinse.com.cn, jinse.com.cn),
         // normalize all to www.jinse.com.cn since old domains are dead
-        const link = item.jump_url.replace(/\/\/(www\.|m\.)?jinse\.com(?!\.cn)/, '//www.jinse.com.cn').replace('//m.jinse.com.cn', '//www.jinse.com.cn');
+        const link = item.jump_url.replace(/\/\/(www\.|m\.)?jinse\.com(\.cn)?/, '//www.jinse.com.cn');
 
         return {
             title: item.title,

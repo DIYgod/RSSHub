@@ -59,21 +59,6 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
 
     const $content = $(selectors.content);
 
-    $content.find('a').each((_, el) => {
-        const $a = $(el);
-        const href = $a.attr('href');
-        if (href) {
-            $a.attr('href', new URL(href, item.link).href);
-        }
-    });
-    $content.find('img').each((_, el) => {
-        const $img = $(el);
-        const src = $img.attr('src');
-        if (src) {
-            $img.attr('src', new URL(src, item.link).href);
-        }
-    });
-
     const title = $(selectors.title).text().trim();
     const pubDate = selectors.date ? parsePubDate($(selectors.date).text()) : undefined;
 
@@ -81,7 +66,7 @@ async function fetchArticle(item: NoticeItem, selectors: DetailSelectors): Promi
         ...item,
         title: title || item.title,
         pubDate: pubDate ?? item.pubDate,
-        description: $content.html() ?? item.description,
+        description: $content.html(),
     };
 }
 

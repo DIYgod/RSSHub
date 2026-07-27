@@ -61,7 +61,7 @@ async function handler(): Promise<Data> {
                         pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                         link,
                         author: item.creator || 'CoinTelegraph',
-                        category: item.categories?.map((c) => c.trim()) || [],
+                        category: item.categories || [],
                         image: item.enclosure?.url,
                     } as DataItem;
                 })

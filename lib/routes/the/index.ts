@@ -28,7 +28,7 @@ export const handler = async (ctx): Promise<Data> => {
 
     return {
         title: `${title} - 江河日下`,
-        description: $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content') || '',
+        description: $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content'),
         link: targetUrl,
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content') || '',
@@ -99,14 +99,14 @@ function findArticleLink($: CheerioAPI, block: Cheerio<Element>): string | undef
 function extractFromMaterialBlocks($: CheerioAPI, pageUrl: string): DataItem[] {
     return $('[class^="material5"], [class^="material3"], [class^="material2"]')
         .toArray()
-        .map((el): DataItem | null => {
+        .map((el): DataItem => {
             const block = $(el);
 
             const title = block.find('h3').text().trim();
 
             const summary = block.find('.ui-summary, h4.ui-summary, p.ui-summary').text().trim();
             const dateStr = block.find('time').attr('datetime');
-            const tag = block.find('.TagName').attr('title') || '';
+            const tag = block.find('.TagName').attr('title');
             const author = block.find('.postMetaInline--author').text().trim();
             const image = block.find('img.graf-image--src').attr('data-srcset');
 
@@ -129,7 +129,7 @@ function extractFromMaterialBlocks($: CheerioAPI, pageUrl: string): DataItem[] {
                 author,
                 guid,
             };
-        }) as DataItem[];
+        });
 }
 
 /**
@@ -140,7 +140,7 @@ function extractFromMaterialBlocks($: CheerioAPI, pageUrl: string): DataItem[] {
 function extractFromPostPreviews($: CheerioAPI, pageUrl: string): DataItem[] {
     return $('.streamItem--postPreview')
         .toArray()
-        .map((el): DataItem | null => {
+        .map((el): DataItem => {
             const block = $(el);
 
             const title = block.find('h3.graf--title').text().trim();
@@ -148,7 +148,7 @@ function extractFromPostPreviews($: CheerioAPI, pageUrl: string): DataItem[] {
             const summary = block.find('h4.ui-summary, .graf--subtitle').text().trim();
             const dateStr = block.find('time').attr('datetime');
             const author = block.find('.postMetaInline--author').text().trim();
-            const tag = block.find('.TagName').attr('title') || '';
+            const tag = block.find('.TagName').attr('title');
             const image = block.find('img.graf-image--src').not('.avatar-image img').attr('data-srcset');
 
             // Reason: these blocks typically have #Unauthorized links; use page URL as fallback
@@ -170,7 +170,7 @@ function extractFromPostPreviews($: CheerioAPI, pageUrl: string): DataItem[] {
                 author,
                 guid,
             };
-        }) as DataItem[];
+        });
 }
 
 export const route: Route = {

@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('a.coh-link').first();
 
             const title: string = $aEl.text();
-            const description: string | undefined = $el.find('div.coh-container').eq(3).html() ?? undefined;
+            const description = $el.find('div.coh-container').eq(3).html();
             const pubDateStr: string | undefined = $el.find('div.coh-container').eq(4).text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.coh-style-tags a').toArray();
@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.coh-heading').text();
-                const description: string | undefined = $$('div.coh-body').html() ?? item.description;
+                const description: string | null | undefined = $$('div.coh-body').html() ?? item.description;
                 const pubDateStr: string | undefined = detailResponse.match(/"datePublished": "(.*?)",/)?.[1];
                 const upDatedStr: string | undefined = detailResponse.match(/"dateModified": "(.*?)",/)?.[1];
 

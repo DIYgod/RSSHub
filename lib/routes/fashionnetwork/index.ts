@@ -29,7 +29,7 @@ export const handler = async (ctx) => {
 
             const title = item.find('h2.family-title').text();
 
-            const src = item.find('img.item__img').first().prop('src') ?? undefined;
+            const src = item.find('img.item__img').prop('src') ?? undefined;
             const image = src ? new URL(src, rootUrl).href : undefined;
 
             const description = renderDescription({
@@ -72,7 +72,6 @@ export const handler = async (ctx) => {
                 item.description = description;
                 item.pubDate = timezone(parseDate($$('span.time-ago').first().text().trim()), 8);
                 item.category = $$('div.newsTags')
-                    .first()
                     .find('div.news-tag')
                     .toArray()
                     .map((c) => $$(c).text());

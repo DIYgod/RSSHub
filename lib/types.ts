@@ -32,7 +32,7 @@ export type Category =
 // rss
 export type DataItem = {
     title: string;
-    description?: string;
+    description?: string | null;
     pubDate?: number | string | Date;
     link?: string;
     category?: string[];
@@ -47,8 +47,8 @@ export type DataItem = {
     guid?: string;
     id?: string;
     content?: {
-        html: string;
-        text: string;
+        html?: string | null;
+        text?: string | null;
     };
     summary?: string;
     image?: string;
@@ -81,7 +81,7 @@ export type DataItem = {
 
 export type Data = {
     title: string;
-    description?: string;
+    description?: string | null;
     link?: string;
     item?: DataItem[];
     allowEmpty?: boolean;

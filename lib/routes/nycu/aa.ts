@@ -36,7 +36,7 @@ async function handler(ctx: Context): Promise<Data> {
     const item = $('.newslist li')
         .toArray()
         .map((e) => ({
-            title: $('a', e).attr('title')?.trim() || '',
+            title: $('a', e).attr('title') || '',
             link: $('a', e).attr('href') || '',
             pubDate: ROCDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim()),
             category: [$('div p:nth-child(2)', e).text().replace('分類：', '')],

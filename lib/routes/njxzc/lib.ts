@@ -43,8 +43,8 @@ async function handler() {
             if (!href) {
                 return null;
             }
-            const day = $link.find('.tm-1').text().trim();
-            const yearMonth = $link.find('.tm-2').text().trim();
+            const day = $link.find('.tm-1').text();
+            const yearMonth = $link.find('.tm-2').text();
             return {
                 title: $link.find('.btt-4').text().trim(),
                 link: new URL(href, pageUrl).href,

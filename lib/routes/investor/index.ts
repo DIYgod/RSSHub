@@ -52,8 +52,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('div.text_content_detail_title h1').text() ?? item.title;
-                const description: string | undefined = $$('div.trs_editor_view').html() ?? undefined;
+                const title: string = $$('div.text_content_detail_title h1').text();
+                const description = $$('div.trs_editor_view').html();
                 const pubDateStr: string | undefined = $$('div.base_info_left span')
                     .toArray()
                     .some((el) => $$(el).text().includes('时间'))

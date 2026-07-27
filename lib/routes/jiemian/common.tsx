@@ -1,3 +1,4 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -7,14 +8,13 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+const rootUrl = 'https://www.jiemian.com';
+
 export const handler = async (ctx): Promise<Data> => {
-    const { category, id } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    const rootUrl = 'https://www.jiemian.com';
-    // Reason: lists.ts uses :id param, other routes use :category or hardcoded paths
-    const pathSegment = category || (id ? `lists/${id}` : '');
-    const currentUrl = new URL(pathSegment ? `${pathSegment}.html` : '', rootUrl).href;
+    const category = ctx.req.path.replace(/^\/jiemian\//, '');
+    const currentUrl = new URL(category ? `${category}.html` : '', rootUrl).href;
 
     const response = await ofetch(currentUrl);
 
@@ -45,62 +45,85 @@ export const handler = async (ctx): Promise<Data> => {
     items = await Promise.all(
         Object.values(items)
             .slice(0, limit)
-            .map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const detailResponse = await ofetch(item.link);
-
-                    const content = load(detailResponse);
-                    const image = content('div.article-img img').first();
-                    const video = content('#video-player').first();
-                    content('p.report-view').remove();
-
-                    item.title = content('div.article-header h1').eq(0).text();
-                    item.description = renderDescription({
-                        image: image
-                            ? {
-                                  src: image.prop('src'),
-                                  alt: image.next('p').text() || item.title,
-                              }
-                            : undefined,
-                        video: video
-                            ? {
-                                  src: video.prop('data-url'),
-                                  poster: video.prop('data-poster'),
-                                  width: video.prop('width'),
-                                  height: video.prop('height'),
-                              }
-                            : undefined,
-                        intro: content('div.article-header p').text(),
-                        description: content('div.article-content').html(),
-                    });
-                    item.author = content('span.author')
-                        .first()
-                        .find('a')
-                        .toArray()
-                        .map((a) => content(a).text())
-                        .join('/');
-                    item.category = content('meta.meta-container a')
-                        .toArray()
-                        .map((c) => content(c).text());
-                    item.pubDate = parseDate(content('div.article-info span[data-article-publish-time]').prop('data-article-publish-time'), 'X');
-                    item.upvotes = content('span.opt-praise__count').text() ? Number(content('span.opt-praise__count').text()) : 0;
-                    item.comments = content('span.opt-comment__count').text() ? Number(content('span.opt-comment__count').text()) : 0;
-
-                    return item;
-                })
-            )
+            .map((item) => fetchArticle(item))
     );
-
-    const title = $('title').text();
-    const titleSplits = title.split(/_/);
-    const image = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
     return {
         item: items,
+        ...feedMeta($, currentUrl),
+    };
+};
+
+export const parseCardList = (html: string) => {
+    const $ = load(html, null, false);
+
+    return $('li.card-list')
+        .toArray()
+        .map((el) => {
+            const $item = $(el);
+            return {
+                title: $item.find('h3.card-list__title').text(),
+                link: $item.find('.card-list__content > a').attr('href'),
+                image: $item.find('.card-list__img img').attr('src'),
+            };
+        });
+};
+
+export const fetchArticle = (item) =>
+    cache.tryGet(item.link, async () => {
+        const detailResponse = await ofetch(item.link);
+
+        const content = load(detailResponse);
+        const image = content('div.article-img img').first();
+        const video = content('#video-player').first();
+        content('p.report-view').remove();
+
+        item.title = content('div.article-header h1').eq(0).text();
+        item.description = renderDescription({
+            image: image
+                ? {
+                      src: image.prop('src'),
+                      alt: image.next('p').text() || item.title,
+                  }
+                : undefined,
+            video: video
+                ? {
+                      src: video.prop('data-url'),
+                      poster: video.prop('data-poster'),
+                      width: video.prop('width'),
+                      height: video.prop('height'),
+                  }
+                : undefined,
+            intro: content('div.article-header p').text(),
+            description: content('div.article-content').html(),
+        });
+        item.author = content('span.author')
+            .first()
+            .find('a')
+            .toArray()
+            .map((a) => content(a).text())
+            .join('/');
+        item.category = content('meta.meta-container a')
+            .toArray()
+            .map((c) => content(c).text());
+        // article: div.article-info, video: div.article-header__info
+        item.pubDate = parseDate(content('div.article-info, div.article-header__info').find('span[data-article-publish-time]').first().prop('data-article-publish-time'), 'X');
+        item.upvotes = content('span.opt-praise__count').text() ? Number(content('span.opt-praise__count').text()) : 0;
+        item.comments = content('span.opt-comment__count').text() ? Number(content('span.opt-comment__count').text()) : 0;
+
+        return item;
+    });
+
+export const feedMeta = ($: CheerioAPI, currentUrl: string) => {
+    const title = $('title').text();
+    const titleSplits = title.split(/_/);
+    const image = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+
+    return {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Data['language'],
         image,
         icon: image,
         logo: image,
@@ -109,7 +132,7 @@ export const handler = async (ctx): Promise<Data> => {
     };
 };
 
-const renderDescription = ({
+export const renderDescription = ({
     image,
     intro,
     video,

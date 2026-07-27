@@ -48,7 +48,7 @@ async function handler(ctx) {
         .map((e) => parseItems($(e), showImages));
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link,
         language: $('html').attr('lang') as any,
         item: items,

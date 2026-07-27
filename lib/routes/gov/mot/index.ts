@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1').first().text();
-                const description: string | undefined = $$('div.TRS_UEDITOR').html() ?? undefined;
+                const description = $$('div.TRS_UEDITOR').html();
                 const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
                 const categories: string[] = [
                     ...new Set(

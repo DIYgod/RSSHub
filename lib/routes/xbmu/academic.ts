@@ -20,7 +20,7 @@ const handler: Route['handler'] = async () => {
         // Map through each list item to extract details
         const academicLinkList = await Promise.all(
             listItems.toArray().map((element) => {
-                const rawDate = $(element).find('span').text().trim();
+                const rawDate = $(element).find('span').text();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
                 const formattedDate = parseDate(`${yearMonth}-${day}`).toUTCString();
 

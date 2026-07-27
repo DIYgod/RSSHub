@@ -31,9 +31,6 @@ async function handler() {
     const response = await got({
         method: 'get',
         url: 'http://cse.sysu.edu.cn/',
-        headers: {
-            Referer: 'http://cse.sysu.edu.cn/',
-        },
     });
     const $ = load(response.data);
 

@@ -57,7 +57,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.title').text();
-                    const description: string = $$('div#article-content').html() ?? '';
+                    const description = $$('div#article-content').html();
                     const pubDateStr: string | undefined = $$('span.time').text().split(/：/).pop();
                     const authorEls: Element[] = $$('span.form, span.from').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {

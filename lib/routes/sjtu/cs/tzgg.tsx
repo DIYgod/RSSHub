@@ -59,19 +59,6 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         const $body = $('div.xw-cont');
         const $txt = $body.find('.txt');
 
-        $txt.find('img').each((_, e) => {
-            const src = $(e).attr('src') || $(e).attr('_src');
-            if (src) {
-                $(e).attr('src', absolutize(src));
-            }
-        });
-        $txt.find('a').each((_, e) => {
-            const href = $(e).attr('href');
-            if (href) {
-                $(e).attr('href', absolutize(href));
-            }
-        });
-
         const publishedText = $body.find('.jj p').first().text();
         const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
         let pubDate: Date | undefined;
@@ -83,7 +70,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         return {
             title: item.title,
             link: item.link,
-            description: $txt.html() ?? '',
+            description: $txt.html(),
             pubDate: pubDate ?? timezone(parseDate(item.date, 'YYYY-MM-DD'), 8),
         };
     }) as Promise<DataItem>;

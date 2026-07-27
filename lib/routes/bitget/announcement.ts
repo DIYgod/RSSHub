@@ -96,11 +96,8 @@ const handler: Route['handler'] = async (ctx) => {
                         link: item.openUrl ?? '',
                         pubDate: item.sendTime ? date : undefined,
                         description: item.content ?? '',
+                        image: item.imgUrl,
                     };
-
-                    if (item.imgUrl) {
-                        dataItem.image = item.imgUrl;
-                    }
 
                     if (item.stationLetterType === '01' || item.stationLetterType === '06') {
                         try {

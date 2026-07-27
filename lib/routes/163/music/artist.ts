@@ -31,11 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got(`https://music.163.com/api/artist/albums/${id}`, {
-        headers: {
-            Referer: 'https://music.163.com/',
-        },
-    });
+    const response = await got(`https://music.163.com/api/artist/albums/${id}`);
 
     const data = response.data;
 

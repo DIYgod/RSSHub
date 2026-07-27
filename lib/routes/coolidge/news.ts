@@ -10,17 +10,17 @@ const handler = async () => {
     const html = await ofetch(link);
     const $ = load(html);
 
-    const container = $('#block-coolidge-content > div > div > div.view-content').first();
+    const container = $('#block-coolidge-content > div > div > div.view-content');
     const elements = container.find('div.news-item').toArray();
 
     const items = elements.map((el) => {
         const element = $(el);
 
-        const titleEl = element.find('h2.news-item__title > a').first();
-        const title = titleEl.text().trim();
+        const titleEl = element.find('h2.news-item__title > a');
+        const title = titleEl.text();
         const href = titleEl.attr('href');
-        const descriptionText = element.find('div.news-item__content > p').first().text().trim();
-        const imageSrc = element.find('div.news-item__image img').first().attr('src');
+        const descriptionText = element.find('div.news-item__content > p').first().text();
+        const imageSrc = element.find('div.news-item__image img').attr('src');
 
         const absoluteLink = href ? new URL(href, link).href : undefined;
         const absoluteImage = imageSrc ? new URL(imageSrc, link).href : undefined;

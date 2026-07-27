@@ -120,18 +120,14 @@ async function handler(ctx) {
                             `&nbsp&nbsp<small><a href="${rootUrl}/item?id=${content(el).attr('id')}">` +
                             `${content(el).find('.age').attr('title')}</a></small></div>`;
 
-                        const commentText = comment.clone();
+                        const leading = content(`<p>${comment.contents().not('p').text()}</p>`);
+                        const paragraphs = comment
+                            .find('p')
+                            .toArray()
+                            .map((p) => `<p>${content(p).html()}</p>`)
+                            .join('');
 
-                        commentText.find('p').remove();
-                        commentText.html(`<p>${commentText.text()}</p>`);
-                        commentText.append(
-                            comment
-                                .find('p')
-                                .toArray()
-                                .map((p) => `<p>${content(p).html()}</p>`)
-                        );
-
-                        item.description += `<div>${commentText.html()}</div></div>`;
+                        item.description += `<div>${content.html(leading)}${paragraphs}</div></div>`;
                     });
                 } else if (item.comments !== 'discuss' && type === 'comments_list') {
                     item.title = item.onStory;

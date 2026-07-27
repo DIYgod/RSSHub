@@ -40,14 +40,14 @@ async function handler(ctx: Context) {
         .toArray()
         .flatMap((row) => {
             const $row = $(row);
-            const year = $row.find('h3').text().trim();
+            const year = $row.find('h3').text();
             return $row
                 .find('ul.ico-link li a')
                 .toArray()
                 .map((a) => {
                     const $a = $(a);
                     return {
-                        title: `${year}${$a.text().trim()}`,
+                        title: `${year}${$a.text()}`,
                         link: new URL($a.attr('href')!, baseUrl).href,
                     };
                 })
@@ -61,12 +61,12 @@ async function handler(ctx: Context) {
                 const response = await fetchPage(item.link!);
                 const $ = load(response);
 
-                const dateText = $('.prt-topContents .al-right').text().trim();
+                const dateText = $('.prt-topContents .al-right').text();
                 const cleanedDate = dateText.replaceAll(/（[^）]+）/g, '');
                 const content = $('#contentsInner');
                 content.find('.prt-topContents, .prt-linkNavi, .prt-plugin').remove();
 
-                item.title = $('h1#pageTitle').text().trim() || item.title;
+                item.title = $('h1#pageTitle').text() || item.title;
                 item.pubDate = timezone(parseDate(cleanedDate, 'YYYY年M月D日'), 9);
                 item.description = content.html()?.trim();
 
@@ -76,8 +76,8 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: $('head title').text().trim(),
-        description: $('meta[name="description"]').attr('content')?.trim(),
+        title: $('head title').text(),
+        description: $('meta[name="description"]').attr('content'),
         link,
         image: `${baseUrl}/favicon.ico`,
         language: $('html').attr('lang'),

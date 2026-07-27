@@ -36,7 +36,7 @@ async function process(baseUrl: string, section: any) {
             const img = i.find('img').attr('src');
             const link = `${baseUrl}${i.find('h3>a').attr('href')}`;
             return {
-                title: i.find('h3>a').text().trim(),
+                title: i.find('h3>a').text(),
                 link,
                 pubDate: parseDate(i.find('p.time').text()),
                 itunes_item_image: `${baseUrl}${img}`,

@@ -17,17 +17,6 @@ async function getFullArticle(link) {
     if (content.length === 0) {
         return null;
     }
-    // resolve links of <img> and <a>
-    content.find('img').each((_, e) => {
-        const relativeLink = $(e).attr('src');
-        const absLink = new URL(relativeLink, urlRoot).href;
-        $(e).attr('src', absLink);
-    });
-    content.find('a').each((_, e) => {
-        const relativeLink = $(e).attr('href');
-        const absLink = new URL(relativeLink, urlRoot).href;
-        $(e).attr('href', absLink);
-    });
     return content.html() + ($('.Newslist2').length ? $('.Newslist2').html() : '');
 }
 

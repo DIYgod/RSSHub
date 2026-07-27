@@ -20,7 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '南京工程学院教务处',
+    name: '教务处',
     maintainers: ['zefengdaguo'],
     handler,
     description: `| 教学 | 考试 | 信息 | 实践 |

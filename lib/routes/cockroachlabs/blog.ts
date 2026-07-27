@@ -67,7 +67,7 @@ async function handler(ctx) {
                 // <article class="blog-content null">
                 //   ..multiple <div>/<a>/<img>/<p>..
                 // </article>
-                const content = $('article.blog-content').html() || '';
+                const content = $('article.blog-content').html();
 
                 // <div class="mt-4 flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-4">
                 //   <div>

@@ -33,9 +33,9 @@ async function handler(ctx) {
             ? urls
                   .map((item) => {
                       try {
-                          const title = $(item).find('loc').text() || '';
-                          const link = $(item).find('loc').text() || '';
-                          const description = $(item).find('loc').text() || '';
+                          const title = $(item).find('loc').text();
+                          const link = $(item).find('loc').text();
+                          const description = $(item).find('loc').text();
                           const pubDate = $(item).find('lastmod').text() || undefined;
 
                           return {

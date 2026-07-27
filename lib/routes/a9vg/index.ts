@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
                     );
                 });
 
-                item.title = $$('h1.ts, div.c-article-main_content-title').first().text();
+                item.title = $$('h1.ts, div.c-article-main_content-title').text();
                 item.description = renderDescription({
                     description: $$('td.t_f, div.c-article-main_contentraw').first().html(),
                 });
@@ -91,7 +91,6 @@ export const handler = async (ctx) => {
                         $$('div.authi em')
                             .first()
                             .text()
-                            .trim()
                             .match(/发表于 (\d+-\d+-\d+ \d+:\d+)/)?.[1] ?? $$('span.c-article-main_content-intro-item').first().text(),
                         ['YYYY-M-D HH:mm', 'YYYY-MM-DD HH:mm']
                     ),

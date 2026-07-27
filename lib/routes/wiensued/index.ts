@@ -45,8 +45,8 @@ leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)`,
                 const $image = $el.find('.image img');
                 const link = $el.find('.link a').attr('href');
                 const image = $image.attr('data-lazy-src') || $image.attr('src');
-                const title = $el.find('.address h4').first().text().trim();
-                const subtitle = $el.find('.address p').first().text().trim();
+                const title = $el.find('.address h4').first().text();
+                const subtitle = $el.find('.address p').first().text();
                 const $text = $el.find('.text');
                 const description = $text
                     .find('.labtxtline')
@@ -55,7 +55,7 @@ leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)`,
                         $(el)
                             .children()
                             .toArray()
-                            .map((c) => $(c).text().trim())
+                            .map((c) => $(c).text())
                             .join(': ')
                     )
                     .join(', ');

@@ -91,7 +91,7 @@ Categories
                     // Remove `iframe` (e.g. YouTube embeds)
                     $('iframe').remove();
 
-                    item.description = $('#body-text-section').first().html();
+                    item.description = $('#body-text-section').html();
 
                     return item;
                 })

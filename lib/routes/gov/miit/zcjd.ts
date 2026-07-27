@@ -59,12 +59,6 @@ async function handler() {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
-                $('iframe').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('src').startsWith('/')) {
-                        e.attr('src', new URL(e.attr('src'), baseUrl).href);
-                    }
-                });
                 item.author = $('.cinfo')
                     .text()
                     .match(/来源：(.*)/)[1];

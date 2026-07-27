@@ -19,11 +19,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id') || '';
     const toUrl = id === '' ? `${rootUrl}/${column}.htm` : `${rootUrl}/${column}/${id}.htm`;
 
-    const response = await got(toUrl, {
-        headers: {
-            Referer: rootUrl,
-        },
-    });
+    const response = await got(toUrl);
 
     const $ = load(response.data);
 

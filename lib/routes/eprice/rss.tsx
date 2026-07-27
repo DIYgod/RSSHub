@@ -48,11 +48,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link, {
-                    headers: {
-                        Referer: `https://www.eprice.com.${region}`,
-                    },
-                });
+                const response = await got(item.link);
 
                 const $ = load(response.data);
 

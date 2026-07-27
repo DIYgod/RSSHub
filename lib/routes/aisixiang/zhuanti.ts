@@ -38,7 +38,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const title = $('div.tips h2').first().text();
+    const title = $('div.tips h2').text();
 
     const items = $('div.article-title')
         .slice(0, limit)

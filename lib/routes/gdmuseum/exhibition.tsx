@@ -67,10 +67,9 @@ export const route: Route = {
                 const rawLink = $item.attr('href');
                 const itemLink = rawLink ? new URL(rawLink, baseUrl).href : '';
 
-                const rawSrc = $item.find('img').attr('src');
-                const imgUrl = rawSrc ? new URL(rawSrc, baseUrl).href : undefined;
+                const imgUrl = $item.find('img').attr('src');
 
-                const textDurationAndLocation = $item.find('.quitxt.qui-dot').text().trim();
+                const textDurationAndLocation = $item.find('.quitxt.qui-dot').text();
                 const [fullDuration = '', location = ''] = textDurationAndLocation.split('|').map((p) => p.trim());
 
                 const { startDate, endDate } = parseExhibitionDuration(fullDuration);

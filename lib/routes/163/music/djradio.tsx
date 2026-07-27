@@ -57,9 +57,6 @@ const ProcessFeed = (id, limit, offset) =>
         `163:music:djradio:${id}:${limit}:${offset}`,
         async () =>
             await got.post('https://music.163.com/api/dj/program/byradio', {
-                headers: {
-                    Referer: 'https://music.163.com/',
-                },
                 form: {
                     radioId: id,
                     limit,

@@ -48,15 +48,15 @@ async function handler(ctx) {
     const categoriesConf = {
         hot: {
             articleSelector: '.carousel__list .carousel__item',
-            titleExtractor: (e) => e.attr('title').trim(),
+            titleExtractor: (e) => e.attr('title'),
         },
         editor: {
             articleSelector: '.list-container--featured .list-vertical__item',
-            titleExtractor: (e) => e.find('.list-vertical__title').text().trim(),
+            titleExtractor: (e) => e.find('.list-vertical__title').text(),
         },
         default: {
             articleSelector: '.list-container--index .list-vertical__item',
-            titleExtractor: (e) => e.find('.list-vertical__title').text().trim(),
+            titleExtractor: (e) => e.find('.list-vertical__title').text(),
         },
     };
     const getItems = (config) =>
@@ -93,7 +93,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.author = content('.article-content__authors-name').first().text().trim();
+                item.author = content('.article-content__authors .article-content__authors-name').text();
                 item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
 
                 const mainImage = content('.article-content__focus').html();

@@ -46,10 +46,10 @@ async function handler(ctx): Promise<Data> {
             const $el = $(el);
 
             const p1 = $el.find('.p-1').first();
-            const description = (p1.text() || '').trim();
+            const description = p1.text().trim();
 
             const publishedDiv = $el.children('div').last();
-            const publishedRaw = (publishedDiv.text() || '').trim();
+            const publishedRaw = publishedDiv.text();
 
             // Example
             // Published at: September 20, 2025 12:44:36 PM

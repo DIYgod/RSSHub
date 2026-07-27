@@ -48,7 +48,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 $$('div.promo-widget, div.eas').remove();
 
                 const title: string = $$('div.title h1').text();
-                const description: string | undefined = $$('div#expats-article-content').html() ?? undefined;
+                const description = $$('div#expats-article-content').html();
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const categories: string[] = [$$('meta[property="article:section"]').attr('content') ?? ''];
                 const authorEls: Element[] = $$('span.written-by a').toArray();

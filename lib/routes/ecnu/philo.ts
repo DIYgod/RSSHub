@@ -44,7 +44,7 @@ export const route: Route = {
                             $el.attr(attr, new URL(val, baseUrl).href);
                         }
                     });
-                    item.description = $read.html()?.trim();
+                    item.description = $read.html();
                     return item;
                 })
             )

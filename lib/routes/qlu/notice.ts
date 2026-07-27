@@ -55,7 +55,7 @@ async function handler() {
                 } else {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
-                    description = $('.read').html().trim();
+                    description = $('.read').html();
                 }
                 return {
                     title: itemTitle,

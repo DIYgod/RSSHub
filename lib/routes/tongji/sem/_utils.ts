@@ -25,7 +25,7 @@ export async function getNotifByPage(url): Promise<Array<{ title: string; link: 
 
             const title = aTagFirst.attr('title');
             const href = aTagFirst.attr('href');
-            const time = aTagSecond.text().trim();
+            const time = aTagSecond.text();
 
             return {
                 title,

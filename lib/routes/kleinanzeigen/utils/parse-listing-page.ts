@@ -16,7 +16,7 @@ export const parseListingPage = ($: CheerioAPI): Promise<DataItem[]> =>
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const article = $item.find('article').first();
+                const article = $item.find('article');
                 return getProductPage(`https://www.kleinanzeigen.de${article.attr('data-href')}`);
             })
     );

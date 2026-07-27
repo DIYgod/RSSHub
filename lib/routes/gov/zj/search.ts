@@ -59,11 +59,11 @@ export const route: Route = {
                 const title = $('.titleWrapper>a');
                 const footer = $('.sourceTime>span');
                 return {
-                    title: title.text().trim() || '',
+                    title: title.text().trim(),
                     link: title.attr('href') || '',
-                    pubDate: parseDate(footer.eq(1).text().trim().replace('时间:', '')) || '',
-                    author: footer.eq(0).text().trim().replace('来源:', '') || '',
-                    description: $('.newsDescribe>a').text() || '',
+                    pubDate: parseDate(footer.eq(1).text().replace('时间:', '')) || '',
+                    author: footer.eq(0).text().trim().replace('来源:', ''),
+                    description: $('.newsDescribe>a').text(),
                 };
             }) || [];
         const res = {};

@@ -142,7 +142,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 });
 
                 const title: string = detailResponse.title;
-                const description: string | undefined = detailResponse.content ? parseContentToHtml(JSON.parse(detailResponse.content)) : item.description;
+                const description: string | null | undefined = detailResponse.content ? parseContentToHtml(JSON.parse(detailResponse.content)) : item.description;
                 const pubDate: number | string = detailResponse.publishedAt;
                 const linkUrl: string | undefined = `blog/${detailResponse.slug}`;
                 const categories: string[] = [...new Set([detailResponse.category?.name, ...(detailResponse.tags ?? []).map((c) => c.name)].filter(Boolean))];

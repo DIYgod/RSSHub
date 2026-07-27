@@ -56,7 +56,7 @@ async function handler() {
 
     return {
         title: $('title').text(),
-        description: $('head meta[name=description]').attr('content').trim(),
+        description: $('head meta[name=description]').attr('content'),
         link: response.url,
         item: items,
         image: $('head meta[property=og:image]').attr('content'),

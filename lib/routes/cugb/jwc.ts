@@ -48,11 +48,11 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((el) => {
             const item = $(el);
-            const title = item.find('.list_con_main').text().trim();
+            const title = item.find('.list_con_main').text();
             return {
                 title,
                 link: new URL(item.attr('href') as string, rootUrl).href,
-                pubDate: timezone(parseDate(item.find('.list_con_time').text().trim()), 8),
+                pubDate: timezone(parseDate(item.find('.list_con_time').text()), 8),
             };
         })
         .filter((item) => item.title)
@@ -63,7 +63,7 @@ async function handler(ctx): Promise<Data> {
             cache.tryGet(item.link as string, async () => {
                 const { data: detailResponse } = await got(item.link as string);
                 const content = load(detailResponse);
-                item.description = content('div.detail_content_box').html() ?? '';
+                item.description = content('div.detail_content_box').html();
                 return item;
             })
         )

@@ -35,7 +35,6 @@ async function handler(ctx) {
         title: $('.header_text').text().trim(),
         link: currentUrl,
         item: entries.toArray().map((item) => {
-            const content = $(item).clone();
             const header = $(item).prev();
             const pubDate = $('div.article_author .au1', header)
                 .contents()
@@ -48,7 +47,7 @@ async function handler(ctx) {
                 link: $('a.title_link', header).attr('href'),
                 author: $('div.article_author span span', header).text().trim() + ' via ' + $('div.article_author a.feed_link', header).text().trim(),
                 pubDate: parseDate(pubDate, ['MMM DD YYYY HH:mm:ss', 'HH:mm:ss']),
-                description: $(content).html(),
+                description: $(item).html(),
             };
         }),
         allowEmpty: true,

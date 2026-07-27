@@ -42,9 +42,9 @@ async function handler() {
         .map((el) => {
             const $el = $(el);
             const href = $el.attr('href')!;
-            const title = $el.find('h2').text().trim();
-            const metaLine = $el.find('p.text-sm').text().trim();
-            const description = $el.find('p[style]').text().trim();
+            const title = $el.find('h2').text();
+            const metaLine = $el.find('p.text-sm').text();
+            const description = $el.find('p[style]').text();
 
             // meta format: "Author · Date · Read time · #tag1 #tag2"
             const parts = metaLine.split('·').map((s) => s.trim());
