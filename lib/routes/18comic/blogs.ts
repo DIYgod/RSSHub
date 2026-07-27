@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,6 +60,10 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: `${rootUrl}${$item.parent().attr('href')}`,
                 guid: `https://18comic.org${$item.parent().attr('href')}`,
+                pubDate: undefined as DataItem['pubDate'],
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
             };
         });
 

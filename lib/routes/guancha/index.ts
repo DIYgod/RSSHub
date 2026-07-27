@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -71,14 +71,22 @@ others = 热点新闻 + 滚动新闻
 :::`,
 };
 
+interface ListItem {
+    title: string;
+    link: string;
+    pubDate?: DataItem['pubDate'];
+    description?: string | null;
+    author?: string;
+}
+
 async function handler(ctx) {
     const total = 10;
     const category = ctx.req.param('category') ?? 'all';
     const rootUrl = 'https://www.guancha.cn';
 
-    let newsList = [],
-        redianList = [],
-        gundongList = [];
+    let newsList: ListItem[] = [],
+        redianList: ListItem[] = [],
+        gundongList: ListItem[] = [];
 
     // 'review', 'story' and 'fengwen' come from homepage.
 

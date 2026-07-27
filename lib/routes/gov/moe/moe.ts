@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -76,7 +76,7 @@ async function handler(ctx) {
                           description: firstA.html(),
                       }
                     : await cache.tryGet(itemUrl, async () => {
-                          const res = {};
+                          const res = { description: undefined as DataItem['description'] };
                           const response = await got({
                               method: 'get',
                               url: itemUrl,

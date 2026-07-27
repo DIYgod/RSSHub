@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,6 +37,10 @@ export const route: Route = {
                 return {
                     title: a.text(),
                     link: String(a.attr('href')),
+                    pubDate: undefined as DataItem['pubDate'],
+                    author: undefined as DataItem['author'],
+                    description: undefined as DataItem['description'],
+                    category: undefined as DataItem['category'],
                 };
             });
         const items = await Promise.all(

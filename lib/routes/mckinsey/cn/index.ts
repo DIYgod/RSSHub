@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -92,6 +92,7 @@ async function handler(ctx) {
                 description: $item.find('.fl-post-grid-content').html()?.trim(),
                 link: a.attr('href'),
                 pubDate: $item.find('[itemprop="datePublished"]').length ? parseDate($item.find('[itemprop="datePublished"]').attr('content')!) : undefined,
+                guid: undefined as DataItem['guid'],
             };
         });
 

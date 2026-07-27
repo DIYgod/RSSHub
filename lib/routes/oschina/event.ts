@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             });
             const pubDateStr: string | undefined = $el.find('footer.when-where label').first().text();
             const linkUrl: string | undefined = $el.find('a.summary').attr('href');
-            const categoryEl: Element = $el.find('footer.when-where label').last();
+            const categoryEl: Cheerio<Element> = $el.find('footer.when-where label').last();
             const categories: string[] = [categoryEl.text()];
             const authorEls: Element[] = $el.find('div.sponsor').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {

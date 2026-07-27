@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
@@ -135,7 +136,7 @@ async function handler(ctx) {
                     .remove();
                 node.find('*')
                     .contents()
-                    .filter((_, el) => el.type === 'comment' || el.tagName === 'meta' || el.tagName === 'style')
+                    .filter((_, el) => el.type === 'comment' || (el as Element).tagName === 'meta' || (el as Element).tagName === 'style')
                     .remove();
                 node.find('*').each((_, el) => {
                     if (el.attribs.style !== undefined) {

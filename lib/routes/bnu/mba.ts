@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -32,6 +32,10 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('div.crq').text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language,
+                description: undefined as DataItem['description'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
             };
         });
 

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -75,6 +75,8 @@ async function handler(ctx) {
                 link: title.attr('href'),
                 poster: $item.find('img').attr('data-src'),
                 video: $item.find('video').attr('data-src'),
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
             };
         });
 

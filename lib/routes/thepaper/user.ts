@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -145,6 +145,8 @@ async function handler(ctx) {
         author: item.authorInfo.sname,
         contId: item.contId,
         image: item.pic,
+        description: undefined as DataItem['description'],
+        updated: undefined as DataItem['updated'],
     }));
 
     const items = await Promise.all(

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -37,7 +38,7 @@ async function handler(ctx) {
                 .map((item) => {
                     const href = $(item).attr('href');
                     return {
-                        title: `${item.previousSibling.data.replace(' | ', '')} ${$(item).text()}`,
+                        title: `${(item.previousSibling as Text).data.replace(' | ', '')} ${$(item).text()}`,
                         link: `${rootUrl}${href}`,
                         pubDate: timezone(parseDate(`${href.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日'), 8),
                     };

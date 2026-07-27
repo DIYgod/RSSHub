@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,6 +45,7 @@ async function handler() {
                 link: $item.find('h3 a').attr('href'),
                 author: meta.split('|', 1)[0].trim(),
                 pubDate: parseDate(meta.split('|', 2)[1].trim()),
+                description: undefined as DataItem['description'],
             };
         });
 

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,6 +50,8 @@ async function handler(ctx) {
                 link: new URL($item.find('.topic-body-link').attr('href')!, baseUrl).href,
                 author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
                 pubDate: parseDate($item.find('.topic-header .timeago').attr('title')!),
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
             };
         });
 

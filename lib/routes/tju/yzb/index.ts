@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -67,7 +67,7 @@ async function handler(ctx) {
             subtitle = '校级公告';
             path = 'xwzx/zxxx/';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(yzb_base_url + path, {
             responseType: 'buffer',
@@ -103,6 +103,7 @@ async function handler(ctx) {
                 link: type === 'in-site' ? yzb_base_url + path + href : href,
                 pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), 8),
                 type,
+                description: undefined as DataItem['description'],
             };
         });
 

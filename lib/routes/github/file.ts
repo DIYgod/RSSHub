@@ -32,7 +32,7 @@ async function handler(ctx) {
 
     const fileUrl = `https://github.com/${user}/${repo}/commits/${branch}/${filepath}`;
 
-    const headers = {};
+    const headers = {} as Record<string, any>;
     if (config.github && config.github.access_token) {
         headers.Authorization = `token ${config.github.access_token}`;
     }

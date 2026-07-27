@@ -84,7 +84,7 @@ async function handler(ctx) {
     // The RSS feed is implemented by a keyword search on the science.org end
     // so the description field of the feed looks like this:
     const name_re = /Keyword search result for Blog Series: (?<blog_name>[^-]+) --/;
-    const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re).groups;
+    const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re)!.groups!;
 
     return {
         title: `Science Blogs: ${blog_name}`,

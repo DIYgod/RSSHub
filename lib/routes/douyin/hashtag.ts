@@ -49,7 +49,7 @@ async function handler(ctx) {
         async () => {
             const context = await playwright();
             const page = await context.newPage();
-            let awemeList = '';
+            let awemeList: any = '';
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();

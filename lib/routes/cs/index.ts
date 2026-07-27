@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -93,6 +93,9 @@ async function handler(ctx) {
                 title: $item.find('h3').text().trim(),
                 link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('em').text()), 8),
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
             };
         });
 

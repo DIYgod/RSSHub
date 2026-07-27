@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import LZString from 'lz-string';
 
 import type { Route } from '@/types';
@@ -81,7 +81,7 @@ async function handler(ctx) {
 
     const chapterCnt = Number(ctx.req.param('chapterCnt') || 0);
     const { data } = await got(`${baseUrl}/comic/${id}/`);
-    const $ = load(data);
+    const $ = load(data) as CheerioAPI & { pubDate: Date; newChapterCnt: number };
 
     if ($('#__VIEWSTATE').length > 0) {
         const n = LZString.decompressFromBase64($('#__VIEWSTATE').val());

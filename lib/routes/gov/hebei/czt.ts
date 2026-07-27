@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,6 +47,9 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href').startsWith('../..') ? $item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${$item.attr('href').replace(/^\./, '')}`}`,
+                author: undefined as DataItem['author'],
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 

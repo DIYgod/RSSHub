@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
@@ -52,6 +53,11 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                 title: element.find('.video-title').text(),
                 link: `${rootUrl}${element.find('.box').attr('href')}`,
                 pubDate: parseDate(element.find('.meta').text()),
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                category: undefined as DataItem['category'],
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

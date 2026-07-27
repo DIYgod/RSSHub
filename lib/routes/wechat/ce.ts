@@ -60,7 +60,7 @@ async function handler(ctx) {
 
                 const description = fixArticleContent($('.post'));
 
-                let pubDate = item.pubDate;
+                let pubDate: string | Date | undefined = item.pubDate;
                 if (!pubDate || pubDate === 'Invalid Date') {
                     // sometimes the pubDate is not available in the official feed
                     const postDate = $('.post-date')

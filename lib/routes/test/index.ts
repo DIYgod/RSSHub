@@ -97,9 +97,11 @@ async function handler(ctx) {
             break;
 
         case 'cache': {
-            const description = await cache.tryGet('test', () => ({
-                text: `Cache${++cacheIndex}`,
-            }));
+            const description = await cache.tryGet<{ text: string }>('test', () =>
+                Promise.resolve({
+                    text: `Cache${++cacheIndex}`,
+                })
+            );
             item.push({
                 title: 'Cache Title',
                 description: description.text,
@@ -132,7 +134,7 @@ async function handler(ctx) {
             break;
         }
         case 'cacheUrlKey': {
-            const description = await cache.tryGet(
+            const description = await cache.tryGet<{ text: string }>(
                 new URL('https://rsshub.app'),
                 () => ({
                     text: `Cache${++cacheIndex}`,

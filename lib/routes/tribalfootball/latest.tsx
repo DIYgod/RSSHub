@@ -42,14 +42,12 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            let link = $item.find('link').text();
-            link = new URL(link);
-            link.search = '';
-            link = link.href;
+            const linkUrl = new URL($item.find('link').text());
+            linkUrl.search = '';
             return {
                 title: $item.find('title').text(),
                 description: $item.find('description').text(),
-                link,
+                link: linkUrl.href,
                 guid: $item.find('guid').text(),
                 pubDate: parseDate($item.find('pubDate').text()),
                 author: $item.find(String.raw`dc\:creator`).text(),

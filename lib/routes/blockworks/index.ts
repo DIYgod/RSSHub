@@ -47,6 +47,7 @@ async function handler(ctx): Promise<Data> {
             .map((item) => ({
                 ...item,
                 link: item.link?.split('?', 1)[0],
+                author: undefined as DataItem['author'],
             }))
             .map((item) =>
                 cache.tryGet(item.link!, async () => {

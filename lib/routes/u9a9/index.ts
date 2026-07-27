@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,7 +49,7 @@ async function handler(ctx) {
                 .find('td')
                 .eq(3)
                 .text()
-                .match(/(?<size>\d+\.\d+)\s(?<unit>\w+)/).groups;
+                .match(/(?<size>\d+\.\d+)\s(?<unit>\w+)/)!.groups as any;
             return {
                 title: a.attr('title'),
                 link: `${baseUrl}${a.attr('href')}`,
@@ -58,6 +58,7 @@ async function handler(ctx) {
                 enclosure_url: $item.find('td').eq(2).find('a').eq(1).attr('href'),
                 enclosure_length: Number.parseInt(size * (unit === 'GB' ? 1024 * 1024 * 1024 : 1024 * 1024)),
                 enclosure_type: 'application/x-bittorrent',
+                description: undefined as DataItem['description'],
             };
         });
 

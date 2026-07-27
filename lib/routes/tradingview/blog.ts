@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,6 +52,7 @@ async function handler(ctx) {
                     .map((c) => $(c).text()),
                 guid: `tradingview-blog-${category}-${$item.prop('id')}`,
                 pubDate: parseDate($item.find('div.date').text(), 'MMM D, YYYY'),
+                author: undefined as DataItem['author'],
             };
         });
 

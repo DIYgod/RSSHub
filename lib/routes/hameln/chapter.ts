@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,7 @@ async function handler(ctx) {
                 title: chapter_link.text(),
                 link: chapter_link.attr('href'),
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), 9),
+                description: undefined as DataItem['description'],
             };
         })
         .toSorted((a, b) => b.pubDate - a.pubDate)

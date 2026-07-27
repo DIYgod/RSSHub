@@ -68,7 +68,7 @@ async function handler(ctx) {
         description: `${title}的最新回复`,
         item: list.toArray().map((element) => {
             const item = $(element);
-            const { author, content } = item.data('field');
+            const { author, content } = item.data('field') as any;
             const tempList = item
                 .find('.post-tail-wrap > .tail-info')
                 .toArray()

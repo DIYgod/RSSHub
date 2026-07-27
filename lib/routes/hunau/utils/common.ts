@@ -1,6 +1,7 @@
 // common.js
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -34,6 +35,8 @@ export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTi
             return {
                 title,
                 link,
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 

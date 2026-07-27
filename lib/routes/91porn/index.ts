@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -62,6 +62,9 @@ async function handler(ctx) {
                 title: $item.find('.video-title').text(),
                 link: $item.find('a').attr('href'),
                 poster: $item.find('.img-responsive').attr('src'),
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
             };
         });
 

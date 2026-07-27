@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -41,7 +41,7 @@ async function handler() {
     );
 
     const list = responses
-        .filter((r) => r.status === 'fulfilled' && r.value)
+        .filter((r): r is PromiseFulfilledResult<any> => r.status === 'fulfilled' && r.value)
         .flatMap((response) => {
             const $ = load(response.value);
             const pubDate = parseDate($('meta[property=article:modified_time]').attr('content')!);
@@ -54,6 +54,7 @@ async function handler() {
                         link: `${url}${$item.find('h2.node-title > a').attr('href')}`,
                         author: $item.find('div.field.field-name-field-paper-people-text.field-type-text-long.field-label-hidden p').text(),
                         pubDate,
+                        description: undefined as DataItem['description'],
                     };
                 });
         });

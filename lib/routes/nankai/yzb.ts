@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,6 +58,7 @@ export const route: Route = {
                     title: $a.text(),
                     link: linkStr,
                     pubDate: timezone(parseDate(dateList[index]), 8),
+                    description: undefined as DataItem['description'],
                 };
             });
 

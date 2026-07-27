@@ -100,6 +100,11 @@ async function handler(ctx) {
                     .find('label')
                     .toArray()
                     .map((l) => $(l).text()),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
+                upvotes: undefined as DataItem['upvotes'],
+                downvotes: undefined as DataItem['downvotes'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

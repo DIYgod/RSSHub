@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,6 +41,7 @@ async function handler() {
                 link: `${baseUrl}${$item.find('a').attr('href')}`,
                 pubDate: parseDate($item.find('.views-field-field-lv2-publication-date').text()),
                 author: $item.find('.views-field-pseudo-author-list').text().trim().replace('Authors: ', ''),
+                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(

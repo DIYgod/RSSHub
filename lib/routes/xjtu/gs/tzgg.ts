@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,7 @@ async function handler() {
                 title: a.attr('title'),
                 link: new URL(a.attr('href')!, 'http://gs.xjtu.edu.cn/').href,
                 pubDate: parseDate($item.find('span.time').text()),
+                description: undefined as DataItem['description'],
             };
         });
 

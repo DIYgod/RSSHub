@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -43,6 +43,7 @@ async function handler() {
                 title: a.text(),
                 link: `${url}/${a.attr('href')}`,
                 itunes_item_image: img.attr('data-src'),
+                description: undefined as DataItem['description'],
             };
         });
 

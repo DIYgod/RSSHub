@@ -42,7 +42,7 @@ async function handler() {
             const nextData = JSON.parse($('#__NEXT_DATA__').text());
             const pageProps = nextData.props.pageProps;
 
-            return cache.tryGet(`typeless:changelog:${platform}:${pageProps.updatedAt}`, () => {
+            return cache.tryGet<{ appPlatform: string; decompressedData: any[] }>(`typeless:changelog:${platform}:${pageProps.updatedAt}`, () => {
                 const compressedData = pageProps.compressedData;
 
                 const decodedString = Buffer.from(compressedData, 'base64');

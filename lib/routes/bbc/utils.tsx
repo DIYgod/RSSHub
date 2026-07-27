@@ -376,7 +376,7 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
         };
     }
 
-    const article = Object.values(initialData.data).find((d) => d.name === 'article')?.data;
+    const article = Object.values<any>(initialData.data).find((d) => d.name === 'article')?.data;
     const topics = Array.isArray(article?.topics) ? article.topics : [];
     const blocks = article?.content?.model?.blocks;
 

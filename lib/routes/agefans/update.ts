@@ -46,6 +46,7 @@ async function handler() {
                 title: $item.text(),
                 link,
                 guid: `${link}#${$item.find('.video_item--info').text()}`,
+                description: undefined as DataItem['description'],
             };
         });
 

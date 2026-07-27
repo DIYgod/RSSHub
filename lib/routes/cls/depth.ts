@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -72,6 +72,7 @@ async function handler(ctx) {
         author: item.source,
         category: item.article_tag?.map((tag) => tag.name),
         image: item.image,
+        description: undefined as DataItem['description'],
     }));
 
     items = await Promise.all(

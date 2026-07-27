@@ -14,7 +14,7 @@ import { renderDescription } from './templates/description';
  *
  * @returns {Array} - An array of objects containing the key-value pairs.
  */
-const parseTree = (tree, result = []) => {
+const parseTree = (tree, result: Array<{ key: any; value: any }> = []) => {
     for (const obj of tree) {
         const { key, value, children } = obj;
         result.push({ key, value });

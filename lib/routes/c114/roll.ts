@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,6 +34,8 @@ export const handler = async (ctx) => {
                 link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
                 author: $item.find('div.new_list_author').text().trim(),
                 language,
+                description: undefined as DataItem['description'],
+                content: undefined as DataItem['content'],
             };
         });
 
@@ -102,8 +104,7 @@ export const route: Route = {
         {
             source: ['c114.com.cn/news/roll.asp'],
             target: (_, url) => {
-                url = new URL(url);
-                const original = url.searchParams.get('o');
+                const original = new URL(url).searchParams.get('o');
 
                 return `/roll${original ? `/${original}` : ''}`;
             },

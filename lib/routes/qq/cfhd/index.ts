@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,6 +33,11 @@ export const handler = async (ctx) => {
                 title: $item.find('p').text(),
                 pubDate: parseDate($item.find('span.date').text()),
                 link: new URL($item.find('a.clearfix').prop('href')!, rootUrl).href,
+                description: undefined as DataItem['description'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
+                language: undefined as DataItem['language'],
             };
         });
 

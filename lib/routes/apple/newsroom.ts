@@ -31,7 +31,7 @@ const extractArticleDescription = ($: CheerioAPI) => {
     return article.html() ?? undefined;
 };
 
-const fetchArticle = (item: Item & { link: string }) =>
+const fetchArticle = (item: Item & { link: string; author?: string }) =>
     cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,6 +53,7 @@ async function handler(ctx) {
                 link: $item.attr('href'),
                 author: parent.find('.td-post-author-name a').text(),
                 pubDate: parseDate(parent.find('.td-post-date time').attr('datetime')!),
+                description: undefined as DataItem['description'],
             };
         });
 

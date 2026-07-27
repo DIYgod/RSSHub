@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -14,6 +15,7 @@ const normalizeItem = (item) => ({
     author: item.author_name,
     image: item.cover_image,
     seoKey: item.seo_key,
+    description: undefined as DataItem['description'],
 });
 
 export const fetchContentStream = (streamId, limit) =>

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,6 +23,8 @@ export const utils = async (ctx, currentUrl) => {
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

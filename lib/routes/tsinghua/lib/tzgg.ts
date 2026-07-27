@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -49,6 +49,7 @@ async function handler(ctx) {
                 title,
                 link: fullUrl,
                 pubDate: time,
+                description: undefined as DataItem['description'],
             };
         });
 

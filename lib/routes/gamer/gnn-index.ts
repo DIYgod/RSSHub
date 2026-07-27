@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -110,6 +110,9 @@ async function handler(ctx) {
             return {
                 title: '[' + tag + ']' + aLabelNode.text(),
                 link: aLabelNode.attr('href').replace('//', 'https://'),
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

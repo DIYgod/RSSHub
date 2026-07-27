@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,6 +55,10 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language,
+                author: undefined as DataItem['author'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 

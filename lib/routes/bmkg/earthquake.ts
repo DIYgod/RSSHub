@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -37,7 +38,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const td = $item.find('td');
+            const td = $item.find('td') as unknown as Array<{ children: Text[] }>;
             return {
                 title: `${td[2].children[0].data}|${td[3].children[0].data}|${td[4].children[0].data}|${td[5].children[0].data}|${td[6].children[0].data}`,
                 link: url,

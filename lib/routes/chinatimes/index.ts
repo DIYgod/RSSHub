@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -60,6 +60,7 @@ async function handler(ctx) {
                     .find('.category a')
                     .toArray()
                     .map((i) => $(i).text()),
+                description: undefined as DataItem['description'],
             };
         });
 

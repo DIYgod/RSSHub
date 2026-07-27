@@ -15,6 +15,11 @@ const text_tag = {
 };
 
 class TreeNode {
+    attr: any;
+    start: number;
+    end: number;
+    children: any[];
+    text?: string;
     constructor(attr) {
         this.attr = attr;
         this.start = attr.start;
@@ -23,6 +28,9 @@ class TreeNode {
     }
 }
 class Ucs2Text {
+    string: string | null;
+    codePoints: number[];
+    length: number;
     constructor(text) {
         if (Array.isArray(text)) {
             this.string = null;
@@ -55,7 +63,7 @@ class Ucs2Text {
         this.length = this.codePoints.length;
     }
     substring(start, end) {
-        let _len = this.length,
+        let _len: any = this.length,
             _start = start,
             _end = end;
         if (_end === 0) {
@@ -124,11 +132,11 @@ const parseAttr = (description) => {
             e = d.start + d.length;
         return f === e ? text_tag[b.detailData.style] - text_tag[d.detailData.style] : f - e;
     });
-    const n = [];
+    const n: TreeNode[] = [];
     for (const q of attrs) {
         const p = new TreeNode(q);
         const w = q.start;
-        while (0 < n.length && n.at(-1).attr.start >= w) {
+        while (0 < n.length && n.at(-1)!.attr.start >= w) {
             p.children.push(n.pop());
         }
         p.children.reverse();

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -44,6 +44,7 @@ async function handler() {
                 title: $item.find('li').text(),
                 link: new URL($item.find('li a').attr('href')!, baseUrl).href,
                 author,
+                description: undefined as DataItem['description'],
             };
         });
 

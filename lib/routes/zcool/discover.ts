@@ -194,6 +194,7 @@ async function handler(ctx) {
         recommendLevel: ctx.req.param('recommendLevel') ?? '2',
         sort: ctx.req.param('sort') ?? '9',
         limit: ctx.req.query('limit') ?? '25',
+        page: undefined as any,
     };
 
     let query = ctx.req.param('query') ?? '';

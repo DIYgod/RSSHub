@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -52,6 +52,7 @@ async function handler() {
                 author: $(item).find('.text-500').text(),
                 link: new URL($(item).attr('href')!, host).href,
                 pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
+                description: undefined as DataItem['description'],
             };
             return info;
         });

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -111,6 +111,10 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link.startsWith('http') ? link : new URL(link!, rootUrl).href,
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

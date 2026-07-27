@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,6 +44,7 @@ async function handler(ctx) {
                 link: new URL($item.find('a').eq(1).attr('href')!, baseUrl).href,
                 category: $item.find('a').eq(0).text(),
                 pubDate: parseDate($($item).find('.gridlinedate').text(), 'YYYY年MM月DD日'),
+                description: undefined as DataItem['description'],
             };
         });
 

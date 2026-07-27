@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -82,6 +82,9 @@ async function handler(ctx) {
             guid: `abc-${i.id}`,
             pubDate: parseDate(i.dates.firstPublished),
             updated: i.dates.lastUpdated ? parseDate(i.dates.lastUpdated) : undefined,
+            enclosure_type: undefined as DataItem['enclosure_type'],
+            itunes_item_image: undefined as DataItem['itunes_item_image'],
+            itunes_duration: undefined as DataItem['itunes_duration'],
         };
 
         if (i.mediaIndicator) {

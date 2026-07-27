@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -30,7 +30,7 @@ async function handler(ctx) {
     const topicPath = ctx.req.param('topicPath');
     const link = `${baseUrl}/${topicPath ?? 'latest'}`;
 
-    let cookieJar = await cache.get('pnas:cookieJar');
+    let cookieJar: any = await cache.get('pnas:cookieJar');
     const cacheMiss = !cookieJar;
     cookieJar = cacheMiss ? new CookieJar() : CookieJar.fromJSON(cookieJar);
     const { data: res } = await got(link, {
@@ -50,6 +50,10 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.card__meta__date').text()),
+                category: undefined as DataItem['category'],
+                author: undefined as DataItem['author'],
+                doi: undefined as DataItem['doi'],
+                description: undefined as DataItem['description'],
             };
         });
 

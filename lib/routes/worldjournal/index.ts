@@ -38,6 +38,7 @@ async function handler(ctx) {
                 description: $item.find('p').html(),
                 link: url.includes('?from=') ? url.split('?from=', 1)[0] : url,
                 pubDate: timezone(parseDate($item.find('.subcate-list__time--roc').text(), 'YYYY-MM-DD HH:mm'), 8),
+                categories: undefined as any,
             };
         });
 

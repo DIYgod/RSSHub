@@ -49,7 +49,7 @@ async function handler(ctx) {
         .map((e) => $(e).text());
 
     const out = await Promise.all(
-        urlList.map((itemUrl, index) => {
+        urlList.map((itemUrl: any, index: any) => {
             itemUrl = new URL(itemUrl, host).href;
             if (itemUrl.includes('.htm')) {
                 return cache.tryGet(itemUrl, async () => {

@@ -56,7 +56,7 @@ async function handler(ctx) {
     const { data } = JSON.parse(
         $('#sanRoot')
             .contents()
-            .filter((e) => e.nodeType === 8)
+            .filter((e: any) => e.nodeType === 8)
             .prevObject[0].data.match(/s-data:(.*)/)[1]
     );
 

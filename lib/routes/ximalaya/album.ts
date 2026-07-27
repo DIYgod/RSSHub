@@ -1,7 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -114,7 +114,7 @@ async function handler(ctx) {
     let playList = trackInfoResponse.data.list;
 
     if (shouldAll) {
-        const promises = [];
+        const promises: Array<Promise<TrackInfoResponse>> = [];
         for (let i = 2; i <= maxPageId; i++) {
             // string + number -> string
             promises.push(
@@ -161,7 +161,7 @@ async function handler(ctx) {
                         },
                     });
                     const trackInfo = trackPayInfoResponse.trackInfo;
-                    const _item = {};
+                    const _item = {} as Record<string, any>;
                     if (!trackInfo.isAuthorized) {
                         return _item;
                     }
@@ -194,6 +194,9 @@ async function handler(ctx) {
             description: item.desc || '',
             pubDate,
             itunes_item_image: itunesItemImage,
+            enclosure_url: undefined as DataItem['enclosure_url'],
+            itunes_duration: undefined as DataItem['itunes_duration'],
+            enclosure_type: undefined as DataItem['enclosure_type'],
         };
 
         if (enclosureUrl) {

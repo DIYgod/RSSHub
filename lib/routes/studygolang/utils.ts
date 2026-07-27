@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +43,8 @@ const FetchGoItems = async (ctx, rewriteId) => {
                     .find('.node')
                     .toArray()
                     .map((n) => $(n).text()),
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 

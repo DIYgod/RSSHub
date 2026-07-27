@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -59,6 +59,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 author: $item.find('.aw-user-name').text(),
                 pubDate: timezone(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8),
+                description: undefined as DataItem['description'],
             };
         });
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,6 +60,10 @@ async function handler(ctx) {
         .filter((item) => $(item).attr('href').startsWith('/'))
         .map((item) => ({
             link: rootUrl + $(item).attr('href'),
+            title: undefined as DataItem['title'] | undefined,
+            description: undefined as DataItem['description'],
+            author: undefined as DataItem['author'],
+            pubDate: undefined as DataItem['pubDate'],
         }));
     const items = await Promise.all(
         list.map((item) =>

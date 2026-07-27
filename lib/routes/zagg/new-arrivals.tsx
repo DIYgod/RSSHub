@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://www.zagg.com/en_us';
@@ -48,7 +48,7 @@ async function handler(ctx) {
     const list = $('.item.product.product-item')
         .toArray()
         .map((element) => {
-            const data = {};
+            const data = { link: undefined as DataItem['link'], title: undefined as DataItem['title'] | undefined, description: undefined as DataItem['description'] };
             const details = $(element).find('.product.details-box').html();
             data.link = $(element).find('.product-item-link').eq(0).attr('href');
             data.title = $(element).find('.product-item-link').text();

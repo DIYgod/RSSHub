@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,6 +61,8 @@ const ProcessItems = async (language, currentUrl) => {
                 title: $item.text(),
                 description: table.find('textarea').text(),
                 pubDate: parseDate(table.find('.date').text()),
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
             };
         });
 

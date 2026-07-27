@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 计算机科学与技术学院：http://computer.upc.edu.cn/
 // - 学院新闻：http://computer.upc.edu.cn/6277/list.htm
@@ -67,6 +67,7 @@ async function handler(ctx) {
                 title: a.attr('title'),
                 link: link.startsWith('http') ? link : `${baseUrl}${link}`,
                 pubDate: parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'),
+                description: undefined as DataItem['description'],
             };
         });
     // ## 定义输出的item

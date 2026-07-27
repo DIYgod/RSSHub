@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,6 +50,7 @@ async function handler(ctx) {
             author: $(item).find('td.author').text(),
             pubDate: timezone(parseDate($(item).find('td.dateline').text(), 'YYYY-M-D HH:mm'), 8),
             category: $(item).find('td.forum').text(),
+            description: undefined as DataItem['description'],
         }))
         .filter((item) => item.title);
 

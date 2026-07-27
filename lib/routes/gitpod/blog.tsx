@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,8 @@ async function handler(ctx) {
                 title: $item.find('h2').text(),
                 link: rootUrl + $item.find('a').attr('href'),
                 pubDate: parseDate($item.find('span[class^=date]').text()),
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
             };
         });
 

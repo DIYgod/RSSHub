@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -39,6 +39,8 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('a.goodname').text().trim(),
             link: new URL($(item).find('div.iteminfoarea > h2 > a').attr('href')!, host).href,
+            description: undefined as DataItem['description'],
+            pubDate: undefined as DataItem['pubDate'],
         }));
 
     const items = await Promise.all(

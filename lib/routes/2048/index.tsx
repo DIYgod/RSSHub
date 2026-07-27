@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -110,12 +110,17 @@ async function handler(ctx) {
         .nextAll('.tr3')
         .toArray()
         .map((item) => {
-            item = $(item).find('a.subject');
+            const $item = $(item).find('a.subject');
 
             return {
-                title: item.text(),
-                link: `${currentHost}/${item.attr('href')}`,
-                guid: `${rootUrl}/2048/${item.attr('href')}`,
+                title: $item.text(),
+                link: `${currentHost}/${$item.attr('href')}`,
+                guid: `${rootUrl}/2048/${$item.attr('href')}`,
+                author: undefined as DataItem['author'],
+                pubDate: undefined as DataItem['pubDate'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                description: undefined as DataItem['description'],
             };
         })
         .filter((item) => !item.link.includes('undefined'));

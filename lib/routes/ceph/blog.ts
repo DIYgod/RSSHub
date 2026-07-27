@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,6 +48,8 @@ async function handler(ctx: Context): Promise<Data> {
                 title,
                 link: new URL(element.find('a').attr('href')!, 'https://ceph.io').href,
                 pubDate,
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

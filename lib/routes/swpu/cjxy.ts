@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,8 @@ async function handler(ctx) {
             title: $('a[href]', elem).text().trim(),
             pubDate: timezone(parseDate($('span', elem).text(), 'YYYY年MM月DD日'), 8),
             link: `https://www.swpu.edu.cn/nccjxy/${$('a[href]', elem).attr('href').split('../', 2)[1]}`,
+            author: undefined as DataItem['author'],
+            description: undefined as DataItem['description'],
         }));
 
     const out = await Promise.all(

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -38,6 +38,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.next().text(), 'YYYY年MM月DD日'),
+                description: undefined as DataItem['description'],
             };
         });
 

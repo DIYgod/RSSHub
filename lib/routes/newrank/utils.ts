@@ -82,8 +82,9 @@ async function getCookie() {
     // Check if this key should be replace? every 30 times should be fine.
     shouldUpdateCookie();
     let token = await cache.get(newrank_cookie_token);
-    const username = String(config.newrank.username);
-    const password = md5(md5(String(config.newrank.password)) + 'daddy');
+    const newrankConfig = config.newrank as any;
+    const username = String(newrankConfig.username);
+    const password = md5(md5(String(newrankConfig.password)) + 'daddy');
     const nonce = random_nonce(9);
     const xyz = decrypt_login_xyz(username, password, nonce);
     if (!token) {

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import queryString from 'query-string';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -81,6 +81,7 @@ async function handler(ctx) {
                     image: imageSrc,
                     by: user,
                 }),
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
@@ -96,7 +97,7 @@ async function handler(ctx) {
                 const statisticsStr = statisticsTages.text();
 
                 const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/g;
-                const result = {};
+                const result = {} as Record<string, any>;
                 for (const match of statisticsStr.matchAll(regex)) {
                     const { key, value } = match.groups ?? ({} as { key: string; value: string });
                     result[key.trim().toLocaleLowerCase()] = value.trim();

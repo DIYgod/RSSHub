@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -16,6 +17,8 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
             return {
                 title: $item.find(titleSelector).attr('title'),
                 link: host + $item.find(titleSelector).attr('href'),
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

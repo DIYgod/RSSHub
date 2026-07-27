@@ -3,7 +3,7 @@
 // import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { fetchArticle } from '@/utils/wechat-mp';
@@ -71,6 +71,7 @@ async function handler(ctx) {
                           title: $item.find('a b.am-text-truncate').text().trim(),
                           pubDate: $item.find('a i').text(),
                           link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                          description: undefined as DataItem['description'],
                       };
                   })
             : $('div.list_txt.am-fr ul.am-list li')
@@ -81,6 +82,7 @@ async function handler(ctx) {
                           title: $item.find('a span').text().trim(),
                           pubDate: $item.find('a i').text(),
                           link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                          description: undefined as any,
                       };
                   });
 

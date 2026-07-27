@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,6 +64,8 @@ async function handler(ctx) {
                     },
                 }),
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1]) : undefined,
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

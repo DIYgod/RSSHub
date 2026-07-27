@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -46,6 +46,9 @@ async function handler(ctx) {
                 id,
                 authors,
                 issue,
+                doi: undefined as DataItem['doi'],
+                description: undefined as DataItem['description'],
+                abstract: undefined as any,
             };
         });
 

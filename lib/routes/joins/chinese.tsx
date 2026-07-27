@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,6 +33,11 @@ export const handler = async (ctx) => {
                 link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
                 author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
             };
         });
 

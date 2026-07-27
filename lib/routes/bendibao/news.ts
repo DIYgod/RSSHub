@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,13 +64,15 @@ async function handler(ctx) {
     let items = $('ul.focus-news li')
         .toArray()
         .map((item) => {
-            item = $(item).find('a');
+            const $item = $(item).find('a');
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
@@ -92,12 +94,12 @@ async function handler(ctx) {
         items = $('#listNewsTimeLy div.info')
             .toArray()
             .map((item) => {
-                item = $(item).find('a');
+                const $item = $(item).find('a');
 
-                const link = item.attr('href');
+                const link = $item.attr('href');
 
                 return {
-                    title: item.text(),
+                    title: $item.text(),
                     link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
                 };
             });

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got';
@@ -56,6 +56,7 @@ async function handler(ctx) {
                 title: a.attr('title'),
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
+                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(

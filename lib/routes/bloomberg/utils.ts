@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { destr } from 'destr';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
@@ -201,7 +202,7 @@ const parseVideoPage = async (res, api, item) => {
 
 const parsePhotoEssaysPage = async (res, api, item) => {
     const $ = load(res.data.html);
-    const article_json = {};
+    const article_json = { id: undefined as DataItem['id'], headline: undefined as any, canonical: undefined as any, body: undefined as any, authors: undefined as any };
     for (const e of $(api.sel).toArray()) {
         Object.assign(article_json, JSON.parse($(e).html() ?? ''));
     }
@@ -235,7 +236,7 @@ const parseReactRendererPage = async (res, api, item) => {
 };
 
 const parseStoryJson = async (story_json, item) => {
-    const media_img = story_json.ledeImageUrl || Object.values(story_json.imageAttachments ?? {})[0]?.url;
+    const media_img = story_json.ledeImageUrl || Object.values<any>(story_json.imageAttachments ?? {})[0]?.url;
     const rss_item = {
         title: story_json.headline || item.title,
         link: story_json.url || item.link,
@@ -283,7 +284,7 @@ const processLedeMedia = async (story_json) => {
         return renderImageFigure(image);
     }
     if (story_json.imageAttachments) {
-        const attachment = Object.values(story_json.imageAttachments)[0];
+        const attachment = Object.values<any>(story_json.imageAttachments)[0];
         if (attachment) {
             const image = {
                 src: attachment.baseUrl || attachment.url,
@@ -396,6 +397,7 @@ const processVideo = async (bmmrId, summary?) => {
             mp4: video_json.downloadURLs ? video_json.downloadURLs['600'] : '',
             coverUrl: video_json.thumbnail?.baseUrl ?? '',
             caption: video_json.description || video_json.title || summary,
+            keywords: undefined as any,
         };
     }
     return {

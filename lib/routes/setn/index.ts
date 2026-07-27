@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -107,6 +107,10 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: link.startsWith('http') ? link : `${Object.hasOwn(rootUrls, category) ? rootUrls[category] : defaultRootUrl}${link}`,
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 
@@ -120,7 +124,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                let head: Record<string, unknown>;
+                let head: Record<string, any>;
                 try {
                     head = JSON.parse(content('script[type="application/ld+json"]').first().text());
                 } catch {

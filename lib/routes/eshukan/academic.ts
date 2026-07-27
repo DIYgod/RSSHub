@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,6 +48,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $item.find('p').text(),
                 },
+                author: undefined as DataItem['author'],
             };
         });
 
@@ -121,8 +122,8 @@ export const route: Route = {
         {
             source: ['www.eshukan.com/academic/index.aspx'],
             target: (_, url) => {
-                url = new URL(url);
-                const id = url.searchParams.get('id');
+                const { searchParams } = new URL(url);
+                const id = searchParams.get('id');
 
                 return `/academic${id ? `/${id}` : ''}`;
             },

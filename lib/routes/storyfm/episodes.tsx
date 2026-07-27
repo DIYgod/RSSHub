@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -56,6 +56,8 @@ async function handler() {
                 enclosure_type: 'audio/mpeg',
                 enclosure_url: $item.find('audio source').attr('src'),
                 itunes_item_image: $item.find('.zoom-image-container-progression img').attr('src'),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

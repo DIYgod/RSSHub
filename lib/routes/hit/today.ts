@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -51,6 +51,7 @@ async function handler(ctx) {
             title: $('span span a', e).text(),
             author: $('div a', e).attr('hreflang', 'zh-hans').text(),
             pubDate: timezone(parseDate($('span span a', e).attr('href').split('/').slice(-4, -1).join(','), 'YYYYMMDD'), 8),
+            description: undefined as DataItem['description'],
         }));
 
     const out = await Promise.all(

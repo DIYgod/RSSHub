@@ -29,7 +29,7 @@ async function handler() {
     const responses = await Promise.allSettled(urlList.map((url) => ofetch(url)));
 
     const items = responses.flatMap((response, i) => {
-        const $ = load(response.value);
+        const $ = load((response as PromiseFulfilledResult<any>).value);
         return $('div.panel-body > div.list-group-item')
             .toArray()
             .map((item) => {

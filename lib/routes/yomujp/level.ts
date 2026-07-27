@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -48,7 +49,7 @@ async function handler(ctx) {
                 if (el.tagName === 'img') {
                     return `<img src=${el.attribs.src} />`;
                 }
-                if (el.firstChild.tagName === 'p') {
+                if ((el.firstChild as Element).tagName === 'p') {
                     return `<p>${$(el.firstChild).html()}</p>`;
                 }
                 return `<p>${$(el).html()}</p>`;

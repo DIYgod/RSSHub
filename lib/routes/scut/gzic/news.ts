@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
@@ -49,6 +49,7 @@ async function handler() {
                         .replaceAll('日', '')
                 ),
                 itunes_item_image: `${baseUrl}${$item.find('.li-img img').attr('src')}`,
+                description: undefined as DataItem['description'],
             };
         });
 

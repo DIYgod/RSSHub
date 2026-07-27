@@ -82,6 +82,6 @@ async function handler(ctx) {
     return {
         title: $('title').text(),
         link: url,
-        item: out.filter((x) => x.title),
+        item: out.filter((x: any) => x.title),
     };
 }

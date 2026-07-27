@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -40,8 +41,8 @@ async function handler() {
 
             const data = response.data;
             const $ = load(data);
-            const tmp = $('.list2')[0].children;
-            const infos = [];
+            const tmp = $('.list2')[0].children as Element[];
+            const infos: Element[] = [];
             for (const element of tmp) {
                 if (element.children) {
                     infos.push(element);

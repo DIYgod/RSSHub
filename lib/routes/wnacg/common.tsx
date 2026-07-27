@@ -3,6 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -57,6 +58,9 @@ export async function handler(ctx) {
                     'YYYY-MM-DD'
                 ),
                 aid,
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
+                description: undefined as DataItem['description'],
             };
         });
 

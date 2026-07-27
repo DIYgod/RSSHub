@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -32,7 +32,7 @@ async function handler(ctx) {
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;
     const currentUrl = new URL(category?.replace(/^(tag|category)?\/(\d+)/, '$1-$2') ?? '', rootUrl).href;
 
-    const searchParams = {};
+    const searchParams = {} as Record<string, any>;
     const matches = category?.match(/^(tag|category|search|page)?[/-]?(\w+)/) ?? undefined;
 
     if (matches) {
@@ -75,7 +75,10 @@ async function handler(ctx) {
                     .find('.category')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: image ? image.prop('post-id') : $item.link.match(/\/(\d+)/)[1],
+                guid: image ? image.prop('post-id') : ($item as any).link.match(/\/(\d+)/)[1],
+                pubDate: undefined as DataItem['pubDate'],
+                updated: undefined as DataItem['updated'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 

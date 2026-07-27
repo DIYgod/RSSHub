@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -67,6 +67,7 @@ async function handler(ctx) {
                 category: nexAuthorBtms.find('em a').text().trim(),
                 link: baseUrl + '/' + nexForumtitTopA.attr('href'),
                 author: $item.find('.nex_threads_author').find('a').text().trim(),
+                description: undefined as DataItem['description'],
             };
         });
     items = await Promise.all(

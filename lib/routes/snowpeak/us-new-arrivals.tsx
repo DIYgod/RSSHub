@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://www.snowpeak.com';
@@ -41,7 +41,14 @@ async function handler() {
     const list = $('.element.product-tile')
         .toArray()
         .map((element) => {
-            const data = {};
+            const data = {
+                title: undefined as DataItem['title'] | undefined,
+                link: undefined as DataItem['link'],
+                pubDate: undefined as DataItem['pubDate'],
+                category: undefined as DataItem['category'],
+                description: undefined as DataItem['description'],
+                variants: undefined as any,
+            };
             const product = $(element).find('.product-data').data('product');
             data.title = product.title;
             data.link = `${host}/products/${product.handle}`;

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,6 +55,7 @@ async function handler(ctx) {
                 title: $item.find('h3').text(),
                 pubDate: timezone(parseDate($item.find('p').text().replace('发布于 ', '')), 8),
                 link: $item.attr('href'),
+                description: undefined as DataItem['description'],
             };
         });
 

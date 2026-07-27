@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -56,6 +56,7 @@ async function handler(ctx) {
                 link: `${baseUrl}${a.attr('href')}`,
                 description: $item.find('.preview').text(),
                 category: $item.find('.classification').text().trim(),
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

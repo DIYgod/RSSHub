@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -57,6 +57,7 @@ async function handler(ctx) {
                     ),
                     9
                 ),
+                description: undefined as DataItem['description'],
             };
             body.find('a img').each((_, el) => {
                 $(el).attr('src', $(el).parent('a').attr('href'));

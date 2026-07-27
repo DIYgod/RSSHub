@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -86,6 +86,8 @@ async function handler(ctx) {
                 guid: `zjks-${matches[1]}-${matches[2]}`,
                 pubDate: parseDate($item.parent().next().text()),
                 tzid: matches[2],
+                description: undefined as DataItem['description'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 

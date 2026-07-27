@@ -178,7 +178,7 @@ async function handler(ctx) {
         })
     );
     // 由数组索引获取初步分析数据
-    const tempData = [];
+    const tempData: any[] = [];
     await Promise.all(
         responseList.map(async (response) => {
             const result = await getData(response);

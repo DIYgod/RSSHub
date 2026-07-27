@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -101,6 +101,9 @@ async function handler(ctx) {
                 link: host + $item.find('a.xst').attr('href'),
                 pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
                 author: $item.find('td.by cite a').first().text(),
+                description: undefined as DataItem['description'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

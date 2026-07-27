@@ -4,7 +4,7 @@ import iconv from 'iconv-lite';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -130,6 +130,7 @@ async function handler(ctx) {
                     link: fixUrl(a.attr('href'), link),
                     pubDate: $item.find('td.author em').length ? parseDate($item.find('td.author em').text().trim()) : undefined,
                     author: $item.find('td.author cite a').text().trim(),
+                    description: undefined as DataItem['description'],
                 };
             });
 
@@ -157,6 +158,7 @@ async function handler(ctx) {
                     link: fixUrl(a.attr('href'), link),
                     pubDate: $item.find('td.by:nth-child(3) em span').last().length ? parseDate($item.find('td.by:nth-child(3) em span').last().text().trim()) : undefined,
                     author: $item.find('td.by:nth-child(3) cite a').text().trim(),
+                    description: undefined as DataItem['description'],
                 };
             });
 

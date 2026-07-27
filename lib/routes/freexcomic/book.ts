@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -39,6 +39,7 @@ const handler = async (ctx) => {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, addresses[Math.floor(Math.random() * addresses.length)]).href,
                 guid: new URL($item.attr('href')!, jjmhw).href,
+                description: undefined as DataItem['description'],
             };
         });
 

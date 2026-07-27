@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -92,6 +92,7 @@ async function handler(ctx) {
                 link: baseUrl + $e.attr('href'),
                 author: $e.find('.author-by span').text(),
                 pubDate: $e.find('.author-time').text(),
+                description: undefined as DataItem['description'],
             };
         });
 

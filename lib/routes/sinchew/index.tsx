@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -45,6 +45,7 @@ async function handler(ctx) {
                 title: $item.attr('data-title'),
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
                 pubDate: timezone(parseDate($item.text()), 8),
+                description: undefined as DataItem['description'],
             };
         });
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -74,6 +74,7 @@ async function handler(ctx) {
                 pubDate: item.find('td:nth-of-type(5)').text(),
                 enclosure_url: item.find('td:nth-of-type(3) > a:nth-of-type(2)').attr('href'),
                 enclosure_type: 'application/x-bittorrent',
+                description: undefined as DataItem['description'],
             };
         });
 

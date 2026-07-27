@@ -4,7 +4,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -84,6 +84,7 @@ async function handler(ctx) {
                 title: $item.find('a').attr('title') || $item.find('h3').text() || $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, host).href,
                 pubDate: match ? parseDate(match[0], 'YYYY-MM-DD') : null,
+                description: undefined as DataItem['description'],
             };
         })
         .filter((item) => {

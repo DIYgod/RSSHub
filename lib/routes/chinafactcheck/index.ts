@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -30,7 +30,14 @@ async function handler() {
 
     const articlesLink = $('.post-info-box .post-thumb a')
         .toArray()
-        .map((item) => ({ link: $(item).attr('href') }));
+        .map((item) => ({
+            link: $(item).attr('href'),
+            title: undefined as DataItem['title'] | undefined,
+            author: undefined as DataItem['author'],
+            pubDate: undefined as DataItem['pubDate'],
+            description: undefined as DataItem['description'],
+            category: undefined as DataItem['category'],
+        }));
 
     const articles = await Promise.all(
         articlesLink.map((item) =>

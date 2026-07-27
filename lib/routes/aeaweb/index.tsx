@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -69,6 +69,12 @@ async function handler(ctx) {
 
             return {
                 link: `${rootUrl}${$item.attr('href').split('&', 1)[0]}`,
+                doi: undefined as DataItem['doi'],
+                guid: undefined as DataItem['guid'],
+                title: undefined as DataItem['title'] | undefined,
+                author: undefined as DataItem['author'],
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 

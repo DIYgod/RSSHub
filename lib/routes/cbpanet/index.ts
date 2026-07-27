@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -31,6 +31,8 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('div.zxtime1').text(), 'YY/MM/DD'),
                 link: new URL(a.prop('href')!, rootUrl).href,
+                description: undefined as DataItem['description'],
+                content: undefined as DataItem['content'],
             };
         });
 
@@ -158,9 +160,9 @@ export const route: Route = {
         {
             source: ['www.cbpanet.com/dzp_news.aspx'],
             target: (_, url) => {
-                url = new URL(url);
-                const bigId = url.searchParams.get('bigid');
-                const smallId = url.searchParams.get('smallid');
+                const { searchParams } = new URL(url);
+                const bigId = searchParams.get('bigid');
+                const smallId = searchParams.get('smallid');
 
                 return `/dzp_news${bigId ? `/${bigId}${smallId ? `/${smallId}` : ''}` : ''}`;
             },

@@ -336,7 +336,7 @@ interface ShowMore {
     url: string;
 }
 
-interface UserInfoCell32 {
+export interface UserInfoCell32 {
     avatar_url: string;
     desc: string;
     id: number;
@@ -359,7 +359,7 @@ interface UserInfoCell32 {
     verified_content: string;
 }
 
-interface UserInfoCell49 {
+export interface UserInfoCell49 {
     info: {
         avatar_uri: string;
         avatar_url: string;

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -110,6 +110,7 @@ async function handler(ctx) {
                             title,
                             pubDate,
                             guid: `${title}:${pubDate}`,
+                            description: undefined as DataItem['description'],
                         };
                     })
                     .filter((item) => item.title !== 'null'),

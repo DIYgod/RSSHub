@@ -35,6 +35,7 @@ async function handler(ctx) {
     const categories = ctx.req.param('category');
     const searchParams = {
         per_page: 100,
+        categories: undefined as any,
     };
     if (categories) {
         searchParams.categories = await getCategoryId(categories);

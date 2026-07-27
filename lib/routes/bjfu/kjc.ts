@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,6 +53,7 @@ async function handler() {
                 link: 'http://kyc.bjfu.edu.cn/tztg/' + link,
                 author: '北京林业大学科技处通知公告',
                 pubDate,
+                description: undefined as DataItem['description'],
             };
         });
 

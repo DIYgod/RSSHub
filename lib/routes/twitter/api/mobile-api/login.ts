@@ -27,6 +27,7 @@ const headers = {
     'X-Twitter-Active-User': 'yes',
     'Content-Type': 'application/json',
     Authorization: bearerToken,
+    att: undefined as any,
 };
 
 const loginLimiter = cache.clients.redisClient

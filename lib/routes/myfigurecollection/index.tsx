@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { isValidHost } from '@/utils/valid-host';
@@ -61,12 +61,14 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
         .map((item) => {
-            item = $(item).find('a');
+            const $item = $(item).find('a');
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                title: undefined as DataItem['title'] | undefined,
+                description: undefined as DataItem['description'],
             };
         });
 

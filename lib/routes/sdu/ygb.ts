@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -61,6 +61,7 @@ async function handler(ctx) {
                 title: a.text().trim(),
                 link,
                 pubDate: parseDate($e.find('b').text().trim().slice(1, -1), 'YYYY-MM-DD'),
+                description: undefined as DataItem['description'],
             };
         });
 

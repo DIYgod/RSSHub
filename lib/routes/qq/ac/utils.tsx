@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -24,6 +25,8 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
                 title: $item.text(),
                 guid: `${rootUrl}${$item.attr('href')}`,
                 link: `${mobileRootUrl}${$item.attr('href').replace(/Comic\/ComicInfo/, 'comic/index')}`,
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

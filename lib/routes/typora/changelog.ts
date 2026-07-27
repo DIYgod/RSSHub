@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,6 +41,7 @@ async function handler() {
             author: i.author,
             description: i.content,
             link: `${host}${i.url}`,
+            pubDate: undefined as DataItem['pubDate'],
         }));
 
     const items = await Promise.all(

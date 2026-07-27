@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { link, key } = getConfig(ctx);
+    const { link, key } = getConfig(ctx) as unknown as { link: string; key: string };
     const path = ctx.req.param('path');
 
     const url = `${link}/${path}.rss`;

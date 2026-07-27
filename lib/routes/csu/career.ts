@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,7 @@ async function handler() {
                 title: $item.find('a').text(),
                 link: `${baseUrl}${$item.find('a').attr('href')}`,
                 pubDate: timezone(parseDate($item.find('.span4').text()), 8),
+                description: undefined as DataItem['description'],
             };
         });
 
@@ -60,7 +61,7 @@ async function handler() {
                     .match(/Base64\.decode\(unzip\("(.*)"\)\./)[1];
                 const { slice1, slice2 } = $('script[type="text/javascript"]')
                     .text()
-                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/).groups;
+                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)!.groups as any;
                 const unzipped = Buffer.from(unzip(zipped).slice(slice1), 'base64').toString().slice(slice2);
 
                 $ = load(unzipped, null, false);

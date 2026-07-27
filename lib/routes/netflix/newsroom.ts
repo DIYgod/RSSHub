@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -151,7 +151,7 @@ const render = (node) => {
         }
 
         case 'embedded-asset-block': {
-            const file = Object.values(node.data?.file)[0];
+            const file = Object.values<any>(node.data?.file)[0];
             if (!file || !file.url) {
                 return '';
             }
@@ -229,6 +229,7 @@ async function handler(ctx) {
         category: [...new Set([...i.categories.map((category) => category.label), ...i.locations.map((location) => location.label)])],
         image: i.heroImage?.url ? `https:${i.heroImage.url.replace('?w=2560', '')}` : null,
         slug: i.slug,
+        description: undefined as DataItem['description'],
     }));
 
     const items = await Promise.all(

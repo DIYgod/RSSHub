@@ -61,4 +61,7 @@ async function handler(ctx) {
     };
 }
 
-const get = async (url: string) => decode(await got(url).buffer(), 'gbk');
+const get = async (url: string) => {
+    const buffer = await (got(url) as any).buffer();
+    return decode(buffer, 'gbk');
+};

@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(`https://rss.dw.com/rdf/${category}`);
     const items = await processItems(
-        feed.items.map((item) => {
+        feed.items.map((item: any) => {
             item.id = item['dwsyn:contentID'];
             item.pubDate = item.isoDate;
             item.description = item.content;

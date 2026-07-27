@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -88,6 +88,8 @@ async function handler(ctx) {
                 issue,
                 img,
                 authors,
+                description: undefined as DataItem['description'],
+                abstract: undefined as any,
             };
         });
 

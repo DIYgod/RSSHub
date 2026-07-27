@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -31,6 +31,7 @@ export const route: Route = {
                 pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
+                description: undefined as DataItem['description'],
             }));
         const items = await Promise.all(
             links.map((item) =>

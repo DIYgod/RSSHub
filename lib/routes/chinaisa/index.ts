@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -196,6 +196,8 @@ async function handler(ctx) {
                 link: new URL(`gxportal/xfgl/portal/${$item.prop('href')}`, rootUrl).href,
                 guid: $item.prop('href').match(/articleId=(\w+)/)[1],
                 pubDate: parseDate($item.parent().find('span.times').text().replaceAll('[]', '')),
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
             };
         });
 

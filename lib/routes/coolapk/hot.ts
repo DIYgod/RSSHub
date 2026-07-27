@@ -1,11 +1,11 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 import utils from './utils';
 
 const getLinkAndTitle = (type, period) => {
     const baseURL = 'https://api.coolapk.com/v6/page/dataList?url=';
-    const res = {};
+    const res = { link: undefined as DataItem['link'], title: undefined as DataItem['title'] | undefined };
     const types = {
         jrrm: {
             title: '今日热门',

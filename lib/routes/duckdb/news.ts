@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,6 +40,7 @@ async function handler() {
                 link: `https://duckdb.org${$item.find('a.blocklink').attr('href')}`,
                 pubDate: timezone(parseDate($item.find('.date').text(), 'YYYY-MM-DD'), 0),
                 author: $item.find('.author').text().trim(),
+                description: undefined as DataItem['description'],
             };
         });
 

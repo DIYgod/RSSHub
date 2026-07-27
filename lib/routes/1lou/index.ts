@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,6 +45,13 @@ export const handler = async (ctx) => {
                 ].filter(Boolean),
                 author: $item.find('a.username').text(),
                 language,
+                description: undefined as DataItem['description'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 
@@ -138,9 +145,9 @@ export const route: Route = {
         {
             source: ['1lou.me/:params'],
             target: (_, url) => {
-                url = new URL(url);
+                const parsedUrl = new URL(url);
 
-                return `/1lou${url.href.replace(rootUrl, '')}`;
+                return `/1lou${parsedUrl.href.replace(rootUrl, '')}`;
             },
         },
     ],

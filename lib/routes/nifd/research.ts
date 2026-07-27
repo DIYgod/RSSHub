@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,6 +54,7 @@ async function handler(ctx) {
             link: rootUrl + $(item).find('a').attr('href'),
             author: $(item).find('p > span:nth-child(2)').text(),
             pubDate: parseDate($(item).find('p > span:nth-child(1)').text(), 'YYYY-MM-DD'),
+            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

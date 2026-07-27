@@ -1,5 +1,6 @@
 import path from 'node:path';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
@@ -27,6 +28,8 @@ export const getNews = async (category) => {
                     title,
                     link: url,
                     pubDate: timezone(parseDate(focus_date), 8),
+                    description: undefined as DataItem['description'],
+                    author: undefined as DataItem['author'],
                 };
                 const id = path.parse(url).name;
                 const unknownTip = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';

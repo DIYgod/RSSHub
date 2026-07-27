@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,6 +55,12 @@ export async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link.startsWith('http') ? link : new URL(link!, currentUrl).href,
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
+                guid: undefined as DataItem['guid'],
+                pubDate: undefined as DataItem['pubDate'],
+                updated: undefined as DataItem['updated'],
             };
         });
 

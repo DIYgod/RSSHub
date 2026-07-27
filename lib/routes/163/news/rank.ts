@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -145,6 +145,9 @@ async function handler(ctx) {
 
             return {
                 link: $item.attr('href'),
+                title: undefined as DataItem['title'] | undefined,
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 

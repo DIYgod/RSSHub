@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,6 +64,7 @@ async function handler(ctx: Context): Promise<Data> {
                 link: new URL(title.attr('href')!, sydwgkzpUrl).href,
                 // 文章发布日期
                 pubDate: parseDate($item.find('span').text()),
+                description: undefined as DataItem['description'],
             };
         });
 

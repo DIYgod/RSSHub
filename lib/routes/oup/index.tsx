@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -47,6 +47,10 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('a.at-articleLink').text(),
             link: new URL($(item).find('a.at-articleLink').attr('href')!, rootUrl).href,
+            author: undefined as DataItem['author'],
+            description: undefined as DataItem['description'],
+            pubDate: undefined as DataItem['pubDate'],
+            category: undefined as DataItem['category'],
         }));
 
     const items = await Promise.all(

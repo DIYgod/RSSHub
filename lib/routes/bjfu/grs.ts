@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,6 +53,7 @@ async function handler() {
                 link: 'http://graduate.bjfu.edu.cn/pygl/pydt/' + link,
                 author: '北京林业大学研究生院培养动态',
                 pubDate,
+                description: undefined as DataItem['description'],
             };
         });
 

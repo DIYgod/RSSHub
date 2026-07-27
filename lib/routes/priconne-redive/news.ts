@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -77,6 +77,8 @@ async function handler(ctx) {
                         const rssitem = {
                             title: $item.find('h4').text(),
                             link,
+                            description: undefined as DataItem['description'],
+                            pubDate: undefined as DataItem['pubDate'],
                         };
 
                         const response = await got(link);
@@ -128,6 +130,8 @@ async function handler(ctx) {
                         const rssitem = {
                             title: title.text().trim(),
                             link,
+                            description: undefined as DataItem['description'],
+                            pubDate: undefined as DataItem['pubDate'],
                         };
 
                         const response = await got(link);
@@ -162,6 +166,7 @@ async function handler(ctx) {
                             title: item.title,
                             link,
                             pubDate: parseDate(item.ctime),
+                            description: undefined as DataItem['description'],
                         };
                         const resp = await got({ method: 'get', url: `https://api.biligame.com/news/${item.id}` });
                         rssitem.description = resp.data.data.content;

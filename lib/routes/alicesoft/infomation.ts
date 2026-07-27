@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -58,6 +58,7 @@ async function handler(ctx) {
                 title: $item.find('p.txt').text(),
                 link: $item.find('a').attr('href'),
                 pubDate: new Date($item.find('time').attr('datetime')),
+                description: undefined as DataItem['description'],
             };
         });
 

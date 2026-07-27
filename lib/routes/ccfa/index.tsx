@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,6 +30,11 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'),
                 link: new URL(a.prop('href')!, currentUrl).href,
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                content: undefined as DataItem['content'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 
@@ -152,8 +157,7 @@ export const route: Route = {
                 'www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp',
             ],
             target: (_, url) => {
-                url = new URL(url);
-                const type = url.searchParams.get('type');
+                const type = new URL(url).searchParams.get('type');
 
                 return type ? `/${type}` : '';
             },

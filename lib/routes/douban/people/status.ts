@@ -111,7 +111,7 @@ function tryFixStatus(status) {
     return result;
 }
 
-function getContentByActivity(ctx, item, params = {}, picsPrefixes: string[] = []) {
+function getContentByActivity(ctx, item, params = {} as Record<string, any>, picsPrefixes: string[] = []) {
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
     const mergedParams = {
@@ -311,7 +311,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes: string[] = [
         }
         picsPrefixes.push(picsPrefix);
 
-        const imageUrls: Array<string | undefined> = Array.from(status.images, (image) => image?.large?.url);
+        const imageUrls: Array<string | undefined> = Array.from(status.images, (image: any) => image?.large?.url);
         description += prepareImages(imageUrls);
     }
 

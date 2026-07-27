@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -41,6 +41,9 @@ export const route: Route = {
                 const link = baseURL + a.attr('href');
                 return {
                     link,
+                    title: undefined as DataItem['title'] | undefined,
+                    pubDate: undefined as DataItem['pubDate'],
+                    description: undefined as DataItem['description'],
                 };
             });
 

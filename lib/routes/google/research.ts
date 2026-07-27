@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -35,6 +35,7 @@ export const route: Route = {
                         .find('.not-glue.caption')
                         .toArray()
                         .map((item) => $(item).text().replace('·', '').trim()),
+                    description: undefined as DataItem['description'],
                 };
             });
 

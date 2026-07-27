@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,9 @@ async function handler(ctx) {
                 title: $item.find('.title a').attr('title'),
                 link: `${baseUrl}${$item.find('.title a').attr('href')}`,
                 author: $item.find('.author a').text().split('作者 : ', 2)[1],
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
             };
         });
 

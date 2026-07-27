@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -62,7 +62,7 @@ async function handler(ctx) {
             subtitle = '新闻动态';
             path = 'xwdt.htm';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(oaa_base_url + path, {
             headers: {
@@ -99,6 +99,7 @@ async function handler(ctx) {
                 link: type === 'in-site' ? oaa_base_url + href : href,
                 pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), 8),
                 type,
+                description: undefined as DataItem['description'],
             };
         });
 

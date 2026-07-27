@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -45,6 +45,7 @@ async function handler() {
                     pubDate: $date.text().trim(),
                     author: $author.text().replace('OpenAI', '').trim(),
                     category: $tags.toArray().map((tag) => $(tag).text().trim()),
+                    description: undefined as DataItem['description'],
                 };
             });
 

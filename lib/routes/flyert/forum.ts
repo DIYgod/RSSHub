@@ -90,7 +90,7 @@ export const route: Route = {
         {
             source: ['www.flyert.com.cn/forum.php'],
             target: (_, url) => {
-                const params = url.searchParams
+                const params = (url as unknown as URL).searchParams
                     .entries()
                     .toArray()
                     .map(([key, value]) => key + '=' + value)

@@ -41,16 +41,15 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            let description = $item.find(String.raw`dc\:content`).text();
-            description = $('<div>').html(description);
-            description.find('.vanilla-image-block').removeAttr('style');
-            description.find('.fancy-box').remove();
+            const $description = $('<div>').html($item.find(String.raw`dc\:content`).text());
+            $description.find('.vanilla-image-block').removeAttr('style');
+            $description.find('.fancy-box').remove();
 
             return {
                 title: $item.find('title').text(),
                 pubDate: parseDate($item.find('pubDate').text()),
                 link: $item.find('link').text(),
-                description: description.html(),
+                description: $description.html(),
             };
         });
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -71,7 +71,7 @@ async function handler(ctx) {
     ];
 
     const seen = new Set<string>();
-    const dedupedList: Array<{ title?: string; link?: string }> = [];
+    const dedupedList: Array<Partial<DataItem>> = [];
     for (const item of list) {
         const link = item.link || '';
         if (seen.has(link)) {

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
@@ -35,7 +36,7 @@ const ProcessFeed = (data, hasEnVersion = false) => {
     const $ = load(data);
 
     let content;
-    const result = {};
+    const result = { description: undefined as DataItem['description'], title: undefined as DataItem['title'] | undefined, author: undefined as DataItem['author'], pubDate: undefined as DataItem['pubDate'] };
 
     // 处理 www.nytimes.com
     if (hasEnVersion) {

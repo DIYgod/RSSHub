@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,6 +52,7 @@ async function handler() {
                         author: $item.siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
                         link: $item.siblings('a').attr('href'),
                         pubDate,
+                        description: undefined as DataItem['description'],
                     };
                 });
             if (divMatch.length > 0) {

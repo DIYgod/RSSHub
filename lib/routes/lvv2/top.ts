@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,6 +64,9 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('div.md > a').text(),
             link: new URL($(item).find('div.md > a').attr('href')!, rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
+            pubDate: undefined as DataItem['pubDate'],
+            author: undefined as DataItem['author'],
+            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

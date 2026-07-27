@@ -4,7 +4,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -81,6 +81,7 @@ async function handler(ctx: Context) {
                 title: a.text().trim(),
                 link: new URL(a.attr('href')!, rootUrl).href,
                 pubDate: timezone(parseDate(dateString, 'YYYY.M.D'), 9),
+                description: undefined as DataItem['description'],
             };
         });
 

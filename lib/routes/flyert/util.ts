@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -96,6 +97,7 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
                 pubDate: pubDate ? parseDate(pubDate) : undefined,
                 link: new URL(aEl.prop('href')!, rootUrl).href,
                 author: $item.find('a.author_t').text().trim(),
+                language: undefined as DataItem['language'],
             };
         });
 

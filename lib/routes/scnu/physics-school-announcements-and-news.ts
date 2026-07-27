@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,6 +22,7 @@ const getAritlces = async (category, url, cache) => {
                 link,
                 pubDate: timezone(parseDate($item.find('span.time').text()), 8),
                 category,
+                description: undefined as DataItem['description'],
             };
         })
         .map((item) =>

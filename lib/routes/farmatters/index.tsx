@@ -51,6 +51,7 @@ async function handler(ctx) {
         locale,
         page: 0,
         pagesize: limit,
+        subCatalogId: undefined as any,
     };
 
     if (type === 'wiki' && id) {

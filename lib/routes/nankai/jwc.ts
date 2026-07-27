@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,6 +58,7 @@ export const route: Route = {
                     title: $link.text(),
                     link: linkStr,
                     pubDate: timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8),
+                    description: undefined as DataItem['description'],
                 };
             })
             .filter((item) => item.link); // 过滤掉没有链接的项目

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,6 +37,8 @@ async function handler() {
             const ret = {
                 title: fullTitle,
                 link: new URL($(item).find('a').attr('href')!, baseUrl).href,
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
             if (result !== null) {
                 ret.title = result[1];

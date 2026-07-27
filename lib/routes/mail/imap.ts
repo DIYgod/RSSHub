@@ -1,4 +1,4 @@
-import { ImapFlow } from 'imapflow';
+import { ImapFlow, type MailboxObject } from 'imapflow';
 import { simpleParser } from 'mailparser';
 
 import { config } from '@/config';
@@ -22,6 +22,8 @@ async function handler(ctx) {
         username: email,
         port: 993,
         ...Object.fromEntries(new URLSearchParams(config.email.config[email.replaceAll(/[.@]/g, '_')])),
+        password: undefined as any,
+        host: undefined as any,
     };
 
     if (!mailConfig.username || !mailConfig.password || !mailConfig.host || !mailConfig.port) {
@@ -65,10 +67,10 @@ async function handler(ctx) {
         }
       ]
     */
-    const mails = [];
+    const mails: any[] = [];
     const lock = await client.getMailboxLock(folder);
     try {
-        const messages = client.fetch(`${Math.max(client.mailbox.exists - limit + 1, 1)}:*`, { envelope: true, source: true, uid: true });
+        const messages = client.fetch(`${Math.max((client.mailbox as MailboxObject).exists - limit + 1, 1)}:*`, { envelope: true, source: true, uid: true });
         for await (const message of messages) {
             mails.push(message);
         }

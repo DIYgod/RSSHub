@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,11 +25,11 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item).parent();
+            const $item = $(item).parent();
 
-            const title = item.find('a.card-title').text();
+            const title = $item.find('a.card-title').text();
 
-            const src = item.find('a.card-image img').prop('data-src');
+            const src = $item.find('a.card-image img').prop('data-src');
             const image = src?.startsWith('//') ? `https:${src}` : src;
 
             const description = renderDescription({
@@ -42,9 +42,9 @@ export const handler = async (ctx) => {
                       ]
                     : undefined,
             });
-            const pubDate = item.find('div.card-info span.item').last().text();
+            const pubDate = $item.find('div.card-info span.item').last().text();
 
-            const href = item.find('a.card-title').prop('href');
+            const href = $item.find('a.card-title').prop('href');
 
             return {
                 title,
@@ -53,16 +53,18 @@ export const handler = async (ctx) => {
                 link: href?.startsWith('//') ? `https:${href}` : href,
                 category: [
                     ...new Set([
-                        ...item
+                        ...$item
                             .find('span.tag-title')
                             .toArray()
                             .map((c) => $(c).text()),
-                        item.find('div.card-info span.item').first().text(),
+                        $item.find('div.card-info span.item').first().text(),
                     ]),
                 ].filter(Boolean),
                 image,
                 banner: image,
                 language,
+                author: undefined as DataItem['author'],
+                content: undefined as DataItem['content'],
             };
         });
 

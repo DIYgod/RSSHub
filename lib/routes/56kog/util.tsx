@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,6 +28,10 @@ const fetchItems = async (limit, currentUrl) => {
                 title: a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
                 author: $item.find('span').last().text(),
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
+                guid: undefined as DataItem['guid'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
@@ -42,7 +47,7 @@ const fetchItems = async (limit, currentUrl) => {
 
                     const details = content('div.mohe-content p')
                         .toArray()
-                        .map((detail) => {
+                        .map((detail): { label: string; value: any } => {
                             const $detail = content(detail);
                             const as = $detail.find('a');
 

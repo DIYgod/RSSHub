@@ -17,7 +17,7 @@ class RenewWeiboCookiesError extends Error {
     }
 }
 
-const getDescriptionRenderParams = (routeParams, params = {}) => ({
+const getDescriptionRenderParams = (routeParams, params = {} as Record<string, any>) => ({
     showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
     showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
 });
@@ -159,7 +159,7 @@ const weiboUtils = {
             .replaceAll(/<[^<]*>/g, '')
             .replaceAll('\n', ' ')
             .trim(),
-    formatExtended: (ctx, status, uid, params = {}, picsPrefixes: string[] = []) => {
+    formatExtended: (ctx, status, uid, params = {} as Record<string, any>, picsPrefixes: string[] = []) => {
         // `uid = undefined` to explicitly mark it as optional, avoiding IDEs prompting warnings
 
         // undefined and strings like "1" is also safely parsed, so no if branch is needed
@@ -333,7 +333,7 @@ const weiboUtils = {
                 };
             }
             // 插入转发的微博
-            const retweetedParams = Object.assign({}, params);
+            const retweetedParams = Object.assign({} as Record<string, any>, params);
             retweetedParams.showAuthorInDesc = true;
             retweetedParams.showAuthorAvatarInDesc = false;
             retweetedParams.showAtBeforeAuthor = true;

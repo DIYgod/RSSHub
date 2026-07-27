@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,6 +55,7 @@ async function handler() {
                 link: 'https://jw.cdu.edu.cn/' + link,
                 author: '成都大学教务处通知公告',
                 pubDate,
+                description: undefined as DataItem['description'],
             };
         });
 

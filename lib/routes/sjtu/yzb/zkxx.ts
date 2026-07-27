@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -43,6 +43,7 @@ async function handler(ctx) {
             link: new URL(elem.attribs.href, pageUrl).href,
             title: $(elem).text(),
             pubDate: parseDate($(elem.next?.next).text().trim()),
+            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

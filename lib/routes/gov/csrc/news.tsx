@@ -80,6 +80,7 @@ async function handler(ctx) {
                     title: a.text(),
                     link: `${baseUrl}${a.attr('href')}`,
                     pubDate: timezone(parseDate($item.find('.data').text(), 'YYYY-MM-DD'), 8),
+                    description: undefined as DataItem['description'],
                 };
             });
 

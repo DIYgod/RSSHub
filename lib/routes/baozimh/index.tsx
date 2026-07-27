@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -48,6 +48,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
+                description: undefined as DataItem['description'],
             };
         });
 
@@ -63,6 +64,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
+                description: undefined as any,
             };
         });
 

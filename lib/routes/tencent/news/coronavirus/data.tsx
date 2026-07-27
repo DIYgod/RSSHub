@@ -25,7 +25,7 @@ async function handler(ctx) {
     const nationalData = areaTree?.[0];
     const provinceList = nationalData?.children;
 
-    let coronavirusData: Record<string, unknown>;
+    let coronavirusData: Record<string, any>;
     let placeName: string;
 
     if (!province || province === '中国' || province === '全国') {

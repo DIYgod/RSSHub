@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -112,6 +112,11 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: `${rootUrl}/${a.attr('href')}`,
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                pubDate: undefined as DataItem['pubDate'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 

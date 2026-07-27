@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -103,6 +103,7 @@ async function dealChannel(suburl, selectors) {
                 // 如果是正常文章的话可以在那里提取更精确的时间
                 // 如果是公示文章或者站外文章的话只能用这个保底了
                 pubDate: parseRelativeDate(dateraw),
+                description: undefined as DataItem['description'],
             };
         });
 

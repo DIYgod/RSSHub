@@ -101,7 +101,7 @@ async function handler(ctx) {
     const items = (
         await Promise.all(
             feed.items.map(async (item) => {
-                const itemDetails = await getArticleDetail(item.link);
+                const itemDetails = (await getArticleDetail(item.link)) as any;
                 if (itemDetails === null) {
                     return null;
                 }

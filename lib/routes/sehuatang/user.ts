@@ -2,7 +2,7 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -65,6 +65,10 @@ async function handler(ctx) {
                 link: baseUrl + a.attr('href'),
                 // pubDate: '',
                 author: $('.mt').first().text(),
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

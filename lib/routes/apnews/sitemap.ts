@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -67,7 +67,7 @@ async function handler(ctx) {
                     .find(String.raw`news\:language`)
                     .text()
             );
-            let res = { link: $(e).find('loc').text() };
+            let res = { link: $(e).find('loc').text(), pubDate: undefined as DataItem['pubDate'], lastmod: undefined as any };
             if (title) {
                 res = Object.assign(res, { title });
             }

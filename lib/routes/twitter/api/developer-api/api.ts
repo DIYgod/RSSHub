@@ -135,9 +135,9 @@ const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, a
         return cacheMap.get(tweet.id);
     }
 
-    const users = new Map((includes?.users ?? []).map((user) => [user.id, user]));
-    const tweets = new Map((includes?.tweets ?? []).map((item) => [item.id, item]));
-    const media = new Map((includes?.media ?? []).map((item) => [item.media_key, item]));
+    const users = new Map<string, Record<string, any>>((includes?.users ?? []).map((user) => [user.id, user]));
+    const tweets = new Map<string, Record<string, any>>((includes?.tweets ?? []).map((item) => [item.id, item]));
+    const media = new Map<string, Record<string, any>>((includes?.media ?? []).map((item) => [item.media_key, item]));
 
     const user = users.get(tweet.author_id);
     const legacyUser = mapUserToLegacy(user);
@@ -214,7 +214,7 @@ const getUserData = (id: string) =>
             'user.fields': 'profile_image_url,description,verified,url',
         };
         const response = id.startsWith('+') ? await client.v2.user(id.slice(1), params) : await client.v2.userByUsername(id, params);
-        return mapUserToLegacy(response?.data);
+        return mapUserToLegacy(response?.data) ?? '';
     });
 
 const cacheTryGet = async (_id: string, params: Record<string, any> | undefined, func: (id: string, params?: Record<string, any>) => Promise<any>) => {

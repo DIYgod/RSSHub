@@ -24,7 +24,7 @@ function appendRentalAPIParams(urlString) {
 }
 
 async function getToken() {
-    const html = await client('https://rent.591.com.tw').text();
+    const html = await (client('https://rent.591.com.tw') as any).text();
 
     const $ = load(html);
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -39,12 +39,14 @@ async function getToken() {
 async function getHouseList(houseListURL) {
     const csrfToken = await getToken();
 
-    const data = await client({
-        url: houseListURL,
-        headers: {
-            'X-CSRF-TOKEN': csrfToken,
-        },
-    }).json();
+    const data = await (
+        client({
+            url: houseListURL,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+            },
+        }) as any
+    ).json();
 
     const {
         data: { data: houseList },

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const cookieJar = new CookieJar();
@@ -69,6 +69,7 @@ async function handler(ctx) {
                 abstract,
                 issue,
                 img,
+                description: undefined as DataItem['description'],
             };
         });
 

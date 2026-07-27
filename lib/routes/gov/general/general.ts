@@ -106,7 +106,7 @@ const gdgov = async (info, ctx) => {
 
     let $ = '';
     let name: string;
-    let list: string;
+    let list: any;
     // 判断是否处于特殊目录
     if (pathname.startsWith('gkmlpt')) {
         title_element = undefined;

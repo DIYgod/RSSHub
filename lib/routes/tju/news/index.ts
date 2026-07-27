@@ -70,7 +70,7 @@ async function handler(ctx) {
             subtitle = '聚焦天大';
             path = 'jjtd.htm';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(news_base_url + path, {
             headers: {

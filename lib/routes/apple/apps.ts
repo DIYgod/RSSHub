@@ -1,4 +1,4 @@
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -113,7 +113,7 @@ async function handler(ctx) {
     const artistName = attributes.artistName;
     const platformAttributes = attributes.platformAttributes;
 
-    let items: DataItem[] = [];
+    let items: any[] = [];
     let title: string;
     let description = '';
     let image = '';

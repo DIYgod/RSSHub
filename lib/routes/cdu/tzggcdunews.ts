@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,6 +53,7 @@ async function handler() {
                 link: link.startsWith('http') ? link : new URL(link!, baseUrl).href,
                 pubDate,
                 author: '成都大学官网通知公告',
+                description: undefined as DataItem['description'],
             };
         });
 

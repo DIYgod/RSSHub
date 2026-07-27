@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -57,6 +57,9 @@ async function handler(ctx) {
                 ),
                 guid: link.startsWith(rootUrl) ? `${link}#${title}` : link,
                 pubDate: parseDate($item.find('p.medGrey').text(), 'DD/MM/YYYY'),
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                category: undefined as DataItem['category'],
             };
         });
 

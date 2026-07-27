@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,7 @@ async function handler() {
             title: titleElement.attr('title'),
             link: titleElement.attr('href'),
             pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'),
+            description: undefined as DataItem['description'],
         };
     });
 

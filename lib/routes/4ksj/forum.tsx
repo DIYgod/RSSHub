@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
@@ -103,6 +103,18 @@ async function handler(ctx) {
 
             return {
                 link: new URL($item.prop('href')!, rootUrl).href,
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_title: undefined as DataItem['enclosure_title'],
+                title: undefined as DataItem['title'] | undefined,
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
+                category: undefined as DataItem['category'],
+                author: undefined as DataItem['author'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
+                language: undefined as DataItem['language'],
             };
         });
 

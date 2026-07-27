@@ -1,7 +1,7 @@
 // 导入必要的模组
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,9 @@ const handler = async (ctx) => {
             return {
                 title: a.text(),
                 link: linkStr,
-                pubDate: timezone(parseDate($item.find('.news_meta').text()), 8), // 添加发布日期查询
+                pubDate: timezone(parseDate($item.find('.news_meta').text()), 8),
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'], // 添加发布日期查询
             };
         });
 

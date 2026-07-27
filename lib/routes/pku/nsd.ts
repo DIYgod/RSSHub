@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,6 +60,7 @@ async function handler() {
                 link: type === 'in-site' ? baseUrl + href : href,
                 pubDate: parseDate($(item).find('span').first().text(), 'YYYY-MM-DD'),
                 type,
+                description: undefined as DataItem['description'],
             };
         });
 

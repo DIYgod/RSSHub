@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -56,6 +56,7 @@ async function handler() {
                 pubDate: $el.find('time.datetime').attr('datetime') ? parseDate($el.find('time.datetime').attr('datetime')!) : undefined,
                 author: $el.find('.author__container--name').text().trim(),
                 image: $el.find('.field--name-field-teaser-image img').attr('src'),
+                description: undefined as DataItem['description'],
             };
         })
         .filter(Boolean);

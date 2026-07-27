@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -78,6 +78,14 @@ async function handler(ctx) {
                 link: `${baseUrl}/../${a.attr('href')}`,
                 pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), 8) : null,
                 author: '时间|' + timestr,
+                guid: undefined as DataItem['guid'],
+                updated: undefined as DataItem['updated'],
+                itunes_item_image: undefined as DataItem['itunes_item_image'],
+                itunes_duration: undefined as DataItem['itunes_duration'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_length: undefined as DataItem['enclosure_length'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                description: undefined as DataItem['description'],
             };
         });
 

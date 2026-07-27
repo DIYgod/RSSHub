@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,7 @@ async function handler() {
                 title: tds.eq(2).text(),
                 link: 'http://jwgl.ouc.edu.cn/public/viewSchoolNoticeDetail.action?schoolNoticeId=' + noticeId,
                 pubDate: parseDate(tds.eq(3).text(), 'YYYY-MM-DD HH:mm'),
+                description: undefined as DataItem['description'],
             };
         });
 

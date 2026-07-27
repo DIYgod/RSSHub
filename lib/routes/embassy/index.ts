@@ -34,7 +34,7 @@ async function handler(ctx) {
     const res = await got(link);
     const $ = load(res.data);
 
-    const list = [];
+    const list: any[] = [];
 
     $(config.list)
         .slice(0, 10)

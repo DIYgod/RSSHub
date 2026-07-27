@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
@@ -54,6 +54,9 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link.indexOf('http') === 0 ? link : `${currentUrl}/${$item.attr('href')}`,
+                pubDate: undefined as DataItem['pubDate'],
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

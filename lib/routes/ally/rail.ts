@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -104,7 +105,7 @@ async function handler(ctx) {
                         .each((_, child) => {
                             const $child = $(child);
                             let innerHtml;
-                            if (child.name === 'div') {
+                            if ((child as Element).name === 'div') {
                                 innerHtml = $child.html();
                                 innerHtml &&= innerHtml.trim();
                                 description += !innerHtml || innerHtml === '&nbsp;' ? (description ? '<br>' : '') : innerHtml;

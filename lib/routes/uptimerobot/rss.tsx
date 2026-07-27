@@ -28,6 +28,9 @@ const formatTime = (s) => {
 };
 
 class Monitor {
+    name: string;
+    uptime: number;
+    downtime: number;
     constructor(name, uptime = 0, downtime = 0) {
         this.name = name;
         this.uptime = uptime;

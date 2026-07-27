@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -59,7 +59,7 @@ async function handler(ctx) {
             subtitle = '学部新闻';
             path = 'xwzx/xyxw.htm';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(cic_base_url + path);
     } catch {
@@ -91,6 +91,8 @@ async function handler(ctx) {
                 title: $('a', item).text(),
                 link: type === 'in-site' ? cic_base_url + href : href,
                 type,
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
         });
 

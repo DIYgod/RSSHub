@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -51,6 +51,7 @@ async function handler(ctx) {
                     .map((tag) => $(tag).attr('title').replace(/^:/, '')),
                 description: needImages ? '' : `<img src="${$item.find('div.glthumb div img').attr('data-src') ?? $item.find('div.glthumb div img').attr('src')}">`,
                 enclosure_url: needTorrents && $item.find('div.gldown a img[title="Show torrents"]').length > 0 ? $item.find('.gldown a').attr('href') : undefined,
+                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 
@@ -85,7 +86,7 @@ async function handler(ctx) {
             }
 
             if (needImages) {
-                let images = await cache.get(item.link!);
+                let images: any = await cache.get(item.link!);
 
                 if (!images) {
                     const imageResponse = await got({

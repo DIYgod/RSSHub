@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,6 +40,12 @@ export const handler = async (ctx) => {
                     .toArray()
                     .map((c) => $(c).text()),
                 language,
+                pubDate: undefined as DataItem['pubDate'],
+                author: undefined as DataItem['author'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
+                updated: undefined as DataItem['updated'],
             };
         });
 

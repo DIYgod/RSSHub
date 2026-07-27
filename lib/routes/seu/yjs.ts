@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -40,6 +40,8 @@ async function handler() {
                 title: $(element).find('span.news_title > a').attr('title'),
                 link: `https://seugs.seu.edu.cn${$(element).find('span.news_title > a').attr('href')}`,
                 date: $(element).find('span.news_meta').text(),
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
             return info;
         });

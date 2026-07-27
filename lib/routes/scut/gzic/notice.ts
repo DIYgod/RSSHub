@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
@@ -59,6 +59,7 @@ async function handler(ctx) {
                 title: $item.find('.thr-box a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
+                description: undefined as DataItem['description'],
             };
         });
 

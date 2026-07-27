@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -31,6 +31,7 @@ const get_from_link = async (link) => {
                 title: a.text(),
                 link: articleLink,
                 pubDate: parseDate(date.text()),
+                description: undefined as DataItem['description'],
             };
         });
     return articleList;

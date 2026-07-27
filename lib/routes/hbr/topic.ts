@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -68,6 +68,8 @@ async function handler(ctx) {
                 author: $item.attr('data-authors'),
                 category: $item.attr('data-topic'),
                 link: `${rootUrl}${$item.attr('data-url')}`,
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

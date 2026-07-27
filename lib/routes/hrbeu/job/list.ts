@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -62,6 +62,7 @@ async function handler(ctx) {
                 title: $(item).find('a').attr('title'),
                 pubDate: parseDate($(item).find('.Article_PublishDate').text()),
                 link,
+                description: undefined as DataItem['description'],
             };
         });
 

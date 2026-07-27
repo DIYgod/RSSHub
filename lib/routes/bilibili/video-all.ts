@@ -60,7 +60,7 @@ async function handler(ctx) {
         });
     };
 
-    const promises = [];
+    const promises: Array<Promise<any>> = [];
 
     if (pageTotal > 1) {
         for (let i = 2; i <= pageTotal; i++) {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,6 +58,7 @@ async function handler(ctx) {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
                 pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), 8),
+                description: undefined as DataItem['description'],
             };
             return info;
         });

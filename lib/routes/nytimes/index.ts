@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -132,6 +132,7 @@ async function handler(ctx) {
                 pubDate: item.pubDate,
                 link,
                 author: item['dc:creator'],
+                description: undefined as DataItem['description'],
             };
 
             const result = utils.ProcessFeed(response, hasEnVersion);

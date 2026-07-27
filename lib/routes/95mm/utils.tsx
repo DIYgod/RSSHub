@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -28,6 +29,7 @@ const ProcessItems = async (ctx, title, currentUrl) => {
                 title: a.text(),
                 link: a.attr('href'),
                 guid: a.attr('href').replace('95mm.vip', '95mm.org'),
+                description: undefined as DataItem['description'],
             };
         });
 

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,14 +42,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item).next();
+            const $item = $(item).next();
 
-            const pubDateMatches = item.text().match(/(\d+年\d+月)/);
+            const pubDateMatches = $item.text().match(/(\d+年\d+月)/);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.text(),
+                link: new URL($item.prop('href'), rootUrl).href,
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1], ['YYYY年MM月', 'YYYY年M月']) : undefined,
+                description: undefined as DataItem['description'],
             };
         });
 

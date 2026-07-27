@@ -5,7 +5,7 @@ import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -132,6 +132,10 @@ async function handler(ctx) {
                 title: next.find('h3').text(),
                 link: `${rootUrl}${link[0]}`,
                 pubDate: parseDate(next.find('.text-muted').text()),
+                description: undefined as DataItem['description'],
+                guid: undefined as DataItem['guid'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

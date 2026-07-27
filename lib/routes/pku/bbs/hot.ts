@@ -36,7 +36,7 @@ export const route: Route = {
 
 async function handler() {
     const cookie = config.pkubbs.cookie;
-    const headers = {};
+    const headers = {} as Record<string, any>;
     if (cookie) {
         headers.cookie = cookie;
     }

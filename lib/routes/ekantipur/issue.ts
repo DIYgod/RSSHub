@@ -1,6 +1,6 @@
 import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // Require necessary modules
 import got from '@/utils/got'; // a customised got
@@ -60,6 +60,7 @@ async function handler(ctx) {
                 link: `${baseUrl}${a.attr('href')}`,
                 author: $item.find('div.author').text(),
                 category: channel,
+                description: undefined as DataItem['description'],
             };
         });
 

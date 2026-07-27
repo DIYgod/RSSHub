@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -92,6 +92,9 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href').replace(/;jsessionid=[\dA-Z]+/, '')}`,
                 pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
             };
         });
 

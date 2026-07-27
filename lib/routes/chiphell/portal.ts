@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -25,6 +25,7 @@ const handler = async (ctx: Context) => {
                 link: `https://www.chiphell.com/${a.attr('href')}`,
                 category: [$item.find('dd label').text()],
                 pubDate: timezone(parseDate($item.find('span.xg1').text()), 8),
+                description: undefined as DataItem['description'],
             };
         });
 

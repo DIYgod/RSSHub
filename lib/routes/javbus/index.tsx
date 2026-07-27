@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
@@ -110,6 +110,12 @@ async function handler(ctx) {
                 link: $item.attr('href'),
                 guid: $item.find('date').first().text(),
                 pubDate: parseDate($item.find('date').last().text()),
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                author: undefined as DataItem['author'],
+                title: undefined as DataItem['title'] | undefined,
+                category: undefined as DataItem['category'],
+                description: undefined as DataItem['description'],
             };
         });
 

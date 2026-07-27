@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -71,6 +71,8 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: `${rootUrl}${$item.find('a').attr('href')}`,
                 pubDate: parseDate($item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

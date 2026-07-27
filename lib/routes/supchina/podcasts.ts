@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,13 @@ async function handler(ctx) {
             return {
                 link: $item.find('guid').text(),
                 author: $item.find(String.raw`itunes\:author`).text(),
+                title: undefined as DataItem['title'] | undefined,
+                itunes_item_image: undefined as DataItem['itunes_item_image'],
+                itunes_duration: undefined as DataItem['itunes_duration'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

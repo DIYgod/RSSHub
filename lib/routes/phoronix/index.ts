@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -186,7 +187,7 @@ async function handler(ctx) {
                 let pubDate;
                 if (!item.pubDate) {
                     // the text next to the category is the date
-                    let pubDateReadable = categorySelector.length && categorySelector[0].nextSibling?.nodeValue;
+                    let pubDateReadable = categorySelector.length && (categorySelector[0].nextSibling as Text | null)?.nodeValue;
                     if (pubDateReadable) {
                         pubDateReadable = pubDateReadable.replaceAll(/on|at|\./g, '').trim();
                         pubDate = /\d{4}$/.test(pubDateReadable)

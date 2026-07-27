@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,6 +53,8 @@ async function handler(ctx) {
                 title: $item.find('h3 a').text(),
                 link: (cate === 'xsqy' ? rootUrl : '') + $item.find('h3 a').attr('href'),
                 pubDate: parseDate($item.find('div p').text()),
+                description: undefined as DataItem['description'],
+                status: undefined as any,
             };
         });
 

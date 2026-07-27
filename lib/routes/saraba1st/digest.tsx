@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,6 +52,7 @@ async function handler(ctx) {
                 link: new URL(floorUrl!, `${host}/2b/`).href,
                 author: $each.find('td.by cite').text(),
                 pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
+                description: undefined as DataItem['description'],
             };
         });
 

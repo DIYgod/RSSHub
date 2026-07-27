@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,7 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, 'https://bgm.tv').href,
                 pubDate: timezone(parseDate($item.parent().find('small.time').text()), 0),
+                description: undefined as DataItem['description'],
             };
         });
 

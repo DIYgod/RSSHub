@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -57,6 +57,7 @@ async function handler() {
                 title: $elem.find('a').text(),
                 link: $elem.find('a').attr('href'),
                 pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim(), 8)),
+                description: undefined as DataItem['description'],
             };
         });
 

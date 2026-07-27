@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,6 +50,7 @@ async function handler(ctx) {
                 link: `${host}/${language}/${$item.find('.media-body a').attr('href')}`,
                 author: $item.find('.col-sm-3').text(),
                 pubDate: parseDate($item.find('.news_date').text(), 'YYYY.M.D.'),
+                description: undefined as DataItem['description'],
             };
         });
 

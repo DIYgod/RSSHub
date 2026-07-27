@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -37,6 +37,9 @@ async function handler() {
         .map((item) => ({
             title: $(item).find('h2.subtitle').text(),
             link: $(item).find('a.row.d-flex').prop('href'),
+            description: undefined as DataItem['description'],
+            pubDate: undefined as DataItem['pubDate'],
+            author: undefined as DataItem['author'],
         }));
     const items = await Promise.all(
         list.map((item) =>

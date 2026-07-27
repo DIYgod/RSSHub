@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -50,7 +50,9 @@ async function handler(ctx) {
             return {
                 title: $item.find('p').text(),
                 link: `${baseUrl}${$item.attr('href')}`,
-                pubDate: parseDate($item.find('.date').text()), // 2023-03-22
+                pubDate: parseDate($item.find('.date').text()),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'], // 2023-03-22
             };
         });
 

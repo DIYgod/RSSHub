@@ -3,7 +3,7 @@ import iconv from 'iconv-lite';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -75,6 +75,7 @@ async function handler(ctx) {
                 link,
                 author,
                 pubDate,
+                description: undefined as DataItem['description'],
             };
         });
 

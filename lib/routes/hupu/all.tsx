@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -57,6 +57,8 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: `https://m.hupu.com/bbs${$item.attr('href')}`,
                 pubDate: timezone(parseDate($item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 
@@ -71,7 +73,7 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    const videos = [];
+                    const videos: any[] = [];
 
                     content('.hupu-post-video').each((_, el) => {
                         videos.push({

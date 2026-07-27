@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -48,6 +48,7 @@ async function handler(ctx) {
                 title: $e.find('a').attr('title'),
                 link: `${baseUrl}${$e.find('a').attr('href')}`,
                 pubDate: timezone(parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
+                description: undefined as DataItem['description'],
             };
         })
         .toSorted((a, b) => b.pubDate - a.pubDate)

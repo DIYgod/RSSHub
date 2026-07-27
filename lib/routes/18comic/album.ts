@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 
 import { renderDescription } from './templates/description';
@@ -70,7 +70,16 @@ async function handler(ctx) {
                 cache.tryGet(`18comic:album:${item.id}`, async () => {
                     const chapterApiUrl = `${getApiUrl()}/chapter?id=${item.id}`;
                     const chapterResult = await processApiItems(chapterApiUrl);
-                    const result = {};
+                    const result = {
+                        title: undefined as DataItem['title'] | undefined,
+                        link: undefined as DataItem['link'],
+                        guid: undefined as DataItem['guid'],
+                        updated: undefined as DataItem['updated'],
+                        pubDate: undefined as DataItem['pubDate'],
+                        category: undefined as DataItem['category'],
+                        author: undefined as DataItem['author'],
+                        description: undefined as DataItem['description'],
+                    };
                     const chapterNum = index + 1;
                     result.title = `第${chapterNum}話 ${item.name === '' ? chapterNum : item.name}`;
                     result.link = `${rootUrl}/photo/${item.id}`;

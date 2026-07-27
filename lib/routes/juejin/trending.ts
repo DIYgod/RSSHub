@@ -137,6 +137,7 @@ async function handler(ctx) {
         id_type: 2,
         limit: 20,
         sort_type: p.sort_type,
+        cate_id: undefined as any,
     };
 
     if (url !== 'recommended') {

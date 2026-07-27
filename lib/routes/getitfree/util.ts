@@ -247,7 +247,7 @@ const getFilterKeyForSearchParams = (key, isApi = false) => {
  *                   e.g. `name1,name2`.
  */
 const getFilterNameForTitle = (filterPairs) =>
-    Object.values(filterPairs)
+    Object.values<any>(filterPairs)
         .flat()
         .map((pair) => pair?.name ?? pair?.slug ?? pair)
         .filter(Boolean)

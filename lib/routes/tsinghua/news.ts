@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,7 @@ async function handler(ctx) {
                     title: $item.find('.bt').text().trim(),
                     link: new URL($item.attr('href')!, baseUrl).href?.replace('http://', 'https://'),
                     pubDate: parseDate(`${sj.find('span').text().trim()}.${sj.find('p').text().trim()}`, 'YYYY.MM.DD'),
+                    description: undefined as any,
                 };
             }),
         ...($('.qhrw2_first').length
@@ -57,6 +58,7 @@ async function handler(ctx) {
                       title: $('.qhrw2_first .bt').text().trim(),
                       link: $('.qhrw2_first a').attr('href')?.replace('http://', 'https://'),
                       pubDate: parseDate(`${$('.qhrw2_first .sj span').text().trim()}.${$('.qhrw2_first .sj p').text().trim()}`, 'YYYY.MM.DD'),
+                      description: undefined as DataItem['description'],
                   },
               ]
             : []),

@@ -1,4 +1,6 @@
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -33,7 +35,7 @@ async function handler(ctx) {
     const originDomain = 'https://www.gov.cn';
     let url = '';
     let title = '';
-    let list: string;
+    let list: Cheerio<Element>;
     switch (uid) {
         case 'bm':
             url = `${originDomain}/lianbo/bumen/index.htm`;

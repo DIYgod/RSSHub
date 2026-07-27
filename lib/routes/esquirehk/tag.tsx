@@ -4,7 +4,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +49,11 @@ const handler = async (ctx) => {
         .map((item) => ({
             ...item,
             slug: item.link.replace(rootUrl, ''),
+            description: undefined as DataItem['description'],
+            pubDate: undefined as DataItem['pubDate'],
+            updated: undefined as DataItem['updated'],
+            author: undefined as DataItem['author'],
+            category: undefined as DataItem['category'],
         }))
         .filter((item) => !item.slug.startsWith('/campaign'));
 

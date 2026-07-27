@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,6 +64,7 @@ async function handler(ctx) {
             title: $(item).find('h5.issue-item__title').text(),
             link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
             pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
+            description: undefined as DataItem['description'],
         }));
     const items = await Promise.all(
         list.map((item) =>

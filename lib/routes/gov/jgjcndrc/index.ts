@@ -114,9 +114,9 @@ export const route: Route = {
         {
             source: ['www.jgjcndrc.org.cn/list'],
             target: (_, url) => {
-                url = new URL(url);
-                const columnId = url.searchParams.get('clmId');
-                const subColumnId = url.searchParams.get('sclmId');
+                const { searchParams } = new URL(url);
+                const columnId = searchParams.get('clmId');
+                const subColumnId = searchParams.get('sclmId');
 
                 return `/jgjcndrc${columnId ? `/${columnId}${subColumnId ? `/${subColumnId}` : ''}` : ''}`;
             },

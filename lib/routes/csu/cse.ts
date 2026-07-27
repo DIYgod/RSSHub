@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -12,6 +12,8 @@ async function fetch(address) {
         description: $('[name="_newscontent_fromname"]').html(),
         link: address,
         guid: address,
+        title: undefined as DataItem['title'] | undefined,
+        pubDate: undefined as DataItem['pubDate'],
     };
 }
 

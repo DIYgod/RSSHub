@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,6 +44,9 @@ async function handler() {
                 title: title.attr('title'),
                 link: `https://www.suzhou.gov.cn${title.attr('href')}`,
                 pubDate: timezone(parseDate($item.find('td:nth-child(3)').text().trim()), 8),
+                description: undefined as DataItem['description'],
+                author: undefined as DataItem['author'],
+                category: undefined as DataItem['category'],
             };
         });
 

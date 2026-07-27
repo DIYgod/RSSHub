@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -70,6 +70,8 @@ async function handler(ctx) {
                 title: $1.find('.title a').attr('title'),
                 author: $1.find('a').eq(1).text(),
                 link: $1.find('.title a').attr('href'),
+                pubDate: undefined as DataItem['pubDate'],
+                description: undefined as DataItem['description'],
             };
             return cache.tryGet(result.link!, async () => {
                 try {

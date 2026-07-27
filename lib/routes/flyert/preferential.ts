@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,6 +47,7 @@ async function handler() {
             title: $(item).find('.wzbt').text(),
             link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
             description: $(item).find('.wznr > div:first-child').text(),
+            pubDate: undefined as DataItem['pubDate'],
         }));
 
     const items = await Promise.all(

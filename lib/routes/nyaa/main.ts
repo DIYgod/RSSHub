@@ -33,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const parser = new Parser({
+    const parser = new Parser<Record<string, any>, Record<string, any>>({
         customFields: {
             item: ['magnet', ['nyaa:infoHash', 'infoHash']],
         },

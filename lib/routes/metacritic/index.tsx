@@ -53,6 +53,12 @@ async function handler(ctx) {
         productType: types[type].id,
         limit,
         apiKey,
+        genres: undefined as any,
+        releaseType: undefined as any,
+        releaseYearMin: undefined as any,
+        releaseYearMax: undefined as any,
+        gamePlatformIds: undefined as any,
+        streamingNetworkIds: undefined as any,
     };
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();

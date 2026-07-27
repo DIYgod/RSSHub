@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -51,7 +51,7 @@ async function handler() {
             const lastTouched = $item.find('span.last-touched').text();
             const pubDate = parseRelativeDate(lastTouched);
             const link = url ? url.split('#', 1)[0] : undefined;
-            return link ? { title, link, author, pubDate } : undefined;
+            return link ? { title, link, author, pubDate, description: undefined as DataItem['description'] } : undefined;
         })
         .filter((item) => item !== undefined);
 

@@ -7,7 +7,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 import { FetchError } from 'ofetch';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -74,6 +74,7 @@ async function handler(ctx) {
                     link: item.link.url,
                     pubDate: item.link.display_date,
                     updated: item.link.last_modified,
+                    description: undefined as DataItem['description'],
                 };
                 if (item.blurbs?.items[0]?.text) {
                     object.description = item.blurbs?.items[0]?.text;

@@ -55,9 +55,10 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let list = $('.list-view--item a');
+    const $list = $('.list-view--item a');
+    let list: any[];
 
-    if (list.length === 0) {
+    if ($list.length === 0) {
         const response = await got({
             method: 'get',
             url: `${rootUrl}/api/hubs/${category.replaceAll('-', '')}?sf_culture=zh&$orderby=PublicationDateAndTime%20desc&$select=Title,PublicationDateAndTime,ItemDefaultUrl&$top=30`,
@@ -69,7 +70,7 @@ async function handler(ctx) {
             pubDate: parseDate(item.PublicationDateAndTime),
         }));
     } else {
-        list = list.toArray().map((item) => {
+        list = $list.toArray().map((item) => {
             const $item = $(item);
             const link = $item.attr('href');
 

@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -69,6 +70,9 @@ export default {
                         url: item.sharePic || contentDetail.sharePic,
                     },
                 },
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                itunes_item_image: undefined as DataItem['itunes_item_image'],
             };
             if (contentDetail.voiceInfo?.isHaveVoice) {
                 rss_item.enclosure_type = 'audio/mpeg';

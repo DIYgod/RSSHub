@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 /*
  * @Author: nightmare-mio wanglongwei2009@qq.com
@@ -51,6 +51,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: parseDate($item.find('.time').text()),
                 author: $item.find('a').eq(1).text(),
+                description: undefined as DataItem['description'],
             };
         });
     const title = $('#content>h1').text();

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +42,7 @@ export const route: Route = {
                     title: a.attr('title') || a.text(),
                     link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn/zx/xingnew/').href,
                     pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
+                    description: undefined as DataItem['description'],
                     // description: a.attr('title') || a.text(),
                 };
             });

@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -79,6 +79,7 @@ async function handler(ctx) {
                     author: item.publisher,
                     pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), 8),
                     link: item.url,
+                    category: undefined as DataItem['category'],
                 };
                 if (type === 'ggtz') {
                     ret.category = item.f1;

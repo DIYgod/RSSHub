@@ -3,6 +3,7 @@ import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
@@ -106,6 +107,11 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                 title: $item.text().trim(),
                 link: `${rootUrl}${$item.prev().find('a').attr('href')}`,
                 guid: `18comic:${$item.prev().find('a').attr('href')}`,
+                pubDate: undefined as DataItem['pubDate'],
+                updated: undefined as DataItem['updated'],
+                category: undefined as DataItem['category'],
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

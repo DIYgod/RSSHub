@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,9 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language,
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
+                content: undefined as DataItem['content'],
             };
         });
 

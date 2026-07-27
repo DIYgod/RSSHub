@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,6 +54,7 @@ async function handler(ctx) {
                                 .match(/CDATA\[(.*?)\]/)[1]
                     ),
                 pubDate: parseDate($item.find('pubDate').text()),
+                description: undefined as DataItem['description'],
             };
         });
 

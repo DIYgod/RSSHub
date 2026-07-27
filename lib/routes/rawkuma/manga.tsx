@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,6 +60,7 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('span.chapterdate').text(), 'MMMM DD'),
                 enclosure_url: $item.next().find('a.dload').prop('href'),
                 enclosure_type: 'application/zip',
+                description: undefined as DataItem['description'],
             };
         });
 

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
@@ -214,9 +215,11 @@ async function handler(ctx) {
                 });
 
                 const ldJson = JSON.parse(
-                    $('script[type="application/ld+json"]')
-                        .toArray()
-                        .find((e) => $(e).text().includes('NewsArticle'))?.children[0].data
+                    (
+                        $('script[type="application/ld+json"]')
+                            .toArray()
+                            .find((e) => $(e).text().includes('NewsArticle'))?.children as Text[] | undefined
+                    )?.[0].data as string
                 );
 
                 item.description = $('div.article-detail-body-container').html()!;

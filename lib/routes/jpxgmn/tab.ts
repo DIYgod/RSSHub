@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -46,6 +46,7 @@ async function handler(ctx) {
             title: $(item).find('a span').text(),
             link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             pubDate: parseDate($(item).find('footer span').first().text()),
+            description: undefined as DataItem['description'],
         }));
     return {
         title: `极品性感美女 - ${feedTitle}`,

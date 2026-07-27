@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -50,6 +50,10 @@ async function handler(ctx) {
             return {
                 title: $item.text().trim(),
                 link: $item.attr('href'),
+                author: undefined as DataItem['author'],
+                pubDate: undefined as DataItem['pubDate'],
+                category: undefined as DataItem['category'],
+                description: undefined as DataItem['description'],
             };
         });
 

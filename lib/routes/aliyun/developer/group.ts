@@ -43,7 +43,7 @@ async function handler(ctx) {
     const $ = load(data);
     const title = $('div[class="header-information-title"]')
         .contents()
-        .filter((element) => element.nodeType === 3)
+        .filter((element: any) => element.nodeType === 3)
         .text()
         .trim();
     const desc = $('div[class="header-information"]').find('span').last().text().trim();

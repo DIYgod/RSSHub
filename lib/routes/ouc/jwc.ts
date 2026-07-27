@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +42,8 @@ async function handler() {
                 title: a.attr('title'),
                 link: a.attr('href').startsWith('http') ? a.attr('href') : 'https://jwc.ouc.edu.cn' + a.attr('href'),
                 pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
+                author: undefined as DataItem['author'],
+                description: undefined as DataItem['description'],
             };
         });
 

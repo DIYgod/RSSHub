@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,6 +25,7 @@ async function handler(ctx) {
                 title: $elem.find('b').text(),
                 link: new URL($elem.attr('href')!, baseUrl).href,
                 pubDate: parseDate($elem.next().next('small').text().split('.', 1)[0]),
+                description: undefined as DataItem['description'],
             };
         })
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);

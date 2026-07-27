@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -161,6 +161,7 @@ async function handler(ctx) {
                 title,
                 pubDate,
                 link,
+                description: undefined as DataItem['description'],
                 // guid: link,
             };
 

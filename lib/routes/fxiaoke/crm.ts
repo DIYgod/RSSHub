@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,6 +54,8 @@ async function handler(ctx) {
                 // pubDate: parseDate(c3.first().text().trim()),
                 link: $item.find('a').attr('href'),
                 author: c3.last().text().trim(),
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
     items = await Promise.all(

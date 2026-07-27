@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://magazinelib.com';
@@ -56,6 +56,9 @@ async function handler(ctx) {
             link: obj.link,
             featuredMediaLink: obj._links['wp:featuredmedia'][0].href,
             title: obj.title.rendered,
+            content: undefined as DataItem['content'],
+            description: undefined as DataItem['description'],
+            categories: undefined as any,
         };
         const $ = load(obj.content.rendered);
         const content = $('.vk-att');

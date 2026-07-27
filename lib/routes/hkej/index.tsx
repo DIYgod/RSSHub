@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -106,6 +106,9 @@ async function handler(ctx) {
             return {
                 title: $item.text().trim(),
                 link: baseUrl + $item.attr('href').slice(0, $item.attr('href').lastIndexOf('/')),
+                category: undefined as DataItem['category'],
+                description: undefined as DataItem['description'],
+                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

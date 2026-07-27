@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,6 +47,15 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('span.time').text()),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
+                enclosure_url: undefined as DataItem['enclosure_url'],
+                enclosure_type: undefined as DataItem['enclosure_type'],
+                enclosure_title: undefined as DataItem['enclosure_title'],
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
+                author: undefined as DataItem['author'],
+                content: undefined as DataItem['content'],
+                image: undefined as DataItem['image'],
+                banner: undefined as DataItem['banner'],
             };
         });
 

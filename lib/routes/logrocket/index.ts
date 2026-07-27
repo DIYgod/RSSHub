@@ -1,6 +1,6 @@
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +42,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: parseDate($item.find('.post-card-author-name').next().text().split(' ⋅ ', 1)[0], 'MMM D, YYYY'),
                 author: $item.find('.post-card-author-name').text(),
+                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(

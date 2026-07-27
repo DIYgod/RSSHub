@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -34,6 +35,7 @@ export async function handler(ctx) {
                 title: $item.text(),
                 pubDate: parseDate(pubDate),
                 link: link.endsWith('.html') ? link : `${link}#${pubDate}`,
+                description: undefined as DataItem['description'],
             };
         });
 

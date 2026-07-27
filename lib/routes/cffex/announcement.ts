@@ -50,6 +50,7 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
                 title: titleEle.text().trim(),
                 link: `${baseUrl}${titleEle.attr('href')}`,
                 pubDate: timezone(parseDate(dateEle.text(), 'YYYY-MM-DD'), 8),
+                description: undefined as DataItem['description'],
             };
         });
 

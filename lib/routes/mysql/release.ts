@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -50,6 +50,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${currentUrl}${$item.attr('href')}`,
+                description: undefined as DataItem['description'],
             };
         });
 

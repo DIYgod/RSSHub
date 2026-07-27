@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -36,6 +36,12 @@ async function handler(ctx) {
                   return {
                       title: $item.find('div.hot-item p').text(),
                       link: new URL($item.prop('href')!, rootUrl).href,
+                      description: undefined as DataItem['description'],
+                      author: undefined as DataItem['author'],
+                      category: undefined as DataItem['category'],
+                      pubDate: undefined as DataItem['pubDate'],
+                      upvotes: undefined as DataItem['upvotes'],
+                      comments: undefined as DataItem['comments'],
                   };
               })
         : $('div.single-post')

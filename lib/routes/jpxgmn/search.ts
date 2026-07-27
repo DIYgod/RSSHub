@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -32,6 +32,7 @@ async function handler(ctx) {
             title: $(item).find('b').text(),
             link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             pubDate: parseDate($(item).next().next().next().find('span').first().text()),
+            description: undefined as DataItem['description'],
         }))
         .filter((item) => item.title.length !== 0);
 

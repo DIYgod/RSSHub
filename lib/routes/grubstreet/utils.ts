@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -50,6 +51,7 @@ function ProcessFeed(list, caches) {
                     guid: itemUrl,
                     pubDate: item.date,
                     author: bylineString,
+                    description: undefined as DataItem['description'],
                 };
 
                 const { description } = await loadContent(itemUrl);

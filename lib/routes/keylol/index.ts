@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import queryString from 'query-string';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -49,7 +49,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let queryParams = {};
+    let queryParams = {} as Record<string, any>;
     const path = ctx.req.param('path');
     if (/^f\d+-\d+/.test(path)) {
         queryParams.fid = path.match(/^f(\d+)-\d+/)[1];
@@ -96,6 +96,10 @@ async function handler(ctx) {
                 link: new URL($item.find(' a.xst').prop('href').split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
                 pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
+                description: undefined as DataItem['description'],
+                category: undefined as DataItem['category'],
+                updated: undefined as DataItem['updated'],
+                comments: undefined as DataItem['comments'],
             };
         });
 

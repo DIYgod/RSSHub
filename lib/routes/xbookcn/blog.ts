@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -33,7 +33,8 @@ export const route: Route = {
             return {
                 title: a.text(), // 标题
                 link: a.attr('href'), // 链接
-                category: [] as string[], // 分类
+                category: [] as string[],
+                description: undefined as DataItem['description'], // 分类
             };
         });
 

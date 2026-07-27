@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
@@ -147,9 +148,11 @@ const parseItem = (item) =>
         const $ = load(response);
 
         const ldJson = JSON.parse(
-            $('script[type="application/ld+json"]')
-                .toArray()
-                .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data || '{}'
+            (
+                $('script[type="application/ld+json"]')
+                    .toArray()
+                    .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children as Text[] | undefined
+            )?.[0].data || '{}'
         );
         const author = ldJson.author?.name;
         const body = $('.atoms').length ? $('.atoms') : $('.article-detail').length ? $('.article-detail') : $('.bodyItems-wrapper');

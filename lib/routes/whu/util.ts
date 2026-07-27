@@ -89,11 +89,11 @@ const getItemDetail = async (item, rootUrl) => {
         const attachments = content('form[name="_newscontent_fromname"] ul li')
             .toArray()
             .map((attachment) => {
-                attachment = content(attachment).find('a');
+                const $attachment = content(attachment).find('a');
 
                 return {
-                    title: attachment.text(),
-                    link: new URL(attachment.prop('href'), rootUrl).href,
+                    title: $attachment.text(),
+                    link: new URL($attachment.prop('href'), rootUrl).href,
                 };
             });
 

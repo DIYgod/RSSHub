@@ -43,6 +43,11 @@ const getArticleDetail = async (link) => {
     return new ArticleDetail(title, author, pubDate, description, category);
 };
 class ArticleDetail {
+    title: any;
+    author: any;
+    pubDate: any;
+    description: any;
+    category: any;
     constructor(title, author, pubDate, description, category) {
         this.title = title;
         this.author = author;

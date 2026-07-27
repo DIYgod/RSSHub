@@ -218,7 +218,7 @@ export default {
 
     getQuery: async (number, id, phone) => {
         const query_key = `kuaidi100-query-${number}-${id}`;
-        let query = await cache.get(query_key);
+        let query: any = await cache.get(query_key);
         // 组装日期与单号 日期为提前两个月
         const timestamp = Number.parseInt(Date.now() / 1000);
         const lastTowMonth = Date.now() - 60 * 60 * 24 * 60 * 1000;

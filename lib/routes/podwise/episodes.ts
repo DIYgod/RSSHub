@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date';
@@ -45,6 +45,12 @@ export const route: Route = {
                     link: `https://podwise.ai${link}`,
                     description,
                     pubDate: timezone(parseDate(pubDate, 'DD MMM YYYY', 'en'), 8),
+                    title: undefined as DataItem['title'] | undefined,
+                    author: undefined as DataItem['author'],
+                    itunes_item_image: undefined as DataItem['itunes_item_image'],
+                    itunes_duration: undefined as DataItem['itunes_duration'],
+                    enclosure_url: undefined as DataItem['enclosure_url'],
+                    enclosure_type: undefined as DataItem['enclosure_type'],
                 };
             });
 
