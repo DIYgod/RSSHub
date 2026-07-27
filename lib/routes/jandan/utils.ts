@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -52,7 +53,7 @@ export const handleTopSection = async (rootUrl: string, type: string): Promise<{
 
         return {
             author: item.author,
-            title: `${item.author}: ${content.replaceAll(/<[^>]+>/g, '')}`,
+            title: `${item.author}: ${sanitizeHtml(content, { allowedTags: [], allowedAttributes: {} })}`,
             description: content,
             pubDate: parseDate(item.date_gmt),
             link: `${rootUrl}/t/${item.id}`,
@@ -117,7 +118,7 @@ export const handleCommentSection = async (rootUrl: string, category: string): P
 
         return {
             author: comment.author,
-            title: `${comment.author}: ${content.replaceAll(/<[^>]+>/g, '')}`,
+            title: `${comment.author}: ${sanitizeHtml(content, { allowedTags: [], allowedAttributes: {} })}`,
             description: content,
             pubDate: parseDate(comment.date_gmt),
             link: `${rootUrl}/t/${comment.id}`,
