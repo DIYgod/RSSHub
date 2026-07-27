@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 import { baseUrl } from './utils';
 
@@ -33,9 +33,9 @@ async function handler() {
     const category = 'topic';
     const link = `${baseUrl}/${category}`;
 
-    const response = await got(`${baseUrl}/${category}`);
+    const response = await ofetch(`${baseUrl}/${category}`);
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     const items = $('.ag-topic')
         .toArray()

@@ -22,6 +22,15 @@ export const route: Route = {
     url: 'www.mhlw.go.jp/toukei/list/30-1a.html',
 };
 
+const parseJapaneseDate = (text: string) => {
+    const normalized = text
+        .replaceAll(/（[^）]+）/g, '')
+        // oxlint-disable-next-line regexp/no-obscure-range
+        .replaceAll(/[０-９]/g, (c) => String.fromCodePoint(c.codePointAt(0)! - 0xfee0))
+        .replace(/^令和(\d+)年/, (_, year) => `${Number(year) + 2018}年`);
+    return parseDate(normalized, 'YYYY年M月D日');
+};
+
 async function fetchPage(url: string) {
     const raw = await ofetch(url, { responseType: 'arrayBuffer' });
     const decoder = new TextDecoder('shift-jis');
@@ -62,12 +71,11 @@ async function handler(ctx: Context) {
                 const $ = load(response);
 
                 const dateText = $('.prt-topContents .al-right').text();
-                const cleanedDate = dateText.replaceAll(/（[^）]+）/g, '');
                 const content = $('#contentsInner');
                 content.find('.prt-topContents, .prt-linkNavi, .prt-plugin').remove();
 
-                item.title = $('h1#pageTitle').text() || item.title;
-                item.pubDate = timezone(parseDate(cleanedDate, 'YYYY年M月D日'), 9);
+                item.title = $('h1#pageTitle').text().trim() || item.title;
+                item.pubDate = timezone(parseJapaneseDate(dateText), 9);
                 item.description = content.html()?.trim();
 
                 return item;

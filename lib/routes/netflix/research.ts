@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import { collapseWhitespace } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -72,6 +73,7 @@ async function handler() {
             title: item.title,
             description: item.description,
             link: item.link,
+            guid: collapseWhitespace(item.title) ?? undefined,
             pubDate: (item.date ?? item.startDate) ? parseDate(item.date ?? item.startDate) : undefined,
             category: item.tags?.json,
             image: item.image?.url,

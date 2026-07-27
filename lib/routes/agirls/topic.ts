@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 import { baseUrl, parseArticle } from './utils';
 
@@ -32,9 +32,9 @@ export const route: Route = {
 async function handler(ctx) {
     const topic = ctx.req.param('topic');
     const link = `${baseUrl}/topic/${topic}`;
-    const response = await got(link);
+    const response = await ofetch(link);
 
-    const $ = load(response.data);
+    const $ = load(response);
     const ldJson = JSON.parse($('script[type="application/ld+json"]').text());
     const list = $('.ag-post-item__link')
         .toArray()

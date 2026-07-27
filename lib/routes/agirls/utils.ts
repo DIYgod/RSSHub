@@ -1,13 +1,13 @@
 import { load } from 'cheerio';
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://agirls.aotter.net';
 
 const parseArticle = async (item) => {
-    const detailResponse = await got(item.link);
-    const content = load(detailResponse.data);
+    const detailResponse = await ofetch(item.link);
+    const content = load(detailResponse);
 
     item.category = [
         ...new Set(
@@ -17,11 +17,12 @@ const parseArticle = async (item) => {
         ),
     ];
     const ldJson = JSON.parse(content('script[type="application/ld+json"]').text());
+    const newsArticle = ldJson['@graph'].find((g) => g['@type'] === 'NewsArticle');
 
     item.description = content('.ag-article__content').html();
-    item.pubDate = parseDate(ldJson['@graph'][0].datePublished); // 2023-07-05T12:11:36+08:00
-    item.updated = parseDate(ldJson['@graph'][0].dateModified); // 2023-07-05T12:11:36+08:00
-    item.author = ldJson['@graph'][0].author.map((a) => a.name).join(', ');
+    item.pubDate = parseDate(newsArticle.datePublished); // 2023-07-05T12:11:36+08:00
+    item.updated = parseDate(newsArticle.dateModified); // 2023-07-05T12:11:36+08:00
+    item.author = newsArticle.author.map((a) => a.name).join(', ');
 
     return item;
 };
