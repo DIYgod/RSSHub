@@ -61,11 +61,7 @@ async function handler(ctx) {
     }
     let response = null;
     try {
-        response = await got(cic_base_url + path, {
-            headers: {
-                Referer: cic_base_url,
-            },
-        });
+        response = await got(cic_base_url + path);
     } catch {
         // ignore error handler
         // console.log(e);

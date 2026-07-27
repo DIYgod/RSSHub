@@ -43,9 +43,9 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             return {
-                title: item.find('.articleTitle').text().trim(),
-                description: item.find('.articleContentInner').text().trim(),
-                author: item.find('.author').text().trim(),
+                title: item.find('.articleTitle').text(),
+                description: item.find('.articleContentInner').text(),
+                author: item.find('.author').text(),
                 link: new URL(item.find('a').first().attr('href'), link).href,
                 category: [
                     ...item
@@ -63,7 +63,7 @@ async function handler(ctx) {
                 const response = await got(element.link);
                 const $ = load(response.data);
 
-                element.pubDate = timezone(parseDate($('.writeTime3').text().trim()), 8);
+                element.pubDate = timezone(parseDate($('.writeTime3').text()), 8);
                 element.description = $('.pc_content').html();
 
                 return element;

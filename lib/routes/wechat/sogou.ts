@@ -30,7 +30,6 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
                 page: '1',
             },
             headers: {
-                Referer: host,
                 Cookie: hardcodedCookie,
             },
         });

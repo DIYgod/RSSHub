@@ -57,7 +57,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.description = $('.wp_articlecontent').first().html();
+                item.description = $('.wp_articlecontent').html();
                 return item;
             })
         )

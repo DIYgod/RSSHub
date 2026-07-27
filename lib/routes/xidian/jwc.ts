@@ -32,11 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'tzgg' } = ctx.req.param();
     const url = `${baseUrl}/${category}.htm`;
-    const response = await got(url, {
-        headers: {
-            referer: baseUrl,
-        },
-    });
+    const response = await got(url);
     const $ = load(response.data);
 
     let items = $('.list ul li')

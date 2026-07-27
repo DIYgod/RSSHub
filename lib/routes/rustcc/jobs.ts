@@ -36,9 +36,6 @@ async function handler() {
 
     const response = await got({
         url: jobs_url,
-        headers: {
-            Referer: base_url,
-        },
     });
 
     const $ = load(response.data);

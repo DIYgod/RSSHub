@@ -35,9 +35,6 @@ async function handler() {
         searchParams: {
             page: 1,
         },
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(response.data.data.list);
     const items = $('section.item')

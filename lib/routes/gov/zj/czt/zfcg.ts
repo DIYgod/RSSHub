@@ -66,7 +66,7 @@ async function handler(ctx: Context) {
                 $('.ann-block [class], .ann-block [style]').removeAttr('class').removeAttr('style');
                 return {
                     ...item,
-                    description: $('.ann-block').html() ?? '',
+                    description: $('.ann-block').html(),
                     category: [...new Set([item.category, data.projectName, ...data.categoryNames])],
                 };
             })

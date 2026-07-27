@@ -11,12 +11,7 @@ export async function getNoticeContent(item: NoticeItem): Promise<NoticeItem> {
     const pageTitle = $('title').text();
 
     const $content = $('.v_news_content');
-    $content.find('script, style, .vsbcontent_end').remove();
-    $content.find('img[src], a[href]').each((_, element) => {
-        const $element = $(element);
-        const attribute = element.tagName === 'img' ? 'src' : 'href';
-        $element.attr(attribute, new URL($element.attr(attribute)!, item.link).href);
-    });
+    $content.find('style, .vsbcontent_end').remove();
 
     return {
         ...item,

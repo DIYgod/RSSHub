@@ -40,16 +40,12 @@ async function handler(ctx) {
 
     const response = await got.get(`https://music.163.com/api/v3/playlist/detail?id=${id}`, {
         headers: {
-            Referer: 'https://music.163.com/',
             Cookie: config.ncm.cookies,
         },
     });
 
     const data = response.data.playlist;
     const songinfo = await got('https://music.163.com/api/song/detail', {
-        headers: {
-            Referer: 'https://music.163.com',
-        },
         searchParams: {
             ids: `[${data.trackIds.slice(0, 201).map((item) => item.id)}]`,
         },

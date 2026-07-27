@@ -43,16 +43,16 @@ async function handler() {
                 .toArray()
                 .map((postItem) => {
                     const $post = $(postItem);
-                    const $link = $post.find('a').first();
-                    const $title = $post.find('h3').first();
+                    const $link = $post.find('a');
+                    const $title = $post.find('h3');
                     const $dateMeta = $post.find('.archive-meta span');
 
                     return {
-                        title: $title.text().trim(), // 去除首尾空格
+                        title: $title.text(),
                         link: $link.attr('href') || '',
                         // 解析发布时间和更新时间（根据页面结构调整选择器，若存在则启用）
                         pubDate: parseDate($dateMeta.eq(0).attr('title') || ''),
-                        author: $post.find('.archive-meta span').last().text().trim() || '',
+                        author: $post.find('.archive-meta span').last().text(),
                         description: '',
                     };
                 })
@@ -64,11 +64,11 @@ async function handler() {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                const $main = $('main').first();
+                const $main = $('main');
                 item.description = `<article>
                     <header>
                         <div class="post-description">
-                        ${$main.find('header .post-description').first().html()}
+                        ${$main.find('header .post-description').html()}
                         </div>
                     </header>
 
@@ -77,7 +77,7 @@ async function handler() {
                     </figure>
                     
                     <div class="post-content">
-                        ${$main.find('.post-content').first().html()}
+                        ${$main.find('.post-content').html()}
                     </div>
                     </article>`;
                 return item;

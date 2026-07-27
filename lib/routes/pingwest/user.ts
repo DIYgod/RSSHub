@@ -44,11 +44,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.pingwest.com';
     const aimUrl = `${baseUrl}/user/${uid}/${type}`;
     const { userName, realUid, userSign, userAvatar } = await cache.tryGet(`pingwest:user:info:${uid}`, async () => {
-        const res = await got(aimUrl, {
-            headers: {
-                Referer: baseUrl,
-            },
-        });
+        const res = await got(aimUrl);
         const $ = load(res.data);
         const userInfoNode = $('#J_userId');
         return {
@@ -64,9 +60,6 @@ async function handler(ctx) {
             page: 1,
             user_id: realUid,
             tab: type,
-        },
-        headers: {
-            Referer: baseUrl,
         },
     });
     const $ = load(response.data.data.list);

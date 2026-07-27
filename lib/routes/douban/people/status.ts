@@ -51,8 +51,6 @@ export const route: Route = {
   <img loading="lazy" src="/img/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS" />`,
 };
 
-const headers = { Referer: 'https://m.douban.com/' };
-
 function tryFixStatus(status) {
     let result = { isFixSuccess: true, why: '' };
     const now = new Date();
@@ -491,7 +489,7 @@ async function getFullTextItems(items) {
             } else {
                 const {
                     data: { text },
-                } = await got({ url, headers });
+                } = await got(url);
                 cache.set(url, text);
                 item.status.text = text;
             }
@@ -508,7 +506,7 @@ async function getFullTextItems(items) {
                     // 存在reshared_status字段正常，但尝试获取时返回403的情况。比如原po被炸号就可能这样。
                     const {
                         data: { text },
-                    } = await got({ url, headers });
+                    } = await got(url);
                     cache.set(url, text);
                     item.status.reshared_status.text = text;
                 } catch {
@@ -525,7 +523,7 @@ async function handler(ctx) {
     const items = await cache.tryGet(
         url,
         async () => {
-            const _r = await got({ url, headers });
+            const _r = await got(url);
             return _r.data.items;
         },
         config.cache.routeExpire,

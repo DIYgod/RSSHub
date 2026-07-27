@@ -43,7 +43,7 @@ async function handler() {
             const a = $item.find('.news-block-title a');
             const link = a.attr('href');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: link as string,
                 pubDate: parseDate($item.find('time[datetime]').attr('datetime') as string),
                 category: $item
@@ -60,8 +60,8 @@ async function handler() {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                const featuredImage = $('.single-featured-image').first().html() || '';
-                const fullContent = $('.single-body').first().html() || '';
+                const featuredImage = $('.single-featured-image').html() || '';
+                const fullContent = $('.single-body').html() || '';
                 item!.description = renderDescription({
                     featuredImage,
                     fullContent,

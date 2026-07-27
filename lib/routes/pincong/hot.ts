@@ -39,7 +39,7 @@ async function handler(ctx) {
         title: '品葱 - 精选',
         link: `${baseUrl}/hot/${category === '0' ? '' : `category-${category}`}`,
         item: list.toArray().map((item) => ({
-            title: $(item).find('h2 a').text().trim(),
+            title: $(item).find('h2 a').text(),
             description: $(item).find('div.markitup-box').html(),
             link: baseUrl + $(item).find('div.mod-head h2 a').attr('href'),
             pubDate: parseDate($(item).find('div.mod-footer .aw-small-text').text()),

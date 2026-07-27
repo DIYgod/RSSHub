@@ -61,7 +61,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const resp = await got(item.link);
                 const $ = load(resp.data);
-                const firstViewBox = $('.body-wrapper-article').first();
+                const firstViewBox = $('.body-wrapper-article');
 
                 firstViewBox.find('img').each((_, img) => {
                     img = $(img);

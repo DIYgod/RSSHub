@@ -19,7 +19,7 @@ async function loadContent(link) {
 
     // 去除全文末尾多余内容
     $('.lookMore').remove();
-    $('script, style').remove();
+    $('style').remove();
     $('#loginDialog').remove();
 
     // 获取第一个帖子对象

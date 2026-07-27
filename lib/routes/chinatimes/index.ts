@@ -52,14 +52,14 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('.title a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: `${baseUrl}${a.attr('href')}?chdtv`,
                 guid: `${baseUrl}${a.attr('href')}`,
                 pubDate: timezone(parseDate($item.find('time').attr('datetime')), 8),
                 category: $item
                     .find('.category a')
                     .toArray()
-                    .map((i) => $(i).text().trim()),
+                    .map((i) => $(i).text()),
             };
         });
 
@@ -85,7 +85,7 @@ async function handler(ctx) {
                         ...item.category,
                         ...$('.article-hash-tag a')
                             .toArray()
-                            .map((i) => $(i).text().trim()),
+                            .map((i) => $(i).text()),
                     ]),
                 ];
 

@@ -39,7 +39,8 @@ async function handler(ctx) {
                 title: item.text(),
                 link: new URL(item.attr('href'), link).href,
             };
-        });
+        })
+        .filter((item, index, arr) => arr.findIndex((i) => i.link === item.link) === index);
 
     const items = await Promise.all(list.map((item) => parseItem(item)));
 

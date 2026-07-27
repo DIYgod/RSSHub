@@ -50,7 +50,7 @@ async function handler(ctx) {
     const mobileBaseUrl = 'https://mobile.tingtingfm.com';
 
     const params = {
-        version: 'h5_5.16',
+        version: 'h5_6.3.2',
         client: getClientVal(30),
         h_program_id: programId,
     };

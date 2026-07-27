@@ -49,7 +49,7 @@ export const route: Route = {
                 cache.tryGet(item.link, async () => {
                     const response = await ofetch(item.link);
                     const $ = load(response);
-                    item.description = $('.article-content').first().html();
+                    item.description = $('.article-content').html();
                     return item;
                 })
             )

@@ -3,12 +3,26 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/gamedb/recent',
-    name: 'Unknown',
+    name: 'GameDB 游戏库',
+    path: '/gamedb/recent/:platform?',
+    example: '/indienova/gamedb/recent',
+    categories: ['game'],
+    parameters: {
+        platform: {
+            description: '平台，留空为 `all`',
+            options: [
+                { value: 'all', label: '全部' },
+                { value: 'ps4', label: 'PS4' },
+                { value: 'xboxone', label: 'XBOX One' },
+                { value: 'nintendo-switch', label: 'Nintendo Switch' },
+            ],
+            default: 'all',
+        },
+    },
     maintainers: ['TonyRL'],
     handler,
 };
@@ -23,14 +37,15 @@ async function handler(ctx) {
     const list = $('.related-game')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item
+                title: $item
                     .find('span')
                     .contents()
                     .filter((_, el) => el.nodeType === 3)
                     .text(),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseRelativeDate($item.find('small').first().text()),
             };
         });
 
@@ -50,7 +65,7 @@ async function handler(ctx) {
                 article.find('#showHiddenText').remove();
 
                 item.description = $('.cover-image').prop('outerHTML') + $('.tab-container').html() + article.html();
-                item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), 8) : null;
+                item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), 8) : item.pubDate;
 
                 return item;
             })

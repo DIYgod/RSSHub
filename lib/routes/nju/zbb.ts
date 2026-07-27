@@ -48,9 +48,9 @@ async function handler(ctx) {
                 item = $(item);
                 return {
                     title: item.find('a').attr('title'),
-                    description: item.find('a').first().text(),
+                    description: item.find('a').text(),
                     link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), 8),
+                    pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
                 };
             }),
         };
@@ -80,9 +80,9 @@ async function handler(ctx) {
                 item = $(item);
                 return {
                     title: item.find('a').attr('title'),
-                    description: item.find('a').first().text(),
+                    description: item.find('a').text(),
                     link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), 8),
+                    pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
                     category: category_dict[c],
                 };
             });

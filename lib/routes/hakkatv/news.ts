@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -41,41 +41,44 @@ async function handler(ctx) {
 
     const allData = type
         ? (
-              await got(`${apiUrl}/api/news/index`, {
-                  searchParams: {
-                      per: 4,
+              await ofetch(`${apiUrl}/api/news/index`, {
+                  query: {
+                      per: 8,
                       'sort[created_at]': 'desc',
                       type,
                       keywords: '',
                   },
               })
-          ).data.data
+          ).data
         : await Promise.all(
               typeMap.map(async (t) => {
-                  const { data } = await got(`${apiUrl}/api/news/index`, {
-                      searchParams: {
-                          per: 4,
+                  const { data } = await ofetch(`${apiUrl}/api/news/index`, {
+                      query: {
+                          per: 8,
                           'sort[created_at]': 'desc',
                           type: t,
                           keywords: '',
                       },
                   });
-                  return data.data;
+                  return data;
               })
           );
 
-    const list = allData.flat().map((item) => ({
-        title: item.title,
-        pubDate: timezone(parseDate(item.created_at), 8),
-        author: item.author,
-        link: `${baseUrl}/news-detail/${item.id}`,
-        id: item.id,
-    }));
+    const list = allData
+        .flat()
+        .filter((item, index, arr) => arr.findIndex((i) => i.id === item.id) === index)
+        .map((item) => ({
+            title: item.title,
+            pubDate: timezone(parseDate(item.created_at), 8),
+            author: item.author,
+            link: `${baseUrl}/news-detail/${item.id}`,
+            id: item.id,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data } = await got(`${apiUrl}/api/news/read/${item.id}`);
+                const data = await ofetch(`${apiUrl}/api/news/read/${item.id}`);
                 item.category = data.tag.map((t) => t.tag);
                 item.description = data.content.replaceAll('\n', '<br>');
                 delete item.id;

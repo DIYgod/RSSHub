@@ -44,8 +44,12 @@ async function handler() {
                 .match(/\((.*)\)/);
             date = Array.isArray(date) ? date[1] : null;
             return {
-                title: item.text().trim(),
-                description: $('<div/>').append(item.nextUntil('h2').clone()).html(),
+                title: item.text(),
+                description: item
+                    .nextUntil('h2')
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join(''),
                 pubDate: date,
                 link: url + '#' + item.attr('id'),
             };

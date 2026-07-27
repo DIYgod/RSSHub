@@ -44,7 +44,7 @@ async function handler() {
             // 优先使用title属性内容，避免内容被截断
             const title = element.attr('title') || element.find('.tit').text().trim();
             const link = element.attr('href');
-            const dateText = element.find('.date').text().trim();
+            const dateText = element.find('.date').text();
             const pubDate = timezone(parseDate(dateText), 8);
 
             return {

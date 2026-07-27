@@ -73,7 +73,7 @@ async function handler() {
                 $('.mb-4, .mb-6, .not-prose, h1').remove();
                 return {
                     ...item,
-                    description: $('.blog-content').html() ?? undefined,
+                    description: $('.blog-content').html(),
                 };
             })
         )

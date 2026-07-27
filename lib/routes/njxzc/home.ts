@@ -45,7 +45,7 @@ async function handler() {
                 return null;
             }
             return {
-                title: $link.attr('title') || $link.text().trim(),
+                title: $link.attr('title') || $link.text(),
                 link: new URL(href, pageUrl).href,
                 pubDate: parsePubDate($item.find('.news_meta').text()),
             };

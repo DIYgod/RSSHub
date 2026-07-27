@@ -456,7 +456,11 @@ async function handler(ctx) {
             // logger.info("link:" + link);
 
             // title
-            let title = item.find($(struct[type].titleSelector.list)).clone().children().remove().end().text();
+            let title = item
+                .find($(struct[type].titleSelector.list))
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text();
             if (title === '') {
                 title = item.find($(struct[type].titleSelector.list)).text();
             }

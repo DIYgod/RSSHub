@@ -29,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $pEl: Cheerio<Element> = $el.parent('p');
 
             const title: string = $pEl.prev('h2').text();
-            const description: string | undefined = $pEl.html() ?? undefined;
+            const description = $pEl.html();
             const pubDateStr: string | undefined = $pEl.text().match(/〔(\d{4}年\d{1,2}月\d{1,2}日)発行〕/)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
             const upDatedStr: string | undefined = pubDateStr;

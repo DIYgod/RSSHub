@@ -46,11 +46,11 @@ async function handler(ctx) {
                     desc += `Items count: ${bundle.m_rgItems.length}\n`;
                 }
                 if (isDiscounted) {
-                    desc += `Discount: ${$el.find('.discount_pct').text().trim()}\n`;
-                    desc += `Original price: ${$el.find('.discount_original_price').text().trim()}\n`;
-                    desc += `Discounted price: ${$el.find('.discount_final_price').text().trim()}\n`;
+                    desc += `Discount: ${$el.find('.discount_pct').text()}\n`;
+                    desc += `Original price: ${$el.find('.discount_original_price').text()}\n`;
+                    desc += `Discounted price: ${$el.find('.discount_final_price').text()}\n`;
                 } else {
-                    desc += `Price: ${$el.find('.discount_final_price').text().trim()}\n`;
+                    desc += `Price: ${$el.find('.discount_final_price').text()}\n`;
                 }
                 if (hasReview) {
                     desc += $el.find('.search_review_summary').attr('data-tooltip-html');

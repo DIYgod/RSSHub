@@ -84,7 +84,7 @@ async function handler(ctx) {
                 const outItem: DataItem = {
                     title: item.title,
                     link: item.link,
-                    description: content.html() || '',
+                    description: content.html(),
                     pubDate: releaseDate ? timezone(parseDate(releaseDate), 8) : item.pubDate,
                     author: $('meta[property="og:author"]').attr('content') || '',
                 };

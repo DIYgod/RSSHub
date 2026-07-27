@@ -44,7 +44,7 @@ async function handler() {
             const $section = $(section);
 
             // Extract version and date from h3 title
-            const titleText = $section.find('h3').first().text().trim();
+            const titleText = $section.find('h3').text();
             const versionMatch = titleText.match(/^([\d.]+)\s*\[([^\]]+)\]/);
 
             if (!versionMatch) {

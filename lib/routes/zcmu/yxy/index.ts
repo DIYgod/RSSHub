@@ -53,7 +53,7 @@ async function handler(ctx) {
             return {
                 title: item.find('a').text(),
                 link: `https://yxy.zcmu.edu.cn/${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span').text().trim()),
+                pubDate: parseDate(item.find('span').text()),
             };
         });
 

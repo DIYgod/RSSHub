@@ -38,7 +38,7 @@ async function handler(ctx) {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('.entry-title a').text().trim();
+            const title = $el.find('.entry-title a').text();
             return {
                 title,
                 link: $el.find('.entry-title a').attr('href'),

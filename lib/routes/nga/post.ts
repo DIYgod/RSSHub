@@ -99,7 +99,7 @@ async function handler(ctx) {
     const pageId = await getLastPageId(tid, authorId);
 
     const $ = await getPage(tid, authorId, pageId);
-    const title = $('title').text() || '';
+    const title = $('title').text();
     const posterMap = JSON.parse(
         $('script')
             .text()

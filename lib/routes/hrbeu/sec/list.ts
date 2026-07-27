@@ -35,19 +35,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const response = await got(`${rootUrl}/${id}/list.htm`, {
-        headers: {
-            Referer: rootUrl,
-        },
-    });
+    const response = await got(`${rootUrl}/${id}/list.htm`);
 
     const $ = load(response.data);
 
     const bigTitle = $('div [class=lanmuInnerMiddleBigClass_right]')
         .find('div [portletmode=simpleColumnAttri]')
         .text()
-        .replaceAll(/[\s·]/g, '')
-        .trim();
+        .replaceAll(/[\s·]/g, '');
 
     const list = $('li.list_item')
         .toArray()

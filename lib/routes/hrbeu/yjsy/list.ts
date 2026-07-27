@@ -36,11 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got(`${rootUrl}/${id}/list.htm`, {
-        headers: {
-            Referer: rootUrl,
-        },
-    });
+    const response = await got(`${rootUrl}/${id}/list.htm`);
 
     const $ = load(response.data);
 

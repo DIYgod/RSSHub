@@ -75,7 +75,7 @@ function extractGames($: any, limit: number, baseUrl: string): Array<{ title: st
             arrivedAtGameSection = true;
             // Found H1 date, fill all empty Games with the new Date.
             for (const game of games) {
-                if (game.pubDate === null || game.pubDate.trim() === '') {
+                if (game.pubDate === null || game.pubDate === '') {
                     game.pubDate = match[0];
                 }
             }
@@ -114,7 +114,7 @@ function extractLatestDate(pageHtml: string): Date | null {
 function sanitizeHtml(pageHtml: string): string {
     const $page = load(pageHtml);
 
-    $page('script, style, link, nav').remove();
+    $page('style, link, nav').remove();
 
     $page('*').each((_: number, elem: any) => {
         if (!elem.attribs) {

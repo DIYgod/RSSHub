@@ -74,8 +74,8 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 const description = content('#content').html();
-                const author = content('td.td_lable:contains("所属机构")').next('td').text().trim();
-                const category = content('td.td_lable:contains("主题分类")').next('td').text().trim();
+                const author = content('td.td_lable:contains("所属机构")').next('td').text();
+                const category = content('td.td_lable:contains("主题分类")').next('td').text();
 
                 return {
                     ...item,

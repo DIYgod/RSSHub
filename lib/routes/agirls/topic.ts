@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 import { baseUrl, parseArticle } from './utils';
 
@@ -32,16 +32,16 @@ export const route: Route = {
 async function handler(ctx) {
     const topic = ctx.req.param('topic');
     const link = `${baseUrl}/topic/${topic}`;
-    const response = await got(link);
+    const response = await ofetch(link);
 
-    const $ = load(response.data);
+    const $ = load(response);
     const ldJson = JSON.parse($('script[type="application/ld+json"]').text());
     const list = $('.ag-post-item__link')
         .toArray()
         .map((item) => {
             item = $(item);
             return {
-                title: item.text().trim(),
+                title: item.text(),
                 link: `${baseUrl}${item.attr('href')}`,
             };
         });
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseArticle(item))));
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         link,
         description: ldJson['@graph'][0].description,
         item: items,

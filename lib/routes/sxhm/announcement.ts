@@ -40,7 +40,7 @@ export const route: Route = {
                 const title = $item.find('.ltit .t').text();
                 const link = new URL($a.attr('href')!, baseUrl).href;
 
-                const dateStr = $item.find('.lcont .date').text().trim();
+                const dateStr = $item.find('.lcont .date').text();
 
                 return {
                     title,

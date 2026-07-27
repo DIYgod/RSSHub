@@ -98,7 +98,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 item.link = finalUrl;
 
                 const title: string = $$('div.articleTitle h1').text();
-                const description: string | undefined = $$('div#articleBox').html() ?? undefined;
+                const description = $$('div#articleBox').html();
                 const pubDateStr: string | undefined = $$('span.yearMsg').text() && $$('span.timeMsg').text() ? `${$$('span.yearMsg').text()} ${$$('span.timeMsg').text()}` : undefined;
                 const authors: DataItem['author'] = $$('spna.sourceMsg').text();
                 const upDatedStr: string | undefined = pubDateStr;

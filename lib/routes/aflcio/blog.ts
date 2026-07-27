@@ -27,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('header.container h1 a').first();
 
             const title: string = $aEl.text();
-            const description: string | undefined = $el.find('div.section').html() ?? '';
+            const description = $el.find('div.section').html();
             const pubDateStr: string | undefined = $el.find('div.date-timeline time').attr('datetime');
             const linkUrl: string | undefined = $aEl.attr('href');
             const authorEls: Element[] = $el.find('div.date-timeline a.user').toArray();
@@ -74,7 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('header.article-header h1').text();
-                    const description: string | undefined = $$('div.section-article-body').html() ?? '';
+                    const description = $$('div.section-article-body').html();
                     const pubDateStr: string | undefined = $$('time').attr('datetime');
                     const authorEls: Element[] = $$('div.byline a[property="schema:name"]').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {

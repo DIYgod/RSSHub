@@ -40,7 +40,7 @@ async function handler(): Promise<Data> {
     const dates = logContainer
         .find('dt')
         .toArray()
-        .map((element) => $(element).text().trim());
+        .map((element) => $(element).text());
 
     const contents = logContainer
         .find('dd')

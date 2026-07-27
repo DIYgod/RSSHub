@@ -27,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.text();
-            const description: string | undefined = $el.next().html() ?? '';
+            const description = $el.next().html();
             const pubDateStr: string | undefined = title.split(/\s/, 1)[0];
             const linkUrl: string | undefined = targetUrl;
             const upDatedStr: string | undefined = pubDateStr;

@@ -81,7 +81,7 @@ const buildItem = (url: string) =>
 
         return {
             title: $('h1').text(),
-            description: $('.kb-cot').html() || '',
+            description: $('.kb-cot').html(),
             link: url,
         };
     }) as Promise<DataItem>;

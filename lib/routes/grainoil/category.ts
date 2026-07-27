@@ -55,7 +55,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.m_tit h2').text();
-                    const description: string = $$('div.TRS_Editor').html() ?? '';
+                    const description = $$('div.TRS_Editor').html();
                     const authors: DataItem['author'] = $$('div.m_tit h2 a').first().text();
 
                     const processedItem: DataItem = {

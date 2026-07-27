@@ -81,7 +81,12 @@ async function handler(ctx) {
     );
 
     return {
-        title: 'ALICESOFT ' + $('article h2').clone().children().remove().end().text(),
+        title:
+            'ALICESOFT ' +
+            $('article h2')
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text(),
         link: url,
         item: items,
         language: 'ja',

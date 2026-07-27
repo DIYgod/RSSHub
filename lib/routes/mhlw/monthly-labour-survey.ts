@@ -22,6 +22,15 @@ export const route: Route = {
     url: 'www.mhlw.go.jp/toukei/list/30-1a.html',
 };
 
+const parseJapaneseDate = (text: string) => {
+    const normalized = text
+        .replaceAll(/（[^）]+）/g, '')
+        // oxlint-disable-next-line regexp/no-obscure-range
+        .replaceAll(/[０-９]/g, (c) => String.fromCodePoint(c.codePointAt(0)! - 0xfee0))
+        .replace(/^令和(\d+)年/, (_, year) => `${Number(year) + 2018}年`);
+    return parseDate(normalized, 'YYYY年M月D日');
+};
+
 async function fetchPage(url: string) {
     const raw = await ofetch(url, { responseType: 'arrayBuffer' });
     const decoder = new TextDecoder('shift-jis');
@@ -40,14 +49,14 @@ async function handler(ctx: Context) {
         .toArray()
         .flatMap((row) => {
             const $row = $(row);
-            const year = $row.find('h3').text().trim();
+            const year = $row.find('h3').text();
             return $row
                 .find('ul.ico-link li a')
                 .toArray()
                 .map((a) => {
                     const $a = $(a);
                     return {
-                        title: `${year}${$a.text().trim()}`,
+                        title: `${year}${$a.text()}`,
                         link: new URL($a.attr('href')!, baseUrl).href,
                     };
                 })
@@ -61,13 +70,12 @@ async function handler(ctx: Context) {
                 const response = await fetchPage(item.link!);
                 const $ = load(response);
 
-                const dateText = $('.prt-topContents .al-right').text().trim();
-                const cleanedDate = dateText.replaceAll(/（[^）]+）/g, '');
+                const dateText = $('.prt-topContents .al-right').text();
                 const content = $('#contentsInner');
                 content.find('.prt-topContents, .prt-linkNavi, .prt-plugin').remove();
 
                 item.title = $('h1#pageTitle').text().trim() || item.title;
-                item.pubDate = timezone(parseDate(cleanedDate, 'YYYY年M月D日'), 9);
+                item.pubDate = timezone(parseJapaneseDate(dateText), 9);
                 item.description = content.html()?.trim();
 
                 return item;
@@ -76,8 +84,8 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: $('head title').text().trim(),
-        description: $('meta[name="description"]').attr('content')?.trim(),
+        title: $('head title').text(),
+        description: $('meta[name="description"]').attr('content'),
         link,
         image: `${baseUrl}/favicon.ico`,
         language: $('html').attr('lang'),

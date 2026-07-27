@@ -73,7 +73,7 @@ export const route: Route = {
                     try {
                         const detailResponse = await ofetch(link);
                         const $$ = load(detailResponse);
-                        const description = $$('.v_news_content').html() || $$('#vsb_content').html() || '';
+                        const description = $$('.v_news_content').html() || $$('#vsb_content').html();
 
                         return {
                             title,

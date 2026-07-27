@@ -147,7 +147,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => content(c).text());
 
-                const pubDateEm = content('img.authicn').first().next();
+                const pubDateEm = content('img.authicn').next();
                 const pubDateText = pubDateEm.find('span').prop('title') ?? pubDateEm.text();
                 const pubDateMatches = pubDateText.match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
                 if (pubDateMatches) {

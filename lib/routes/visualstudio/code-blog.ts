@@ -43,7 +43,7 @@ async function handler() {
                 const $ = load(data);
 
                 // remove title and time
-                $('main h1').first().remove();
+                $('main h1').remove();
                 $('main p').first().remove();
 
                 item.content = $('main').html() as string;

@@ -23,9 +23,9 @@ const handler: Route['handler'] = async () => {
                     const $ = load(data);
 
                     return {
-                        title: $('h1').first().text().trim(),
+                        title: $('h1').first().text(),
                         link,
-                        description: $('article div:nth-child(2)').html() ?? '',
+                        description: $('article div:nth-child(2)').html(),
                         pubDate: parseDate($('p.whitespace-pre-wrap').first().text().split(/\s+by/, 1)[0]),
                     };
                 });

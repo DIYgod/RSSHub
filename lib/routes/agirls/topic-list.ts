@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 import { baseUrl } from './utils';
 
@@ -33,23 +33,23 @@ async function handler() {
     const category = 'topic';
     const link = `${baseUrl}/${category}`;
 
-    const response = await got(`${baseUrl}/${category}`);
+    const response = await ofetch(`${baseUrl}/${category}`);
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     const items = $('.ag-topic')
         .toArray()
         .map((item) => {
             item = $(item);
             return {
-                title: item.find('.ag-topic__link').text().trim(),
-                description: item.find('.ag-topic__summery').text().trim(),
+                title: item.find('.ag-topic__link').text(),
+                description: item.find('.ag-topic__summery').text(),
                 link: `${baseUrl}${item.find('.ag-topic__link').attr('href')}`,
             };
         });
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         link,
         description: $('head meta[name=description]').attr('content'),
         item: items,

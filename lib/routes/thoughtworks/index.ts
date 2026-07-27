@@ -21,7 +21,6 @@ async function handler() {
         headers: {
             'content-type': 'application/json',
             origin: 'https://www.thoughtworks.com',
-            referer: 'https://www.thoughtworks.com/',
         },
     });
 

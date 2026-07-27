@@ -50,13 +50,12 @@ Note: If you want to track a specific post's content changes (e.g., first post w
         const threadLink = `${baseUrl}/threads/${thread}/`;
 
         const headers = {
-            referer: baseUrl,
             ...(config.f95zone.cookie && { cookie: config.f95zone.cookie }),
         };
 
         const firstPageResponse = await ofetch(threadLink, { headers });
         const $firstPage = load(firstPageResponse);
-        const title = $firstPage('h1.p-title-value').text().trim();
+        const title = $firstPage('h1.p-title-value').text();
 
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
         const totalPages = lastPageLink ? Number(lastPageLink.match(/page-(\d+)/)?.[1] || '1') : 1;
@@ -64,14 +63,14 @@ Note: If you want to track a specific post's content changes (e.g., first post w
         const extractPosts = ($: CheerioAPI): DataItem[] =>
             $('article.message')
                 .toArray()
-                .flatMap((article) => {
+                .map((article) => {
                     const $article = $(article);
                     const postId = $article.attr('data-content')?.replace('post-', '');
                     if (!postId) {
-                        return [];
+                        return;
                     }
 
-                    const author = $article.find('.message-name a').text().trim();
+                    const author = $article.find('.message-name a').text();
                     const postDate = $article.find('time.u-dt').attr('datetime');
                     const content = $article.find('.bbWrapper').html() || '';
                     const postLink = `${threadLink}post-${postId}`;
@@ -87,7 +86,8 @@ Note: If you want to track a specific post's content changes (e.g., first post w
                         pubDate: postDate ? parseDate(postDate) : undefined,
                         author,
                     };
-                });
+                })
+                .filter(Boolean);
 
         // Extract posts from the first page
         const allPosts: DataItem[] = [...extractPosts($firstPage)];

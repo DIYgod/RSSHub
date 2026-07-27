@@ -1,23 +1,17 @@
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import { PRESETS } from '@/utils/header-generator';
+import ofetch from '@/utils/ofetch';
 
-import { parseItem } from './utils';
-
-const baseUrl = 'https://byteclicks.com';
+import { baseUrl, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
     categories: ['new-media'],
     example: '/byteclicks/tag/人工智能',
     parameters: { tag: '标签，可在URL中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     radar: [
         {
             source: ['byteclicks.com/tag/:tag'],
@@ -31,27 +25,18 @@ export const route: Route = {
 
 async function handler(ctx) {
     const tag = ctx.req.param('tag');
-    const { data: search } = await got(`${baseUrl}/wp-json/wp/v2/tags`, {
-        searchParams: {
-            search: tag,
-            per_page: 100,
-        },
-    });
-    const tagData = search.find((item) => item.name === tag);
+    const link = `${baseUrl}/tag/${tag}`;
 
-    const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
-        searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100,
-            tags: tagData.id,
-        },
-    });
+    const response = await ofetch(link, { headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME });
+    const $ = load(response);
 
-    const items = parseItem(data);
+    const list = parseList($).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined);
+    const items = await pMap(list, (item) => parseItem(item), { concurrency: 5 });
 
     return {
-        title: `${tagData.name} - 字节点击`,
-        image: 'https://byteclicks.com/wp-content/themes/RK-Blogger/images/wbolt.ico',
-        link: tagData.link,
+        title: $('head title').text(),
+        image: $('head link[rel="shortcut icon"]').attr('href'),
+        link,
         item: items,
     };
 }

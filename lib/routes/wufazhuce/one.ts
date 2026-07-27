@@ -37,7 +37,7 @@ async function handler(): Promise<Data> {
         ...$('#carousel-one div.item')
             .toArray()
             .map((item) => {
-                const a = $(item).find('.fp-one-cita a').first();
+                const a = $(item).find('.fp-one-cita a');
                 return {
                     title: a.text(),
                     link: a.attr('href'),
@@ -75,7 +75,7 @@ async function handler(): Promise<Data> {
             cache.tryGet(item.link, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.body);
-                item.description = content('.tab-content').html() || '';
+                item.description = content('.tab-content').html();
                 return item;
             })
         )

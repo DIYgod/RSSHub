@@ -21,7 +21,7 @@ async function handler(): Promise<Data> {
             const $li = $(li);
 
             return {
-                title: $li.find('.newTitle').text().trim(),
+                title: $li.find('.newTitle').text(),
                 link: new URL($li.find('a').attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($li.find('.data1').text().trim(), '发布时间 : YYYY-MM-DD'), 8),
             };

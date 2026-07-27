@@ -17,11 +17,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { category = 'jwxt' } = ctx.req.param();
     const url = `${xmut}/index/tzgg/${category}.htm`;
-    const res = await got(url, {
-        headers: {
-            referer: xmut,
-        },
-    });
+    const res = await got(url);
     const $ = load(res.data);
     const itemsArray = $('#result_list table tbody tr')
         .toArray()
@@ -37,7 +33,7 @@ async function handler(ctx) {
                 link = resLink;
             }
             const title = $('a', res).attr('title');
-            const pubDate = parseDate(resDate.text().trim());
+            const pubDate = parseDate(resDate.text());
             return {
                 title,
                 link,

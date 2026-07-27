@@ -69,9 +69,7 @@ async function handler() {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.description = content('#con_con')
-                    .html()
-                    ?.replaceAll(/(<iframe.*?src=")([^"]*)(".*?>)/g, (_match, p1, p2, p3) => p1 + rootUrl + p2 + p3);
+                item.description = content('#con_con').html();
 
                 return item;
             })

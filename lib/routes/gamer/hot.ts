@@ -28,12 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = `https://forum.gamer.com.tw/B.php?bsn=${ctx.req.param('bsn')}`;
-    const response = await got({
-        url: rootUrl,
-        headers: {
-            Referer: 'https://forum.gamer.com.tw',
-        },
-    });
+    const response = await got(rootUrl);
 
     const $ = load(response.data);
     const list = $('div.popular__card-list div.popular__card-img a')

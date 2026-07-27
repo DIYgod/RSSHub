@@ -58,7 +58,7 @@ async function handler(ctx) {
             return {
                 title: tag.text().trim(),
                 link: tag.attr('href'),
-                pubDate: timezone(parseDate(tag2.text().trim(), 'YYYY/MM/DD'), 0),
+                pubDate: timezone(parseDate(tag2.text(), 'YYYY/MM/DD'), 0),
             };
         });
 

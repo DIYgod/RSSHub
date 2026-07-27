@@ -26,7 +26,7 @@ export const route: Route = {
             source: ['www.njit.edu.cn/'],
         },
     ],
-    name: '南京工程学院通知公告',
+    name: '通知公告',
     maintainers: ['zefengdaguo'],
     handler,
     url: 'www.njit.edu.cn/',

@@ -30,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('a');
 
             const title: string = $el.find('div.text_box p').text();
-            const description: string | undefined = $aEl.html() ?? undefined;
+            const description = $aEl.html();
             const pubDateStr: string | undefined = $el.find('div.date').text().trim();
             const linkUrl: string | undefined = $aEl.attr('href');
             const image: string | undefined = $el.find('div.img_box img').attr('src');
@@ -42,8 +42,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl,
                 content: {
-                    html: description ?? '',
-                    text: description ?? '',
+                    html: description,
+                    text: description,
                 },
                 image,
                 banner: image,
@@ -67,12 +67,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$pageBox: Cheerio<Element> = $$('div.page_box');
 
                     const title: string = $$pageBox.find('h2').text();
-                    const pubDateStr: string | undefined = $$('div.date').first().text();
+                    const pubDateStr: string | undefined = $$('div.date').text();
                     const upDatedStr: string | undefined = pubDateStr;
 
                     $$pageBox.find('h2, div.date, .the_champ_sharing_container').remove();
 
-                    const description: string | undefined = $$pageBox.html() ?? item.description;
+                    const description: string | null | undefined = $$pageBox.html() ?? item.description;
 
                     const processedItem: DataItem = {
                         title,

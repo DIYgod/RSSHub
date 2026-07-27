@@ -61,7 +61,7 @@ async function handler(ctx) {
             return {
                 title: item.find('a').attr('title'),
                 link: `${baseUrl}${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span').text().trim()),
+                pubDate: parseDate(item.find('span').text()),
             };
         });
     // 获取公告详情

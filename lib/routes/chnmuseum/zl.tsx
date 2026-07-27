@@ -113,7 +113,7 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
             const $item = $(el).closest('li');
             if ($item.length > 0) {
                 const rawLink = $(el).attr('href') || '';
-                const rawZtzl = $(el).attr('ztzlurl')?.trim() || ''; // some exhibition links have a separate detailed page, use ztzlurl to get the detailed exhibition link if available
+                const rawZtzl = $(el).attr('ztzlurl') || ''; // some exhibition links have a separate detailed page, use ztzlurl to get the detailed exhibition link if available
 
                 // Use exhibitionLink to remove the repeat ones
                 const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
@@ -181,7 +181,7 @@ export const route: Route = {
 
                     return cache.tryGet(itemLink, async () => {
                         // for detailed exhibition page if available, different from base exhibition page.
-                        const rawZtzl = aTag.attr('ztzlurl')?.trim() || '';
+                        const rawZtzl = aTag.attr('ztzlurl') || '';
                         const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
 
                         // title may not have full display on the page, use the img alt information instead
@@ -198,8 +198,7 @@ export const route: Route = {
                                 .find((box) => box.find('p').first().text().includes(keyword))
                                 ?.find('p')
                                 .last()
-                                .text()
-                                .trim() ?? '';
+                                .text() ?? '';
 
                         const location = findValue('地点');
                         let fullDuration = findValue('展期');

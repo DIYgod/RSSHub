@@ -42,7 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('a').text().trim();
+            const title = element.find('a').text();
             const pubDate = parseDate(element.find('time').attr('datetime'));
             return {
                 title,
@@ -58,7 +58,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const data = itemReponse.data;
                 const item$ = load(data);
 
-                item.author = item$('#main section > div:nth-child(1) span').text().trim();
+                item.author = item$('#main section > div:nth-child(1) span').text();
                 item.description = item$('#main section > div:nth-child(2) > div').html();
                 return item;
             })

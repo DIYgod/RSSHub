@@ -60,14 +60,12 @@ async function handler(ctx) {
                     .find('.author')
                     .contents()
                     .filter((_, c) => c.type === 'text')
-                    .text()
-                    .trim(),
+                    .text(),
                 category: $item
                     .find('.category')
                     .contents()
                     .filter((_, c) => c.type === 'text')
-                    .text()
-                    .trim(),
+                    .text(),
             };
         });
 

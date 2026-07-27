@@ -83,7 +83,7 @@ async function handler(ctx) {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                item.description = $('.comment-body').first().html() || '';
+                item.description = $('.comment-body').html();
 
                 return item;
             })

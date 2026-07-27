@@ -45,7 +45,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const target = $('script[type="text/javascript"]:contains("xplGlobal.document.metadata")');
-                const code = target.text() || '';
+                const code = target.text();
 
                 // 捕获等号右侧的 JSON（最小匹配直到紧随的分号）
                 const m = code.match(/xplGlobal\.document\.metadata\s*=\s*(\{[\s\S]*?\})\s*;/);

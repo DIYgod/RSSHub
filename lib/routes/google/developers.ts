@@ -47,12 +47,12 @@ async function handler(ctx: Context) {
     const items = $('.search-result')
         .toArray()
         .map((element) => {
-            const dateCategory = $(element).find('.search-result__eyebrow').text().trim();
+            const dateCategory = $(element).find('.search-result__eyebrow').text();
             const [date, category] = dateCategory.split(' / ', 2);
             const titleElement = $(element).find('.search-result__title a');
-            const title = titleElement.text().trim();
+            const title = titleElement.text();
             const link = titleElement.attr('href');
-            const summary = $(element).find('.search-result__summary').text().trim();
+            const summary = $(element).find('.search-result__summary').text();
 
             return {
                 title,

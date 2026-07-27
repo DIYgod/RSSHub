@@ -33,7 +33,7 @@ async function handler(): Promise<Data> {
     const indexPage = await ofetch(redirectURL);
     const $: CheerioAPI = load(indexPage);
     const title = $('title').text()?.trim();
-    const author = $('div.logo a').attr('title')?.trim();
+    const author = $('div.logo a').attr('title');
     const items: DataItem[] = $('div.infor-list-item')
         .toArray()
         .map((listItem) => {
