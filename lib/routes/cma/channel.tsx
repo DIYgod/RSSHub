@@ -39,7 +39,7 @@ const fetchPageWithChallenge = async (url: string) => {
 
     const answer = challenge.replace('safeline_bot_challenge=', 'safeline_bot_challenge_ans=') + solveChallenge(prefix, leadingZeroBits);
 
-    return await ofetch<string>(url, {
+    return ofetch<string>(url, {
         headers: {
             Cookie: `${challenge}; ${answer}`,
         },
@@ -54,7 +54,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -104,9 +104,9 @@ async function handler(ctx) {
         },
     });
 
-    const data = response?.data?.pop() ?? {};
+    const article = response?.data?.pop() ?? {};
 
-    data.image = data.image?.replace(/\?.*$/, '') ?? undefined;
+    article.image = article.image?.replace(/\?.*$/, '');
 
     const currentResponse = await fetchPageWithChallenge(currentUrl);
 
@@ -123,38 +123,32 @@ async function handler(ctx) {
     const descriptionHtml = $('div.xml').html();
     const image = new URL($('li.active a img').prop('src'), rootUrl).href;
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const sourceElement = $('div.col-xs-8 span')
+        .toArray()
+        .findLast((element) => $(element).text().startsWith('来源'));
+    const itemAuthor = $(sourceElement).text().split('：').pop() || author;
 
-    const items = data
-        ? [
-              {
-                  title: `${data.title} ${data.releaseTime}`,
-                  link: new URL(data.link, rootUrl).href,
-                  description: renderToString(
-                      <>
-                          {data.image ? (
-                              <figure>
-                                  <img src={new URL(data.image, rootUrl).href} alt={data.title} />
-                              </figure>
-                          ) : null}
-                          {descriptionHtml ? raw(descriptionHtml) : null}
-                      </>
-                  ),
-                  author:
-                      $(
-                          $('div.col-xs-8 span')
-                              .toArray()
-                              .findLast((a) => $(a).text().startsWith('来源'))
-                      )
-                          ?.text()
-                          ?.split(/：/)
-                          ?.pop() || author,
-                  guid: `cma${data.link}#${data.releaseTime.replaceAll(/\s/g, '-')}`,
-                  pubDate: timezone(parseDate(data.releaseTime), 8),
-                  enclosure_url: new URL(data.image, rootUrl).href,
-                  enclosure_type: data.image ? `image/${data.image.split(/\./).pop()}` : undefined,
-              },
-          ]
-        : [];
+    const items = [
+        {
+            title: `${article.title} ${article.releaseTime}`,
+            link: new URL(article.link, rootUrl).href,
+            description: renderToString(
+                <>
+                    {article.image ? (
+                        <figure>
+                            <img src={new URL(article.image, rootUrl).href} alt={article.title} />
+                        </figure>
+                    ) : null}
+                    {descriptionHtml ? raw(descriptionHtml) : null}
+                </>
+            ),
+            author: itemAuthor,
+            guid: `cma${article.link}#${article.releaseTime.replaceAll(/\s/g, '-')}`,
+            pubDate: timezone(parseDate(article.releaseTime), 8),
+            enclosure_url: new URL(article.image, rootUrl).href,
+            enclosure_type: article.image ? `image/${article.image.split(/\./).pop()}` : undefined,
+        },
+    ];
 
     return {
         item: items,
