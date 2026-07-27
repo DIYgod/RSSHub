@@ -352,14 +352,14 @@ const processBody = async (body_html, story_json) => {
             new_figure = renderAudioMedia(audio);
         } else if (imageType === 'video') {
             if (story_json.videoAttachments) {
-                const attachment = story_json.videoAttachments[$(e).data('id')];
+                const attachment = story_json.videoAttachments[$(e).data('id') as string];
                 const video = await processVideo(attachment.bmmrId);
                 new_figure = renderVideoMedia(video);
             }
         } else if (imageType === 'photo' || imageType === 'image' || type === 'image') {
             let src, alt;
             if (story_json.imageAttachments) {
-                const attachment = story_json.imageAttachments[$(e).data('id')];
+                const attachment = story_json.imageAttachments[$(e).data('id') as string];
                 alt = attachment?.alt || $(e).find('img').attr('alt')?.trim();
                 src = attachment?.baseUrl;
             } else {

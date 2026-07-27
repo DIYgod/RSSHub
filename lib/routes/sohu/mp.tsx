@@ -142,8 +142,8 @@ async function handler(ctx) {
             .text()
             .match(/(\{.*\})/)![1]
     );
-    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
-    const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))].param.data.list[0];
+    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))!];
+    const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))!].param.data.list[0];
 
     const globalConst = JSON.parse(
         $('script:contains("globalConst")')

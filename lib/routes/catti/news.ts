@@ -26,7 +26,7 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
 };
 
 const handler: Route['handler'] = async (ctx) => {
-    const category = ctx.req.param('category');
+    const category = ctx.req.param('category')!;
 
     const BASE_URL = `https://www.catticenter.com/${category}`;
 

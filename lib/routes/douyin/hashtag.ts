@@ -68,7 +68,7 @@ async function handler(ctx) {
             await context.close();
 
             const renderData = JSON.parse(decodeURIComponent(html));
-            const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail);
+            const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail)!;
             renderData[dataKey].defaultData = awemeList.aweme_list;
             return renderData[dataKey];
         },

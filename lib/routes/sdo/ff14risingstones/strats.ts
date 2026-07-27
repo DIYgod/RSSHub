@@ -69,7 +69,7 @@ async function handler(ctx: Context) {
     });
 
     return {
-        title: `石之家 - ${POST_TYPE[type] ?? ''}攻略${stratPart ? ` - ${stratPart}` : ''}`,
+        title: `石之家 - ${POST_TYPE[type!] ?? ''}攻略${stratPart ? ` - ${stratPart}` : ''}`,
         link: `${INDEX_URL}#/strat`,
         image: LOGO_URL,
         item: await generatePostFeeds(posts),

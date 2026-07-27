@@ -84,7 +84,7 @@ async function handler(ctx: Context) {
             media: cover && {
                 content: {
                     url: cover,
-                    type: `image/${mime[cover.split('.').pop()]}`,
+                    type: `image/${mime[cover.split('.').pop()!]}`,
                 },
             },
         };

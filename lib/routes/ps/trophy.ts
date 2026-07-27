@@ -69,7 +69,7 @@ async function handler(ctx) {
                         .contents()
                         .filter((_, element) => element.nodeType === 3)
                         .text()
-                        .trim()}<br>等级：${classMap[$item.find('td').eq(5).find('img').attr('title')]}<br>珍贵度：${$item.find('.hover-show .typo-top').text()}`,
+                        .trim()}<br>等级：${classMap[$item.find('td').eq(5).find('img').attr('title')!]}<br>珍贵度：${$item.find('.hover-show .typo-top').text()}`,
                     link: 'https://psnprofiles.com' + $item.find('.title').attr('href'),
                     pubDate: new Date(
                         +new Date(

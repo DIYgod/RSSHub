@@ -27,7 +27,7 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
 };
 
 const handler: Route['handler'] = async (ctx) => {
-    const category = ctx.req.param('category');
+    const category = ctx.req.param('category')!;
     const BASE_URL = NEWS_TYPES[category].baseUrl;
     // Fetch the index page
     const { data: listResponse } = await got(BASE_URL);

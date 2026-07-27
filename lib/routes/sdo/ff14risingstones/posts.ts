@@ -74,7 +74,7 @@ async function handler(ctx: Context) {
     });
 
     return {
-        title: `石之家 - ${POST_TYPE[type] ?? ''}帖文${postPart ? ` - ${postPart}` : ''}`,
+        title: `石之家 - ${POST_TYPE[type!] ?? ''}帖文${postPart ? ` - ${postPart}` : ''}`,
         link: `${INDEX_URL}#/post`,
         image: LOGO_URL,
         item: await generatePostFeeds(posts),
