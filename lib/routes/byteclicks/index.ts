@@ -27,7 +27,7 @@ async function handler(ctx) {
     const $ = load(response);
 
     const list = parseList($).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined);
-    const items = await pMap(list, (item) => parseItem(item), { concurrency: 50 });
+    const items = await pMap(list, (item) => parseItem(item), { concurrency: 5 });
 
     return {
         title: $('head title').text(),
