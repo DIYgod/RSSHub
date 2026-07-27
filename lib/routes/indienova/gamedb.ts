@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'GameDB 游戏库',
     path: '/gamedb/recent/:platform?',
     example: '/indienova/gamedb/recent',
+    categories: ['game'],
     parameters: {
         platform: {
             description: '平台，留空为 `all`',
