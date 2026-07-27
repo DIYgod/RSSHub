@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "@bbob/html": "4.3.1",
-        "@bbob/plugin-helper": "4.3.1",
+        "@bbob/plugin-helper": "4.4.0",
         "@bbob/preset-html5": "4.3.1",
         "@googleapis/youtube": "33.0.0",
         "@honeybadger-io/js": "6.15.3",
