@@ -5,6 +5,17 @@ import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://www.snowpeak.com';
+
+interface Product {
+    title: string;
+    handle: string;
+    published_at: string;
+    tags: string[];
+    description: string;
+    variants: Array<{ name: string }>;
+    images: string[];
+}
+
 export const route: Route = {
     path: '/us/new-arrivals',
     categories: ['shopping'],
@@ -49,7 +60,7 @@ async function handler() {
                 description: undefined as DataItem['description'],
                 variants: undefined as any,
             };
-            const product = $(element).find('.product-data').data('product');
+            const product = $(element).find('.product-data').data('product') as Product;
             data.title = product.title;
             data.link = `${host}/products/${product.handle}`;
             data.pubDate = new Date(product.published_at).toUTCString();

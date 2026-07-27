@@ -21,7 +21,7 @@ async function handler() {
         .toArray()
         .map((e) => {
             const $e = $(e);
-            const data = $e.data('rn-track-value');
+            const data = $e.data('rn-track-value') as { title: string; kiji_id_raw: string };
             const title = data.title;
             const link = `${url}/article/${data.kiji_id_raw}/`;
 

@@ -70,7 +70,7 @@ async function handler(ctx) {
             });
             hasArticle = true;
         } catch (error) {
-            if (error.code === 'ERR_NON_2XX_3XX_RESPONSE') {
+            if ((error as { code?: string }).code === 'ERR_NON_2XX_3XX_RESPONSE') {
                 hasArticle = false;
                 apiUrl = toApiUrl(dayjs().subtract(++i, 'day').format('YYYYMMDD'));
             }

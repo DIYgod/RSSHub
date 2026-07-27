@@ -71,9 +71,9 @@ async function handler(ctx) {
             cookie: buildAuthorizeCookie + '; ' + idpCookie,
         },
     });
-    const dates = data[0];
+    const dates: Record<string, any[]> = data[0];
 
-    let items = Object.values(dates).flatMap((articles) =>
+    let items: any[] = Object.values(dates).flatMap((articles) =>
         articles.map((article) => ({
             title: article.title,
             description: renderToString(

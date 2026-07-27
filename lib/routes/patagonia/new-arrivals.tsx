@@ -56,7 +56,7 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const data = {
-                title: $(element).find('.product-tile').data('tealium').product_name[0],
+                title: ($(element).find('.product-tile').data('tealium') as { product_name: string[] }).product_name[0],
                 link: host + '/' + $(element).find('[itemprop="url"]').attr('href'),
                 description: '',
                 category: $(element).find('[itemprop="category"]').attr('content'),

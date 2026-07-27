@@ -95,7 +95,7 @@ async function handler(ctx) {
         const pageList = results.filter((item) => Object.values<any>(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
         const items = await Promise.all(
             pageList.map(async (page) => {
-                const titleProperty = Object.values(page.properties).find((property) => property.id === 'title');
+                const titleProperty = Object.values<any>(page.properties).find((property) => property.id === 'title');
                 const pageTitle = titleProperty.title[0].plain_text;
                 const pageLink = page.url;
                 const pageLastEditedTime = page.last_edited_time;

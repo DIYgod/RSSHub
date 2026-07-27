@@ -54,7 +54,7 @@ export const route: Route = {
         });
 
         // 近期更新漫画数据
-        const updateData = response.data.comicList;
+        const updateData = response.data.comicList as Array<Record<string, any>>;
         const items = await pMap(
             updateData,
             async (item) => {

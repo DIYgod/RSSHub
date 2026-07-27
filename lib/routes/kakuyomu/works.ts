@@ -45,7 +45,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const { title, catchphrase } = __APOLLO_STATE__[`Work:${id}`];
 
-    const values = Object.values(__APOLLO_STATE__);
+    const values = Object.values<{ __typename: string }>(__APOLLO_STATE__);
     const episodes = values.filter((value) => value.__typename === 'Episode') as NextDataEpisode[];
     const items = (await Promise.all(
         episodes

@@ -4,7 +4,7 @@ const ProcessFeed = async (items, cookies, context, limit, cache) => {
     let newCookies = [];
     const result = await pMap(
         items.slice(0, limit),
-        async (i) => {
+        async (i: { id: number; forumAlias: string; description?: string }) => {
             const url = `https://www.dcard.tw/service/api/v2/posts/${i.id}`;
             const content = await cache.tryGet(`dcard:${i.id}`, async () => {
                 // try catch 处理被删除的帖子

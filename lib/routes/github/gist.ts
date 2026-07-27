@@ -50,7 +50,7 @@ async function handler(ctx) {
 
     return {
         allowEmpty: true,
-        title: `${response.owner.login} / ${Object.values(response.files)[0].filename}`,
+        title: `${response.owner.login} / ${Object.values<any>(response.files)[0].filename}`,
         description: response.description,
         image: response.owner.avatar_url,
         link: `${response.html_url}/revisions`,

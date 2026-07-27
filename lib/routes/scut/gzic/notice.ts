@@ -71,7 +71,8 @@ async function handler(ctx) {
                     const $ = load(response);
                     item.description = $('div.wp_articlecontent').html();
                 } catch (error) {
-                    if (error.response && error.response.status === 404) {
+                    const err = error as { response?: { status: number } };
+                    if (err.response && err.response.status === 404) {
                         item.description = '';
                     } else {
                         throw error;

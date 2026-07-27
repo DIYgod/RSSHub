@@ -77,7 +77,8 @@ const webFetch = (url) =>
         try {
             return webFetchCb(await got(url));
         } catch (error) {
-            if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
+            const err = error as { name: string; response: { statusCode: number } };
+            if ((err.name === 'HTTPError' || err.name === 'FetchError') && err.response.statusCode === 404) {
                 return '404';
             }
             throw error;

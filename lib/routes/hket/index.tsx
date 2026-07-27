@@ -144,7 +144,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const url = $item.parent().parent().find('.share-button').data('url');
+            const url = $item.parent().parent().find('.share-button').data('url') as string;
             return {
                 title: $item.text().trim(),
                 link: url.startsWith('http') ? url : baseUrl + url,

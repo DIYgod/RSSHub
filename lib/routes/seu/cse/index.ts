@@ -70,7 +70,7 @@ async function handler(ctx) {
                     response = await got(item.link);
                 } catch (error) {
                     // intranet
-                    if (error.response.url.startsWith('https://newids.seu.edu.cn/')) {
+                    if ((error as { response: { url: string } }).response.url.startsWith('https://newids.seu.edu.cn/')) {
                         return item;
                     }
                     throw error;

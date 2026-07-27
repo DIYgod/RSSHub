@@ -111,7 +111,8 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+                    const err = error as Error;
+                    if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -225,7 +226,8 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+        const err = error as Error;
+        if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
             return {
                 title: item.title,
                 link: item.link,
@@ -329,7 +331,7 @@ const processBody = async (body_html, story_json) => {
         if (imageType === 'audio') {
             let audio = {};
             if (story_json.audios) {
-                const attachment = story_json.audios.find((a) => a.id.toString() === $(e).data('id').toString());
+                const attachment = story_json.audios.find((a) => a.id.toString() === ($(e).data('id') as string | number).toString());
                 audio = {
                     img: attachment.image?.url || $(e).find('img').attr('src'),
                     src: attachment.url || $(e).find('audio source').attr('src'),

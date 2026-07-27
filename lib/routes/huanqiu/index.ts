@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
 function getKeysRecursive(dic, key, attr, array) {
-    for (const v of Object.values(dic)) {
+    for (const v of Object.values<Record<string, any>>(dic)) {
         if (v[key] === undefined) {
             array.push(v[attr]);
         } else {

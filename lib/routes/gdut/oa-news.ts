@@ -37,6 +37,16 @@ const typeMap = {
     },
 };
 
+interface Article {
+    title: string;
+    guid: string;
+    link: string;
+    pubDate: Date;
+    author: string;
+    category: string;
+    description?: string;
+}
+
 function getArg(type) {
     return JSON.stringify([
         { page: 1, size: 50 },
@@ -109,7 +119,7 @@ async function handler(ctx) {
     }
 
     // 构造文章数组
-    const articles = resp.data.data.map((item) => ({
+    const articles: Article[] = resp.data.data.map((item) => ({
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
@@ -122,7 +132,7 @@ async function handler(ctx) {
         articles,
         async (data) => {
             const link = data.link;
-            data.description = await cache.tryGet(link, async () => {
+            data.description = (await cache.tryGet(link, async () => {
                 // 获取数据
                 const response = await got(link, {
                     cookieJar,
@@ -198,7 +208,7 @@ async function handler(ctx) {
                 });
 
                 return node.html() ?? '';
-            });
+            })) as string;
             return data;
         },
         { concurrency: 2 }

@@ -34,7 +34,7 @@ async function handler() {
 
     const { data } = await got(`${host}/store/`);
 
-    const list = Object.values(data)
+    const list = Object.values<{ category: string; title: string; author: string; content: DataItem['description']; url: string }>(data)
         .filter((i) => i.category === 'new')
         .map((i) => ({
             title: i.title,

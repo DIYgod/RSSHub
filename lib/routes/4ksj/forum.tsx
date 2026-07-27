@@ -250,7 +250,7 @@ async function handler(ctx) {
                     links,
                 });
                 item.pubDate = timezone(parseDate(pubDate, 'YYYY-M-D HH:mm:ss'), 8);
-                item.category = Object.values(mergedDetails)
+                item.category = Object.values<string>(mergedDetails)
                     .flatMap((c) => c.split(/\s/))
                     .filter(Boolean);
                 item.author = mergedDetails['导演'];

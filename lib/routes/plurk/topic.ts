@@ -46,10 +46,10 @@ async function handler(ctx) {
     delete apiResponse.pids;
     delete apiResponse.count;
 
-    const userIds = Object.values(apiResponse).map((item) => item.user_id);
+    const userIds = Object.values<any>(apiResponse).map((item) => item.user_id);
     const names = await fetchFriends(userIds);
 
-    const items = await Promise.all(Object.values(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name)));
+    const items = await Promise.all(Object.values<any>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name)));
 
     return {
         title: $('head title').text(),

@@ -32,8 +32,8 @@ const parseItems = (list) =>
                     });
                     data = response.data;
                 } catch (error) {
-                    if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
-                        logger.error(`Error parsing article ${item.link}: ${error.message}`);
+                    if (((error as Error).name === 'HTTPError' || (error as Error).name === 'FetchError') && (error as { response: { statusCode: number } }).response.statusCode === 404) {
+                        logger.error(`Error parsing article ${item.link}: ${(error as Error).message}`);
                         return item;
                     }
                     throw error;

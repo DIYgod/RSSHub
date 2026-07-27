@@ -51,7 +51,7 @@ async function handler() {
 
                 return Promise.resolve({
                     appPlatform: pageProps.platform,
-                    decompressedData: Object.values(changelogData).map((item) => item.en),
+                    decompressedData: Object.values<any>(changelogData).map((item) => item.en),
                 });
             });
         })

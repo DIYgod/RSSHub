@@ -171,7 +171,7 @@ const render = (node) => {
             let innerHTML = '';
             if (node.data.display === 'carousel') {
                 for (const img of node.data.images) {
-                    const file = Object.values(img.file)[0];
+                    const file = Object.values<any>(img.file)[0];
                     const url = file.url.startsWith('//') ? 'https:' + file.url : file.url;
 
                     innerHTML += renderImage({

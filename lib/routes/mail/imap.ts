@@ -50,7 +50,7 @@ async function handler(ctx) {
     try {
         await client.connect();
     } catch (error) {
-        throw new Error(error.responseText, { cause: error });
+        throw new Error((error as { responseText: string }).responseText, { cause: error });
     }
 
     /**

@@ -68,7 +68,7 @@ async function handler() {
             .match(/window\.__INITIAL_STATE__=(.*);\(function\(\)\{var/)![1]
     );
 
-    const list = Object.values(initialState.courseindex.myModules).flatMap((mod) =>
+    const list = Object.values<Record<string, any>>(initialState.courseindex.myModules).flatMap((mod) =>
         mod.contents.map((item) => ({
             title: `${item.title} - ${item.subtitle}`,
             author: item.authorName,

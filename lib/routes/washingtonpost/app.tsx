@@ -40,7 +40,7 @@ For example, the category for <https://www.washingtonpost.com/national/investiga
 };
 
 function handleDuplicates(array) {
-    const objects = {};
+    const objects: Record<string, any> = {};
     for (const obj of array) {
         const existing = objects[obj.id];
         objects[obj.id] = existing ? Object.assign(existing, obj) : obj;
