@@ -62,6 +62,9 @@ export type DataItem = {
     itunes_duration?: number | string;
     itunes_item_image?: string;
     media?: Record<string, Record<string, string>>;
+    upvotes?: number;
+    downvotes?: number;
+    comments?: number;
     attachments?: Array<{
         url: string;
         mime_type: string;
