@@ -27,7 +27,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/article/list/:category'],
+            source: ['www.kcna.kp/:lang'],
+            target: '/:lang',
+        },
+        {
+            source: ['www.kcna.kp/:lang/article/list/:category'],
             target: '/:lang/:category',
         },
     ],
