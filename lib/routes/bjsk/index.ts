@@ -39,11 +39,11 @@ async function handler(ctx) {
     const list = $('.article-list a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: `${baseUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.time').text(), 'YYYY.MM.DD'),
+                title: $item.attr('title'),
+                link: `${baseUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.time').text(), 'YYYY.MM.DD'),
             };
         });
 

@@ -58,11 +58,11 @@ async function handler(ctx) {
     const items = $('.column-news-list > .news_list > .news')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.news_meta').text(), 'YYYY-MM-DD'),
+                title: $item.find('a').attr('title'),
+                link: new URL($item.find('a').attr('href'), baseUrl).href,
+                pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'),
             };
         });
 

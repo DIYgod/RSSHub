@@ -41,11 +41,11 @@ async function handler() {
     const list = $('div.normal_list>ul a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: $(item).find('p').text().trim(),
-                pubDate: parseDate($(item).find('span.date').text()),
-                link: baseUrl + $(item).attr('href'),
+                title: $($item).find('p').text().trim(),
+                pubDate: parseDate($($item).find('span.date').text()),
+                link: baseUrl + $($item).attr('href'),
             };
         });
 

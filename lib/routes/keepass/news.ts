@@ -20,11 +20,11 @@ async function handler(ctx) {
     const list = $('p > a')
         .toArray()
         .map((elem) => {
-            elem = $(elem);
+            const $elem = $(elem);
             return {
-                title: elem.find('b').text(),
-                link: new URL(elem.attr('href'), baseUrl).href,
-                pubDate: parseDate(elem.next().next('small').text().split('.', 1)[0]),
+                title: $elem.find('b').text(),
+                link: new URL($elem.attr('href'), baseUrl).href,
+                pubDate: parseDate($elem.next().next('small').text().split('.', 1)[0]),
             };
         })
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);

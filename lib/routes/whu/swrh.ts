@@ -66,21 +66,21 @@ async function handler(ctx) {
             ? $('div.my_box_nei')
                   .toArray()
                   .map((item) => {
-                      item = $(item);
+                      const $item = $(item);
                       return {
-                          title: item.find('a b.am-text-truncate').text().trim(),
-                          pubDate: item.find('a i').text(),
-                          link: new URL(item.find('a').attr('href'), baseUrl).href,
+                          title: $item.find('a b.am-text-truncate').text().trim(),
+                          pubDate: $item.find('a i').text(),
+                          link: new URL($item.find('a').attr('href'), baseUrl).href,
                       };
                   })
             : $('div.list_txt.am-fr ul.am-list li')
                   .toArray()
                   .map((item) => {
-                      item = $(item);
+                      const $item = $(item);
                       return {
-                          title: item.find('a span').text().trim(),
-                          pubDate: item.find('a i').text(),
-                          link: new URL(item.find('a').attr('href'), baseUrl).href,
+                          title: $item.find('a span').text().trim(),
+                          pubDate: $item.find('a i').text(),
+                          link: new URL($item.find('a').attr('href'), baseUrl).href,
                       };
                   });
 

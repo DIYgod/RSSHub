@@ -26,11 +26,11 @@ async function handler(ctx) {
     const items = $('.mainWrap .main_con .main_conR ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('em').text(),
-                link: `${xmut}/` + item.find('a').attr('href'),
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('em').text(),
+                link: `${xmut}/` + $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
     const itemPromises = await Promise.all(

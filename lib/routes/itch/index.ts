@@ -28,11 +28,11 @@ async function handler(ctx) {
     let items = $('.title.game_link')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 

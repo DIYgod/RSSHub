@@ -49,11 +49,11 @@ async function handler(ctx) {
     const items = $('.lm_list li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: `https://yxy.zcmu.edu.cn/${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('a').text(),
+                link: `https://yxy.zcmu.edu.cn/${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

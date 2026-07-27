@@ -65,10 +65,10 @@ async function handler(ctx) {
     let items = $('h4.title a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: `${rootUrl}${item.attr('href').split('&', 1)[0]}`,
+                link: `${rootUrl}${$item.attr('href').split('&', 1)[0]}`,
             };
         });
 

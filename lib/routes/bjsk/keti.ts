@@ -50,12 +50,12 @@ async function handler(ctx) {
     let items = $('a.news')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.zizizi').text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.date').text()),
+                title: $item.find('.zizizi').text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.date').text()),
             };
         });
 

@@ -38,8 +38,8 @@ async function handler() {
     const links: string[] = $('.tz-list ul li a')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link: string = item.attr('href');
+            const $item = $(item);
+            const link: string = $item.attr('href');
             return link.startsWith('http') ? link : baseIndexUrl + link;
         });
 

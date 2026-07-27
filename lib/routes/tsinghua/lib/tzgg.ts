@@ -38,10 +38,10 @@ async function handler(ctx) {
     const list = $('ul.notice-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').text();
-            const time = item.find('.notice-date').text();
-            const a = item.find('a').attr('href');
+            const $item = $(item);
+            const title = $item.find('a').text();
+            const time = $item.find('.notice-date').text();
+            const a = $item.find('a').attr('href');
 
             const fullUrl = new URL(a, host).href;
 

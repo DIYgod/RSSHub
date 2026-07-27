@@ -27,9 +27,9 @@ async function handler(ctx) {
         items = $('li.box-s.h16')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
-                const date = item.find('.box-date');
+                const $item = $(item);
+                const a = $item.find('a').first();
+                const date = $item.find('.box-date');
                 return {
                     title: a.text(),
                     link: new URL(a.attr('href'), currentUrl).href,
@@ -40,9 +40,9 @@ async function handler(ctx) {
         items = $('div.list-tab ul li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
-                const date = item.find('.right').first();
+                const $item = $(item);
+                const a = $item.find('a').first();
+                const date = $item.find('.right').first();
                 return {
                     title: a.text(),
                     link: new URL(a.attr('href'), currentUrl).href,
@@ -53,9 +53,9 @@ async function handler(ctx) {
         items = $('li.row.no-gutters.py-1')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
-                const date = item.find('.col-news-date');
+                const $item = $(item);
+                const a = $item.find('a').first();
+                const date = $item.find('.col-news-date');
                 return {
                     title: a.text(),
                     link: new URL(a.attr('href'), currentUrl).href,

@@ -33,12 +33,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: parseDate(item.prev().text()),
+                title: $item.text(),
+                link: new URL($item.prop('href'), rootUrl).href,
+                pubDate: parseDate($item.prev().text()),
             };
         });
 

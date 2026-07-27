@@ -34,10 +34,10 @@ async function handler() {
     const list = $('div.news li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('h4').text();
-            const time = item.find('h6').text();
-            const a = item.find('a').attr('href');
+            const $item = $(item);
+            const title = $item.find('h4').text();
+            const time = $item.find('h6').text();
+            const a = $item.find('a').attr('href');
             const fullUrl = new URL(a, host).href;
 
             return {

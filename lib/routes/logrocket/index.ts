@@ -34,14 +34,14 @@ async function handler(ctx) {
     const list = $('div.post-list .post-card')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
-            const title = item.find('.post-card-title');
+            const $item = $(item);
+            const a = $item.find('a').first();
+            const title = $item.find('.post-card-title');
             return {
                 title: title.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('.post-card-author-name').next().text().split(' ⋅ ', 1)[0], 'MMM D, YYYY'),
-                author: item.find('.post-card-author-name').text(),
+                pubDate: parseDate($item.find('.post-card-author-name').next().text().split(' ⋅ ', 1)[0], 'MMM D, YYYY'),
+                author: $item.find('.post-card-author-name').text(),
             };
         });
     const items = await Promise.all(

@@ -71,10 +71,10 @@ async function handler(ctx) {
     const out = $(items)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const newsTitle = item.find('a').attr('title');
-            const newsLink = baseUrl + item.find('a').attr('href').slice(3);
-            const newsPubDate = parseDate(item.find('span').text().slice(1, -1));
+            const $item = $(item);
+            const newsTitle = $item.find('a').attr('title');
+            const newsLink = baseUrl + $item.find('a').attr('href').slice(3);
+            const newsPubDate = parseDate($item.find('span').text().slice(1, -1));
 
             return {
                 title: newsTitle,

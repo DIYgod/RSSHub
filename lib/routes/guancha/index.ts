@@ -99,12 +99,12 @@ async function handler(ctx) {
 
                 .filter((item) => $(item).attr('href') !== 'https://user.guancha.cn')
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
 
-                    const link = item.attr('href');
+                    const link = $item.attr('href');
 
                     return {
-                        title: item.text(),
+                        title: $item.text(),
                         link: `${link.indexOf('http') === 0 ? '' : rootUrl}${link.replace(/\.shtml/, '_s.shtml')}`,
                     };
                 });

@@ -86,8 +86,8 @@ async function handler(ctx) {
         items = $('.m-article-wrap:first-of-type .m-article-item__link')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const link = item.attr('href');
+                const $item = $(item);
+                const link = $item.attr('href');
                 return {
                     link: resolveRelativeLink(link, rootUrl),
                 };

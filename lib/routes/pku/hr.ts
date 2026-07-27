@@ -50,11 +50,11 @@ async function handler(ctx) {
     const list = $('.item-list li a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text().replace(/\d+、/, ''),
-                link: `${rootUrl}/${category}/${item.attr('href')}`,
+                title: $item.text().replace(/\d+、/, ''),
+                link: `${rootUrl}/${category}/${$item.attr('href')}`,
             };
         });
 

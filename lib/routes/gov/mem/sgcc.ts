@@ -48,15 +48,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             const regExp = new RegExp(String.raw`\/sgcc\/${category}\/\.\.\.`);
-            const link = new URL(`${category}/${item.prop('href').replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
+            const link = new URL(`${category}/${$item.prop('href').replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
 
             return {
-                title: item.contents().first().text(),
+                title: $item.contents().first().text(),
                 link,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
                 enclosure_url: link,
                 enclosure_type: `application/${link.split(/\./).pop()}`,
             };

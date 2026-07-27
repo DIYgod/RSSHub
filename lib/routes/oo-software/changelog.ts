@@ -44,14 +44,14 @@ async function handler(ctx) {
     const items = $('.content h4')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
 
             return {
                 title,
                 link: `${currentUrl}#${title.split(' – ', 1)[0]}`,
-                description: item.next().html(),
+                description: $item.next().html(),
                 pubDate: parseDate(title.match(/released (on )?(.*)$/)[2], 'MMMM DD, YYYY'),
             };
         });

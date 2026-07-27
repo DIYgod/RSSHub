@@ -39,12 +39,12 @@ async function handler() {
     const list = $('div.mr245')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const aEle = item.find('a').first();
+            const $item = $(item);
+            const aEle = $item.find('a').first();
             const href = aEle.attr('href');
             const title = aEle.find('h3').first().text();
-            const author = item.find('a.namenode').text();
-            const category = item.find('span.r').text();
+            const author = $item.find('a.namenode').text();
+            const category = $item.find('span.r').text();
             return {
                 title,
                 link: href,

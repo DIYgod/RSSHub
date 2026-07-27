@@ -23,13 +23,13 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a.xxgk_list1');
+            const a = $item.find('a.xxgk_list1');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('td').last().text()),
+                pubDate: parseDate($item.find('td').last().text()),
                 link: new URL(a.prop('href'), currentUrl).href,
                 language,
             };

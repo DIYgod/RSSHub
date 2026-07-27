@@ -22,17 +22,17 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             const description = renderDescription({
-                intro: item.find('p').text(),
+                intro: $item.find('p').text(),
             });
 
             return {
-                title: item.find('h3 > a').text(),
+                title: $item.find('h3 > a').text(),
                 description,
-                pubDate: parseDate(item.find('span').text()),
-                link: item.find('h3 > a').prop('href'),
+                pubDate: parseDate($item.find('span').text()),
+                link: $item.find('h3 > a').prop('href'),
                 language,
             };
         });

@@ -31,13 +31,13 @@ async function handler(ctx) {
     const list = $('.subcate-list__wrapper .subcate-list__link__text')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const url = item.find('a').first().attr('href');
+            const $item = $(item);
+            const url = $item.find('a').first().attr('href');
             return {
-                title: item.find('h3').text(),
-                description: item.find('p').html(),
+                title: $item.find('h3').text(),
+                description: $item.find('p').html(),
                 link: url.includes('?from=') ? url.split('?from=', 1)[0] : url,
-                pubDate: timezone(parseDate(item.find('.subcate-list__time--roc').text(), 'YYYY-MM-DD HH:mm'), 8),
+                pubDate: timezone(parseDate($item.find('.subcate-list__time--roc').text(), 'YYYY-MM-DD HH:mm'), 8),
             };
         });
 

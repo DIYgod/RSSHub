@@ -79,11 +79,11 @@ const parseList = ($, limit) =>
     $('.caption')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h3').text(),
-                link: item.find('h3 a').attr('href'),
-                pubDate: parseDate(item.find('time').text()),
+                title: $item.find('h3').text(),
+                link: $item.find('h3 a').attr('href'),
+                pubDate: parseDate($item.find('time').text()),
             };
         })
         .slice(0, limit);

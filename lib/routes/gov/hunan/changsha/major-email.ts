@@ -43,12 +43,12 @@ async function handler() {
         .slice(1)
         .toArray()
         .map((tr) => {
-            tr = $(tr);
+            const $tr = $(tr);
 
             return {
-                title: tr.find('td[title]').attr('title'),
-                link: baseUrl + tr.find('td[title] > a').attr('href'),
-                author: tr.find('td:last').text(),
+                title: $tr.find('td[title]').attr('title'),
+                link: baseUrl + $tr.find('td[title] > a').attr('href'),
+                author: $tr.find('td:last').text(),
             };
         });
 

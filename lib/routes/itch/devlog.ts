@@ -54,12 +54,12 @@ async function handler(ctx) {
         .toArray()
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
-                pubDate: timezone(parseDate(item.text()), 8),
+                title: $item.text(),
+                link: $item.attr('href'),
+                pubDate: timezone(parseDate($item.text()), 8),
             };
         });
 

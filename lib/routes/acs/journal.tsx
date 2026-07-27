@@ -52,23 +52,23 @@ async function handler(ctx) {
             return $('.issue-item')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
 
-                    const a = item.find('.issue-item_title a');
-                    const doi = item.find('input[name="doi"]').attr('value');
+                    const a = $item.find('.issue-item_title a');
+                    const doi = $item.find('input[name="doi"]').attr('value');
 
                     return {
                         doi,
                         guid: doi,
                         title: a.text(),
                         link: `${rootUrl}${a.attr('href')}`,
-                        pubDate: parseDate(item.find('.pub-date-value').text(), 'MMMM D, YYYY'),
-                        author: item
+                        pubDate: parseDate($item.find('.pub-date-value').text(), 'MMMM D, YYYY'),
+                        author: $item
                             .find('.issue-item_loa li')
                             .toArray()
                             .map((a) => $(a).text())
                             .join(', '),
-                        description: renderDescription(item.find('.issue-item_img').html(), item.find('.hlFld-Abstract').html()),
+                        description: renderDescription($item.find('.issue-item_img').html(), $item.find('.hlFld-Abstract').html()),
                     };
                 });
         },

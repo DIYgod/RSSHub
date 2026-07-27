@@ -25,14 +25,14 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('img.a9-rich-card-list_image');
-            const title = item.find('div.a9-rich-card-list_label').text();
+            const image = $item.find('img.a9-rich-card-list_image');
+            const title = $item.find('div.a9-rich-card-list_label').text();
 
             return {
                 title,
-                link: new URL(item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href'), rootUrl).href,
                 description: renderDescription({
                     images: image
                         ? [
@@ -43,7 +43,7 @@ export const handler = async (ctx) => {
                           ]
                         : undefined,
                 }),
-                pubDate: timezone(parseDate(item.find('div.a9-rich-card-list_infos').text()), 8),
+                pubDate: timezone(parseDate($item.find('div.a9-rich-card-list_infos').text()), 8),
                 language,
             };
         });
@@ -56,15 +56,15 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 $$('ignore_js_op img, p img').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    el.parent().replaceWith(
+                    $el.parent().replaceWith(
                         renderDescription({
-                            images: el.prop('file')
+                            images: $el.prop('file')
                                 ? [
                                       {
-                                          src: el.prop('file'),
-                                          alt: el.next().find('div.xs0 p').first().text(),
+                                          src: $el.prop('file'),
+                                          alt: $el.next().find('div.xs0 p').first().text(),
                                       },
                                   ]
                                 : undefined,

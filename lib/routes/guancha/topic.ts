@@ -36,11 +36,11 @@ async function handler(ctx) {
     let items = $('.list-item h4 a, ul.home li .list-item h4 a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}&page=0`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}&page=0`,
             };
         });
 

@@ -38,11 +38,11 @@ async function handler(ctx) {
         .toArray()
         .filter((item) => !$(item).attr('style'))
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), url).href,
-                pubDate: parseDate(item.find('span').text().replace('[', '').replace(']', '')),
+                title: $item.find('a').attr('title'),
+                link: new URL($item.find('a').attr('href'), url).href,
+                pubDate: parseDate($item.find('span').text().replace('[', '').replace(']', '')),
             };
         });
 

@@ -44,14 +44,14 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
         .toArray()
         .map((each) => {
-            each = $(each);
-            const floor = each.find('th.new a.s.xst').text();
-            const floorUrl = each.find('th.new a.s.xst').attr('href');
+            const $each = $(each);
+            const floor = $each.find('th.new a.s.xst').text();
+            const floorUrl = $each.find('th.new a.s.xst').attr('href');
             return {
                 title: `${title}:${floor}`,
                 link: new URL(floorUrl, `${host}/2b/`).href,
-                author: each.find('td.by cite').text(),
-                pubDate: timezone(parseDate(each.find('td.by em').first().text()), 8),
+                author: $each.find('td.by cite').text(),
+                pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
             };
         });
 

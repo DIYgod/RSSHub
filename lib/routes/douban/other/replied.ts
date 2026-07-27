@@ -33,8 +33,8 @@ async function handler(ctx) {
     const list = $('div.recent-replied-mod ul.comment-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const p = item.find('p');
+            const $item = $(item);
+            const p = $item.find('p');
             const nid = p
                 .find('a')
                 .attr('href')
@@ -43,7 +43,7 @@ async function handler(ctx) {
             p.remove();
 
             return {
-                title: `${item.find('a.lnk-people').text()} - ${title}`,
+                title: `${$item.find('a.lnk-people').text()} - ${title}`,
                 link: `https://www.douban.com/note/${nid}`,
             };
         });

@@ -48,12 +48,12 @@ export async function handler(ctx) {
     let items = $('h4 a, div.subtitle a[title]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.prop('href');
+            const link = $item.prop('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: link.startsWith('http') ? link : new URL(link, currentUrl).href,
             };
         });

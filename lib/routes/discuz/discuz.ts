@@ -63,11 +63,11 @@ async function loadContent(itemLink, charset, header) {
 
     // fix lazyload image
     post.find('img').each((_, img) => {
-        img = $(img);
-        if (img.attr('src')?.endsWith('none.gif') && img.attr('file')) {
-            img.attr('src', img.attr('file') || img.attr('zoomfile'));
-            img.removeAttr('file');
-            img.removeAttr('zoomfile');
+        const $img = $(img);
+        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
+            $img.attr('src', $img.attr('file') || $img.attr('zoomfile'));
+            $img.removeAttr('file');
+            $img.removeAttr('zoomfile');
         }
     });
 
@@ -123,13 +123,13 @@ async function handler(ctx) {
             .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('span[id^=thread] a');
+                const $item = $(item);
+                const a = $item.find('span[id^=thread] a');
                 return {
                     title: a.text().trim(),
                     link: fixUrl(a.attr('href'), link),
-                    pubDate: item.find('td.author em').length ? parseDate(item.find('td.author em').text().trim()) : undefined,
-                    author: item.find('td.author cite a').text().trim(),
+                    pubDate: $item.find('td.author em').length ? parseDate($item.find('td.author em').text().trim()) : undefined,
+                    author: $item.find('td.author cite a').text().trim(),
                 };
             });
 
@@ -150,13 +150,13 @@ async function handler(ctx) {
             .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a.xst');
+                const $item = $(item);
+                const a = $item.find('a.xst');
                 return {
                     title: a.text(),
                     link: fixUrl(a.attr('href'), link),
-                    pubDate: item.find('td.by:nth-child(3) em span').last().length ? parseDate(item.find('td.by:nth-child(3) em span').last().text().trim()) : undefined,
-                    author: item.find('td.by:nth-child(3) cite a').text().trim(),
+                    pubDate: $item.find('td.by:nth-child(3) em span').last().length ? parseDate($item.find('td.by:nth-child(3) em span').last().text().trim()) : undefined,
+                    author: $item.find('td.by:nth-child(3) cite a').text().trim(),
                 };
             });
 

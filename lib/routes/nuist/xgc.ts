@@ -40,11 +40,11 @@ async function handler() {
     const list = $('.wp_article_list .list_item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'),
+                title: $item.find('a').attr('title'),
+                link: new URL($item.find('a').attr('href'), baseUrl).href,
+                pubDate: parseDate($item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'),
             };
         });
 

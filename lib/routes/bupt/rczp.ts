@@ -44,11 +44,11 @@ async function handler() {
     const list = $('.date-block')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.next().text(),
-                link: `${rootUrl}/${item.next().attr('href')}`,
+                title: $item.next().text(),
+                link: `${rootUrl}/${$item.next().attr('href')}`,
             };
         });
 

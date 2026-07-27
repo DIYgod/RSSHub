@@ -45,12 +45,12 @@ async function handler(ctx) {
     const list = $('ul.wp_article_list li')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+            const $e = $(e);
+            const a = $e.find('a');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), host).href,
-                pubDate: parseDate(e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
+                pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
             };
         });
 

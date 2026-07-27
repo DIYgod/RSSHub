@@ -30,8 +30,8 @@ export const route: Route = {
             .toArray()
             .slice(0, 10)
             .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
+                const $item = $(item);
+                const a = $item.find('a').first();
 
                 const title = a.find('.article-title').text();
                 const link = `${baseUrl}${a.attr('href')}`;

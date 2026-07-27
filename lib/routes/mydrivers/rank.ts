@@ -50,12 +50,12 @@ async function handler(ctx) {
         .filter((item) => /\/\d+\.html?/.test($(item).prop('href')))
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.prop('href');
+            const link = $item.prop('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: new URL(link, rootUrl).href,
                 guid: link.match(/\/(\d+)\.html?/)[1],
             };

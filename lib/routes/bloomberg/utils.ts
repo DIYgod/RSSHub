@@ -83,11 +83,11 @@ const parseNewsList = async (url, ctx) => {
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .map((u) => {
-            u = $(u);
+            const $u = $(u);
             const item = {
-                title: u.find(String.raw`news\:title`).text(),
-                link: u.find('loc').text(),
-                pubDate: parseDate(u.find(String.raw`news\:publication_date`).text()),
+                title: $u.find(String.raw`news\:title`).text(),
+                link: $u.find('loc').text(),
+                pubDate: parseDate($u.find(String.raw`news\:publication_date`).text()),
             };
             return item;
         });

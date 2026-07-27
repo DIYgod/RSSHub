@@ -663,12 +663,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.prop('title') || item.text(),
-                link: new URL(item.prop('href'), currentUrl).href,
-                pubDate: parseDate(item.next().text(), 'YYYY/MM/DD'),
+                title: $item.prop('title') || $item.text(),
+                link: new URL($item.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.next().text(), 'YYYY/MM/DD'),
             };
         });
 

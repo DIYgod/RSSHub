@@ -29,12 +29,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
-            const image = item.find('img').first();
+            const a = $item.find('a').first();
+            const image = $item.find('img').first();
 
-            item.find('dd').last().remove();
+            $item.find('dd').last().remove();
 
             return {
                 title: a.prop('title'),
@@ -46,7 +46,7 @@ async function handler(ctx) {
                     },
                 }),
                 pubDate: parseDate(
-                    item
+                    $item
                         .find('dd')
                         .last()
                         .text()

@@ -12,10 +12,10 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
     const list = $(listSelector)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find(titleSelector).attr('title'),
-                link: host + item.find(titleSelector).attr('href'),
+                title: $item.find(titleSelector).attr('title'),
+                link: host + $item.find(titleSelector).attr('href'),
             };
         });
 

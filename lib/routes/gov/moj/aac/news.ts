@@ -38,12 +38,12 @@ async function handler(ctx) {
     const list = $('.list ul li a')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const isDownload = /檔案下載/.test(item.attr('title'));
-            const title = isDownload ? item.text().trim() : item.attr('title');
+            const $item = $(item);
+            const isDownload = /檔案下載/.test($item.attr('title'));
+            const title = isDownload ? $item.text().trim() : $item.attr('title');
             return {
                 title,
-                link: new URL(item.attr('href'), baseUrl).href,
+                link: new URL($item.attr('href'), baseUrl).href,
                 isDownload,
             };
         });

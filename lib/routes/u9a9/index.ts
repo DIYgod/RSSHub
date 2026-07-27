@@ -43,9 +43,9 @@ async function handler(ctx) {
         .slice(1) // skip thead
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('td').eq(1).find('a');
-            const { size, unit } = item
+            const $item = $(item);
+            const a = $item.find('td').eq(1).find('a');
+            const { size, unit } = $item
                 .find('td')
                 .eq(3)
                 .text()
@@ -53,9 +53,9 @@ async function handler(ctx) {
             return {
                 title: a.attr('title'),
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: timezone(parseDate(item.find('td').eq(4).text()), 8),
+                pubDate: timezone(parseDate($item.find('td').eq(4).text()), 8),
 
-                enclosure_url: item.find('td').eq(2).find('a').eq(1).attr('href'),
+                enclosure_url: $item.find('td').eq(2).find('a').eq(1).attr('href'),
                 enclosure_length: Number.parseInt(size * (unit === 'GB' ? 1024 * 1024 * 1024 : 1024 * 1024)),
                 enclosure_type: 'application/x-bittorrent',
             };

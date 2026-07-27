@@ -124,10 +124,10 @@ async function handler(ctx) {
         .slice(0, 15)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = item.attr('href').split(';jsessionid=');
+            const $item = $(item);
+            const link = $item.attr('href').split(';jsessionid=');
             jsessionid = link[1];
-            const next = item.next();
+            const next = $item.next();
             return {
                 title: next.find('h3').text(),
                 link: `${rootUrl}${link[0]}`,

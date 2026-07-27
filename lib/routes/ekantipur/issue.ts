@@ -52,13 +52,13 @@ async function handler(ctx) {
         .toArray()
         // We use the `map()` method to traverse the array and parse the data we need from each element.
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 // We need an absolute URL for `link`, but `a.attr('href')` returns a relative URL.
                 link: `${baseUrl}${a.attr('href')}`,
-                author: item.find('div.author').text(),
+                author: $item.find('div.author').text(),
                 category: channel,
             };
         });

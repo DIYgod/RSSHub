@@ -43,9 +43,9 @@ async function handler(ctx) {
     const list = $("div[class='list_right fr'] ul li")
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const date = parseDate(item.find('span').text());
+            const $item = $(item);
+            const a = $item.find('a');
+            const date = parseDate($item.find('span').text());
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), baseUrl).href,

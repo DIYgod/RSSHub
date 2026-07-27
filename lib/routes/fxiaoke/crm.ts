@@ -46,13 +46,13 @@ async function handler(ctx) {
     let items = $('.content-item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const c1 = item.find('.baike-content-t1');
-            const c3 = item.find('.baike-content-t3').find('span');
+            const $item = $(item);
+            const c1 = $item.find('.baike-content-t1');
+            const c3 = $item.find('.baike-content-t3').find('span');
             return {
                 title: c1.text().trim(),
                 // pubDate: parseDate(c3.first().text().trim()),
-                link: item.find('a').attr('href'),
+                link: $item.find('a').attr('href'),
                 author: c3.last().text().trim(),
             };
         });
@@ -64,13 +64,13 @@ async function handler(ctx) {
                 const firstViewBox = $('.body-wrapper-article');
 
                 firstViewBox.find('img').each((_, img) => {
-                    img = $(img);
-                    if (img.attr('zoomfile')) {
-                        img.attr('src', img.attr('zoomfile'));
-                        img.removeAttr('zoomfile');
-                        img.removeAttr('file');
+                    const $img = $(img);
+                    if ($img.attr('zoomfile')) {
+                        $img.attr('src', $img.attr('zoomfile'));
+                        $img.removeAttr('zoomfile');
+                        $img.removeAttr('file');
                     }
-                    img.removeAttr('onmouseover');
+                    $img.removeAttr('onmouseover');
                 });
 
                 item.description = firstViewBox.html();

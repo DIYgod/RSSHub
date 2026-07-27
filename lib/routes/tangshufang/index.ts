@@ -57,14 +57,14 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h2 a');
+            const a = $item.find('h2 a');
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('time').text()),
+                pubDate: parseDate($item.find('time').text()),
             };
         });
 

@@ -43,14 +43,14 @@ export async function handler(ctx) {
     const list = $('.gallary_item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const href = item.find('a').attr('href');
+            const $item = $(item);
+            const href = $item.find('a').attr('href');
             const aid = href.match(/^\/photos-index-aid-(\d+)\.html$/)[1];
             return {
-                title: item.find('a').attr('title'),
+                title: $item.find('a').attr('title'),
                 link: `${baseUrl}${href}`,
                 pubDate: parseDate(
-                    item
+                    $item
                         .find('.info_col')
                         .text()
                         .replace(/\d+張照片，\n創建於/, ''),

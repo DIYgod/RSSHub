@@ -78,8 +78,8 @@ async function handler(ctx) {
         link: url,
         item: await Promise.all(
             list.toArray().map((item) => {
-                item = $(item);
-                let contentUrl = item.find('a').attr('href');
+                const $item = $(item);
+                let contentUrl = $item.find('a').attr('href');
                 contentUrl = contentUrl.startsWith('http') ? contentUrl : new URL(contentUrl, url).href;
                 return cache.tryGet(contentUrl, async () => {
                     let description;
@@ -88,7 +88,7 @@ async function handler(ctx) {
                     let pubDate;
                     let author;
                     let category;
-                    if (/dysMiddleResultConItemTitle/.test(item.html())) {
+                    if (/dysMiddleResultConItemTitle/.test($item.html())) {
                         if (contentUrl.includes('content')) {
                             fullTextGet = await got.get(contentUrl);
                             fullTextData = load(fullTextGet.data);
@@ -96,7 +96,7 @@ async function handler(ctx) {
                             fullTextData('#myFlash').remove(); // 移除flash
                             description = /pages_content/.test(fullTextData.html()) ? fullTextData('.pages_content').html() : fullTextData('#UCAP-CONTENT').html();
                         } else {
-                            description = item.find('a').text(); // 忽略获取吹风会的全文
+                            description = $item.find('a').text(); // 忽略获取吹风会的全文
                         }
                     } else if (contentUrl.includes('content')) {
                         fullTextGet = await got.get(contentUrl);
@@ -114,10 +114,10 @@ async function handler(ctx) {
                             description = /UCAP-CONTENT/.test($1) ? fullTextData('#UCAP-CONTENT').html() : fullTextData('body').html();
                         }
                     } else {
-                        description = item.find('a').text(); // 忽略获取吹风会的全文
+                        description = $item.find('a').text(); // 忽略获取吹风会的全文
                     }
                     return {
-                        title: item.find('a').text(),
+                        title: $item.find('a').text(),
                         description,
                         link: contentUrl,
                         pubDate,

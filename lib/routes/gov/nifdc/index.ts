@@ -43,15 +43,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const link = a.prop('href');
 
             return {
                 title: a.prop('title') || a.text(),
                 link: link.startsWith('http') ? link : new URL(link, currentUrl).href,
-                pubDate: parseDate(item.find('span').text().replaceAll(/\(|\)/g, '')),
+                pubDate: parseDate($item.find('span').text().replaceAll(/\(|\)/g, '')),
             };
         });
 

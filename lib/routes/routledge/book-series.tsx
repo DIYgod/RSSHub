@@ -41,10 +41,10 @@ async function handler(ctx) {
     const list = $('.row.book')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('h3 a');
-            const description = item.find('p.description');
-            const meta = item.find('p.description').prev().text().split('\n');
+            const $item = $(item);
+            const title = $item.find('h3 a');
+            const description = $item.find('p.description');
+            const meta = $item.find('p.description').prev().text().split('\n');
             return {
                 title: title.text(),
                 link: title.attr('href'),

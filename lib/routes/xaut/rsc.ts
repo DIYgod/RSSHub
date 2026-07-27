@@ -52,12 +52,12 @@ async function handler(ctx) {
     const list = $('.vsb-space.n_right .list .cleafix')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             // 工作动态栏目里有一些是外链，这里做个判断
-            const a = item.find('.list_wen a').eq(0).attr('href');
+            const a = $item.find('.list_wen a').eq(0).attr('href');
             const link = a.slice(0, 4) === 'http' ? a : 'http://renshichu.xaut.edu.cn/' + a;
             // 这里jquery比较长，引几个中间变量倒是方便阅读，但是我还是觉得不需要
-            const title = item.find('.list_wen a.tit').text();
+            const title = $item.find('.list_wen a.tit').text();
             return {
                 title,
                 link,

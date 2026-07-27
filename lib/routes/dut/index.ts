@@ -50,24 +50,24 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             const result = {
-                link: item.attr('href').startsWith('http') ? item.attr('href') : `${rootUrl}/${item.attr('href').replace(/^[./]+/, '')}`,
+                link: $item.attr('href').startsWith('http') ? $item.attr('href') : `${rootUrl}/${$item.attr('href').replace(/^[./]+/, '')}`,
             };
 
             if (site === 'fldpj') {
-                result.title = item.find('em').text();
-                result.pubDate = parseDate(item.find('span').text());
+                result.title = $item.find('em').text();
+                result.pubDate = parseDate($item.find('span').text());
             } else {
                 const dateRegex = /(\d{4}[/年-]\d{2}[/月-]\d{2})/;
 
-                let dateMatch = item.parent().text().match(dateRegex);
+                let dateMatch = $item.parent().text().match(dateRegex);
                 if (!dateMatch) {
-                    dateMatch = item.parent().parent().text().match(dateRegex);
+                    dateMatch = $item.parent().parent().text().match(dateRegex);
                 }
 
-                result.title = item.text().trim() === '' ? item.next().text() : item.text();
+                result.title = $item.text().trim() === '' ? $item.next().text() : $item.text();
                 if (dateMatch) {
                     result.pubDate = parseDate(dateMatch[1].replaceAll(/年|月/g, '-'));
                 }

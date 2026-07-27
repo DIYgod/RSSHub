@@ -31,8 +31,8 @@ async function handler(ctx) {
     const list = $('.newslist .infor')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.attr('title'),
                 link: a.attr('href'),

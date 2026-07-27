@@ -59,12 +59,12 @@ async function handler(ctx) {
         .find('a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.parent().prev().find('li').first().text(), 'YYYY.MM'),
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.parent().prev().find('li').first().text(), 'YYYY.MM'),
             };
         });
 

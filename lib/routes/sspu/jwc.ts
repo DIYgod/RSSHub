@@ -29,8 +29,8 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('.news_title a');
+            const $item = $(item);
+            const title = $item.find('.news_title a');
             return {
                 title: title.attr('title'),
                 link: `${baseUrl}${title.attr('href')}`,

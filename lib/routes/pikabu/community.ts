@@ -26,8 +26,8 @@ async function handler(ctx) {
 
         fixImage(content);
         content.find('.player').each((_, elem) => {
-            elem = $(elem);
-            fixVideo(elem);
+            const $elem = $(elem);
+            fixVideo($elem);
         });
         return {
             title: data.name,

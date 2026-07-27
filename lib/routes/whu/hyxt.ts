@@ -28,14 +28,14 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('td a');
+            const a = $item.find('td a');
 
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
-                pubDate: parseDate(item.find('td').last().text()),
+                pubDate: parseDate($item.find('td').last().text()),
             };
         });
 

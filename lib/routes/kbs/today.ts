@@ -50,15 +50,15 @@ async function handler(ctx) {
     const list = $('.comp_text_1x article')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h2 a');
+            const a = $item.find('h2 a');
 
             return {
                 title: a.text(),
-                category: item.find('.cate').text(),
+                category: $item.find('.cate').text(),
                 link: `${rootUrl}/service${a.attr('href').replace('./', '/')}`,
-                pubDate: timezone(parseDate(item.find('.date').text()), 9),
+                pubDate: timezone(parseDate($item.find('.date').text()), 9),
             };
         });
 

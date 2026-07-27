@@ -64,9 +64,9 @@ async function handler(ctx) {
     // 最新一话的地址
     const updatedOne = $('div.detail-list-form-title span.s a').attr('href');
     const items = list.toArray().map((item) => {
-        item = $(item);
-        const itemTitle = item.text();
-        const itemUrl = item.attr('href');
+        const $item = $(item);
+        const itemTitle = $item.text();
+        const itemUrl = $item.attr('href');
         const itemDate = itemUrl === updatedOne ? parseDate(newOneDate) : '';
         return {
             title: itemTitle,

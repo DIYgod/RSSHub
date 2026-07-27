@@ -43,12 +43,12 @@ async function handler(ctx) {
         .slice(0, 15)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
-                pubDate: parseDate(item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1]),
+                title: $item.text(),
+                link: $item.attr('href'),
+                pubDate: parseDate($item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1]),
             };
         });
 

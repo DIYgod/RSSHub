@@ -94,13 +94,13 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const hasCategory = item.find('th em a').length;
+            const $item = $(item);
+            const hasCategory = $item.find('th em a').length;
             return {
-                title: `${hasCategory ? `[${item.find('th em a').text()}]` : ''} ${item.find('a.xst').text()}`,
-                link: host + item.find('a.xst').attr('href'),
-                pubDate: parseDate(item.find('td.by').find('em span span').attr('title')),
-                author: item.find('td.by cite a').first().text(),
+                title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
+                link: host + $item.find('a.xst').attr('href'),
+                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')),
+                author: $item.find('td.by cite a').first().text(),
             };
         });
 

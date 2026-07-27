@@ -26,9 +26,9 @@ async function handler() {
     const items = $('div.recent-post-item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a.article-title');
-            const timeElement = item.find('time');
+            const $item = $(item);
+            const a = $item.find('a.article-title');
+            const timeElement = $item.find('time');
             return {
                 title: a.attr('title'),
                 link: `https://daoxuan.cc${a.attr('href')}`,

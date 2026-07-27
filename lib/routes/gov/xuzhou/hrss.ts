@@ -41,13 +41,13 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = (category ? $('.module-items a') : $('.bdl[data-target="1"]').eq(1).find('a')).toArray().map((item) => {
-        item = $(item);
+        const $item = $(item);
 
-        const link = item.attr('href');
+        const link = $item.attr('href');
 
         return {
-            title: item.attr('title'),
-            link: `${link.startsWith('http') ? '' : rootUrl}${item.attr('href')}`,
+            title: $item.attr('title'),
+            link: `${link.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
         };
     });
 

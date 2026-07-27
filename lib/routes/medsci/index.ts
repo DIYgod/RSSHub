@@ -84,13 +84,13 @@ async function handler(ctx) {
         .find('.ms-link')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const pubDate = item.parent().parent().find('.item-meta-item').first().text();
+            const pubDate = $item.parent().parent().find('.item-meta-item').first().text();
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href').replace(/;jsessionid=[\dA-Z]+/, '')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href').replace(/;jsessionid=[\dA-Z]+/, '')}`,
                 pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
             };
         });

@@ -29,15 +29,15 @@ const FetchGoItems = async (ctx, rewriteId) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
                 link: `${rootUrl}${a.attr('href')}`,
-                author: item.next().find('.author').text(),
-                category: item
+                author: $item.next().find('.author').text(),
+                category: $item
                     .next()
                     .find('.node')
                     .toArray()

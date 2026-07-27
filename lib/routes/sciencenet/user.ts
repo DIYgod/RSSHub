@@ -57,11 +57,11 @@ async function handler(ctx) {
         .toArray()
         .toReversed()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('title').text(),
-                link: item.find('guid').text(),
+                title: $item.find('title').text(),
+                link: $item.find('guid').text(),
             };
         });
 

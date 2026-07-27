@@ -36,11 +36,11 @@ const parseNewsList = async (url, selector, ctx) => {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').first().text().trim(),
-                link: new URL(item.find('a').first().attr('href'), url).href,
-                pubDate: parseDate(item.find('.more').text(), 'YYYY-MM-DD'),
+                title: $item.find('a').first().text().trim(),
+                link: new URL($item.find('a').first().attr('href'), url).href,
+                pubDate: parseDate($item.find('.more').text(), 'YYYY-MM-DD'),
             };
         });
     const title = $('.other_Location')

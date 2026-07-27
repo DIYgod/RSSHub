@@ -63,9 +63,9 @@ async function handler(ctx) {
     const list = $(listSelector)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const content = item.find('header').find('h2').find('a');
-            const time = item.find('header').find('span.h4').text();
+            const $item = $(item);
+            const content = $item.find('header').find('h2').find('a');
+            const time = $item.find('header').find('span.h4').text();
 
             return {
                 // title: content.text(),

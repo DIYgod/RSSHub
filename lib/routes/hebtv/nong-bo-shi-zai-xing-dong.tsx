@@ -67,8 +67,8 @@ async function handler(ctx) {
         .children()
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             const timeMatch = a.text().match(/\d+/);
             const timestr = timeMatch ? timeMatch[0] : '';
 

@@ -45,13 +45,13 @@ async function handler(ctx) {
     const list = $('div.page-contner.fl li.pot-r')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a.no-wrap');
+            const $item = $(item);
+            const a = $item.find('a.no-wrap');
             const link = new URL(a.attr('href'), url).href;
             return {
                 title: a.attr('title'),
                 link,
-                pubDate: parseDate(item.find('span.fr').text()), // 假设日期格式是YYYY-MM-DD
+                pubDate: parseDate($item.find('span.fr').text()), // 假设日期格式是YYYY-MM-DD
             };
         });
 

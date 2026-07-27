@@ -75,16 +75,16 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const matches = item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
+            const matches = $item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: detailUrl,
                 category: matches[1],
                 guid: `zjks-${matches[1]}-${matches[2]}`,
-                pubDate: parseDate(item.parent().next().text()),
+                pubDate: parseDate($item.parent().next().text()),
                 tzid: matches[2],
             };
         });

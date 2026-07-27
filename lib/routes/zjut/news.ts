@@ -44,11 +44,11 @@ async function handler(ctx) {
     const list = $('#l-container .news_list > li.news')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').text();
-            const link = item.find('a').attr('href');
+            const $item = $(item);
+            const title = $item.find('a').text();
+            const link = $item.find('a').attr('href');
 
-            const date = item.find("span[class='news_meta']").text();
+            const date = $item.find("span[class='news_meta']").text();
 
             return {
                 title,

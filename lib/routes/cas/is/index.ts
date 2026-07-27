@@ -22,11 +22,11 @@ async function handler(ctx) {
     const items = $('.list-news ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), response.url).href,
-                pubDate: parseDate(item.find('span').text().replaceAll('[]', '')),
+                title: $item.find('a').text(),
+                link: new URL($item.find('a').attr('href'), response.url).href,
+                pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
             };
         });
 

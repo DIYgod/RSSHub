@@ -40,10 +40,10 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((i, item) => {
-            item = $(item);
-            const itemTitle = item.find('a').text();
-            const itemDate = item.find('.span-time').text();
-            const path = item.find('a').attr('href');
+            const $item = $(item);
+            const itemTitle = $item.find('a').text();
+            const itemDate = $item.find('.span-time').text();
+            const path = $item.find('a').attr('href');
             const itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
                 let description: string;

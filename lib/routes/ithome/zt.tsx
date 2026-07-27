@@ -25,24 +25,24 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('h2').text();
-            const image = item.find('img').prop('data-original') ?? item.find('img').prop('src');
+            const title = $item.find('h2').text();
+            const image = $item.find('img').prop('data-original') ?? $item.find('img').prop('src');
 
             return {
                 title,
                 pubDate: timezone(
                     parseDate(
-                        item
+                        $item
                             .find('span.time script')
                             .text()
                             .match(/'(.*?)'/)
                     ),
                     8
                 ),
-                link: item.find('a').first().prop('href'),
-                author: item.find('div.editor').contents().first().text(),
+                link: $item.find('a').first().prop('href'),
+                author: $item.find('div.editor').contents().first().text(),
                 image,
                 banner: image,
                 language,
@@ -59,13 +59,13 @@ export const handler = async (ctx) => {
                 $$('p.ad-tips, a.topic-bar').remove();
 
                 $$('div#paragraph p img').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    const src = el.prop('data-original');
+                    const src = $el.prop('data-original');
 
                     if (src) {
-                        const alt = el.prop('alt');
-                        el.replaceWith(renderToString(<figure>{alt ? <img src={src} alt={alt} /> : <img src={src} />}</figure>));
+                        const alt = $el.prop('alt');
+                        $el.replaceWith(renderToString(<figure>{alt ? <img src={src} alt={alt} /> : <img src={src} />}</figure>));
                     }
                 });
 

@@ -56,10 +56,10 @@ async function handler(ctx) {
         .slice(0, 16)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const pubDate = item.children('span').text();
-            const title = item.find('a em').text();
-            const link = item
+            const $item = $(item);
+            const pubDate = $item.children('span').text();
+            const title = $item.find('a em').text();
+            const link = $item
                 .children('a')
                 .attr('href')
                 .replaceAll('../', () => rootMeta.url);

@@ -55,12 +55,12 @@ async function handler(ctx) {
     let items = $('.article-list li .fl-info')
         .toArray()
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                title: e.find('h3 a').text(),
-                link: `${baseURL}${e.find('h3 a').attr('href')}`,
-                author: e.find('p a').text(),
-                pubDate: timezone(parseDate(e.find('p').eq(2).text()), 8),
+                title: $e.find('h3 a').text(),
+                link: `${baseURL}${$e.find('h3 a').attr('href')}`,
+                author: $e.find('p a').text(),
+                pubDate: timezone(parseDate($e.find('p').eq(2).text()), 8),
             };
         });
 

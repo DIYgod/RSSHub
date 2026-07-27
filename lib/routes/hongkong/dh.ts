@@ -51,12 +51,12 @@ async function handler(ctx) {
     let items = $('td[headers="title"]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.find('a').attr('href'),
-                pubDate: parseDate(item.next().text(), language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日'),
+                title: $item.text(),
+                link: $item.find('a').attr('href'),
+                pubDate: parseDate($item.next().text(), language === 'english' ? 'D-MMMM-YYYY' : 'YYYY年M月D日'),
             };
         });
 

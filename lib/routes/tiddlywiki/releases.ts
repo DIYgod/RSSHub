@@ -40,9 +40,9 @@ async function handler() {
     const versionList = alist
         .toArray()
         .map((item) => {
-            item = $(item);
-            const text = item.find('title').text();
-            const date = item.find('updated').text();
+            const $item = $(item);
+            const text = $item.find('title').text();
+            const date = $item.find('updated').text();
             // 使用正则提取 v5.3.6 格式
             const version = text.match(/v\d+\.\d+\.\d+/)?.[0];
             return {

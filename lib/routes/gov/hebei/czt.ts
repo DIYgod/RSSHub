@@ -42,11 +42,11 @@ async function handler(ctx) {
     let items = $('td li a[title]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href').startsWith('../..') ? item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${item.attr('href').replace(/^\./, '')}`}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href').startsWith('../..') ? $item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${$item.attr('href').replace(/^\./, '')}`}`,
             };
         });
 

@@ -74,10 +74,10 @@ async function handler(ctx) {
                 const content = load(res.data);
                 const paragraph = content('#paragraph');
                 paragraph.find('img[data-original]').each((_, ele) => {
-                    ele = $(ele);
-                    ele.attr('src', ele.attr('data-original'));
-                    ele.removeAttr('class');
-                    ele.removeAttr('data-original');
+                    const $ele = $(ele);
+                    $ele.attr('src', $ele.attr('data-original'));
+                    $ele.removeAttr('class');
+                    $ele.removeAttr('data-original');
                 });
                 item.description = paragraph.html();
                 item.pubDate = new Date(content('#pubtime_baidu').text() + ' GMT+8').toUTCString();

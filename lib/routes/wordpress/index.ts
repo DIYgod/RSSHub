@@ -46,14 +46,14 @@ async function handler(ctx) {
             const $$ = load(item.content?.rendered ?? item.content);
 
             $$('img').each((_, el) => {
-                el = $$(el);
+                const $el = $$(el);
 
-                const src = el.prop('src');
+                const src = $el.prop('src');
 
                 if (src.startsWith('/')) {
-                    el.prop('src', `${cdn}${item.link}${src}`);
+                    $el.prop('src', `${cdn}${item.link}${src}`);
                 } else if (src.startsWith('http:')) {
-                    el.prop('src', `${cdn}${src}`);
+                    $el.prop('src', `${cdn}${src}`);
                 }
             });
 
@@ -91,14 +91,14 @@ async function handler(ctx) {
             const $$ = load(item['content:encoded']);
 
             $$('img').each((_, el) => {
-                el = $$(el);
+                const $el = $$(el);
 
-                const src = el.prop('src');
+                const src = $el.prop('src');
 
                 if (src.startsWith('/')) {
-                    el.prop('src', `${cdn}${item.link}${src}`);
+                    $el.prop('src', `${cdn}${item.link}${src}`);
                 } else if (src.startsWith('http:')) {
-                    el.prop('src', `${cdn}${src}`);
+                    $el.prop('src', `${cdn}${src}`);
                 }
             });
 

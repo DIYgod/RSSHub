@@ -30,11 +30,11 @@ export const handler = async (ctx) => {
         .filter((item) => ids.length === 0 || ids.includes($(item).prop('id')))
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const id = item.prop('id');
+            const id = $item.prop('id');
             const title = $(`li[data-id="${id}"]`).text() || undefined;
-            const image = new URL(item.prop('src'), currentUrl).href;
+            const image = new URL($item.prop('src'), currentUrl).href;
             const date =
                 image
                     .match(/_(\d{4})(\d{2})(\d{2})_/)

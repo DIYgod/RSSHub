@@ -32,11 +32,11 @@ async function handler() {
     let items = $('.post-preview')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.title').text(),
-                link: `${rootUrl}/${item.children('a').attr('href')}`,
+                title: $item.find('.title').text(),
+                link: `${rootUrl}/${$item.children('a').attr('href')}`,
             };
         });
 

@@ -49,10 +49,10 @@ async function handler(ctx) {
     const list = $('#div_md > table > tbody > tr > td:nth-child(1) > a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.prop('innerText').replaceAll(/\s/g, ''),
-                link: item.attr('href'),
+                title: $item.prop('innerText').replaceAll(/\s/g, ''),
+                link: $item.attr('href'),
             };
         });
     const items = await Promise.all(

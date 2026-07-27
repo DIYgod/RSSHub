@@ -62,10 +62,10 @@ async function handler(ctx) {
     const list = $('#post-list > div.content > div > div:nth-child(3) span')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
 
-            const scriptStr = item.find('script[type="text/javascript"]').first().text();
+            const scriptStr = $item.find('script[type="text/javascript"]').first().text();
             const user = scriptStr.match(/user':'(.*?)'/)?.[1] ?? '';
 
             const title = a.find('img').first().attr('title') ?? '';

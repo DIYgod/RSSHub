@@ -38,10 +38,10 @@ async function handler() {
     const list = $('.paragraphs .span4')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.content-heading h6 a').text().trim(),
-                link: baseUrl + item.find('a').attr('href'),
+                title: $item.find('.content-heading h6 a').text().trim(),
+                link: baseUrl + $item.find('a').attr('href'),
             };
         });
 

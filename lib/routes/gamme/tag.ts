@@ -28,10 +28,10 @@ async function handler(ctx) {
     const list = $('#category_new li a, .List-4 h3 a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.attr('title') || item.text(),
-                link: item.attr('href'),
+                title: $item.attr('title') || $item.text(),
+                link: $item.attr('href'),
             };
         });
 

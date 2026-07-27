@@ -47,13 +47,13 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: link.indexOf('http') === 0 ? link : `${currentUrl}/${item.attr('href')}`,
+                title: $item.text(),
+                link: link.indexOf('http') === 0 ? link : `${currentUrl}/${$item.attr('href')}`,
             };
         });
 

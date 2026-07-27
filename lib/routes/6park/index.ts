@@ -46,9 +46,9 @@ async function handler(ctx) {
         .toArray()
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             return {
                 link: `${rootUrl}/${id}/${a.attr('href')}`,

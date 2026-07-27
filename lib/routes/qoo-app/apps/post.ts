@@ -36,14 +36,14 @@ async function handler(ctx) {
     const list = $('.qoo-post-item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.attr('title'),
                 link: a.attr('href'),
                 // description: item.find('.img-list').html() + item.find('.text-view').html(),
-                pubDate: timezone(parseDate(item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
-                author: item.find('cite.name').text(),
+                pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                author: $item.find('cite.name').text(),
                 postId: a.attr('href').split('/').pop(),
             };
         });

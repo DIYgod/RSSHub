@@ -42,12 +42,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const postCardTitle = item.find('h2.post--card__title a');
+            const $item = $(item);
+            const postCardTitle = $item.find('h2.post--card__title a');
             return {
                 title: postCardTitle.attr('title'),
                 link: postCardTitle.attr('href'),
-                pubDate: parseDate(item.find('time').text(), 'YYYY-MM-DD'),
+                pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD'),
             };
         });
 

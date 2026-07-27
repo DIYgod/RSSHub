@@ -52,12 +52,12 @@ async function handler(ctx) {
     const list = $('.news_list .news')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const a = e.find('.news_title a');
+            const $e = $(e);
+            const a = $e.find('.news_title a');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), host).href,
-                pubDate: parseDate(e.find('.news_meta').text()),
+                pubDate: parseDate($e.find('.news_meta').text()),
             };
         });
 

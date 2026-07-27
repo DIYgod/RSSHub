@@ -36,10 +36,10 @@ export const route: Route = {
             .find('.group')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const link = item.find('a').first().attr('href');
-                const description = item.find('p').first().text();
-                const pubDate = item.find('a').next().children('span').text();
+                const $item = $(item);
+                const link = $item.find('a').first().attr('href');
+                const description = $item.find('p').first().text();
+                const pubDate = $item.find('a').next().children('span').text();
 
                 return {
                     link: `https://podwise.ai${link}`,

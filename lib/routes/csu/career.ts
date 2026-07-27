@@ -41,11 +41,11 @@ async function handler() {
     const list = $('.infoList')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: `${baseUrl}${item.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.span4').text()), 8),
+                title: $item.find('a').text(),
+                link: `${baseUrl}${$item.find('a').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.span4').text()), 8),
             };
         });
 

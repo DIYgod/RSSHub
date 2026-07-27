@@ -53,13 +53,13 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('div.background_miniatura img');
+            const image = $item.find('div.background_miniatura img');
 
             return {
-                title: item.find('div.base_tt').text(),
-                link: item.prop('href'),
+                title: $item.find('div.base_tt').text(),
+                link: $item.prop('href'),
                 description: renderDescription({
                     images: image
                         ? [
@@ -70,12 +70,12 @@ async function handler(ctx) {
                           ]
                         : undefined,
                 }),
-                author: item.find('.author').text(),
-                category: item
+                author: $item.find('.author').text(),
+                category: $item
                     .find('.category')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: image ? image.prop('post-id') : item.link.match(/\/(\d+)/)[1],
+                guid: image ? image.prop('post-id') : $item.link.match(/\/(\d+)/)[1],
             };
         });
 

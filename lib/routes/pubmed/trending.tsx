@@ -30,11 +30,11 @@ async function handler(ctx) {
     let items = $('a[data-article-id]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}/${item.attr('data-article-id')}`,
+                title: $item.text(),
+                link: `${rootUrl}/${$item.attr('data-article-id')}`,
             };
         });
 

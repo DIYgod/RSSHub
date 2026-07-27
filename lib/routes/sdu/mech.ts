@@ -41,10 +41,10 @@ async function handler(ctx) {
     let item = $('#page_list li a')
         .toArray()
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                title: e.attr('title'),
-                link: e.attr('href'),
+                title: $e.attr('title'),
+                link: $e.attr('href'),
             };
         });
 

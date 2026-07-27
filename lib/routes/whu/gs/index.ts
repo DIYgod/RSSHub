@@ -61,12 +61,12 @@ async function handler(ctx) {
     let items = $('.list ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = item.find('a').attr('href');
+            const $item = $(item);
+            const link = $item.find('a').attr('href');
             return {
-                title: item.find('p').text(),
+                title: $item.find('p').text(),
                 link: link.startsWith('http') ? link : new URL(link, host).href,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 
@@ -86,15 +86,15 @@ async function handler(ctx) {
                     content('.con_xq').remove();
 
                     content('form[name=_newscontent_fromname] img').each((_, i) => {
-                        i = $(i);
-                        if (i.attr('src').startsWith('/')) {
-                            i.attr('src', new URL(i.attr('src'), host).href);
+                        const $i = $(i);
+                        if ($i.attr('src').startsWith('/')) {
+                            $i.attr('src', new URL($i.attr('src'), host).href);
                         }
                     });
                     content('form[name=_newscontent_fromname] ul li a').each((_, a) => {
-                        a = $(a);
-                        if (a.attr('href').startsWith('/')) {
-                            a.attr('href', new URL(a.attr('href'), host).href);
+                        const $a = $(a);
+                        if ($a.attr('href').startsWith('/')) {
+                            $a.attr('href', new URL($a.attr('href'), host).href);
                         }
                     });
 

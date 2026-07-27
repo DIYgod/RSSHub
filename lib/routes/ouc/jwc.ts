@@ -36,12 +36,12 @@ async function handler() {
     const list = $('.wp_article_list li')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+            const $e = $(e);
+            const a = $e.find('a');
             return {
                 title: a.attr('title'),
                 link: a.attr('href').startsWith('http') ? a.attr('href') : 'https://jwc.ouc.edu.cn' + a.attr('href'),
-                pubDate: parseDate(e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
+                pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
             };
         });
 

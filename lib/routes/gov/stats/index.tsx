@@ -93,11 +93,11 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.attr('title'),
-                link: new URL(item.attr('href'), currentUrl).href,
+                title: $item.attr('title'),
+                link: new URL($item.attr('href'), currentUrl).href,
             };
         });
 
@@ -147,10 +147,10 @@ async function handler(ctx) {
                     attachments: content('a[oldsrc]')
                         .toArray()
                         .map((a) => {
-                            a = $(a);
+                            const $a = $(a);
                             return {
-                                link: new URL(a.attr('href'), item.link).href,
-                                name: a.text().trim(),
+                                link: new URL($a.attr('href'), item.link).href,
+                                name: $a.text().trim(),
                             };
                         }),
                 });

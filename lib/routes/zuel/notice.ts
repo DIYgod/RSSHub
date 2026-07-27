@@ -43,13 +43,13 @@ async function handler() {
     let items = $('.list_item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('.Article_Title a');
+            const a = $item.find('.Article_Title a');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('.Article_PublishDate').text()),
+                pubDate: parseDate($item.find('.Article_PublishDate').text()),
                 link: `${a.attr('href').startsWith('http') ? '' : rootUrl}${a.attr('href')}`,
             };
         });

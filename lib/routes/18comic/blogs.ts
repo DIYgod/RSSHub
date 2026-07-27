@@ -54,12 +54,12 @@ async function handler(ctx) {
     let items = $('.title')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.parent().attr('href')}`,
-                guid: `https://18comic.org${item.parent().attr('href')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.parent().attr('href')}`,
+                guid: `https://18comic.org${$item.parent().attr('href')}`,
             };
         });
 

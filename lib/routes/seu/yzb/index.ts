@@ -50,12 +50,12 @@ async function handler(ctx) {
     const list = $('#wp_news_w3 td tbody tr')
         .toArray()
         .map((elem) => {
-            elem = $(elem);
-            const a = elem.find('td a');
+            const $elem = $(elem);
+            const a = $elem.find('td a');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), host).href,
-                pubDate: parseDate(elem.find('td div').text()),
+                pubDate: parseDate($elem.find('td div').text()),
             };
         });
 

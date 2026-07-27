@@ -51,18 +51,18 @@ async function handler(ctx) {
     let items = $('entry')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const doi = item.find('id').text().split('doi=').pop();
+            const doi = $item.find('id').text().split('doi=').pop();
 
             return {
                 doi,
                 guid: doi,
-                title: item.find('title').text(),
-                link: item.find('link').attr('href').split('?', 1)[0],
-                description: item.find('content').text(),
-                pubDate: parseDate(item.find('published').text()),
-                author: item
+                title: $item.find('title').text(),
+                link: $item.find('link').attr('href').split('?', 1)[0],
+                description: $item.find('content').text(),
+                pubDate: parseDate($item.find('published').text()),
+                author: $item
                     .find('author name')
                     .toArray()
                     .map((a) => $(a).text())

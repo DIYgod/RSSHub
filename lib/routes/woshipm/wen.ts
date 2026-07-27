@@ -37,11 +37,11 @@ async function handler() {
     const postList = $('.article-list-item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.went-head-text').text(),
-                link: `${baseUrl}${item.find('.went-head').attr('href')}`,
-                pubDate: parseRelativeDate(item.find('.list-text').text().split('|', 2)[1]),
+                title: $item.find('.went-head-text').text(),
+                link: `${baseUrl}${$item.find('.went-head').attr('href')}`,
+                pubDate: parseRelativeDate($item.find('.list-text').text().split('|', 2)[1]),
             };
         });
 

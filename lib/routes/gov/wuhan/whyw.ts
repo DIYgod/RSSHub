@@ -40,12 +40,12 @@ async function handler() {
     const list = $('.articleList li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('.time').text()), 8),
+                pubDate: timezone(parseDate($item.find('.time').text()), 8),
             };
         });
 

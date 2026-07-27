@@ -48,12 +48,12 @@ async function handler(ctx) {
     let items = $('.fallsBox')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.ftitle a').attr('title'),
-                link: item.find('.ftitle a').attr('href'),
-                pubDate: timezone(parseDate(item.find('.dateBox').text(), 'YYYY-MM-DD HH:mm'), 8),
-                author: item.find('.dateBox span a').eq(0).text().trim(),
+                title: $item.find('.ftitle a').attr('title'),
+                link: $item.find('.ftitle a').attr('href'),
+                pubDate: timezone(parseDate($item.find('.dateBox').text(), 'YYYY-MM-DD HH:mm'), 8),
+                author: $item.find('.dateBox span a').eq(0).text().trim(),
             };
         });
 

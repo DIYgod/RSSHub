@@ -41,9 +41,9 @@ async function handler(ctx) {
         item: $('.script-discussion-list .discussion-list-container .discussion-list-item')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const metaItem = item.find('.discussion-meta .discussion-meta-item').eq(0);
-                const discussionTitle = item.find('.discussion-title');
+                const $item = $(item);
+                const metaItem = $item.find('.discussion-meta .discussion-meta-item').eq(0);
+                const discussionTitle = $item.find('.discussion-title');
 
                 return {
                     title: discussionTitle.text().trim(),

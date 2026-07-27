@@ -44,20 +44,20 @@ async function handler(ctx) {
         .not('.story__placeholder')
         .toArray()
         .map((story) => {
-            story = $(story);
+            const $story = $(story);
 
-            const a = story.find('.story__title a');
-            fixImage(story);
-            story.find('.player').each((_, elem) => {
-                elem = $(elem);
-                fixVideo(elem);
+            const a = $story.find('.story__title a');
+            fixImage($story);
+            $story.find('.player').each((_, elem) => {
+                const $elem = $(elem);
+                fixVideo($elem);
             });
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(story.find('time').attr('datetime')),
-                description: story.find('.story__content-inner').html(),
-                author: story.find('.user__nick').text(),
+                pubDate: parseDate($story.find('time').attr('datetime')),
+                description: $story.find('.story__content-inner').html(),
+                author: $story.find('.user__nick').text(),
             };
         });
 

@@ -38,12 +38,12 @@ async function handler(ctx) {
     const list = $('.news_list ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.title a');
+            const $item = $(item);
+            const a = $item.find('.title a');
             return {
                 title: a.text(),
                 link: a.attr('href').startsWith('http') ? a.attr('href') : baseURL + a.attr('href'),
-                pubDate: parseDate(item.find('.date').text(), 'YYYY.MM.DD'),
+                pubDate: parseDate($item.find('.date').text(), 'YYYY.MM.DD'),
             };
         });
 

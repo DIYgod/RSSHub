@@ -43,12 +43,12 @@ async function handler(ctx) {
     const list = $('.element')
         .toArray()
         .map((item) => {
-            item = $api(item);
-            const a = item.find('.title a');
+            const $item = $api(item);
+            const a = $item.find('.title a');
             return {
                 title: a.text().trim(),
                 link: a.attr('href'),
-                author: item.find('.author-name').text(),
+                author: $item.find('.author-name').text(),
             };
         });
 

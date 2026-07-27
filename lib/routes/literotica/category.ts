@@ -36,15 +36,15 @@ async function handler(ctx) {
     const list = $('.b-slb-item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h3 a');
+            const a = $item.find('h3 a');
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                author: item.find('.b-user-info-name').text(),
-                pubDate: parseDate(item.find('.b-slib-date').text(), 'MM/DD/YY'),
+                author: $item.find('.b-user-info-name').text(),
+                pubDate: parseDate($item.find('.b-slib-date').text(), 'MM/DD/YY'),
             };
         });
 

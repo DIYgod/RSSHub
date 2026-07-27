@@ -27,10 +27,10 @@ async function handler() {
     const recommand = $('.img-box ul > a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: item.attr('href'),
+                title: $item.attr('title'),
+                link: $item.attr('href'),
             };
         });
 
@@ -38,11 +38,11 @@ async function handler() {
         ...$('.pic-summary .title')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    link: item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    title: $item.find('a').attr('title'),
+                    link: $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
                 };
             }),
         ...recommand,

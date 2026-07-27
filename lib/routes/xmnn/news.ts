@@ -28,14 +28,14 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('h1').text().trim(),
-                link: item.prop('href'),
-                description: item.find('div.abstract').html(),
-                author: item.find('div.source').text(),
-                pubDate: timezone(parseDate(item.find('div.time').text()), 8),
+                title: $item.find('h1').text().trim(),
+                link: $item.prop('href'),
+                description: $item.find('div.abstract').html(),
+                author: $item.find('div.source').text(),
+                pubDate: timezone(parseDate($item.find('div.time').text()), 8),
             };
         });
 

@@ -23,20 +23,20 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             const title = a.contents().last().text();
-            const pubDate = item
+            const pubDate = $item
                 .find('p span')
                 .text()
                 .match(/(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
 
-            item.find('p span').remove();
+            $item.find('p span').remove();
 
             const description = renderDescription({
-                intro: item.find('p').text(),
+                intro: $item.find('p').text(),
             });
 
             return {
@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
                 link: new URL(a.prop('href'), currentUrl).href,
                 content: {
                     html: description,
-                    text: item.find('p').text(),
+                    text: $item.find('p').text(),
                 },
             };
         });

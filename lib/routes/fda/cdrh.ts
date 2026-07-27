@@ -35,12 +35,12 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
             };
         });

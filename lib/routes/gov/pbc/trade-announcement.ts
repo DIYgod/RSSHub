@@ -41,8 +41,8 @@ async function handler() {
     const list = $('font.newslist_style')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a[title]');
+            const $item = $(item);
+            const a = $item.find('a[title]');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), 'http://www.pbc.gov.cn').href,

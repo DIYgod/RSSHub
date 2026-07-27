@@ -14,11 +14,11 @@ const handler = async () => {
     const list = $('div#datalist div.list div.item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('span.s1').text(),
-                pubDate: parseDate(item.find('span.s2').text()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
+                title: $item.find('span.s1').text(),
+                pubDate: parseDate($item.find('span.s2').text()),
+                link: new URL($item.find('a').prop('href'), rootUrl).href,
             };
         });
 

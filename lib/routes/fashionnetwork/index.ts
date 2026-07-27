@@ -25,11 +25,11 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('h2.family-title').text();
+            const title = $item.find('h2.family-title').text();
 
-            const src = item.find('img.item__img').prop('src') ?? undefined;
+            const src = $item.find('img.item__img').prop('src') ?? undefined;
             const image = src ? new URL(src, rootUrl).href : undefined;
 
             const description = renderDescription({
@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                link: new URL(item.find('h2.family-title a').prop('href'), rootUrl).href,
+                link: new URL($item.find('h2.family-title a').prop('href'), rootUrl).href,
                 image,
                 banner: image,
                 language,

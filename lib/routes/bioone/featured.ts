@@ -39,11 +39,11 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = item.attr('href').split('?', 1)[0];
+            const $item = $(item);
+            const link = $item.attr('href').split('?', 1)[0];
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: link.includes('http') ? link : `${rootUrl}${link}`,
             };
         });

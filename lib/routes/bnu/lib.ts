@@ -29,11 +29,11 @@ async function handler(ctx) {
     const list = $('.view-content .item-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: `${baseUrl}/${category}/${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span > span').eq(1).text(), 'YYYY-MM-DD'),
+                title: $item.find('a').text(),
+                link: `${baseUrl}/${category}/${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('span > span').eq(1).text(), 'YYYY-MM-DD'),
             };
         });
 

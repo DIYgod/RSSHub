@@ -25,13 +25,13 @@ export async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const pubDate = item.next().text();
-            const link = new URL(item.attr('href'), currentUrl).href;
+            const pubDate = $item.next().text();
+            const link = new URL($item.attr('href'), currentUrl).href;
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 pubDate: parseDate(pubDate),
                 link: link.endsWith('.html') ? link : `${link}#${pubDate}`,
             };

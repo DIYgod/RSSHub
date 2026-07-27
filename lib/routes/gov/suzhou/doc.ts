@@ -38,12 +38,12 @@ async function handler() {
     const list = $('.tr_main_value_odd')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a');
+            const $item = $(item);
+            const title = $item.find('a');
             return {
                 title: title.attr('title'),
                 link: `https://www.suzhou.gov.cn${title.attr('href')}`,
-                pubDate: timezone(parseDate(item.find('td:nth-child(3)').text().trim()), 8),
+                pubDate: timezone(parseDate($item.find('td:nth-child(3)').text().trim()), 8),
             };
         });
 

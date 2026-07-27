@@ -42,10 +42,10 @@ async function handler() {
     const list = $('.n_newslist').children();
     const items = await Promise.all(
         list.map((i, item) => {
-            item = $(item);
-            const itemTitle = item.find('a').text();
-            let itemDate = timezone(parseDate(item.find('span').text()), 8);
-            const path = item.find('a').attr('href');
+            const $item = $(item);
+            const itemTitle = $item.find('a').text();
+            let itemDate = timezone(parseDate($item.find('span').text()), 8);
+            const path = $item.find('a').attr('href');
             const itemUrl = base + path;
             return cache.tryGet(itemUrl, async () => {
                 const result = await got(itemUrl);

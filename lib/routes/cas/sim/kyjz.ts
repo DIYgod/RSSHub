@@ -41,10 +41,10 @@ async function handler() {
         .toArray()
         .filter((e) => !$(e).attr('style'))
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                link: new URL(e.find('a').attr('href'), link).href,
-                pubDate: e.find('span').text().replace('[', '').replace(']', ''),
+                link: new URL($e.find('a').attr('href'), link).href,
+                pubDate: $e.find('span').text().replace('[', '').replace(']', ''),
             };
         });
 

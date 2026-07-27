@@ -72,9 +72,9 @@ async function handler(ctx) {
     result.item = $('div#div table tbody tr:not([class])')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             /** @type cheerio.Cheerio<th>[] */
-            const [, topic, requester, reqType, anceBegDate, anceEndDate, officeName, anceFile] = item
+            const [, topic, requester, reqType, anceBegDate, anceEndDate, officeName, anceFile] = $item
                 .find('th')
                 .toArray()
                 .map((item) => $(item));

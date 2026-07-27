@@ -49,7 +49,7 @@ async function handler(ctx) {
 
             const list = $('.zebra tr.completed');
             const items = list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 const classMap = {
                     Platinum: '白金',
                     Gold: '金',
@@ -57,24 +57,24 @@ async function handler(ctx) {
                     Bronze: '铜',
                 };
                 return {
-                    title: item.find('.title').text() + ' - ' + $('.page h3').eq(0).text().trim().replace(' Trophies', ''),
-                    description: `<img src="${item.find('.trophy source').attr('srcset').split(' ', 2)[1]}"><br>${item
+                    title: $item.find('.title').text() + ' - ' + $('.page h3').eq(0).text().trim().replace(' Trophies', ''),
+                    description: `<img src="${$item.find('.trophy source').attr('srcset').split(' ', 2)[1]}"><br>${$item
                         .find('.title')
                         .parent()
                         .contents()
                         .filter((_, element) => element.nodeType === 3)
                         .text()
-                        .trim()}<br>等级：${classMap[item.find('td').eq(5).find('img').attr('title')]}<br>珍贵度：${item.find('.hover-show .typo-top').text()}`,
-                    link: 'https://psnprofiles.com' + item.find('.title').attr('href'),
+                        .trim()}<br>等级：${classMap[$item.find('td').eq(5).find('img').attr('title')]}<br>珍贵度：${$item.find('.hover-show .typo-top').text()}`,
+                    link: 'https://psnprofiles.com' + $item.find('.title').attr('href'),
                     pubDate: new Date(
                         +new Date(
-                            item
+                            $item
                                 .find('.typo-top-date nobr')
                                 .contents()
                                 .filter((_, element) => element.nodeType === 3)
                                 .text() +
                                 ' ' +
-                                item.find('.typo-bottom-date').text()
+                                $item.find('.typo-bottom-date').text()
                         ) +
                             8 * 60 * 60 * 1000
                     ).toUTCString(),

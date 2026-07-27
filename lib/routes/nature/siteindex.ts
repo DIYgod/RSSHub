@@ -31,11 +31,11 @@ async function handler(ctx) {
     let items = $('li[class^="grid mq640-grid-12"]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('href').replaceAll('/', ''),
-                name: item.find('a').text(),
-                link: baseUrl + item.find('a').attr('href'),
+                title: $item.find('a').attr('href').replaceAll('/', ''),
+                name: $item.find('a').text(),
+                link: baseUrl + $item.find('a').attr('href'),
             };
         });
 

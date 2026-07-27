@@ -30,13 +30,13 @@ async function handler(ctx) {
         .filter((item) => /(?:\/\d{4}){2}\/\w+-\w+\.html/.test($(item).prop('href')))
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.prop('href');
+            const link = $item.prop('href');
 
             return {
-                title: item.text(),
-                link: link.startsWith('http') ? link : new URL(item.prop('href'), rootUrl).href,
+                title: $item.text(),
+                link: link.startsWith('http') ? link : new URL($item.prop('href'), rootUrl).href,
             };
         });
 

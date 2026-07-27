@@ -41,12 +41,12 @@ async function handler(ctx) {
     const list = $('.list_item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.attr('title'),
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(item.find('.Article_PublishDate').text()),
+                pubDate: parseDate($item.find('.Article_PublishDate').text()),
             };
         });
 

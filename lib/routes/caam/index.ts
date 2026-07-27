@@ -27,12 +27,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.parent();
+            const a = $item.parent();
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: new URL(a.prop('href'), currentUrl).href,
                 pubDate: parseDate(a.find('span.time').text(), '[YYYY.MM.DD]'),
             };

@@ -44,13 +44,13 @@ async function handler(ctx) {
     let items = $('.pageList li a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                pubDate: parseDate(item.next().text()),
+                title: $item.text(),
+                pubDate: parseDate($item.next().text()),
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
             };
         });

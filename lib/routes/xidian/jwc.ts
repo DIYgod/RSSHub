@@ -38,11 +38,11 @@ async function handler(ctx) {
     let items = $('.list ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.con span').text()),
+                title: $item.find('a').attr('title'),
+                link: new URL($item.find('a').attr('href'), baseUrl).href,
+                pubDate: parseDate($item.find('.con span').text()),
             };
         });
 

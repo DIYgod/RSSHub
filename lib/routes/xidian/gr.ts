@@ -247,11 +247,11 @@ async function handler(ctx) {
     let items = $(struct[category].selector.list)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('a').text(),
+                link: new URL($item.find('a').attr('href'), baseUrl).href,
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

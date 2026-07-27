@@ -37,12 +37,12 @@ async function handler() {
     const items = $('.block_100 .js-block-news')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.information a').text(),
-                description: item.find('.description').html(),
-                link: item.find('.information a').attr('href'),
-                pubDate: parseDate(item.find('time[itemprop=dateCreated]').attr('datetime')),
+                title: $item.find('.information a').text(),
+                description: $item.find('.description').html(),
+                link: $item.find('.information a').attr('href'),
+                pubDate: parseDate($item.find('time[itemprop=dateCreated]').attr('datetime')),
             };
         });
 

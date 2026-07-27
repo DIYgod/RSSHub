@@ -36,13 +36,13 @@ async function handler(ctx) {
     const list = $('.qoo-note-wrap')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.content-title').text() || item.find('.description').text(),
-                link: item.find('a.link-wrap').attr('href'),
-                description: item.find('.description').text(),
-                pubDate: timezone(parseDate(item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
-                author: item.find('cite.name').text(),
+                title: $item.find('.content-title').text() || $item.find('.description').text(),
+                link: $item.find('a.link-wrap').attr('href'),
+                description: $item.find('.description').text(),
+                pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                author: $item.find('cite.name').text(),
             };
         });
 

@@ -38,11 +38,11 @@ async function handler() {
         .toArray()
         .slice(0, -1) // last one is a dummy
         .map((item) => {
-            item = $(item);
-            const meta = item.find('h5').first().text();
+            const $item = $(item);
+            const meta = $item.find('h5').first().text();
             return {
-                title: item.find('h3').text(),
-                link: item.find('h3 a').attr('href'),
+                title: $item.find('h3').text(),
+                link: $item.find('h3 a').attr('href'),
                 author: meta.split('|', 1)[0].trim(),
                 pubDate: parseDate(meta.split('|', 2)[1].trim()),
             };

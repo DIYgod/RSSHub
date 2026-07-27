@@ -71,11 +71,11 @@ async function handler(ctx) {
             const list = $('[class^="conList_ul"] li')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        title: item.find('a').attr('title'),
-                        link: new URL(item.find('a').attr('href'), host).href,
-                        date: parseDate(item.find('span').text()),
+                        title: $item.find('a').attr('title'),
+                        link: new URL($item.find('a').attr('href'), host).href,
+                        date: parseDate($item.find('span').text()),
                     };
                 });
             return list;

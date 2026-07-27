@@ -19,8 +19,8 @@ const handler = async (ctx) => {
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             let linkStr = a.attr('href');
             // 改为https访问并补全站内链接
             linkStr = linkStr.replace('http://', 'https://');
@@ -30,7 +30,7 @@ const handler = async (ctx) => {
             return {
                 title: a.text(),
                 link: linkStr,
-                pubDate: timezone(parseDate(item.find('.news_meta').text()), 8), // 添加发布日期查询
+                pubDate: timezone(parseDate($item.find('.news_meta').text()), 8), // 添加发布日期查询
             };
         });
 

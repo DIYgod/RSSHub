@@ -29,9 +29,9 @@ async function handler(ctx) {
     const list = $('.box')
         .toArray()
         .flatMap((item) => {
-            item = $(item);
-            const dateStr = item.find('h2').text().split(' ', 1)[0];
-            return item
+            const $item = $(item);
+            const dateStr = $item.find('h2').text().split(' ', 1)[0];
+            return $item
                 .find('a')
                 .toArray()
                 .map((item) => {

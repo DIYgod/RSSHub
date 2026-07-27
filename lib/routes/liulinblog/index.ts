@@ -29,26 +29,26 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h2.entry-title a');
+            const a = $item.find('h2.entry-title a');
 
             return {
                 title: a.prop('title'),
                 link: a.prop('href'),
-                description: item.find('div.entry-excerpt').html(),
-                author: item
+                description: $item.find('div.entry-excerpt').html(),
+                author: $item
                     .find('span.meta-author a')
                     .toArray()
                     .map((a) => $(a).prop('title'))
                     .join(' / '),
-                category: item
+                category: $item
                     .find('span.meta-category-dot a[rel="category"]')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: `liulinblog-${item.prop('id')}`,
-                pubDate: parseDate(item.find('span.meta-date time').prop('datetime')),
-                comments: item.find('span.meta-comment').text() ? Number(item.find('span.meta-comment').text().trim()) : 0,
+                guid: `liulinblog-${$item.prop('id')}`,
+                pubDate: parseDate($item.find('span.meta-date time').prop('datetime')),
+                comments: $item.find('span.meta-comment').text() ? Number($item.find('span.meta-comment').text().trim()) : 0,
             };
         });
 

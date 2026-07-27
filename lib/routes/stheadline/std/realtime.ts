@@ -31,10 +31,10 @@ async function handler(ctx) {
     let items = $('.news-block .news-detail > a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.title').text(),
-                link: new URL(item.attr('href'), 'https://www.stheadline.com').href,
+                title: $item.find('.title').text(),
+                link: new URL($item.attr('href'), 'https://www.stheadline.com').href,
             };
         });
 

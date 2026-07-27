@@ -89,13 +89,13 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('a.xst').text(),
-                link: new URL(item.find(' a.xst').prop('href').split('&extra=', 1)[0], rootUrl).href,
-                author: item.find('td.by-author cite').text(),
-                pubDate: parseRelativeDate(item.find('td.by-author em').text().replaceAll(' 发表', '')),
+                title: $item.find('a.xst').text(),
+                link: new URL($item.find(' a.xst').prop('href').split('&extra=', 1)[0], rootUrl).href,
+                author: $item.find('td.by-author cite').text(),
+                pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };
         });
 
@@ -190,11 +190,11 @@ function getDescription($) {
 
     // handle lazyload image
     descriptionEl.find('img').each((_, img) => {
-        img = $(img);
-        if (img.attr('src')?.endsWith('none.gif') && img.attr('file')) {
-            img.attr('src', img.attr('file'));
-            img.removeAttr('file');
-            img.removeAttr('zoomfile');
+        const $img = $(img);
+        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
+            $img.attr('src', $img.attr('file'));
+            $img.removeAttr('file');
+            $img.removeAttr('zoomfile');
         }
     });
 

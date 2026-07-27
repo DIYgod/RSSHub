@@ -40,14 +40,14 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item
+                    title: $item
                         .contents()
                         .filter((_, node) => node.type === 'text')
                         .text(),
-                    link: item.attr('href'),
-                    pubDate: parseDate(item.find('.time').text()),
+                    link: $item.attr('href'),
+                    pubDate: parseDate($item.find('.time').text()),
                 };
             }),
     };

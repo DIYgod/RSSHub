@@ -55,11 +55,11 @@ async function handler(ctx) {
     const list = $('.article-item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.title').text(),
-                link: item.find('a').first().attr('href'),
-                category: item.find('.category').text(),
+                title: $item.find('.title').text(),
+                link: $item.find('a').first().attr('href'),
+                category: $item.find('.category').text(),
             };
         });
 

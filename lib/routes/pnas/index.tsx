@@ -44,12 +44,12 @@ async function handler(ctx) {
     const list = $('.card--row-reversed .card-content')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.article-title a');
+            const $item = $(item);
+            const a = $item.find('.article-title a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.card__meta__date').text()),
+                pubDate: parseDate($item.find('.card__meta__date').text()),
             };
         });
 

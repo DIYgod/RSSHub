@@ -20,9 +20,9 @@ const ProcessItems = async (ctx, title, currentUrl) => {
     let items = $('div.list-body')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),

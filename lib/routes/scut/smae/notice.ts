@@ -49,9 +49,9 @@ async function handler(ctx) {
     const list = $('#wp_news_w6 ul li.news')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const pubDate = item.find('span.news_meta');
+            const $item = $(item);
+            const a = $item.find('a');
+            const pubDate = $item.find('span.news_meta');
             return {
                 title: a.attr('title'),
                 link: `${baseUrl}${a.attr('href')}`,

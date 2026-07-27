@@ -41,11 +41,11 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h2').text(),
-                link: rootUrl + item.find('a').attr('href'),
-                pubDate: parseDate(item.find('span[class^=date]').text()),
+                title: $item.find('h2').text(),
+                link: rootUrl + $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('span[class^=date]').text()),
             };
         });
 

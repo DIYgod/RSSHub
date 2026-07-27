@@ -73,11 +73,11 @@ async function handler(ctx) {
         .find('a[title]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.attr('title'),
-                link: `https:${item.attr('href')}`,
+                title: $item.attr('title'),
+                link: `https:${$item.attr('href')}`,
             };
         });
 

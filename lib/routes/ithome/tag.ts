@@ -64,10 +64,10 @@ async function handler(ctx) {
 
                 const article = content('div.post_content');
                 article.find('img[data-original]').each((_, ele) => {
-                    ele = $(ele);
-                    ele.attr('src', ele.attr('data-original'));
-                    ele.removeAttr('class');
-                    ele.removeAttr('data-original');
+                    const $ele = $(ele);
+                    $ele.attr('src', $ele.attr('data-original'));
+                    $ele.removeAttr('class');
+                    $ele.removeAttr('data-original');
                 });
                 item.description = article.html();
                 item.author = content('span.author_baidu > strong').text();

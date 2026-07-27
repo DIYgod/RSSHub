@@ -40,11 +40,11 @@ async function handler() {
     const list = $('article')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const time = item.find('div').first().find('time').first();
-            const tag = item.find('div').first().find('ul').first().find('li').first();
-            const title = item.find('h2').first().find('a').first();
-            const content = item.find('h2').first().next();
+            const $item = $(item);
+            const time = $item.find('div').first().find('time').first();
+            const tag = $item.find('div').first().find('ul').first().find('li').first();
+            const title = $item.find('h2').first().find('a').first();
+            const content = $item.find('h2').first().next();
             return {
                 title: title.attr('title'),
                 link: title.attr('href'),

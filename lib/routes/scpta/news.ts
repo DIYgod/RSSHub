@@ -57,11 +57,11 @@ async function handler(ctx) {
     const list = $('div.wrap-content li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: `${baseUrl}${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('a').attr('title'),
+                link: `${baseUrl}${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('span').text()),
             };
         });
     // 获取公告详情

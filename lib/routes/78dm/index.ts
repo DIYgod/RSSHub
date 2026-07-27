@@ -76,18 +76,18 @@ export const handler = async (ctx) => {
                 $$('i.p-status').remove();
 
                 $$('div.image-text-content p img.lazy').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    const src = el.prop('data-src');
+                    const src = $el.prop('data-src');
                     const image = src?.startsWith('//') ? `https:${src}` : src;
 
-                    el.parent().replaceWith(
+                    $el.parent().replaceWith(
                         renderDescription({
                             images: image
                                 ? [
                                       {
                                           src: image,
-                                          alt: el.prop('title') ?? '',
+                                          alt: $el.prop('title') ?? '',
                                       },
                                   ]
                                 : undefined,

@@ -57,12 +57,12 @@ async function handler(ctx) {
     const items = $('#arthd li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                pubDate: parseDate(item.find('.art-date').text()),
+                title: $item.find('a').attr('title'),
+                pubDate: parseDate($item.find('.art-date').text()),
 
-                link: `http://physics.zju.edu.cn/${item.find('a').attr('href')}`,
+                link: `http://physics.zju.edu.cn/${$item.find('a').attr('href')}`,
                 // link: `http://10.14.122.238/${item.find('a').attr('href')}`,
             };
         });

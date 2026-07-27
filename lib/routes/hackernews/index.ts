@@ -69,23 +69,23 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((thing) => {
-            thing = $(thing);
+            const $thing = $(thing);
 
             const item = {
-                guid: thing.attr('id'),
-                title: thing.find('.titleline').children('a').text(),
-                category: thing.find('.sitestr').text(),
-                author: thing.next().find('.hnuser').text(),
-                pubDate: parseDate(thing.find('.age').attr('title') ?? thing.next().find('.age').attr('title')),
+                guid: $thing.attr('id'),
+                title: $thing.find('.titleline').children('a').text(),
+                category: $thing.find('.sitestr').text(),
+                author: $thing.next().find('.hnuser').text(),
+                pubDate: parseDate($thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title')),
 
                 link: '',
-                origin: thing.find('.titleline').children('a').attr('href'),
-                onStory: thing.find('.onstory').text().slice(2),
+                origin: $thing.find('.titleline').children('a').attr('href'),
+                onStory: $thing.find('.onstory').text().slice(2),
 
-                comments: thing.next().find('a').last().text().split(' comment', 1)[0],
-                upvotes: thing.next().find('.score').text().split(' point', 1)[0],
+                comments: $thing.next().find('a').last().text().split(' comment', 1)[0],
+                upvotes: $thing.next().find('.score').text().split(' point', 1)[0],
 
-                currentComment: thing.find('.comment').text(),
+                currentComment: $thing.find('.comment').text(),
                 description: '',
             };
 

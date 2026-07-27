@@ -33,12 +33,12 @@ async function handler() {
         return $('div.panel-body > div.list-group-item')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const title = item.find('b').text().trim();
+                const $item = $(item);
+                const title = $item.find('b').text().trim();
                 const link = urlList[i];
                 return {
                     title,
-                    author: item.html().trim().split('<br>', 2)[1].trim(),
+                    author: $item.html().trim().split('<br>', 2)[1].trim(),
                     link: `${link}#${title}`,
                     pubDate: parseDate(link.match(/SP(\d{4})/)[1], 'YYYY'),
                 };

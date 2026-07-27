@@ -67,23 +67,23 @@ async function handler(ctx) {
 
                 // fix lazyload image
                 $('a').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('href') && e.attr('href').endsWith('.jpg')) {
-                        e.after(
+                    const $e = $(e);
+                    if ($e.attr('href') && $e.attr('href').endsWith('.jpg')) {
+                        $e.after(
                             renderToString(
                                 <figure>
-                                    <img src={e.attr('href')} alt={e.attr('title') ?? ''} title={e.attr('title') ?? ''} />
-                                    <figcaption>{e.attr('title') ?? ''}</figcaption>
+                                    <img src={$e.attr('href')} alt={$e.attr('title') ?? ''} title={$e.attr('title') ?? ''} />
+                                    <figcaption>{$e.attr('title') ?? ''}</figcaption>
                                 </figure>
                             )
                         );
-                        e.remove();
+                        $e.remove();
                     }
                 });
                 $('img').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('data-original')) {
-                        e.attr('src', e.attr('data-original'));
+                    const $e = $(e);
+                    if ($e.attr('data-original')) {
+                        $e.attr('src', $e.attr('data-original'));
                     }
                 });
 

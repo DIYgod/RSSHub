@@ -44,13 +44,13 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('img').first();
+            const image = $item.find('img').first();
 
             return {
-                title: item.find('div.work-info').text(),
-                link: item.find('a').prop('href'),
+                title: $item.find('div.work-info').text(),
+                link: $item.find('a').prop('href'),
                 description: renderDescription({
                     images: image?.prop('src')
                         ? [
@@ -62,7 +62,7 @@ async function handler(ctx) {
                         : undefined,
                 }),
                 author,
-                pubDate: parseDate(item.find('div.work-info p').last(), 'YYYY'),
+                pubDate: parseDate($item.find('div.work-info p').last(), 'YYYY'),
                 enclosure_url: image?.prop('src') ?? undefined,
                 enclosure_type: image?.prop('src') ? 'image/jpeg' : undefined,
             };
@@ -78,11 +78,11 @@ async function handler(ctx) {
                 const images = content('div.work-item img')
                     .toArray()
                     .map((item) => {
-                        item = content(item);
+                        const $item = content(item);
 
                         return {
-                            src: item.prop('src').replace(/-\d+x\d+\./, '.'),
-                            alt: item.prop('alt'),
+                            src: $item.prop('src').replace(/-\d+x\d+\./, '.'),
+                            alt: $item.prop('alt'),
                         };
                     });
 

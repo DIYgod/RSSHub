@@ -38,8 +38,8 @@ async function handler() {
     const listItems = $('li.hp-featured__tease')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = item.find('.small-tease__link').attr('href').split('/').at(-2);
+            const $item = $(item);
+            const link = $item.find('.small-tease__link').attr('href').split('/').at(-2);
             return {
                 link,
             };

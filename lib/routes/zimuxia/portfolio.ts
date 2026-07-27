@@ -47,9 +47,9 @@ async function handler(ctx) {
         .filter((_, el) => $(el).attr('href')?.match(new RegExp(linktype)))
         .toArray()
         .map((item) => {
-            item = $(item);
-            const tmpstr2match = $.html(item.parent().children()[item.prevAll('br').first().index() + 1]);
-            const tmphtml = item
+            const $item = $(item);
+            const tmpstr2match = $.html($item.parent().children()[$item.prevAll('br').first().index() + 1]);
+            const tmphtml = $item
                 .parent()
                 .contents()
                 .toArray()
@@ -59,8 +59,8 @@ async function handler(ctx) {
             return {
                 link: currentUrl,
                 title,
-                description: `<p>${item.parent().html()}</p>`,
-                enclosure_url: item.attr('href'),
+                description: `<p>${$item.parent().html()}</p>`,
+                enclosure_url: $item.attr('href'),
                 enclosure_type: 'application/x-bittorrent',
                 guid: `${currentUrl}#${title}`,
             };

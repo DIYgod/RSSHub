@@ -57,11 +57,11 @@ async function handler(ctx) {
     let items = $('.row .well')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.video-title').text(),
-                link: item.find('a').attr('href'),
-                poster: item.find('.img-responsive').attr('src'),
+                title: $item.find('.video-title').text(),
+                link: $item.find('a').attr('href'),
+                poster: $item.find('.img-responsive').attr('src'),
             };
         });
 

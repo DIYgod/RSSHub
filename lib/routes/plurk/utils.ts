@@ -32,11 +32,11 @@ const getPlurk = (plurkGuid, item, author) =>
     cache.tryGet(plurkGuid, () => {
         const $ = load(item.content || item.rendered, null, false);
         $('img').each((_, e) => {
-            e = $(e);
-            e.removeAttr('height').removeAttr('width');
-            if (e.attr('alt') && e.attr('alt').startsWith('http')) {
-                e.attr('src', e.attr('alt'));
-                e.removeAttr('alt');
+            const $e = $(e);
+            $e.removeAttr('height').removeAttr('width');
+            if ($e.attr('alt') && $e.attr('alt').startsWith('http')) {
+                $e.attr('src', $e.attr('alt'));
+                $e.removeAttr('alt');
             }
         });
 

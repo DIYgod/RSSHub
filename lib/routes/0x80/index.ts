@@ -38,10 +38,10 @@ async function handler() {
     const list = alist
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href') || '';
-            const title = item.text();
+            const link = $item.attr('href') || '';
+            const title = $item.text();
             const pubDate = extractDateFromURL(link);
 
             return {

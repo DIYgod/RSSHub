@@ -65,16 +65,16 @@ async function handler(ctx) {
     let items = $('.video')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('.video-title a');
+            const title = $item.find('.video-title a');
             return {
                 title: title.text(),
-                author: item.find('.video-channel').text(),
-                pubDate: parseDate(item.find('.small').text()),
+                author: $item.find('.video-channel').text(),
+                pubDate: parseDate($item.find('.small').text()),
                 link: title.attr('href'),
-                poster: item.find('img').attr('data-src'),
-                video: item.find('video').attr('data-src'),
+                poster: $item.find('img').attr('data-src'),
+                video: $item.find('video').attr('data-src'),
             };
         });
 

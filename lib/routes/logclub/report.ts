@@ -66,12 +66,12 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 content('img').each((_, el) => {
-                    el = content(el);
-                    el.replaceWith(
+                    const $el = content(el);
+                    $el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                                alt: el.prop('title'),
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
                             },
                         })
                     );

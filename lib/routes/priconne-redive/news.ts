@@ -71,11 +71,11 @@ async function handler(ctx) {
 
             const out = await Promise.all(
                 list.map((index, item) => {
-                    item = $(item);
-                    const link = item.find('a').attr('href');
+                    const $item = $(item);
+                    const link = $item.find('a').attr('href');
                     return cache.tryGet(link, async () => {
                         const rssitem = {
-                            title: item.find('h4').text(),
+                            title: $item.find('h4').text(),
                             link,
                         };
 

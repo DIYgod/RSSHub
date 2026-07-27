@@ -65,16 +65,16 @@ async function handler(ctx) {
     const items = $('item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('title').text().trim(),
-                link: item.find('link').text().trim(),
-                author: item
+                title: $item.find('title').text().trim(),
+                link: $item.find('link').text().trim(),
+                author: $item
                     .find(String.raw`dc\:creator`)
                     .text()
                     .trim(),
-                pubDate: parseDate(item.find('pubDate').text().trim()),
-                description: item
+                pubDate: parseDate($item.find('pubDate').text().trim()),
+                description: $item
                     .find(String.raw`content\:encoded`)
                     .text()
                     .trim(),

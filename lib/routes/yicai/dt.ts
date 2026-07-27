@@ -124,15 +124,15 @@ async function handler(ctx) {
                 content('div.logintips').remove();
 
                 content('img').each((_, e) => {
-                    e = content(e);
+                    const $e = content(e);
 
-                    content(e).replaceWith(
+                    content($e).replaceWith(
                         renderDescription({
                             image: {
-                                src: e.prop('data-original') ?? e.prop('src'),
-                                alt: e.prop('alt'),
-                                width: e.prop('width'),
-                                height: e.prop('height'),
+                                src: $e.prop('data-original') ?? $e.prop('src'),
+                                alt: $e.prop('alt'),
+                                width: $e.prop('width'),
+                                height: $e.prop('height'),
                             },
                         })
                     );

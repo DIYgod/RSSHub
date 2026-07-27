@@ -47,12 +47,12 @@ async function handler(ctx) {
     const list = $('a.tit')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                pubDate: parseDate(item.prev().text()),
-                link: `${rootUrl}${item.attr('href').replace(/\.\./, '/')}`,
+                title: $item.text(),
+                pubDate: parseDate($item.prev().text()),
+                link: `${rootUrl}${$item.attr('href').replace(/\.\./, '/')}`,
             };
         });
 

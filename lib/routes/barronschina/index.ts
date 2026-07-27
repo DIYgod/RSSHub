@@ -52,10 +52,10 @@ async function handler(ctx) {
               $('.title')
                   .toArray()
                   .map((item) => {
-                      item = $(item);
+                      const $item = $(item);
                       return {
-                          title: item.find('.title').text(),
-                          link: `${rootUrl}${item.parent().attr('href')}`,
+                          title: $item.find('.title').text(),
+                          link: `${rootUrl}${$item.parent().attr('href')}`,
                       };
                   })
                   .map((item) =>
@@ -77,19 +77,19 @@ async function handler(ctx) {
         : $('dd')
               .toArray()
               .map((item) => {
-                  item = $(item);
+                  const $item = $(item);
 
-                  const title = item.find('strong').text();
-                  item.find('strong').remove();
+                  const title = $item.find('strong').text();
+                  $item.find('strong').remove();
 
-                  const description = item.find('.short').html();
-                  item.find('.short').remove();
+                  const description = $item.find('.short').html();
+                  $item.find('.short').remove();
 
                   return {
                       title,
                       description,
                       link: currentUrl,
-                      pubDate: timezone(parseDate(`${item.parent().find('dt').text()} ${item.text()}`), 8),
+                      pubDate: timezone(parseDate(`${$item.parent().find('dt').text()} ${$item.text()}`), 8),
                   };
               });
 

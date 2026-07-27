@@ -38,8 +38,8 @@ async function handler() {
     const items = await pMap(
         $('article-item').toArray(),
         (item) => {
-            item = $(item);
-            const link = item.attr('url');
+            const $item = $(item);
+            const link = $item.attr('url');
             return cache.tryGet(link, async () => {
                 const response = await got(`${link}?sn_f=1`);
                 const $ = load(response.data);

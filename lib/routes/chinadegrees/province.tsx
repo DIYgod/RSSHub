@@ -103,9 +103,9 @@ async function handler(ctx) {
                     .toArray()
                     .slice(1)
                     .map((item) => {
-                        item = $(item);
-                        const title = item.find('td').eq(1).text();
-                        const pubDate = item.find('td').eq(2).text();
+                        const $item = $(item);
+                        const title = $item.find('td').eq(1).text();
+                        const pubDate = $item.find('td').eq(2).text();
                         return {
                             title,
                             pubDate,

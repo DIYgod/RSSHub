@@ -42,10 +42,10 @@ async function handler(ctx) {
         .slice(-limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: `${baseUrl}${item.attr('href')}`,
+                title: $item.attr('title'),
+                link: `${baseUrl}${$item.attr('href')}`,
             };
         });
     const items = await Promise.all(

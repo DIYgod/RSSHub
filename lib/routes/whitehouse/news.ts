@@ -47,14 +47,14 @@ async function handler(ctx) {
     const list = $('.post')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('time').attr('datetime')),
-                category: [item.find('a[rel^=tag]').first().text()],
+                pubDate: parseDate($item.find('time').attr('datetime')),
+                category: [$item.find('a[rel^=tag]').first().text()],
             };
         });
 

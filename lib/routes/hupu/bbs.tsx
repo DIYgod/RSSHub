@@ -54,12 +54,12 @@ async function handler(ctx) {
     let items = $('.bbs-sl-web-post-layout .post-title a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: timezone(parseDate(item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: timezone(parseDate($item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
             };
         });
 

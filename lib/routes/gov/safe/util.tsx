@@ -26,9 +26,9 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const spans = item.find('span[objid]');
+            const spans = $item.find('span[objid]');
 
             const message = {
                 author: spans.first().text().replace(/:$/, ''),

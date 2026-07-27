@@ -39,19 +39,19 @@ async function handler(ctx) {
                 .toArray()
                 .slice(3) // skip Home, For you and Following
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        category: item.text(),
-                        url: new URL(item.attr('href'), baseUrl).href,
+                        category: $item.text(),
+                        url: new URL($item.attr('href'), baseUrl).href,
                     };
                 }),
             ...$('a.aqvwYd') // Home
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        category: item.text(),
-                        url: new URL(item.attr('href'), baseUrl).href,
+                        category: $item.text(),
+                        url: new URL($item.attr('href'), baseUrl).href,
                     };
                 }),
         ];
@@ -64,11 +64,11 @@ async function handler(ctx) {
     const list = [...$('.UwIKyb'), ...$('.IBr9hb'), ...$('.IFHyqb')]; // 3 rows of news, 3-rows-wide news, single row news
 
     const items = list.map((item) => {
-        item = $(item);
+        const $item = $(item);
 
-        const title = item.find('.gPFEn').text();
+        const title = $item.find('.gPFEn').text();
 
-        const authorText = item.find('.bInasb span').text();
+        const authorText = $item.find('.bInasb span').text();
         const authors = authorText
             ? authorText
                   .replace(/^By\s+/i, '') // Handle 'By' case-insensitively
@@ -88,10 +88,10 @@ async function handler(ctx) {
 
         return {
             title,
-            description: renderDescription(item.find('img.Quavad').attr('src'), title),
-            pubDate: parseDate(item.find('time').attr('datetime')),
+            description: renderDescription($item.find('img.Quavad').attr('src'), title),
+            pubDate: parseDate($item.find('time').attr('datetime')),
             author: authors,
-            link: new URL(item.find('a.WwrzSb').first().attr('href'), baseUrl).href,
+            link: new URL($item.find('a.WwrzSb').first().attr('href'), baseUrl).href,
         };
     });
 

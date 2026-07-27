@@ -55,15 +55,15 @@ async function handler(ctx: Context): Promise<Data> {
     const list = $('ul[class="rsj-list1"] > li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a');
+            const $item = $(item);
+            const title = $item.find('a');
             return {
                 // 文章标题
                 title: title.text(),
                 // 文章链接
                 link: new URL(title.attr('href'), sydwgkzpUrl).href,
                 // 文章发布日期
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

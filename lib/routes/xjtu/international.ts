@@ -24,10 +24,10 @@ async function handler(ctx) {
     const list = $('.news-list-a > .c')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').attr('title');
-            const pubDate = parseDate(item.find('p.list-time').text());
-            const link = new URL(item.find('a').attr('href'), base).href;
+            const $item = $(item);
+            const title = $item.find('a').attr('title');
+            const pubDate = parseDate($item.find('p.list-time').text());
+            const link = new URL($item.find('a').attr('href'), base).href;
             return {
                 title,
                 pubDate,

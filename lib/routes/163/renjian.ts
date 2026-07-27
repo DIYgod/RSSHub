@@ -70,9 +70,9 @@ async function handler(ctx) {
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
             .toArray()
             .map((_, item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    link: item.attr('href'),
+                    link: $item.attr('href'),
                 };
             });
     }

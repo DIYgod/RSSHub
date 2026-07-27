@@ -77,18 +77,18 @@ async function handler() {
     const out = $(items)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             const now = dayjs();
-            let date = dayjs(now.year() + '-' + item.find('a span').text());
+            let date = dayjs(now.year() + '-' + $item.find('a span').text());
             if (now < date) {
-                date = dayjs(now.year() - 1 + '-' + item.find('a span').text());
+                date = dayjs(now.year() - 1 + '-' + $item.find('a span').text());
             }
-            let newsTitle = item
+            let newsTitle = $item
                 .find('a[href]')
                 .contents()
                 .filter((index, element) => element.nodeType === 3)
                 .text();
-            const newsLink = host + item.find('a[href]').attr('href');
+            const newsLink = host + $item.find('a[href]').attr('href');
             const newsPubDate = parseDate(date);
 
             let prefix = '【其他】';

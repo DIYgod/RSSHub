@@ -52,11 +52,11 @@ async function handler(ctx) {
     }
 
     items = items.slice(0, limit).map((item) => {
-        item = $(item);
+        const $item = $(item);
 
         return {
-            title: item.text().split('：').pop(),
-            link: new URL(item.prop('href'), rootUrl).href,
+            title: $item.text().split('：').pop(),
+            link: new URL($item.prop('href'), rootUrl).href,
         };
     });
 

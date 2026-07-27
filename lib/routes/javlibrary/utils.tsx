@@ -48,16 +48,16 @@ const ProcessItems = async (language, currentUrl) => {
         .toArray()
         .filter((i) => $(i).parent().hasClass('video') || $(i).parent().get(0).tagName === 'strong')
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const table = item.parentsUntil('table');
-            const link = `${rootUrl}/${language}/${item.attr('href').replace(/^\.\//, '')}`;
+            const table = $item.parentsUntil('table');
+            const link = `${rootUrl}/${language}/${$item.attr('href').replace(/^\.\//, '')}`;
 
             return {
                 link, // url to target content.
                 url: link.replace(/video.*\.php/, ''), // url to the video page.
 
-                title: item.text(),
+                title: $item.text(),
                 description: table.find('textarea').text(),
                 pubDate: parseDate(table.find('.date').text()),
             };

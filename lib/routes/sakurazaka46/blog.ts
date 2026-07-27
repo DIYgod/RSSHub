@@ -80,12 +80,12 @@ async function handler(ctx) {
     let items = $('.com-blog-part .box a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                author: item.find('.name').text(),
-                link: `${rootUrl}${item.attr('href').split('?', 1)[0]}`,
+                title: $item.text(),
+                author: $item.find('.name').text(),
+                link: `${rootUrl}${$item.attr('href').split('?', 1)[0]}`,
             };
         });
 

@@ -37,10 +37,10 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: $(item).find('a').attr('href'),
+                link: $($item).find('a').attr('href'),
             };
         });
 

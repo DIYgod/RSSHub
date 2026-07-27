@@ -42,10 +42,10 @@ async function handler() {
     const list = $('h4 a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href').replace('http://', 'https://'),
+                title: $item.text(),
+                link: $item.attr('href').replace('http://', 'https://'),
             };
         });
 

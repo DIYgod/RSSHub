@@ -30,28 +30,28 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('div.title').text();
+            const title = $item.find('div.title').text();
 
             return {
                 title,
-                link: item.find('a.articles-grid-link').prop('href'),
+                link: $item.find('a.articles-grid-link').prop('href'),
                 description: renderDescription({
                     image: {
-                        src: item
+                        src: $item
                             .find('div.articles-grid-img img')
                             .prop('src')
                             .replace(/-\d+x\d+\./, '.'),
                         alt: title,
                     },
                 }),
-                category: item
+                category: $item
                     .find('a.section')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: `tradingview-blog-${category}-${item.prop('id')}`,
-                pubDate: parseDate(item.find('div.date').text(), 'MMM D, YYYY'),
+                guid: `tradingview-blog-${category}-${$item.prop('id')}`,
+                pubDate: parseDate($item.find('div.date').text(), 'MMM D, YYYY'),
             };
         });
 

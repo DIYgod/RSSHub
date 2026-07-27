@@ -52,15 +52,15 @@ async function handler(ctx) {
         .slice(0, 20)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = item
+            const $item = $(item);
+            const link = $item
                 .attr('href')
                 .replace(/^\.\./, () => rootUrl)
                 .replace(/^(info)/, () => rootUrl + 'info');
             return {
-                title: item.find('em').text(),
+                title: $item.find('em').text(),
                 link,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

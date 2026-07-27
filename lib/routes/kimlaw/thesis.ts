@@ -40,13 +40,13 @@ async function handler() {
     const list = $('.li_body')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a.list_text_title');
+            const $item = $(item);
+            const a = $item.find('a.list_text_title');
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
-                author: item.find('.name').text(),
-                pubDate: timezone(parseDate(item.find('.time').attr('title')), 9),
+                author: $item.find('.name').text(),
+                pubDate: timezone(parseDate($item.find('.time').attr('title')), 9),
             };
         });
 

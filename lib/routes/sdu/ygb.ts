@@ -54,13 +54,13 @@ async function handler(ctx) {
     let item = $('.zytz-list li')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+            const $e = $(e);
+            const a = $e.find('a');
             const link = a.attr('href').startsWith('info/') || a.attr('href').startsWith('content') ? host + a.attr('href') : a.attr('href');
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDate(e.find('b').text().trim().slice(1, -1), 'YYYY-MM-DD'),
+                pubDate: parseDate($e.find('b').text().trim().slice(1, -1), 'YYYY-MM-DD'),
             };
         });
 

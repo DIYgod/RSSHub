@@ -62,10 +62,10 @@ async function handler(ctx) {
         .slice(0, 30)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a.reco-job-title');
-            const company = item.find('div.reco-job-com a');
-            const time = item.find('div.reco-job-detail span').eq(1).text();
+            const $item = $(item);
+            const title = $item.find('a.reco-job-title');
+            const company = $item.find('div.reco-job-com a');
+            const time = $item.find('div.reco-job-detail span').eq(1).text();
             const date = new Date();
             if (time.includes('天')) {
                 const day = time.split('天', 1)[0];

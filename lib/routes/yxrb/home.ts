@@ -44,11 +44,11 @@ async function handler(ctx) {
     const list = $('.channel-news .item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.title a').attr('title'),
-                link: `${baseUrl}${item.find('.title a').attr('href')}`,
-                author: item.find('.author a').text().split('作者 : ', 2)[1],
+                title: $item.find('.title a').attr('title'),
+                link: `${baseUrl}${$item.find('.title a').attr('href')}`,
+                author: $item.find('.author a').text().split('作者 : ', 2)[1],
             };
         });
 

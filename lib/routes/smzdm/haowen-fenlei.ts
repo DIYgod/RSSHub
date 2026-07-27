@@ -61,13 +61,13 @@ async function handler(ctx) {
     const list = $('div.list.post-list')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h2.item-name a').text(),
-                link: item.find('h2.item-name a').attr('href'),
-                description: item.find('.item-info').html(),
-                author: item.find('.nickname').text(),
-                pubDate: timezone(parseDate(item.find('span.time').text(), ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8),
+                title: $item.find('h2.item-name a').text(),
+                link: $item.find('h2.item-name a').attr('href'),
+                description: $item.find('.item-info').html(),
+                author: $item.find('.nickname').text(),
+                pubDate: timezone(parseDate($item.find('span.time').text(), ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8),
             };
         });
 

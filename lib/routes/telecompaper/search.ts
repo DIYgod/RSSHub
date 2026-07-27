@@ -75,12 +75,12 @@ async function handler(ctx) {
         .slice(0, 15)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: new Date(item.find('span.source').text().split(' | ', 1)[0] + ' GMT+1').toUTCString(),
+                pubDate: new Date($item.find('span.source').text().split(' | ', 1)[0] + ' GMT+1').toUTCString(),
             };
         });
 

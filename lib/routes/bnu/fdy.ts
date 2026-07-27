@@ -23,12 +23,12 @@ async function handler(ctx) {
     const list = $('.listconrl li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), link).href,
-                pubDate: parseDate(item.find('.news-dates').text()),
+                pubDate: parseDate($item.find('.news-dates').text()),
             };
         });
 

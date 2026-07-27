@@ -38,12 +38,12 @@ async function handler(ctx) {
     const list = $('.djdt li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.tit').text().trim(),
-                link: item.find('a').attr('href'),
-                pubDate: timezone(parseDate(item.find('.time').text().trim())),
+                title: $item.find('.tit').text().trim(),
+                link: $item.find('a').attr('href'),
+                pubDate: timezone(parseDate($item.find('.time').text().trim())),
             };
         });
 

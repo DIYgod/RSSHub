@@ -51,11 +51,11 @@ async function handler(ctx) {
         .find('li a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('p').text(),
-                link: `${currentUrl}/${item.attr('href')}`,
+                title: $item.find('p').text(),
+                link: `${currentUrl}/${$item.attr('href')}`,
             };
         });
 

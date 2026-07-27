@@ -42,9 +42,9 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
     const list = $('div.notice_list li')
         .toArray()
         .map((item) => {
-            item = $(item); // (Element) -> LoadedCheerio
-            const titleEle = $(item).find('a').first();
-            const dateEle = $(item).find('a').eq(1);
+            const $item = $(item); // (Element) -> LoadedCheerio
+            const titleEle = $($item).find('a').first();
+            const dateEle = $($item).find('a').eq(1);
 
             return {
                 title: titleEle.text().trim(),

@@ -99,9 +99,9 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').last();
+            const a = $item.find('a').last();
             const link = a.attr('href').replaceAll(/(\?|&)utm_campaign=.*/g, '');
 
             return {

@@ -48,12 +48,12 @@ async function handler(ctx) {
     const list = $('.articleroll__article a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.title').text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.meta').text()),
+                title: $item.find('.title').text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.meta').text()),
             };
         });
 

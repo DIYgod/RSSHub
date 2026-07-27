@@ -45,14 +45,14 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 12)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.find('a');
+            const link = $item.find('a');
 
             return {
                 title: link.text(),
                 link: new URL(link.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.contents().last().text().trim()),
+                pubDate: parseDate($item.contents().last().text().trim()),
             };
         });
 

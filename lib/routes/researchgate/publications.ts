@@ -39,10 +39,10 @@ async function handler(ctx) {
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 

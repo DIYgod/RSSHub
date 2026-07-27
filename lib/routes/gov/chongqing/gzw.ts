@@ -41,9 +41,9 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
@@ -51,7 +51,7 @@ async function handler(ctx) {
                     a.prop('href').replace(/^\./, () => category),
                     rootUrl
                 ).href,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

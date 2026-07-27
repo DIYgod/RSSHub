@@ -48,16 +48,16 @@ async function handler(ctx) {
     let items = $('.link-dark')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const pubDate = item.parent().parent().find('.align-text-top').last().text();
+            const pubDate = $item.parent().parent().find('.align-text-top').last().text();
             const today = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
 
             return {
-                link: `${rootUrl}${item.attr('href')}`,
-                author: item.parent().parent().find('.text-dark').last().text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                author: $item.parent().parent().find('.text-dark').last().text(),
                 pubDate: timezone(parseDate(pubDate.includes('-') ? pubDate : `${today} ${pubDate}`), 8),
-                title: `${item.parent().parent().find('.align-middle').text()} ${item.text().replace(/ - SubHD/, '')}`,
+                title: `${$item.parent().parent().find('.align-middle').text()} ${$item.text().replace(/ - SubHD/, '')}`,
             };
         });
 

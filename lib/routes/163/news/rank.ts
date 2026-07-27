@@ -141,10 +141,10 @@ async function handler(ctx) {
         .find('table tbody tr td a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
             };
         });
 

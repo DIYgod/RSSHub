@@ -62,14 +62,14 @@ async function handler(ctx) {
     const list = $('a.announcement-item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const day = item.find('.day').text().trim().replace('.', '-');
-            const year = item.find('.month').text().trim();
+            const day = $item.find('.day').text().trim().replace('.', '-');
+            const year = $item.find('.month').text().trim();
 
             return {
-                title: item.find('.title').text().trim(),
-                link: `${item.attr('href').startsWith('http') ? '' : rootUrl}${item.attr('href')}`,
+                title: $item.find('.title').text().trim(),
+                link: `${$item.attr('href').startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
                 pubDate: timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), 8),
             };
         });

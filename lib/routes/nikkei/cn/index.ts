@@ -102,11 +102,11 @@ async function handler(ctx) {
         items = $('dt a')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
 
                 return {
-                    title: item.text(),
-                    link: new URL(item.attr('href'), currentUrl).href,
+                    title: $item.text(),
+                    link: new URL($item.attr('href'), currentUrl).href,
                 };
             })
             .filter((item) => {

@@ -30,17 +30,17 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
-            const image = item.find('img');
+            const a = $item.find('a');
+            const image = $item.find('img');
 
-            const title = item.find('h3.mediumFont').text().trim();
+            const title = $item.find('h3.mediumFont').text().trim();
 
             let link = a.prop('href');
             link = link === '#' ? currentUrl : link;
 
-            const description = item.find('p.gowhite').text();
+            const description = $item.find('p.gowhite').text();
             const imageSrc = image.prop('src');
             return {
                 title,
@@ -56,7 +56,7 @@ async function handler(ctx) {
                     </>
                 ),
                 guid: link.startsWith(rootUrl) ? `${link}#${title}` : link,
-                pubDate: parseDate(item.find('p.medGrey').text(), 'DD/MM/YYYY'),
+                pubDate: parseDate($item.find('p.medGrey').text(), 'DD/MM/YYYY'),
             };
         });
 

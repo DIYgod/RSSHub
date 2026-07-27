@@ -93,10 +93,10 @@ async function handler(ctx) {
                     $(ele).replaceWith($(ele).html());
                 });
                 article.find('.article-a-attach-body a').each((i, ele) => {
-                    ele = $(ele);
-                    if (ele.attr('onclick')?.startsWith("location.href=encodeURI($('#fileDownUrl').val()+'fileDownLoad.do")) {
-                        ele.attr('href', `${baseUrl}/dqs/cm-s-notice-query/fileDownLoad.do?mode=open&contentId=${item.contentId}&priority=${i}`);
-                        ele.removeAttr('onclick');
+                    const $ele = $(ele);
+                    if ($ele.attr('onclick')?.startsWith("location.href=encodeURI($('#fileDownUrl').val()+'fileDownLoad.do")) {
+                        $ele.attr('href', `${baseUrl}/dqs/cm-s-notice-query/fileDownLoad.do?mode=open&contentId=${item.contentId}&priority=${i}`);
+                        $ele.removeAttr('onclick');
                     }
                 });
 

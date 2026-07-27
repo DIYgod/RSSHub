@@ -46,11 +46,11 @@ async function handler() {
     const list = $('ul li a b')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.parent().attr('href'),
+                title: $item.text(),
+                link: $item.parent().attr('href'),
             };
         });
 

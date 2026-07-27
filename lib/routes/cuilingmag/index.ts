@@ -24,11 +24,11 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('h3.new-list-h3, h3.title-font').text().trim();
+            const title = $item.find('h3.new-list-h3, h3.title-font').text().trim();
 
-            const src = item.find('img').first().prop('src');
+            const src = $item.find('img').first().prop('src');
             const image = src ? new URL(src, rootUrl).href : undefined;
 
             const description = renderDescription({
@@ -45,8 +45,8 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                link: new URL(item.find('a').first().prop('href'), rootUrl).href,
-                author: item.find('a.new-list-p, div.author').text().trim(),
+                link: new URL($item.find('a').first().prop('href'), rootUrl).href,
+                author: $item.find('a.new-list-p, div.author').text().trim(),
                 image,
                 banner: image,
                 language,

@@ -37,16 +37,16 @@ async function handler() {
     const urls = $('url')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find(String.raw`news\:title`).text(),
-                pubDate: parseDate(item.find(String.raw`news\:publication_date`).text()),
-                category: item
+                title: $item.find(String.raw`news\:title`).text(),
+                pubDate: parseDate($item.find(String.raw`news\:publication_date`).text()),
+                category: $item
                     .find(String.raw`news\:keywords`)
                     .text()
                     .split(',')
                     .map((item) => item.trim()),
-                link: item.find('loc').text(),
+                link: $item.find('loc').text(),
             };
         });
 

@@ -25,13 +25,13 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('strong').text(),
-                pubDate: timezone(parseDate(item.find('div.list-dated').text().split(/\|/).pop()), 8),
-                link: new URL(item.find('a.links').prop('href'), rootUrl).href,
-                author: item.find('div.list-dated').text().split(/\|/, 1)[0],
+                title: $item.find('strong').text(),
+                pubDate: timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()), 8),
+                link: new URL($item.find('a.links').prop('href'), rootUrl).href,
+                author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
                 language,
             };
         });

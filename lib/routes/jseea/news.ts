@@ -49,15 +49,15 @@ async function handler(ctx) {
     const list = $('div.content-list-div ul li a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item
+                title: $item
                     .contents()
                     .filter((_, e) => e.nodeType === 3)
                     .text()
                     .trim(),
-                link: `https:${item.attr('href')}`,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                link: `https:${$item.attr('href')}`,
+                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
         });
 

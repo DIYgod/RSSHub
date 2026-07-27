@@ -22,12 +22,12 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.contents().first().text(),
-                pubDate: parseDate(item.find('span').text().replaceAll('[]', '')),
-                link: new URL(item.prop('href'), currentUrl).href,
+                title: $item.contents().first().text(),
+                pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
+                link: new URL($item.prop('href'), currentUrl).href,
                 language,
             };
         });

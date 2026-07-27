@@ -35,12 +35,12 @@ async function handler() {
     const list = $('div.views-row')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.views-field-title').text().trim(),
-                link: `${baseUrl}${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('.views-field-field-lv2-publication-date').text()),
-                author: item.find('.views-field-pseudo-author-list').text().trim().replace('Authors: ', ''),
+                title: $item.find('.views-field-title').text().trim(),
+                link: `${baseUrl}${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('.views-field-field-lv2-publication-date').text()),
+                author: $item.find('.views-field-pseudo-author-list').text().trim().replace('Authors: ', ''),
             };
         });
     const items = await Promise.all(

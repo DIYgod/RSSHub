@@ -39,10 +39,10 @@ async function handler() {
     const list = $('section#articles section')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('li').text(),
-                link: new URL(item.find('li a').attr('href'), baseUrl).href,
+                title: $item.find('li').text(),
+                link: new URL($item.find('li a').attr('href'), baseUrl).href,
                 author,
             };
         });

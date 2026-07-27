@@ -49,9 +49,9 @@ async function handler(ctx) {
     const items = $('div.article > div.grid-view > div.item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const itemPicUrl = item.find('.pic a img').attr('src');
-            const info = item.find('.info');
+            const $item = $(item);
+            const itemPicUrl = $item.find('.pic a img').attr('src');
+            const info = $item.find('.info');
             const title = info.find('ul li.title a').text();
             const url = info.find('ul li.title a').attr('href');
             const title_ = title.split('/').find((title) => title.trim());

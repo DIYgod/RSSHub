@@ -35,9 +35,9 @@ async function handler() {
     const list = $('div .ms-slide')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const img = item.find('img');
+            const $item = $(item);
+            const a = $item.find('a');
+            const img = $item.find('img');
 
             return {
                 title: a.text(),

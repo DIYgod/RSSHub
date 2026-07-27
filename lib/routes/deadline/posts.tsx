@@ -52,11 +52,11 @@ async function handler(ctx) {
         const $ = load(item.content.rendered, null, false);
 
         $('.c-lazy-image__img').each((_, img) => {
-            img = $(img);
-            if (img.attr('data-lazy-src')) {
-                img.attr('src', img.attr('data-lazy-src').split('?', 1)[0]);
-                img.removeAttr('data-lazy-src');
-                img.removeAttr('data-lazy-srcset');
+            const $img = $(img);
+            if ($img.attr('data-lazy-src')) {
+                $img.attr('src', $img.attr('data-lazy-src').split('?', 1)[0]);
+                $img.removeAttr('data-lazy-src');
+                $img.removeAttr('data-lazy-srcset');
             }
         });
         $('[class^="lrv-a-crop-"]').contents().unwrap();

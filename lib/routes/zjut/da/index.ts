@@ -52,10 +52,10 @@ async function handler(ctx) {
     const list = $("td[class='newstd'] .news2")
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').text();
+            const $item = $(item);
+            const title = $item.find('a').text();
 
-            let link = item.find('a').attr('href');
+            let link = $item.find('a').attr('href');
             if (!link) {
                 return null;
             }
@@ -63,7 +63,7 @@ async function handler(ctx) {
                 link = rootUrl + link;
             }
 
-            const date = item.next().text().replace('[', '').replace(']', '');
+            const date = $item.next().text().replace('[', '').replace(']', '');
 
             return {
                 title,

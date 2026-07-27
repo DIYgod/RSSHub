@@ -36,10 +36,10 @@ async function handler() {
     const list = $('.subList li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('li a').text(),
-                link: item.find('li a').attr('href').replace('http:', 'https:'),
+                title: $item.find('li a').text(),
+                link: $item.find('li a').attr('href').replace('http:', 'https:'),
             };
         });
 

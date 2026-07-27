@@ -48,12 +48,12 @@ async function handler(ctx) {
         .toArray()
         .filter((i) => $(i).text().length)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h3 a').attr('title'),
-                link: item.find('h3 a').attr('href'),
-                pubDate: timezone(parseDate(item.find('.fire_left').text()), 8),
-                author: item
+                title: $item.find('h3 a').attr('title'),
+                link: $item.find('h3 a').attr('href'),
+                pubDate: timezone(parseDate($item.find('.fire_left').text()), 8),
+                author: $item
                     .find('.fire_right')
                     .text()
                     .match(/作者：([^|]*)\|/)[1]

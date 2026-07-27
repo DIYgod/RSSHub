@@ -45,14 +45,14 @@ async function handler() {
         .find('li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const date = item.find('.column-news-date').text();
+            const $item = $(item);
+            const date = $item.find('.column-news-date').text();
 
             // 置顶链接自带http前缀，其他不带，需要手动判断
-            const a = item.find('a').attr('href');
+            const a = $item.find('a').attr('href');
             const link = a.slice(0, 4) === 'http' ? a : rootUrl + a;
             return {
-                title: item.find('a').attr('title'),
+                title: $item.find('a').attr('title'),
                 link,
                 pubDate: timezone(parseDate(date), 8),
             };

@@ -23,10 +23,10 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('div.List-item-excerpt img').prop('data-src')?.split(/\?/, 1)[0] ?? undefined;
-            const title = item.find('h2.List-item-title').text();
+            const image = $item.find('div.List-item-excerpt img').prop('data-src')?.split(/\?/, 1)[0] ?? undefined;
+            const title = $item.find('h2.List-item-title').text();
             const description = renderDescription({
                 images: image
                     ? [
@@ -36,17 +36,17 @@ export const handler = async (ctx) => {
                           },
                       ]
                     : undefined,
-                intro: item.find('div.List-item-preview').text(),
+                intro: $item.find('div.List-item-preview').text(),
             });
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.primary-border-color-after').text()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('span.primary-border-color-after').text()),
+                link: new URL($item.find('a').prop('href'), rootUrl).href,
                 content: {
                     html: description,
-                    text: item.find('div.List-item-preview').text(),
+                    text: $item.find('div.List-item-preview').text(),
                 },
                 image,
                 banner: image,

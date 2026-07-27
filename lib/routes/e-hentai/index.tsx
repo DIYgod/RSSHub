@@ -38,19 +38,19 @@ async function handler(ctx) {
         .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : needImages ? 16 : 26)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('div.glink').text(),
-                author: item.find('td.glhide div a').text(),
-                link: item.find('td.glname a').attr('href'),
-                pubDate: parseDate(item.find('div.ir').prev().text()),
-                category: item
+                title: $item.find('div.glink').text(),
+                author: $item.find('td.glhide div a').text(),
+                link: $item.find('td.glname a').attr('href'),
+                pubDate: parseDate($item.find('div.ir').prev().text()),
+                category: $item
                     .find('div.gt')
                     .toArray()
                     .map((tag) => $(tag).attr('title').replace(/^:/, '')),
-                description: needImages ? '' : `<img src="${item.find('div.glthumb div img').attr('data-src') ?? item.find('div.glthumb div img').attr('src')}">`,
-                enclosure_url: needTorrents && item.find('div.gldown a img[title="Show torrents"]').length > 0 ? item.find('.gldown a').attr('href') : undefined,
+                description: needImages ? '' : `<img src="${$item.find('div.glthumb div img').attr('data-src') ?? $item.find('div.glthumb div img').attr('src')}">`,
+                enclosure_url: needTorrents && $item.find('div.gldown a img[title="Show torrents"]').length > 0 ? $item.find('.gldown a').attr('href') : undefined,
             };
         });
 
@@ -74,8 +74,8 @@ async function handler(ctx) {
                     torrents = torrent('table tbody tr td a')
                         .toArray()
                         .map((t) => {
-                            t = torrent(t);
-                            return { link: t.attr('href'), title: t.text() };
+                            const $t = torrent(t);
+                            return { link: $t.attr('href'), title: $t.text() };
                         });
                     cache.set(item.enclosure_url, torrents);
                 }

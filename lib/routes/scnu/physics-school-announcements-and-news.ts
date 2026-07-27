@@ -12,14 +12,14 @@ const getAritlces = async (category, url, cache) => {
         .children()
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             const link = a.attr('href');
 
             return {
                 title: a.text(),
                 link,
-                pubDate: timezone(parseDate(item.find('span.time').text()), 8),
+                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
                 category,
             };
         })

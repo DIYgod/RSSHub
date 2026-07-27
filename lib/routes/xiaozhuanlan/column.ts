@@ -43,13 +43,13 @@ async function handler(ctx) {
     let items = $('.xzl-topic-item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            item.find('.topic-has-suggested-item').remove();
+            const $item = $(item);
+            $item.find('.topic-has-suggested-item').remove();
             return {
-                title: item.find('h3').text().trim(),
-                link: new URL(item.find('.topic-body-link').attr('href'), baseUrl).href,
-                author: item.find('.topic-header .xzl-author-lockup').text().trim(),
-                pubDate: parseDate(item.find('.topic-header .timeago').attr('title')),
+                title: $item.find('h3').text().trim(),
+                link: new URL($item.find('.topic-body-link').attr('href'), baseUrl).href,
+                author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
+                pubDate: parseDate($item.find('.topic-header .timeago').attr('title')),
             };
         });
 

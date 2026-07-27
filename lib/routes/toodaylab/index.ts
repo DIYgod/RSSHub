@@ -31,22 +31,22 @@ async function handler(ctx) {
               .slice(0, limit)
               .toArray()
               .map((item) => {
-                  item = $(item);
+                  const $item = $(item);
 
                   return {
-                      title: item.find('div.hot-item p').text(),
-                      link: new URL(item.prop('href'), rootUrl).href,
+                      title: $item.find('div.hot-item p').text(),
+                      link: new URL($item.prop('href'), rootUrl).href,
                   };
               })
         : $('div.single-post')
               .slice(0, limit)
               .toArray()
               .map((item) => {
-                  item = $(item);
+                  const $item = $(item);
 
-                  const a = item.find('p.title a');
+                  const a = $item.find('p.title a');
 
-                  const pubDate = item
+                  const pubDate = $item
                       .find('div.left-infos p')
                       .text()
                       .trim()
@@ -56,8 +56,8 @@ async function handler(ctx) {
                   return {
                       title: a.text(),
                       link: new URL(a.prop('href'), rootUrl).href,
-                      description: item.find('p.excerpt').html(),
-                      author: item.find('div.left-infos p a').text().trim(),
+                      description: $item.find('p.excerpt').html(),
+                      author: $item.find('div.left-infos p a').text().trim(),
                       pubDate: timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8),
                   };
               });

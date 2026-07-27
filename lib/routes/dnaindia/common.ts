@@ -24,8 +24,8 @@ export async function handler(ctx) {
     const listItems = $('div.list-news')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('div.explainer-subtext a');
+            const $item = $(item);
+            const a = $item.find('div.explainer-subtext a');
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,

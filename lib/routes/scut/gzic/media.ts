@@ -35,11 +35,11 @@ async function handler() {
     const list = $('.right-nr .row .col-lg-4')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.thr-box a');
-            const pubDate = item.find('.thr-box a span');
+            const $item = $(item);
+            const a = $item.find('.thr-box a');
+            const pubDate = $item.find('.thr-box a span');
             return {
-                title: item.find('.thr-box a p').text(),
+                title: $item.find('.thr-box a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `https://www2.scut.edu.cn${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
             };

@@ -65,9 +65,9 @@ async function handler(ctx) {
         link: moeUrl,
         item: await Promise.all(
             newsLis.toArray().map(async (item) => {
-                item = $(item);
+                const $item = $(item);
 
-                const firstA = item.find('a');
+                const firstA = $item.find('a');
                 const itemUrl = new URL(firstA.attr('href'), moeUrl).href;
 
                 // some live pages have no content, just return the liva page url
@@ -101,7 +101,7 @@ async function handler(ctx) {
                     title: firstA.text(),
                     description: infos.description,
                     link: itemUrl,
-                    pubDate: parseDate(item.find('span').text(), 'MM-DD'),
+                    pubDate: parseDate($item.find('span').text(), 'MM-DD'),
                 };
             })
         ),

@@ -41,11 +41,11 @@ Helpful route parameters:
         const items = $('div.clearfix .changeLogCtn')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 // changelogHeadline is local time
-                const changelogHeadline = item.find('.headline').text();
-                const changelogTimestamp = item.find('p').attr('id');
-                const changeDetail = item.find('p').html();
+                const changelogHeadline = $item.find('.headline').text();
+                const changelogTimestamp = $item.find('p').attr('id');
+                const changeDetail = $item.find('p').html();
 
                 return {
                     title: changelogHeadline,

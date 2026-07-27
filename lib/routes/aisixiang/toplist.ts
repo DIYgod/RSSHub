@@ -32,15 +32,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('div.tips a');
+            const a = $item.find('div.tips a');
 
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
-                author: item.find('div.name').text(),
-                pubDate: parseDate(item.find('div.times').text()),
+                author: $item.find('div.name').text(),
+                pubDate: parseDate($item.find('div.times').text()),
             };
         });
 

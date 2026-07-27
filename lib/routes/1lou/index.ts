@@ -28,22 +28,22 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const subjectEl = item.find('div.subject').children('a').first();
+            const subjectEl = $item.find('div.subject').children('a').first();
 
             return {
                 title: subjectEl.text(),
-                pubDate: timezone(parseDate(item.find('span.date').text()), 8),
+                pubDate: timezone(parseDate($item.find('span.date').text()), 8),
                 link: new URL(subjectEl.prop('href'), rootUrl).href,
                 category: [
-                    item.find('a.text-secondary').text().replaceAll('[]', ''),
-                    ...item
+                    $item.find('a.text-secondary').text().replaceAll('[]', ''),
+                    ...$item
                         .find('a.badge')
                         .toArray()
                         .map((c) => $(c).text()),
                 ].filter(Boolean),
-                author: item.find('a.username').text(),
+                author: $item.find('a.username').text(),
                 language,
             };
         });

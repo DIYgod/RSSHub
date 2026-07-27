@@ -39,11 +39,11 @@ async function handler() {
     let items = $('.cc-layout-3 .cc-list-content li')
         .toArray()
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                title: e.find('a').attr('title'),
-                link: e.find('a').attr('href'),
-                pubDate: parseDate(e.find('span').text()),
+                title: $e.find('a').attr('title'),
+                link: $e.find('a').attr('href'),
+                pubDate: parseDate($e.find('span').text()),
             };
         });
 

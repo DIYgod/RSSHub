@@ -43,11 +43,11 @@ async function handler(ctx) {
     const list = $('td[align=left] b')
         .toArray()
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                title: e.find('a').attr('title'),
-                link: `${baseUrl}${e.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
+                title: $e.find('a').attr('title'),
+                link: `${baseUrl}${$e.find('a').attr('href')}`,
+                pubDate: timezone(parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
             };
         })
         .toSorted((a, b) => b.pubDate - a.pubDate)

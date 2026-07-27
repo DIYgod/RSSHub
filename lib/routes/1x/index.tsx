@@ -27,11 +27,11 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('span.photos-feed-data-title').first().text() || 'Untitled';
-            const image = item.find('img').prop('src');
-            const author = item.find('span.photos-feed-data-name').first().text();
+            const title = $item.find('span.photos-feed-data-title').first().text() || 'Untitled';
+            const image = $item.find('img').prop('src');
+            const author = $item.find('span.photos-feed-data-name').first().text();
 
             const text = `${title} by ${author}`;
 
@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
                 </>
             );
 
-            const id = item.find('img[id]').prop('id').split(/-/).pop();
+            const id = $item.find('img[id]').prop('id').split(/-/).pop();
             const guid = `1x-${id}`;
 
             return {

@@ -40,10 +40,10 @@ async function handler(ctx: Context) {
     let items = $('div.center_subject ul li a[href^=thread]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${config.sis001.baseUrl}/forum/${item.attr('href')}`,
+                title: $item.text(),
+                link: `${config.sis001.baseUrl}/forum/${$item.attr('href')}`,
                 author: username,
             };
         });

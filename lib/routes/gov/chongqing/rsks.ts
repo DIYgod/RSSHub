@@ -28,12 +28,12 @@ async function handler() {
     const list = $('div.page-list .tab-item > li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').first();
+            const $item = $(item);
+            const title = $item.find('a').first();
             return {
                 title: title.text(),
                 link: `${rsksUrl}${title.attr('href')}`,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

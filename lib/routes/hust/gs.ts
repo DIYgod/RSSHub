@@ -20,14 +20,14 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const link = a.prop('href');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('span.time').text()),
+                pubDate: parseDate($item.find('span.time').text()),
                 link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
             };
         });

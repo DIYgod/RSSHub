@@ -41,11 +41,11 @@ async function handler(ctx) {
     const list = $('.pg-item a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('h2').text(),
-                link: item.attr('href'),
+                title: $item.find('h2').text(),
+                link: $item.attr('href'),
             };
         });
 

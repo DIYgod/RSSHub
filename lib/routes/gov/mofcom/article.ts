@@ -26,20 +26,20 @@ async function handler(ctx) {
     const list = $('.txtList_01 li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             const date =
-                item.find('span').length === 0
-                    ? item
+                $item.find('span').length === 0
+                    ? $item
                           .find('a')
                           .attr('title')
                           .match(/(\d{4}年\d{1,2}月\d{1,2})/)[1]
-                    : item
+                    : $item
                           .find('span')
                           .text()
                           .match(/((\d{4}-\d{2}-\d{2})(\s\d{2}:\d{2}:\d{2})?)/)[1];
             return {
-                title: item.find('a').attr('title'),
-                link: host + item.find('a').attr('href'),
+                title: $item.find('a').attr('title'),
+                link: host + $item.find('a').attr('href'),
                 pubDate: timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY年M月D']), 8),
             };
         });

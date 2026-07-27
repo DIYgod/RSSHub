@@ -40,13 +40,13 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.prop('title') || item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                author: item.find('.author').text(),
-                pubDate: parseDate(item.parent().find('span.time').text().trim()),
+                title: $item.prop('title') || $item.text(),
+                link: new URL($item.prop('href'), rootUrl).href,
+                author: $item.find('.author').text(),
+                pubDate: parseDate($item.parent().find('span.time').text().trim()),
             };
         });
 

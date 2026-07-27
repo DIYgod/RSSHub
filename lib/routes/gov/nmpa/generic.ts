@@ -47,11 +47,11 @@ async function handler(ctx) {
                 items: $('.list ul li')
                     .toArray()
                     .map((item) => {
-                        item = $(item);
+                        const $item = $(item);
                         return {
-                            title: item.find('a').text().trim(),
-                            link: new URL(item.find('a').attr('href'), baseUrl).href,
-                            pubDate: parseDate(item.find('span').text(), 'YYYY-MM-DD'),
+                            title: $item.find('a').text().trim(),
+                            link: new URL($item.find('a').attr('href'), baseUrl).href,
+                            pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
                         };
                     }),
             };

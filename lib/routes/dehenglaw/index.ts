@@ -22,18 +22,18 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('h2').text();
+            const title = $item.find('h2').text();
             const description = renderDescription({
-                intro: item.find('div.deheng_newscontent p').text(),
+                intro: $item.find('div.deheng_newscontent p').text(),
             });
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span').text(), 'YYYY/M/D'),
-                link: item.find('a').first().prop('href'),
+                pubDate: parseDate($item.find('span').text(), 'YYYY/M/D'),
+                link: $item.find('a').first().prop('href'),
             };
         });
 

@@ -59,10 +59,10 @@ async function handler(ctx) {
     const list = $('.view-list-title')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
+                title: $item.find('a').text(),
+                link: new URL($item.find('a').attr('href'), baseUrl).href,
             };
         });
 

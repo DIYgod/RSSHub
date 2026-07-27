@@ -65,12 +65,12 @@ async function handler(ctx) {
     let items = $('li[id*="material"]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
+                title: $item.text(),
+                link: `${rootUrl}${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
             };
         });
 

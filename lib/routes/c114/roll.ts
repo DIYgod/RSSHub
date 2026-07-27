@@ -26,13 +26,13 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('h6 a').text(),
-                pubDate: timezone(parseDate(item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
-                link: new URL(item.find('h6 a').prop('href'), rootUrl).href,
-                author: item.find('div.new_list_author').text().trim(),
+                title: $item.find('h6 a').text(),
+                pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
+                link: new URL($item.find('h6 a').prop('href'), rootUrl).href,
+                author: $item.find('div.new_list_author').text().trim(),
                 language,
             };
         });

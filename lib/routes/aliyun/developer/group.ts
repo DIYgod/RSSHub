@@ -54,13 +54,13 @@ async function handler(ctx) {
         link,
         description: desc,
         item: list.toArray().map((item) => {
-            item = $(item);
-            const desc = item.find('.question-desc');
-            const description = item.find('.browse').text() + ' ' + desc.find('.answer').text();
+            const $item = $(item);
+            const desc = $item.find('.question-desc');
+            const description = $item.find('.browse').text() + ' ' + desc.find('.answer').text();
             return {
-                title: item.find('.question-title').text().trim() || item.find('a p').text().trim(),
-                link: item.find('a').attr('href'),
-                pubDate: parseDate(item.find('.time').text()),
+                title: $item.find('.question-title').text().trim() || $item.find('a p').text().trim(),
+                link: $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('.time').text()),
                 description,
             };
         }),

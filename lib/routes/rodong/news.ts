@@ -44,12 +44,12 @@ async function handler(ctx) {
     const list = $('.date_news_list .row')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.media-body').text(),
-                link: `${host}/${language}/${item.find('.media-body a').attr('href')}`,
-                author: item.find('.col-sm-3').text(),
-                pubDate: parseDate(item.find('.news_date').text(), 'YYYY.M.D.'),
+                title: $item.find('.media-body').text(),
+                link: `${host}/${language}/${$item.find('.media-body a').attr('href')}`,
+                author: $item.find('.col-sm-3').text(),
+                pubDate: parseDate($item.find('.news_date').text(), 'YYYY.M.D.'),
             };
         });
 

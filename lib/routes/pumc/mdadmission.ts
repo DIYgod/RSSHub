@@ -42,14 +42,14 @@ async function handler(ctx) {
     let items = $('div.media')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h4.media-heading a');
+            const a = $item.find('h4.media-heading a');
 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.find('span').first().text(), 'DDYYYY-MM'),
+                pubDate: parseDate($item.find('span').first().text(), 'DDYYYY-MM'),
             };
         });
 

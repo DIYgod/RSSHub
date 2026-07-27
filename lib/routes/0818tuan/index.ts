@@ -38,10 +38,10 @@ async function handler(ctx) {
     const list = $(listId === '3' ? '.col-xs-12 .thumbnail > a' : '.col-md-8 .list-group > a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: item.attr('href').startsWith('http') ? item.attr('href') : `${baseUrl}${item.attr('href')}`,
+                title: $item.attr('title'),
+                link: $item.attr('href').startsWith('http') ? $item.attr('href') : `${baseUrl}${$item.attr('href')}`,
             };
         })
         .filter((i) => !i.link.includes('m.0818tuan.com/tb1111.php') && !i.link.includes('www.0818tuan.com/pdd/zudui.php'));

@@ -46,15 +46,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
-            let link = item.attr('href');
+            const $item = $(item);
+            let link = $item.attr('href');
             if (link.indexOf('../../..') === 0) {
                 link = `${rootUrl}${link.replace('../../..', '')}`;
             } else if (link.indexOf('.') === 0) {
                 link = `${currentUrl}${link.replace('.', '')}`;
             }
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
             };
         });

@@ -44,13 +44,13 @@ async function handler(ctx) {
         .toArray()
         .slice(1)
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.attr('title'),
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('.time').text()),
-                author: item.find('a').eq(1).text(),
+                pubDate: parseDate($item.find('.time').text()),
+                author: $item.find('a').eq(1).text(),
             };
         });
     const title = $('#content>h1').text();

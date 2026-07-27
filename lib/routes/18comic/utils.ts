@@ -100,12 +100,12 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text().trim(),
-                link: `${rootUrl}${item.prev().find('a').attr('href')}`,
-                guid: `18comic:${item.prev().find('a').attr('href')}`,
+                title: $item.text().trim(),
+                link: `${rootUrl}${$item.prev().find('a').attr('href')}`,
+                guid: `18comic:${$item.prev().find('a').attr('href')}`,
             };
         });
 

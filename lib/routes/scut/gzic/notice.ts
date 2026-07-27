@@ -52,11 +52,11 @@ async function handler(ctx) {
     const list = $('.right-nr .row .col-lg-4')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.thr-box a');
-            const pubDate = item.find('.thr-box a span');
+            const $item = $(item);
+            const a = $item.find('.thr-box a');
+            const pubDate = $item.find('.thr-box a span');
             return {
-                title: item.find('.thr-box a p').text(),
+                title: $item.find('.thr-box a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
             };

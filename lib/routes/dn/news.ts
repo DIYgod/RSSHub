@@ -55,13 +55,13 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('div.img img');
+            const image = $item.find('div.img img');
 
             return {
-                title: item.find('h2.ellipse2').text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.find('h2.ellipse2').text(),
+                link: new URL($item.prop('href'), rootUrl).href,
                 description: renderDescription({
                     image: image
                         ? {
@@ -69,13 +69,13 @@ async function handler(ctx) {
                               alt: image.prop('alt'),
                           }
                         : undefined,
-                    abstracts: item.find('p.abstract').html(),
+                    abstracts: $item.find('p.abstract').html(),
                 }),
-                category: item
+                category: $item
                     .find('span.cat')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('span.time').text()), 8),
+                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
             };
         });
 

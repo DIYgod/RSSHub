@@ -40,8 +40,8 @@ async function handler() {
         .slice(0, 10)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), 'http://www.chinatax.gov.cn').href,

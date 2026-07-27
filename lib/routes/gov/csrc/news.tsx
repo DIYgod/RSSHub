@@ -74,12 +74,12 @@ async function handler(ctx) {
         const list = $('#list li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
                 return {
                     title: a.text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: timezone(parseDate(item.find('.data').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: timezone(parseDate($item.find('.data').text(), 'YYYY-MM-DD'), 8),
                 };
             });
 

@@ -49,14 +49,14 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.find('permalink').text();
+            const link = $item.find('permalink').text();
             const isNews = /news_\d+_\d+\.html/.test(link);
 
             return {
-                title: item.find('title').text(),
-                pubDate: parseDate(item.find('date').text()),
+                title: $item.find('title').text(),
+                pubDate: parseDate($item.find('date').text()),
                 link: `${rootUrl}${isNews ? `/news/${link}` : ''}`,
                 isNews,
             };

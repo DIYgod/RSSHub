@@ -22,14 +22,14 @@ export const handler = async (ctx) => {
         .toArray()
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('p.txt').text();
-            const image = new URL(item.find('img').prop('src'), rootUrl).href;
+            const title = $item.find('p.txt').text();
+            const image = new URL($item.find('img').prop('src'), rootUrl).href;
 
             return {
                 title,
-                link: new URL(item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href'), rootUrl).href,
                 pubDate: parseDate(title, 'YYYY年MM期'),
                 author,
                 image,
@@ -54,24 +54,24 @@ export const handler = async (ctx) => {
                 return $$('a.txt')
                     .toArray()
                     .map((i) => {
-                        i = $(i);
+                        const $i = $(i);
 
-                        const id = i.prop('href').match(/c\/(\d+)\.shtml/)?.[1] ?? undefined;
+                        const id = $i.prop('href').match(/c\/(\d+)\.shtml/)?.[1] ?? undefined;
 
                         if (!id) {
                             return;
                         }
 
-                        const title = i.prop('title') || i.text();
+                        const title = $i.prop('title') || $i.text();
                         const guid = `gmcmonline-chinacustoms-${id}`;
 
                         return {
                             title,
                             pubDate,
-                            link: new URL(i.prop('href'), item.link).href,
+                            link: new URL($i.prop('href'), item.link).href,
                             category: [
                                 current,
-                                i
+                                $i
                                     .closest('div.class-box')
                                     .find('div.title-box span')
                                     .text()

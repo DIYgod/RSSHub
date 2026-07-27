@@ -52,11 +52,11 @@ async function handler(ctx) {
     let items = $('.column_list h2')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: `${rootUrl}${item.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.dy_date').text()), 8),
+                title: $item.find('a').attr('title'),
+                link: `${rootUrl}${$item.find('a').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.dy_date').text()), 8),
             };
         });
 

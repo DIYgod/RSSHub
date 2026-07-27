@@ -40,17 +40,17 @@ async function handler(ctx) {
     const paidSelector = 'img[class^="icon_"]';
 
     let list = listSelector.toArray().map((item) => {
-        item = $(item);
-        item.find('p a').remove();
+        const $item = $(item);
+        $item.find('p a').remove();
         return {
-            title: item.find('[class^="titleLink_"]').text(),
-            link: `${baseUrl}${item.find('[class^="title_"] a').attr('href')}`,
-            image: item.find('[class^="image_"] img').removeAttr('style').removeAttr('width').removeAttr('height').parent().html(),
-            category: item
+            title: $item.find('[class^="titleLink_"]').text(),
+            link: `${baseUrl}${$item.find('[class^="title_"] a').attr('href')}`,
+            image: $item.find('[class^="image_"] img').removeAttr('style').removeAttr('width').removeAttr('height').parent().html(),
+            category: $item
                 .find('[class^="topicItem_"] a')
                 .toArray()
                 .map((item) => $(item).text()),
-            paywall: !!item.find(paidSelector).length,
+            paywall: !!$item.find(paidSelector).length,
         };
     });
 
@@ -61,16 +61,16 @@ async function handler(ctx) {
             ...$('div#CONTENTS_MAIN .m-miM32_itemTitle')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
-                    const a = item.find('a').first();
+                    const $item = $(item);
+                    const a = $item.find('a').first();
                     return {
                         title: a.text(),
                         link: `${baseUrl}${a.attr('href')}`,
-                        category: item
+                        category: $item
                             .find('.m-miM32_itemkeyword a')
                             .toArray()
                             .map((item) => $(item).text()),
-                        paywall: !!item.find(paidSelector).length,
+                        paywall: !!$item.find(paidSelector).length,
                     };
                 }),
         ];

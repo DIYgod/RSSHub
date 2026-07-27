@@ -36,11 +36,11 @@ async function handler() {
     const list = $('.right-nr .row .col-lg-4')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.li-img a');
-            const pubDate = item.find('.li-img a span');
+            const $item = $(item);
+            const a = $item.find('.li-img a');
+            const pubDate = $item.find('.li-img a span');
             return {
-                title: item.find('.li-img a p').text(),
+                title: $item.find('.li-img a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(
                     pubDate
@@ -48,7 +48,7 @@ async function handler() {
                         .replaceAll(/年|月/g, '-')
                         .replaceAll('日', '')
                 ),
-                itunes_item_image: `${baseUrl}${item.find('.li-img img').attr('src')}`,
+                itunes_item_image: `${baseUrl}${$item.find('.li-img img').attr('src')}`,
             };
         });
 

@@ -47,20 +47,20 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h2 a');
+            const a = $item.find('h2 a');
 
             return {
                 title: a.text(),
                 link: a.prop('href'),
-                description: item.find('span.note').text(),
-                category: item
+                description: $item.find('span.note').text(),
+                category: $item
                     .find('a.label')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('p.auth-span span.muted').first().text().trim()), 8),
-                upvotes: item.find('span.count').text() ? Number(item.find('span.count').text()) : 0,
+                pubDate: timezone(parseDate($item.find('p.auth-span span.muted').first().text().trim()), 8),
+                upvotes: $item.find('span.count').text() ? Number($item.find('span.count').text()) : 0,
             };
         });
 

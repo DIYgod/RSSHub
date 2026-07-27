@@ -40,12 +40,12 @@ async function handler() {
     const list = $('.video_item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = item.find('a').attr('href').replace('http://', 'https://');
+            const $item = $(item);
+            const link = $item.find('a').attr('href').replace('http://', 'https://');
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
-                guid: `${link}#${item.find('.video_item--info').text()}`,
+                guid: `${link}#${$item.find('.video_item--info').text()}`,
             };
         });
 

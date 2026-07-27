@@ -63,9 +63,9 @@ async function handler(ctx) {
     const list = $('div.Box-row')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a.Link--primary');
-            const b = item.find('relative-time').attr('datetime');
+            const $item = $(item);
+            const a = $item.find('a.Link--primary');
+            const b = $item.find('relative-time').attr('datetime');
             const title = a.text() || 'No title';
             const link = a.attr('href') || '#';
             const pubDate = parseDate(b || '');

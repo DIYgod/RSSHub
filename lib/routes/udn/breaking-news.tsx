@@ -123,8 +123,8 @@ const getLinkName = async (link) => {
         const data = $('.cate-list__subheader a')
             .toArray()
             .map((item) => {
-                item = $(item);
-                return [item.attr('href'), item.text().trim()];
+                const $item = $(item);
+                return [$item.attr('href'), $item.text().trim()];
             });
         return Object.fromEntries(data);
     });

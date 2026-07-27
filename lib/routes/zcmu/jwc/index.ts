@@ -48,11 +48,11 @@ async function handler(ctx) {
     const items = $('.winstyle196327 tr:lt(20)')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: `https://jwc.zcmu.edu.cn/${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span.timestyle196327').text().trim()),
+                title: $item.find('a').attr('title'),
+                link: `https://jwc.zcmu.edu.cn/${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('span.timestyle196327').text().trim()),
             };
         });
 

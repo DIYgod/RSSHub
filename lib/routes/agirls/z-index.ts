@@ -43,10 +43,10 @@ async function handler(ctx) {
     const list = $('.ag-post-list .ag-post-item__link')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${baseUrl}${item.attr('href')}`,
+                title: $item.text(),
+                link: `${baseUrl}${$item.attr('href')}`,
             };
         });
 

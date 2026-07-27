@@ -52,9 +52,9 @@ async function handler(ctx) {
         .toArray()
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
             const link = a.attr('href');
 
             return {

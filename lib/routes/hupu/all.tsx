@@ -51,12 +51,12 @@ async function handler(ctx) {
     let items = $('div.t-info > a, a.p-title')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `https://m.hupu.com/bbs${item.attr('href')}`,
-                pubDate: timezone(parseDate(item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
+                title: $item.text(),
+                link: `https://m.hupu.com/bbs${$item.attr('href')}`,
+                pubDate: timezone(parseDate($item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
             };
         });
 

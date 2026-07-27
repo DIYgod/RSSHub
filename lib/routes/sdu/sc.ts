@@ -40,14 +40,14 @@ async function handler(ctx) {
     let item = $('.newlist01 li')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+            const $e = $(e);
+            const a = $e.find('a');
             let link = a.attr('href');
             link = new URL(link, host).href;
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDate(e.find('.date').text().trim()),
+                pubDate: parseDate($e.find('.date').text().trim()),
             };
         });
 

@@ -47,8 +47,8 @@ async function handler() {
     const list = $('.content dl h4')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: a.attr('href'),

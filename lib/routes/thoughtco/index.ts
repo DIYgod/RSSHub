@@ -336,11 +336,11 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('span.block-title').text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.find('span.block-title').text(),
+                link: new URL($item.prop('href'), rootUrl).href,
             };
         });
 
@@ -354,11 +354,11 @@ async function handler(ctx) {
                 content('div.adslot').remove();
                 content('div.sources-and-citation, .mntl-figure-caption svg').remove();
                 content('div.figure-media').each((_, e) => {
-                    e = $(e);
+                    const $e = $(e);
 
-                    const image = e.find('img');
+                    const image = $e.find('img');
 
-                    e.replaceWith(
+                    $e.replaceWith(
                         renderDescription({
                             image: {
                                 src: image.prop('data-src'),

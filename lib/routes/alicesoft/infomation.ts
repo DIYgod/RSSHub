@@ -53,11 +53,11 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('p.txt').text(),
-                link: item.find('a').attr('href'),
-                pubDate: new Date(item.find('time').attr('datetime')),
+                title: $item.find('p.txt').text(),
+                link: $item.find('a').attr('href'),
+                pubDate: new Date($item.find('time').attr('datetime')),
             };
         });
 

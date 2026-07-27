@@ -70,11 +70,11 @@ async function handler(ctx) {
         }));
     } else {
         list = list.toArray().map((item) => {
-            item = $(item);
-            const link = item.attr('href');
+            const $item = $(item);
+            const link = $item.attr('href');
 
             return {
-                link: `${link.indexOf('http') === 0 ? '' : rootUrl}${item.attr('href')}`,
+                link: `${link.indexOf('http') === 0 ? '' : rootUrl}${$item.attr('href')}`,
             };
         });
     }

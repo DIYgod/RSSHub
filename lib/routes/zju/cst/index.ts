@@ -31,11 +31,11 @@ async function getPage(id) {
     const list = $('.lm_new').find('li');
 
     return list.toArray().map((item) => {
-        item = $(item);
+        const $item = $(item);
         return {
-            title: item.find('a').text(),
-            pubDate: parseDate(item.find('.fr').text()),
-            link: new URL(item.find('a').attr('href'), host).href,
+            title: $item.find('a').text(),
+            pubDate: parseDate($item.find('.fr').text()),
+            link: new URL($item.find('a').attr('href'), host).href,
         };
     });
 }

@@ -50,13 +50,13 @@ async function handler(ctx) {
         .slice(4, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((item) => {
-            item = $(item);
-            let link = item.attr('href');
+            const $item = $(item);
+            let link = $item.attr('href');
             /^https?:\/\//.test(link) || (link = rootUrl + '/' + link.replace(/^\//, ''));
-            let date = item.parent().text().trim().slice(0, 8);
+            let date = $item.parent().text().trim().slice(0, 8);
             date = parseDate(date, 'YY.MM.DD');
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
                 pubDate: date,
             };

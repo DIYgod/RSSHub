@@ -87,12 +87,12 @@ async function handler(ctx) {
                 $('[data-lake-id]').removeAttr('data-lake-id');
                 $('[id]').removeAttr('id');
                 $('p').each((_, elem) => {
-                    elem = $(elem);
-                    if (elem.children().length === 1 && elem.children().is('br')) {
-                        elem.remove();
+                    const $elem = $(elem);
+                    if ($elem.children().length === 1 && $elem.children().is('br')) {
+                        $elem.remove();
                     }
-                    if (elem.children().length === 2 && elem.children().eq(0).is('span') && elem.children().eq(0).text().length === 1 && elem.children().eq(1).is('br')) {
-                        elem.remove();
+                    if ($elem.children().length === 2 && $elem.children().eq(0).is('span') && $elem.children().eq(0).text().length === 1 && $elem.children().eq(1).is('br')) {
+                        $elem.remove();
                     }
                 });
                 // obtain real video src

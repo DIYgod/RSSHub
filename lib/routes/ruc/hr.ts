@@ -50,12 +50,12 @@ async function handler(ctx) {
     let items = $('a[title]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: `${rootUrl}${link.indexOf('..') === 0 ? link.replace(/\.\./, '') : `/${category}/${link}`}`,
             };
         });

@@ -34,9 +34,9 @@ async function handler(ctx) {
     const list = $('div.popular__card-list div.popular__card-img a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
             };
         });
 

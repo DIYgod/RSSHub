@@ -19,14 +19,14 @@ const fetchItems = async (limit, currentUrl) => {
     let items = $('p.line')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
-                author: item.find('span').last().text(),
+                author: $item.find('span').last().text(),
             };
         });
 
@@ -43,15 +43,15 @@ const fetchItems = async (limit, currentUrl) => {
                     const details = content('div.mohe-content p')
                         .toArray()
                         .map((detail) => {
-                            detail = content(detail);
-                            const as = detail.find('a');
+                            const $detail = content(detail);
+                            const as = $detail.find('a');
 
                             return {
-                                label: detail.find('span.c-l-depths').text().split(/：/, 1)[0],
+                                label: $detail.find('span.c-l-depths').text().split(/：/, 1)[0],
                                 value:
                                     as.length === 0
                                         ? content(
-                                              detail
+                                              $detail
                                                   .contents()
                                                   .toArray()
                                                   .find((c) => c.nodeType === 3)

@@ -46,11 +46,11 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = (isNumber ? $('.panel-body').eq(id).find('.examName a') : $('.panel-body ul li a')).toArray().map((item) => {
-        item = $(item);
-        const link = item.attr('href');
+        const $item = $(item);
+        const link = $item.attr('href');
 
         return {
-            title: item.text(),
+            title: $item.text(),
             link: link.startsWith('//') ? (link.startsWith('https') ? link : `https:${link}`) : `${rootUrl}${link}/news/bulletin`,
         };
     });

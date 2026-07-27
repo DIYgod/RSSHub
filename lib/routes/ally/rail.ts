@@ -67,13 +67,13 @@ async function handler(ctx) {
 
     let items = links
         .map((link) => {
-            link = $(link);
-            const url = link.attr('href');
+            const $link = $(link);
+            const url = $link.attr('href');
             const urlMatch = url && url.match(/\/html\/(\d{4})\/\w+_(\d{4})\/\d+\.html/);
             if (!urlMatch) {
                 return null;
             }
-            const title = link.text();
+            const title = $link.text();
             return {
                 title,
                 link: url.startsWith('/') ? `${rootUrl}${url}` : url,

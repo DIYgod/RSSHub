@@ -49,12 +49,12 @@ async function handler(ctx) {
     let item = $('.ss li')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+            const $e = $(e);
+            const a = $e.find('a');
             return {
                 title: a.text().trim(),
                 link: a.attr('href').startsWith('info/') ? host + a.attr('href') : a.attr('href'),
-                pubDate: parseDate(e.find('span').text().trim(), 'YYYY-MM-DD'),
+                pubDate: parseDate($e.find('span').text().trim(), 'YYYY-MM-DD'),
             };
         });
 

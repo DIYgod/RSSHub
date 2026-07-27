@@ -41,8 +41,8 @@ async function handler(ctx) {
     const items = await pMap(
         $('#newslist-top a[title]').slice(0, limit),
         (item) => {
-            item = $(item);
-            const link = item.attr('href');
+            const $item = $(item);
+            const link = $item.attr('href');
             return cache.tryGet(link, async () => {
                 const response = await got(link);
                 const $ = load(response.data);
@@ -50,7 +50,7 @@ async function handler(ctx) {
                 $('.artical-content p:eq(0), .artical-content .flexbox').remove();
 
                 return {
-                    title: item.attr('title'),
+                    title: $item.attr('title'),
                     author,
                     description: $('.artical-content').html(),
                     category: $('meta[property="article:section"]').attr('content'),

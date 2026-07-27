@@ -60,9 +60,9 @@ async function handler(ctx) {
     const detailsUrls = $('.item-con-inner')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                link: item.find('.tit>a').attr('href'),
+                link: $item.find('.tit>a').attr('href'),
             };
         })
         .filter((item) => item.link !== void 0)

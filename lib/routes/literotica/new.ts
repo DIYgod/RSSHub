@@ -44,16 +44,16 @@ async function handler() {
     const list = $('.b-46t')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('.p-48y');
+            const a = $item.find('.p-48y');
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                category: item.nextAll().eq(3).text().replaceAll(/\(|\)/g, '').trim(),
-                pubDate: parseDate(item.nextAll().eq(4).text().trim(), 'MM/DD/YY'),
-                author: item
+                category: $item.nextAll().eq(3).text().replaceAll(/\(|\)/g, '').trim(),
+                pubDate: parseDate($item.nextAll().eq(4).text().trim(), 'MM/DD/YY'),
+                author: $item
                     .nextAll()
                     .eq(2)
                     .text()

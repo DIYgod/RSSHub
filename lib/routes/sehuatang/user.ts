@@ -56,9 +56,9 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('th>a').first();
-            const category = item.find('.xg1').first().text();
+            const $item = $(item);
+            const a = $item.find('th>a').first();
+            const category = $item.find('.xg1').first().text();
             return {
                 title: `[${category}] ${a.text()}`,
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。

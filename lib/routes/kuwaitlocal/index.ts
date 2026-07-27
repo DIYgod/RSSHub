@@ -40,10 +40,10 @@ async function handler(ctx) {
     const list = $('a.ggrid')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.txt').text().trim(),
-                link: item.attr('href'),
+                title: $item.find('.txt').text().trim(),
+                link: $item.attr('href'),
             };
         });
 

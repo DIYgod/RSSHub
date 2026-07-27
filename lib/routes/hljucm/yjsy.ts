@@ -40,11 +40,11 @@ async function handler(ctx) {
     const list = $('.postlist a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.attr('title'),
-                link: new URL(item.attr('href'), currentUrl).href,
+                title: $item.attr('title'),
+                link: new URL($item.attr('href'), currentUrl).href,
             };
         });
 

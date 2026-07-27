@@ -56,11 +56,11 @@ async function handler(ctx) {
         .find('div.card')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('.card-title > a').attr('title');
-            let link = item.find('.card-title > a').attr('href');
+            const $item = $(item);
+            const title = $item.find('.card-title > a').attr('title');
+            let link = $item.find('.card-title > a').attr('href');
             link = link.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate(item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
+            const pubDate = timezone(parseDate($item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
                 title,
                 pubDate,

@@ -57,16 +57,16 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('div.img img');
+            const image = $item.find('div.img img');
 
             return {
-                title: item.prop('title') ?? item.find('h4.eclips').text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: parseDate(item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
+                title: $item.prop('title') ?? $item.find('h4.eclips').text(),
+                link: new URL($item.prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
                 description: renderDescription({
-                    description: item.find('div.txt p').html(),
+                    description: $item.find('div.txt p').html(),
                     image: image.prop('src')
                         ? {
                               src: new URL(image.prop('src'), rootUrl).href,

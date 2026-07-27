@@ -33,8 +33,8 @@ async function handler(ctx) {
     const list = $('div.recent-replies-mod ul.comment-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const p = item.find('p');
+            const $item = $(item);
+            const p = $item.find('p');
             const match = p
                 .find('a')
                 .attr('href')

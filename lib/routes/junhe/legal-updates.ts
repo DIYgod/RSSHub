@@ -21,12 +21,12 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('h1.news.detail').text(),
-                pubDate: parseDate(item.find('p.date').text(), 'YYYY.MM.DD'),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.find('h1.news.detail').text(),
+                pubDate: parseDate($item.find('p.date').text(), 'YYYY.MM.DD'),
+                link: new URL($item.prop('href'), rootUrl).href,
             };
         });
 

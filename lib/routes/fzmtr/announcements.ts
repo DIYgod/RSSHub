@@ -32,10 +32,10 @@ async function handler() {
     const list = $('span#resources li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const url = `http://${domain}` + item.find('a').attr('href');
-            const title = item.find('a').text();
-            const publishTime = parseDate(item.find('span').text());
+            const $item = $(item);
+            const url = `http://${domain}` + $item.find('a').attr('href');
+            const title = $item.find('a').text();
+            const publishTime = parseDate($item.find('span').text());
             return {
                 title,
                 link: url,

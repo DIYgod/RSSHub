@@ -44,14 +44,14 @@ async function handler() {
     let items = $('.col-md a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: link.startsWith('http') ? link : `${rootUrl}${link.replace(/^\./, '/tzgg')}`,
-                pubDate: parseDate(item.parent().find('span').text()),
+                pubDate: parseDate($item.parent().find('span').text()),
             };
         });
 

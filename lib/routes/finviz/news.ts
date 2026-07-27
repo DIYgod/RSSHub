@@ -66,15 +66,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a.nn-tab-link');
+            const a = $item.find('a.nn-tab-link');
 
             const descriptionMatches = a
                 .parent()
                 .prop('data-boxover')
                 ?.match(/<td class='news_tooltip-tab'>(.*?)<\/td>/);
-            const authorMatches = item
+            const authorMatches = $item
                 .find('use')
                 .first()
                 .prop('href')
@@ -85,7 +85,7 @@ async function handler(ctx) {
                 link: a.prop('href'),
                 description: descriptionMatches ? descriptionMatches[1] : undefined,
                 author: authorMatches ? authorMatches[1].replaceAll('-', ' ') : 'finviz',
-                pubDate: timezone(parseDate(item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
+                pubDate: timezone(parseDate($item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
             };
         })
         .filter((item) => item.title);

@@ -38,11 +38,11 @@ async function handler(ctx) {
     const list = $('.mainRightBox .announcements-title a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text().trim(),
-                link: baseUrl + item.attr('href').trim(),
+                title: $item.text().trim(),
+                link: baseUrl + $item.attr('href').trim(),
             };
         });
 

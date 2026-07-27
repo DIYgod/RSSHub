@@ -39,12 +39,12 @@ async function handler() {
     const list = $('div.datalist table tbody tr')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const noticeId = e
+            const $e = $(e);
+            const noticeId = $e
                 .find('a')
                 .attr('onclick')
                 .match(/viewNotice\('(.+?)'\)/)[1];
-            const tds = e.find('td');
+            const tds = $e.find('td');
             return {
                 title: tds.eq(2).text(),
                 link: 'http://jwgl.ouc.edu.cn/public/viewSchoolNoticeDetail.action?schoolNoticeId=' + noticeId,

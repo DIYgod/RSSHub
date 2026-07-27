@@ -44,15 +44,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
                 link: new URL(a.prop('href'), rootUrl).href,
                 author: a.text().split('：', 1)[0],
-                pubDate: timezone(parseDate(item.find('span').text()), 8),
+                pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
         });
 

@@ -50,15 +50,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('span.chapternum').text(),
-                link: item.find('a').prop('href'),
+                title: $item.find('span.chapternum').text(),
+                link: $item.find('a').prop('href'),
                 author,
                 category,
-                pubDate: parseDate(item.find('span.chapterdate').text(), 'MMMM DD'),
-                enclosure_url: item.next().find('a.dload').prop('href'),
+                pubDate: parseDate($item.find('span.chapterdate').text(), 'MMMM DD'),
+                enclosure_url: $item.next().find('a.dload').prop('href'),
                 enclosure_type: 'application/zip',
             };
         });

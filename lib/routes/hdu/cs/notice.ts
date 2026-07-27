@@ -15,13 +15,13 @@ const getSingleRecord = async () => {
     const list = $('.posts-list').find('li');
 
     return list.toArray().map((item) => {
-        item = $(item);
-        const dateTxt = item.find('.date').text();
+        const $item = $(item);
+        const dateTxt = $item.find('.date').text();
         const date = dateTxt.slice(1, -1);
         return {
-            title: item.find('a').text(),
+            title: $item.find('a').text(),
             pubDate: parseDate(date),
-            link: link + item.find('a').attr('href'),
+            link: link + $item.find('a').attr('href'),
         };
     });
 };

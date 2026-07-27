@@ -40,12 +40,12 @@ async function handler(ctx) {
         .find('tr.gridline')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.Title').text(),
-                link: new URL(item.find('.Title').attr('href'), baseUrl).href,
+                title: $item.find('.Title').text(),
+                link: new URL($item.find('.Title').attr('href'), baseUrl).href,
                 pubDate: parseDate(
-                    item
+                    $item
                         .find('td')
                         .eq(2)
                         .text()

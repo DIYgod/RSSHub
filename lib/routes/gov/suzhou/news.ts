@@ -150,12 +150,12 @@ async function handler(ctx) {
         items = $('ul.infolist li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
                 return {
                     title: a.attr('title'),
                     link: new URL(a.attr('href'), rootUrl).href,
-                    pubDate: timezone(parseDate(item.find('.time').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
                 };
             });
     }

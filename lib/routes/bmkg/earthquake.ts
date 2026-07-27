@@ -36,8 +36,8 @@ async function handler() {
     const items = $('div .table-responsive tbody tr')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const td = item.find('td');
+            const $item = $(item);
+            const td = $item.find('td');
             return {
                 title: `${td[2].children[0].data}|${td[3].children[0].data}|${td[4].children[0].data}|${td[5].children[0].data}|${td[6].children[0].data}`,
                 link: url,

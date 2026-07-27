@@ -34,12 +34,12 @@ async function handler() {
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h3').text().trim(),
-                link: `https://duckdb.org${item.find('a.blocklink').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.date').text(), 'YYYY-MM-DD'), 0),
-                author: item.find('.author').text().trim(),
+                title: $item.find('h3').text().trim(),
+                link: `https://duckdb.org${$item.find('a.blocklink').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.date').text(), 'YYYY-MM-DD'), 0),
+                author: $item.find('.author').text().trim(),
             };
         });
 

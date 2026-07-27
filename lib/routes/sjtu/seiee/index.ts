@@ -60,11 +60,11 @@ async function handler(ctx) {
     const list = $(catID ? 'li' : '.u10 li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.name').text().trim(),
-                link: item.find('a').attr('href'),
+                title: $item.find('.name').text().trim(),
+                link: $item.find('a').attr('href'),
             };
         });
 

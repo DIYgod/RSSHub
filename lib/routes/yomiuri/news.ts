@@ -62,13 +62,13 @@ async function handler(ctx) {
         list = $('.news-top-latest__list .news-top-latest__list-item__inner')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('h3 a');
+                const $item = $(item);
+                const a = $item.find('h3 a');
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: timezone(parseDate(item.find('time').attr('datetime')), 9),
-                    locked: item.find('.icon-locked').length,
+                    pubDate: timezone(parseDate($item.find('time').attr('datetime')), 9),
+                    locked: $item.find('.icon-locked').length,
                 };
             });
     } else {
@@ -76,9 +76,9 @@ async function handler(ctx) {
         list = $('.layout-contents__main .c-list-title')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('h3 a');
-                const parent = item.parent();
+                const $item = $(item);
+                const a = $item.find('h3 a');
+                const parent = $item.parent();
                 return {
                     title: a.text(),
                     link: a.attr('href'),

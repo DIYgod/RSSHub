@@ -92,11 +92,11 @@ async function handler(ctx) {
     const actList = $('div.item-77')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: `${baseUrl}/${item.find('a').attr('href')}`,
-                category: item
+                title: $item.find('a').text(),
+                link: `${baseUrl}/${$item.find('a').attr('href')}`,
+                category: $item
                     .find('label')
                     .toArray()
                     .map((l) => $(l).text()),

@@ -55,9 +55,9 @@ async function handler(ctx) {
     const list = $('a', 'record')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
             };
         });
     const items = await Promise.all(

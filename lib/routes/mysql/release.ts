@@ -45,11 +45,11 @@ async function handler(ctx) {
         .slice(1, -1)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${currentUrl}${item.attr('href')}`,
+                title: $item.text(),
+                link: `${currentUrl}${$item.attr('href')}`,
             };
         });
 

@@ -36,13 +36,13 @@ async function handler() {
     const items = $('div[class^=changelog-entry]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h2').text(),
-                link: rootUrl + item.find('a').attr('href'),
-                description: item.find('div[class^=content-docs]').html(),
-                pubDate: parseDate(item.find('a[class*=mb-xx-small]').text()),
-                author: item
+                title: $item.find('h2').text(),
+                link: rootUrl + $item.find('a').attr('href'),
+                description: $item.find('div[class^=content-docs]').html(),
+                pubDate: parseDate($item.find('a[class*=mb-xx-small]').text()),
+                author: $item
                     .find('span[class^=flex-shrink-0]')
                     .eq(0)
                     .find('img')

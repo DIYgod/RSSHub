@@ -40,12 +40,12 @@ async function handler() {
         .slice(0, 10)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), 'http://gs.xjtu.edu.cn/').href,
-                pubDate: parseDate(item.find('span.time').text()),
+                pubDate: parseDate($item.find('span.time').text()),
             };
         });
 

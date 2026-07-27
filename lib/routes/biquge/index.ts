@@ -58,10 +58,10 @@ async function handler(ctx) {
         .toReversed()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 1)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             let link: string;
-            const url = item.attr('href');
+            const url = $item.attr('href');
             if (url.startsWith('http')) {
                 link = url;
             } else if (url.startsWith('/')) {
@@ -71,7 +71,7 @@ async function handler(ctx) {
             }
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
                 author,
                 pubDate,

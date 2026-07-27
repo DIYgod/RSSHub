@@ -39,10 +39,10 @@ async function handler() {
         .find('a')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const link = rootUrl + item.attr('href');
+            const $item = $(item);
+            const link = rootUrl + $item.attr('href');
             const reg = /^(.+) - (.*) - (.+)$/;
-            const keyword = reg.exec(item.text().trim());
+            const keyword = reg.exec($item.text().trim());
             return {
                 title: keyword[1],
                 author: keyword[2],

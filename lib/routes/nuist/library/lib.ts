@@ -29,12 +29,12 @@ async function handler() {
     const list = $('.list2 li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('a').attr('title'),
+                title: $item.find('a').attr('title'),
                 category: '通知',
-                link: new URL(item.find('a').attr('href'), link).href,
+                link: new URL($item.find('a').attr('href'), link).href,
             };
         });
 

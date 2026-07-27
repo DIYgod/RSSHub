@@ -24,9 +24,9 @@ export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTi
     const list = $(baseClass)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const href = a.attr('href');
             const title = a.text();
             const link = href.startsWith('./') && !href.endsWith('.pdf') ? `${baseURl}${href.replace('./', '/')}` : href;

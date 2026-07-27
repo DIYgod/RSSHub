@@ -40,12 +40,12 @@ async function handler() {
 
     const list = $('.news_ul li');
     const articleList = list.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('.news_title a');
+        const $item = $(item);
+        const titleElement = $item.find('.news_title a');
         return {
             title: titleElement.attr('title'),
             link: titleElement.attr('href'),
-            pubDate: parseDate(item.find('.news_meta').text(), 'YYYY-MM-DD'),
+            pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'),
         };
     });
 

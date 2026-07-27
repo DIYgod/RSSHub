@@ -40,12 +40,12 @@ async function handler(ctx) {
         .find('h2.title')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), 'https://bgm.tv').href,
-                pubDate: timezone(parseDate(item.parent().find('small.time').text()), 0),
+                pubDate: timezone(parseDate($item.parent().find('small.time').text()), 0),
             };
         });
 

@@ -66,23 +66,23 @@ async function handler() {
         title,
         link,
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             // remove event and styles
-            item.find('*').removeAttr('onclick');
-            item.find('*').removeAttr('onerror');
-            item.find('*').removeAttr('style');
+            $item.find('*').removeAttr('onclick');
+            $item.find('*').removeAttr('onerror');
+            $item.find('*').removeAttr('style');
 
             // format account style
-            const account = item.find('.account-group-link-row');
+            const account = $item.find('.account-group-link-row');
             account.html(account.text());
 
             // extract video tag from its player
-            item.find('.plyr--video').each((_, player) => {
-                player = $(player);
+            $item.find('.plyr--video').each((_, player) => {
+                const $player = $(player);
 
-                const video = player.find('video');
-                player.replaceWith(video);
+                const video = $player.find('video');
+                $player.replaceWith(video);
                 const poster = video.attr('data-poster');
                 video.attr('poster', 'https:' + poster);
 
@@ -92,17 +92,17 @@ async function handler() {
             });
 
             // correct src of img tags
-            item.find('img').each((_, image) => {
+            $item.find('img').each((_, image) => {
                 const src = $(image).attr('data-src');
                 $(image).attr('src', 'https:' + src);
             });
 
             return {
-                title: item.find('.account-group').text() + ` - ${title}`,
-                description: item.html(),
-                link: item.find('.account-group-link-row').attr('href'),
-                pubDate: parseDate(item.find('.profile-char').attr('datetime')),
-                guid: item.find('a.tap-image').attr('data-tweet-id') || item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate(item.find('.profile-char').attr('datetime')).getTime(),
+                title: $item.find('.account-group').text() + ` - ${title}`,
+                description: $item.html(),
+                link: $item.find('.account-group-link-row').attr('href'),
+                pubDate: parseDate($item.find('.profile-char').attr('datetime')),
+                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')).getTime(),
             };
         }),
     };

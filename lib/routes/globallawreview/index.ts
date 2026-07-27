@@ -36,25 +36,25 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('p.p1 a');
+            const a = $item.find('p.p1 a');
             const link = new URL(a.prop('href'), rootUrl).href;
 
             return {
                 title: a.text(),
                 link,
-                description: item.find('p.p2').html(),
-                author: item.find('p.p3 span').text() || a.text().split('：', 1)[0],
+                description: $item.find('p.p2').html(),
+                author: $item.find('p.p3 span').text() || a.text().split('：', 1)[0],
                 category: [
-                    item
+                    $item
                         .find('p.p4')
                         .text()
                         .match(/\] (\d+\.\d+);/)[1],
                 ],
                 enclosure_url: link,
                 enclosure_length:
-                    item
+                    $item
                         .find('p.p4')
                         .text()
                         .match(/(\d+(\.\d+)?)\sKB/)[1] * 1000,

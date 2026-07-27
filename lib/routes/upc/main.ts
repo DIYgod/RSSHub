@@ -52,14 +52,14 @@ async function handler(ctx) {
     const list = $('.main-list-box-left li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.li-right-bt a');
+            const $item = $(item);
+            const a = $item.find('.li-right-bt a');
             const link = a.attr('href');
             return {
                 title: a.text(),
-                description: item.find('.li-right-zy a').text(),
+                description: $item.find('.li-right-zy a').text(),
                 link: link.startsWith('http') ? link : `${baseUrl}/${link}`,
-                pubDate: parseDate(item.find('.li-left').text(), 'DDYYYY-MM'),
+                pubDate: parseDate($item.find('.li-left').text(), 'DDYYYY-MM'),
             };
         });
     // ## 定义输出的item

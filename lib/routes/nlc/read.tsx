@@ -44,16 +44,16 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('span').first().text();
+            const title = $item.find('span').first().text();
 
             return {
                 title,
-                link: item.prop('onclick').match(/openOutRes\('1','(.*?)','1',/)[1],
+                link: $item.prop('onclick').match(/openOutRes\('1','(.*?)','1',/)[1],
                 description: renderToString(
                     <>
-                        {item
+                        {$item
                             .find('div.pic img')
                             .toArray()
                             .map((img) => {
@@ -66,13 +66,13 @@ async function handler(ctx) {
                                     </figure>
                                 ) : null;
                             })}
-                        {item.find('div.txt').prop('title') ? <p>{item.find('div.txt').prop('title')}</p> : null}
+                        {$item.find('div.txt').prop('title') ? <p>{$item.find('div.txt').prop('title')}</p> : null}
                     </>
                 ),
                 author,
                 category: [type],
                 guid: `nlc-read#${
-                    item
+                    $item
                         .prev()
                         .prop('onclick')
                         .match(/\('(\d+)'\)/)[1]

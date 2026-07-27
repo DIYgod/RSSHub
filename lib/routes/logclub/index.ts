@@ -29,10 +29,10 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('div.newslist-txt h3 a, a.article_title').first();
-            const image = item.find('img.img-hover').prop('src')?.split(/\?/, 1)[0] ?? undefined;
+            const a = $item.find('div.newslist-txt h3 a, a.article_title').first();
+            const image = $item.find('img.img-hover').prop('src')?.split(/\?/, 1)[0] ?? undefined;
 
             return {
                 title: a.text(),
@@ -42,7 +42,7 @@ async function handler(ctx) {
                         src: image,
                         alt: a.text(),
                     },
-                    intro: item.find('p.newslist-intro, div.newslist-info-intro').text(),
+                    intro: $item.find('p.newslist-intro, div.newslist-info-intro').text(),
                 }),
                 itunes_item_image: image,
             };
@@ -56,16 +56,16 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 content('a.dl_file').each((_, el) => {
-                    el = content(el);
-                    el.parent().remove();
+                    const $el = content(el);
+                    $el.parent().remove();
                 });
                 content('img').each((_, el) => {
-                    el = content(el);
-                    el.replaceWith(
+                    const $el = content(el);
+                    $el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                                alt: el.prop('title'),
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
                             },
                         })
                     );

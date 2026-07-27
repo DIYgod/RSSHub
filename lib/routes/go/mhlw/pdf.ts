@@ -20,10 +20,10 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('font').text() || item.text();
-            const link = new URL(item.prop('href'), rootUrl).href;
+            const title = $item.find('font').text() || $item.text();
+            const link = new URL($item.prop('href'), rootUrl).href;
 
             return {
                 title,

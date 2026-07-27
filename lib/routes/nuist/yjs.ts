@@ -30,14 +30,14 @@ async function handler(ctx) {
     let items = $('.gridlinediv')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').last();
+            const a = $item.find('a').last();
 
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.next().text(), 'YYYY年MM月DD日'),
+                pubDate: parseDate($item.next().text(), 'YYYY年MM月DD日'),
             };
         });
 

@@ -46,11 +46,11 @@ async function handler(ctx) {
     const list = $('.list-content a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('p').text(),
-                link: `${baseUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.date').text()), // 2023-03-22
+                title: $item.find('p').text(),
+                link: `${baseUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.date').text()), // 2023-03-22
             };
         });
 

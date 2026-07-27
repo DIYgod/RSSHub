@@ -104,12 +104,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.prop('href');
+            const link = $item.prop('href');
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
             };
         });

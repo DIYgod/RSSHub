@@ -32,8 +32,8 @@ export const route: Route = {
         const list = $('#mainContent li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a').eq(1);
+                const $item = $(item);
+                const a = $item.find('a').eq(1);
                 return {
                     title: a.text(),
                     link: String(a.attr('href')),

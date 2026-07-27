@@ -22,9 +22,9 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const link = a.prop('href');
             const msg = a.prop('msg');
 
@@ -41,7 +41,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: parseDate(item.contents().last().text()),
+                pubDate: parseDate($item.contents().last().text()),
                 link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link, rootUrl).href),
                 language,
                 enclosure_url: enclosureUrl,

@@ -86,12 +86,12 @@ async function handler(ctx) {
     let items = $('.main-content-left-list-item')
         .toArray()
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                title: e.find('.title span').text(),
-                link: baseUrl + e.attr('href'),
-                author: e.find('.author-by span').text(),
-                pubDate: e.find('.author-time').text(),
+                title: $e.find('.title span').text(),
+                link: baseUrl + $e.attr('href'),
+                author: $e.find('.author-by span').text(),
+                pubDate: $e.find('.author-time').text(),
             };
         });
 

@@ -64,11 +64,11 @@ async function handler(ctx) {
     const list = $('div.study ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a p').text().trim(),
-                pubDate: parseDate(item.find('span').text()),
-                link: new URL(item.find('a').attr('href'), link).href,
+                title: $item.find('a p').text().trim(),
+                pubDate: parseDate($item.find('span').text()),
+                link: new URL($item.find('a').attr('href'), link).href,
             };
         });
 
@@ -92,12 +92,12 @@ async function handler(ctx) {
                 const content = $('.content');
 
                 content.find('img').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('orisrc')) {
-                        const newUrl = new URL(e.attr('orisrc'), 'https://cs.whu.edu.cn');
-                        e.attr('src', newUrl.href);
-                        e.removeAttr('orisrc');
-                        e.removeAttr('vurl');
+                    const $e = $(e);
+                    if ($e.attr('orisrc')) {
+                        const newUrl = new URL($e.attr('orisrc'), 'https://cs.whu.edu.cn');
+                        $e.attr('src', newUrl.href);
+                        $e.removeAttr('orisrc');
+                        $e.removeAttr('vurl');
                     }
                 });
 

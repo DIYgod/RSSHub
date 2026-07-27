@@ -43,10 +43,10 @@ async function handler(ctx) {
     let items = $('.a-full')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: `${rootUrl}${item.attr('href')}`,
+                link: `${rootUrl}${$item.attr('href')}`,
             };
         });
 

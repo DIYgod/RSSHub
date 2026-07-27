@@ -48,12 +48,12 @@ async function handler(ctx) {
     let items = $('.pageUl ul li a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.attr('title'),
-                link: new URL(item.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.attr('title'),
+                link: new URL($item.attr('href'), currentUrl).href,
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

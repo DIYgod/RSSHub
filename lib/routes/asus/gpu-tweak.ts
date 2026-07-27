@@ -37,13 +37,13 @@ async function handler() {
     const items = $('section div.inner div.item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            item.find('.last').remove();
+            const $item = $(item);
+            $item.find('.last').remove();
             return {
-                title: item.find('.ver h6').text().trim(),
-                description: item.find('.btnbox a.open_patch_lightbox').attr('data-info'),
-                pubDate: parseDate(item.find('.ti').text()),
-                link: item.find('.btnbox a[download=]').attr('href'),
+                title: $item.find('.ver h6').text().trim(),
+                description: $item.find('.btnbox a.open_patch_lightbox').attr('data-info'),
+                pubDate: parseDate($item.find('.ti').text()),
+                link: $item.find('.btnbox a[download=]').attr('href'),
             };
         });
 

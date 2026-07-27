@@ -36,8 +36,8 @@ export const route: Route = {
         const list = $('div.fr li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
+                const $item = $(item);
+                const a = $item.find('a').first();
                 const link = baseURL + a.attr('href');
                 return {
                     link,

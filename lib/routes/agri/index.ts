@@ -25,14 +25,14 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             const title = a.text();
-            const image = item.find('img').first().prop('src') ? new URL(item.find('img').first().prop('src'), rootUrl).href : undefined;
+            const image = $item.find('img').first().prop('src') ? new URL($item.find('img').first().prop('src'), rootUrl).href : undefined;
             const description = renderDescription({
-                intro: item.find('p.con_text').text() || undefined,
+                intro: $item.find('p.con_text').text() || undefined,
                 images: image
                     ? [
                           {
@@ -46,11 +46,11 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.con_date_span').text() || `${item.find('div.com_time_p2').text().trim()}${item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
+                pubDate: parseDate($item.find('span.con_date_span').text() || `${$item.find('div.com_time_p2').text().trim()}${$item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
                 link: new URL(a.prop('href'), currentUrl).href,
                 content: {
                     html: description,
-                    text: item.find('p.con_text').text() || undefined,
+                    text: $item.find('p.con_text').text() || undefined,
                 },
                 image,
                 banner: image,

@@ -27,12 +27,12 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('p').text(),
-                pubDate: parseDate(item.find('span.date').text()),
-                link: new URL(item.find('a.clearfix').prop('href'), rootUrl).href,
+                title: $item.find('p').text(),
+                pubDate: parseDate($item.find('span.date').text()),
+                link: new URL($item.find('a.clearfix').prop('href'), rootUrl).href,
             };
         });
 

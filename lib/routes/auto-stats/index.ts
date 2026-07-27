@@ -45,14 +45,14 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
             const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1] ?? undefined;
 
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],
-                link: new URL(item.parent().prop('href'), rootUrl).href,
+                link: new URL($item.parent().prop('href'), rootUrl).href,
                 pubDate: timezone(parseDate(pubDate, 'YYYY/M/D H:mm:ss'), 8),
             };
         });

@@ -37,12 +37,12 @@ async function handler(ctx) {
     const list = $('#datalist_wap .li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text().trim(),
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(item.find('.d').text(), 'YYYY.MM.DD'),
+                pubDate: parseDate($item.find('.d').text(), 'YYYY.MM.DD'),
             };
         });
 

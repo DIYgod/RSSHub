@@ -36,13 +36,13 @@ const renderDescription = ({ images, videos }: { images?: DescriptionImage[]; vi
 
 const unblurImages = ($: CheerioAPI) => {
     $('img[data-original-src]').each((_, el) => {
-        el = $(el);
+        const $el = $(el);
 
-        el.replaceWith(
+        $el.replaceWith(
             renderDescription({
                 images: [
                     {
-                        src: el.prop('data-original-src'),
+                        src: $el.prop('data-original-src'),
                     },
                 ],
             })

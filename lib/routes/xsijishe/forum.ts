@@ -56,9 +56,9 @@ async function handler(ctx) {
     let items = $('[id^="normalthread"]')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const nexAuthorBtms = item.find('.nex_author_btms');
-            const nexForumtitTopA = item.find('.nex_forumtit_top a').first();
+            const $item = $(item);
+            const nexAuthorBtms = $item.find('.nex_author_btms');
+            const nexForumtitTopA = $item.find('.nex_forumtit_top a').first();
             const nexFtdate = nexAuthorBtms.find('.nex_ftdate');
             const pubDate = nexFtdate.find('span').length > 0 ? nexFtdate.find('span').attr('title') : nexFtdate.text().replace('发表于', '');
             return {
@@ -66,7 +66,7 @@ async function handler(ctx) {
                 pubDate: parseDate(pubDate.trim()),
                 category: nexAuthorBtms.find('em a').text().trim(),
                 link: baseUrl + '/' + nexForumtitTopA.attr('href'),
-                author: item.find('.nex_threads_author').find('a').text().trim(),
+                author: $item.find('.nex_threads_author').find('a').text().trim(),
             };
         });
     items = await Promise.all(
@@ -79,13 +79,13 @@ async function handler(ctx) {
                 const firstViewBox = $('.t_f').first();
 
                 firstViewBox.find('img').each((_, img) => {
-                    img = $(img);
-                    if (img.attr('zoomfile')) {
-                        img.attr('src', img.attr('zoomfile'));
-                        img.removeAttr('zoomfile');
-                        img.removeAttr('file');
+                    const $img = $(img);
+                    if ($img.attr('zoomfile')) {
+                        $img.attr('src', $img.attr('zoomfile'));
+                        $img.removeAttr('zoomfile');
+                        $img.removeAttr('file');
                     }
-                    img.removeAttr('onmouseover');
+                    $img.removeAttr('onmouseover');
                 });
 
                 item.description = firstViewBox.html();

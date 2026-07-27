@@ -24,10 +24,10 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('h3').text();
-            const image = item.find('img').prop('src');
+            const title = $item.find('h3').text();
+            const image = $item.find('img').prop('src');
 
             const description = renderToString(
                 <>
@@ -36,18 +36,18 @@ export const handler = async (ctx) => {
                             <img src={image} alt={title} />
                         </figure>
                     ) : null}
-                    {item.find('div.p-row').text() ? <blockquote>{item.find('div.p-row').text()}</blockquote> : null}
+                    {$item.find('div.p-row').text() ? <blockquote>{$item.find('div.p-row').text()}</blockquote> : null}
                 </>
             );
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.time').text()),
-                link: new URL(item.find('h3 a').prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('span.time').text()),
+                link: new URL($item.find('h3 a').prop('href'), rootUrl).href,
                 content: {
                     html: description,
-                    text: item.find('div.p-row').text(),
+                    text: $item.find('div.p-row').text(),
                 },
                 image,
                 banner: image,

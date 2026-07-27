@@ -47,9 +47,9 @@ async function handler(ctx) {
     const list = $('div#articleList-body div.item.clearfix')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const date = parseDate(item.find('div.item-date').text());
+            const $item = $(item);
+            const a = $item.find('a');
+            const date = parseDate($item.find('div.item-date').text());
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), baseUrl).href,

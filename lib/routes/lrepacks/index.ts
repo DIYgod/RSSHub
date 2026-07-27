@@ -24,18 +24,18 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('h3.entry-title').text();
+            const title = $item.find('h3.entry-title').text();
             const description = renderDescription({
-                intro: item.find('div.entry-content').text(),
+                intro: $item.find('div.entry-content').text(),
             });
 
             return {
                 title,
                 description,
-                link: item.find('h3.entry-title a').prop('href'),
-                category: item
+                link: $item.find('h3.entry-title a').prop('href'),
+                category: $item
                     .find('span.cat-links')
                     .toArray()
                     .map((c) => $(c).text()),
@@ -53,14 +53,14 @@ export const handler = async (ctx) => {
                 const data = JSON.parse($$('script[type="application/ld+json"]').first().text())['@graph']?.[0] ?? undefined;
 
                 $$('div.entry-content a.highslide[href]').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    el.parent().replaceWith(
+                    $el.parent().replaceWith(
                         renderDescription({
                             images: [
                                 {
-                                    src: el.prop('href'),
-                                    alt: el.prop('title'),
+                                    src: $el.prop('href'),
+                                    alt: $el.prop('title'),
                                 },
                             ],
                         })

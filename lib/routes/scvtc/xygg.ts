@@ -36,12 +36,12 @@ async function handler() {
     const list = $('div.text-list ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a[title]');
+            const $item = $(item);
+            const a = $item.find('a[title]');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.find('span').text().trim()),
+                pubDate: parseDate($item.find('span').text().trim()),
             };
         });
 

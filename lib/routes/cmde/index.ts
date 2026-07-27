@@ -40,10 +40,10 @@ async function handler(ctx) {
             items: $('.list ul li')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        title: $(item).find('a').attr('title'),
-                        link: new URL($(item).find('a').attr('href'), url).href,
+                        title: $($item).find('a').attr('title'),
+                        link: new URL($($item).find('a').attr('href'), url).href,
                     };
                 }),
         };

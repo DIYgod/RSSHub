@@ -50,11 +50,11 @@ async function handler(ctx) {
     content('div.folderlabel').remove();
 
     content('div.lazy_load_img_box').each((_, el) => {
-        el = content(el);
+        const $el = content(el);
 
-        const image = el.find('img');
+        const image = $el.find('img');
 
-        el.replaceWith(
+        $el.replaceWith(
             renderToString(
                 <figure>
                     <img src={image.prop('src')} alt={image.prop('alt')} width={image.prop('width')} height={image.prop('height')} />

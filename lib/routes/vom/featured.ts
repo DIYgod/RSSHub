@@ -45,9 +45,9 @@ async function handler(ctx) {
             $('#bigNewsSlide .item, #news_3 .item')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        link: item.find('a').eq(0).attr('href'),
+                        link: $item.find('a').eq(0).attr('href'),
                     };
                 })
         ),

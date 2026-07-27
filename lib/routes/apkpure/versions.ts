@@ -49,13 +49,13 @@ async function handler(ctx) {
     const items = $('.ver li')
         .toArray()
         .map((ver) => {
-            ver = $(ver);
+            const $ver = $(ver);
             return {
-                title: ver.find('.ver-item-n').text(),
-                description: ver.html(),
-                link: `${baseUrl}${ver.find('a').attr('href')}`,
+                title: $ver.find('.ver-item-n').text(),
+                description: $ver.html(),
+                link: `${baseUrl}${$ver.find('a').attr('href')}`,
                 pubDate: parseDate(
-                    ver
+                    $ver
                         .find('.update-on')
                         .text()
                         .replaceAll(/年|月/g, '-')

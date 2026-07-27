@@ -37,12 +37,12 @@ async function handler() {
     const list = $('ul.news_list > li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').first();
+            const $item = $(item);
+            const title = $item.find('a').first();
             return {
                 title: title.text(),
                 link: contentUrl(title.attr('contentid')),
-                pubDate: parseDate(item.find('span.right.txt_black2').text()),
+                pubDate: parseDate($item.find('span.right.txt_black2').text()),
             };
         });
 

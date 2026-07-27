@@ -87,12 +87,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('h3').text().trim(),
-                link: new URL(item.prop('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('em').text()), 8),
+                title: $item.find('h3').text().trim(),
+                link: new URL($item.prop('href'), currentUrl).href,
+                pubDate: timezone(parseDate($item.find('em').text()), 8),
             };
         });
 

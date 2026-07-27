@@ -64,10 +64,10 @@ async function handler(ctx) {
         : $('.u-clickable-card__link')
               .toArray()
               .map((item) => {
-                  item = $(item);
+                  const $item = $(item);
 
                   return {
-                      link: `${rootUrl}${item.attr('href')}`,
+                      link: `${rootUrl}${$item.attr('href')}`,
                   };
               });
 

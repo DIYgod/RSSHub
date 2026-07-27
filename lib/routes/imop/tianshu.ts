@@ -28,10 +28,10 @@ async function handler() {
     const list = $('.right .right_top .right_bot .list2 .ul1 ul')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const href: string = item.find('a').attr('href');
+            const $item = $(item);
+            const href: string = $item.find('a').attr('href');
             return {
-                title: item.find('a').text(),
+                title: $item.find('a').text(),
                 link: href.startsWith('http') ? href : `${baseUrl}${href}`,
             };
         });

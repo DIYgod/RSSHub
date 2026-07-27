@@ -32,9 +32,9 @@ async function handler(ctx) {
     const list = $('tbody[id^="normalthread_"]')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const xst = item.find('a.s.xst');
-            const author = item.find('td.by cite a').eq(0).text();
+            const $item = $(item);
+            const xst = $item.find('a.s.xst');
+            const author = $item.find('td.by cite a').eq(0).text();
             return {
                 title: xst.text(),
                 link: xst.attr('href'),

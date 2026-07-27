@@ -37,14 +37,14 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.attr('data-title'),
+                title: $item.attr('data-title'),
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
-                pubDate: timezone(parseDate(item.text()), 8),
+                pubDate: timezone(parseDate($item.text()), 8),
             };
         });
 
