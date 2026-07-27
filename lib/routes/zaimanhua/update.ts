@@ -43,7 +43,6 @@ export const route: Route = {
         const currentUrl = `${baseUrl}/api/v1/comic2/update_list?status&theme&zone&cate&firstLetter&sortType&page=1&size=20`;
         const headers: Record<string, string> = {
             'user-agent': config.trueUA,
-            referer: baseUrl,
         };
         const token = config.zaimanhua.token;
         if (token) {

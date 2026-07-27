@@ -34,9 +34,6 @@ async function handler() {
     const res = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(res.data);
     const list = $('.notice_01').find('li');

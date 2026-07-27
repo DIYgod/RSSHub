@@ -37,7 +37,6 @@ async function handler(ctx: Context): Promise<Data> {
             accept: 'text/html, application/xhtml+xml',
             'accept-language': 'en-US;q=0.9',
             'turbo-frame': 'search_page',
-            referer: baseURL,
             dnt: '1',
         },
     });

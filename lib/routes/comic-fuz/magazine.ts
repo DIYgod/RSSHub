@@ -34,7 +34,6 @@ export const route: Route = {
 
         const response = await ofetch(openUrl, {
             headers: {
-                Referer: 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
             },
         });

@@ -25,9 +25,6 @@ async function handler() {
     const response = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: url,
-        },
         headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
     const $ = load(response.data);

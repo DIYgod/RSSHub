@@ -132,11 +132,7 @@ async function handler(ctx) {
     const author = ctx.req.param('author') || 'gztz';
     const category = ctx.req.param('category') || 'all';
     const link = baseUrl + authorMap[author][category] + '/list.htm';
-    const response = await got(link, {
-        headers: {
-            Referer: baseUrl,
-        },
-    });
+    const response = await got(link);
     const $ = load(response.data);
 
     const list = $('.wp_article_list_table .border9')

@@ -30,11 +30,7 @@ async function handler() {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
-                    headers: {
-                        Referer: baseUrl,
-                    },
-                });
+                const response = await ofetch(item.link);
                 const $ = load(response);
 
                 item.title = ($('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text()).replace(' - 香港手機遊戲網 GameApps.hk', '');

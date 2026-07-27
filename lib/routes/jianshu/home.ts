@@ -36,9 +36,6 @@ async function handler() {
     const response = await got({
         method: 'get',
         url: 'https://www.jianshu.com',
-        headers: {
-            Referer: 'https://www.jianshu.com',
-        },
     });
 
     const data = response.data;

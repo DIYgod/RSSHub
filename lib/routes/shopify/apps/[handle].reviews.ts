@@ -30,7 +30,6 @@ async function handler(ctx: Context): Promise<Data> {
         headers: {
             accept: 'text/html, application/xhtml+xml',
             'accept-language': 'en-US;q=0.9',
-            referer: baseURL,
             dnt: '1',
         },
     });

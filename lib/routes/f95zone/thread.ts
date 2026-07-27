@@ -50,7 +50,6 @@ Note: If you want to track a specific post's content changes (e.g., first post w
         const threadLink = `${baseUrl}/threads/${thread}/`;
 
         const headers = {
-            referer: baseUrl,
             ...(config.f95zone.cookie && { cookie: config.f95zone.cookie }),
         };
 

@@ -65,7 +65,6 @@ async function handler(ctx) {
                     method: 'get',
                     url: item.link,
                     headers: {
-                        Referer: rootUrl,
                         Cookie: token,
                     },
                 });

@@ -23,9 +23,6 @@ async function handler(ctx) {
     const resp = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: 'https://ipsw.dev/',
-        },
     });
 
     const $ = load(resp.data);

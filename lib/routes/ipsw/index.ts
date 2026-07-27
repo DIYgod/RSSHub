@@ -45,9 +45,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: host,
-        },
     });
     const $ = load(response.data);
     const list = pname.includes(',')
@@ -79,9 +76,6 @@ async function handler(ctx) {
                 const response = await got({
                     method: 'get',
                     url: itemUrl,
-                    headers: {
-                        Referer: host,
-                    },
                 });
                 const $ = load(response.data);
                 const description = $('div.selector__wizard').html();

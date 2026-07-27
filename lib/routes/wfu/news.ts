@@ -84,9 +84,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: listPageUrl,
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(response.data);
 

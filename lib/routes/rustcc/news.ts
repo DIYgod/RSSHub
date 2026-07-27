@@ -27,9 +27,6 @@ async function handler() {
 
     const response = await got({
         url: newsUrl,
-        headers: {
-            Referer: baseUrl,
-        },
     });
 
     const $ = load(response.data);

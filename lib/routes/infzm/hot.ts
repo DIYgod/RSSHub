@@ -24,9 +24,6 @@ async function handler(): Promise<Data> {
     const { data } = await got<ContentsResponse>({
         method: 'get',
         url: 'https://www.infzm.com/hot_contents',
-        headers: {
-            Referer: link,
-        },
     });
 
     const resultItem = await fetchArticles(data.data.hot_contents);

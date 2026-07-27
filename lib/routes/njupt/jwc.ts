@@ -41,9 +41,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: host,
-        },
     });
     const $ = load(response.data);
 

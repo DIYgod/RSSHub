@@ -41,7 +41,6 @@ export const route: Route = {
 
         const response = await ofetch<string>(fetchUrl, {
             headers: {
-                Referer: baseUrl,
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
             },
         });
