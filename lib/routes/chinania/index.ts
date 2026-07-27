@@ -47,7 +47,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('div.article_title p').last().text().split('：'));
+                item.pubDate = parseDate($$('div.article_title p').last().text().split('：') as unknown as string);
                 item.author = $$("meta[name='keywords']").prop('content');
                 item.content = {
                     html: description,

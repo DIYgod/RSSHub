@@ -53,7 +53,7 @@ async function handler(ctx) {
                             .find('.magazine-text-atten')
                             .text()
                             .match(/\d{4}-\d{2}-\d{2}/)[0],
-                        8
+                        8 as unknown as string
                     )
                 ),
                 doi: undefined as DataItem['doi'],

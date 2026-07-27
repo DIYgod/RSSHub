@@ -141,7 +141,7 @@ export default async function handler(ctx: Context) {
 
     let peerCache = await cache.get(`telegram:inputEntity:${username}`);
     if (!peerCache) {
-        const p = await client.getInputEntity(username);
+        const p = await client.getInputEntity(username!);
         peerCache = JSON.stringify(p.toJSON());
         await cache.set(`telegram:inputEntity:${username}`, peerCache);
     }

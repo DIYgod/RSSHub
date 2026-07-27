@@ -70,7 +70,7 @@ async function handler(ctx) {
     // get detail info from each item
     const out = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link!, async (): Promise<any> => {
                 const response = await ofetch(item.link!, {
                     headers: getHeaders(),
                 });

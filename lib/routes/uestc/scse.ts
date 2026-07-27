@@ -62,7 +62,7 @@ async function handler() {
 
     const iList = $('.s2-lswitch .i-list');
     let firstFlag = true;
-    const items = [];
+    const items: any[] = [];
     iList.each((_, element) => {
         if (firstFlag) {
             firstFlag = false;
@@ -89,7 +89,7 @@ async function handler() {
                 .filter((index, element) => element.nodeType === 3)
                 .text();
             const newsLink = host + $item.find('a[href]').attr('href');
-            const newsPubDate = parseDate(date);
+            const newsPubDate = parseDate(date as unknown as Date);
 
             let prefix = '【其他】';
             for (const code in prefixes) {

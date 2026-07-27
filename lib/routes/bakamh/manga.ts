@@ -44,7 +44,7 @@ const handler = async (ctx) => {
                 const containerDiv = $('<div class="image-container"></div>');
                 comicpage.appendTo(containerDiv);
                 item.description = containerDiv.html();
-                item.pubDate = parseDate(item.pubDate, 'YYYY年M月D日');
+                item.pubDate = parseDate(item.pubDate!, 'YYYY年M月D日');
                 return item;
             })
         )

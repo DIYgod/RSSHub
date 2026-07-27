@@ -78,7 +78,7 @@ async function handler(ctx) {
 
                 content.find('[style]').removeAttr('style');
                 content.find('font').contents().unwrap();
-                content.html(content.html()?.replaceAll('&nbsp;', ''));
+                content.html(content.html()?.replaceAll('&nbsp;', '') ?? '');
                 content.find('[align]').removeAttr('align');
 
                 const author = $('span.arti_publisher').text().replace('发布者：', '').trim();

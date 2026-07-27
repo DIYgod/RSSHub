@@ -18,7 +18,7 @@ async function handler(ctx) {
     const city = ctx.req.param('city') || '';
 
     const link = 'https://news.qq.com/zt2020/page/feiyan.htm#/';
-    const item = [];
+    const item: any[] = [];
 
     const diseaseh5Shelf = (await getData(['diseaseh5Shelf']))?.data?.diseaseh5Shelf || {};
     const { lastUpdateTime, areaTree } = diseaseh5Shelf;

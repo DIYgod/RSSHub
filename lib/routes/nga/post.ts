@@ -68,8 +68,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const getPageUrl = (tid, authorId, page = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
-    const getPage = async (tid, authorId, pageId = 1) => {
+    const getPageUrl = (tid, authorId, page: string | number = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
+    const getPage = async (tid, authorId, pageId: string | number = 1) => {
         const link = getPageUrl(tid, authorId, pageId);
         const timestamp = Math.floor(Date.now() / 1000);
         let cookieString = `guestJs=${timestamp};`;

@@ -14,7 +14,7 @@ const regex = /(?<key>[A-Z_]+)=(?<value>.*?(?=; max-age)|[\dA-Fa-f]+)/g;
 
 const parseCookie = async (body) => {
     let m;
-    const cookies = [];
+    const cookies: Cookie[] = [];
     while ((m = regex.exec(body)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regex.lastIndex) {

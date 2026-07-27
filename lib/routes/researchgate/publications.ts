@@ -66,7 +66,7 @@ async function handler(ctx) {
                 item.doi = content('meta[property="citation_doi"]').attr('content');
                 item.pubDate = parseDate(content('meta[property="citation_publication_date"]').attr('content')!);
 
-                const authors = [];
+                const authors: any[] = [];
 
                 content('meta[property="citation_author"]').each((_, el) => {
                     authors.push(content(el).attr('content'));

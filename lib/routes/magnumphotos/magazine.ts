@@ -37,7 +37,7 @@ async function handler() {
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link!, (async () => {
                 if (!item.link) {
                     return;
                 }
@@ -54,7 +54,7 @@ async function handler() {
                     category: item.categories,
                     description: description.html(),
                 };
-            })
+            }) as () => Promise<Record<string, any>>)
         )
     );
 

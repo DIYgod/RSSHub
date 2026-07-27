@@ -62,7 +62,7 @@ async function handler(ctx) {
                         : undefined,
                 }),
                 author,
-                pubDate: parseDate($item.find('div.work-info p').last(), 'YYYY'),
+                pubDate: parseDate($item.find('div.work-info p').last() as unknown as string, 'YYYY'),
                 enclosure_url: image?.prop('src') ?? undefined,
                 enclosure_type: image?.prop('src') ? 'image/jpeg' : undefined,
             };

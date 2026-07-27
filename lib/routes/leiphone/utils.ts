@@ -23,7 +23,7 @@ const ProcessFeed = async (list, cache) => {
                 return {
                     title: $('.headTit').text(),
                     description: description + $('.article-lead').text() + $('.lph-article-comView').html(),
-                    pubDate: parseDate($('.time').text(), 8),
+                    pubDate: parseDate($('.time').text(), 8 as unknown as string),
                     author: $('.aut > a').text(),
                     link,
                 };

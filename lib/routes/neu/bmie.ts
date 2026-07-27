@@ -99,7 +99,7 @@ async function handler(ctx) {
                     .find('div')
                     .each((_, el) => {
                         const temp = $(el).html();
-                        $(el).replaceWith(temp);
+                        $(el).replaceWith(temp as string);
                     });
                 $('.entry').find('a').remove();
                 $('.entry')

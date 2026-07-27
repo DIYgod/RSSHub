@@ -135,9 +135,9 @@ async function handler(ctx) {
     // for each parameter, in order to matching the default behavior
     // here we use arrays to track the setting for `limit`,
     // `mark` and `feed_name`.
-    const setLimit = [];
-    const setMark = [];
-    const setFeedName = [];
+    const setLimit: number[] = [];
+    const setMark: number[] = [];
+    const setFeedName: number[] = [];
 
     const feeds = ctx.req.param('feeds');
 
@@ -161,14 +161,14 @@ async function handler(ctx) {
 
         if (limit && queryLimit) {
             if (limit >= queryLimit) {
-                const eachLimit = Number.parseInt(queryLimit / feedsList.length);
+                const eachLimit = Number.parseInt(String(queryLimit / feedsList.length));
                 limit = eachLimit || 1;
             }
             parameters += `&limit=${limit}`;
         } else if (limit) {
             parameters += `&limit=${limit}`;
         } else if (queryLimit) {
-            const eachLimit = Number.parseInt(queryLimit / feedsList.length);
+            const eachLimit = Number.parseInt(String(queryLimit / feedsList.length));
             limit = eachLimit || 1;
             parameters += `&limit=${limit}`;
         }

@@ -78,7 +78,7 @@ async function handler(ctx) {
 
                 content.find('[style]').removeAttr('style');
                 content.find('font').contents().unwrap();
-                content.html(content.html()?.replaceAll('&nbsp;', ''));
+                content.html(content.html()?.replaceAll('&nbsp;', '') as string);
                 content.find('[align]').removeAttr('align');
 
                 return {

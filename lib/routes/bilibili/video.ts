@@ -250,7 +250,7 @@ async function handler(ctx: Context) {
                 const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                 return {
                     title: item.title,
-                    description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
+                    description: utils.renderUGCDescription(embed, item.pic, item.description, String(item.aid), undefined, item.bvid),
                     pubDate: new Date(item.created * 1000).toUTCString(),
                     link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                     author: name,

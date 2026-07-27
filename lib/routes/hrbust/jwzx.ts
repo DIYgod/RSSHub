@@ -82,7 +82,7 @@ async function handler(ctx) {
                 const body = $('div.body');
                 body.find('[style]').removeAttr('style');
                 body.find('font').contents().unwrap();
-                body.html(body.html()?.replaceAll('&nbsp;', ''));
+                body.html(body.html()?.replaceAll('&nbsp;', '') as string);
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
                 if (item.description === null) {

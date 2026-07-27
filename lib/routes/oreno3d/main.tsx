@@ -128,7 +128,7 @@ async function handler(ctx) {
                     </>
                 );
                 const title = `${video_name} - ${authors}`;
-                const realData = await cache.tryGet(oreno3d_link, () => {
+                const realData = await cache.tryGet(oreno3d_link, (() => {
                     const result = {
                         title,
                         author: authors,
@@ -137,7 +137,7 @@ async function handler(ctx) {
                         description,
                     };
                     return result;
-                });
+                }) as unknown as () => Promise<Record<string, any>>);
                 return realData;
             })
         );

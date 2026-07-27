@@ -89,7 +89,7 @@ async function handler(ctx) {
                             return $('#view').html();
                         })
                     );
-                    content.append(pages);
+                    content.append(pages as unknown as string);
                 }
 
                 // remove unwanted elements

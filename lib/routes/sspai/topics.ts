@@ -41,7 +41,7 @@ async function handler() {
             let description = '';
 
             const key = `sspai:topics:${item.id}`;
-            return cache.tryGet(key, () => {
+            return cache.tryGet(key, (() => {
                 description = `<br><img src="https://cdnfile.sspai.com/${item.banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"/>${item.intro}<br>如有兴趣,请复制链接订阅 <br> <h3>https://rsshub.app/sspai/topic/${item.id}</h3>`;
 
                 return {
@@ -51,7 +51,7 @@ async function handler() {
                     pubDate: parseDate(item.released_at * 1000),
                     author: item.author.nickname,
                 };
-            });
+            }) as unknown as () => Promise<Record<string, any>>);
         })
     );
 

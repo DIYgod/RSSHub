@@ -65,7 +65,7 @@ async function handler(ctx) {
         fulltext === 'y'
             ? await Promise.all(
                   list.map((item) =>
-                      cache.tryGet(item.link, async () => {
+                      cache.tryGet(item.link!, async () => {
                           const detailResponse = await got.get(item.link);
                           const content = load(detailResponse.data);
                           item.description = content('div.intro-box').html() ?? '';

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { OptionType } from 'dayjs';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -102,7 +103,7 @@ const handler = async (ctx) => {
                 // Parse date based on language
                 // English: "21 Jan 2026" with 'en' locale for month name recognition
                 // Chinese: "2026年01月20日" - numeric format, no locale needed
-                const pubDate = articleDate ? parseDate(articleDate, lang === 'en' ? 'DD MMM YYYY' : 'YYYY年MM月DD日', lang === 'en' ? 'en' : undefined) : undefined;
+                const pubDate = articleDate ? parseDate(articleDate, lang === 'en' ? 'DD MMM YYYY' : 'YYYY年MM月DD日', (lang === 'en' ? 'en' : undefined) as unknown as OptionType) : undefined;
 
                 return {
                     title: item.title,

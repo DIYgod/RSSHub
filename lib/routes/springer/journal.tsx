@@ -46,7 +46,7 @@ async function handler(ctx) {
         .map((c) => c.split(';', 1)[0])
         .join('; ');
 
-    await ofetch(authorizeResponse.headers.get('location'), {
+    await ofetch(authorizeResponse.headers.get('location')!, {
         headers: {
             cookie: authorizeCookie,
         },

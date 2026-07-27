@@ -99,7 +99,7 @@ async function handler() {
                 const solution = md.render(officialSolution.data.question.solution.content);
 
                 info.description = (questionContent.data.question.content?.trim() ?? '') + solution;
-                info.pubDate = parseDate(info.pubDate);
+                info.pubDate = parseDate(info.pubDate as string);
 
                 return info;
             })

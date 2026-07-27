@@ -84,7 +84,7 @@ async function handler(ctx) {
     const $ = load(data) as CheerioAPI & { pubDate: Date; newChapterCnt: number };
 
     if ($('#__VIEWSTATE').length > 0) {
-        const n = LZString.decompressFromBase64($('#__VIEWSTATE').val());
+        const n = LZString.decompressFromBase64($('#__VIEWSTATE').val() as string);
         if (n) {
             $('#erroraudit_show').replaceWith(n);
             $('#__VIEWSTATE').remove();

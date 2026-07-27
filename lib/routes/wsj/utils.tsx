@@ -43,7 +43,7 @@ const parseArticle = (item) =>
             $(e)
                 .find('p')
                 .each((_, el) => {
-                    $(el).replaceWith($(el).html());
+                    $(el).replaceWith($(el).html() ?? '');
                 });
         });
 

@@ -59,7 +59,7 @@ async function handler() {
                 description: undefined as DataItem['description'],
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const fullItems = await Promise.all(
         items.map((item) =>

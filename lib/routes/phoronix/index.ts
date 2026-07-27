@@ -232,7 +232,7 @@ async function handler(ctx) {
                             })
                         )
                     );
-                    content.append(pages);
+                    content.append(pages as unknown as string);
                 }
 
                 const images = content.find('img');

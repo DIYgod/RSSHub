@@ -85,7 +85,7 @@ async function handler(ctx) {
     const feed = handleDuplicates(list);
     const items = await Promise.all(
         feed.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<any> => {
                 let response;
                 try {
                     response = await got(`https://rainbowapi-a.wpdigital.net/rainbow-data-service/rainbow/content-by-url.json?followLinks=false&url=${item.link}`, { headers });

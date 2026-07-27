@@ -26,10 +26,10 @@ export const route: Route = {
 
 const parseCategory = (category: string | number) => {
     const outputs = ['wdzx/wdyw', 'kydt', 'stkj/ljyx', 'stkj/wdsp'];
-    if (['0', '1', '2', '3'].includes(category)) {
+    if (['0', '1', '2', '3'].includes(category as string)) {
         return outputs[category];
     }
-    if (outputs.includes(category)) {
+    if (outputs.includes(category as string)) {
         return category;
     }
     return 'wdzx/wdyw';

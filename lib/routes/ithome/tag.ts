@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link!, async (): Promise<any> => {
                 let detailResponse;
 
                 // handle 404 errors for some article URLs

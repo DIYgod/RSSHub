@@ -69,7 +69,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         request.headers.delete('x-prefer-proxy');
     }
 
-    config.enableRemoteDebugging && useCustomHeader(request.headers);
+    config.enableRemoteDebugging && useCustomHeader(request.headers as unknown as Headers);
 
     // proxy
     if (!init?.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {

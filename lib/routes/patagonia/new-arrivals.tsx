@@ -14,7 +14,7 @@ const categoryMap = {
 function extractSfrmUrl(url) {
     const urlObj = new URL(url);
     const sfrmValue = urlObj.searchParams.get('sfrm');
-    urlObj.search = new URLSearchParams({ sfrm: sfrmValue }).toString();
+    urlObj.search = new URLSearchParams({ sfrm: sfrmValue as string }).toString();
     return urlObj.href;
 }
 export const route: Route = {

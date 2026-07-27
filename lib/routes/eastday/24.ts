@@ -96,7 +96,7 @@ async function handler(ctx) {
                     }
 
                     for (const link of links) {
-                        cache.tryGet(link, async () => {
+                        cache.tryGet<any>(link, async () => {
                             const pageResponse = await got({
                                 method: 'get',
                                 url: link,

@@ -255,7 +255,7 @@ async function handler(ctx) {
                 let extra: { links: Array<{ type: string; url: string | undefined }> } | null = null;
 
                 /* message types */
-                let msgTypes = [];
+                let msgTypes: any[] = [];
                 if ($item.find('.service_message').length) {
                     // service message can have an image (avatar changed)
                     msgTypes.push(SERVICE);

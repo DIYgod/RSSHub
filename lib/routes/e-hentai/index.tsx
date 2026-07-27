@@ -108,7 +108,7 @@ async function handler(ctx) {
 
                                     const image = load(imageResponse.data);
 
-                                    return image('#img').attr('src');
+                                    return image('#img').attr('src')!;
                                 })
                             )
                     );

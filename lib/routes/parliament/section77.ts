@@ -71,7 +71,7 @@ async function handler(ctx) {
     };
 
     const queryParams = {
-        page: 1,
+        page: '1',
         type,
     };
     if (type) {
@@ -148,8 +148,8 @@ async function handler(ctx) {
                     const upvotePercent = Number(voteRegex[1]);
                     const downvotePercent = Number(voteRegex[2]);
 
-                    item.upvotes = Number.parseInt((upvotePercent / 100) * voteTotal);
-                    item.downvotes = Number.parseInt((downvotePercent / 100) * voteTotal);
+                    item.upvotes = Number.parseInt(((upvotePercent / 100) * voteTotal) as unknown as string);
+                    item.downvotes = Number.parseInt(((downvotePercent / 100) * voteTotal) as unknown as string);
                 }
 
                 const dateText = $('.banner-detail .banner-detail-caption .blockquote p:last-child').text();
@@ -172,7 +172,7 @@ async function handler(ctx) {
                                 ตุลาคม: 9,
                                 พฤศจิกายน: 10,
                                 ธันวาคม: 11,
-                            }[dateRegex[2].trim()],
+                            }[dateRegex[2].trim()]!,
                             Number.parseInt(dateRegex[1])
                         ),
                         7

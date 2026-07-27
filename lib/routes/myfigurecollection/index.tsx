@@ -63,7 +63,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item).find('a');
 
-            const link = $item.attr('href');
+            const link = $item.attr('href')!;
 
             return {
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,

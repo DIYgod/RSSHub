@@ -32,7 +32,7 @@ async function handler(ctx) {
 
     const client = new ImapFlow({
         host: mailConfig.host,
-        port: Number.parseInt(mailConfig.port),
+        port: Number.parseInt(String(mailConfig.port)),
         secure: true,
         auth: {
             user: mailConfig.username,

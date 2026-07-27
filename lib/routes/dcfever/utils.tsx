@@ -71,7 +71,7 @@ const parseItem = (item) =>
                     return $('div[itemprop="articleBody"]').html();
                 })
             );
-            content.append(pages);
+            content.append(pages as unknown as string);
         }
 
         content.find('img').each((_, e) => {

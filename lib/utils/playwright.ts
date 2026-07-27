@@ -31,7 +31,7 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
         return {
             proxy: {
                 password: decodeURIComponent(password ?? ''),
-                server: proxyServerFromUrl(currentProxy.urlHandler),
+                server: proxyServerFromUrl(currentProxy.urlHandler!),
                 username: decodeURIComponent(username ?? ''),
             },
         } satisfies Pick<LaunchOptions, 'proxy'>;

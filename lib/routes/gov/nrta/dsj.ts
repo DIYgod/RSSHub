@@ -48,7 +48,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: new URL($item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1], ['YYYY年MM月', 'YYYY年M月']) : undefined,
                 description: undefined as DataItem['description'],
             };

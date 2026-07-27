@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 import { renderAudioMedia } from './templates/audio-media';
 import { renderChartMedia } from './templates/chart-media';
 import { renderImageFigure } from './templates/image-figure';
-import { renderLedeMedia } from './templates/lede-media';
+import { type LedeMedia, renderLedeMedia } from './templates/lede-media';
 import { renderVideoMedia } from './templates/video-media';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
@@ -271,7 +271,7 @@ const processLedeMedia = async (story_json) => {
             src: story_json.ledeImageUrl,
             video: kind === 'video' && (await processVideo(story_json.ledeAttachment.bmmrId)),
         };
-        return renderLedeMedia(media);
+        return renderLedeMedia(media as unknown as LedeMedia);
     }
     if (story_json.lede) {
         const lede = story_json.lede;

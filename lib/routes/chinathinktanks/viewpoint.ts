@@ -106,7 +106,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const content = $('#art');
                 item.description = content.html();
-                item.pubDate = item.pubDate.includes('-') ? timezone(parseDate(item.pubDate, 'YYYY-MM-DD'), 8) : parseRelativeDate(item.pubDate);
+                item.pubDate = item.pubDate.includes('-') ? timezone(parseDate(item.pubDate as string, 'YYYY-MM-DD'), 8) : parseRelativeDate(item.pubDate as string);
 
                 return item;
             })

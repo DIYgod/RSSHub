@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}${site ? `/#/list?type=${sites[0].value}` : ''}`;
 
-    const items = [];
+    const items: any[] = [];
 
     await Promise.all(
         sites.map(async (a) => {

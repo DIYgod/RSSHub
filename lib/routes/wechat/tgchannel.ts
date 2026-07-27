@@ -63,9 +63,9 @@ async function handler(ctx) {
                     for (const mark of highlightMarks) {
                         const $mark = $(mark);
                         const markInnerHtml = $mark.html();
-                        $mark.replaceWith(markInnerHtml);
+                        $mark.replaceWith(markInnerHtml as string);
                     }
-                    $item = $($item.html()) as Cheerio<Element>; // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
+                    $item = $($item.html() as string) as Cheerio<Element>; // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
                 }
             }
 

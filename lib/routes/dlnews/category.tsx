@@ -70,7 +70,7 @@ const extractArticle = (item) =>
         const $ = load(response);
         const scriptTagContent = $('script#fusion-metadata').text();
         const jsonData = JSON.parse(scriptTagContent.match(/Fusion\.globalContent=(\{.*?\});Fusion\.globalContentConfig/)[1]).content_elements;
-        const filteredData = [];
+        const filteredData: any[] = [];
         for (const v of jsonData) {
             if (v.type === 'header' && v.content.includes('What we’re reading')) {
                 break;

@@ -87,10 +87,10 @@ async function handler(ctx) {
                 const article = $('.article-a-body');
                 article.find('*').removeAttr('style');
                 article.find('font').each((_, ele) => {
-                    $(ele).replaceWith($(ele).html());
+                    $(ele).replaceWith($(ele).html() ?? '');
                 });
                 article.find('span').each((_, ele) => {
-                    $(ele).replaceWith($(ele).html());
+                    $(ele).replaceWith($(ele).html() ?? '');
                 });
                 article.find('.article-a-attach-body a').each((i, ele) => {
                     const $ele = $(ele);

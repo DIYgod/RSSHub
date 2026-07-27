@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -123,7 +123,7 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
             per_page: limit,
         },
     });
-    const items = [];
+    const items: DataItem[] = [];
     const lastUrl = timelineResponse.headers.get('link')?.match(/<(\S+?)>; rel="last"/)?.[1];
     if (lastUrl) {
         timelineResponse = await ofetch.raw(lastUrl, { headers });

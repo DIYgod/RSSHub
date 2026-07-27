@@ -44,7 +44,7 @@ async function handler(ctx) {
     const rssDescribe = html.match(rssDescribeRegexp)[1];
 
     // list ("Array" in js, though) of items
-    const outageHistory = [];
+    const outageHistory: any[] = [];
 
     // 2020-09-17 output as long as it exists, avoid reporting errors
     // compatible with optional variables

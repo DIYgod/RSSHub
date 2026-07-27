@@ -45,7 +45,7 @@ async function loadContent(link) {
     return { description };
 }
 
-const ProcessFeed = (list, caches) => {
+const ProcessFeed = (list: any[], caches) => {
     const host = 'https://www.flyert.com.cn';
 
     return pMap(

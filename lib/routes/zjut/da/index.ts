@@ -80,7 +80,7 @@ async function handler(ctx) {
                 const $ = load(itemsResponse.data);
                 item.description = $('div[style="line-height:27px;"]').html() ?? '';
 
-                return item;
+                return item!;
             })
         )
     );

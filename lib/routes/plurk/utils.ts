@@ -40,14 +40,14 @@ const getPlurk = (plurkGuid, item, author) =>
             }
         });
 
-        return {
+        return Promise.resolve({
             title: item.content_raw ?? ($.text() || plurkGuid),
             description: $.html(),
             guid: plurkGuid,
             link: item.rendered ? item.link_url : null,
             author,
             pubDate: parseDate(item.posted),
-        };
+        });
     });
 
 export { baseUrl, fetchFriends, getPlurk };

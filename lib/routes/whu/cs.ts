@@ -75,7 +75,7 @@ async function handler(ctx) {
 
     let items = (await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<any> => {
                 let response;
                 try {
                     // 实测发现有些链接无法访问

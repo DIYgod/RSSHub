@@ -48,7 +48,7 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     content('.cont-tit').remove();
-                    content('.art-body').html(content('.v_news_content').html());
+                    content('.art-body').html(content('.v_news_content').html() as string);
 
                     item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
                     item.description = content('form[name="_newscontent_fromname"]').html();

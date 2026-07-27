@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const urlList = $('body')
         .find('ul li span a')
-        .map((e) => $(e).attr('href'));
+        .map((e: any) => $(e).attr('href'));
 
     const titleList = $('body')
         .find('ul li span a')

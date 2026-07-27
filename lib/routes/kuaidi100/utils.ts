@@ -130,25 +130,25 @@ function getCompanyList() {
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, 0);
+        cache.set(query_count, 0 as unknown as string);
     } else {
         const count = cache.get(query_count);
         if (count) {
             if (count > max_query_count) {
-                cache.set(query_count, 0);
+                cache.set(query_count, 0 as unknown as string);
                 clearCookie();
             } else {
                 cache.set(query_count, count + 1);
             }
         } else {
-            cache.set(query_count, 1);
+            cache.set(query_count, 1 as unknown as string);
         }
     }
 }
 
 function clearCookie() {
-    cache.set(wwwid_key, null);
-    cache.set(csrf_key, null);
+    cache.set(wwwid_key, null as unknown as string);
+    cache.set(csrf_key, null as unknown as string);
 }
 
 export default {
@@ -220,7 +220,7 @@ export default {
         const query_key = `kuaidi100-query-${number}-${id}`;
         let query: any = await cache.get(query_key);
         // 组装日期与单号 日期为提前两个月
-        const timestamp = Number.parseInt(Date.now() / 1000);
+        const timestamp = Number.parseInt(String(Date.now() / 1000));
         const lastTowMonth = Date.now() - 60 * 60 * 24 * 60 * 1000;
         const dateString = new Date(lastTowMonth).toLocaleDateString('ZH').split('/').join('');
         const queryMeta = encodeURIComponent(

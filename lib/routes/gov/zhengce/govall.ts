@@ -45,7 +45,7 @@ async function handler(ctx) {
     const advance = ctx.req.param('advance');
     const link = 'http://sousuo.gov.cn/list.htm';
     const params = new URLSearchParams({
-        n: 20,
+        n: '20',
         t: 'govall',
         sort: 'pubtime',
         advance: 'true',

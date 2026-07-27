@@ -140,13 +140,13 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
     }
 
-    const item_Promises = [];
+    const item_Promises: Array<Promise<any>> = [];
     galleries.children().each((index, element) => {
         item_Promises.push(parseElement(cache, element));
     });
     const items_with_null = await Promise.all(item_Promises);
 
-    const items = [];
+    const items: any[] = [];
     for (const item of items_with_null) {
         if (item) {
             items.push(item);

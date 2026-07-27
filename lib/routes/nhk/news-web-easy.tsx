@@ -51,11 +51,11 @@ async function handler(ctx) {
         .map((c) => c.split(';', 1)[0])
         .join('; ');
 
-    const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location'), {
+    const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location')!, {
         redirect: 'manual',
     });
 
-    const idpResponse = await ofetch.raw(authorizeResponse.headers.get('location'), {
+    const idpResponse = await ofetch.raw(authorizeResponse.headers.get('location')!, {
         headers: {
             cookie: buildAuthorizeCookie,
         },

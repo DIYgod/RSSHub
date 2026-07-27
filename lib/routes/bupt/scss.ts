@@ -63,7 +63,7 @@ async function handler() {
                 pubDate: undefined as DataItem['pubDate'],
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>

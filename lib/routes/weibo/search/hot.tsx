@@ -206,7 +206,7 @@ function seekContent(clist) {
             });
             stub.append(section);
         } else if (curitem.card_type === 11) {
-            stub.append(seekContent(curitem.card_group));
+            stub.append(seekContent(curitem.card_group) ?? '');
         }
     }
     return stub.html();

@@ -50,7 +50,7 @@ async function handler(ctx) {
                     const gallery = JSON.parse(
                         $('[type=text/x-magento-init]')
                             .text()
-                            .match(/\{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder\]": \{\n\s+"mage(?:\/gal{2}ery){2}".*?\}{4}(?:\s+\}\n){3}/s)
+                            .match(/\{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder\]": \{\n\s+"mage(?:\/gal{2}ery){2}".*?\}{4}(?:\s+\}\n){3}/s) as unknown as string
                     );
 
                     description = renderEshopHkDescription({

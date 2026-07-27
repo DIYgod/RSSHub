@@ -19,7 +19,7 @@ describe('trace middleware', () => {
             called = true;
         };
 
-        await trace(ctx as any, next);
+        await trace(ctx as any, next as any);
         expect(called).toBe(true);
 
         config.debugInfo = originalDebug;

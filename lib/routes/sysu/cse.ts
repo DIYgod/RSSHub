@@ -95,7 +95,7 @@ async function handler() {
         };
     }
 
-    const item_data = [];
+    const item_data: any[] = [];
     for (const element of block_index) {
         const block_news = $('#block-views-homepage-block-' + element.index + '> div > div.view-content > div > ul > li > a');
         for (const block_new of block_news) {

@@ -49,10 +49,10 @@ async function handler() {
                 const decompressed = zlib.gunzipSync(decodedString).toString('utf-8');
                 const changelogData = JSON.parse(decompressed);
 
-                return {
+                return Promise.resolve({
                     appPlatform: pageProps.platform,
                     decompressedData: Object.values(changelogData).map((item) => item.en),
-                };
+                });
             });
         })
     );

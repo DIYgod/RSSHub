@@ -37,7 +37,7 @@ export const handler = async (ctx) => {
                         $item
                             .find('span.time script')
                             .text()
-                            .match(/'(.*?)'/)
+                            .match(/'(.*?)'/) as unknown as string
                     ),
                     8
                 ),

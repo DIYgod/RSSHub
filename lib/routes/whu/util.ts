@@ -93,7 +93,7 @@ const getItemDetail = async (item, rootUrl) => {
 
                 return {
                     title: $attachment.text(),
-                    link: new URL($attachment.prop('href'), rootUrl).href,
+                    link: new URL($attachment.prop('href')!, rootUrl).href,
                 };
             });
 

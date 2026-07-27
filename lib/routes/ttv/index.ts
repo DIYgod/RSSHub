@@ -65,8 +65,8 @@ async function handler(ctx) {
                     .toArray()
                     .map((t) => content(t).text());
                 const section = content("meta[property='article:section']").attr('content');
-                if (!item.category.includes(section)) {
-                    item.category.push(section);
+                if (!item.category.includes(section!)) {
+                    item.category.push(section!);
                 }
                 item.description = content('#newscontent').html();
                 return item;

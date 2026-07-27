@@ -1,5 +1,6 @@
-import type { CheerioAPI } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -39,7 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const detailResponse = await ofetch(apiUrl);
     const $$: CheerioAPI = load(detailResponse);
 
-    const items: DataItem[] = await processItems($$, $$('*'), limit);
+    const items: DataItem[] = await processItems($$, $$('*') as Cheerio<Element>, limit);
 
     const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');

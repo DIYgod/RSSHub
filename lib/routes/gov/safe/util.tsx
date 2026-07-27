@@ -24,7 +24,7 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
     const $ = load(response);
 
     const items = $('#complaint')
-        .slice(0, limit)
+        .slice(0, limit as unknown as number)
         .toArray()
         .map((item) => {
             const $item = $(item);

@@ -39,7 +39,7 @@ const fixFancybox = (element, $) => {
     const url = new URL($e.attr('href'));
     let video;
     if (url.hostname === 'videop.mingpao.com') {
-        video = new URL(url.searchParams.get('file'));
+        video = new URL(url.searchParams.get('file')!);
         video.hostname = 'cfrvideo.mingpao.com'; // use cloudflare cdn
         video = video.href;
     }

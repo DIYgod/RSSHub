@@ -50,7 +50,7 @@ async function handler(ctx) {
             return {
                 title: c('td:nth-child(1)').text(),
                 description: renderToString(<CebbankRateDescription fcer={c('td:nth-child(2)').text()} pmc={c('td:nth-child(3)').text()} exrt={c('td:nth-child(4)').text()} mc={c('td:nth-child(5)').text()} />),
-                pubDate: timezone(parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true), 8),
+                pubDate: timezone(parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true as unknown as string), 8),
                 guid: md5(c('td:nth-child(1)').text() + $('#t_id span').text().slice(5)),
             };
         });
@@ -62,7 +62,7 @@ async function handler(ctx) {
         item: items as DataItem[],
     };
 
-    const pubDate = parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true);
+    const pubDate = parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true as unknown as string);
     ctx.set('json', {
         ...ret,
         pubDate: timezone(pubDate, 0),

@@ -84,7 +84,7 @@ async function handler(ctx) {
                 const body = $('div.wp_articlecontent');
                 body.find('[style]').removeAttr('style');
                 body.find('font').contents().unwrap();
-                body.html(body.html()?.replaceAll('&nbsp;', ''));
+                body.html(body.html()?.replaceAll('&nbsp;', '') ?? '');
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
                 return item;

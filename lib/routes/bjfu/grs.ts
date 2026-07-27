@@ -46,7 +46,7 @@ async function handler() {
                 .find('li a')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = timezone(parseDate(date), 8);
+            const pubDate = timezone(parseDate(date as unknown as string), 8);
 
             return {
                 title: title!,

@@ -254,7 +254,7 @@ async function handler() {
                     const content = await crawler(item, context);
                     const $ = load(content);
                     item.category = $('meta[name="ColumnType"]').attr('content');
-                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')));
+                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')) as any);
                     item.author = '浙江政务服务网';
                 } else {
                     // 其他正常抓取

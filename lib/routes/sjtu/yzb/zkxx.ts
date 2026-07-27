@@ -42,7 +42,11 @@ async function handler(ctx) {
         .map((elem) => ({
             link: new URL(elem.attribs.href, pageUrl).href,
             title: $(elem).text(),
-            pubDate: parseDate($(elem.next?.next).text().trim()),
+            pubDate: parseDate(
+                $(elem.next?.next ?? undefined)
+                    .text()
+                    .trim()
+            ),
             description: undefined as DataItem['description'],
         }));
 

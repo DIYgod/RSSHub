@@ -34,7 +34,7 @@ async function loadContent(link) {
                 const $video = $(video);
 
                 if (!$video.attr('src') && $video.data('src')) {
-                    $video.attr('src', $video.data('src'));
+                    $video.attr('src', $video.data('src') as string);
                     $video.removeAttr('data-src');
                     $video.removeAttr('data-video-small');
                     $video.removeAttr('data-video-medium');
@@ -45,7 +45,7 @@ async function loadContent(link) {
                 const $img = $(img);
 
                 if ($img.data('animated-url')) {
-                    $img.attr('src', $img.data('animated-url'));
+                    $img.attr('src', $img.data('animated-url') as string);
                     $img.removeAttr('data-animated-url');
                     $img.removeAttr('srcset');
                 }

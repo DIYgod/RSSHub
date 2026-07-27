@@ -35,7 +35,7 @@ async function handler(ctx) {
     const level = formatLevel(ctx.req.param('level'));
     const url = new URL('https://yomujp.com/wp-json/wp/v2/posts');
     url.searchParams.append('categories', getLevel(level));
-    url.searchParams.append('per_page', Number.parseInt(ctx.req.query('limit')) || 10);
+    url.searchParams.append('per_page', `${Number.parseInt(ctx.req.query('limit')) || 10}`);
     const posts = await get(url);
 
     const item = posts.map((post) => {
@@ -50,7 +50,7 @@ async function handler(ctx) {
                     return `<img src=${el.attribs.src} />`;
                 }
                 if ((el.firstChild as Element).tagName === 'p') {
-                    return `<p>${$(el.firstChild).html()}</p>`;
+                    return `<p>${$(el.firstChild!).html()}</p>`;
                 }
                 return `<p>${$(el).html()}</p>`;
             })

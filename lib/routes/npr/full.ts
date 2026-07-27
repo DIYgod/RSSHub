@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 
 const getArticleDetail = (link) =>
-    cache.tryGet(link, async () => {
+    cache.tryGet(link, async (): Promise<any> => {
         const response = await got(link);
         const $ = load(response.data);
 

@@ -140,7 +140,7 @@ const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, a
     const media = new Map<string, Record<string, any>>((includes?.media ?? []).map((item) => [item.media_key, item]));
 
     const user = users.get(tweet.author_id);
-    const legacyUser = mapUserToLegacy(user);
+    const legacyUser = mapUserToLegacy(user!);
     const legacy: Record<string, any> = {
         id_str: tweet.id,
         conversation_id_str: tweet.conversation_id,

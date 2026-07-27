@@ -63,7 +63,7 @@ async function handler() {
                 item.title = $('p.wztitle').text().trim();
                 item.author = reg.exec(author)[1].toString().trim();
                 item.description = $('.TRS_Editor').html();
-                item.pubDate = parseDate(item.pubDate);
+                item.pubDate = parseDate(item.pubDate!);
                 return item;
             })
         )

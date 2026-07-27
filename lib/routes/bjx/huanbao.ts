@@ -1,3 +1,4 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -64,7 +65,7 @@ async function handler() {
 const fetchPage = (link) =>
     cache.tryGet(link, async () => {
         // 可能一篇文章过长会分成多页
-        const pages = [];
+        const pages: CheerioAPI[] = [];
 
         const result = await got(link);
         const $page = load(result.data);

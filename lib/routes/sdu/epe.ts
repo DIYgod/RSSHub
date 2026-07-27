@@ -55,7 +55,7 @@ async function handler(ctx) {
         item
             .filter((e) => e.link.startsWith('../info'))
             .map((item) => {
-                item.link = new URL(item.link.slice('3'), host).href;
+                item.link = new URL(item.link.slice('3' as unknown as number), host).href;
                 return cache.tryGet(item.link, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);

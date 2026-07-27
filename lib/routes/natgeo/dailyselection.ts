@@ -45,7 +45,7 @@ async function handler() {
     const api = 'http://dili.bdatu.com/jiekou/albums/a' + sort + '.html';
     const response = await got(api);
     const items = response.data.picture;
-    const out = [];
+    const out: any[] = [];
 
     items.map((item) => {
         const info = {

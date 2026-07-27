@@ -41,7 +41,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const handle = isBizId(handleOrId || '') ? handleOrId : handleOrId.startsWith('@') ? handleOrId.slice(1) : handleOrId;
 
-    const searchParams = new URLSearchParams({ handle });
+    const searchParams = new URLSearchParams({ handle: handle! });
 
     if (isBizId(handle || '')) {
         searchParams.append('id', handle!);
