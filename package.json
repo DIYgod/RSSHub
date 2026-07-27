@@ -184,7 +184,7 @@
         "eslint-plugin-yml": "3.6.0",
         "fast-string-width": "3.0.2",
         "fs-extra": "11.4.0",
-        "globals": "17.7.0",
+        "globals": "17.8.0",
         "husky": "9.1.7",
         "js-beautify": "2.0.3",
         "lint-staged": "17.2.0",
