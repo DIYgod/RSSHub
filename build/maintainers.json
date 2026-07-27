@@ -251,6 +251,9 @@
   "/ifun/n/tag/:name": [
     "nczitzk"
   ],
+  "/immich/cursed-knowledge": [
+    "TonyRL"
+  ],
   "/isct/news/:lang": [
     "catyyy"
   ],
@@ -484,12 +487,6 @@
   ],
   "/bse/:category?/:keyword?": [
     "nczitzk"
-  ],
-  "/byteclicks/": [
-    "TonyRL"
-  ],
-  "/byteclicks/tag/:tag": [
-    "TonyRL"
   ],
   "/cbnweek/": [
     "nczitzk"
@@ -2583,6 +2580,12 @@
   "/byau/news/:type_id": [
     "ueiu"
   ],
+  "/byteclicks/": [
+    "TonyRL"
+  ],
+  "/byteclicks/tag/:tag": [
+    "TonyRL"
+  ],
   "/bytes/": [
     "meixger"
   ],
@@ -4577,9 +4580,6 @@
   "/imiker/ask/jinghua": [
     "nczitzk"
   ],
-  "/immich/cursed-knowledge": [
-    "TonyRL"
-  ],
   "/imop/tianshu": [
     "zhkgo"
   ],
@@ -4602,7 +4602,7 @@
   "/indienova/column/:columnId": [
     "TonyRL"
   ],
-  "/indienova/gamedb/recent": [
+  "/indienova/gamedb/recent/:platform?": [
     "TonyRL"
   ],
   "/indienova/usergames": [

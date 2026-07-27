@@ -1547,7 +1547,7 @@ export type RoutePath =
   | `/indiansinkuwait/latest`
   | `/indienova/:type`
   | `/indienova/column/:columnId`
-  | `/indienova/gamedb/recent`
+  | `/indienova/gamedb/recent/:platform?`
   | `/indienova/usergames`
   | `/inewsweek/:channel`
   | `/infoq/presentations/:conference?`

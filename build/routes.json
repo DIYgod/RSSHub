@@ -3222,6 +3222,36 @@
     "description": "全面的找书、学习资源导航平台，它整合了电子书和科研文档的搜索功能，方便用户进行学习资料的检索和分享，为用户提供一站式的读书学习体验。",
     "lang": "zh-CN"
   },
+  "immich": {
+    "routes": {
+      "/cursed-knowledge": {
+        "path": "/cursed-knowledge",
+        "categories": [
+          "blog"
+        ],
+        "example": "/immich/cursed-knowledge",
+        "radar": [
+          {
+            "source": [
+              "immich.app/cursed-knowledge",
+              "immich.app"
+            ],
+            "target": "/cursed-knowledge"
+          }
+        ],
+        "name": "Cursed Knowledge",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "cursed-knowledge.ts",
+        "module": "() => import('@/routes/immich/cursed-knowledge.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Immich",
+    "url": "immich.app",
+    "lang": "en-us"
+  },
   "isct": {
     "routes": {
       "/news/:lang": {
@@ -7688,64 +7718,6 @@
     "url": "bse.cn",
     "lang": "zh-CN"
   },
-  "byteclicks": {
-    "routes": {
-      "/": {
-        "path": "/",
-        "radar": [
-          {
-            "source": [
-              "byteclicks.com/"
-            ],
-            "target": ""
-          }
-        ],
-        "name": "Unknown",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "byteclicks.com/",
-        "location": "index.ts",
-        "module": "() => import('@/routes/byteclicks/index.ts')"
-      },
-      "/tag/:tag": {
-        "path": "/tag/:tag",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/byteclicks/tag/人工智能",
-        "parameters": {
-          "tag": "标签，可在URL中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "byteclicks.com/tag/:tag"
-            ]
-          }
-        ],
-        "name": "标签",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "byteclicks.com/",
-        "location": "tag.ts",
-        "module": "() => import('@/routes/byteclicks/tag.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "字节点击",
-    "url": "byteclicks.com",
-    "lang": "zh-CN"
-  },
   "cbnweek": {
     "routes": {
       "/": {
@@ -9786,8 +9758,8 @@
         ],
         "url": "hakkatv.org.tw/news",
         "description": "| 客家焦點 | 政經要聞  | 民生醫療 | 地方風采 | 國際萬象      |\n| -------- | --------- | -------- | -------- | ------------- |\n| hakka    | political | medical  | local    | international |",
-        "location": "type.ts",
-        "module": "() => import('@/routes/hakkatv/type.ts')"
+        "location": "news.ts",
+        "module": "() => import('@/routes/hakkatv/news.ts')"
       }
     },
     "apiRoutes": {},
@@ -38385,6 +38357,59 @@
     "url": "byau.edu.cn",
     "lang": "zh-CN"
   },
+  "byteclicks": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/byteclicks",
+        "radar": [
+          {
+            "source": [
+              "byteclicks.com/"
+            ]
+          }
+        ],
+        "name": "首页",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "byteclicks.com/",
+        "location": "index.ts",
+        "module": "() => import('@/routes/byteclicks/index.ts')"
+      },
+      "/tag/:tag": {
+        "path": "/tag/:tag",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/byteclicks/tag/人工智能",
+        "parameters": {
+          "tag": "标签，可在URL中找到"
+        },
+        "radar": [
+          {
+            "source": [
+              "byteclicks.com/tag/:tag"
+            ]
+          }
+        ],
+        "name": "标签",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "byteclicks.com/",
+        "location": "tag.ts",
+        "module": "() => import('@/routes/byteclicks/tag.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "字节点击",
+    "url": "byteclicks.com",
+    "lang": "zh-CN"
+  },
   "bytes": {
     "routes": {
       "/": {
@@ -65807,36 +65832,6 @@
     "url": "imiker.com",
     "lang": "zh-CN"
   },
-  "immich": {
-    "routes": {
-      "/cursed-knowledge": {
-        "path": "/cursed-knowledge",
-        "categories": [
-          "blog"
-        ],
-        "example": "/immich/cursed-knowledge",
-        "radar": [
-          {
-            "source": [
-              "immich.app/cursed-knowledge",
-              "immich.app"
-            ],
-            "target": "/cursed-knowledge"
-          }
-        ],
-        "name": "Cursed Knowledge",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "cursed-knowledge.ts",
-        "module": "() => import('@/routes/immich/cursed-knowledge.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "Immich",
-    "url": "immich.app",
-    "lang": "en-us"
-  },
   "imop": {
     "routes": {
       "/tianshu": {
@@ -66091,9 +66086,37 @@
         "location": "column.ts",
         "module": "() => import('@/routes/indienova/column.ts')"
       },
-      "/gamedb/recent": {
-        "path": "/gamedb/recent",
-        "name": "Unknown",
+      "/gamedb/recent/:platform?": {
+        "name": "GameDB 游戏库",
+        "path": "/gamedb/recent/:platform?",
+        "example": "/indienova/gamedb/recent",
+        "categories": [
+          "game"
+        ],
+        "parameters": {
+          "platform": {
+            "description": "平台，留空为 `all`",
+            "options": [
+              {
+                "value": "all",
+                "label": "全部"
+              },
+              {
+                "value": "ps4",
+                "label": "PS4"
+              },
+              {
+                "value": "xboxone",
+                "label": "XBOX One"
+              },
+              {
+                "value": "nintendo-switch",
+                "label": "Nintendo Switch"
+              }
+            ],
+            "default": "all"
+          }
+        },
         "maintainers": [
           "TonyRL"
         ],

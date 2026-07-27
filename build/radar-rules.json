@@ -864,6 +864,20 @@
       }
     ]
   },
+  "immich.app": {
+    "_name": "Immich",
+    ".": [
+      {
+        "title": "Cursed Knowledge",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/cursed-knowledge",
+          "/"
+        ],
+        "target": "/immich/cursed-knowledge"
+      }
+    ]
+  },
   "isct.ac.jp": {
     "_name": "Institute of Science Tokyo",
     "www": [
@@ -2618,27 +2632,6 @@
           "/"
         ],
         "target": "/bse/:category?/:keyword?"
-      }
-    ]
-  },
-  "byteclicks.com": {
-    "_name": "字节点击",
-    ".": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/byteclicks/"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/tag/:tag"
-        ],
-        "target": "/byteclicks/tag/:tag"
       }
     ]
   },
@@ -13760,6 +13753,27 @@
       }
     ]
   },
+  "byteclicks.com": {
+    "_name": "字节点击",
+    ".": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/byteclicks/"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/byteclicks/tag/:tag"
+      }
+    ]
+  },
   "bytes.dev": {
     "_name": "ui.dev",
     ".": [
@@ -24348,20 +24362,6 @@
           "/explore/find"
         ],
         "target": "/imiker/ask/jinghua"
-      }
-    ]
-  },
-  "immich.app": {
-    "_name": "Immich",
-    ".": [
-      {
-        "title": "Cursed Knowledge",
-        "docs": "https://docs.rsshub.app/routes/blog",
-        "source": [
-          "/cursed-knowledge",
-          "/"
-        ],
-        "target": "/immich/cursed-knowledge"
       }
     ]
   },
