@@ -11185,7 +11185,7 @@
         "title": "最新动态",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
-          "/zh-CN/news/list"
+          "/zh-CN/about/news"
         ],
         "target": "/alwayscontrol/news"
       }
@@ -17129,17 +17129,16 @@
       }
     ]
   },
-  "cognition.ai": {
+  "cognition.com": {
     "_name": "cognition",
     ".": [
       {
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
-          "/blog/1",
-          "/blog/:category/1"
+          "/blog"
         ],
-        "target": "/cognition/blog/:category?"
+        "target": "/cognition/blog"
       }
     ]
   },
@@ -19476,7 +19475,7 @@
       }
     ]
   },
-  "dykszx.com": {
+  "dykszx.cn": {
     "_name": "德阳人事考试网",
     "www": [
       {
@@ -19685,7 +19684,7 @@
         "target": "/ecnu/bksy"
       }
     ],
-    "cee": [
+    "ieeic": [
       {
         "title": "通信与电子工程学院通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
@@ -22398,7 +22397,7 @@
   },
   "hitwh.edu.cn": {
     "_name": "哈尔滨工业大学（威海）",
-    ".": [
+    "today": [
       {
         "title": "今日工大 - 通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
@@ -25545,11 +25544,17 @@
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/:lang",
-          "/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf",
-          "/:lang/category/articles.kcmsf"
+          "/:lang"
         ],
         "target": "/kcna/:lang"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:lang/article/list/:category"
+        ],
+        "target": "/kcna/:lang/:category"
       }
     ]
   },
@@ -29614,11 +29619,11 @@
       }
     ]
   },
-  "my-formosa.com": {
+  "my-formosa.com.tw": {
     "_name": "美麗島電子報",
-    ".": [
+    "m": [
       {
-        "title": "首页",
+        "title": "首頁",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -30815,7 +30820,7 @@
     "_name": "南京工程学院",
     "www": [
       {
-        "title": "南京工程学院通知公告",
+        "title": "通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/"
@@ -34568,7 +34573,7 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
-          "/hub"
+          "/hub/blog"
         ],
         "target": "/perplexity/blog"
       },
@@ -41258,7 +41263,7 @@
         "title": "Press releases",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/de/presse-und-service/pressemitteilungen/"
+          "/presse-und-service/pressemitteilungen/"
         ],
         "target": "/verfghbw/press"
       }

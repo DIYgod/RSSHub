@@ -3006,7 +3006,7 @@
     "Fatpandac"
   ],
   "/codeforces/recent-actions/:minrating?": [],
-  "/cognition/blog/:category?": [
+  "/cognition/blog": [
     "Loongphy",
     "ttttmr"
   ],
@@ -7505,7 +7505,7 @@
   "/v2ex/xna": [
     "luckyscript"
   ],
-  "/verfghbw/press/:keyword?": [
+  "/verfghbw/press": [
     "quinn-dev"
   ],
   "/vertikal/latest": [
@@ -9296,11 +9296,16 @@
     "xyqfer"
   ],
   "/jandan/": [
+    "lonelykid",
     "nczitzk",
     "bigfei",
     "pseudoyu"
   ],
   "/jandan/:category/:type?": [
+    "kobemtl",
+    "Xuanwo",
+    "xyqfer",
+    "9uanhuo",
     "nczitzk",
     "pseudoyu"
   ],
@@ -9358,24 +9363,24 @@
   "/jewishmuseum/exhibitions": [
     "chazeon"
   ],
-  "/jiemian/account/main/1": [
-    "nczitzk",
-    "pseudoyu"
-  ],
   "/jiemian/lists/:id": [
     "WenhuWee",
     "nczitzk",
     "pseudoyu"
   ],
-  "/jiemian/special/1192": [
+  "/jiemian/video/lists/:id": [
     "nczitzk",
     "pseudoyu"
   ],
-  "/jiemian/video/lists/258_1": [
+  "/jiemian/pro/lists/:id": [
     "nczitzk",
     "pseudoyu"
   ],
-  "/jiemian/pro/lists/12": [
+  "/jiemian/account/main/:id": [
+    "nczitzk",
+    "pseudoyu"
+  ],
+  "/jiemian/special/:id": [
     "nczitzk",
     "pseudoyu"
   ],

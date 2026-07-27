@@ -627,7 +627,7 @@ export type RoutePath =
   | `/codefather/questions/:sort?`
   | `/codeforces/contests`
   | `/codeforces/recent-actions/:minrating?`
-  | `/cognition/blog/:category?`
+  | `/cognition/blog`
   | `/cohere/blog`
   | `/coindesk/consensus-magazine`
   | `/coindesk/news`
@@ -1641,11 +1641,11 @@ export type RoutePath =
   | `/jianshu/home`
   | `/jianshu/user/:id`
   | `/jiaoliudao/`
-  | `/jiemian/account/main/1`
+  | `/jiemian/account/main/:id`
   | `/jiemian/lists/:id`
-  | `/jiemian/pro/lists/12`
-  | `/jiemian/special/1192`
-  | `/jiemian/video/lists/258_1`
+  | `/jiemian/pro/lists/:id`
+  | `/jiemian/special/:id`
+  | `/jiemian/video/lists/:id`
   | `/jike/topic/:id/:showUid?`
   | `/jike/topic/text/:id`
   | `/jike/user/:id`
@@ -2995,7 +2995,7 @@ export type RoutePath =
   | `/v2rayshare/`
   | `/vcb-s/`
   | `/vcb-s/category/:cate`
-  | `/verfghbw/press/:keyword?`
+  | `/verfghbw/press`
   | `/vertikal/latest`
   | `/vice/topic/:topic/:language?`
   | `/vimeo/category/:category/:staffpicks?`
