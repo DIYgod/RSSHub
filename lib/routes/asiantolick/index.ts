@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -91,7 +91,7 @@ async function handler(ctx) {
 
                 item.title = content('h1').text();
                 item.description = renderDescription({
-                    description: content('#metadata_qrcode').html(),
+                    description: content('#metadata_qrcode').html() ?? undefined,
                     images: content('div.miniatura')
                         .toArray()
                         .map((i) => ({
@@ -126,7 +126,7 @@ async function handler(ctx) {
         title: title === 'Asian To Lick' ? title : `Asian To Lick - ${title}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

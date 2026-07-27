@@ -89,7 +89,7 @@ const renderDescription = (item): string =>
             <br />
             {Object.entries(item.files ?? {}).map(([key, value]) => (
                 <>
-                    <a href={value}>{key}</a>&nbsp;&nbsp;
+                    <a href={value as string}>{key}</a>&nbsp;&nbsp;
                 </>
             ))}
         </>

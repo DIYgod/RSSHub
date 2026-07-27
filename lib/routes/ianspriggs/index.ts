@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -89,7 +89,7 @@ async function handler(ctx) {
                 item.title = content('div.project-title').text();
                 item.description += renderDescription({
                     images,
-                    description: content('div.nectar-fancy-ul').html(),
+                    description: content('div.nectar-fancy-ul').html() ?? undefined,
                 });
                 item.pubDate = parseDate(content('span.subheader').last().text(), 'YYYY');
 
@@ -105,7 +105,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle: $('a[aria-current="page"] span.menu-title-text').text(),

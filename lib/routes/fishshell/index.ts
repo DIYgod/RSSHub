@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,7 +27,7 @@ async function handler() {
     return {
         link,
         title: 'Release notes — fish-shell',
-        language: 'en',
+        language: 'en' as Language,
         item: $('#release-notes > section')
             .toArray()
             .map((item) => {

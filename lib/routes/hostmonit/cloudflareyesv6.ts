@@ -9,4 +9,6 @@ export const route: Route = {
 
 function handler(ctx) {
     ctx.set('redirect', '/hostmonit/cloudflareyes/v6');
+
+    return null;
 }

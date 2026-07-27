@@ -65,7 +65,7 @@ async function handler(ctx) {
             // Assume that the articles are published at 12:00 UTC+8
             const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), -4);
             return {
-                title,
+                title: title!,
                 pubDate,
                 link,
                 description: undefined as DataItem['description'],
@@ -77,7 +77,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('div.wp_articlecontent').html();
+                    const desc: string = load(response.data)('div.wp_articlecontent').html() ?? '';
                     item.description = desc;
                 } catch {
                     // Intranet only contents

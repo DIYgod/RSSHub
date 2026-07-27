@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -118,7 +119,7 @@ export const route: Route = {
     url: 'www.math.zju.edu.cn',
 };
 
-async function handler(ctx: { req: { param: (arg0: string) => string } }) {
+async function handler(ctx: Context) {
     const type = Math.trunc(Number(ctx.req.param('type')));
     const categoryInfo = categoryMap.get(type);
 

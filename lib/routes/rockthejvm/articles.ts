@@ -86,13 +86,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const categoryEls: Element[] = $$('meta[property="article:tag"]').toArray();
-                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).attr('content')).filter(Boolean))];
+                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).attr('content')).filter(Boolean) as string[])];
                 const authorEls: Element[] = $$('meta[property="article:author"]').toArray();
                 const authors: DataItem['author'] = authorEls.map((authorEl) => {
                     const $$authorEl: Cheerio<Element> = $$(authorEl);
 
                     return {
-                        name: $$authorEl.attr('content'),
+                        name: $$authorEl.attr('content')!,
                         url: undefined,
                         avatar: undefined,
                     };

@@ -39,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                       const title = `${pubDateStr} - ${$el.find('div.title').text().replaceAll(/\s/g, '')}`;
                       const description: string | undefined = renderDescription({
-                          description: $el.find('div.writing').html(),
+                          description: $el.find('div.writing').html() ?? undefined,
                       });
 
                       const linkUrl: string | undefined = targetUrl;
@@ -51,7 +51,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           .split(/\s/)
                           .filter(Boolean)
                           .map((name) => ({
-                              name: name.split(/：/).pop(),
+                              name: name.split(/：/).pop()!,
                               url: undefined,
                               avatar: undefined,
                           }));

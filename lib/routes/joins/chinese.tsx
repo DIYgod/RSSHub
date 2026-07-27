@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -32,7 +32,7 @@ export const handler = async (ctx) => {
                 pubDate: timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()!), 8),
                 link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
                 author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 category: undefined as DataItem['category'],
                 content: undefined as DataItem['content'],
@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -101,7 +101,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

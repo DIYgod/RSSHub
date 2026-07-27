@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { Language } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -93,7 +94,7 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: content('meta[name="ColumnDescription"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

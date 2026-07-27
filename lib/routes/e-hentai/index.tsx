@@ -59,7 +59,7 @@ async function handler(ctx) {
         items.map(async (item) => {
             if (item.enclosure_url) {
                 let forms = '',
-                    torrents = await cache.get(item.enclosure_url);
+                    torrents: any = await cache.get(item.enclosure_url);
 
                 if (!torrents) {
                     const torrentResponse = await got({
@@ -70,7 +70,7 @@ async function handler(ctx) {
                     const torrent = load(torrentResponse.data);
 
                     torrent('h1, input[name="torrent_info"]').remove();
-                    forms = torrent('form').parent().html();
+                    forms = torrent('form').parent().html() ?? '';
 
                     torrents = torrent('table tbody tr td a')
                         .toArray()

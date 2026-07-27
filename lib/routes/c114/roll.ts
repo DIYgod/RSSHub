@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
                 pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
                 link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
                 author: $item.find('div.new_list_author').text().trim(),
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 content: undefined as DataItem['content'],
             };
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('.text').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -76,7 +76,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('p.top1-1-1 a').first().text(),
-        language,
+        language: language as Language,
     };
 };
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -105,6 +105,6 @@ async function handler(ctx) {
         icon: new URL($('link[rel="apple-touch-icon"]').attr('href')!, currentUrl).href,
         logo: new URL($('link[rel="apple-touch-icon"]').attr('href')!, currentUrl).href,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

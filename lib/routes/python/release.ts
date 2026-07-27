@@ -55,7 +55,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.page-title').text();
-                const description: string | undefined = $$('section#pep-content').html();
+                const description: string | undefined = $$('section#pep-content').html() ?? undefined;
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
 
                 const processedItem: DataItem = {

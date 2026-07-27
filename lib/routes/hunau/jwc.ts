@@ -37,4 +37,6 @@ async function handler(ctx) {
         baseTitle: '湖南农业大学教务处',
         baseDeparment: 'jwc',
     });
+
+    return null;
 }

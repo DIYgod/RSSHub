@@ -51,7 +51,7 @@ async function handler(ctx) {
                 .text()
                 .match(/(?<size>\d+\.\d+)\s(?<unit>\w+)/)!.groups as any;
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: timezone(parseDate($item.find('td').eq(4).text()), 8),
 

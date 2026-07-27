@@ -67,7 +67,7 @@ async function handler(ctx) {
 
     if (getSubPath(ctx) === '/') {
         ctx.set('redirect', `/141ppv${$('.overview').first().attr('href')}`);
-        return;
+        return null;
     }
 
     const items = $('.columns')

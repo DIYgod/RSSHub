@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -97,7 +97,7 @@ async function handler(ctx) {
         title: `finviz - ${category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'en-US',
+        language: 'en-us' as Language,
         image: new URL($('a.logo svg use').first().prop('href')!, rootUrl).href,
         icon,
         logo: icon,

@@ -85,7 +85,7 @@ async function handler(ctx) {
             return {
                 title,
                 description: renderDescription({
-                    videoUrl: $item.find('.more').attr('href'),
+                    videoUrl: $item.find('.more').attr('href')!,
                     vdescription: description[index] || '',
                 }),
                 pubDate: parseDate($item.find('time').attr('datetime')!),

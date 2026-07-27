@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,7 +58,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 link: $item.attr('href'),
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
                 author: undefined as DataItem['author'],
@@ -84,7 +84,7 @@ async function handler(ctx) {
         title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

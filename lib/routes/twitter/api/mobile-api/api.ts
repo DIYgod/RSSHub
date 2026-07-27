@@ -39,7 +39,7 @@ const twitterGot = async (url, params) => {
     };
 
     const response = await ofetch.raw(requestData.url, {
-        headers: oauth.toHeader(oauth.authorize(requestData, token)),
+        headers: oauth.toHeader(oauth.authorize(requestData, token)) as unknown as Record<string, string>,
     });
     if (response.status === 401) {
         cache.globalCache.set(token.cacheKey, '');

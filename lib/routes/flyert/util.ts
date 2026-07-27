@@ -32,7 +32,7 @@ const parseArticleList = ($: CheerioAPI, limit: number) =>
                           },
                       ]
                     : undefined,
-                description: $item.find('div.wznr').html(),
+                description: $item.find('div.wznr').html() ?? undefined,
             });
             const pubDate = $item.find('div.subcat span.y').contents()?.eq(2)?.text().trim() ?? undefined;
             const link = new URL($item.find('div.wzbt a').prop('href')!, rootUrl).href;
@@ -111,7 +111,7 @@ const parseArticle = ($$: CheerioAPI, item) => {
     const title = $$('h1.ph').text().trim();
     const description = renderDescription({
         intro: $$('div.s').text() || undefined,
-        description: $$('div#artMain').html(),
+        description: $$('div#artMain').html() ?? undefined,
     });
     const pubDate =
         $$('p.xg1')

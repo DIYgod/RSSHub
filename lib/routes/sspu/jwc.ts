@@ -32,7 +32,7 @@ async function handler(ctx) {
             const $item = $(item);
             const title = $item.find('.news_title a');
             return {
-                title: title.attr('title'),
+                title: title.attr('title')!,
                 link: `${baseUrl}${title.attr('href')}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],

@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -189,7 +189,7 @@ async function handler(ctx) {
     return {
         title,
         description,
-        language,
+        language: language as Language,
         link,
         item: items,
     };

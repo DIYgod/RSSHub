@@ -41,7 +41,7 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('h3').attr('title'),
+                title: $item.find('h3').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 author: $item.find('span').text(),
                 description: undefined as DataItem['description'],

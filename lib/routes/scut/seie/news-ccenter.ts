@@ -43,7 +43,7 @@ async function handler() {
         const $item = $(item);
         const titleElement = $item.find('.news_title a');
         return {
-            title: titleElement.attr('title'),
+            title: titleElement.attr('title')!,
             link: titleElement.attr('href'),
             pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'),
             description: undefined as DataItem['description'],

@@ -62,7 +62,7 @@ async function handler(ctx) {
     if (urls) {
         items = urls.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) => ({
             link: item.match(/url:"(.*)",/)[1],
-        }));
+        })) as DataItem[];
     } else {
         const $ = load(data);
 
@@ -74,7 +74,7 @@ async function handler(ctx) {
                 return {
                     link: $item.attr('href'),
                 };
-            });
+            }) as DataItem[];
     }
 
     items = await Promise.all(

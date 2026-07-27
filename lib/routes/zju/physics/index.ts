@@ -59,7 +59,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 pubDate: parseDate($item.find('.art-date').text()),
 
                 link: `http://physics.zju.edu.cn/${$item.find('a').attr('href')}`,

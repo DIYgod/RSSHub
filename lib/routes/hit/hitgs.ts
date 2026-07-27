@@ -64,7 +64,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('h1.arti_title').text() + $$('h2.arti_title').text();
                 const description: string | undefined = renderDescription({
-                    description: $$('div.wp_articlecontent').html(),
+                    description: $$('div.wp_articlecontent').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('span.arti_update').text().split(/：/).pop()?.trim();
                 const upDatedStr: string | undefined = pubDateStr;

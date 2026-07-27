@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -65,6 +65,6 @@ async function handler() {
         link: url,
         description: '印尼气象气候和地球物理局 新闻 | BMKG news',
         item: items,
-        language: 'in',
+        language: 'in' as Language,
     };
 }

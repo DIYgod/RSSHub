@@ -74,7 +74,7 @@ async function handler(ctx) {
                 }
 
                 return {
-                    title: item.title,
+                    title: item.title!,
                     description,
                     pubDate,
                     link: item.link,

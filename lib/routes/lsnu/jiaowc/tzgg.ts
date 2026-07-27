@@ -64,7 +64,7 @@ async function handler(ctx) {
                 const description = article$('.v_news_content').html();
 
                 return {
-                    title,
+                    title: title!,
                     link,
                     description,
                     pubDate: new Date(date).toUTCString(),

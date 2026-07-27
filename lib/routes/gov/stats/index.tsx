@@ -96,7 +96,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: new URL($item.attr('href')!, currentUrl).href,
                 pubDate: undefined as DataItem['pubDate'],
                 author: undefined as DataItem['author'],
@@ -146,7 +146,7 @@ async function handler(ctx) {
                 item.title ||= content('div.detail-title h1').text();
                 item.pubDate = timezone(parseDate(content('div.detail-title-des h2 p, .info').first().text().trim()), 8);
                 item.description = renderDescription({
-                    description: content('.TRS_Editor').html() || content('.TRS_UEDITOR').html(),
+                    description: (content('.TRS_Editor').html() || content('.TRS_UEDITOR').html()) ?? undefined,
                     attachments: content('a[oldsrc]')
                         .toArray()
                         .map((a) => {

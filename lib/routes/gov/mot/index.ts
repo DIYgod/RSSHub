@@ -62,11 +62,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             $$('meta[name="ColumnType"]').attr('content'),
                             $$('meta[name="ContentSource"]').attr('content'),
                             ...($$('meta[name="Keywords"]').attr('content')?.split(';') ?? []),
-                        ].filter(Boolean)
+                        ].filter(Boolean) as string[]
                     ),
                 ];
                 const authors: DataItem['author'] = [$$('meta[name="ColumnSource"]').attr('content'), $$('meta[name="Author"]').attr('content')].filter(Boolean).map((author) => ({
-                    name: author,
+                    name: author!,
                     url: undefined,
                     avatar: undefined,
                 }));

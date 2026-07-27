@@ -55,8 +55,8 @@ export async function handler(ctx) {
 
                 item.pubDate = detailPubTimeMatches ? timezone(parseDate(detailPubTimeMatches[1]), 8) : item.pubDate;
                 item.description = renderDescription({
-                    video: content('#con_video').html(),
-                    description: content('.TRS_Editor, #content').html(),
+                    video: content('#con_video').html() ?? undefined,
+                    description: content('.TRS_Editor, #content').html() ?? undefined,
                 });
 
                 return item;

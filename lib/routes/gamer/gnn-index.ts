@@ -139,7 +139,7 @@ async function handler(ctx) {
                         item.author = pubInfo[0].replace('（', '').replace(' 報導', '');
                         dateStr = pubInfo[1].replace('原文出處', '').trim();
                     }
-                    component = $('div.GN-lbox3B').html();
+                    component = $('div.GN-lbox3B').html() ?? '';
                 } else {
                     // url redirect
                     const _response = await got.get(item.link);
@@ -150,13 +150,13 @@ async function handler(ctx) {
                         pubInfo = _$('span.ST1').text().split('│');
                         item.author = pubInfo[0].replace('作者：', '');
                         dateStr = pubInfo[_$('span.ST1').find('a').length > 0 ? 2 : 1];
-                        component = _$('div.MSG-list8C').html();
+                        component = _$('div.MSG-list8C').html() ?? '';
                     } else {
                         // personal publish 2
                         pubInfo = _$('div.article-intro').text().replaceAll('\n', '').split('|');
                         item.author = pubInfo[0];
                         dateStr = pubInfo[1];
-                        component = _$('div.text-paragraph').html();
+                        component = _$('div.text-paragraph').html() ?? '';
                     }
                 }
                 item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);

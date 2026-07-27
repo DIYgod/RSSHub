@@ -40,7 +40,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: $item.attr('href').startsWith('http') ? $item.attr('href') : `${baseUrl}${$item.attr('href')}`,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],

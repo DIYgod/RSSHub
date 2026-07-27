@@ -9,6 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
+    example: '/141jav/new',
     name: '通用',
     maintainers: ['cgkings', 'nczitzk'],
     parameters: { type: '类型，可查看下表的类型说明', keyword: '关键词，可查看下表的关键词说明' },
@@ -67,7 +68,7 @@ async function handler(ctx) {
 
     if (getSubPath(ctx) === '/') {
         ctx.set('redirect', `/141jav${$('.overview').first().attr('href')}`);
-        return;
+        return null;
     }
 
     const items = $('.columns')
@@ -95,7 +96,7 @@ async function handler(ctx) {
                 title: `${id} ${size}`,
                 pubDate: parseDate(pubDate!, 'YYYY/MM/DD'),
                 link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
-                description: renderToString(<JavDescription image={image} id={id} size={size} pubDate={pubDate} description={description} actresses={actresses} tags={tags} magnet={magnet} link={link} />),
+                description: renderToString(<JavDescription image={image} id={id} size={size} pubDate={pubDate!} description={description} actresses={actresses} tags={tags} magnet={magnet} link={link} />),
                 author: actresses.join(', '),
                 category: [...tags, ...actresses],
                 enclosure_type: 'application/x-bittorrent',

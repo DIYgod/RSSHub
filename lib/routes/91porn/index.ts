@@ -76,8 +76,8 @@ async function handler(ctx) {
 
                 item.pubDate = parseDate($('.title-yakov').eq(0).text(), 'YYYY-MM-DD');
                 item.description = renderIndexDescription({
-                    link: item.link,
-                    poster: item.poster,
+                    link: item.link!,
+                    poster: item.poster!,
                 });
                 item.author = $('.title-yakov a span').text();
                 delete item.poster;

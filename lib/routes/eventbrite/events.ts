@@ -61,7 +61,7 @@ export const route: Route = {
             if (eventData === undefined) {
                 const pElements = el.find('p');
                 return {
-                    title: fallbackTitle,
+                    title: fallbackTitle ?? '',
                     author: pElements.length > 1 ? $(pElements[1]).text() : undefined,
                 };
             }

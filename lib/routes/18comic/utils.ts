@@ -139,7 +139,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                     introduction: content('#intro-block .p-t-5').text(),
                     images: content('.img_zoom_img img')
                         .toArray()
-                        .map((image) => content(image).attr('data-original')),
+                        .map((image) => content(image).attr('data-original')!),
                     cover: content('.thumb-overlay img').first().attr('src'),
                     category: item.category,
                 });

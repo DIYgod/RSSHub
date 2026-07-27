@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -116,7 +116,7 @@ async function handler(ctx) {
         item: items,
         title: $('title').text(),
         link: currentUrl,
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: new URL('r/cms/www/default/zhuanti/2021djt/images/top.png', rootUrl).href,
         icon,
         logo: icon,

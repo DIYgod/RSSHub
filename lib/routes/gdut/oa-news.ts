@@ -3,7 +3,7 @@ import type { Element } from 'domhandler';
 import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -208,6 +208,6 @@ async function handler(ctx) {
         title: '广东工业大学通知公文网 - ' + type.name,
         link: site,
         description: '广东工业大学通知公文网',
-        item: results,
+        item: results as DataItem[],
     };
 }

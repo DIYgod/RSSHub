@@ -76,7 +76,7 @@ async function handler(ctx) {
                 try {
                     const contentData = await got(item.link);
                     const $ = load(contentData.data);
-                    description = $('#UCAP-CONTENT').html();
+                    description = $('#UCAP-CONTENT').html() ?? '';
                 } catch {
                     description = '文章已被删除';
                 }

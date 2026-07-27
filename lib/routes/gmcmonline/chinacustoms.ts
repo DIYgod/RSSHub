@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
     const author = $('p.copyright a').text();
     const language = $('html').prop('lang');
 
-    let items = $('ul.booklist li a')
+    const issues = $('ul.booklist li a')
         .toArray()
         .slice(0, limit)
         .map((item) => {
@@ -34,12 +34,12 @@ export const handler = async (ctx) => {
                 author,
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        issues.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -76,13 +76,13 @@ export const handler = async (ctx) => {
                                     .find('div.title-box span')
                                     .text()
                                     .replaceAll(/【|】/g, '') || undefined,
-                            ].filter(Boolean),
+                            ].filter(Boolean) as string[],
                             author,
                             guid,
                             id: guid,
                             image,
                             banner: image,
-                            language,
+                            language: language as Language,
                             enclosure_url: new URL(`front/article/${id}/pdf?magazineID=2`, magRootUrl).href,
                             enclosure_type: 'application/pdf',
                             enclosure_title: title,
@@ -100,11 +100,11 @@ export const handler = async (ctx) => {
         title,
         description: title,
         link: rootUrl,
-        item: items.flat(),
+        item: items.flat() as DataItem[],
         allowEmpty: true,
         image,
         author: title,
-        language,
+        language: language as Language,
     };
 };
 

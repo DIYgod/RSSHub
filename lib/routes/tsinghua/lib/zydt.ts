@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -32,7 +32,7 @@ export const handler = async (ctx) => {
                     .find('div.notice-label')
                     .toArray()
                     .map((c) => $(c).text()),
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 content: undefined as DataItem['content'],
             };
@@ -54,7 +54,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.v_news_content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

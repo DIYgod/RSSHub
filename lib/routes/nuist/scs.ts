@@ -49,7 +49,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.newsDate').text()),
                 author: undefined as DataItem['author'],
@@ -66,7 +66,7 @@ async function handler(ctx) {
                 const authorMatch = $('.newsTitleAddDate')
                     .text()
                     .match(/发布者：(.*)发布时间/);
-                item.author = authorMatch ? authorMatch[1].trim() : null;
+                item.author = authorMatch ? authorMatch[1].trim() : undefined;
                 item.description = $('.newsContent').html();
                 return item;
             })

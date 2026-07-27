@@ -52,7 +52,7 @@ const ja: Route['handler'] = async (ctx) => {
     return {
         title: `ブルアカ - ${JP[type]}`,
         link: 'https://bluearchive.jp/news/newsJump',
-        language: 'ja-JP',
+        language: 'ja',
         image: 'https://webcnstatic.yostar.net/ba_cn_web/prod/web/favicon.png', // The CN website has a larger one
         icon: 'https://webcnstatic.yostar.net/ba_cn_web/prod/web/favicon.png',
         logo: 'https://webcnstatic.yostar.net/ba_cn_web/prod/web/favicon.png',

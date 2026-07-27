@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -141,6 +141,6 @@ async function handler(ctx) {
         title: '《明日方舟：终末地》游戏公告与新闻',
         link: 'https://endfield.hypergryph.com/news',
         item: items,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
     };
 }

@@ -52,7 +52,7 @@ async function handler(ctx) {
             pubDate: timezone(parseDate(item.publish_time), 8),
             description: renderToString(
                 item.type === 'audio' ? (
-                    <audio controls="controls">
+                    <audio controls>
                         <source src={enclosure_url} type="audio/mp3" />
                     </audio>
                 ) : item.type === 'video' ? (

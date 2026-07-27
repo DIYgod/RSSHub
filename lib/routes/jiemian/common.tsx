@@ -95,7 +95,7 @@ export const fetchArticle = (item) =>
                   }
                 : undefined,
             intro: content('div.article-header p').text(),
-            description: content('div.article-content').html(),
+            description: content('div.article-content').html() ?? undefined,
         });
         item.author = content('span.author')
             .first()

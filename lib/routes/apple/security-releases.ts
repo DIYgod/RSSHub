@@ -81,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description: string | undefined =
                     item.description +
                     renderDescription({
-                        description: $$('div#sections').html(),
+                        description: $$('div#sections').html() ?? undefined,
                     });
                 const pubDateStr: string | undefined = detailResponse.match(/publish_date:\s"(\d{8})",/, '')?.[1];
                 const authors: DataItem['author'] = $$('meta[property="og:site_name"]').attr('content');

@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Item } from 'rss-parser';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -72,7 +72,7 @@ async function handler(ctx) {
         feedLink: feedUrl,
         description: 'Apple 新闻中心是 Apple 新闻的来源。阅读新闻稿、获取最新消息、观看视频和下载图片。',
         item: items,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
     };
 }
 

@@ -55,7 +55,7 @@ async function handler() {
                 const articlePubDate = timezone(parseDate(datetimeString, 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 const item = {
-                    title: $('.article-main .foreword').text().trim().split('——').pop(),
+                    title: $('.article-main .foreword').text().trim().split('——').pop()!,
                     link: itemUrl,
                     description: contentPart.length > 1 ? contentPart : forewordPart,
                     pubDate: articlePubDate,

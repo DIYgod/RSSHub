@@ -128,7 +128,7 @@ async function handler(ctx) {
             }
 
             const single = {
-                title: item.title,
+                title: item.title!,
                 pubDate: item.pubDate,
                 link,
                 author: item['dc:creator'],

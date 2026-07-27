@@ -67,7 +67,7 @@ async function handler(ctx) {
         list.map((item) => {
             const $1 = $(item);
             const result = {
-                title: $1.find('.title a').attr('title'),
+                title: $1.find('.title a').attr('title')!,
                 author: $1.find('a').eq(1).text(),
                 link: $1.find('.title a').attr('href'),
                 pubDate: undefined as DataItem['pubDate'],

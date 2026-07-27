@@ -54,7 +54,7 @@ async function handler(ctx) {
 
             return {
                 link: rootUrl + $(item).find('a').attr('href'),
-                title: $(item).find('a').attr('title'),
+                title: $(item).find('a').attr('title')!,
                 pubDate: parseDate(dateStr, 'YYYY/MM/DD'),
                 description: undefined as DataItem['description'],
             };

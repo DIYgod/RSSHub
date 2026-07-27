@@ -29,7 +29,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const href: string = $item.find('a').attr('href');
+            const href: string = $item.find('a').attr('href')!;
             return {
                 title: $item.find('a').text(),
                 link: href.startsWith('http') ? href : `${baseUrl}${href}`,

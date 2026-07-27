@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 
 import { applyLanguageToTagSlug, CHANNEL_TAG_MAP, ghostFetch, postsToItems } from './utils';
 
@@ -133,7 +133,7 @@ async function handler(ctx) {
         title: `${name} - ${label}`,
         link: 'https://theinitium.com/latest/',
         icon: 'https://theinitium.com/favicon.ico',
-        language: language === 'zh-hans' ? 'zh-CN' : 'zh-TW',
+        language: (language === 'zh-hans' ? 'zh-CN' : 'zh-TW') as Language,
         item: items,
     };
 }

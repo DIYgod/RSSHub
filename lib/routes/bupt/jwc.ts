@@ -128,6 +128,6 @@ async function handler(ctx: Context) {
     return {
         title: `北京邮电大学教务处 - ${pageTitle}`,
         link: currentUrl,
-        item: items,
+        item: items as DataItem[],
     };
 }

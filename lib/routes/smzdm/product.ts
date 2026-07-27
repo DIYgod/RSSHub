@@ -97,6 +97,6 @@ async function handler(ctx) {
     return {
         title,
         link,
-        item: filteredOut,
+        item: filteredOut as DataItem[],
     };
 }

@@ -39,7 +39,7 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
+    items = (await Promise.all(
         items.map((item) =>
             cache.tryGet(`nature:siteindex:${item.title}`, async () => {
                 try {
@@ -71,7 +71,7 @@ async function handler(ctx) {
                 }
             })
         )
-    );
+    )) as typeof items;
 
     ctx.set('json', {
         items,

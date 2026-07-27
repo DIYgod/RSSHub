@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,7 +43,7 @@ export const handler = async (ctx) => {
                 title,
                 pubDate: parseDate($item.contents().last().text()),
                 link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link!, rootUrl).href),
-                language,
+                language: language as Language,
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureType,
                 enclosure_title: enclosureUrl ? title : undefined,
@@ -83,7 +83,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.news-content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -100,7 +100,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="keywords"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -74,6 +74,6 @@ async function handler(ctx) {
         image: 'https://s3.hicloud.net.tw/zuvio.public/public/system/images/irs_v4/chicken/shared/webshare.png',
         link: `${rootUrl}/articles`,
         item: items,
-        language: 'zh-Hant',
+        language: 'zh-Hant' as Language,
     };
 }

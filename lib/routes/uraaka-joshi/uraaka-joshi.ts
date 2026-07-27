@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 
@@ -102,7 +102,7 @@ async function handler() {
                 description: $item.html(),
                 link: $item.find('.account-group-link-row').attr('href'),
                 pubDate: parseDate($item.find('.profile-char').attr('datetime')!),
-                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime(),
+                guid: ($item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime()) as DataItem['guid'],
             };
         }),
     };

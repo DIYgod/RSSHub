@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ export const handler = async (ctx) => {
                 title: $item.find('a').text(),
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
                 link: $item.find('a').prop('href'),
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 content: undefined as DataItem['content'],
@@ -53,7 +53,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.txt').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -71,7 +71,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop()?.trim(),
-        language,
+        language: language as Language,
     };
 };
 

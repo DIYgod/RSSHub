@@ -38,4 +38,5 @@ async function handler(ctx) {
         baseDescription: '湖南农业大学公共管理与法学学院',
         baseDeparment: 'gfxy',
     });
+    return null;
 }

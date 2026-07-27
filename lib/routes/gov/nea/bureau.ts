@@ -77,7 +77,7 @@ async function handler(ctx) {
             pubDate: item.publishTime ? timezone(parseDate(item.publishTime), 8) : undefined,
             description: item.summary?.trim() || title,
             author: [...new Set([item.sourceText, item.author, item.editor, item.responsibleEditor].filter(Boolean))].map((author) => ({
-                name: author,
+                name: author!,
             })),
             category: item.keywords.split(/,/),
         };

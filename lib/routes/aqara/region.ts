@@ -16,4 +16,6 @@ function handler(ctx) {
     const { region = 'en', type = 'news' } = ctx.req.param();
     const redirectTo = `/aqara/${region}/category/${types[type]}`;
     ctx.set('redirect', redirectTo);
+
+    return null;
 }

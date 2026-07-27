@@ -66,7 +66,7 @@ async function handler(ctx) {
         links = $('.left a, .container_left a').toArray();
     }
 
-    let items = links
+    let items: DataItem[] = links
         .map((link) => {
             const $link = $(link);
             const url = $link.attr('href');
@@ -81,7 +81,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(`${urlMatch[1]}${urlMatch[2]}`), 8),
             };
         })
-        .filter(Boolean);
+        .filter(Boolean) as DataItem[];
     const uniqueItems: DataItem[] = [];
     for (const item of items) {
         if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
@@ -92,7 +92,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 // fix weird format
@@ -116,7 +116,7 @@ async function handler(ctx) {
                         });
                 } else {
                     // http://rail.ally.net.cn/html/2022/InviteTen_0407/4686.html
-                    description = $('div.content div').first().html();
+                    description = $('div.content div').first().html() ?? '';
                 }
 
                 description = description.replace(/\s*<br ?\/?>\s*$/, ''); // trim <br> at the end

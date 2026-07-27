@@ -77,7 +77,7 @@ async function handler(ctx) {
             const newsPubDate = parseDate($item.find('span').text().slice(1, -1));
 
             return {
-                title: newsTitle,
+                title: newsTitle!,
                 link: newsLink,
                 pubDate: newsPubDate,
             };

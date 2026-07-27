@@ -48,7 +48,7 @@ async function handler(ctx) {
                     const $item = $(item);
                     return {
                         link: $item.find('a').eq(0).attr('href'),
-                        title: undefined as DataItem['title'] | undefined,
+                        title: undefined as unknown as DataItem['title'],
                         author: undefined as DataItem['author'],
                         pubDate: undefined as DataItem['pubDate'],
                         category: undefined as DataItem['category'],
@@ -79,7 +79,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('meta[name=description]').attr('content'),
+        title: $('meta[name=description]').attr('content')!,
         image: 'http://www.vom.mn/dist/images/vom-logo.png',
         item: items,
     };

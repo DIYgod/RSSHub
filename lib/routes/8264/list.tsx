@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -164,7 +164,7 @@ async function handler(ctx) {
         title: `${$('span.country, h2').text()} - ${description.split(',').pop()}`,
         link: currentUrl,
         description,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content').trim(),

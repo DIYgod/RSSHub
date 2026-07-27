@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -31,7 +31,7 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('td').last().text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 category: undefined as DataItem['category'],
                 author: undefined as DataItem['author'],
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.article').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
                 item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href')!, currentUrl).href;
                 item.enclosure_title = item.enclosure_url ? $$('table.enclosure a.xxgk_list1').first().text() : undefined;
 
@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="SiteName"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

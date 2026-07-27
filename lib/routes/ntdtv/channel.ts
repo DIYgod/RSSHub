@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 
-                item.description = content('div.post_content').html();
+                item.description = content('div.post_content').html() ?? '';
                 item.pubDate = timezone(parseDate(content('div.time > span').text()), 8);
 
                 return item;

@@ -88,7 +88,7 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('h2 a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 description: $item.find('.fl-post-grid-content').html()?.trim(),
                 link: a.attr('href'),
                 pubDate: $item.find('[itemprop="datePublished"]').length ? parseDate($item.find('[itemprop="datePublished"]').attr('content')!) : undefined,

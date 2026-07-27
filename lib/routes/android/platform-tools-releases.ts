@@ -58,7 +58,7 @@ async function handler() {
             });
 
             return {
-                title,
+                title: title!,
                 description,
                 link: `${currentUrl}#${$item.attr('id')}`,
                 pubDate: parseDate(title.match(/\((.*)\)/)[1], 'MMMM YYYY'),

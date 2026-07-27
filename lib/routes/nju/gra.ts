@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -55,11 +55,11 @@ async function handler() {
                 } // 去掉友情链接
 
                 return {
-                    title: $item.find('a').attr('title'),
+                    title: $item.find('a').attr('title')!,
                     link: 'https://grawww.nju.edu.cn' + $item.find('a').attr('href'),
                     pubDate: timezone(parseDate(year + day, 'YYYYMM-DD'), 8),
                 };
             })
-            .filter(Boolean),
+            .filter(Boolean) as DataItem[],
     };
 }

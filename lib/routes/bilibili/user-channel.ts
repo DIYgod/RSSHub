@@ -69,9 +69,9 @@ async function handler(ctx) {
         title: `${username} 的 bilibili 频道 ${channelInfo.meta.name}`,
         link,
         description: `${username} 的 bilibili 频道`,
-        image: face,
-        logo: face,
-        icon: face,
+        image: face ?? undefined,
+        logo: face ?? undefined,
+        icon: face ?? undefined,
         item: data.archives.map((item) => ({
             title: item.title,
             description: utils.renderUGCDescription(embed, item.pic, '', item.aid, undefined, item.bvid),

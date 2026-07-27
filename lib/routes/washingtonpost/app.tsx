@@ -111,7 +111,7 @@ async function handler(ctx) {
     return {
         title,
         link,
-        item: items,
+        item: items as DataItem[],
     };
 }
 

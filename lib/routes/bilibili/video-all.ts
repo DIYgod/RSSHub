@@ -24,7 +24,7 @@ async function handler(ctx) {
     const cookie = await cache.getCookie();
     const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
-    const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
+    const [name, face] = (await cache.getUsernameAndFaceFromUID(uid)) as [string, string];
 
     await got(`https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`, {
         headers: {

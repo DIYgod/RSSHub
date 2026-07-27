@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -90,6 +90,6 @@ async function handler(ctx) {
                 .text(),
         link: url,
         item: items,
-        language: 'ja',
+        language: 'ja' as Language,
     };
 }

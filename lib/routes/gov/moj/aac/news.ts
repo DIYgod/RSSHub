@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,7 +42,7 @@ async function handler(ctx) {
             const isDownload = /檔案下載/.test($item.attr('title')!);
             const title = isDownload ? $item.text().trim() : $item.attr('title');
             return {
-                title,
+                title: title!,
                 link: new URL($item.attr('href')!, baseUrl).href,
                 isDownload,
                 pubDate: undefined as DataItem['pubDate'],
@@ -71,6 +71,6 @@ async function handler(ctx) {
         title: $('head title').text(),
         link: url,
         item: items,
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
     };
 }

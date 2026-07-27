@@ -47,7 +47,7 @@ async function handler(ctx) {
 
             const $ = load(html);
 
-            title = $('meta[property="og:title"]').attr('content');
+            title = $('meta[property="og:title"]').attr('content')!;
 
             return $('.issue-item')
                 .toArray()

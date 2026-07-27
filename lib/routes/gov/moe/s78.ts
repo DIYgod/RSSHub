@@ -42,7 +42,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
                 description: undefined as DataItem['description'],

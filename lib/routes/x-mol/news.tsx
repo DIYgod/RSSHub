@@ -82,7 +82,7 @@ async function handler(ctx) {
                 const description = $('.newscontent');
                 description.find('.detitemtit, .detposttiau').remove();
 
-                item.description = description.html();
+                item.description = description.html() ?? '';
 
                 return item;
             })

@@ -37,7 +37,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 link: $item.attr('href'),
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 pubDate: undefined as DataItem['pubDate'],

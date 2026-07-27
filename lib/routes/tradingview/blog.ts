@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -84,7 +84,7 @@ async function handler(ctx) {
                         src: content('meta[property="og:image"]').prop('content'),
                         alt: item.title,
                     },
-                    description: content('div.entry-content').html(),
+                    description: content('div.entry-content').html() ?? undefined,
                 });
                 item.author = content('meta[property="og:site_name"]').prop('content');
                 item.category = content('div.sections a.section')
@@ -104,7 +104,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('div.site-subtitle').text(),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle: $('h1.site-title').text(),

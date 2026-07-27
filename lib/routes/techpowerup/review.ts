@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -89,7 +89,7 @@ async function handler(ctx) {
     return {
         title: 'Reviews | TechPowerUp',
         link: url.href,
-        language: 'en',
+        language: 'en' as Language,
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
     };

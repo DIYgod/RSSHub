@@ -34,7 +34,7 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: a.attr('href'),
                 category: undefined as DataItem['category'],
                 author: undefined as DataItem['author'],

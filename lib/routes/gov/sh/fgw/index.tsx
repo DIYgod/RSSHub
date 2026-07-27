@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
                 title: $item.find('a').prop('title'),
                 pubDate: parseDate($item.find('span.time').text()),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
-                language,
+                language: language as Language,
                 enclosure_url: undefined as DataItem['enclosure_url'],
                 enclosure_type: undefined as DataItem['enclosure_type'],
                 enclosure_title: undefined as DataItem['enclosure_title'],
@@ -99,7 +99,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 const enclosureUrl = $$('div.pdf-content a, div.xgfj a').first().prop('href');
 
@@ -123,7 +123,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 

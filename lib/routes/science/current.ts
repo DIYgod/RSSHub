@@ -8,7 +8,7 @@
 // stm:            Science Translational Medicine
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import playwright from '@/utils/playwright';
 
@@ -74,7 +74,7 @@ async function handler(ctx) {
         description: `Current Issue of ${pageTitleName}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageURL,
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

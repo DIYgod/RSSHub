@@ -45,7 +45,7 @@ export const route: Route = {
                     link: `https://podwise.ai${link}`,
                     description,
                     pubDate: timezone(parseDate(pubDate, 'DD MMM YYYY', 'en'), 8),
-                    title: undefined as DataItem['title'] | undefined,
+                    title: undefined as unknown as DataItem['title'],
                     author: undefined as DataItem['author'],
                     itunes_item_image: undefined as DataItem['itunes_item_image'],
                     itunes_duration: undefined as DataItem['itunes_duration'],
@@ -60,7 +60,7 @@ export const route: Route = {
                     const response = await ofetch(item.link);
                     const $ = load(response);
 
-                    item.description = $('summary').first().html();
+                    item.description = $('summary').first().html() ?? '';
 
                     // duration
                     const $cover = $('img[alt="Podcast cover"]').eq(1);

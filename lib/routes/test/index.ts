@@ -38,7 +38,7 @@ async function handler(ctx) {
     }
     if (ctx.req.param('id') === 'redirect') {
         ctx.set('redirect', '/test/1');
-        return;
+        return null;
     }
     let item: DataItem[] = [];
     let image: string | null = null;
@@ -80,7 +80,7 @@ async function handler(ctx) {
                 pubDate: new Date('2019-3-1').toUTCString(),
                 link: 'https://github.com/DIYgod/RSSHub/issues/1',
                 author: 'DIYgod0',
-                category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }],
+                category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }] as unknown as string[],
             });
 
             break;
@@ -338,7 +338,7 @@ async function handler(ctx) {
                     title: 'Title4 author is null',
                     pubDate: new Date('2019-3-1').toUTCString(),
                     link: 'https://github.com/DIYgod/RSSHub/pull/11555',
-                    author: null,
+                    author: null as unknown as DataItem['author'],
                 }
             );
 
@@ -369,11 +369,11 @@ async function handler(ctx) {
     }
 
     if (ctx.req.param('id') === 'empty') {
-        item = null;
+        item = null as unknown as DataItem[];
     }
 
     if (ctx.req.param('id') === 'allow_empty') {
-        item = null;
+        item = null as unknown as DataItem[];
     }
 
     if (ctx.req.param('id') === 'enclosure') {
@@ -415,9 +415,9 @@ async function handler(ctx) {
     }
 
     return {
-        image,
+        image: image ?? undefined,
         title: `Test ${ctx.req.param('id')}`,
-        itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : null,
+        itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : (null as unknown as string),
         link: 'https://github.com/DIYgod/RSSHub',
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',

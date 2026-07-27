@@ -67,7 +67,7 @@ async function handler(ctx) {
             });
 
             return {
-                title,
+                title: title!,
                 link,
                 pubDate,
                 description: desc,

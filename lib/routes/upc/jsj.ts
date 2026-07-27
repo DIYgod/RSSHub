@@ -64,7 +64,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             const link = a.attr('href');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: link.startsWith('http') ? link : `${baseUrl}${link}`,
                 pubDate: parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'),
                 description: undefined as DataItem['description'],

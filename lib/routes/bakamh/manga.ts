@@ -26,7 +26,7 @@ const handler = async (ctx) => {
                 title: $item.find('a').text(),
                 link: $item.find('a').attr('href'),
                 guid: $item.find('a').attr('href'),
-                pubDate: itemDate,
+                pubDate: itemDate as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
             };
         });

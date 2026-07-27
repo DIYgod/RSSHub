@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -54,10 +54,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         image: domain === 'news' ? `${baseUrl}/blogico.ico` : `${baseUrl}/favicon.ico`,
         description: feed.description,
-        item: items,
+        item: items as DataItem[],
     };
 }

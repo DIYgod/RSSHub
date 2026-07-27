@@ -44,7 +44,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const description: string | undefined = firstPostData?.type && firstPostData.id ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
         const pubDate: number | string = attributes.createdAt;
         const linkUrl: string | undefined = item.id ? `d/${item.id}` : undefined;
-        const categories: string[] = [...new Set(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean);
+        const categories: string[] = [...new Set(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean) as string[];
 
         const userData = relationships?.user?.data;
         const userAttributes = userData && userData.type && userData.id ? includedMap.get(`${userData.type}-${userData.id}`)?.attributes : undefined;

@@ -61,8 +61,8 @@ export const handler = async (ctx) => {
 
                 const title = $$('h1').text();
                 const description = renderDescription({
-                    intro: $$('div.summary').html(),
-                    description: $$('div.detail').html(),
+                    intro: $$('div.summary').html() ?? undefined,
+                    description: $$('div.detail').html() ?? undefined,
                 });
                 const pubDate = $$('div.author')
                     .text()

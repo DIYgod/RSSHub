@@ -102,7 +102,7 @@ const getItemDetail = async (item, rootUrl) => {
 
         item.title = getMeta(meta, 'ArticleTitle') ?? item.title;
         item.description = renderDescription({
-            description,
+            description: description ?? undefined,
             attachments,
         });
         item.author = getMeta(meta, 'ContentSource');

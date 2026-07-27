@@ -103,7 +103,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                 });
 
                 const description: string | undefined = renderDescription({
-                    description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html(),
+                    description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html() ?? undefined,
                 });
 
                 const processedItem: DataItem = {

@@ -29,14 +29,14 @@ async function handler(ctx) {
     const { title, link, description, image, items: item } = await parser.parseURL(feedUrl);
 
     const items = item.map((i) => ({
-        title: i.title,
+        title: i.title!,
         pubDate: parseDate(i.isoDate!),
         link: i.link,
         description: i['content:encoded'] || i.content,
     }));
 
     return {
-        title,
+        title: title!,
         link,
         description,
         image: image.url,

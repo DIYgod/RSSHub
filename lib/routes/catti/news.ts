@@ -75,13 +75,13 @@ const handler: Route['handler'] = async (ctx) => {
                         image: 'https://www.catticenter.com/img/applogo.png',
                         content,
                         updated: item.date,
-                        language: 'zh-cn',
+                        language: 'zh-CN',
                     };
                 })
             )
         )) as DataItem[],
         allowEmpty: true,
-        language: 'zh-cn',
+        language: 'zh-CN',
         feedLink: 'https://rsshub.app/ruankao/news',
         id: 'https://rsshub.app/ruankao/news',
     };

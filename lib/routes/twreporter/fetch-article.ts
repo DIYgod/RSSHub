@@ -107,6 +107,6 @@ export default async function fetch(slug: string) {
         link: `https://www.twreporter.org/a/${slug}`,
         guid: `https://www.twreporter.org/a/${slug}`,
         pubDate: parseDate(time, 'YYYY-MM-DDTHH:mm:ssZ'),
-        title: undefined as DataItem['title'] | undefined,
+        title: undefined as unknown as DataItem['title'],
     };
 }

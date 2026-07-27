@@ -44,7 +44,7 @@ async function handler() {
             list.toArray().map((item) => {
                 const $item = $(item);
                 return {
-                    title: $item.find('a').attr('title'),
+                    title: $item.find('a').attr('title')!,
                     link: `${baseUrl}${$item.find('a').attr('href')}`,
                     pubDate: parseDate($item.find('.news_meta').text()),
                 };

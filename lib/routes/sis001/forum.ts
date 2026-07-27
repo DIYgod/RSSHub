@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
             };
         });
 
-    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))));
+    items = (await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))))) as typeof items;
 
     return {
         title: $('head title').text(),

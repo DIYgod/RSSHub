@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 import { baseUrl, getPlurk } from './utils';
@@ -44,6 +44,6 @@ async function handler(ctx) {
         title: 'Anonymous - Plurk',
         image: 'https://s.plurk.com/2c1574c02566f3b06e91.png',
         link: `${baseUrl}/anonymous`,
-        item: items,
+        item: items as DataItem[],
     };
 }

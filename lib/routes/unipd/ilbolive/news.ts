@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -96,6 +96,6 @@ async function handler() {
         title: 'Il Bo Live - News',
         link: homeUrl,
         item: finalItems,
-        language: 'it',
+        language: 'it' as Language,
     };
 }

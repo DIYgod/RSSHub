@@ -41,7 +41,7 @@ async function handler() {
         .map((e) => {
             const $e = $(e);
             return {
-                title: $e.find('a').attr('title'),
+                title: $e.find('a').attr('title')!,
                 link: $e.find('a').attr('href'),
                 pubDate: parseDate($e.find('span').text()),
             };

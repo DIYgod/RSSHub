@@ -114,7 +114,7 @@ async function handler(ctx) {
                 item.description = renderDescription({
                     title: item.title,
                     image: bigImage ?? item.image,
-                    posted: item.pubDate ?? '',
+                    posted: (item.pubDate ?? '') as string,
                     by: result.by,
                     source: result.source,
                     rating: result.rating,

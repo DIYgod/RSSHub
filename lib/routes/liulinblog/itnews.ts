@@ -11,4 +11,6 @@ function handler(ctx) {
     const { channel } = ctx.req.param();
     const redirectTo = `/liulinblog/${channel}`;
     ctx.set('redirect', redirectTo);
+
+    return null;
 }

@@ -46,7 +46,7 @@ async function handler(ctx) {
             const span = $item.find('span');
             const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD');
             return {
-                title,
+                title: title!,
                 link,
                 description,
                 pubDate,

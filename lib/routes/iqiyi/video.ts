@@ -60,7 +60,7 @@ async function handler(ctx) {
                 title: $('title').text(),
                 link,
                 item: list.toArray().map((item) => ({
-                    title: $(item).attr('title'),
+                    title: $(item).attr('title')!,
                     // description: `<img src="${$(item).find('.li-pic img').attr('src')}">`,
                     pubDate: parseDate($(item).find('.li-sub span.sub-date').text(), 'YYYY-MM-DD'),
                     link: $(item).find('.li-dec a').attr('href'),

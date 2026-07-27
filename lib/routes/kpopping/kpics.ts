@@ -73,7 +73,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = $$('h1').contents().first().text();
                     const description: string = renderDescription({
-                        description: $$('div.pics').first().html(),
+                        description: $$('div.pics').first().html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                     const categoryEls: Element[] = $$('div.buttons a').toArray();

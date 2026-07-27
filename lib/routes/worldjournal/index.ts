@@ -56,7 +56,7 @@ async function handler(ctx) {
                     }
                     const url = new URL(img.attribs['data-src']);
                     if (url.pathname === '/gw/photo.php') {
-                        img.attribs.src = url.searchParams.get('u');
+                        img.attribs.src = url.searchParams.get('u') ?? '';
                         delete img.attribs['data-src'];
                     }
                 });

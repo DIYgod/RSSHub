@@ -50,7 +50,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head title').attr('content'),
+        title: $('head title').attr('content')!,
         link: baseUrl,
         item: items,
     };

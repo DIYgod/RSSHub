@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
 
@@ -52,5 +52,5 @@ async function handler(ctx) {
         ...e,
     }));
 
-    return { item: feed.items, ...feed };
+    return { item: feed.items, ...feed } as unknown as Data;
 }

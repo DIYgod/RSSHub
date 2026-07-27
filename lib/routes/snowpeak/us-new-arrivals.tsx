@@ -42,7 +42,7 @@ async function handler() {
         .toArray()
         .map((element) => {
             const data = {
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 link: undefined as DataItem['link'],
                 pubDate: undefined as DataItem['pubDate'],
                 category: undefined as DataItem['category'],

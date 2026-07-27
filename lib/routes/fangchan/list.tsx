@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             description,
             pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
             link: linkUrl,
-            id: categories,
+            id: categories as unknown as string,
             content: {
                 html: description,
                 text: item.zhaiyao ?? description,
@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         title,
                         description,
                         pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                        id: categories,
+                        id: categories as unknown as string,
                         author: authors,
                         content: {
                             html: description,

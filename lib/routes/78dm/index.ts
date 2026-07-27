@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
                 ].filter(Boolean),
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 author: undefined as DataItem['author'],
                 content: undefined as DataItem['content'],
             };
@@ -112,7 +112,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.image-text-content').first().text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -130,7 +130,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

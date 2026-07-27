@@ -26,7 +26,7 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: parseDate($item.find('.news-dates').text()),
                 description: undefined as DataItem['description'],

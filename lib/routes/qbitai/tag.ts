@@ -31,7 +31,7 @@ async function handler(ctx) {
     const feed = await parser.parseURL(link);
 
     const items = feed.items.map((item) => ({
-        title: item.title,
+        title: item.title!,
         pubDate: parseDate(item.pubDate!),
         link: item.link,
         author: '量子位',

@@ -47,7 +47,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.attr('data-content-name'),
+                title: $item.attr('data-content-name')!,
                 author: $item.attr('data-content-merchant'),
                 description: `<p>${$item.find('.mb-3').text()}</p>`,
                 link: `${rootUrl}/login?redirect=/redirect/alink/${$item.attr('data-content-id')}`,

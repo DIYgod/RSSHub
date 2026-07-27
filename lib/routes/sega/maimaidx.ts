@@ -2,7 +2,7 @@ import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -61,7 +61,7 @@ async function handler() {
     return {
         title: 'maimai DX - Japanese Ver. News',
         link: baseUrl,
-        language: 'ja',
+        language: 'ja' as Language,
         item,
     };
 }

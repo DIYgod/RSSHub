@@ -98,6 +98,6 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         const { headerGeneratorOptions, ...cleanOptions } = options;
 
         return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;
-    };
+    } as unknown as typeof origin;
 
 export default getWrappedGet;

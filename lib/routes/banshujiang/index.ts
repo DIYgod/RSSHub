@@ -40,7 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                description: $el.find('div.small-list__item-desc').html(),
+                description: $el.find('div.small-list__item-desc').html() ?? undefined,
             });
             const pubDateStr: string | undefined = image?.split(/\?timestamp=/).pop();
             const linkUrl: string | undefined = $aEl.attr('href');

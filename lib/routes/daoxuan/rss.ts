@@ -30,7 +30,7 @@ async function handler() {
             const a = $item.find('a.article-title');
             const timeElement = $item.find('time');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: `https://daoxuan.cc${a.attr('href')}`,
                 pubDate: parseDate(timeElement.attr('datetime')!),
                 description: a.attr('title'),

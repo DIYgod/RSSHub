@@ -55,7 +55,7 @@ async function handler(ctx) {
 
                     description = renderEshopHkDescription({
                         attributes,
-                        description: $('.description').html(),
+                        description: $('.description').html() ?? undefined,
                         gallery: gallery['[data-gallery-role=gallery-placeholder]']['mage/gallery/gallery'].data,
                         host: 'store.nintendo.com.hk',
                     });

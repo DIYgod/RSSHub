@@ -82,9 +82,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = $$('h1.article-box__title').text();
                     const description: string = renderDescription({
-                        description: $$('div.content').html(),
+                        description: $$('div.content').html() ?? undefined,
                     });
-                    const pubDateEl: Element = $$('div.article-box__meta div.item-list div.item')
+                    const pubDateEl: Element | undefined = $$('div.article-box__meta div.item-list div.item')
                         .toArray()
                         .find((i) => /\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/.test($$(i).text()));
                     const pubDateStr: string | undefined = pubDateEl ? $$(pubDateEl).text() : undefined;

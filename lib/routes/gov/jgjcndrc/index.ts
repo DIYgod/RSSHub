@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -36,7 +36,7 @@ export const handler = async (ctx) => {
             link: new URL(`prod-api/portal/article/${item.articleId}`, rootUrl).href,
             guid,
             id: guid,
-            language,
+            language: language as Language,
         };
     });
 
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('header h1').text(),
-        language,
+        language: language as Language,
     };
 };
 

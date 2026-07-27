@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,7 +55,7 @@ async function handler(ctx) {
                 title: i.text(),
                 link: id ? `${baseUrl}/detail.do?iid=${id}` : '',
                 description: '',
-                pubDate: '',
+                pubDate: '' as DataItem['pubDate'],
             };
         })
         .filter((e) => e.link);

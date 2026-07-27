@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -72,7 +72,7 @@ async function handler() {
         title: 'Hazy Research Blog',
         link: currentUrl,
         description: 'Research updates from Stanford Hazy Research',
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

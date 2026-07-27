@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
@@ -54,7 +54,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             link: `${baseUrl}${$(item).find('a').attr('href')}`,
-            title: undefined as DataItem['title'] | undefined,
+            title: undefined as unknown as DataItem['title'],
             pubDate: undefined as DataItem['pubDate'],
             doi: undefined as DataItem['doi'],
             author: undefined as DataItem['author'],
@@ -112,6 +112,6 @@ async function handler(ctx) {
         link,
         image: $('head meta[property="og:image"]').attr('content'),
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

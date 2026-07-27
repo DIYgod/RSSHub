@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { SourceMapConsumer } from 'source-map';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -81,7 +81,7 @@ async function handler(ctx) {
         title: `${title} - Essay`,
         link: currentUrl,
         description,
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: icon,
         icon,
         logo: icon,

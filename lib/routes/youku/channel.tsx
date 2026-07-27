@@ -3,7 +3,7 @@ import path from 'node:path';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -56,7 +56,7 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const title = $item.find('a.videoitem_videolink').attr('title');
+                const title = $item.find('a.videoitem_videolink').attr('title')!;
                 const cover = $item.find('a.videoitem_videolink > img').attr('src');
                 const $link = $item.find('a.videoitem_videolink');
                 const link = $link.length > 0 ? `https:${$link.attr('href')}` : null;
@@ -80,6 +80,6 @@ async function handler(ctx) {
                     pubDate,
                 };
             })
-            .filter(Boolean),
+            .filter(Boolean) as DataItem[],
     };
 }

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -91,7 +91,7 @@ async function handler(ctx) {
         title: `${title}${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:title"]').prop('content'),
-        language: $('meta[property="og:locale"]').prop('content'),
+        language: $('meta[property="og:locale"]').prop('content') as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

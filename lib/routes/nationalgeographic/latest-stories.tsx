@@ -182,7 +182,7 @@ async function handler() {
     );
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content')!,
         link: currentUrl,
         item: items.filter((item) => item !== null),
     };

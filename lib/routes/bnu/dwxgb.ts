@@ -42,7 +42,7 @@ async function handler(ctx) {
         try {
             response = await got(`${rootUrl}/${category}/${type}/index.htm`);
         } catch {
-            return;
+            return null;
         }
     }
 

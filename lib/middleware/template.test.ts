@@ -25,7 +25,7 @@ const createCtx = (query: Record<string, string | undefined>, data: any, extra: 
 describe('template middleware', () => {
     it('returns debug json when requested', async () => {
         const originalDebug = config.debugInfo;
-        config.debugInfo = true;
+        config.debugInfo = 'true';
 
         const ctx = createCtx({ format: 'debug.json' }, { item: [] }, { json: { ok: true } });
         const result = await template(ctx as any, async () => {});
@@ -46,7 +46,7 @@ describe('template middleware', () => {
 
     it('renders debug html snippet when requested', async () => {
         const originalDebug = config.debugInfo;
-        config.debugInfo = true;
+        config.debugInfo = 'true';
 
         const ctx = createCtx({ format: '0.debug.html' }, { item: [{ description: 'Hello' }] });
         const result = await template(ctx as any, async () => {});

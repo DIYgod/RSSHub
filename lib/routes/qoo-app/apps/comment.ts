@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -50,7 +50,7 @@ async function handler(ctx) {
                 link: $item.find('a.bg-click-wrap').attr('href'),
                 description: renderComment({
                     rating: $item.find('.qoo-rating-bar').text().trim(),
-                    text: $item.find('.text-view').html(),
+                    text: $item.find('.text-view').html() ?? undefined,
                 }),
                 pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
                 author,
@@ -60,7 +60,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         item: items,
     };
 }

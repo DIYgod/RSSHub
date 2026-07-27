@@ -56,7 +56,7 @@ async function handler(ctx) {
             const isNotCollection = !/^\d{4}-\d{2}-\d{2}$/.test(path);
             const itemDetails = isNotCollection ? await getArticleDetail(item.link) : null;
             return {
-                title: item.title,
+                title: item.title!,
                 description: isNotCollection ? itemDetails.article : item.content,
                 link: item.link,
                 guid: item.guid,
@@ -67,7 +67,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         item: items,

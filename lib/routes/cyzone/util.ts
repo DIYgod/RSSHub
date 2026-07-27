@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,7 +28,7 @@ const getInfo = (url) =>
             title: $('title').text(),
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-cn',
+            language: 'zh-CN' as Language,
             image: avatar || image,
             icon,
             logo: icon,

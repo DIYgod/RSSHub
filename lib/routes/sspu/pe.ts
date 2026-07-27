@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,7 +38,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: parseDate($item.prev().text()),
+                pubDate: parseDate($item.prev().text()) as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
             };
@@ -74,7 +74,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('div.tyb_headtitle1').text(),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle,

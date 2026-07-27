@@ -36,7 +36,7 @@ const ProcessFeed = (data, hasEnVersion = false) => {
     const $ = load(data);
 
     let content;
-    const result = { description: undefined as DataItem['description'], title: undefined as DataItem['title'] | undefined, author: undefined as DataItem['author'], pubDate: undefined as DataItem['pubDate'] };
+    const result = { description: undefined as DataItem['description'], title: undefined as unknown as DataItem['title'], author: undefined as DataItem['author'], pubDate: undefined as DataItem['pubDate'] };
 
     // 处理 www.nytimes.com
     if (hasEnVersion) {

@@ -15,7 +15,7 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find(titleSelector).attr('title'),
+                title: $item.find(titleSelector).attr('title')!,
                 link: host + $item.find(titleSelector).attr('href'),
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],

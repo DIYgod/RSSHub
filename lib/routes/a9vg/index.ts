@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
                         : undefined,
                 }),
                 pubDate: timezone(parseDate($item.find('div.a9-rich-card-list_infos').text()), 8),
-                language,
+                language: language as Language,
                 author: undefined as DataItem['author'],
             };
         });
@@ -75,7 +75,7 @@ export const handler = async (ctx) => {
 
                 item.title = $$('h1.ts, div.c-article-main_content-title').text();
                 item.description = renderDescription({
-                    description: $$('td.t_f, div.c-article-main_contentraw').first().html(),
+                    description: $$('td.t_f, div.c-article-main_contentraw').first().html() ?? undefined,
                 });
                 item.author =
                     $$('b a.blue').first().text() ||
@@ -97,7 +97,7 @@ export const handler = async (ctx) => {
                     ),
                     8
                 );
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -115,7 +115,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

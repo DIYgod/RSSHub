@@ -46,7 +46,7 @@ async function handler() {
             const $tr = $(tr);
 
             return {
-                title: $tr.find('td[title]').attr('title'),
+                title: $tr.find('td[title]').attr('title')!,
                 link: baseUrl + $tr.find('td[title] > a').attr('href'),
                 author: $tr.find('td:last').text(),
             };
@@ -62,7 +62,7 @@ async function handler() {
                 const $ = load(postPage.data);
 
                 const data = {
-                    title: item.title,
+                    title: item.title!,
                     description: $('.letter-details').html().trim(),
                     pubDate: parseDate($('.letter-details div:first table tr:nth-child(2) > .td_label2').text() + ' +0800', 'YYYY-MM-DD HH:mm:ss ZZ'),
                     link: item.link,

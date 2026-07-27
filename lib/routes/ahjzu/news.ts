@@ -52,7 +52,7 @@ async function handler() {
             const a = $item.find('a').attr('href');
             const link = a.slice(0, 4) === 'http' ? a : rootUrl + a;
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link,
                 pubDate: timezone(parseDate(date), 8),
                 description: undefined as DataItem['description'],

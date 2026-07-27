@@ -56,7 +56,7 @@ async function handler() {
             itemUrl = new URL(itemUrl!, host).href;
             if (itemUrl.includes('content.jsp')) {
                 const single = {
-                    title: titleList[index],
+                    title: titleList[index]!,
                     link: itemUrl,
                     description: '该通知仅限校内访问，请点击原文链接↑',
                     pubDate: parseDate(dateList[index]),

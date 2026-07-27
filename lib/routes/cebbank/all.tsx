@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
@@ -59,7 +59,7 @@ async function handler(ctx) {
         title: '中国光大银行',
         description: '中国光大银行 外汇牌价',
         link,
-        item: items,
+        item: items as DataItem[],
     };
 
     const pubDate = parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true);

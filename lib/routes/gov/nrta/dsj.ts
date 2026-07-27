@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -76,7 +76,7 @@ async function handler(ctx) {
         title: `${$('title').text()}-${$('div.headbottom_menu_selected').text()}`,
         link: currentUrl,
         description: $('td').last().text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('img').first().prop('src'),
         author: '国家广播电影电视总局电视剧管理司',
     };

@@ -69,7 +69,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const itemReponse = await got(item.link);
                 const itemElement = load(itemReponse.data);
-                item.description = itemElement('#se-knowledge').html();
+                item.description = itemElement('#se-knowledge').html() ?? '';
 
                 return item;
             })

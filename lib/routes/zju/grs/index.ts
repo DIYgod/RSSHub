@@ -48,7 +48,7 @@ async function handler(ctx) {
     const items = list.toArray().map((item) => {
         const $item = $(item);
         return {
-            title: $item.find('h3').attr('title'),
+            title: $item.find('h3').attr('title')!,
             pubDate: timezone(parseDate($item.find('.date').text().trim(), 'YY-MM-DD'), 8),
             link: `http://www.grs.zju.edu.cn${$item.find('a').eq(-1).attr('href')}`,
             description: $item.find('p').text(),

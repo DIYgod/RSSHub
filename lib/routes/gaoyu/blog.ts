@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $el.find('p.text-neutral-900').text();
             const description: string | undefined = renderDescription({
-                intro: $el.find('p.text-neutral-600').last().html(),
+                intro: $el.find('p.text-neutral-600').last().html() ?? undefined,
             });
             const pubDateStr: string | undefined = $el.find('p.text-neutral-600').first().text();
             const linkUrl: string | undefined = $el.attr('href');
@@ -74,7 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description: string | undefined =
                     item.description +
                     renderDescription({
-                        description: $$('article.prose').html(),
+                        description: $$('article.prose').html() ?? undefined,
                     });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');

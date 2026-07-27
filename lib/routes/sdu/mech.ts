@@ -43,7 +43,7 @@ async function handler(ctx) {
         .map((e) => {
             const $e = $(e);
             return {
-                title: $e.attr('title'),
+                title: $e.attr('title')!,
                 link: $e.attr('href'),
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],

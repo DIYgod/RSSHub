@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -80,7 +80,7 @@ async function handler(ctx) {
         title: `${author} - ${title}`,
         link: currentUrl,
         description: title,
-        language: 'en',
+        language: 'en' as Language,
         image: $(`img[alt="${title}"]`).prop('src'),
         icon,
         logo: icon,

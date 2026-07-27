@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -379,7 +379,7 @@ async function handler(ctx) {
                     image: {
                         src: content('meta[property="og:image"]').prop('content'),
                     },
-                    description: content('div.article-content').html(),
+                    description: content('div.article-content').html() ?? undefined,
                 });
                 item.author = content('meta[name="sailthru.author"]').prop('content');
                 item.category = [
@@ -407,7 +407,7 @@ async function handler(ctx) {
         title: `${author}${title.startsWith(author) ? '' : ` - ${title}`}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('meta[property="og:image"]').prop('content'),
         icon,
         logo: icon,

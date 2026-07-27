@@ -176,8 +176,8 @@ const render = (node) => {
 
                     innerHTML += renderImage({
                         url,
-                        alt: Object.values(img.title)[0],
-                        caption: img.description ? Object.values(img.description)[0] : '',
+                        alt: Object.values(img.title)[0] as string,
+                        caption: img.description ? (Object.values(img.description)[0] as string) : '',
                     });
                 }
             }
@@ -227,7 +227,7 @@ async function handler(ctx) {
         link: `${baseUrl}/${region}/news/${i.slug}`,
         pubDate: parseDate(i.rawPublishedDate),
         category: [...new Set([...i.categories.map((category) => category.label), ...i.locations.map((location) => location.label)])],
-        image: i.heroImage?.url ? `https:${i.heroImage.url.replace('?w=2560', '')}` : null,
+        image: i.heroImage?.url ? `https:${i.heroImage.url.replace('?w=2560', '')}` : undefined,
         slug: i.slug,
         description: undefined as DataItem['description'],
     }));

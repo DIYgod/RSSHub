@@ -82,7 +82,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: detailUrl,
-                category: matches[1],
+                category: matches[1] as DataItem['category'],
                 guid: `zjks-${matches[1]}-${matches[2]}`,
                 pubDate: parseDate($item.parent().next().text()),
                 tzid: matches[2],

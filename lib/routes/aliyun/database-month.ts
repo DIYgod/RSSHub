@@ -53,7 +53,7 @@ async function handler() {
             return cache.tryGet(link, async () => {
                 const itemReponse = await got(link);
                 const itemElement = load(itemReponse.data);
-                item.description = itemElement('.content').html();
+                item.description = itemElement('.content').html() ?? '';
                 return item;
             });
         })

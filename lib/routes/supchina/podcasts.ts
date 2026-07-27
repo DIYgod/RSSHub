@@ -49,7 +49,7 @@ async function handler(ctx) {
             return {
                 link: $item.find('guid').text(),
                 author: $item.find(String.raw`itunes\:author`).text(),
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 itunes_item_image: undefined as DataItem['itunes_item_image'],
                 itunes_duration: undefined as DataItem['itunes_duration'],
                 enclosure_url: undefined as DataItem['enclosure_url'],

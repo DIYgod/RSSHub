@@ -71,7 +71,7 @@ async function handler(ctx) {
                 // title: content.text(),
                 time,
                 link: content.attr('href'),
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],
             };

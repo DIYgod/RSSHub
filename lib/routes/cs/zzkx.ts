@@ -12,4 +12,5 @@ function handler(ctx) {
 
     const redirectTo = '/cs/sylm/jsbd';
     ctx.set('redirect', redirectTo);
+    return null;
 }

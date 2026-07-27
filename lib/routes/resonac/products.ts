@@ -82,6 +82,6 @@ async function handler() {
         title: 'Resonac_Products',
         link: baseUrl,
         description: 'Resonac_Products',
-        item: items,
+        item: items as DataItem[],
     };
 }

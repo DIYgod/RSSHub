@@ -51,7 +51,7 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('a[title]');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
                 description: undefined as DataItem['description'],
                 pubDate: undefined as DataItem['pubDate'],

@@ -43,7 +43,7 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('.entry-header a').first();
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('.entry-date span').eq(1).text(), 'YYYY/MM/DD HH:mm'), 8),
                 author: undefined as DataItem['author'],
@@ -62,7 +62,7 @@ async function handler(ctx) {
                 item.author = $('.article-author').text();
                 item.category = $('.tagcloud a')
                     .toArray()
-                    .map((a) => $(a).attr('title'));
+                    .map((a) => $(a).attr('title')!);
 
                 $('.article-head-wrapper, div[id^=div-gpt-ad-], div[class^=hidden-], footer').remove();
                 $('.container-fluid').eq(2).remove();

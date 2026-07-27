@@ -39,7 +39,7 @@ async function handler() {
             const $e = $(e);
             const a = $e.find('a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: a.attr('href').startsWith('http') ? a.attr('href') : 'https://jwc.ouc.edu.cn' + a.attr('href'),
                 pubDate: parseDate($e.find('span.Article_PublishDate').text(), 'YYYY-MM-DD'),
                 author: undefined as DataItem['author'],

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -76,7 +76,7 @@ async function handler(ctx) {
         title: `${category.title}-${rootMeta.title}`,
         link: rootMeta.url + category.url,
         description: `${category.title}-${rootMeta.title}`,
-        language: 'zh_CN',
+        language: 'zh-CN' as Language,
         item: await Promise.all(
             data.map((item) =>
                 cache.tryGet(item.link, async () => {

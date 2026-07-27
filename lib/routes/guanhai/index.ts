@@ -29,7 +29,7 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: $item.attr('href'),
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],
@@ -43,7 +43,7 @@ async function handler() {
             .map((item) => {
                 const $item = $(item);
                 return {
-                    title: $item.find('a').attr('title'),
+                    title: $item.find('a').attr('title')!,
                     link: $item.find('a').attr('href'),
                     pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
                     author: undefined as any,

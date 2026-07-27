@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { Language } from '@/types';
 import got from '@/utils/got';
 
 import utils from './utils';
@@ -63,7 +64,7 @@ export async function track(ctx) {
         title: `${baseTitle} ${reqCode} ${packageType}`,
         link,
         description: `${baseTitle} ${reqCode} ${packageType}`,
-        language: locale,
+        language: locale as Language,
         icon: 'https://www.post.japanpost.jp/favicon.ico',
         logo: 'https://www.post.japanpost.jp/favicon.ico',
         item: listEven.toArray().map((item, index) => {

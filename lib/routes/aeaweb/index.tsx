@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -71,7 +71,7 @@ async function handler(ctx) {
                 link: `${rootUrl}${$item.attr('href').split('&', 1)[0]}`,
                 doi: undefined as DataItem['doi'],
                 guid: undefined as DataItem['guid'],
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 author: undefined as DataItem['author'],
                 pubDate: undefined as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
@@ -91,7 +91,7 @@ async function handler(ctx) {
                 item.doi = content('meta[name="citation_doi"]').attr('content');
 
                 item.guid = item.doi;
-                item.title = content('meta[name="citation_title"]').attr('content');
+                item.title = content('meta[name="citation_title"]').attr('content')!;
                 item.author = content('.author')
                     .toArray()
                     .map((a) => content(a).text().trim())
@@ -115,7 +115,7 @@ async function handler(ctx) {
         description,
         link: currentUrl,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }
 

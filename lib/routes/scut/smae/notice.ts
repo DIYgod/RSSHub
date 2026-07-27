@@ -53,7 +53,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             const pubDate = $item.find('span.news_meta');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
                 description: undefined as DataItem['description'],

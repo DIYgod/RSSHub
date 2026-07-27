@@ -68,7 +68,7 @@ async function handler(ctx) {
 
                 for (const i of item.items) {
                     const newPubDate = new Date(i.publish_time);
-                    pubDate = Math.max(pubDate, newPubDate);
+                    pubDate = new Date(Math.max(+pubDate, +newPubDate));
                     description += `<a href="${rootUrl}/zaixianke/content.html?id=${i.id}">${i.title}</a><br>`;
                 }
 

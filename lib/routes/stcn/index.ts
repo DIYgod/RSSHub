@@ -30,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('div.tt a');
 
             const title: string = $aEl.text();
-            const description: string = $el.find('div.text').html();
+            const description: string = $el.find('div.text').html() ?? '';
             const pubDateStr: string | undefined = $el.find('div.info span').last().text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.tags span').toArray();

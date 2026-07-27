@@ -39,10 +39,10 @@ async function handler() {
         link: url,
         item: list.toArray().map((item) => {
             const $item = $(item);
-            let date = $($item)
+            const dateMatch = $($item)
                 .text()
                 .match(/\((.*)\)/);
-            date = Array.isArray(date) ? date[1] : null;
+            const date = Array.isArray(dateMatch) ? dateMatch[1] : null;
             return {
                 title: $item.text(),
                 description: $item

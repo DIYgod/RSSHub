@@ -133,7 +133,7 @@ export const route: Route = {
  * @param ctx - The request context containing route parameters
  * @returns Promise with RSS feed data including title, link, and news items
  */
-async function handleSisRequest(ctx: { req: { param: (arg0: string) => string } }) {
+async function handleSisRequest(ctx) {
     const requestedType = Number.parseInt(ctx.req.param('type'));
     const categoryInfo = categoryMap.get(requestedType);
 

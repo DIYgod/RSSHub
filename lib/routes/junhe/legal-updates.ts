@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,7 +53,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.d-content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: '君合律师事务所',
-        language,
+        language: language as Language,
     };
 };
 

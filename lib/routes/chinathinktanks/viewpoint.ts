@@ -91,7 +91,7 @@ async function handler(ctx) {
                 title: $e.find('.title span').text(),
                 link: baseUrl + $e.attr('href'),
                 author: $e.find('.author-by span').text(),
-                pubDate: $e.find('.author-time').text(),
+                pubDate: $e.find('.author-time').text() as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
             };
         });

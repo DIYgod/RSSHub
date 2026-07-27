@@ -82,7 +82,7 @@ async function handler(ctx) {
         )
     );
     return {
-        title,
+        title: title!,
         link: url,
         description: desc,
         item: items,

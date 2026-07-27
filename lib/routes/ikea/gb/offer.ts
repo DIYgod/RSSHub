@@ -51,8 +51,8 @@ async function handler() {
             return {
                 title: title.text(),
                 description: renderOffer({
-                    img: img.parent().html(),
-                    desc: title.next().parent().html(),
+                    img: img.parent().html() ?? undefined,
+                    desc: title.next().parent().html() ?? undefined,
                 }),
                 link: href,
                 guid: `${href}#${title.text()}`,
@@ -78,8 +78,8 @@ async function handler() {
             return {
                 title: title.text(),
                 description: renderOffer({
-                    img: img.parent().html(),
-                    desc: title.parent().html(),
+                    img: img.parent().html() ?? undefined,
+                    desc: title.parent().html() ?? undefined,
                 }),
                 link: href,
                 guid: `${href}#${title.text()}`,

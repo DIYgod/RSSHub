@@ -38,7 +38,7 @@ async function handler(ctx) {
                 link = `${rootUrl}/${link}`;
             }
             return {
-                title: $(item).find('a').attr('title'),
+                title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('span').text()),
                 link,
                 description: undefined as DataItem['description'],

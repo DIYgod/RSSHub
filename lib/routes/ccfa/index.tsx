@@ -83,7 +83,7 @@ export const handler = async (ctx) => {
                               .toArray()
                               .find((a) => $$(a).prop('href')?.includes('downFiles.do'));
 
-                item.enclosure_url = attachmentEl ? new URL($$(attachmentEl).prop('href')!, rootUrl) : undefined;
+                item.enclosure_url = attachmentEl ? new URL($$(attachmentEl).prop('href')!, rootUrl).href : undefined;
                 item.enclosure_title = attachmentEl ? $$(attachmentEl).text() : undefined;
 
                 return item;

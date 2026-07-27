@@ -67,7 +67,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
-                pubDate: new Date($item.next().text()).toUTCString(),
+                pubDate: new Date($item.next().text()).toUTCString() as DataItem['pubDate'],
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],
             };

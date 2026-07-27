@@ -51,7 +51,7 @@ async function handler() {
                 title: $(item).find('h4.media-heading').text().trim(),
                 author: $(item).find('.text-500').text(),
                 link: new URL($(item).attr('href')!, host).href,
-                pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
+                pubDate: $(item).find('p.pull-right.media-date strong').text().trim() as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
             };
             return info;

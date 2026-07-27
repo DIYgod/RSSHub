@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
                 author: $item.find('a.new-list-p, div.author').text().trim(),
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
                                   },
                               ]
                             : undefined,
-                        description: $$('div.article-content').html(),
+                        description: $$('div.article-content').html() ?? undefined,
                     });
 
                 item.title = title;
@@ -107,7 +107,7 @@ export const handler = async (ctx) => {
                     text: $$('div.article-content').text(),
                 };
                 item.banner = banner;
-                item.language = language;
+                item.language = language as Language;
                 item.enclosure_url = banner ?? item.enclosure_url;
                 item.enclosure_type = banner ? `image/${banner.split(/\./).pop()}` : item.enclosure_type;
                 item.enclosure_title = title;
@@ -128,7 +128,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

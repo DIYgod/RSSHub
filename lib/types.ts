@@ -33,9 +33,9 @@ export type Category =
 export type DataItem = {
     title: string;
     description?: string | null;
-    pubDate?: number | string | Date;
+    pubDate?: number | string | Date | null;
     link?: string;
-    category?: string[];
+    category?: string[] | string;
     author?:
         | string
         | Array<{

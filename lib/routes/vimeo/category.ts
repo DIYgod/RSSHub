@@ -37,7 +37,7 @@ async function handler(ctx) {
     let sortparams = '&direction=desc&sort=date';
     let feedtitle = category;
     if (staffpicks && staffpicks !== 'staffpicks') {
-        return;
+        return null;
     }
 
     if (staffpicks) {

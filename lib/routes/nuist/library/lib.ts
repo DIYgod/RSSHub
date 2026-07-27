@@ -32,7 +32,7 @@ async function handler() {
             const $item = $(item);
 
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 category: '通知',
                 link: new URL($item.find('a').attr('href')!, link).href,
                 description: undefined as DataItem['description'],

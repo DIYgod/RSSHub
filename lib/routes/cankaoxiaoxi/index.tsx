@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -100,7 +100,7 @@ async function handler(ctx) {
         title: `参考消息 - ${channelResponse.data.name}`,
         link: currentUrl,
         description: '参考消息',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

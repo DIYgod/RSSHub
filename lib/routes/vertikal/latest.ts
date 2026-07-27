@@ -59,7 +59,7 @@ async function handler() {
 
                 content.find('.newsentry__date, .newsentry__title, .lazyimage-placeholder, .newsentry__tags, .newsentry__share, .newsentry__comments, .newsentry__write-comment').remove();
 
-                item.description = content.html();
+                item.description = content.html() ?? '';
 
                 return item;
             })

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -79,7 +79,7 @@ async function handler(ctx) {
 
                 item.title = content('h1').first().text();
                 item.description += renderDescription({
-                    description: content('div.article-cont').html(),
+                    description: content('div.article-cont').html() ?? undefined,
                 });
                 item.author = content('div.lc-infos a')
                     .toArray()
@@ -112,7 +112,7 @@ async function handler(ctx) {
         title: `${$('title').text()}${title}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

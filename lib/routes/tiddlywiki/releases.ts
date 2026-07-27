@@ -67,7 +67,7 @@ async function handler() {
                 const description = $('.tc-tiddler-body').html();
 
                 return {
-                    title: item.version,
+                    title: item.version!,
                     link: url,
                     pubDate: item.pubDate,
                     description,

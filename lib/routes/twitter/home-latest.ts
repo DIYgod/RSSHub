@@ -58,7 +58,7 @@ async function handler(ctx) {
         link: 'https://x.com/home',
         // description: userInfo?.description,
         item: utils.ProcessFeed(ctx, {
-            data,
+            data: data as any[],
         }),
     };
 }

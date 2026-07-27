@@ -47,7 +47,7 @@ async function handler() {
             const itemDate = $item.find('span').text();
             const path = $item.find('.active').attr('href');
             let itemUrl = '';
-            itemUrl = path.startsWith('http') ? path : base + path;
+            itemUrl = (path.startsWith('http') ? path : base + path)!;
             return cache.tryGet(itemUrl, async () => {
                 let description: string;
                 if (path.startsWith('http')) {

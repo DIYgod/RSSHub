@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import got from '@/utils/got';
 
 const rootUrl = 'https://getitfree.cn';
@@ -192,7 +193,7 @@ const fetchData = async (url) => {
         title,
         link: url,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

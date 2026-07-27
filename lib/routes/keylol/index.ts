@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import queryString from 'query-string';
 
 import { config } from '@/config';
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -180,7 +180,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         icon,
         logo: icon,
         subtitle: $('meta[name="application-name"]').prop('content'),

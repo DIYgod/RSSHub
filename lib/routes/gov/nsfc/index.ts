@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -121,7 +121,7 @@ async function handler(ctx) {
             .join(' - ')}`,
         link: currentUrl,
         description: $('meta[name="DESCRIPTION"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         subtitle: $('meta[name="KEYWORDS"]').prop('content'),
         author: $('meta[name="AUTHOR"]').prop('content'),
     };

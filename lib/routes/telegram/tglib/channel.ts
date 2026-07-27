@@ -208,7 +208,7 @@ export default async function handler(ctx: Context) {
 
     return {
         title: getDisplayName(entity),
-        language: null,
+        language: undefined,
         link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -78,7 +78,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: rootUrl + '/blog',
         description: $('meta[name="description"]').attr('content'),
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 

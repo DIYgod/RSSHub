@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -111,7 +111,7 @@ async function handler(ctx) {
 
     return {
         title: map.get(category).title,
-        language: 'en',
+        language: 'en' as Language,
         link: apiUrl,
         description: map.get(category).title,
         item: items,

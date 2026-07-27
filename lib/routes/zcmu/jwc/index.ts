@@ -50,7 +50,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: `https://jwc.zcmu.edu.cn/${$item.find('a').attr('href')}`,
                 pubDate: parseDate($item.find('span.timestyle196327').text().trim()),
             };

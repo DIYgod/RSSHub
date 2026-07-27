@@ -49,7 +49,7 @@ async function handler(ctx) {
             const a = $item.find('a.no-wrap');
             const link = new URL(a.attr('href')!, url).href;
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link,
                 pubDate: parseDate($item.find('span.fr').text()),
                 description: undefined as DataItem['description'], // 假设日期格式是YYYY-MM-DD

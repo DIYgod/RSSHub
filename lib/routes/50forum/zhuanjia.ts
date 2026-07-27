@@ -32,7 +32,7 @@ async function handler() {
     });
     const data = response.data;
     if (!data) {
-        return;
+        return null;
     }
     const $ = load(data);
     let out = $('div.container div.list_list.mtop10 ul li')

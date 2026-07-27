@@ -49,7 +49,7 @@ async function handler() {
             const pubDate = timezone(parseDate(date), 8);
 
             return {
-                title,
+                title: title!,
                 link: 'http://graduate.bjfu.edu.cn/pygl/pydt/' + link,
                 author: '北京林业大学研究生院培养动态',
                 pubDate,

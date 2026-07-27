@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,7 +50,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('h3 a').attr('title'),
+                title: $item.find('h3 a').attr('title')!,
                 link: $item.find('h3 a').attr('href'),
                 pubDate: timezone(parseDate($item.find('.fire_left').text()), 8),
                 author: $item
@@ -67,6 +67,6 @@ async function handler(ctx) {
         title: $('head title').text(),
         link: url,
         item: items,
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
     };
 }

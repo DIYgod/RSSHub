@@ -73,7 +73,7 @@ async function handler(ctx) {
                     guid: `18comic:/album/${item.id}`,
                     updated: parseDate(item.update_at),
                     pubDate: undefined as DataItem['pubDate'],
-                    category: undefined as DataItem['category'],
+                    category: undefined as string[] | undefined,
                     author: undefined as DataItem['author'],
                     description: undefined as DataItem['description'],
                 };

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
@@ -81,7 +81,7 @@ async function handler(ctx) {
         return {
             ...data,
             item: items,
-        };
+        } as Data;
     } catch {
         const feed = await parser.parseURL(`${rootUrl}/feed/`);
 
@@ -105,7 +105,7 @@ async function handler(ctx) {
             const description = $$.html();
 
             return {
-                title: item.title,
+                title: item.title!,
                 description,
                 pubDate: parseDate(item.pubDate ?? ''),
                 link: item.link,
@@ -121,14 +121,14 @@ async function handler(ctx) {
         });
 
         return {
-            title: feed.title,
+            title: feed.title!,
             description: feed.description,
             link: feed.link,
             item: items,
             allowEmpty: true,
             image: feed.image?.url,
             language: feed.language,
-        };
+        } as Data;
     }
 }
 

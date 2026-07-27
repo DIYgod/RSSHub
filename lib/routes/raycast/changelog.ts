@@ -32,7 +32,7 @@ const handler: Route['handler'] = async () => {
     return {
         title: 'Raycast Changelog',
         link: 'https://www.raycast.com/changelog',
-        language: 'en-US',
+        language: 'en-us',
         item,
     };
 };

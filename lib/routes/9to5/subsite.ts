@@ -61,7 +61,7 @@ async function handler(ctx) {
                 const description = utils.ProcessFeed(response.data);
 
                 const single = {
-                    title: item.title,
+                    title: item.title!,
                     description,
                     pubDate: item.pubDate,
                     link: item.link,

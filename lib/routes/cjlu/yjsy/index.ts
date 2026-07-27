@@ -135,7 +135,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: titleMap.get(cate),
+        title: titleMap.get(cate)!,
         link: `https://yjsy.cjlu.edu.cn/index/${cate}.htm`,
         item: items,
     };

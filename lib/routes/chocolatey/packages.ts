@@ -18,8 +18,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    const title: string = $('meta[property="og:title"]').attr('content');
-    const description: string | undefined = $('div#description').html();
+    const title: string = $('meta[property="og:title"]').attr('content')!;
+    const description: string | undefined = $('div#description').html() ?? undefined;
     const pubDateStr: string | undefined = $('h3.mt-0.mb-3').last().text();
     const categoryEls: Element[] = $('a[data-package-tag]').toArray();
     const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];

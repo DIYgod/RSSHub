@@ -57,9 +57,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let yesterday = dayjs().subtract(1, 'day');
-    const dayBefore = yesterday.subtract(1, 'day').format('YYYY-MM-DD');
-    yesterday = yesterday.format('YYYY-MM-DD');
+    const yesterdayDate = dayjs().subtract(1, 'day');
+    const dayBefore = yesterdayDate.subtract(1, 'day').format('YYYY-MM-DD');
+    const yesterday = yesterdayDate.format('YYYY-MM-DD');
 
     const source = ctx.req.param('source').toUpperCase();
     const target = ctx.req.param('target').toUpperCase();

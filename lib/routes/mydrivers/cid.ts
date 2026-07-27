@@ -211,7 +211,7 @@ async function handler(ctx) {
     const feed = await parser.parseURL(rssUrl);
 
     let items = feed.items.slice(0, limit).map((item) => ({
-        title: item.title,
+        title: item.title!,
         link: item.link,
         description: item.content,
         author: item.creator,

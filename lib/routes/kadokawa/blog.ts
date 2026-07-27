@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,7 +50,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
 
                 const title = $$('h1.Post-title').text().trim();
                 const description = renderDescription({
-                    description: $$('div.Post-content').html(),
+                    description: $$('div.Post-content').html() ?? undefined,
                 });
                 const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/, 1)[0] ?? undefined;
 
@@ -81,7 +81,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -98,7 +98,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

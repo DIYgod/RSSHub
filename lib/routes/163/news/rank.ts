@@ -145,7 +145,7 @@ async function handler(ctx) {
 
             return {
                 link: $item.attr('href'),
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 pubDate: undefined as DataItem['pubDate'],
                 description: undefined as DataItem['description'],
             };
@@ -193,6 +193,6 @@ async function handler(ctx) {
     return {
         title: `网易新闻${timeRange[time].title}${type === 'click' ? '点击' : '跟帖'}榜 - ${cfg.title}`,
         link: currentUrl,
-        item: items.filter(Boolean),
+        item: items.filter(Boolean) as DataItem[],
     };
 }

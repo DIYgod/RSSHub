@@ -59,7 +59,7 @@ async function handler() {
                 const title = a.attr('title');
                 const link = `${baseUrl}${a.attr('href')}`;
                 return {
-                    title,
+                    title: title!,
                     link,
                     pubDate: parseDate($item.find('.col-lg-1').text()),
                     guid: `${link}#${title}`,

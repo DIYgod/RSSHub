@@ -47,7 +47,7 @@ async function handler(ctx) {
             item: list.toArray().map((item) => {
                 const $item = $(item);
                 return {
-                    title: $item.find('a').attr('title'),
+                    title: $item.find('a').attr('title')!,
                     description: $item.find('a').text(),
                     link: 'https://zbb.nju.edu.cn' + $item.find('a').attr('href'),
                     pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
@@ -79,7 +79,7 @@ async function handler(ctx) {
             return list.toArray().map((item) => {
                 const $item = $(item);
                 return {
-                    title: $item.find('a').attr('title'),
+                    title: $item.find('a').attr('title')!,
                     description: $item.find('a').text(),
                     link: 'https://zbb.nju.edu.cn' + $item.find('a').attr('href'),
                     pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),

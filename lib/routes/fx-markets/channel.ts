@@ -42,7 +42,7 @@ async function handler(ctx) {
         const articleURL = `https://www.fx-markets.com${$titleEl.attr('href')}`;
         const articleTitle = $titleEl.attr('title');
         return {
-            title: articleTitle,
+            title: articleTitle!,
             link: articleURL,
             pubDate: parseDate($el.find('time').text()),
             description: undefined as DataItem['description'],
@@ -62,7 +62,7 @@ async function handler(ctx) {
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();
                 return {
-                    title: item.title,
+                    title: item.title!,
                     link: item.link,
                     description: item.description,
                     // if we fail to get accurate publish date time, show date only from article link on index page.

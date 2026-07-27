@@ -29,7 +29,7 @@ async function handler(ctx) {
             const pubDate = parseDate($item.find('p.list-time').text());
             const link = new URL($item.find('a').attr('href')!, base).href;
             return {
-                title,
+                title: title!,
                 pubDate,
                 link,
                 description: undefined as DataItem['description'],

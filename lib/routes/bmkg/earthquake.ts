@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Text } from 'domhandler';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -51,6 +51,6 @@ async function handler() {
         link: url,
         description: '印尼气象气候和地球物理局 最近的地震(M ≥ 5.0) | BMKG earthquake',
         item: items,
-        language: 'in',
+        language: 'in' as Language,
     };
 }

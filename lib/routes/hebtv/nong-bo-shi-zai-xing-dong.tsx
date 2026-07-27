@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -150,7 +150,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: baseUrl,
         description,
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('div.logo a img').prop('src'),
         icon,
         logo: icon,

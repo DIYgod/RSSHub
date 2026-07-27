@@ -1,7 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, getCreatorFragment, getCreatorPostReelList } from './utils';
@@ -51,7 +51,7 @@ const renderDescription = ({ description, thumbnailUrl, sampleVideoId, imageUrls
                             src={`https://customer-7d4xajfg7g3ps2lm.cloudflarestream.com/${sampleVideoId}/iframe`}
                             style="border: none; position: absolute; top: 0; height: 100%; width: 100%"
                             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                            allowfullscreen="true"
+                            allowfullscreen
                         ></iframe>
                     </div>
                     <br />
@@ -89,7 +89,7 @@ async function handler(ctx) {
         image: creatorInfo.avatarImageUrl,
         icon: creatorInfo.avatarImageUrl,
         logo: creatorInfo.avatarImageUrl,
-        language: 'ja',
+        language: 'ja' as Language,
         item: items,
     };
 }

@@ -56,7 +56,7 @@ async function handler(ctx) {
             const link = $(item).find('a');
             const date = $(item).find('span.fr');
             return {
-                title: link.attr('title'),
+                title: link.attr('title')!,
                 link: link.attr('href'),
                 pubDate: timezone(parseDate(date.text(), 'YYYY-MM-DD'), 8),
             };

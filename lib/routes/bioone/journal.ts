@@ -47,7 +47,7 @@ async function handler(ctx) {
             return {
                 link: `${rootUrl}${$item.attr('href')}`,
                 description: undefined as DataItem['description'],
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 author: undefined as DataItem['author'],
                 doi: undefined as DataItem['doi'],
                 pubDate: undefined as DataItem['pubDate'],
@@ -65,7 +65,7 @@ async function handler(ctx) {
                 content('#divNotSignedSection, #rightRail').remove();
 
                 item.description = content('.panel-body').html();
-                item.title = content('meta[name="dc.Title"]').attr('content');
+                item.title = content('meta[name="dc.Title"]').attr('content')!;
                 item.author = content('meta[name="dc.Creator"]').attr('content');
                 item.doi = content('meta[name="dc.Identifier"]').attr('content');
                 item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content')!);

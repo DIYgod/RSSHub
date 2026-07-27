@@ -44,11 +44,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                category: $categoryEl.html(),
-                catalogue: $catalogueEl.html(),
+                category: $categoryEl.html() ?? undefined,
+                catalogue: $catalogueEl.html() ?? undefined,
                 title,
                 size: $el.find('td.size').text(),
-                date: $dateEl.html(),
+                date: $dateEl.html() ?? undefined,
             });
             const pubDateStr: string | undefined = $dateEl.text();
             const linkUrl: string | undefined = $el.find('td.title a').attr('href');

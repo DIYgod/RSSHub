@@ -48,7 +48,7 @@ export async function handler(ctx) {
             const href = $item.find('a').attr('href');
             const aid = href.match(/^\/photos-index-aid-(\d+)\.html$/)[1];
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: `${baseUrl}${href}`,
                 pubDate: parseDate(
                     $item

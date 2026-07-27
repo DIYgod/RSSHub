@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -99,7 +99,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
@@ -142,7 +142,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:title"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

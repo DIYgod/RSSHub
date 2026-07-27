@@ -67,7 +67,7 @@ async function handler(ctx) {
 
             return {
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 description: undefined as DataItem['description'],
             };
         });

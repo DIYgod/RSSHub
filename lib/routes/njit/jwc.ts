@@ -56,7 +56,7 @@ async function handler(ctx) {
                     const response = await got(itemUrl);
                     if (response.redirectUrls.length !== 0) {
                         const single = {
-                            title: titleList[index],
+                            title: titleList[index]!,
                             link: itemUrl,
                             description: '该通知无法直接预览, 请点击原文链接↑查看',
                             pubDate: parseDate(dateList[index]),
@@ -78,7 +78,7 @@ async function handler(ctx) {
                 });
             }
             const single = {
-                title: titleList[index],
+                title: titleList[index]!,
                 link: itemUrl,
                 description: '该通知为文件，请点击原文链接↑下载',
                 pubDate: parseDate(dateList[index]),

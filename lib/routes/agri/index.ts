@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,7 +54,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 author: undefined as DataItem['author'],
                 enclosure_url: undefined as DataItem['enclosure_url'],
                 enclosure_type: undefined as DataItem['enclosure_type'],
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.content_body_box').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 item.enclosure_url = $$('div.content_body_box video').prop('src') ?? undefined;
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
@@ -101,7 +101,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         image,
-        language,
+        language: language as Language,
     };
 };
 

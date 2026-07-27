@@ -37,7 +37,7 @@ async function handler() {
         .toArray()
         .map((element) => {
             const info = {
-                title: $(element).find('span.news_title > a').attr('title'),
+                title: $(element).find('span.news_title > a').attr('title')!,
                 link: `https://seugs.seu.edu.cn${$(element).find('span.news_title > a').attr('href')}`,
                 date: $(element).find('span.news_meta').text(),
                 description: undefined as DataItem['description'],

@@ -105,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           ]
                         : undefined,
                     intro: $$('div.subject-desc').text(),
-                    description: $$('div.subject-content').html(),
+                    description: $$('div.subject-content').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('div.subject-meta')
                     .text()

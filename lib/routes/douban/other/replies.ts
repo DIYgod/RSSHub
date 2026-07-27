@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -79,6 +79,6 @@ async function handler(ctx) {
     return {
         title: $('title').text() + ' - 最新回应',
         link: currentUrl,
-        item: items,
+        item: items as DataItem[],
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -91,7 +91,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link: url,
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
         item: items,
     };
 }

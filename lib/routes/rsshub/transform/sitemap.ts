@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -30,7 +30,7 @@ async function handler(ctx) {
     const urls = $('urlset url').toArray();
     const items =
         urls && urls.length
-            ? urls
+            ? (urls
                   .map((item) => {
                       try {
                           const title = $(item).find('loc').text();
@@ -48,7 +48,7 @@ async function handler(ctx) {
                           return null;
                       }
                   })
-                  .filter(Boolean)
+                  .filter(Boolean) as DataItem[])
             : [];
 
     return {

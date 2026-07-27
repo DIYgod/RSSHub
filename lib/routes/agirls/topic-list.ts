@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { baseUrl } from './utils';
@@ -53,6 +53,6 @@ async function handler() {
         link,
         description: $('head meta[name=description]').attr('content'),
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

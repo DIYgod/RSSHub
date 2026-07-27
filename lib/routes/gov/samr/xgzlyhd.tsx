@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -228,7 +228,7 @@ async function handler(ctx) {
         title: `${author}${title}${subtitle ? ` - ${subtitle}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image: new URL(`gjjly/${$('div.fd-logo img').prop('src')}`, rootUrl).href,
         icon,
         logo: icon,

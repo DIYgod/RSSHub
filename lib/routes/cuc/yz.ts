@@ -45,7 +45,7 @@ async function handler() {
         const a = $elem.find('a');
         return {
             link: new URL(a.attr('href')!, host).href,
-            title: a.attr('title'),
+            title: a.attr('title')!,
             pubDate: parseDate($elem.find('.news_meta').text(), 'YYYY-MM-DD'),
         };
     });

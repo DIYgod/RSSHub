@@ -56,7 +56,7 @@ async function handler(ctx) {
                     .replaceAll(/(.*)\/(.*)/g, '$2-$1')
             );
             return {
-                title,
+                title: title!,
                 pubDate,
                 link,
                 description: undefined as DataItem['description'],

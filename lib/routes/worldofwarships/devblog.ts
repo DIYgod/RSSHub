@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,7 +46,7 @@ async function handler() {
             const title = $item.find('h2').first().find('a').first();
             const content = $item.find('h2').first().next();
             return {
-                title: title.attr('title'),
+                title: title.attr('title')!,
                 link: title.attr('href'),
                 pubDate: timezone(parseDate(time.attr('data-timestamp') * 1000), 0),
                 category: tag.text(),
@@ -71,7 +71,7 @@ async function handler() {
         link: url,
         item: items,
         image: 'https:' + face.attr('href'),
-        language: 'en',
+        language: 'en' as Language,
         author: 'Wargaming',
     };
 }

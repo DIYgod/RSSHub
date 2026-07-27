@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Text } from 'domhandler';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -129,7 +129,7 @@ async function handler(ctx) {
         title: `電腦領域 HKEPC${categoryMap[category].feedSuffix}`,
         link: `https://www.hkepc.com/${category}`,
         description: '電腦領域 HKEPC Hardware - 全港 No.1 PC網站',
-        language: 'zh-hk',
+        language: 'zh-HK' as Language,
         item: items,
     };
 }

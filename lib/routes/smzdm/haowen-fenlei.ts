@@ -81,7 +81,7 @@ async function handler(ctx) {
                     const $ = load(response.data);
                     item.description = $('article').html();
                     item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')!), 8);
-                    item.author = $('meta[property="og:author"]').attr('content');
+                    item.author = $('meta[property="og:author"]').attr('content')!;
                 } catch {
                     // 404
                 }

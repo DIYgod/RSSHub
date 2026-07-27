@@ -63,7 +63,7 @@ async function handler(ctx) {
             const url = url_head + url_part;
             // 返回格式化数据
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: url,
                 pubDate,
             };
@@ -79,7 +79,7 @@ async function handler(ctx) {
             const files = content('.Annex').html() || '';
 
             const single = {
-                title: item.title,
+                title: item.title!,
                 link: item.link,
                 description: articleAuthor + eDescription + files,
                 pubDate: item.pubDate,

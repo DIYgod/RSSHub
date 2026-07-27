@@ -6,7 +6,7 @@ import trace from '@/middleware/trace';
 describe('trace middleware', () => {
     it('skips tracing when debugInfo is disabled', async () => {
         const originalDebug = config.debugInfo;
-        config.debugInfo = false;
+        config.debugInfo = false as unknown as string;
 
         let called = false;
         const ctx = {

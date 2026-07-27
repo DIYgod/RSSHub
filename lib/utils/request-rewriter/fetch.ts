@@ -1,7 +1,7 @@
 import type { HeaderGeneratorOptions } from 'header-generator';
 import { useRegisterRequest } from 'node-network-devtools';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import type { RequestInfo, RequestInit } from 'undici';
+import type { RequestInfo, RequestInit, Response } from 'undici';
 import undici, { Request } from 'undici';
 
 import { config } from '@/config';

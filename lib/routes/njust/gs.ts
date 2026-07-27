@@ -51,7 +51,7 @@ async function handler(ctx) {
             let desc = '';
             if (url.startsWith('/')) {
                 const data = await getContent(host + url);
-                desc = load(data)('.wp_articlecontent').html();
+                desc = load(data)('.wp_articlecontent').html() ?? '';
             }
 
             return {

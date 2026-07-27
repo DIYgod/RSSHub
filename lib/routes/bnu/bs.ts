@@ -51,7 +51,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 pubDate: parseDate($item.prev().text()),
                 link: `${rootUrl}/${category}/${$item.attr('href')}`,
                 description: undefined as DataItem['description'],

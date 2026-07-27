@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -81,6 +82,6 @@ export async function handler(ctx) {
         description: 'Latest News on dnaIndia.com',
         logo: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         icon: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

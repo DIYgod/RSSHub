@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import rssParser from '@/utils/rss-parser';
@@ -74,7 +74,7 @@ async function handler(ctx) {
     return {
         title: `Bloomberg - ${authorName}`,
         link,
-        language: 'en-us',
+        language: 'en-us' as Language,
         item,
     };
 }

@@ -1,7 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -74,7 +74,7 @@ async function handler(ctx) {
         description: userInfo.dsc,
         link: `${baseUrl}/user/${id}`,
         image: `${mediaHost}/${userInfo.ico}`,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

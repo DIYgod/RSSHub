@@ -43,7 +43,7 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, 'http://gs.xjtu.edu.cn/').href,
                 pubDate: parseDate($item.find('span.time').text()),
                 description: undefined as DataItem['description'],

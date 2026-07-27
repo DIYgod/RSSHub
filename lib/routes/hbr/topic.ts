@@ -64,7 +64,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.attr('data-title'),
+                title: $item.attr('data-title')!,
                 author: $item.attr('data-authors'),
                 category: $item.attr('data-topic'),
                 link: `${rootUrl}${$item.attr('data-url')}`,

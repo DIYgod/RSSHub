@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -120,7 +120,7 @@ async function handler() {
         title: '中山大学 - 数据科学与计算机学院',
         link: 'http://cse.sysu.edu.cn',
         description: '中山大学 - 数据科学与计算机学院',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: item_data,
     };
 }

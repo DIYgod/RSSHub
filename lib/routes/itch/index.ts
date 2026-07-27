@@ -52,8 +52,8 @@ async function handler(ctx) {
                 item.description = renderDescription({
                     images: content('.screenshot')
                         .toArray()
-                        .map((i) => content(i).attr('src')),
-                    description: content('.formatted_description').html(),
+                        .map((i) => content(i).attr('src')!),
+                    description: content('.formatted_description').html() ?? undefined,
                 });
 
                 return item;

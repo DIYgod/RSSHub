@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -65,11 +65,11 @@ async function handler(ctx) {
                 description: renderDescription({
                     image: image
                         ? {
-                              src: image.prop('src'),
+                              src: image.prop('src')!,
                               alt: image.prop('alt'),
                           }
                         : undefined,
-                    abstracts: $item.find('p.abstract').html(),
+                    abstracts: $item.find('p.abstract').html() ?? undefined,
                 }),
                 category: $item
                     .find('span.cat')
@@ -89,8 +89,8 @@ async function handler(ctx) {
 
                 item.title = content('h1.tit').text();
                 item.description = renderDescription({
-                    abstracts: content('div.abstract').html(),
-                    description: content('div.detail').html(),
+                    abstracts: content('div.abstract').html() ?? undefined,
+                    description: content('div.detail').html() ?? undefined,
                 });
                 item.author = content('span.author')
                     .text()
@@ -116,7 +116,7 @@ async function handler(ctx) {
         title: `${title} - ${$('div.group a.active').text()}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: new URL($('a.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

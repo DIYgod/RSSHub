@@ -365,5 +365,6 @@ async function handler(ctx) {
                 item: items.slice(0, limit),
             };
         }
+        return null;
     }
 }

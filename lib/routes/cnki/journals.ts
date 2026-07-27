@@ -45,7 +45,7 @@ async function handler(ctx) {
 
         if (feed.items && feed.items.length !== 0) {
             const items = feed.items.map((item) => ({
-                title: item.title,
+                title: item.title!,
                 description: item.content,
                 pubDate: parseDate(item.pubDate!),
                 link: item.link,
@@ -53,7 +53,7 @@ async function handler(ctx) {
             }));
 
             return {
-                title: feed.title,
+                title: feed.title!,
                 link: feed.link,
                 description: feed.description,
                 item: items,

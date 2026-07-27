@@ -67,7 +67,7 @@ async function handler(ctx) {
                     .filter((t) => t !== '...');
                 item.description = renderDescription({
                     image: content('meta[property="og:image"]').attr('content'),
-                    description: content('.post-article').html(),
+                    description: content('.post-article').html() ?? undefined,
                 });
                 return item;
             })

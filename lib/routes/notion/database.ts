@@ -175,6 +175,7 @@ async function handler(ctx) {
         } else {
             ctx.throw(error);
         }
+        return null;
     }
 }
 

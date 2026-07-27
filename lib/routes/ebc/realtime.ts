@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -89,7 +89,7 @@ async function handler(ctx) {
     return {
         title: '東森新聞|即時',
         link: category ? `https://news.ebc.net.tw/realtime/${category}` : 'https://news.ebc.net.tw/realtime',
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
         item: items,
     };
 }

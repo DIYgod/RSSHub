@@ -62,7 +62,7 @@ async function handler(ctx) {
             link = link.startsWith('/') ? host + link : link;
             const pubDate = timezone(parseDate($item.find('time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
-                title,
+                title: title!,
                 pubDate,
                 link,
                 description: undefined as DataItem['description'],
@@ -74,7 +74,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('div.wp_articlecontent').html();
+                    const desc: string = load(response.data)('div.wp_articlecontent').html() ?? '';
                     item.description = desc;
                 } catch {
                     // intranet only contents

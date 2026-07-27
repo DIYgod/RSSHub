@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -67,7 +67,7 @@ async function handler(ctx) {
         item: items,
         title: $('title').text(),
         link: currentUrl,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: new URL($('#head-img a img').prop('src')!, rootUrl).href,
         author: '长江大学动物科学学院',
     };

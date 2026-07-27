@@ -52,7 +52,7 @@ async function handler() {
             const tags = $item.find('.tag-info-list').children();
             const taginfo = tags.toArray().map((elem) => $(elem).text());
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: `${host}${$item.attr('href')}`,
                 description: renderDescription(itemPicUrl, taginfo),
             };

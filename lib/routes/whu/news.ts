@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -66,7 +66,7 @@ async function handler(ctx) {
                 link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: parseDate($item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
                 description: renderDescription({
-                    description: $item.find('div.txt p').html(),
+                    description: $item.find('div.txt p').html() ?? undefined,
                     image: image.prop('src')
                         ? {
                               src: new URL(image.prop('src')!, rootUrl).href,
@@ -90,7 +90,7 @@ async function handler(ctx) {
         title: `${siteName} - ${columnName}`,
         link: currentUrl,
         description: getMeta(meta, 'description'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: new URL($('div.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

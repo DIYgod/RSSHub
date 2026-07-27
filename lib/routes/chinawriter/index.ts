@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -72,7 +72,7 @@ async function handler(ctx) {
                                           .replaceAll('来源：', '')
                                           .trim()
                                     : undefined,
-                            ].filter(Boolean)
+                            ].filter(Boolean) as string[]
                         ),
                     ];
                     item.pubDate = content('div.end_info em').text() ? timezone(parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm'), 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
@@ -85,14 +85,14 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl);
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: $('title').text().replaceAll('--', ' - '),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: new URL($('h1.logo a img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -173,7 +173,7 @@ async function handler(ctx) {
         link: baseUrl + cat.link,
         description: `信報網站(www.hkej.com)即時新聞${cat.name}，提供${cat.description}。`,
         item: items,
-        language: 'zh-hk',
+        language: 'zh-HK' as Language,
     };
 
     ctx.set('json', {

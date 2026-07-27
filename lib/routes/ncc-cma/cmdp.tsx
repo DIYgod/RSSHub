@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -23,7 +23,7 @@ export const handler = async (ctx) => {
     const $ = load(iconv.decode(response, 'gbk'));
 
     const author = '国家气候中心';
-    const language = 'zh';
+    const language = 'zh' as Language;
 
     const items = $('ul.img-con-new-con li img[id]')
         .toArray()
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
                 description,
                 pubDate: parseDate(date),
                 link: currentUrl,
-                category: [title],
+                category: [title!],
                 author,
                 guid,
                 id: guid,

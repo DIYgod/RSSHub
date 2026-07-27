@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -82,8 +82,8 @@ async function handler(ctx) {
                 origin: $thing.find('.titleline').children('a').attr('href'),
                 onStory: $thing.find('.onstory').text().slice(2),
 
-                comments: $thing.next().find('a').last().text().split(' comment', 1)[0],
-                upvotes: $thing.next().find('.score').text().split(' point', 1)[0],
+                comments: $thing.next().find('a').last().text().split(' comment', 1)[0] as DataItem['comments'],
+                upvotes: $thing.next().find('.score').text().split(' point', 1)[0] as unknown as DataItem['upvotes'],
 
                 currentComment: $thing.find('.comment').text(),
                 description: '',
@@ -138,7 +138,7 @@ async function handler(ctx) {
                     item.comments = 0;
                 }
 
-                item.link = type === 'sources' ? item.origin : item.link;
+                item.link = (type === 'sources' ? item.origin : item.link)!;
 
                 delete item.origin;
 

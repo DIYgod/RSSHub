@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -54,7 +54,7 @@ async function handler() {
                     </>
                 );
                 item.guid = item.guid.slice(0, item.link.lastIndexOf('/'));
-                item.pubDate = parseDate(item.pubDate!);
+                item.pubDate = parseDate(item.pubDate!) as unknown as string;
                 item.enclosure_url = $('div.introduction.media.news-intro div.media-left').find('img').attr('src');
                 item.enclosure_type = 'image/jpeg';
 
@@ -64,11 +64,11 @@ async function handler() {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         image: `${baseUrl}/static/favicon/apple-touch-icon.png`,
-        item: items,
+        item: items as DataItem[],
         language: feed.language,
     };
 }

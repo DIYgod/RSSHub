@@ -64,7 +64,7 @@ async function handler(ctx) {
         urlfilter = '';
     }
     if (!catword && cat && cat !== 'picks') {
-        return '';
+        return null;
     }
     const picked = cat && cat === 'picks';
 

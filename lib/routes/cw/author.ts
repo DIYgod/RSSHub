@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import playwright from '@/utils/playwright';
 
 import { baseUrl, parsePage } from './utils';
@@ -38,7 +38,7 @@ async function handler(ctx) {
         description: $('.authorTxt').text(),
         link: `${baseUrl}/author/${ctx.req.param('channel')}`,
         image: $('.authorPhoto img').attr('src') || `${baseUrl}/assets_new/img/fbshare.jpg'`,
-        language: $('meta[property="og:locale"]').attr('content'),
+        language: $('meta[property="og:locale"]').attr('content') as Language,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import parser from '@/utils/rss-parser';
 
@@ -36,10 +36,10 @@ async function handler(ctx) {
             let firstImgSrc = '';
             if (item.content !== null) {
                 const $ = load(item.content);
-                firstImgSrc = $('img').first().attr('src');
+                firstImgSrc = $('img').first().attr('src')!;
             }
             return {
-                title: item.title,
+                title: item.title!,
                 pubDate: item.pubDate,
                 link: item.link,
                 description: item.content,
@@ -59,11 +59,11 @@ async function handler(ctx) {
         };
     });
     return {
-        title: feed.title,
+        title: feed.title!,
         itunes_author: 'Inoreader',
         image: 'https://www.inoreader.com/brand/img/ino_app_icon.png',
         link: feed.link,
         description: feed.description,
-        item: feed.items,
+        item: feed.items as DataItem[],
     };
 }

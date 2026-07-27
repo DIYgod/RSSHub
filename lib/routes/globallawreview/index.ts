@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -65,7 +65,7 @@ async function handler(ctx) {
         item: items,
         title: $('title').text(),
         link: currentUrl,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         author: '中国社会科学院法学研究所',
     };
 }

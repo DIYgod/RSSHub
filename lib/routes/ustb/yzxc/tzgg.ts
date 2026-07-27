@@ -45,7 +45,7 @@ async function handler() {
             const path = titleDom.last().attr('href');
             let itemUrl = '';
             if (path.startsWith('http')) {
-                itemUrl = path;
+                itemUrl = path!;
             } else if (path.startsWith('..')) {
                 itemUrl = path.replaceAll('..', () => host);
             } else {

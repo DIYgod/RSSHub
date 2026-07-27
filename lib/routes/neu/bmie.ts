@@ -115,7 +115,7 @@ async function handler(ctx) {
             const pubDate = parseDate(data.date);
             const author = data.author;
             const result = {
-                title,
+                title: title!,
                 description,
                 link: url,
                 pubDate,

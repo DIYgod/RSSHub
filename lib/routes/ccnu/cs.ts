@@ -44,7 +44,7 @@ async function handler() {
                 const $item = $(item);
                 const a = $item.find('a');
                 return {
-                    title: a.attr('title'),
+                    title: a.attr('title')!,
                     description: $item.find('.overfloat-dot-2').text(),
                     link: new URL(a.attr('href')!, link).href,
                     pubDate: parseDate($item.find('.time').text(), 'DDYYYY-MM'),

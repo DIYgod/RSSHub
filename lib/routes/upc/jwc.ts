@@ -45,7 +45,7 @@ const handler = async (ctx) => {
 
                     if (item.link.includes('news.upc.edu.cn')) {
                         item.description = $('.v_news_content').html();
-                        item.author = $('.nr-zz h2').html();
+                        item.author = $('.nr-zz h2').html() ?? undefined;
                     } else if (item.link.includes('app.upc.edu.cn')) {
                         const scriptContent = $('body script').first().html();
                         let dataObj = null;
@@ -61,7 +61,7 @@ const handler = async (ctx) => {
                     } else {
                         // 选择类名为“comment-body”的第一个元素
                         item.description = $('.read').first().html() || '无法获取正文内容，请手动访问';
-                        item.author = $('.arti_publisher').html();
+                        item.author = $('.arti_publisher').html() ?? undefined;
                     }
                 } catch {
                     item.description = '正文内容获取失败';

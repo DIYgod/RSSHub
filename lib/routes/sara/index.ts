@@ -60,7 +60,7 @@ async function getFeedItem(item) {
         const $ = load(response);
         return {
             description: $('.text').html(),
-            language: 'zh-cn',
+            language: 'zh-CN',
             ...item,
         };
     });

@@ -40,4 +40,6 @@ async function handler(ctx) {
         baseDescription: '湖南农业大学国际交流与合作处、国际教育学院、港澳台事务办公室',
         baseDeparment: 'ied',
     });
+
+    return null;
 }

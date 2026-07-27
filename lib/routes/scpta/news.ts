@@ -59,7 +59,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: `${baseUrl}${$item.find('a').attr('href')}`,
                 pubDate: parseDate($item.find('span').text()),
                 description: undefined as DataItem['description'],
@@ -75,7 +75,7 @@ async function handler(ctx) {
                     const content = load(contentResponse.data);
 
                     // 提取公告正文
-                    description = content('div.wrap-content.news-content').html();
+                    description = content('div.wrap-content.news-content').html() ?? '';
                 } catch {
                     // 如果详情页获取失败，使用默认描述
                     description = '公告内容获取失败';

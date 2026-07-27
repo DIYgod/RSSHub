@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,7 @@ export const handler = async (ctx) => {
                 title: a.prop('title'),
                 pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop()!, 'YYYY.MM.DD'),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 category: undefined as DataItem['category'],
                 author: undefined as DataItem['author'],
@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.gsj_htmlcon_bot, div.TRS_Editor').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -88,7 +88,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: '中华人民共和国农业农村部',
-        language,
+        language: language as Language,
     };
 };
 

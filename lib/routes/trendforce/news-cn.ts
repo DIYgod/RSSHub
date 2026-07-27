@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -35,7 +35,7 @@ async function handler() {
             return {
                 title: a.find('strong').text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                description: $item.find('p').text()?.trim(),
+                description: $item.find('p').text()?.trim() as DataItem['description'],
                 pubDate: parseDate($item.find('h4').text()),
                 category: undefined as DataItem['category'],
                 author: undefined as DataItem['author'],
@@ -72,7 +72,7 @@ async function handler() {
         title: $('head title').text(),
         description: $('meta[name="description"]').attr('content'),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         image: `${baseUrl}${$('link[rel="apple-touch-icon-precomposed"][sizes="152x152"]').attr('href')}`,
         item: items,
     };

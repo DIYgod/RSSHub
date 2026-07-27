@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 item.updated = parseDate($('meta[itemprop="dateModified"]').attr('content')!);
                 item.category = $('meta[property="article:tag"]')
                     .toArray()
-                    .map((item) => $(item).attr('content'));
+                    .map((item) => $(item).attr('content')!);
 
                 return item;
             })
@@ -81,7 +81,7 @@ async function handler(ctx) {
         image: $('meta[property="og:image"]').attr('content'),
         logo: $('link[rel="apple-touch-icon"]').attr('href'),
         icon: $('link[rel="icon"]').attr('href'),
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

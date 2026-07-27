@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
                 link: new URL($item.find('h2.family-title a').prop('href')!, rootUrl).href,
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
 
                 const title = $$('h1.newsTitle').text();
                 const description = renderDescription({
-                    description: $$('div.article-content').html(),
+                    description: $$('div.article-content').html() ?? undefined,
                 });
 
                 item.title = title;
@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.article-content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -102,7 +102,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

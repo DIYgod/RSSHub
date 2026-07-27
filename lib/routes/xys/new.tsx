@@ -53,7 +53,7 @@ async function handler(ctx) {
             const $item = $(item);
             let link = $item.attr('href');
             /^https?:\/\//.test(link!) || (link = rootUrl + '/' + link.replace(/^\//, ''));
-            let date = $item.parent().text().trim().slice(0, 8);
+            let date: string | Date = $item.parent().text().trim().slice(0, 8);
             date = parseDate(date, 'YY.MM.DD');
             return {
                 title: $item.text(),

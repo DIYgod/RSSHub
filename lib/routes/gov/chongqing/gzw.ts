@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -11,13 +11,14 @@ export const route: Route = {
     parameters: {
         category: '分类，见下表，默认为通知公告',
     },
+    example: '/gov/chongqing/gzw',
     name: '国有资产监督管理委员会',
     url: 'gzw.cq.gov.cn',
     maintainers: ['nczitzk'],
     handler,
     radar: [
         {
-            source: 'gzw.cq.gov.cn/*category',
+            source: ['gzw.cq.gov.cn/*category'],
             target: '/gzw/*category',
         },
     ],
@@ -83,7 +84,7 @@ async function handler(ctx) {
         title: `${$('title').text()} - ${$('meta[name="ColumnName"]').prop('content')}`,
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: new URL($('div.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

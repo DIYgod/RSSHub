@@ -34,7 +34,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             pubDate: $(item).find('.Article_PublishDate').text(),
-            title: $(item).find('a').attr('title'),
+            title: $(item).find('a').attr('title')!,
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
             description: undefined as DataItem['description'],
         }));

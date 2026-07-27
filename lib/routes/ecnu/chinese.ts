@@ -30,7 +30,7 @@ export const route: Route = {
             .map((el) => ({
                 pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
-                title: $(el).find('a').attr('title'),
+                title: $(el).find('a').attr('title')!,
                 description: undefined as DataItem['description'],
             }));
         const items = await Promise.all(

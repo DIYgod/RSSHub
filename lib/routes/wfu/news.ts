@@ -42,7 +42,7 @@ async function loadContent(link) {
     const $ = load(response.data);
 
     // 提取文章内容
-    description = $('div.wp_articlecontent').html();
+    description = $('div.wp_articlecontent').html() ?? '';
     // 返回解析的结果
     return { description };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -66,7 +66,7 @@ async function handler() {
         title: pageProps.page.seo.title,
         description: pageProps.page.seo.metaDesc,
         link,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

@@ -110,7 +110,7 @@ export const route: Route = {
             // 源链接
             link: `${baseUrl}/${type}/list.htm`,
             // 源文章
-            item: items,
+            item: items as DataItem[],
         };
     },
 };

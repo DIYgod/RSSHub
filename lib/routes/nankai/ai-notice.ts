@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -118,7 +118,7 @@ export const route: Route = {
             // 源链接
             link: `${baseUrl}/xwzx/${type}.htm`,
             // 源文章
-            item: items,
+            item: items as DataItem[],
         };
     },
 };

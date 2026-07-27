@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -75,7 +75,7 @@ async function handler(ctx) {
                 item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
                 item.description = renderDescription({
                     image: content('meta[property="og:image"]').attr('content'),
-                    description: content('.article-content').first().html(),
+                    description: content('.article-content').first().html() ?? undefined,
                 });
                 return item;
             })
@@ -85,7 +85,7 @@ async function handler(ctx) {
     return {
         title,
         link,
-        language: 'zh-tw',
+        language: 'zh-TW' as Language,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -67,7 +67,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: length ? link : undefined,
                 enclosure_type: length ? 'video/mp4' : undefined,
                 enclosure_title: title,
@@ -129,7 +129,7 @@ export const handler = async (ctx) => {
                               },
                           ]
                         : undefined,
-                    description: $$('article.article').html(),
+                    description: $$('article.article').html() ?? undefined,
                 });
 
                 item.description = description;
@@ -139,7 +139,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
                 item.enclosure_url = videoSrc;
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
                 item.enclosure_title = title;
@@ -161,7 +161,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

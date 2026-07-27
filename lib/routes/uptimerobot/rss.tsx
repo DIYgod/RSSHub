@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import Parser from 'rss-parser';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 const titleRegex = /(.*\S)\s+is\s+([A-Z]+)\s+\((.+)\)/;
@@ -180,7 +180,7 @@ async function handler(ctx) {
         title: 'Uptime Robot - RSS (enhanced)',
         description: rss.description,
         link: rssUrl,
-        item: items,
+        item: items as DataItem[],
         image: 'https://uptimerobot.com/favicon.ico',
     };
 }

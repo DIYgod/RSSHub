@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -426,7 +426,7 @@ async function handler(ctx) {
                             const thumbBackgroundUrlSrc = thumbBackgroundUrl && thumbBackgroundUrl[1];
                             tag_media += renderVideo({
                                 source: videoLink,
-                                poster: thumbBackgroundUrlSrc,
+                                poster: thumbBackgroundUrlSrc ?? undefined,
                             });
                         } else if ($node.attr('data-webp')) {
                             // sticker
@@ -762,6 +762,6 @@ async function handler(ctx) {
                 };
             })
             .filter(Boolean)
-            .toReversed(),
+            .toReversed() as unknown as DataItem[],
     };
 }

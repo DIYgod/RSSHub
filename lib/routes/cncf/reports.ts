@@ -28,7 +28,7 @@ async function handler() {
     const list = $('div.report-item')
         .toArray()
         .map((item) => ({
-            title: $(item).find('a.report-item__link').attr('title'),
+            title: $(item).find('a.report-item__link').attr('title')!,
             link: $(item).find('a.report-item__link').attr('href'),
             description: undefined as DataItem['description'],
             parseDate: undefined as any,

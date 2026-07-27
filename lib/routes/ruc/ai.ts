@@ -41,7 +41,7 @@ export const route: Route = {
                 const link = baseURL + a.attr('href');
                 return {
                     link,
-                    title: undefined as DataItem['title'] | undefined,
+                    title: undefined as unknown as DataItem['title'],
                     pubDate: undefined as DataItem['pubDate'],
                     description: undefined as DataItem['description'],
                 };

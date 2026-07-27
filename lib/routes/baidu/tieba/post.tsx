@@ -63,7 +63,7 @@ async function handler(ctx) {
     const list = $('.p_postlist > [data-field]:not(:has(.ad_bottom_view))');
 
     return {
-        title: lz ? `【只看楼主】${title}` : title,
+        title: (lz ? `【只看楼主】${title}` : title)!,
         link: `https://tieba.baidu.com/p/${id}?see_lz=${lz}`,
         description: `${title}的最新回复`,
         item: list.toArray().map((element) => {
@@ -77,7 +77,7 @@ async function handler(ctx) {
             if (0 === tempList.length && 'date' in content) {
                 num = `${content.post_no}楼`;
                 time = content.date;
-                pubContent = item.find('.j_d_post_content').html();
+                pubContent = item.find('.j_d_post_content').html() ?? '';
             } else if (2 === tempList.length) {
                 [num, time] = tempList;
                 pubContent = content.content;

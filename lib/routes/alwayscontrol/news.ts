@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -95,7 +95,7 @@ async function handler() {
         title: 'Always Control - 最新动态',
         link: listUrl,
         description: 'Always Control（旭衡电子）- 智能能源管理系统解决方案专家最新动态',
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: items,
         image: `${baseUrl}/logo.png`,
     };

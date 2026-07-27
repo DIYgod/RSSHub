@@ -50,7 +50,7 @@ async function handler(ctx) {
         .map((item, index) => {
             const $item = $(item);
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: `${baseUrl}${$item.attr('href')}`,
                 pubDate: index === 0 ? parseDate($('head meta[property="og:novel:update_time"]').attr('content')!) : null,
                 author: $('head meta[property="og:novel:author"]').attr('content'),

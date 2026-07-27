@@ -177,7 +177,7 @@ async function handler(ctx) {
                 category: [currentCategory.replace(/^\d+版\s*/, '')],
             };
         })
-        .filter((item): item is DataItem => item !== undefined);
+        .filter((item) => item !== undefined);
 
     if (list.length === 0) {
         throw new Error(`No articles were found for ${yearMonth}${day}.`);

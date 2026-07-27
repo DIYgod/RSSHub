@@ -135,7 +135,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('div.author-infos span')
                         .text()
                         .match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/)?.[1];
-                    const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? item.category ?? [];
+                    const categories: DataItem['category'] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? item.category ?? [];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     const processedItem: DataItem = {

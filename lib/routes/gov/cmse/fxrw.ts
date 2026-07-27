@@ -53,7 +53,7 @@ async function handler() {
                 pubDate: timezone(parseDate($item.find('.infoR').first().text().trim(), 'YYYY年M月D日H时m分'), 8),
                 description: renderDescription({
                     image: new URL($item.find('img').attr('src')!, currentUrl).href,
-                    description: $item.find('.info').html(),
+                    description: $item.find('.info').html() ?? undefined,
                 }),
             };
         });

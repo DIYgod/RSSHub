@@ -82,8 +82,8 @@ async function handler(ctx) {
                 item.description = renderDescription({
                     images: content('.post_image')
                         .toArray()
-                        .map((e) => content(e).attr('src')),
-                    description: content('.post_body').html(),
+                        .map((e) => content(e).attr('src')!),
+                    description: content('.post_body').html() ?? undefined,
                 });
 
                 return item;

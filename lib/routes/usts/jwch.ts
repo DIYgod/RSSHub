@@ -64,7 +64,7 @@ async function handler(ctx) {
                 }
 
                 item.description = content('div#vsb_content').html();
-                item.author = author;
+                item.author = author ?? undefined;
                 item.pubDate = timezone(parseDate(pubDate), 8);
 
                 return item;

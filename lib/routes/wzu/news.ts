@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,7 +47,7 @@ async function loadContent(link) {
             .html();
     });
     // 返回解析的结果
-    return $('div[id^=vsb_content]').html();
+    return $('div[id^=vsb_content]').html() ?? '';
 }
 
 export const route: Route = {
@@ -84,6 +84,6 @@ async function handler(ctx) {
                 pubDate: parseDate($('li>samp').text(), 'YYYY-MM-DD'),
                 link: $itemUrl,
             };
-        }),
+        }) as unknown as DataItem[],
     };
 }

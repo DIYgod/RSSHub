@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -96,7 +96,7 @@ async function handler(ctx) {
         title: author + ' - 唱吧',
         link: url,
         description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
-        item: items,
+        item: items as DataItem[],
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',

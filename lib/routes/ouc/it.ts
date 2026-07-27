@@ -48,7 +48,7 @@ async function handler(ctx) {
             const $e = $(e);
             const a = $e.find('a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($e.find('span.news_meta').text(), 'YYYY-MM-DD'),
                 author: undefined as DataItem['author'],

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -97,7 +97,7 @@ async function handler(ctx) {
 
                 // tw || tw || hk || hk || hk
                 item.description = $('div.user-comment-block').html() || $('div.content').html() || $('li.inner').html() || $('div.section-content').html() || $('.article__content').html();
-                item.pubDate = parseDate(item.pubDate!);
+                (item as DataItem).pubDate = parseDate(item.pubDate!);
 
                 return item;
             })
@@ -105,10 +105,10 @@ async function handler(ctx) {
     );
 
     const ret = {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items,
+        item: items as DataItem[],
         image: feed.image.url,
         language: feed.language,
     };

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -83,7 +83,7 @@ async function handler(ctx) {
                 link: new URL($item.find('a.capsule__action').prop('href')!, rootUrl).href,
                 description: $item.find('div.capsule__column-wrapper').html(),
                 author: authors,
-                category: [$item.find('span.capsule__context').text().trim(), ...authors.split(/,\s|and\s/), isOpenAccess || isManuscript],
+                category: [$item.find('span.capsule__context').text().trim(), ...authors.split(/,\s|and\s/), isOpenAccess || isManuscript] as string[],
                 guid: `rsc-${doi}`,
                 pubDate: timezone(parseDate($item.find('div.text--small span.block').text().split(/on\s/).pop()!, 'DD MMM YYYY'), 1),
                 enclosure_url: enclosureUrl,
@@ -127,7 +127,7 @@ async function handler(ctx) {
         title: $('meta[name="citation_title"]').prop('content'),
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'en',
+        language: 'en' as Language,
         image: new URL($('div.page-head__cell--image span img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

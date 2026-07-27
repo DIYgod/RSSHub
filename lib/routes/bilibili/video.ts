@@ -233,7 +233,7 @@ async function handler(ctx: Context) {
     try {
         const usernameAndFace = await cache.getUsernameAndFaceFromUID(uid);
         name = usernameAndFace[0] || name;
-        face = usernameAndFace[1];
+        face = usernameAndFace[1] ?? undefined;
     } catch (error) {
         logger.warn(`[bilibili/video] failed to fetch user profile: ${error}`);
     }

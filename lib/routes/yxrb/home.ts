@@ -46,7 +46,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('.title a').attr('title'),
+                title: $item.find('.title a').attr('title')!,
                 link: `${baseUrl}${$item.find('.title a').attr('href')}`,
                 author: $item.find('.author a').text().split('作者 : ', 2)[1],
                 pubDate: undefined as DataItem['pubDate'],

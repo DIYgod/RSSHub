@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,7 +37,7 @@ async function handler() {
     return {
         title: '新闻 - 移动支付网',
         link,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: await Promise.all(
             $list('.Newslist-li')
                 .toArray()

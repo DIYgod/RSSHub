@@ -21,10 +21,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     let count = 0;
 
-    let items: DataItem[] = await Promise.all(
+    const monthlyItems = await Promise.all(
         $('h3 a.main')
             .toArray()
-            .map(async (monthlyEl): Promise<Element[] | undefined> => {
+            .map(async (monthlyEl): Promise<DataItem[] | undefined> => {
                 const $monthlyEl: Cheerio<Element> = $(monthlyEl);
 
                 const monthlyUrl: string | undefined = $monthlyEl.attr('href') ? new URL($monthlyEl.attr('href') as string, baseUrl).href : undefined;
@@ -60,13 +60,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         }
                         return;
                     })
-                    .filter(Boolean);
+                    .filter(Boolean) as DataItem[];
             })
     );
 
-    items = await Promise.all(
-        items
-            .filter(Boolean)
+    const items: DataItem[] = await Promise.all(
+        (monthlyItems.filter(Boolean) as DataItem[][])
             .flat()
             .slice(0, limit)
             .map((item) => {

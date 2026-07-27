@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,7 +60,7 @@ async function handler() {
                 return { description, author, category };
             });
             return {
-                title: item.title,
+                title: item.title!,
                 link: item.link,
                 description,
                 author,
@@ -71,11 +71,11 @@ async function handler() {
         })
     );
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.title,
         item: items,
-        language: 'pl',
+        language: 'pl' as Language,
         image: 'https://ocdn.eu/wiadomosciucs/static/logo2017/onet2017big_dark.png',
     };
 }

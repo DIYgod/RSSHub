@@ -212,7 +212,7 @@ const renderDescription = (data, current): string =>
                     </tr>
                     <tr>
                         <td class="title">最近一期审计基准日</td>
-                        <td class="info" colspan="3">
+                        <td class="info" colspan={3}>
                             {data.lastestAuditEndDate}
                         </td>
                     </tr>

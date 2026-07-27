@@ -130,7 +130,7 @@ async function fetchContent(url) {
         const rdata = subres.data;
         const cards = rdata.data.cards;
         // Need to find one cards with 'type ==9'
-        demostr = seekContent(cards);
+        demostr = seekContent(cards) ?? '';
     } catch {
         // console.log(e);
         // console.log(url);

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
                         .map((c) => $(c).text()),
                 ].filter(Boolean),
                 author: $item.find('a.username').text(),
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 content: undefined as DataItem['content'],
                 image: undefined as DataItem['image'],
@@ -80,7 +80,7 @@ export const handler = async (ctx) => {
                     };
                     item.image = image;
                     item.banner = image;
-                    item.language = language;
+                    item.language = language as Language;
 
                     const torrents = $$('ul.attachlist li a');
 
@@ -109,7 +109,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 

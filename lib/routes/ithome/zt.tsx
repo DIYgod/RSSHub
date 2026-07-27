@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
                 author: $item.find('div.editor').contents().first().text(),
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 category: undefined as DataItem['category'],
                 content: undefined as DataItem['content'],
@@ -88,8 +88,8 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div#paragraph').text(),
                 };
-                item.image = image;
-                item.banner = image;
+                item.image = image!;
+                item.banner = image!;
                 item.language = language;
 
                 return item;
@@ -107,7 +107,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 

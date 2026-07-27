@@ -50,7 +50,7 @@ async function handler(ctx) {
                 $('.artical-content p:eq(0), .artical-content .flexbox').remove();
 
                 return {
-                    title: $item.attr('title'),
+                    title: $item.attr('title')!,
                     author,
                     description: $('.artical-content').html(),
                     category: $('meta[property="article:section"]').attr('content'),

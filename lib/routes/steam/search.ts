@@ -61,7 +61,7 @@ async function handler(ctx) {
                     description: desc.replaceAll('\n', '<br>'),
                     media: {
                         thumbnail: {
-                            url: $el.find('.search_capsule img').attr('src'),
+                            url: $el.find('.search_capsule img').attr('src')!,
                         },
                     },
                 };

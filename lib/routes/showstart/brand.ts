@@ -34,7 +34,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const brand = await fetchBrandInfo({
-        brandId: id,
+        brandId: id!,
     });
     return {
         title: `${TITLE} - ${brand.name}`,

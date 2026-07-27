@@ -107,7 +107,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     $$('div.attitude, div.clear').remove();
 
                     const description: string = renderDescription({
-                        description: $$('div.post-body').html(),
+                        description: $$('div.post-body').html() ?? undefined,
                     });
 
                     const processedItem: DataItem = {

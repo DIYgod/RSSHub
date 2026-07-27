@@ -88,7 +88,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$authorEl: Cheerio<Element> = $$(authorEl);
 
                     return {
-                        name: $$authorEl.attr('content'),
+                        name: $$authorEl.attr('content')!,
                         url: undefined,
                         avatar: undefined,
                     };

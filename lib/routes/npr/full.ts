@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -115,10 +115,10 @@ async function handler(ctx) {
     ).filter(Boolean);
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         icon: 'https://media.npr.org/images/podcasts/primary/npr_generic_image_300.jpg?s=200',
-        item: items,
+        item: items as DataItem[],
     };
 }

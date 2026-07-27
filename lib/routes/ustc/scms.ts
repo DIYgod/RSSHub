@@ -80,7 +80,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('div.wp_articlecontent').html();
+                    const desc: string = load(response.data)('div.wp_articlecontent').html() ?? '';
                     item.description = desc;
                 } catch {
                     // Intranet only contents

@@ -72,7 +72,7 @@ export const route: Route = {
                 const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD'), 8);
 
                 return {
-                    title,
+                    title: title!,
                     link,
                     pubDate,
                     author: '研究生院',
@@ -110,7 +110,7 @@ export const route: Route = {
                         });
                     }
 
-                    item.description = $description.html() || item.title;
+                    item.description = ($description.html() || item.title)!;
                     return item;
                 })
             )

@@ -56,7 +56,7 @@ async function handler(ctx) {
             link: obj.link,
             featuredMediaLink: obj._links['wp:featuredmedia'][0].href,
             title: obj.title.rendered,
-            content: undefined as DataItem['content'],
+            content: undefined as DataItem['description'],
             description: undefined as DataItem['description'],
             categories: undefined as any,
         };

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
@@ -66,7 +66,7 @@ async function handler(ctx) {
     const result = {
         title,
         link: `${baseUrl}/survey_more_news.php${type ? '?type=' + type : ''}`,
-        language: 'th-th',
+        language: 'th-th' as Language,
         item: [] as DataItem[],
     };
 
@@ -132,10 +132,10 @@ async function handler(ctx) {
                 // Act draft status
                 const [, presenter, monetaryType] = $('.type77 h5').text().split(' ', 3);
                 item.category = [
-                    ...item.category,
+                    ...(item.category as string[]),
                     $('.container-fluid .bg-status .col-md-8.p-0 h5 span,a')
                         .toArray()
-                        .map((statusElem) => $(statusElem).text()),
+                        .map((statusElem) => $(statusElem).text()) as unknown as string,
                     presenter,
                     monetaryType,
                 ];

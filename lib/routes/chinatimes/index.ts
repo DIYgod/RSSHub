@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -105,7 +105,7 @@ async function handler(ctx) {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         image: `${baseUrl}/images/2020/apple-touch-icon.png`,
         item: items,
     };

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -41,7 +41,7 @@ async function handler(ctx) {
     return {
         title: response.data.title,
         link: `${baseUrl}/${type}/${name}`,
-        language: 'ru-RU',
+        language: 'ru-ru' as Language,
         item: items,
     };
 }

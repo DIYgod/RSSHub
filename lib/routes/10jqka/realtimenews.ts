@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 image,
                 banner: item.picUrl,
                 updated: parseDate(item.rtime, 'X'),
-                language,
+                language: language as Language,
             };
         }) ?? [];
 
@@ -66,7 +66,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -92,7 +92,7 @@ export async function handler(ctx) {
         return {
             title: $item.prop('title') ?? $item.text(),
             link: new URL($item.prop('href'), rootUrl).href,
-            language,
+            language: language as Language,
         };
     });
 
@@ -136,6 +136,6 @@ export async function handler(ctx) {
         item: items,
         allowEmpty: true,
         image,
-        language,
+        language: language as Language,
     };
 }

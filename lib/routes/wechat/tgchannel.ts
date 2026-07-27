@@ -1,4 +1,6 @@
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
@@ -63,7 +65,7 @@ async function handler(ctx) {
                         const markInnerHtml = $mark.html();
                         $mark.replaceWith(markInnerHtml);
                     }
-                    $item = $($item.html()); // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
+                    $item = $($item.html()) as Cheerio<Element>; // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
                 }
             }
 

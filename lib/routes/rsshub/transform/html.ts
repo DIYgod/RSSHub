@@ -106,7 +106,7 @@ Parsing of \`routeParams\` parameter:
                     const pubDate = routeParams.get('itemPubDateAttr') ? pubDateEle.attr(routeParams.get('itemPubDateAttr')) : pubDateEle.html();
 
                     return {
-                        title,
+                        title: title!,
                         link,
                         description: desc,
                         pubDate,

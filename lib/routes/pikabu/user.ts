@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -62,10 +62,10 @@ async function handler(ctx) {
         });
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content')!,
         description: $('.profile__user-about-content').text(),
         image: $('meta[property="og:image"]').attr('content'),
-        language: 'ru-RU',
+        language: 'ru-ru' as Language,
         link,
         item: items,
     };

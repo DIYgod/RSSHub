@@ -35,7 +35,7 @@ const handler: Route['handler'] = async () => {
     return {
         title: 'React Blog',
         link: 'https://react.dev/blog',
-        language: 'en-US',
+        language: 'en-us',
         item,
     };
 };

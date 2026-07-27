@@ -63,7 +63,7 @@ async function handler(ctx) {
             let link: string;
             const url = $item.attr('href');
             if (url.startsWith('http')) {
-                link = url;
+                link = url!;
             } else if (url.startsWith('/')) {
                 link = `${rootUrl}${url}`;
             } else {

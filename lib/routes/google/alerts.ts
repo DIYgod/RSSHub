@@ -39,7 +39,7 @@ async function handler(ctx) {
             const title = $item.find('.result_title a');
             return {
                 title: title.text(),
-                link: new URL(title.attr('href')!).searchParams.get('url'),
+                link: new URL(title.attr('href')!).searchParams.get('url') ?? undefined,
                 author: $item.find('.result_source').text(),
                 description: $item.find('.snippet').html(),
             };

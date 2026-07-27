@@ -52,7 +52,7 @@ async function handler(ctx) {
 
     if (id === '') {
         logger.error('The given type not found.');
-        return;
+        return null;
     }
 
     const response = await got(moeUrl);

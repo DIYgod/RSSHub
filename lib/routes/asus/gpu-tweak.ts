@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -53,6 +53,6 @@ async function handler() {
         image: new URL($('head link[rel="shortcut icon"]').attr('href')!, pageUrl).href,
         link: pageUrl,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

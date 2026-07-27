@@ -4,6 +4,7 @@ import type { OutgoingHttpHeaders } from 'node:http';
 import http from 'node:http';
 import https from 'node:https';
 
+import type { Response as UndiciResponse } from 'undici';
 import undici from 'undici';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -46,7 +47,7 @@ const createJsonResponse = () =>
                 'content-type': 'application/json',
             },
         }
-    );
+    ) as unknown as UndiciResponse;
 
 describe('request-rewriter', () => {
     afterAll(() => {

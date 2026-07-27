@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -95,7 +95,7 @@ async function handler(ctx) {
             return {
                 title: '公主链接日服-新闻',
                 link: 'https://priconne-redive.jp/news/',
-                language: 'ja',
+                language: 'ja' as Language,
                 item: out,
             };
         }
@@ -182,6 +182,6 @@ async function handler(ctx) {
             };
         }
         default:
-        // Do nothing
+            return null;
     }
 }

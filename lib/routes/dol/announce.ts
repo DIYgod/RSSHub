@@ -50,7 +50,7 @@ async function handler(ctx) {
                 return result;
             }
 
-            queryParams.searchprovince = slcProvince.attr('value');
+            queryParams.searchprovince = slcProvince.attr('value')!;
         }
 
         if (office) {
@@ -60,7 +60,7 @@ async function handler(ctx) {
                 return result;
             }
 
-            queryParams.searchoffice = slcOffice.attr('value');
+            queryParams.searchoffice = slcOffice.attr('value')!;
         }
     }
 

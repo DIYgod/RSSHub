@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const image: string | undefined = $$('div.entity_thumb img.img-responsive').attr('src');
 
                     const description: string | undefined = renderDescription({
-                        description: $$('div.entity_content').html(),
+                        description: $$('div.entity_content').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = detailResponse.match(/var\stime\s=\s"(.*?)";/)?.[1];
                     const categoryEls: Element[] = $$('div.entity_tag span a').toArray();

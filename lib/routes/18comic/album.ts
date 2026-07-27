@@ -71,7 +71,7 @@ async function handler(ctx) {
                     const chapterApiUrl = `${getApiUrl()}/chapter?id=${item.id}`;
                     const chapterResult = await processApiItems(chapterApiUrl);
                     const result = {
-                        title: undefined as DataItem['title'] | undefined,
+                        title: undefined as unknown as DataItem['title'],
                         link: undefined as DataItem['link'],
                         guid: undefined as DataItem['guid'],
                         updated: undefined as DataItem['updated'],

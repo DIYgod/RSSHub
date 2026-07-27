@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 category: undefined as DataItem['category'],
             };
         });
@@ -67,14 +67,14 @@ export const handler = async (ctx) => {
                 const description = $$('div.articleContent').html();
 
                 item.title = title;
-                item.description = description;
+                item.description = description ?? '';
                 item.pubDate = timezone(parseDate($$('.time').text()), 8);
                 item.category = $$('meta[name="keywords"]').prop('content').split(/,/);
                 item.content = {
-                    html: description,
+                    html: description ?? '',
                     text: $$('div.articleContent').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -92,7 +92,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/,/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

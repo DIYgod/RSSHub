@@ -51,7 +51,7 @@ async function handler(ctx) {
             const itemDate = $item.find('.span-time').text();
             const path = $item.find('a').attr('href');
             let itemUrl = '';
-            itemUrl = path.startsWith('http') ? path : host + path;
+            itemUrl = (path.startsWith('http') ? path : host + path)!;
             return cache.tryGet(itemUrl, async () => {
                 let description: string;
                 if (itemUrl) {

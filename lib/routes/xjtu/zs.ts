@@ -59,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.show01 h5').text();
-                    const description: string | undefined = $$('div.v_news_content').html();
+                    const description: string | undefined = $$('div.v_news_content').html() ?? undefined;
                     const pubDateStr: string | undefined = $$('div.show01 i')
                         .text()
                         ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];

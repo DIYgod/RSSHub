@@ -38,7 +38,7 @@ async function handler(ctx) {
                           .text()
                           .match(/((\d{4}-\d{2}-\d{2})(\s\d{2}:\d{2}:\d{2})?)/)[1];
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: host + $item.find('a').attr('href'),
                 pubDate: timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY年M月D']), 8),
                 description: undefined as DataItem['description'],

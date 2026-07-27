@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
         item: await ProcessFeed(limit, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: new URL('images/logo_toplist.jpg', ossUrl).href,
         subtitle: title,
     };

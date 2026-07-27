@@ -30,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text();
             const description: string | undefined = renderDescription({
-                description: $el.find('div#cookbook').html(),
+                description: $el.find('div#cookbook').html() ?? undefined,
             });
             const pubDateStr: string | undefined = $el.find('span.updated').text();
             const linkUrl: string | undefined = $aEl.attr('href');
@@ -79,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('.title').text();
                 const description: string | undefined = renderDescription({
-                    description: $$('div#cookbook').html(),
+                    description: $$('div#cookbook').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const categoryEls: Element[] = $$('div.post-header-text-cat p a').toArray();

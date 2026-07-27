@@ -63,7 +63,7 @@ async function handler() {
     );
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content')!,
         link: currentUrl,
         description: $('meta[property="og:description"]').attr('content'),
         item: items,

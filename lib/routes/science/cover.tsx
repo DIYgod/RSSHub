@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 // journals form AAAS publishing group
 //
 // science:        Science
@@ -89,7 +89,7 @@ async function handler() {
         description: $('meta[property="og:description"]').attr('content'),
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageURL,
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

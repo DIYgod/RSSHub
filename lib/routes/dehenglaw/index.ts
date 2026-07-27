@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 const description =
                     item.description +
                     renderDescription({
-                        description: $$('div.news_content').html(),
+                        description: $$('div.news_content').html() ?? undefined,
                     });
                 const image = $$('div.news_content img').prop('src');
 

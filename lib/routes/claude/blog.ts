@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -83,7 +83,7 @@ async function handler(ctx) {
         title: 'Claude Blog',
         link,
         description: 'Product news and best practices for teams building with Claude.',
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

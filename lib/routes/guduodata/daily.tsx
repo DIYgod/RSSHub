@@ -89,7 +89,7 @@ async function handler() {
 }
 
 const GuduodataDailyTable = ({ rows }: { rows: any[] }) => (
-    <table border="1" cellpadding="2" cellspacing="0">
+    <table border={1} cellpadding="2" cellspacing="0">
         <thead>
             <th>排名</th>
             <th>剧名</th>

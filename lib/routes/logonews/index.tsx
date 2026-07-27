@@ -44,7 +44,7 @@ async function handler(ctx) {
 
             return {
                 link: $item.attr('href'),
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 author: undefined as DataItem['author'],
                 pubDate: undefined as DataItem['pubDate'],
                 category: undefined as DataItem['category'],

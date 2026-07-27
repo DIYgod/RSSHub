@@ -79,7 +79,7 @@ async function handler(ctx) {
                 const detailContent = $('.v_news_content').html();
                 // ### 设置 RSS feed item
                 // author,
-                item.description = detailContent;
+                item.description = detailContent ?? '';
                 item.pubDate = timezone(parseDate($('.nr-xinxi i').first().text(), 'YYYY-MM-DD HH:mm:ss'), 8);
                 // // ### 设置缓存
                 return item;

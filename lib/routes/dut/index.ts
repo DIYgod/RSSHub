@@ -54,7 +54,7 @@ async function handler(ctx) {
 
             const result = {
                 link: $item.attr('href').startsWith('http') ? $item.attr('href') : `${rootUrl}/${$item.attr('href').replace(/^[./]+/, '')}`,
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 pubDate: undefined as DataItem['pubDate'],
             };
 

@@ -104,7 +104,7 @@ const gdgov = async (info, ctx) => {
     pathname = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname : pathname + '/';
     const currentUrl = `${rootUrl}/${pathname}`;
 
-    let $ = '';
+    let $ = load('');
     let name: string;
     let list: any;
     // 判断是否处于特殊目录
@@ -154,7 +154,7 @@ const gdgov = async (info, ctx) => {
         if (pathname.startsWith('gkmlpt')) {
             link = i.url;
         } else {
-            link = $(item).attr('href');
+            link = $(item).attr('href')!;
             // 判断获取到的链接是否完整，不完整则补全。
             if (!link.startsWith('http')) {
                 link.startsWith('/') ? (link = `${rootUrl}${link}`) : (link = `${rootUrl}/${link}`);
@@ -215,7 +215,7 @@ const gdgov = async (info, ctx) => {
 
                 return {
                     link,
-                    title,
+                    title: title!,
                     description,
                     pubDate: timezone(parseDate(pubDate!, pubDate_format), 8),
                     author: /本/.test(author!) ? authorisme : author,

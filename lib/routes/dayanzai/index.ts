@@ -44,7 +44,7 @@ async function handler(ctx) {
     const reg = /日期：(.*?(?:\s\(.*?\))?)\s/;
     const list = lists.toArray().map((item) => {
         const $item = $(item).find('div');
-        let date = reg.exec($item.find('div.r > p.other').text())[1];
+        let date: string | Date = reg.exec($item.find('div.r > p.other').text())[1];
         if (date.includes('周') || date.includes('月')) {
             date = /\((.*?)\)/.exec(date)[1];
             date = parseDate(date, 'MM-DD');
@@ -68,7 +68,7 @@ async function handler(ctx) {
                       cache.tryGet(item.link, async () => {
                           const detailResponse = await got.get(item.link);
                           const content = load(detailResponse.data);
-                          item.description = content('div.intro-box').html();
+                          item.description = content('div.intro-box').html() ?? '';
                           return item;
                       })
                   )

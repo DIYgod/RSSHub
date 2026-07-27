@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -61,7 +62,7 @@ const fetchData = ($, currentUrl) => {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content') || $('meta[name="Description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -172,7 +172,7 @@ async function handler(ctx) {
                 delete item.isoDate;
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
-                item.pubDate = parseDate(item.pubDate!);
+                item.pubDate = parseDate(item.pubDate!) as unknown as string;
                 item.guid = item.link.includes('?') ? item.link : item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return item;
@@ -181,10 +181,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items,
+        item: items as DataItem[],
         image: feed.image.url,
         language: feed.language,
     };

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const handler = async (ctx) => {
@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 link,
-                language,
+                language: language as Language,
                 enclosure_url: link,
                 enclosure_type: link ? 'application/pdf' : undefined,
                 enclosure_title: title,
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

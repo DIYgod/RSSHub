@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -125,6 +125,6 @@ async function handler(ctx) {
         description: 'Latest Articles on Smashingmagazine.com',
         logo: 'https://www.smashingmagazine.com/images/favicon/apple-touch-icon.png',
         icon: 'https://www.smashingmagazine.com/images/favicon/favicon.svg',
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

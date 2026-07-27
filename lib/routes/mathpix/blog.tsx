@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     $('div.navbar-menu a.blog-category').each((_, el) => {
         const $el: Cheerio<Element> = $(el);
 
-        const id: string = $el.attr('data-category');
+        const id: string = $el.attr('data-category')!;
         const name: string = $el.text()?.trim();
 
         if (id && name) {
@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.article__title').text();
-                const description: string | undefined = $$('div#setText').html();
+                const description: string | undefined = $$('div#setText').html() ?? undefined;
 
                 const processedItem: DataItem = {
                     title,

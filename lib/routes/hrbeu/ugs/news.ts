@@ -140,7 +140,7 @@ async function handler(ctx) {
         .map((e) => {
             const $e = $(e);
             return {
-                title: $e.find('a').attr('title'),
+                title: $e.find('a').attr('title')!,
                 link: new URL($e.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseDate($e.find('.date').text()),
                 description: undefined as DataItem['description'],

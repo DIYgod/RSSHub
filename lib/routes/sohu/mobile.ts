@@ -61,7 +61,7 @@ async function handler() {
                         const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?', 1)[0]?.replace('www.sohu.com/', 'm.sohu.com/');
                         const response = await ofetch(`https:${fullArticleUrl}`);
                         const $ = load(response);
-                        description = getDescription($);
+                        description = getDescription($) ?? '';
                         pubDate = extractPubDate($);
                     }
 
@@ -137,7 +137,7 @@ function extractPubDate($: CheerioAPI): string {
 function getDescription($: CheerioAPI): string | null {
     const content = $('#articleContent');
     if (content.length) {
-        return content.first().html()?.trim();
+        return content.first().html()?.trim() ?? null;
     }
     const video = $('#videoPlayer div');
     if (video.length) {

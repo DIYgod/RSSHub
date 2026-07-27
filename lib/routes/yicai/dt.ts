@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -161,7 +161,7 @@ async function handler(ctx) {
         title: `${$(`a[data-cid="${category}"]`).text()}${title}`,
         link: currentUrl,
         description: $('meta[name="keywords"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

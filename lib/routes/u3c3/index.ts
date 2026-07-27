@@ -68,7 +68,7 @@ async function handler(ctx) {
             const a = item.find('td:nth-of-type(2) > a');
             const guid = rootURL + a.attr('href');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 guid,
                 link: guid,
                 pubDate: item.find('td:nth-of-type(5)').text(),

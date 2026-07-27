@@ -73,7 +73,7 @@ async function handler(ctx) {
             };
         });
 
-    let items = await Promise.all(
+    let items = (await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 let response;
@@ -108,7 +108,7 @@ async function handler(ctx) {
                 return item;
             })
         )
-    );
+    )) as DataItem[];
     items = items.filter((item) => item !== null);
 
     return {

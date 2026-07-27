@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -245,7 +245,7 @@ async function handler(ctx) {
         title: `${$('title').text()} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'cn',
+        language: 'zh-CN' as Language,
         image: new URL('img/logo.jpg', rootUrl).href,
         icon,
         logo: icon,

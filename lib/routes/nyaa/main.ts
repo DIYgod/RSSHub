@@ -3,7 +3,7 @@ import MarkdownIt from 'markdown-it';
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -88,10 +88,10 @@ async function handler(ctx) {
         );
 
         return {
-            title: feed.title,
+            title: feed.title!,
             link: currentLink,
             description: feed.description,
-            item: items,
+            item: items as DataItem[],
         };
     }
     feed.items.map((item) => {
@@ -102,9 +102,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: currentLink,
         description: feed.description,
-        item: feed.items,
+        item: feed.items as DataItem[],
     };
 }

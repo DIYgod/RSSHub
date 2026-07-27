@@ -35,7 +35,7 @@ async function handler(ctx) {
             const title = $('a', res).attr('title');
             const pubDate = parseDate(resDate.text());
             return {
-                title,
+                title: title!,
                 link,
                 pubDate,
                 description: undefined as DataItem['description'],

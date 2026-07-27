@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import type { Text } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -232,10 +232,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head meta[name=title]').attr('content')?.trim(),
+        title: $('head meta[name=title]').attr('content')?.trim() ?? '',
         link: baseUrl + '/' + category,
         description: $('head meta[name=description]').attr('content')?.trim(),
         item: items,
-        language: 'zh-hk',
+        language: 'zh-HK' as Language,
     };
 }

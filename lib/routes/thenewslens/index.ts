@@ -75,10 +75,10 @@ async function handler(ctx) {
                 item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
                 item.category = content('meta[property="article:tag"]')
                     .toArray()
-                    .map((t) => content(t).attr('content'));
+                    .map((t) => content(t).attr('content')!);
                 item.description = renderDescription({
                     image: content('meta[property="og:image"]')?.attr('content').split('?', 1)[0] ?? undefined,
-                    description: content('.article-main-box, article[itemprop="articleBody"]').html(),
+                    description: content('.article-main-box, article[itemprop="articleBody"]').html() ?? undefined,
                 });
 
                 return item;

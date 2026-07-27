@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 
@@ -56,6 +56,6 @@ async function handler() {
         description: 'Daily Updates on stockedge.com',
         logo: 'https://web.stockedge.com/assets/icon/favicon.png',
         icon: 'https://web.stockedge.com/assets/img/light/icon.png',
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

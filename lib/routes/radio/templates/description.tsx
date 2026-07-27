@@ -10,7 +10,7 @@ const RadioDescription = ({ description, enclosure_url, enclosure_type }: Descri
     <>
         {description ? <p>{description}</p> : null}
         {enclosure_url && enclosure_type ? (
-            <audio controls="controls" preload="metadata">
+            <audio controls preload="metadata">
                 <source src={enclosure_url} type={enclosure_type} />
             </audio>
         ) : null}

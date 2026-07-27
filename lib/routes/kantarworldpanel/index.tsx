@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -87,7 +87,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.title = content('h1.newshead').text();
-                item.description = content('div.center-content div.left-layout-col').html();
+                item.description = content('div.center-content div.left-layout-col').html() ?? '';
                 item.category = content('meta[name="keywords"]').prop('content')?.split(/,\s?/) ?? [];
                 item.pubDate = parseDate(content('p.newsdateshare').text(), 'DD/MM/YYYY');
 
@@ -103,7 +103,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('#logoprint img').prop('src'),
         icon,
         logo: icon,

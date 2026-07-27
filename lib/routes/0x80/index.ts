@@ -47,7 +47,7 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate,
+                pubDate: pubDate as DataItem['pubDate'],
                 category: 'Uncategoried',
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],

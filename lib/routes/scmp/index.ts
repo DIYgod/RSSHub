@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -86,7 +86,7 @@ async function handler(ctx) {
         link: $('channel > link').text(),
         description: $('channel > description').text(),
         item: items,
-        language: 'en-hk',
+        language: 'en-hk' as Language,
         icon: 'https://assets.i-scmp.com/static/img/icons/scmp-icon-256x256.png',
         logo: 'https://customerservice.scmp.com/img/logo_scmp@2x.png',
         image: $('channel > image > url').text(),

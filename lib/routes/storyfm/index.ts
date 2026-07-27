@@ -48,14 +48,14 @@ async function handler() {
                 .map((value) => {
                     if (value.includes('月')) {
                         const enMongth = cnMonth.findIndex((cnMonthStr) => value.includes(cnMonthStr));
-                        value = enMongth + 1;
+                        value = (enMongth + 1) as unknown as string;
                     }
                     return value;
                 });
 
             const pubDate = new Date(`${year}-${month}-${day} ${time}`).toUTCString();
             return {
-                title,
+                title: title as unknown as string,
                 description: [`<img src="${img}"/>`, title].join('<br/>'),
                 link,
                 pubDate,

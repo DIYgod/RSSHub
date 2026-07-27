@@ -48,7 +48,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                description: $el.html(),
+                description: $el.html() ?? undefined,
             });
             const pubDateStr: string | undefined = $el.find('footer.when-where label').first().text();
             const linkUrl: string | undefined = $el.find('a.summary').attr('href');
@@ -106,7 +106,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                   },
                               ]
                             : undefined,
-                        description: $$('div.event-detail').html(),
+                        description: $$('div.event-detail').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('span.box-fl')
                         .filter((_, el) => $$(el).text().includes('时间'))

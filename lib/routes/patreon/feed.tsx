@@ -203,7 +203,7 @@ async function handler(ctx) {
     });
 
     return {
-        title: creatorData.attributes.name,
+        title: creatorData.attributes.name!,
         description: creatorData.attributes.creation_name,
         link,
         image:

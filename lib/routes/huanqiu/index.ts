@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -98,7 +98,7 @@ async function handler(ctx) {
         title: `${name} - 环球网`,
         link: host,
         description: '环球网',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

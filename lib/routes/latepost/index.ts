@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -124,7 +124,7 @@ async function handler(ctx) {
         title: `${title} - ${proma ? columns[proma].title : defaultTitle}`,
         link: currentUrl,
         description: $('div.logo-txt').first().text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: new URL($('div.logo-txt img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

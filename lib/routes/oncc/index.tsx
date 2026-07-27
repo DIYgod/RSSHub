@@ -91,7 +91,7 @@ async function handler(ctx) {
                 const content = $('div.breakingNewsContent').html();
                 const description = renderArticleDescription({
                     imageUrl,
-                    content,
+                    content: content ?? undefined,
                 });
 
                 return description;

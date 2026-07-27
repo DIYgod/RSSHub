@@ -40,7 +40,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, url).href,
                 pubDate: parseDate($item.find('span').text().replace('[', '').replace(']', '')),
                 description: undefined as DataItem['description'],

@@ -76,7 +76,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: `https:${$item.attr('href')}`,
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],

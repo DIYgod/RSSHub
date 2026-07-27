@@ -49,7 +49,7 @@ async function handler(ctx) {
                     const summary = 'Reply: ' + $('.posts', elem).text();
                     return {
                         link,
-                        title: $('.subject a', elem).attr('title'),
+                        title: $('.subject a', elem).attr('title')!,
                         pubDate: parseDate($('.lastpost .time', elem).text()),
                         description: fullText ? summary + '<br><br>' + fullText : summary,
                         author: $('.author a', elem).text(),

@@ -12,7 +12,7 @@ async function fetch(address) {
         description: $('[name="_newscontent_fromname"]').html(),
         link: address,
         guid: address,
-        title: undefined as DataItem['title'] | undefined,
+        title: undefined as unknown as DataItem['title'],
         pubDate: undefined as DataItem['pubDate'],
     };
 }

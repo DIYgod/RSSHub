@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -55,7 +55,7 @@ async function handler(ctx) {
         title: $('head title').text(),
         link,
         image: decodeURIComponent($('.person div.slot').attr('data-args')!).replace('avatar=', '').split('?', 1)[0],
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('h1.meta-tit a').text();
-                const description = item.description + renderDescription({ description: $$('div.entry').html() });
+                const description = item.description + renderDescription({ description: $$('div.entry').html() ?? undefined });
 
                 item.title = title;
                 item.description = description;
@@ -91,7 +91,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.entry').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -109,7 +109,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop()?.trim(),
-        language,
+        language: language as Language,
     };
 };
 

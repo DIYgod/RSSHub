@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -50,7 +50,7 @@ async function handler(ctx) {
         title: `${siteName} - ${columnName}`,
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: new URL($('div.top-logo img').prop('src')!, rootUrl).href,
         subtitle: columnName,
         author: siteName,

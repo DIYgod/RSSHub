@@ -74,7 +74,7 @@ async function loadContent(link) {
     const description = renderShotDescription({
         shotMedia,
         shotData,
-        descriptionHtml: shotDescription.length ? shotDescription.html() : undefined,
+        descriptionHtml: shotDescription.length ? (shotDescription.html() ?? undefined) : undefined,
     });
 
     // Get the text content of the element with class 'shot-date' and convert it to a UTC string representation of a date

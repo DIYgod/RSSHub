@@ -48,7 +48,7 @@ async function handler(ctx) {
         item: list.toArray().map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: 'https://scit.nju.edu.cn' + $item.find('a').attr('href'),
                 pubDate: timezone(parseDate($item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
             };

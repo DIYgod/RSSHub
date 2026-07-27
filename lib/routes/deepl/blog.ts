@@ -84,7 +84,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description: string | undefined =
                     item.description +
                     renderDescription({
-                        description: $$('div.my-redesign-3').html(),
+                        description: $$('div.my-redesign-3').html() ?? undefined,
                     });
                 const pubDateStr: string | undefined = $$('time').first().attr('datetime');
                 const authorsArr: string[] = $$('span[data-contentful-field-id="author"] span').last().text().split(/,\s/);

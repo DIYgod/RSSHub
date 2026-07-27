@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -63,7 +63,7 @@ async function handler(ctx) {
                 const pubDate = parseDate(link.slice(link.lastIndexOf('/') + 1), 'YYYY-MM-DD');
 
                 return {
-                    title,
+                    title: title!,
                     author,
                     category: 'comic',
                     description,
@@ -79,6 +79,6 @@ async function handler(ctx) {
         link: url,
         image: $('.feature-logo').attr('src'),
         item: items,
-        language: 'en-US',
+        language: 'en-us' as Language,
     };
 }

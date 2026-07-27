@@ -5,7 +5,7 @@ import utils from './utils';
 
 const getLinkAndTitle = (type, period) => {
     const baseURL = 'https://api.coolapk.com/v6/page/dataList?url=';
-    const res = { link: undefined as DataItem['link'], title: undefined as DataItem['title'] | undefined };
+    const res = { link: undefined as DataItem['link'], title: undefined as unknown as DataItem['title'] };
     const types = {
         jrrm: {
             title: '今日热门',
@@ -130,6 +130,6 @@ async function handler(ctx) {
         title,
         link: 'https://www.coolapk.com/',
         description: '热榜-' + title,
-        item: out,
+        item: out as DataItem[],
     };
 }

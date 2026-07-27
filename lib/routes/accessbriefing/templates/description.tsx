@@ -20,7 +20,7 @@ const AccessBriefingDescription = ({ images, intro, description }: DescriptionDa
             ? images.map((image) =>
                   image?.src ? (
                       <figure>
-                          <img alt={image.height ?? image.width ?? image.alt} src={image.src} />
+                          <img alt={(image.height ?? image.width ?? image.alt) as string | undefined} src={image.src} />
                       </figure>
                   ) : null
               )

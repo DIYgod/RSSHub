@@ -44,8 +44,8 @@ async function handler() {
             const $e = $(e);
             return {
                 link: new URL($e.find('a').attr('href')!, link).href,
-                pubDate: $e.find('span').text().replace('[', '').replace(']', ''),
-                title: undefined as DataItem['title'] | undefined,
+                pubDate: $e.find('span').text().replace('[', '').replace(']', '') as DataItem['pubDate'],
+                title: undefined as unknown as DataItem['title'],
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],
             };

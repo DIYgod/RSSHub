@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -122,7 +122,7 @@ async function handler(ctx) {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,
         description: $('.banner-widget__content p').text(),
         image: 'https://www.pnas.org/favicon.ico',
-        language: 'en-US',
+        language: 'en-us' as Language,
         link,
         item: out,
     };

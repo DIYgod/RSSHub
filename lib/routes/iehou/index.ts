@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -35,7 +35,7 @@ export const handler = async (ctx) => {
                     .nextAll('a')
                     .toArray()
                     .map((c) => $(c).text()),
-                language,
+                language: language as Language,
                 description: undefined as DataItem['description'],
                 author: undefined as DataItem['author'],
                 content: undefined as DataItem['content'],
@@ -65,7 +65,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         author: $('h1').text(),
-        language,
+        language: language as Language,
     };
 };
 

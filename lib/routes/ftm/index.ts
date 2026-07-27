@@ -52,8 +52,8 @@ async function handler(ctx) {
 
                 item.author = content("[name='author']")
                     .toArray()
-                    .map((e) => ({ name: $(e).attr('content') }));
-                item.category = content('.collection .tab').text().trim() || null;
+                    .map((e) => ({ name: $(e).attr('content')! }));
+                item.category = content('.collection .tab').text().trim() || undefined;
 
                 item.description = content('.body').html();
 

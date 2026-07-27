@@ -68,7 +68,7 @@ async function handler(ctx) {
                     const authorMatch = $('.zzxx')
                         .text()
                         .match(/作者:(.*) 发布时间/);
-                    item.author = authorMatch ? authorMatch[1].trim() : null;
+                    item.author = authorMatch ? authorMatch[1].trim() : undefined;
                     item.pubDate = timezone(
                         parseDate(
                             item

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -56,7 +56,7 @@ async function handler(ctx) {
                     }
                     return cache.tryGet(link, () => loadArticle(link));
                 })
-                .filter(Boolean)
+                .filter(Boolean) as Array<Promise<DataItem>>
         ),
     };
 }

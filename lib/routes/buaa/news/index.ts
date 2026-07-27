@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -66,7 +66,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `北航新闻 - ${title}`,
         link,
         description: `北京航空航天大学新闻网 - ${title}`,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: result,
     };
 }

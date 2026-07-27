@@ -101,11 +101,13 @@ async function handler(ctx) {
                 return {
                     title: $item.text(),
                     link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
+                    description: undefined as DataItem['description'],
+                    pubDate: undefined as DataItem['pubDate'],
                 };
             });
     }
 
-    items = await Promise.all(
+    items = (await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
@@ -139,7 +141,7 @@ async function handler(ctx) {
                 }
             })
         )
-    );
+    )) as typeof items;
 
     return {
         title,

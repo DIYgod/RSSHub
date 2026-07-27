@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,7 +53,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 $('footer').remove();
-                item.description = $('article .content').html();
+                item.description = $('article .content').html() ?? '';
 
                 return item;
             })
@@ -63,7 +63,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         item: items,
     };
 }

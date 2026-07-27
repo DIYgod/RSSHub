@@ -31,7 +31,7 @@ describe('RSS view', () => {
                             itunes_item_image: 'https://example.com/itunes.jpg',
                             itunes_duration: '01:02:03',
                             enclosure_url: 'https://example.com/audio.mp3',
-                            enclosure_length: '123',
+                            enclosure_length: 123,
                             enclosure_type: 'audio/mpeg',
                             category: 'Podcast',
                             media: {

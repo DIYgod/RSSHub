@@ -90,7 +90,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               },
                           ]
                         : undefined,
-                    description: $$('div.image-description').html(),
+                    description: $$('div.image-description').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('div.publish-date time').attr('datetime');
                 const authorEls: Element[] = $$('div.related-researcher-container').toArray();

@@ -53,7 +53,7 @@ async function handler(ctx) {
             const $elem = $(elem);
             const a = $elem.find('td a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($elem.find('td div').text()),
                 description: undefined as DataItem['description'],

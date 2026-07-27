@@ -64,7 +64,7 @@ export const renderVideo = (video: Essential, embed: boolean) =>
             {embed ? (
                 <iframe src={`https://embed.nicovideo.jp/watch/${video.id}`} style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen />
             ) : (
-                <img src={video.thumbnail.nHdUrl || video.thumbnail.largeUrl || video.thumbnail.middleUrl} />
+                <img src={(video.thumbnail.nHdUrl || video.thumbnail.largeUrl || video.thumbnail.middleUrl) ?? undefined} />
             )}
             <br />
             {video.shortDescription ? <>{raw(video.shortDescription)}</> : null}

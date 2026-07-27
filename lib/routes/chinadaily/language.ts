@@ -73,7 +73,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
-                    const title: string = $$('meta[ property="og:title"]').attr('content');
+                    const title: string = $$('meta[ property="og:title"]').attr('content')!;
                     const pubDateStr: string | undefined = $$('p.main_title3').text().split(/\s/).pop();
                     const categories: string[] | undefined = $$('meta[name="keywords"]').attr('content')?.split(/,/);
                     const authorEls: Element[] = $$('meta[name="source"], meta[name="author"], meta[name="editor"]').toArray();
@@ -146,7 +146,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const title: string = $('title').text();
-    const author: string = title.split(/-\s/).pop();
+    const author: string = title.split(/-\s/).pop()!;
 
     return {
         title,

@@ -113,7 +113,7 @@ async function handler(ctx) {
                 enclosure_url: undefined as DataItem['enclosure_url'],
                 enclosure_type: undefined as DataItem['enclosure_type'],
                 author: undefined as DataItem['author'],
-                title: undefined as DataItem['title'] | undefined,
+                title: undefined as unknown as DataItem['title'],
                 category: undefined as DataItem['category'],
                 description: undefined as DataItem['description'],
             };

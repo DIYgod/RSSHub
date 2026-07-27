@@ -51,7 +51,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: new URL($item.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.find('span').text()),
                 description: undefined as DataItem['description'],

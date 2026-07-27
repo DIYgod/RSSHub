@@ -108,7 +108,7 @@ async function handler(ctx) {
                         const pubDate = $item.find('td').eq(2).text();
                         return {
                             title,
-                            pubDate,
+                            pubDate: pubDate as DataItem['pubDate'],
                             guid: `${title}:${pubDate}`,
                             description: undefined as DataItem['description'],
                         };
@@ -122,7 +122,7 @@ async function handler(ctx) {
 
     const items = data.items.map((item) => {
         item.description = renderDescription(item.title, item.pubDate);
-        item.pubDate = parseDate(item.pubDate, 'YYYY-MM-DD');
+        item.pubDate = parseDate(item.pubDate!, 'YYYY-MM-DD');
         return item;
     });
 

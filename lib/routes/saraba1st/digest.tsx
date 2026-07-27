@@ -96,8 +96,8 @@ async function fetchContent(url) {
                         name: subind(el).find('.pls.favatar div.authi').text(),
                         postinfo: subind(el).find('div.authi em[id*=authorposton]').text(),
                     }}
-                    msg={subind(el).find('td[id*="postmessage_"]').html()}
-                    host={config.saraba1st.host}
+                    msg={subind(el).find('td[id*="postmessage_"]').html() ?? undefined}
+                    host={config.saraba1st.host!}
                 />
             );
             stubS.append(section);

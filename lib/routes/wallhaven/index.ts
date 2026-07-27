@@ -48,7 +48,7 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
         .toArray()
         .map((item) => ({
-            title: $(item).find('img.lazyload').attr('data-src').split('/').pop(),
+            title: $(item).find('img.lazyload').attr('data-src').split('/').pop()!,
             description: $(item)
                 .html()
                 .match(/<img.*?>/)[0],
@@ -68,13 +68,13 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    item.title = content('meta[name="title"]').attr('content');
+                    item.title = content('meta[name="title"]').attr('content')!;
                     item.author = content('.username').text();
                     item.pubDate = parseDate(content('time').attr('datetime')!);
                     item.category = content('.tagname')
                         .toArray()
                         .map((tag) => content(tag).text());
-                    item.description = content('div.scrollbox').html();
+                    item.description = content('div.scrollbox').html() ?? '';
 
                     return item;
                 })

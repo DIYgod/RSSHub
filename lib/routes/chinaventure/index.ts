@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -63,7 +63,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             link: rootUrl + $(item).attr('href'),
-            title: undefined as DataItem['title'] | undefined,
+            title: undefined as unknown as DataItem['title'],
             description: undefined as DataItem['description'],
             author: undefined as DataItem['author'],
             pubDate: undefined as DataItem['pubDate'],
@@ -91,7 +91,7 @@ async function handler(ctx) {
         title: `${nodes[id] ?? '推荐'}-投中网`,
         link: currentUrl,
         description: '投中网是国内领先的创新经济信息服务平台，拥有立体化媒体矩阵，十多年行业深耕，为创新经济领域核心人群提供深入、独到的智识和洞见，在私募股权投资行业和创新商业领域均拥有权威影响力。',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

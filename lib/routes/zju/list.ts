@@ -43,7 +43,7 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const info = {
-                title: $(element).find('a').attr('title'),
+                title: $(element).find('a').attr('title')!,
                 link: sortUrl($(element).find('a').attr('href')),
                 date: $(element)
                     .text()
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const description = $('.right_content').html();
                 return {
-                    title,
+                    title: title!,
                     link: itemUrl,
                     description,
                     pubDate: parseDate(date),

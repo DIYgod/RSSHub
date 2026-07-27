@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -55,6 +55,6 @@ async function handler() {
         title: 'WebCatalog Changelog',
         link: url,
         item: items,
-        language: 'en',
+        language: 'en' as Language,
     };
 }

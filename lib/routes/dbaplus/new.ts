@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                intro: $el.find('div.mt10').html(),
+                intro: $el.find('div.mt10').html() ?? undefined,
             });
             const pubDateStr: string | undefined = $el
                 .find('span.time')
@@ -94,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description: string | undefined =
                     item.description +
                     renderDescription({
-                        description: $$('div.new-detailed').html(),
+                        description: $$('div.new-detailed').html() ?? undefined,
                     });
                 const pubDateStr: string | undefined = $$('span.time').first().text();
                 const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(',') ?? [];

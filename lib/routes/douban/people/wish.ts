@@ -57,7 +57,7 @@ async function handler(ctx) {
             const title_ = title.split('/').find((title) => title.trim());
             const day = info.find('ul li .date').text().trim();
             return {
-                title: title_,
+                title: title_!,
                 description: `${info.find('.intro').text()}<br><img src="${itemPicUrl}">`,
                 link: url,
                 pubDate: new Date(day),
