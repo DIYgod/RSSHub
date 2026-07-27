@@ -285,8 +285,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1
       '@bbob/types':
-        specifier: 4.3.1
-        version: 4.3.1
+        specifier: 4.4.0
+        version: 4.4.0
       '@cloudflare/containers':
         specifier: 0.3.7
         version: 0.3.7
@@ -571,8 +571,8 @@ packages:
   '@bbob/preset@4.3.1':
     resolution: {integrity: sha512-we6ITgrwciNIdpZRRJl4y3OOEbXEEVA21895JUInvYXevZBrIgIAvO502qlEYQtqhJqQ1HxY5xyhDjZ9rEYQHg==}
 
-  '@bbob/types@4.3.1':
-    resolution: {integrity: sha512-TXxFPfKvZVH/sR0mfn5I99bEFmbnAzIoqFBxG1htRiKyJUx7Yb/ZNS/OsQD1mIsR6+srDqXFDaWbDgVudTTjvQ==}
+  '@bbob/types@4.4.0':
+    resolution: {integrity: sha512-d79ov/IQFW5gEAllrK48xqI/IDs6y31F4gXRUX3d7KYN+r6EaRsChjMgv0wPppZovUL2/eECFOe82sqAa0HF7g==}
 
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
@@ -6615,35 +6615,35 @@ snapshots:
     dependencies:
       '@bbob/parser': 4.3.1
       '@bbob/plugin-helper': 4.3.1
-      '@bbob/types': 4.3.1
+      '@bbob/types': 4.4.0
 
   '@bbob/html@4.3.1':
     dependencies:
       '@bbob/core': 4.3.1
       '@bbob/plugin-helper': 4.3.1
-      '@bbob/types': 4.3.1
+      '@bbob/types': 4.4.0
 
   '@bbob/parser@4.3.1':
     dependencies:
       '@bbob/plugin-helper': 4.3.1
-      '@bbob/types': 4.3.1
+      '@bbob/types': 4.4.0
 
   '@bbob/plugin-helper@4.3.1':
     dependencies:
-      '@bbob/types': 4.3.1
+      '@bbob/types': 4.4.0
 
   '@bbob/preset-html5@4.3.1':
     dependencies:
       '@bbob/plugin-helper': 4.3.1
       '@bbob/preset': 4.3.1
-      '@bbob/types': 4.3.1
+      '@bbob/types': 4.4.0
 
   '@bbob/preset@4.3.1':
     dependencies:
       '@bbob/plugin-helper': 4.3.1
-      '@bbob/types': 4.3.1
+      '@bbob/types': 4.4.0
 
-  '@bbob/types@4.3.1': {}
+  '@bbob/types@4.4.0': {}
 
   '@bcoe/v8-coverage@1.0.2': {}
 
