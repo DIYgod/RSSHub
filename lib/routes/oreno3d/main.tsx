@@ -186,7 +186,7 @@ async function handler(ctx) {
         })
     );
     // 拼接多页面item
-    let realItem = [];
+    let realItem: any[] = [];
     for (const data of tempData) {
         realItem = [...realItem, ...data.items];
     }

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
@@ -67,7 +67,7 @@ async function handler(ctx) {
         title,
         link: `${baseUrl}/survey_more_news.php${type ? '?type=' + type : ''}`,
         language: 'th-th',
-        item: [],
+        item: [] as DataItem[],
     };
 
     const queryParams = {

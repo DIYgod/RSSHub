@@ -64,7 +64,7 @@ async function handler(ctx) {
     const OutName = map.get(type).name;
     const OutId = map.get(type).channelid;
 
-    let item = [];
+    let item: any[] = [];
 
     if (type === 'all') {
         const results = await Promise.all(

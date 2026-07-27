@@ -59,7 +59,7 @@ async function handler(ctx) {
     const { id, slug, source } = ctx.req.param();
     const link = `https://www.bloomberg.com/authors/${id}/${slug}`;
 
-    let list = [];
+    let list: any[] = [];
     if (!source || source === 'api') {
         list = await parseAuthorNewsList(`${id}/${slug}`);
     }

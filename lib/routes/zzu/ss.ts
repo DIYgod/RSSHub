@@ -53,7 +53,7 @@ async function handler(ctx) {
             // xwzx: 格式为 MM-DD，需要补全年份
             // tzgg: 格式为 yyyy-mm-dd，直接使用
             const pubDateText = $element.find('time').text();
-            let pubDate = null;
+            let pubDate: string | null = null;
 
             if (pubDateText) {
                 if (type === 'xwzx') {

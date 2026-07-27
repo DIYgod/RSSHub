@@ -62,7 +62,7 @@ async function handler(ctx) {
     const responseData = {
         title: '北京科技大学天津学院新闻动态',
         link: baseUrl,
-        item: null,
+        item: null as any[] | null,
     };
 
     if (type === 'all') {

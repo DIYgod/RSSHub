@@ -84,7 +84,7 @@ async function handler(ctx) {
             return items;
         })
     );
-    let result = [];
+    let result: any[] = [];
     for (const item of items) {
         result = [...result, ...item];
     }

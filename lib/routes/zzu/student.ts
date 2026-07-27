@@ -52,7 +52,7 @@ async function handler(ctx) {
 
             // 获取发布时间 (格式: yyyy年mm月dd日)
             const pubDateText = $element.find('em').text().trim();
-            let pubDate = null;
+            let pubDate: string | null = null;
 
             if (pubDateText) {
                 const match = pubDateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);

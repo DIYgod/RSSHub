@@ -49,8 +49,8 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                let author = null;
-                let pubDate = null;
+                let author: string | null = null;
+                let pubDate: string | null = null;
                 for (const item of content('div.content-title.fl > i').text().split('  ')) {
                     if (item.includes('作者：')) {
                         author = item.split('：', 2)[1];

@@ -54,7 +54,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id').split('+');
     const tasks = id.map((id) => getPage(id));
     const results = await Promise.all(tasks);
-    let items = [];
+    let items: any[] = [];
     for (const result of results) {
         items = [...items, ...result];
     }

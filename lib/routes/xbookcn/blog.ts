@@ -33,7 +33,7 @@ export const route: Route = {
             return {
                 title: a.text(), // 标题
                 link: a.attr('href'), // 链接
-                category: [], // 分类
+                category: [] as string[], // 分类
             };
         });
 

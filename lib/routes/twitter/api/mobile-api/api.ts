@@ -252,7 +252,7 @@ const _getUserTweets = (id, params = {}) => cacheTryGet(id, params, getUserTweet
 //    a. if one replies a lot (e.g. elonmusk), there is sometimes no tweets left after filtering, caching may help
 // 2. getUserMedia return LATEST media tweets, which is a good plus
 const getUserTweets = async (id, params = {}) => {
-    let tweets = [];
+    let tweets: any[] = [];
     const rest_id = await getUserID(id);
     await Promise.all(
         [_getUserTweets, getUserTweetsAndReplies, getUserMedia].map(async (func) => {

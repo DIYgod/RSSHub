@@ -38,7 +38,7 @@ async function handler(ctx) {
 
     const title = `${$('h2').first().text()}${type}`;
 
-    let items = [];
+    let items: any[] = [];
 
     const targetList = $('h3')
         .toArray()

@@ -42,7 +42,7 @@ const formatText = (item) => {
     return text.trim().replaceAll('\n', '<br>');
 };
 
-const ProcessFeed = (ctx, { data = [] }, params = {}) => {
+const ProcessFeed = (ctx, { data = [] as any[] }, params = {}) => {
     // undefined and strings like "exclude_rts_replies" is also safely parsed, so no if branch is needed
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
 

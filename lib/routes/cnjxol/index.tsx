@@ -41,7 +41,7 @@ async function handler(ctx) {
         .attr('href')
         .match(/\d{6}\/\d{2}/)[0];
 
-    let items = [];
+    let items: any[] = [];
 
     if (id) {
         const pageUrl = `${currentUrl}/${dateMatch}/node_${id}.html`;

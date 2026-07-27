@@ -93,7 +93,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = [];
+    let items: any[] = [];
 
     const array = response.data.data.programmeArray.slice(0, limit).map((list) => ({
         guid: list.id,

@@ -20,10 +20,10 @@ export const sync_detail = async (link) => {
     const response = await got(link);
     const $ = load(response.data);
     // 创建列表
-    const tags = [];
-    const authors = [];
-    const origins = [];
-    const characters = [];
+    const tags: string[] = [];
+    const authors: string[] = [];
+    const origins: string[] = [];
+    const characters: string[] = [];
     // 筛选
     const raw_pic_link = rootUrl + $(raw_pic_selector).find('img').attr('src');
     const video_name = $(video_name_selector).text();

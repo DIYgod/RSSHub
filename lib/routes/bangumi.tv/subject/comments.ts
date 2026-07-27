@@ -14,7 +14,7 @@ export const getComments = async (subjectID, minLength) => {
         .map((el) => {
             const $el = $(el);
             const $rateEl = $el.find('.starlight');
-            let rate = null;
+            let rate: string | null = null;
             if ($rateEl.length > 0) {
                 rate = $rateEl.attr('class').match(/stars(\d)/)[1];
             }

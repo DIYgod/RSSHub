@@ -64,7 +64,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
     const link = host + map.get(type).id;
-    let items = [];
+    let items: any[] = [];
     if (type === 0) {
         const tasks = Array.from(map.values(), (value) => getPage(value.id));
         const results = await Promise.all(tasks);

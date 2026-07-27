@@ -30,7 +30,7 @@ const authorDetail = (el) => {
     const $ = load(el);
     // if there is <a>
     const a = $('a');
-    const result = {
+    const result: { name?: string | null; avatar?: string | null; link?: string | null } = {
         name: null,
         avatar: null,
         link: null,

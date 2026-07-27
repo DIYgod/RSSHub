@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
 const setCookie = function (cookieName, cookieValue, seconds, path, domain, secure?) {
-    let expires = null;
+    let expires: Date | null = null;
     if (seconds !== -1) {
         expires = new Date();
         expires.setTime(expires.getTime() + seconds);

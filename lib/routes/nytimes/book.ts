@@ -58,7 +58,7 @@ async function handler(ctx) {
 
     const url = `https://www.nytimes.com/books/best-sellers/${category}`;
 
-    let items = [];
+    let items: any[] = [];
     let dataTitle = '';
     if (Object.hasOwn(categoryList, category)) {
         const response = await got({

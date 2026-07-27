@@ -252,7 +252,7 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                let extra = null;
+                let extra: { links: Array<{ type: string; url: string | undefined }> } | null = null;
 
                 /* message types */
                 let msgTypes = [];
