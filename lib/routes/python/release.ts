@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('div.active-release-list-widget ol.list-row-container li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('span.release-version').text();
@@ -38,7 +38,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -67,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     },
                     image,
                     banner: image,
-                    language,
+                    language: language as Language,
                 };
 
                 return {
@@ -85,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
-        language,
+        language: language as Language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

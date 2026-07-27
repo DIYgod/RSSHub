@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -174,7 +174,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

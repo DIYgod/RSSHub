@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('table#home-table tr:not(.gore)')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const $categoryEl: Cheerio<Element> = $el.find('td.category');
@@ -68,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr, 'DD.MM.YYYY') : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -117,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('div.logo img').attr('src') ? new URL($('div.logo img').attr('src') as string, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

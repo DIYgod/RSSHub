@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -66,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image: imageSrc,
                 banner: imageSrc,
-                language,
+                language: language as Language,
             };
         });
 
@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             },
                             image,
                             banner: image,
-                            language,
+                            language: language as Language,
                             media: Object.keys(media).length > 0 ? media : undefined,
                             _extra: {
                                 links: extraLinks.length > 0 ? extraLinks : undefined,
@@ -167,7 +167,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: feedImage,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

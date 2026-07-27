@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -39,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 return $$('h3 a.main')
                     .toArray()
-                    .map((el): Element => {
+                    .map((el) => {
                         if (count < limit) {
                             const $$el: Cheerio<Element> = $$(el);
 
@@ -53,12 +53,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                                language,
+                                language: language as Language,
                             };
                             count++;
                             return processedItem;
                         }
-                        return undefined;
+                        return;
                     })
                     .filter(Boolean);
             })
@@ -103,7 +103,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     return {
@@ -123,7 +123,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author: title,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

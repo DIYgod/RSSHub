@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -62,7 +62,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            language,
+            language: language as Language,
             enclosure_length: item.duration,
         };
 
@@ -131,7 +131,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? timezone(parseRelativeDate(upDatedStr), 8) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 if (enclosureUrl) {
@@ -165,7 +165,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author,
-        language,
+        language: language as Language,
         itunes_author: author,
         itunes_category: 'Technology',
         id: targetUrl,

@@ -23,7 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('div.contRight ul.list li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('a');
 

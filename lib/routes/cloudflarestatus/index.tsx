@@ -5,7 +5,7 @@ import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('div.update')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const $actualTitleEl: Cheerio<Element> = $el.parent().parent().find('a');
@@ -58,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     text: description,
                 },
                 updated: upDatedStr ? parseDate(upDatedStr, 'x') : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -70,7 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: baseUrl,
         item: items,
         allowEmpty: true,
-        language,
+        language: language as Language,
         id: baseUrl,
     };
 };

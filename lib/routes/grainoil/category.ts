@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('div.m_listpagebox ol li a')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('b').text();
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -66,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             html: description,
                             text: description,
                         },
-                        language,
+                        language: language as Language,
                     };
 
                     return {
@@ -86,7 +86,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('div.top_logo img').attr('src') ? new URL($('div.top_logo img').attr('src') as string, baseUrl).href : undefined,
         author: $('meta[http-equiv="keywords"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

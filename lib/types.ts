@@ -206,6 +206,7 @@ export type Language =
     | 'sv-se'
     | 'tr'
     | 'uk'
+    | 'zh'
     | 'zh-CN'
     | 'zh-HK'
     | 'zh-TW'

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: feedImage,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

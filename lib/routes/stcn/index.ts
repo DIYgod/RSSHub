@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('ul.infinite-list li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const $aEl: Cheerio<Element> = $el.find('div.tt a');
@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -88,7 +88,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     return {
@@ -108,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img.stcn-logo').attr('src'),
         author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0],
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

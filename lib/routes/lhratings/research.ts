@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('div.xlistNr ul li a')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('a').first();
 
@@ -42,7 +42,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language,
+                language: language as Language,
             };
 
             const enclosureUrl: string | undefined = linkUrl;
@@ -69,7 +69,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('h1.logo a img').attr('src') ? new URL($('h1.logo a img').attr('src') ?? '', baseUrl).href : undefined,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import MarkdownIt from 'markdown-it';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -115,7 +115,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
-            language,
+            language: language as Language,
             uuid: item.uuid,
         };
 
@@ -198,7 +198,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 const attachment = attachments?.[0];
@@ -236,7 +236,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/-/).pop()?.trim(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

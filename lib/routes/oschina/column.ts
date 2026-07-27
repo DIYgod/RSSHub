@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -27,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('div.news-item')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('div.title').text();
@@ -61,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -122,7 +122,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         image,
                         banner: image,
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     const extraLinkEls: Element[] = $$('div.related-links-box ul.link-list li a').toArray();
@@ -166,7 +166,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('a.logo img').attr('src'),
         author,
-        language,
+        language: language as Language,
         id: $('val[data-name="weixinShareUrl"]').attr('data-value'),
     };
 };
