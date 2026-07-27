@@ -51,12 +51,12 @@ async function handler(ctx) {
         .slice(0, 15)
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('h3 a').first();
+            const $link = $element.find('h3 a');
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
             const title = $link.attr('title') || $link.text().trim();
 
             // 尝试获取发布时间
-            const pubDateText = $element.find('.new-date').text().trim();
+            const pubDateText = $element.find('.new-date').text();
 
             // 尝试获取描述
             const description = $element.find('p a').text().trim() || '';

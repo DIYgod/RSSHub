@@ -48,10 +48,7 @@ async function handler() {
             const rawLink = linkEl.attr('href');
             const link = rawLink ? new URL(rawLink, baseUrl).href : '';
 
-            const dateText = el
-                .find(String.raw`.font-mono span.md\:inline`)
-                .text()
-                .trim();
+            const dateText = el.find(String.raw`.font-mono span.md\:inline`).text();
 
             return {
                 title,
@@ -68,19 +65,6 @@ async function handler() {
                 const $detail = load(detailResponse);
 
                 const contentEl = $detail('.v_news_content');
-
-                contentEl.find('a').each((_, el) => {
-                    const href = $detail(el).attr('href');
-                    if (href && !href.startsWith('http')) {
-                        $detail(el).attr('href', new URL(href, baseUrl).href);
-                    }
-                });
-                contentEl.find('img').each((_, el) => {
-                    const src = $detail(el).attr('src');
-                    if (src && !src.startsWith('http')) {
-                        $detail(el).attr('src', new URL(src, baseUrl).href);
-                    }
-                });
 
                 let description = contentEl.html() || '';
 

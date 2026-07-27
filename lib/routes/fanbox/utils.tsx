@@ -5,16 +5,20 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import type { Page } from '@/utils/playwright';
 
 import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
 
 export function getHeaders() {
-    const sessionid = config.fanbox.session;
-    const cookie = sessionid ? `FANBOXSESSID=${sessionid}` : '';
     return {
         origin: 'https://fanbox.cc',
-        cookie,
+        cookie: getCookieString(),
     };
+}
+
+export function getCookieString() {
+    const sessionid = config.fanbox.session;
+    return sessionid ? `FANBOXSESSID=${sessionid}` : '';
 }
 
 function embedUrlMap(urlEmbed: ArticlePost['body']['urlEmbedMap'][string]) {
@@ -131,7 +135,7 @@ async function parseArtile(body: ArticlePost['body']) {
     return ret.join('');
 }
 
-async function parseDetail(i: PostDetailResponse['body']) {
+async function parseDetail(i: PostDetailResponse['body']['post']) {
     let ret = '';
     if (i.feeRequired !== 0) {
         ret += `Fee Required: <b>${i.feeRequired} JPY/month</b><hr>`;
@@ -167,12 +171,32 @@ async function parseDetail(i: PostDetailResponse['body']) {
     return ret;
 }
 
-export function parseItem(item: PostItem) {
+export function parseItem(page: Page, item: PostItem) {
     return cache.tryGet(`fanbox-${item.id}-${item.updatedDatetime}`, async () => {
-        const postDetail = (await ofetch(`https://api.fanbox.cc/post.info?postId=${item.id}`, { headers: { ...getHeaders(), 'User-Agent': config.trueUA } })) as PostDetailResponse;
+        const postDetail: PostDetailResponse = await page.evaluate(
+            async ({ url }) => {
+                const res = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Sec-Fetch-Dest': 'empty',
+                        'Sec-Fetch-Mode': 'cors',
+                        'Sec-Fetch-Site': 'same-site',
+                    },
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                return res.json();
+            },
+            { url: `https://api.fanbox.cc/post.info?postId=${item.id}` }
+        );
+
         return {
             title: item.title || 'No title',
-            description: await parseDetail(postDetail.body),
+            description: await parseDetail(postDetail.body.post),
             pubDate: parseDate(item.updatedDatetime),
             link: `https://${item.creatorId}.fanbox.cc/posts/${item.id}`,
             category: item.tags,

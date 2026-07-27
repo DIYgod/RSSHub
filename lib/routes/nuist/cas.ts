@@ -42,7 +42,7 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             return {
-                title: item.find('.Title').text().trim(),
+                title: item.find('.Title').text(),
                 link: new URL(item.find('.Title').attr('href'), baseUrl).href,
                 pubDate: parseDate(
                     item

@@ -84,8 +84,7 @@ async function handler(ctx) {
                 const pubDate = content('.info-text')
                     .first()
                     .text()
-                    .replace(/创建于 /, '')
-                    .trim();
+                    .replace(/创建于 /, '');
 
                 item.description = content('.topic-body').html();
                 item.author = content('.user-link').first().text();

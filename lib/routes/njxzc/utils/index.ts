@@ -31,27 +31,12 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
         const $player = $(el);
         const pdfSrc = $player.attr('pdfsrc');
         if (pdfSrc) {
-            $player.replaceWith(`<p><a href="${new URL(pdfSrc, item.link).href}">附件下载</a></p>`);
+            $player.replaceWith(`<p><a href="${pdfSrc}">附件下载</a></p>`);
         } else {
             $player.remove();
         }
     });
-    $content.find('a').each((_, el) => {
-        const $a = $(el);
-        const href = $a.attr('href');
-        if (href) {
-            $a.attr('href', new URL(href, item.link).href);
-        }
-    });
-    $content.find('img').each((_, el) => {
-        const $img = $(el);
-        const src = $img.attr('src');
-        if (src) {
-            $img.attr('src', new URL(src, item.link).href);
-        }
-    });
-
-    const title = $('.arti_title').text().trim();
+    const title = $('.arti_title').text();
     const pubDate = parsePubDate($('.arti_update').text());
 
     return {

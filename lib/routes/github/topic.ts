@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const category = item
                     .find('.topic-tag')
                     .toArray()
-                    .map((item) => $(item).text().trim());
+                    .map((item) => $(item).text());
                 const pubDate = parseDate(item.find('relative-time').attr('datetime'));
 
                 return {

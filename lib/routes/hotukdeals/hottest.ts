@@ -28,11 +28,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const data = await got.get('https://www.hotukdeals.com/', {
-        headers: {
-            Referer: 'https://www.hotukdeals.com/',
-        },
-    });
+    const data = await got.get('https://www.hotukdeals.com/');
 
     const dom = new JSDOM(data.data, {
         runScripts: 'dangerously',

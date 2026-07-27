@@ -51,7 +51,7 @@ async function handler(ctx) {
             const parseContent = (htmlString) => {
                 const $ = load(htmlString);
                 $('.contents-body h3').remove();
-                const time = $('.meta-info .time').text().trim();
+                const time = $('.meta-info .time').text();
                 $('.meta-info').remove();
                 const content = $('.contents-body');
 
@@ -72,7 +72,7 @@ async function handler(ctx) {
             const out = await Promise.all(
                 list.map((index, item) => {
                     item = $(item);
-                    const link = item.find('a').first().attr('href');
+                    const link = item.find('a').attr('href');
                     return cache.tryGet(link, async () => {
                         const rssitem = {
                             title: item.find('h4').text(),

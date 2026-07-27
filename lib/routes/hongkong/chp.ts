@@ -100,7 +100,7 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    content('#btmNav, script').remove();
+                    content('#btmNav').remove();
                     content('.contHeader, .title_display_date').remove();
                     content('.printBtn, .bookmarkBtn, .qrBtn, .qr-content').remove();
 

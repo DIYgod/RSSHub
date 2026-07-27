@@ -38,9 +38,6 @@ async function handler() {
     const response = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: 'https://api.bilibili.com',
-        },
     });
     const trending = response?.data?.data?.trending;
     const title = trending?.title;

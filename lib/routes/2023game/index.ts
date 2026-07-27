@@ -55,8 +55,8 @@ async function handler(ctx: Context): Promise<Data> {
                 title: $item.text().trim(),
                 guid: `2023game:${href}`,
                 link: href!,
-                pubDate: parseDate($item.find('.time_box').text().trim()),
-                description: $item.html() ?? '',
+                pubDate: parseDate($item.find('.time_box').text()),
+                description: $item.html(),
             };
         });
 

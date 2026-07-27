@@ -32,14 +32,14 @@ const getArticleDetail = async (link) => {
     });
     const $ = cleanDom(load(response.data));
 
-    const title = $('.content-head h2').text().trim();
-    const author = $('.content-persons p span:last').text().trim();
-    const pubDate = parseDate($('.content-time').text().trim(), 'YYYY-MM-DD');
+    const title = $('.content-head h2').text();
+    const author = $('.content-persons p span:last').text();
+    const pubDate = parseDate($('.content-time').text(), 'YYYY-MM-DD');
 
     const description = $('div[class=content-list-box]').html();
     const category = $('.content-tags a[rel="tag"]')
         .toArray()
-        .map((item) => $(item).text().trim());
+        .map((item) => $(item).text());
     return new ArticleDetail(title, author, pubDate, description, category);
 };
 class ArticleDetail {

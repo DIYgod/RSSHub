@@ -35,9 +35,9 @@ async function handler(ctx) {
             const $e = $(element);
             const href = $e.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const dateText = $e.find('div[class$="date"]').text().trim();
+            const dateText = $e.find('div[class$="date"]').text();
             return {
-                title: $e.find('h2, h3').text().trim(),
+                title: $e.find('h2, h3').text(),
                 link: fullLink,
                 pubDate: dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined,
             };
@@ -65,8 +65,7 @@ async function handler(ctx) {
                     }
                 });
 
-                item.description = content.html() ?? undefined;
-
+                item.description = content.html();
                 const dateText = $('p[class$="date"]').text().replace('Published', '').trim();
                 item.pubDate ||= dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined;
 

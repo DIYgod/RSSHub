@@ -42,7 +42,7 @@ export const route: Route = {
             .toArray()
             .map((el) => {
                 const comment = $(el);
-                const author = comment.find('.name a').first().text().trim();
+                const author = comment.find('.name a').text();
                 const contentHtml = comment.find('.content').html()?.trim() || '';
                 const textContent = comment.find('.content').text().trim();
                 const commentId = comment.attr('data-comment-id');

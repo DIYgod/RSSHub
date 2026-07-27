@@ -77,7 +77,11 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             const a = item.find('h2.article--post__title a');
-            const description = item.find('p.article--post__teaser').clone().children().remove().end().text();
+            const description = item
+                .find('p.article--post__teaser')
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text();
             const author = item.find('span.article--post__author-name a').text();
             const time = $('p.article--post__teaser time').attr('datetime');
             const pubDate = parseDate(time, 'YYYY-MM-DD');
@@ -98,10 +102,9 @@ async function handler(ctx) {
                 item.category = $('li.meta-box--tags a')
                     .toArray()
                     .map((item) => $(item).text());
-                const header = $('div#article__content header.article-header').clone().children('ul').remove().end().html();
+                const header = $('div#article__content header.article-header').children('ul').remove().end().html();
                 const summary = $('div#article__content section.article__summary').html();
                 const descr = $('div#article__content div.c-garfield-the-cat')
-                    .clone()
                     .children('div')
                     .remove()
                     .end()

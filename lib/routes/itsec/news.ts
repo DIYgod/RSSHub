@@ -40,10 +40,10 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const $link = $item.find('a').first();
+            const $link = $item.find('a');
             const title = $link.text() || $link.prop('title');
             const href = $link.prop('href');
-            const date = $item.find('span').first().text().trim();
+            const date = $item.find('span').text();
 
             if (!title || !href) {
                 return null;
@@ -66,10 +66,10 @@ async function handler() {
                 const $detail = load(detailResponse);
 
                 const title = $detail('.article-tit').text() || item.title;
-                const date = $detail('.article .date').text().trim();
+                const date = $detail('.article .date').text();
                 const author = $detail('.article .from').last().text().trim();
 
-                $detail('#js_content script, #js_content style').remove();
+                $detail('#js_content style').remove();
                 const description = $detail('#js_content .TRS_Editor').html() || $detail('#js_content').html();
 
                 return {

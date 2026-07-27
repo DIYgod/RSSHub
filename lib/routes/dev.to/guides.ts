@@ -56,7 +56,7 @@ async function handler() {
                 const coverImage = $article('.crayons-article__cover img').attr('src');
 
                 // Extract article content
-                const content = $article('.crayons-article__body').html() || '';
+                const content = $article('.crayons-article__body').html();
 
                 // Extract author info
                 const authorName = $article('.crayons-article__header__meta .fw-bold').first().text().trim();
@@ -69,7 +69,7 @@ async function handler() {
                 // Extract tags
                 const tags = $article('.spec__tags .crayons-tag')
                     .toArray()
-                    .map((tag) => $(tag).text().trim().replace('#', ''));
+                    .map((tag) => $(tag).text().replace('#', ''));
 
                 return {
                     title: item.title,

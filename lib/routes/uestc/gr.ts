@@ -71,7 +71,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const items = entries.map(async (entry) => {
         const element = $(entry);
-        const newsTitle = element.find('a').text() ?? '';
+        const newsTitle = element.find('a').text();
         const newsLink = detailUrl + element.find('a').attr('href');
 
         const newsDetail = await cache.tryGet(newsLink, async () => {

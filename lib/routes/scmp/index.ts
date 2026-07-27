@@ -56,7 +56,7 @@ async function handler(ctx) {
         .toArray()
         .map((elem) => {
             const item = $(elem);
-            const enclosure = item.find('enclosure').first();
+            const enclosure = item.find('enclosure');
             const mediaContent = item.find(String.raw`media\:content`).toArray()[0];
             const thumbnail = item.find(String.raw`media\:thumbnail`).toArray()[0];
             return {

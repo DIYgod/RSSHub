@@ -44,8 +44,8 @@ async function handler() {
             const linkUrl = href?.startsWith('http') ? href : `${baseUrl}/tzgg/${href}`;
 
             const dateSpan = item.find('span.date');
-            const day = dateSpan.find('span.day').text().trim();
-            const year = dateSpan.find('span.year').text().trim();
+            const day = dateSpan.find('span.day').text();
+            const year = dateSpan.find('span.year').text();
             const pubDate = year && day ? parseDate(`${year}-${day}`, 'YYYY-MM-DD') : null;
 
             const categoryName = item.find('span.name').text().trim();

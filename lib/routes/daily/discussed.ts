@@ -21,6 +21,13 @@ const query = /* GraphQL */ `
 
     fragment FeedPost on Post {
         ...SharedPostInfo
+        type
+        sharedPost {
+            title
+            summary
+            image
+            permalink
+        }
     }
 
     fragment SharedPostInfo on Post {
@@ -51,7 +58,7 @@ const query = /* GraphQL */ `
 `;
 
 export const route: Route = {
-    path: '/discussed/:period?/:innerSharedContent?/:dateSort?',
+    path: '/discussed/:period?/:dateSort?',
     example: '/daily/discussed/30',
     view: ViewType.Articles,
     radar: [
@@ -64,14 +71,6 @@ export const route: Route = {
     handler,
     url: 'app.daily.dev/discussed',
     parameters: {
-        innerSharedContent: {
-            description: 'Where to Fetch inner Shared Posts instead of original',
-            default: 'false',
-            options: [
-                { value: 'false', label: 'False' },
-                { value: 'true', label: 'True' },
-            ],
-        },
         dateSort: {
             description: 'Sort posts by publication date instead of popularity',
             default: 'true',
@@ -94,7 +93,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
-    const innerSharedContent = ctx.req.param('innerSharedContent') ? JSON.parse(ctx.req.param('innerSharedContent')) : false;
     const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
     const period = ctx.req.param('period') ? Number(ctx.req.param('period')) : 7;
 
@@ -108,7 +106,7 @@ async function handler(ctx) {
             period,
         },
     });
-    const items = getList(data, innerSharedContent, dateSort);
+    const items = getList(data, dateSort);
 
     return {
         title: 'Real-time discussions in the developer community | daily.dev',

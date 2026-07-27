@@ -16,9 +16,9 @@ const handler: Route['handler'] = async () => {
     const $ = load(data);
 
     // the first post, do not cache
-    const title = $('h2').first().text() ?? '';
+    const title = $('h2').first().text();
     const pubDate = parseDate($('time').first().text());
-    const description = $('article.release article').first().html() ?? '';
+    const description = $('article.release article').first().html();
     const link = `https://notion.so/releases/${day(pubDate).format('YYYY-MM-DD')}`;
 
     // archive
@@ -39,9 +39,9 @@ const handler: Route['handler'] = async () => {
                     const $ = load(data);
 
                     return {
-                        title: $('h2').first().text() ?? '',
+                        title: $('h2').first().text(),
                         pubDate: parseDate($('time').first().text()),
-                        description: $('article.release article').first().html() ?? '',
+                        description: $('article.release article').first().html(),
                         link,
                     };
                 });

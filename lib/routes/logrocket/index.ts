@@ -36,7 +36,7 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
             const a = item.find('a').first();
-            const title = item.find('.post-card-title').first();
+            const title = item.find('.post-card-title');
             return {
                 title: title.text(),
                 link: a.attr('href'),

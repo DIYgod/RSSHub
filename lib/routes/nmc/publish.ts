@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                       const timeStrArray = $el
                           .find('div.author b')
                           .toArray()
-                          .map((el) => $(el).text().trim());
+                          .map((el) => $(el).text());
                       const pubDateStr: string | undefined = `${timeStrArray.pop()}:00 ${timeStrArray.join('/')}`;
 
                       const title = `${pubDateStr} - ${$el.find('div.title').text().replaceAll(/\s/g, '')}`;
@@ -86,7 +86,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                       const title = `${$el.find('div').text().trim()} - ${$('div.nav1 a.actived, div#menuNavBar button.dropdown-toggle')
                           .toArray()
-                          .map((el) => $(el).text().trim())
+                          .map((el) => $(el).text())
                           .join(' - ')}`;
                       const description: string | undefined = renderDescription({
                           images: image

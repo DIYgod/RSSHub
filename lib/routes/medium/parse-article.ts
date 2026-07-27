@@ -21,7 +21,7 @@ async function parse(url, cookie = '') {
     article.find('header').remove();
 
     // get and remove title
-    const title = article.find('h1').first();
+    const title = article.find('h1');
     const titleText = title.text();
     title.remove(); // remove title from html
 

@@ -37,11 +37,7 @@ async function handler(ctx) {
     const host = 'http://uae.hrbeu.edu.cn';
     const url = `${host}/${id}.htm`;
 
-    const response = await got(url, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await got(url);
 
     const $ = load(response.data);
     const title = $('h2').text();

@@ -55,13 +55,13 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             item = $(item);
-            const a = item.find('a').first();
+            const a = item.find('a');
 
             // Extract the date from <i>
-            const date = a.find('i').text().trim();
+            const date = a.find('i').text();
 
-            // Clone and remove <i> to get only the visible text
-            const textOnly = a.clone().find('i').remove().end().text().trim();
+            // Remove <i> to get only the visible text
+            const textOnly = a.find('i').remove().end().text();
 
             return {
                 title: textOnly,

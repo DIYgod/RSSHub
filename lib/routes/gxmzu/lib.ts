@@ -46,7 +46,7 @@ async function handler() {
                 return null;
             }
             return {
-                title: $link.text().trim(),
+                title: $link.text(),
                 link: new URL(href, pageUrl).href,
                 pubDate: parsePubDate($item.find('span').text()),
             };

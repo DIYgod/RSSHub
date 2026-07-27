@@ -16,4 +16,5 @@ hyoban
 neverbehave
 pseudoyu
 tonyrl
+-vizmoe impersonate as pseudoyu in #22801. ae0a44ebb738ace62100f66d15d84272356a72c9
 zhenlonghe

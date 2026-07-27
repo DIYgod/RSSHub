@@ -36,8 +36,8 @@ async function handler() {
             const $date = $item.find('.listing-date');
 
             const href = $link.attr('href');
-            const title = $link.text().trim();
-            const dateStr = $date.text().trim();
+            const title = $link.text();
+            const dateStr = $date.text();
 
             if (!href || !title || !dateStr) {
                 return null;
@@ -64,7 +64,7 @@ async function handler() {
 
                         return {
                             ...item,
-                            description: $detail('.content').html() || '',
+                            description: $detail('.content').html(),
                         } as DataItem;
                     } catch {
                         return item;

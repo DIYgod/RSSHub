@@ -66,7 +66,7 @@ export const route: Route = {
                 cache.tryGet(item.link.toString(), async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
-                    item.description = $('.read').first().html();
+                    item.description = $('.read').html();
 
                     // 提取PDF链接，先转换为数组再使用map
                     const pdfLinks = $('div[pdfsrc$=".pdf"]')

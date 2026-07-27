@@ -98,7 +98,7 @@ Examples:
                 const badges = $el
                     .find('.realty-detail-badges .badge')
                     .toArray()
-                    .map((b) => $(b).text().trim());
+                    .map((b) => $(b).text());
                 const agency = $el.find('.realty-detail-agency').text();
                 const imgSrc = $el.find('.realty-image img').attr('src');
 

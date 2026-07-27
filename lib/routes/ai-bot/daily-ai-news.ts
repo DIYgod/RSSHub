@@ -44,7 +44,7 @@ function processNewsList($: CheerioAPI, $newsList: Cheerio<Element>, ctx: DateCo
             const $child = $(child);
 
             if ($child.hasClass('news-date')) {
-                currentPubDate = parseDateString($child.text().trim(), ctx);
+                currentPubDate = parseDateString($child.text(), ctx);
                 return [];
             }
 
@@ -52,7 +52,7 @@ function processNewsList($: CheerioAPI, $newsList: Cheerio<Element>, ctx: DateCo
                 const $link = $child.find('h2 a');
                 const title = $link.text().trim();
                 const link = $link.attr('href');
-                const description = $child.find('p.text-muted').html() || '';
+                const description = $child.find('p.text-muted').html();
 
                 if (!link) {
                     return [];

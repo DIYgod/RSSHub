@@ -23,13 +23,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hitwh.edu.cn/1024/list.htm', 'hitwh.edu.cn/'],
+            source: ['today.hitwh.edu.cn/1024/list.htm', 'today.hitwh.edu.cn/'],
         },
     ],
     name: '今日工大 - 通知公告',
     maintainers: ['raptazure'],
     handler,
-    url: 'hitwh.edu.cn/1024/list.htm',
+    url: 'today.hitwh.edu.cn/1024/list.htm',
 };
 
 async function handler() {
@@ -50,26 +50,14 @@ async function handler() {
         item: await Promise.all(
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            item.description =
-                                $('div.wp_articlecontent').html() &&
-                                $('div.wp_articlecontent')
-                                    .html()
-                                    .replaceAll('src="/', () => `src="${baseUrl}/`)
-                                    .replaceAll('href="/', () => `href="${baseUrl}/`)
-                                    .trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
-                        }
+                    if (type(item.link) !== 'htm') {
+                        // file to download
+                        item.description = '此链接为文件，点击以下载';
+                        return item;
                     }
-                    // file to download
-                    item.description = '此链接为文件，点击以下载';
+                    const { data } = await got(item.link);
+                    const $ = load(data);
+                    item.description = $('div.wp_articlecontent').html() ?? '请进行统一身份认证之后再访问';
                     return item;
                 })
             )

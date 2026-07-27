@@ -25,7 +25,7 @@ async function handler() {
         .toArray()
         .flatMap((item) => {
             const table = $(item);
-            const date = table.find('.date').first().text();
+            const date = table.find('.date').text();
 
             return table
                 .find('.topic-item')

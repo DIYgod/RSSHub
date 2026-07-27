@@ -209,9 +209,7 @@ const processContent = (item, content) => {
         liveblog,
         imageI18n: i18n('Image', item.language),
     });
-    if (content.trackingCategories) {
-        item.category = content.trackingCategories;
-    }
+    item.category = content.trackingCategories;
     if (content.firstPersonArray) {
         item.author = content.firstPersonArray.map((person) => person.fullName).join(', ');
     }

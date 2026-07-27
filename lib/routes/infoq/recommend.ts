@@ -33,9 +33,6 @@ async function handler(ctx) {
     const pageUrl = 'https://www.infoq.cn';
 
     const resp = await got.post(apiUrl, {
-        headers: {
-            Referer: pageUrl,
-        },
         json: {
             size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
         },

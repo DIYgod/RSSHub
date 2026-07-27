@@ -34,18 +34,18 @@ Helpful route parameters:
         const response = await ofetch(url);
         const $ = load(response);
 
-        const appName = $('div.apphub_AppName').first().text();
+        const appName = $('div.apphub_AppName').text();
         const appIcon = $('div.apphub_AppIcon').children('img').attr('src');
-        const itemTitle = $('div.workshopItemTitle').first().text();
+        const itemTitle = $('div.workshopItemTitle').text();
 
         const items = $('div.clearfix .changeLogCtn')
             .toArray()
             .map((item) => {
                 item = $(item);
                 // changelogHeadline is local time
-                const changelogHeadline = item.find('.headline').first().text();
-                const changelogTimestamp = item.find('p').first().attr('id');
-                const changeDetail = item.find('p').first().html();
+                const changelogHeadline = item.find('.headline').text();
+                const changelogTimestamp = item.find('p').attr('id');
+                const changeDetail = item.find('p').html();
 
                 return {
                     title: changelogHeadline,

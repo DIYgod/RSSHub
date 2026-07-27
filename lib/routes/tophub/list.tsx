@@ -45,7 +45,6 @@ async function handler(ctx) {
     const link = `https://tophub.today/n/${id}`;
     const response = await ofetch(link, {
         headers: {
-            Referer: 'https://tophub.today',
             Cookie: config.tophub?.cookie ?? '',
         },
     });

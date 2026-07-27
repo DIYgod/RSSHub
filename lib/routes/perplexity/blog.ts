@@ -23,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.perplexity.ai/hub'],
+            source: ['www.perplexity.ai/hub/blog'],
             target: '/blog',
         },
     ],
@@ -36,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const limit = Number(ctx.req.query('limit') ?? '20');
-    const rootUrl = 'https://www.perplexity.ai/hub';
+    const rootUrl = 'https://www.perplexity.ai/hub/blog';
 
     const { page, destroy, context } = await getPlaywrightPage(rootUrl, {
         onBeforeLoad: async (page) => {
@@ -56,7 +56,7 @@ async function handler(ctx: Context) {
 
     // Step 1: Extract featured article using data-framer-name attribute
     const featuredCard = $('[data-framer-name="Featured Card"]').first();
-    const featuredHref = featuredCard.find('a[href^="./hub/blog/"]').first().attr('href');
+    const featuredHref = featuredCard.find('a[href^="./blog/"]').attr('href');
     const featuredTitle = featuredCard.find('h4').first().text().trim();
 
     if (featuredHref && featuredTitle) {
@@ -136,10 +136,10 @@ async function handler(ctx: Context) {
                     }
                 }
 
-                $content('script, style, noscript').remove();
+                $content('style, noscript').remove();
 
                 const contentArea = $content('[data-framer-name="Content"]').first();
-                const description = contentArea.length ? (contentArea.html() ?? undefined) : undefined;
+                const description = contentArea.length ? contentArea.html() : undefined;
 
                 return {
                     ...item,

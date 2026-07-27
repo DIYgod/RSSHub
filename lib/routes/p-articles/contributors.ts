@@ -31,7 +31,7 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const info = {
-                title: $(element).find('h3').text().trim(),
+                title: $(element).find('h3').text(),
                 link: new URL($(element).attr('href'), rootUrl).href,
             };
             return info;

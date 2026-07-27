@@ -9,7 +9,7 @@ import { renderHeader } from './templates/header';
 
 const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
 
-const shouldKeep = (b: any) => !excludeTypes.has(b.__typename.trim());
+const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 
 export const route: Route = {
     path: '/:hub?',

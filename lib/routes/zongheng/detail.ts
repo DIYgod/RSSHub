@@ -69,7 +69,7 @@ async function handler(ctx) {
 
     return {
         title: `${$('.book-info--title span').text()}（${author}）- 纵横中文网`,
-        description: `${$('.book-info--nums').text().trim()} ${description}`,
+        description: `${$('.book-info--nums').text()} ${description}`,
         link,
         allowEmpty: true,
         image: $('.book-info--coverImage-img').attr('src'),

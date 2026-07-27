@@ -64,35 +64,34 @@ async function handler(ctx) {
         },
     });
 
-    const items =
-        response.list
-            .flatMap((l) => l.lives)
-            .slice(0, limit)
-            .map((item) => ({
-                title: item.content_prefix,
-                link: new URL(`lives/${item.id}.html`, rootUrl).href,
-                description: renderDescription({
-                    images:
-                        item.images?.map((i) => ({
-                            src: i.url.replace(/_[^\W_]+(\.\w+)$/, '_true$1'),
-                            width: i.width,
-                            height: i.height,
-                        })) ?? [],
-                    description: item.content,
-                    original: item.link
-                        ? {
-                              link: item.link,
-                              name: item.link_name,
-                          }
-                        : undefined,
-                }),
-                author: item.show_source_name,
-                guid: `jinse-lives-${item.id}`,
-                pubDate: parseDate(item.created_at, 'X'),
-                upvotes: item.up_counts ?? 0,
-                downvotes: item.down_counts ?? 0,
-                comments: item.comment_count ?? 0,
-            })) ?? [];
+    const items = response.list
+        .flatMap((l) => l.lives)
+        .slice(0, limit)
+        .map((item) => ({
+            title: item.content_prefix,
+            link: new URL(`lives/${item.id}.html`, rootUrl).href,
+            description: renderDescription({
+                images:
+                    item.images?.map((i) => ({
+                        src: i.url.replace(/_[^\W_]+(\.\w+)$/, '_true$1'),
+                        width: i.width,
+                        height: i.height,
+                    })) ?? [],
+                description: item.content,
+                original: item.link
+                    ? {
+                          link: item.link,
+                          name: item.link_name,
+                      }
+                    : undefined,
+            }),
+            author: item.show_source_name,
+            guid: `jinse-lives-${item.id}`,
+            pubDate: parseDate(item.created_at, 'X'),
+            upvotes: item.up_counts ?? 0,
+            downvotes: item.down_counts ?? 0,
+            comments: item.comment_count ?? 0,
+        }));
 
     const { data: currentResponse } = await got(currentUrl);
 

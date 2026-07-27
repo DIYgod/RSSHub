@@ -69,7 +69,7 @@ async function handler(ctx) {
                       item = $(item);
                       return {
                           title: item.find('a b.am-text-truncate').text().trim(),
-                          pubDate: item.find('a i').text().trim(),
+                          pubDate: item.find('a i').text(),
                           link: new URL(item.find('a').attr('href'), baseUrl).href,
                       };
                   })
@@ -79,7 +79,7 @@ async function handler(ctx) {
                       item = $(item);
                       return {
                           title: item.find('a span').text().trim(),
-                          pubDate: item.find('a i').text().trim(),
+                          pubDate: item.find('a i').text(),
                           link: new URL(item.find('a').attr('href'), baseUrl).href,
                       };
                   });
@@ -109,7 +109,7 @@ async function handler(ctx) {
     items = items.filter((item) => item !== null);
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link,
         item: items,
     };

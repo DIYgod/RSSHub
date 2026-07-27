@@ -76,7 +76,7 @@ async function handler(ctx) {
                         content(el).removeAttr(attr);
                     }
                 });
-                const description = content('div.wp_articlecontent').first().html();
+                const description = content('div.wp_articlecontent').html();
                 // merge same objects, replace two times instead of replace recursively
                 description && (item.description = description.replaceAll(/<\/(p|span|strong)>\s*<\1>/g, '').replaceAll(/<\/(p|span|strong)>\s*<\1>/g, ''));
                 return item;

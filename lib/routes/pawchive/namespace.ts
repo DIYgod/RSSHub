@@ -2,6 +2,6 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'Pawchive',
-    url: 'pawchive.st',
+    url: 'pawchive.pw',
     lang: 'en',
 };

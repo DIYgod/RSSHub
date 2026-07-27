@@ -37,7 +37,7 @@ const handler = async (ctx: Context): Promise<Data | null> => {
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
                 const content = load(detailResponse);
-                item.description = content('div.my_doccontent').html() ?? '';
+                item.description = content('div.my_doccontent').html();
                 item.author = author;
                 return item;
             })

@@ -97,7 +97,7 @@ const handler = async (ctx) => {
                 const $article = load(articleResponse);
 
                 const fullContent = $article('.post_content').html();
-                const articleDate = $article('.edited-view .date, p.date').text().trim();
+                const articleDate = $article('.edited-view .date, p.date').text();
 
                 // Parse date based on language
                 // English: "21 Jan 2026" with 'en' locale for month name recognition

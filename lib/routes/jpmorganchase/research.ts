@@ -82,7 +82,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
                 .toArray()
                 .map((el) => $(el).text().trim());
             articleDate = $('.date').text().trim() || entry.date;
-            description = $('.root').children('div').children('div:eq(1)').html() || '';
+            description = $('.root').children('div').children('div:eq(1)').html();
         }
 
         return {

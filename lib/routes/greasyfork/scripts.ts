@@ -54,7 +54,7 @@ async function handler(ctx) {
     const list = $('.script-list').find('article');
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link: currentUrl,
         description: $('meta[name=description]').attr('content'),
         item: list?.toArray().map((item) => {

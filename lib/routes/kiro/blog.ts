@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('header h1').text();
-                const description: string | undefined = $$('div.prose').html() ?? undefined;
+                const description = $$('div.prose').html();
                 const pubDateStr: string | undefined = $$('time').text();
                 const authorEl: Cheerio<Element> = $$('img.aspect-square').parent().parent();
                 const authors: DataItem['author'] = [

@@ -71,11 +71,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    const items: DataItem[] = (response.hits?.hits || []).map((hit) => {
+    const items: DataItem[] = response.hits.hits.map((hit) => {
         const source = hit._source;
         return {
             title: source.title,
-            description: source.description || source.subTitle || '',
+            description: source.description || source.subTitle,
             link: source.pageUrl,
             pubDate: source.datePublished ? parseDate(source.datePublished) : undefined,
             category: [...(source.topics || []), ...(source.industries || [])],

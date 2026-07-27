@@ -42,6 +42,7 @@ const ProcessFeed = async () => {
             ...headers,
             'x-jike-access-token': token_updated.data['x-jike-access-token'],
         },
+        json: {},
     });
 
     const data = response.data.data;
@@ -87,10 +88,15 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '发现',
+    example: '/xiaoyuzhou',
+    categories: ['multimedia'],
     maintainers: ['prnake', 'Maecenas'],
     handler,
     url: 'xiaoyuzhoufm.com/',
+    description: `::: warning
+小宇宙的 api 需要验证 \`x-jike-device-id\`、\`x-jike-access-token\` 和 \`x-jike-refresh-token\` 。必要时需要自行配置，具体见部署文档。
+:::`,
 };
 
 async function handler() {

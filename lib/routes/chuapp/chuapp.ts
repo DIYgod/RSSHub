@@ -127,9 +127,9 @@ async function handler(ctx: Context): Promise<Data | null> {
                 const item: DataItem = {
                     title: article.title,
                     link: article.link,
-                    description: s('.content .the-content').html() || '',
+                    description: s('.content .the-content').html(),
                     pubDate: parseDate(toJavaScriptTimestamp(s('.friendly_time').attr('data-time'))),
-                    author: s('.author-time .fn-left').text() || '',
+                    author: s('.author-time .fn-left').text(),
                 };
 
                 return item;

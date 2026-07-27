@@ -77,7 +77,7 @@ export const route: Route = {
             const pubDate = timezone(parseDate(item.issueTime), 8);
 
             const fullDuration = item.exhibitDateRange || '';
-            const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ').map((s) => s.trim()) : [fullDuration, ''];
+            const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ') : [fullDuration, ''];
 
             const description = renderToString(
                 <div>

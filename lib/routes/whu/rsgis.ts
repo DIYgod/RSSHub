@@ -105,7 +105,7 @@ function checkExternal(link: string): boolean {
  * @returns A list of RSS meta node.
  */
 function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
-    const linkElement = element.find('a').first();
+    const linkElement = element.find('a');
     const title = linkElement.text();
     const href = linkElement.attr('href');
     if (href === undefined) {
@@ -113,7 +113,7 @@ function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
     }
     const external = checkExternal(href);
     const link = external ? href : new URL(href, currentUrl).href;
-    const pubDate = element.find('div.date1').first().text();
+    const pubDate = element.find('div.date1').text();
     return {
         title,
         link,
@@ -132,8 +132,8 @@ async function getDetail(item: Post): Promise<DataItem | any> {
               } else {
                   const response = await ofetch(link);
                   const $ = load(response);
-                  const title = $('div.content div.content_title h1').first().text();
-                  const content = $('div.content div.v_news_content').first().html();
+                  const title = $('div.content div.content_title h1').text();
+                  const content = $('div.content div.v_news_content').html();
                   item.title = title;
                   item.description = content || '';
               }

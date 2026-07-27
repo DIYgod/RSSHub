@@ -49,11 +49,8 @@ function ProcessFeed(list, caches) {
                     link: itemUrl,
                     guid: itemUrl,
                     pubDate: item.date,
+                    author: bylineString,
                 };
-
-                if (bylineString) {
-                    single.author = bylineString;
-                }
 
                 const { description } = await loadContent(itemUrl);
                 single.description = description;

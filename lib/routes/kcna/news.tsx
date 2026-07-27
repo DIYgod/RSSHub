@@ -1,16 +1,16 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
-import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { fetchPhoto, fetchVideo, fixDesc } from './utils';
+import { fetchPhoto, fixDesc } from './utils';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -27,8 +27,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf', 'www.kcna.kp/:lang/category/articles.kcmsf'],
+            source: ['www.kcna.kp/:lang'],
             target: '/:lang',
+        },
+        {
+            source: ['www.kcna.kp/:lang/article/list/:category'],
+            target: '/:lang/:category',
         },
     ],
     name: 'News',
@@ -40,40 +44,43 @@ export const route: Route = {
 
 | Category                                                         | \`:category\`                        |
 | ---------------------------------------------------------------- | ---------------------------------- |
-| WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | \`54c0ca4ca013a92cc9cf95bd4004c61a\` |
-| Latest News (default)                                            | \`1ee9bdb7186944f765208f34ecfb5407\` |
-| Top News                                                         | \`5394b80bdae203fadef02522cfb578c0\` |
-| Home News                                                        | \`b2b3bcc1b0a4406ab0c36e45d5db58db\` |
-| Documents                                                        | \`a8754921399857ebdbb97a98a1e741f5\` |
-| World                                                            | \`593143484cf15d48ce85c26139582395\` |
-| Society-Life                                                     | \`93102e5a735d03979bc58a3a7aefb75a\` |
-| External                                                         | \`0f98b4623a3ef82aeea78df45c423fd0\` |
-| News Commentary                                                  | \`12c03a49f7dbe829bceea8ac77088c21\` |`,
+| WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | \`b0721b9f23054ddc7fe56c2811a12715\` |
+| Latest News (default)                                            | \`a666dda1282180e0ee1b4427b0574ae7\` |
+| Top News                                                         | \`6a47505ba5268fd7749c0fe11e4b24b4\` |
+| Home News                                                        | \`2f7d854121ccbbfbe6feae9fdcc3556e\` |
+| Documents                                                        | \`1afa96195f9b303902490a126ab7285f\` |
+| World                                                            | \`ecc14533d88be93068af4178946b1b05\` |
+| Social Life                                                      | \`680e40b40899891bbe75a7072e3285e7\` |
+| External                                                         | \`e2f336db98b5e69c75e0da264e037e8d\` |
+| Revolutionary Anecdote                                           | \`503e9b606704f9b1c625fa5755928cd3\` |
+| Always in Memory of People                                       | \`7bc083f00425be6aadfb828fba1cb5a7\` |`,
 };
 
-async function handler(ctx) {
-    const { lang, category = '1ee9bdb7186944f765208f34ecfb5407' } = ctx.req.param();
+async function handler(ctx: Context) {
+    const { lang, category = 'a666dda1282180e0ee1b4427b0574ae7' } = ctx.req.param();
 
     const rootUrl = 'http://www.kcna.kp';
-    const pageUrl = `${rootUrl}/${lang}/category/articles/q/${category}.kcmsf`;
+    const pageUrl = `${rootUrl}/${lang}/article/list/${category}`;
 
-    const response = await got(pageUrl);
-    const $ = load(response.data);
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
 
-    // fix <nobr><span class="fSpecCs">???</span></nobr>
-    const title = sanitizeHtml($('head > title').text(), { allowedTags: [], allowedAttributes: {} });
+    const title = $('head > title').text();
 
-    const list = $('.article-link li a')
+    const list = $('.article h5')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const dateElem = item.find('.publish-time');
-            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
-            dateElem.remove();
+            const $item = $(item);
+            const a = $item.find('a');
+            const dateString = $item
+                .find('span')
+                .text()
+                .match(/\d+\.\d+\.\d+/)![0];
+
             return {
-                title: item.text(),
-                link: rootUrl + item.attr('href'),
-                pubDate: timezone(parseDate(dateString[0]), 9),
+                title: a.text().trim(),
+                link: new URL(a.attr('href')!, rootUrl).href,
+                pubDate: timezone(parseDate(dateString, 'YYYY.M.D'), 9),
             };
         });
 
@@ -84,31 +91,17 @@ async function handler(ctx) {
         list,
         (item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-                item.title = $('article-main-title').text() || item.title;
+                const response = await ofetch(item.link);
+                const $ = load(response);
 
-                const dateElem = $('.publish-time');
-                const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
-                dateElem.remove();
-                item.pubDate = dateString ? timezone(parseDate(dateString[0]), 9) : item.pubDate;
+                const container = $('article .container');
+                const gallery = container.find('a.gallery_button').attr('href');
+                container.find('h1, a.right_button').remove();
 
-                const description = fixDesc($, $('.article-content-body .content-wrapper'));
+                const description = fixDesc($, container);
 
-                // add picture and video
-                const media = $('.media-icon a')
-                    .toArray()
-                    .map((elem) => rootUrl + elem.attribs.href);
-                let photo, video;
-                await Promise.all(
-                    media.map(async (medium) => {
-                        if (medium.includes('/photo/')) {
-                            photo = await fetchPhoto(ctx, medium);
-                        } else if (medium.includes('/video/')) {
-                            video = await fetchVideo(ctx, medium);
-                        }
-                    })
-                );
+                // add picture
+                const photo = gallery ? await fetchPhoto(new URL(gallery, rootUrl).href) : '';
 
                 item.description = renderToString(
                     <>
@@ -117,12 +110,6 @@ async function handler(ctx) {
                             <>
                                 <br />
                                 {raw(photo)}
-                            </>
-                        ) : null}
-                        {video ? (
-                            <>
-                                <br />
-                                {raw(video)}
                             </>
                         ) : null}
                     </>

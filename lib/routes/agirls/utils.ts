@@ -13,7 +13,7 @@ const parseArticle = async (item) => {
         ...new Set(
             content('.ag-article__tag')
                 .toArray()
-                .map((e) => content(e).text().trim().replace('#', ''))
+                .map((e) => content(e).text().replace('#', ''))
         ),
     ];
     const ldJson = JSON.parse(content('script[type="application/ld+json"]').text());

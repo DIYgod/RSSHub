@@ -15,10 +15,17 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['music.163.com/djradio'],
+            target: '/music/djradio/:id',
+        },
+    ],
     name: '电台节目',
     maintainers: ['magic-akari'],
     handler,
@@ -50,9 +57,6 @@ const ProcessFeed = (id, limit, offset) =>
         `163:music:djradio:${id}:${limit}:${offset}`,
         async () =>
             await got.post('https://music.163.com/api/dj/program/byradio', {
-                headers: {
-                    Referer: 'https://music.163.com/',
-                },
                 form: {
                     radioId: id,
                     limit,

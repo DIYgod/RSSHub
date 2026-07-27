@@ -41,11 +41,7 @@ async function handler(ctx) {
     const host = 'https://today.hit.edu.cn';
     const category = ctx.req.param('category');
 
-    const response = await got(host + '/category/' + category, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await got(host + '/category/' + category);
 
     const $ = load(response.data);
     const list = $('.paragraph li')
@@ -61,21 +57,11 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const response = await got(item.link, {
-                        headers: {
-                            Referer: host,
-                        },
-                    });
+                    const response = await got(item.link);
 
                     const $ = load(response.data);
-                    item.pubDate = timezone(parseDate($('.left-attr.first').text().trim()), 8);
-                    item.description =
-                        $('.article-content').html() &&
-                        $('.article-content')
-                            .html()
-                            .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
-                            .trim();
+                    item.pubDate = timezone(parseDate($('.left-attr.first').text()), 8);
+                    item.description = $('.article-content').html()?.trim();
                 } catch {
                     // intranet
                     item.description = '请进行统一身份认证后查看全文';

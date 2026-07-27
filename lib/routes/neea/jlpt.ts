@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.dvTitle').text();
-                    const description: string = $$('div.dvContent').html() ?? '';
+                    const description = $$('div.dvContent').html();
 
                     const processedItem: DataItem = {
                         title,

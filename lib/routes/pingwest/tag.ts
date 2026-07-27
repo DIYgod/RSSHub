@@ -44,11 +44,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.pingwest.com';
     const tagUrl = `${baseUrl}/tag/${tag}`;
     const { tagId, tagName } = await cache.tryGet(`pingwest:tag:${tag}`, async () => {
-        const res = await got(tagUrl, {
-            headers: {
-                Referer: baseUrl,
-            },
-        });
+        const res = await got(tagUrl);
         const $ = load(res.data);
         const tagId = $('.tag-detail').attr('data-id');
         const tagName = $('.tag-detail .info .title').text();
@@ -60,9 +56,6 @@ async function handler(ctx) {
         searchParams: {
             id: tagId,
             type: type - 1,
-        },
-        headers: {
-            Referer: baseUrl,
         },
     });
 

@@ -36,7 +36,7 @@ async function handler(ctx) {
         link,
         item: itemList.toArray().map((element) => {
             const item = $(element);
-            const title = item.find('.beatmap-pack__name').text().trim();
+            const title = item.find('.beatmap-pack__name').text();
             const link = item.find('.beatmap-pack__header').attr('href');
             // Trying to get the description will return 429 (Too Many Requests).
             const description = item.find('.beatmap-pack__body').html();

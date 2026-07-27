@@ -54,7 +54,6 @@ export async function handler(ctx) {
 
                 // Process description
                 const description = $('div.article-description')
-                    .clone()
                     .children('div')
                     .remove()
                     .end()
