@@ -32,14 +32,14 @@ importers:
   .:
     dependencies:
       '@bbob/html':
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.4.1
+        version: 4.4.1
       '@bbob/plugin-helper':
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.4.1
+        version: 4.4.1
       '@bbob/preset-html5':
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.4.1
+        version: 4.4.1
       '@googleapis/youtube':
         specifier: 33.0.0
         version: 33.0.0
@@ -285,8 +285,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1
       '@bbob/types':
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.4.1
+        version: 4.4.1
       '@cloudflare/containers':
         specifier: 0.3.7
         version: 0.3.7
@@ -546,26 +546,26 @@ packages:
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
 
-  '@bbob/core@4.4.0':
-    resolution: {integrity: sha512-4rLEjFsbMECLsUsz8SCwP/W2LomPAT1Pj5KBfIF3RDBdQAaU0nSLOauIDhnU17zxUZBlvXsncZmZTWTFNqXCNQ==}
+  '@bbob/core@4.4.1':
+    resolution: {integrity: sha512-+/p5zQryGVbviM6MUCtHZL3TBtsPFLynCClgiWpQgonYunzIifVaPq8wkA3tnYRrz8rTVC2CMEaiGr16/KV+zw==}
 
-  '@bbob/html@4.4.0':
-    resolution: {integrity: sha512-cPNPMOq5akCexag3XerJLQ7A9TGdUdPPACzlZniMj2JGGgBsgGq9kIHm+6huQswvveQDd39dIkKUlcFpK1hQZg==}
+  '@bbob/html@4.4.1':
+    resolution: {integrity: sha512-pR2SruL2LmQEDDjZ+HrkW1wFtUkyTJN4tdUWQelLiRggAzR1XOH5ZtVSGfPlWzX5HvdjGjITxkvtCBuGaESegw==}
 
-  '@bbob/parser@4.4.0':
-    resolution: {integrity: sha512-5w0VnGCSY3JYGs1m4AfR5a3soBoc8HB3EUCYneXQqP1KPUvFuBKDc5XWGQ5EeXl6QuM03oS39HO19fhY9GgzXA==}
+  '@bbob/parser@4.4.1':
+    resolution: {integrity: sha512-Hs6caDSsY5zJdZZpj7ohTz4hQZGKPL+ZgZy+qbgDtfD9WV2YGxFGtXQf7PBu/aIRKOrkGgbCQxDYWlCEyONi9w==}
 
-  '@bbob/plugin-helper@4.4.0':
-    resolution: {integrity: sha512-1X9El64z/g+4vMKx+CnLc2O1No/KqRRU4Ku1PLYN1CD6OmJk/T1sQ3dlLAzSjV6gzZ2fSa8/endhZpf2ULKBLA==}
+  '@bbob/plugin-helper@4.4.1':
+    resolution: {integrity: sha512-vTjwNiiIHhihyD41DuxrUFVCuGPr1EB1fXvy5+HHnmcvWmOH5BzPSgSEs+KCdpWF+hIDMAho2toAHiDmYurCJQ==}
 
-  '@bbob/preset-html5@4.4.0':
-    resolution: {integrity: sha512-hvYpHCRxo2lhfGXgI8TT4BWpVCJM5Bxtgc2XL1Pr77lmTb6yTVG+nNNuNxBJ3Mz3K0XPzaOhlS1YkTLpf1vYfA==}
+  '@bbob/preset-html5@4.4.1':
+    resolution: {integrity: sha512-rk8T9NnaVQRciHklMY1s5FefswT777XKZ+uQISGToUzrkTPQh2B3E5tLlJN4Z0Cb0n9IKCuDxy6sqaCVfPwxOg==}
 
-  '@bbob/preset@4.4.0':
-    resolution: {integrity: sha512-N0k1pS9ywv6qbOiLAoM6RH1yOJtIHDSM7rHWmtfe+FyWjHnP7Icyn4McLIra2ZHlutJIVY+05UGAf375ByRzGw==}
+  '@bbob/preset@4.4.1':
+    resolution: {integrity: sha512-QX68ZKgmX8oLzB7TRaoUlXXX+CN/Mf/TtczH29QIHzwWNTXze04/4njYNulzmIJC7/VcABkK7feEbw8M96rU8Q==}
 
-  '@bbob/types@4.4.0':
-    resolution: {integrity: sha512-d79ov/IQFW5gEAllrK48xqI/IDs6y31F4gXRUX3d7KYN+r6EaRsChjMgv0wPppZovUL2/eECFOe82sqAa0HF7g==}
+  '@bbob/types@4.4.1':
+    resolution: {integrity: sha512-IDu7H3J9yMQG0U//0X4Akbbm3SOIKfeLmgPHO4s3s+WPsl+AeGb6dy4XBFLEDcDIN/N3f8WPibhIjLr0gFQ7Fg==}
 
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
@@ -3697,7 +3697,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.51:
@@ -6603,39 +6603,39 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@bbob/core@4.4.0':
+  '@bbob/core@4.4.1':
     dependencies:
-      '@bbob/parser': 4.4.0
-      '@bbob/plugin-helper': 4.4.0
-      '@bbob/types': 4.4.0
+      '@bbob/parser': 4.4.1
+      '@bbob/plugin-helper': 4.4.1
+      '@bbob/types': 4.4.1
 
-  '@bbob/html@4.4.0':
+  '@bbob/html@4.4.1':
     dependencies:
-      '@bbob/core': 4.4.0
-      '@bbob/plugin-helper': 4.4.0
-      '@bbob/types': 4.4.0
+      '@bbob/core': 4.4.1
+      '@bbob/plugin-helper': 4.4.1
+      '@bbob/types': 4.4.1
 
-  '@bbob/parser@4.4.0':
+  '@bbob/parser@4.4.1':
     dependencies:
-      '@bbob/plugin-helper': 4.4.0
-      '@bbob/types': 4.4.0
+      '@bbob/plugin-helper': 4.4.1
+      '@bbob/types': 4.4.1
 
-  '@bbob/plugin-helper@4.4.0':
+  '@bbob/plugin-helper@4.4.1':
     dependencies:
-      '@bbob/types': 4.4.0
+      '@bbob/types': 4.4.1
 
-  '@bbob/preset-html5@4.4.0':
+  '@bbob/preset-html5@4.4.1':
     dependencies:
-      '@bbob/plugin-helper': 4.4.0
-      '@bbob/preset': 4.4.0
-      '@bbob/types': 4.4.0
+      '@bbob/plugin-helper': 4.4.1
+      '@bbob/preset': 4.4.1
+      '@bbob/types': 4.4.1
 
-  '@bbob/preset@4.4.0':
+  '@bbob/preset@4.4.1':
     dependencies:
-      '@bbob/plugin-helper': 4.4.0
-      '@bbob/types': 4.4.0
+      '@bbob/plugin-helper': 4.4.1
+      '@bbob/types': 4.4.1
 
-  '@bbob/types@4.4.0': {}
+  '@bbob/types@4.4.1': {}
 
   '@bcoe/v8-coverage@1.0.2': {}
 
