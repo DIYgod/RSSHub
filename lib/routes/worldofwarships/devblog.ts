@@ -45,10 +45,11 @@ async function handler() {
             const tag = $item.find('div').first().find('ul').first().find('li').first();
             const title = $item.find('h2').first().find('a').first();
             const content = $item.find('h2').first().next();
+            const timestamp = Number(time.attr('data-timestamp')) * 1000;
             return {
                 title: title.attr('title')!,
                 link: title.attr('href'),
-                pubDate: timezone(parseDate(time.attr('data-timestamp')! * 1000), 0),
+                pubDate: timezone(parseDate(timestamp), 0),
                 category: tag.text(),
                 author: 'Wargaming',
                 description: content.html(),

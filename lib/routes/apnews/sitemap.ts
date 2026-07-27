@@ -83,7 +83,7 @@ async function handler(ctx) {
             return res;
         })
         .filter((e) => Boolean(e.link) && !new URL(e.link).pathname.split('/').includes('hub'))
-        .toSorted((a, b) => (a.pubDate && b.pubDate ? b.pubDate - a.pubDate : b.lastmod - a.lastmod))
+        .toSorted((a, b) => (a.pubDate && b.pubDate ? Number(b.pubDate) - Number(a.pubDate) : Number(b.lastmod) - Number(a.lastmod)))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 20 }) : list;

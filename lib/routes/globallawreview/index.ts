@@ -54,10 +54,12 @@ async function handler(ctx) {
                 ],
                 enclosure_url: link,
                 enclosure_length:
-                    $item
-                        .find('p.p4')
-                        .text()
-                        .match(/(\d+(\.\d+)?)\sKB/)![1] * 1000,
+                    Number(
+                        $item
+                            .find('p.p4')
+                            .text()
+                            .match(/(\d+(\.\d+)?)\sKB/)![1]
+                    ) * 1000,
             };
         });
 

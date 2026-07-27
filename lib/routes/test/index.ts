@@ -362,7 +362,7 @@ async function handler(ctx) {
         item.push({
             title: `Title${i}`,
             description: `Description${i}`,
-            pubDate: new Date((ctx.req.param('id') === 'current_time' ? new Date() : 1_546_272_000_000) - i * 10 * 1000).toUTCString(),
+            pubDate: new Date((ctx.req.param('id') === 'current_time' ? Date.now() : 1_546_272_000_000) - i * 10 * 1000).toUTCString(),
             link: `https://github.com/DIYgod/RSSHub/issues/${i}`,
             author: `DIYgod${i}`,
         });

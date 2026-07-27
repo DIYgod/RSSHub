@@ -43,7 +43,7 @@ async function handler() {
 
     const data = Object.values<Array<{ date: string; youbi: string; startTime?: string; endTime?: string; media: string; program?: string; note: string }>>(parseJSONP(response.data).items)
         .flat()
-        .toSorted((a, b) => new Date(b.date) - new Date(a.date))
+        .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .map((item) => ({
             date: item.date,
             weekDay: item.youbi,

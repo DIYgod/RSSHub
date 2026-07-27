@@ -51,7 +51,7 @@ async function handler(ctx) {
                 description: undefined as DataItem['description'],
             };
         })
-        .toSorted((a, b) => b.pubDate - a.pubDate)
+        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
 
     const items = await Promise.all(

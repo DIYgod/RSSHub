@@ -52,7 +52,7 @@ async function handler(ctx) {
                 description: undefined as DataItem['description'],
             };
         })
-        .toSorted((a, b) => b.pubDate - a.pubDate)
+        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
         .slice(0, limit);
 
     const item_list = await Promise.all(

@@ -88,7 +88,7 @@ async function handler(ctx) {
             uniqueItems.push(item!);
         }
     }
-    items = uniqueItems.toSorted((a, b) => b.pubDate - a.pubDate).slice(0, ctx.req.query('limit') || 20);
+    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, ctx.req.query('limit') || 20);
 
     items = await Promise.all(
         items.map((item) =>
