@@ -165,7 +165,7 @@ const perDirectoryMock = (fakeDirectories: Record<string, Record<string, unknown
 };
 
 const wrap = (registry: Hono) => {
-    const app = new Hono();
+    const app = new Hono<{ Variables: { data: Record<string, unknown>; apiData: Record<string, unknown> } }>();
     app.use(async (ctx, next) => {
         const response = await next();
         const apiData = ctx.get('apiData');

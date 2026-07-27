@@ -57,7 +57,7 @@ async function handler(ctx) {
             return {
                 title: $item.find('p.txt').text(),
                 link: $item.find('a').attr('href'),
-                pubDate: new Date($item.find('time').attr('datetime')),
+                pubDate: new Date($item.find('time').attr('datetime')!),
                 description: undefined as DataItem['description'],
             };
         });

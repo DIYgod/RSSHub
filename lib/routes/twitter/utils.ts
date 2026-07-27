@@ -477,7 +477,7 @@ const parseRouteParams = (routeParams) => {
 
         default: {
             const parsed = new URLSearchParams(routeParams);
-            count = fallback(undefined, queryToInteger(parsed.get('count')));
+            count = fallback(undefined, queryToInteger(parsed.get('count')), undefined);
             include_replies = fallback(undefined, queryToBoolean(parsed.get('includeReplies')), false);
             include_rts = fallback(undefined, queryToBoolean(parsed.get('includeRts')), true);
             force_web_api = fallback(undefined, queryToBoolean(parsed.get('forceWebApi')), false);

@@ -150,7 +150,7 @@ async function handler(ctx) {
                 title = author + ': ' + title; // 给标题里加上获取到的作者
             }
 
-            const pubDate = new Date($item.find('.tgme_widget_message_date time').attr('datetime')).toUTCString();
+            const pubDate = new Date($item.find('.tgme_widget_message_date time').attr('datetime')!).toUTCString();
 
             /*
              * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.

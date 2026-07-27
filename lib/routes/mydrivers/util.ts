@@ -45,7 +45,7 @@ const convertToQueryString = (path) => {
  * @param {number|undefined} [range] - The index value of the range (optional).
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
-const getInfo = (url, range) =>
+const getInfo = (url, range?) =>
     cache.tryGet(url, async () => {
         const { data: response } = await got(url);
 

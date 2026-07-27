@@ -44,7 +44,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const items = $('a')
-        .filter((_, el) => $(el).attr('href')?.match(new RegExp(linktype)))
+        .filter((_, el) => !!$(el).attr('href')?.match(new RegExp(linktype)))
         .toArray()
         .map((item) => {
             const $item = $(item);

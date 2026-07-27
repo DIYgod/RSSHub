@@ -14,7 +14,7 @@ describe('api/follow/config', () => {
             json: (data: unknown) => data,
         };
 
-        const result = handler(ctx as any) as Record<string, unknown>;
+        const result = (handler as (c: typeof ctx) => unknown)(ctx) as Record<string, unknown>;
 
         expect(result).toMatchObject({
             ownerUserId: 'owner',

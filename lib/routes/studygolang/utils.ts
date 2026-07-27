@@ -12,7 +12,7 @@ const md = MarkdownIt({
     linkify: true,
 });
 
-const FetchGoItems = async (ctx, rewriteId) => {
+const FetchGoItems = async (ctx, rewriteId?) => {
     const id = rewriteId || (ctx.req.param('id') ?? 'weekly');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 

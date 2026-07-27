@@ -82,7 +82,7 @@ async function handler(ctx) {
 
                 item.author = content('.entry-author-name').text();
                 item.description = content('.bpp-post-content, .entry-content').html();
-                item.pubDate = new Date(content('.entry-date').attr('datetime')).toUTCString();
+                item.pubDate = new Date(content('.entry-date').attr('datetime')!).toUTCString();
 
                 return item;
             })

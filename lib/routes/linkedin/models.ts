@@ -6,7 +6,7 @@ class Job {
     pubDate: any;
     recruiter: any;
     description: any;
-    constructor(title, link, company, location, pubDate, recruiter, description) {
+    constructor(title?, link?, company?, location?, pubDate?, recruiter?, description?) {
         this.title = title;
         this.link = link;
         this.company = company;

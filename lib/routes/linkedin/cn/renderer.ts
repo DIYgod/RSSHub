@@ -76,7 +76,7 @@ class Ucs2Text {
         }
         return new Ucs2Text(_start === _end ? '' : this.codePoints.slice(_start, _end));
     }
-    slice(a, b) {
+    slice(a, b?) {
         // oxlint-disable-next-line unicorn/prefer-string-slice
         return this.substring(a, b).toString();
     }

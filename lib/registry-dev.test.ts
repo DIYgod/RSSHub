@@ -88,7 +88,7 @@ afterAll(() => {
 const buildApp = () => {
     const namespaces: NamespacesType = {};
     const dev = createDevRegistry({ routesDirectory, namespaces });
-    const app = new Hono();
+    const app = new Hono<{ Variables: { fromOuter: string; data: Record<string, unknown>; apiData: Record<string, unknown> } }>();
     app.use(async (ctx, next) => {
         ctx.set('fromOuter', 'bridged');
         await next();

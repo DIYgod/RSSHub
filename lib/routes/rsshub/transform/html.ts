@@ -84,12 +84,12 @@ Parsing of \`routeParams\` parameter:
                     const $item = $(item);
 
                     const titleEle = routeParams.get('itemTitle') ? $item.find(routeParams.get('itemTitle')!) : $item;
-                    const title = routeParams.get('itemTitleAttr') ? titleEle.attr(routeParams.get('itemTitleAttr')) : titleEle.text();
+                    const title = routeParams.get('itemTitleAttr') ? titleEle.attr(routeParams.get('itemTitleAttr')!) : titleEle.text();
 
                     let link;
                     const linkEle = routeParams.get('itemLink') ? $item.find(routeParams.get('itemLink')!) : $item;
                     if (routeParams.get('itemLinkAttr')) {
-                        link = linkEle.attr(routeParams.get('itemLinkAttr'));
+                        link = linkEle.attr(routeParams.get('itemLinkAttr')!);
                     } else {
                         link = linkEle.is('a') ? linkEle.attr('href') : linkEle.find('a').attr('href');
                     }
@@ -100,10 +100,10 @@ Parsing of \`routeParams\` parameter:
                     }
 
                     const descEle = routeParams.get('itemDesc') ? $item.find(routeParams.get('itemDesc')!) : $item;
-                    const desc = routeParams.get('itemDescAttr') ? descEle.attr(routeParams.get('itemDescAttr')) : descEle.html();
+                    const desc = routeParams.get('itemDescAttr') ? descEle.attr(routeParams.get('itemDescAttr')!) : descEle.html();
 
                     const pubDateEle = routeParams.get('itemPubDate') ? $item.find(routeParams.get('itemPubDate')!) : $item;
-                    const pubDate = routeParams.get('itemPubDateAttr') ? pubDateEle.attr(routeParams.get('itemPubDateAttr')) : pubDateEle.html();
+                    const pubDate = routeParams.get('itemPubDateAttr') ? pubDateEle.attr(routeParams.get('itemPubDateAttr')!) : pubDateEle.html();
 
                     return {
                         title: title!,

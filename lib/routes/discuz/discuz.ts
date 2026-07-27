@@ -29,7 +29,7 @@ async function fetchWithAntiBot(url: string, header: Record<string, string>) {
         headers: header,
     });
 
-    let responseData = Buffer.from(response._data);
+    let responseData = Buffer.from(response._data!);
     const initialHtml = iconv.decode(responseData, 'utf-8');
 
     if (initialHtml.includes('document.location.reload()')) {
@@ -41,7 +41,7 @@ async function fetchWithAntiBot(url: string, header: Record<string, string>) {
                 responseType: 'arrayBuffer',
                 headers: { ...header, Cookie: [header.Cookie, cookieStr].filter(Boolean).join('; ') },
             });
-            responseData = Buffer.from(response._data);
+            responseData = Buffer.from(response._data!);
         }
     }
 

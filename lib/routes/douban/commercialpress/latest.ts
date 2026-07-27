@@ -63,7 +63,7 @@ async function handler() {
                 title: $item.find('.title > a').text(),
                 link: $item.find('.title > a').attr('href'),
                 description: `<img src="${$item.find('.post img').attr('src')}" /><br>${$item.find('.abstract').html()}`,
-                pubDate: new Date($item.find('.time > span').attr('title')).toUTCString(),
+                pubDate: new Date($item.find('.time > span').attr('title')!).toUTCString(),
             };
         });
 
