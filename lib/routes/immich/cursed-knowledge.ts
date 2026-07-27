@@ -53,11 +53,13 @@ async function handler() {
         const blogPost = blogId && feed.items.find((post) => post.id.endsWith(blogId));
         const gh = entry.match(/link: asGithubLink\(([^)]*)\)/);
         const date = entry.match(/new Date\((\d+), (\d+), (\d+)\)/);
+        const title = matchString(entry, 'title');
 
         return {
-            title: matchString(entry, 'title'),
+            title,
             description: matchString(entry, 'description'),
             link: (gh ? parseGithubLink(gh[1]) : undefined) ?? entry.match(/href: '([^']+)'/)?.[1] ?? blogPost?.url,
+            guid: `${link}#${title}`,
             pubDate: date ? parseDate(`${date[1]}-${Number(date[2]) + 1}-${date[3]}`, 'YYYY-M-D') : blogPost ? parseDate(blogPost.date_published) : undefined,
         };
     });

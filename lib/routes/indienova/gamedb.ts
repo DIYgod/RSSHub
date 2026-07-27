@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     name: 'GameDB 游戏库',
-    path: 'gamedb/recent/:platform?',
+    path: '/gamedb/recent/:platform?',
     example: '/indienova/gamedb/recent',
     parameters: {
         platform: {
