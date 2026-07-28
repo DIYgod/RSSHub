@@ -5,7 +5,6 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -62,8 +61,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const rootUrl = getSubPath(ctx).split('/').slice(1, 4).join('/');
-    const currentUrl = getSubPath(ctx).slice(1);
+    const currentUrl = ctx.req.param('url');
+    const rootUrl = currentUrl.split('/').slice(0, 3).join('/');
     if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.has(new URL(rootUrl).hostname)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }

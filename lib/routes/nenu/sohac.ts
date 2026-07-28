@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -24,10 +23,10 @@ export const route: Route = {
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
 
-    const path = getSubPath(ctx) === '/sohac' ? '/index/tzgg' : getSubPath(ctx).replace(/^\/sohac/, '');
+    const path = ctx.req.param('path') ?? 'index/tzgg';
 
     const rootUrl = 'https://sohac.nenu.edu.cn';
-    const currentUrl = `${rootUrl}${path}.htm`;
+    const currentUrl = `${rootUrl}/${path}.htm`;
 
     const response = await got({
         method: 'get',

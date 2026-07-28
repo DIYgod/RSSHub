@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -28,13 +27,14 @@ async function handler(ctx) {
 
     let filterName;
 
-    const currentUrl = new URL(getSubPath(ctx).replace(/^\/cbaigui/, ''), rootUrl).href;
+    const path = ctx.req.param('path') ?? '';
+    const currentUrl = new URL(`/${path}`, rootUrl).href;
     let apiUrl = new URL(`${apiSlug}/posts?_embed=true&per_page=${limit}`, rootUrl).href;
 
-    const filterMatches = getSubPath(ctx).match(/^\/post-(tag|category)\/(.*)$/);
+    const filterMatches = path.match(/^post-(tag|category)\/(.*)$/);
 
     if (filterMatches) {
-        filterName = decodeURI(filterMatches[2].split('/').pop());
+        filterName = filterMatches[2].split('/').pop();
         const filterType = filterMatches[1] === 'tag' ? 'tags' : 'categories';
         const filterId = await GetFilterId(filterType, filterName);
 

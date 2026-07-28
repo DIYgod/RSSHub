@@ -2,13 +2,12 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/:path{.+}',
+    path: '/:path{.+}?',
     categories: ['game'],
     example: '/itch/games/new-and-popular/featured',
     parameters: { path: 'Params' },
@@ -26,7 +25,7 @@ You can browse all the tags [here](https://itch.io/tags).
 
 async function handler(ctx) {
     const rootUrl = 'https://itch.io';
-    const currentUrl = `${rootUrl}${getSubPath(ctx)}`;
+    const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? ''}`;
 
     const response = await got({
         method: 'get',

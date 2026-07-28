@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -21,7 +20,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://bad.news';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/' ? '' : getSubPath(ctx)}`;
+    const path = ctx.req.param('path');
+    const currentUrl = path ? `${rootUrl}/${path}` : rootUrl;
 
     const response = await got({
         method: 'get',

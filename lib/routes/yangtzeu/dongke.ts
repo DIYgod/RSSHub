@@ -2,13 +2,12 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/dongke/:path{.+}',
+    path: '/dongke/:path{.+}?',
     categories: ['university'],
     example: '/yangtzeu/dongke/yqzl/tzgg',
     parameters: { path: '路径，默认为学院新闻' },
@@ -26,7 +25,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
-    const currentUrl = new URL(`${getSubPath(ctx).replace(/^\/dongke/, '') || '/yqzl/xyxw'}.htm`, rootUrl).href;
+    const currentUrl = new URL(`/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

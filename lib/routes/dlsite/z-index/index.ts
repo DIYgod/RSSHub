@@ -3,7 +3,7 @@ import type { Route } from '@/types';
 import { ProcessItems } from '../utils';
 
 export const route: Route = {
-    path: '/:path{.+}',
+    path: '/:path{.+}?',
     categories: ['anime'],
     example: '/dlsite/home/new',
     parameters: {

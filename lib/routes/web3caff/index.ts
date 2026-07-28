@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -20,10 +19,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const params = getSubPath(ctx) === '/' ? '' : getSubPath(ctx);
+    const path = ctx.req.param('path');
 
     const rootUrl = 'https://web3caff.com';
-    const currentUrl = `${rootUrl}${params}`;
+    const currentUrl = path ? `${rootUrl}/${path}` : rootUrl;
 
     const response = await got({
         method: 'get',

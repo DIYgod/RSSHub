@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -35,10 +34,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const params = getSubPath(ctx);
+    const category = ctx.req.param('category') ?? 'tz';
 
     const rootUrl = 'https://www.dgjyw.com';
-    const currentUrl = `${rootUrl}${params === '/' ? '/tz' : params}.htm`;
+    const currentUrl = `${rootUrl}/${category}.htm`;
 
     const response = await got(currentUrl);
 
