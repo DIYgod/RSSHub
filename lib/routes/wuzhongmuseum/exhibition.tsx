@@ -5,7 +5,6 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -96,61 +95,58 @@ export const route: Route = {
 
         const lists = await Promise.all(
             fetchTypes.map(async (t) => {
-                const res = await callCloudApi(token, `/exhibition?type=${t}&current=1&pageSize=6`);
+                const res = await callCloudApi(token, `/exhibition?type=${t}&current=1&pageSize=20`);
                 return res?.data?.list || [];
             })
         );
 
-        const rawList = lists.flat();
-        const list = rawList;
+        const list = lists.flat();
 
-        const items = await Promise.all(
-            list.map((item) => {
-                // online exhit has VR link, for others, itemLink and guid share the same link.
-                const itemLink = item.external_url ?? `https://www.wuzhongmuseum.com/portal/exhibition/content?id=${item._id}`;
-                const guid = `https://www.wuzhongmuseum.com/portal/exhibition/content?id=${item._id}`;
+        const items = list.map((item) => {
+            // online exhit has VR link, for others, itemLink and guid share the same link.
+            const itemLink = item.external_url ?? `https://www.wuzhongmuseum.com/portal/exhibition/content?id=${item._id}`;
+            const guid = `https://www.wuzhongmuseum.com/portal/exhibition/content?id=${item._id}`;
 
-                const title = item.name;
-                const pubDate = timezone(parseDate(item.created_at * 1000), 8);
-                const startDate = item.start_time ? dayjs(item.start_time * 1000).format('YYYY-MM-DD') : undefined;
-                const endDate = item.end_time ? dayjs(item.end_time * 1000).format('YYYY-MM-DD') : undefined;
-                const location = item.address;
-                const imgUrl = item.cover;
+            const title = item.name;
+            const pubDate = parseDate(item.created_at * 1000);
+            const startDate = item.start_time ? dayjs(item.start_time * 1000).format('YYYY-MM-DD') : undefined;
+            const endDate = item.end_time ? dayjs(item.end_time * 1000).format('YYYY-MM-DD') : undefined;
+            const location = item.address;
+            const imgUrl = item.cover;
 
-                const description = renderToString(
-                    <div>
-                        <img src={imgUrl} />
-                        <br />
-                        <p>
-                            <b>地点：</b>
-                            {location || '参考详情'}
-                        </p>
-                        <p>
-                            <b>开展：</b>
-                            {startDate || '未定/常设'}
-                        </p>
-                        <p>
-                            <b>闭展：</b>
-                            {endDate || '未定/常设'}
-                        </p>
-                    </div>
-                );
+            const description = renderToString(
+                <div>
+                    <img src={imgUrl} />
+                    <br />
+                    <p>
+                        <b>地点：</b>
+                        {location || '参考详情'}
+                    </p>
+                    <p>
+                        <b>开展：</b>
+                        {startDate || '未定/常设'}
+                    </p>
+                    <p>
+                        <b>闭展：</b>
+                        {endDate || '未定/常设'}
+                    </p>
+                </div>
+            );
 
-                return {
-                    title,
-                    link: itemLink,
-                    guid,
-                    pubDate,
-                    description,
-                    _extra: {
-                        museumName,
-                        location,
-                        startDate,
-                        endDate,
-                    },
-                };
-            })
-        );
+            return {
+                title,
+                link: itemLink,
+                guid,
+                pubDate,
+                description,
+                _extra: {
+                    museumName,
+                    location,
+                    startDate,
+                    endDate,
+                },
+            };
+        });
 
         return {
             title: `${museumName} - ${titleTag}`,
