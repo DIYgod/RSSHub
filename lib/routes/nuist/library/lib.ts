@@ -17,7 +17,7 @@ export const route: Route = {
             source: ['lib.nuist.edu.cn/', 'lib.nuist.edu.cn/index/tzgg.htm'],
         },
     ],
-    name: '南京信息工程大学图书馆',
+    name: '图书馆',
     maintainers: ['gylidian'],
     handler,
     url: 'lib.nuist.edu.cn/',

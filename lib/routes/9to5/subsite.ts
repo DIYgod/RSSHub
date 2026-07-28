@@ -13,7 +13,7 @@ export const route: Route = {
         subsite: 'Subsite name',
         tag: 'Tag name inside the url of the tag page',
     },
-    name: '9To5 Sub-site',
+    name: 'Sub-site',
     maintainers: ['HenryQW'],
     handler,
     description: `Supported sub-sites：

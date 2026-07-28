@@ -12,7 +12,7 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Grub Street',
+    name: 'Posts',
     maintainers: ['loganrockmore'],
     handler,
     url: 'grubstreet.com/',

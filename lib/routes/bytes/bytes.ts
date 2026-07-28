@@ -16,7 +16,7 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'BYTES - Your weekly dose of JS',
+    name: 'Your weekly dose of JS',
     maintainers: ['meixger'],
     description: 'Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free.',
     handler,

@@ -17,7 +17,7 @@ export const route: Route = {
         folder: 'Inbox name, `INBOX` by default',
     },
     description: 'Only support IMAP protocol, email password and other settings refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)',
-    name: 'Email list',
+    name: 'Inbox',
     maintainers: ['kt286'],
     handler,
 };

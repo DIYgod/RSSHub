@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/',
     categories: ['blog'],
     example: '/stratechery',
-    name: 'Stratechery by Ben Thompson',
+    name: 'Blog',
     maintainers: ['chazeon'],
     handler,
 };
