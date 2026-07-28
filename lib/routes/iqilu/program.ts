@@ -9,8 +9,33 @@ import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/v/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['traditional-media'],
+    example: '/iqilu/v/sdws/sdxwlb',
+    parameters: {
+        category: '节目 id，可在对应节目页 URL 中找到，见下表，默认为 `sdws/sdxwlb`，即山东新闻联播',
+    },
+    features: {
+        supportPodcast: true,
+    },
+    name: '电视节目',
+    maintainers: ['nczitzk'],
+    description: `| 节目名称         | 节目 id        |
+| ---------------- | -------------- |
+| 山东新闻联播     | sdws/sdxwlb    |
+| 闪电大视野       | ggpd/sddsy     |
+| 山东三农新闻联播 | nkpd/snxw      |
+| 每日新闻         | qlpd/mrxw      |
+| 新闻午班车       | ggpd/xwwbc     |
+| 戏宇宙           | sdws/xyz/      |
+| 中国礼 中国乐    | qlpd/zglzgy    |
+| 超级语文课       | sdws/cjywk     |
+| 文物里的山东     | yspd/wwldsd    |
+| 拉呱             | qlpd/l0        |
+| 生活帮           | shpd/shb       |
+| 快乐大赢家       | zypd/kldyj     |
+| 乡村季风         | nkpd/xcjf      |
+| 健康是 1         | ggpd/jks1      |
+| 此时此刻         | sdws/cishicike |`,
     handler,
 };
 

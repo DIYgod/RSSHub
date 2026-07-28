@@ -8,13 +8,15 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
+    categories: ['reading'],
+    example: '/medieval-china',
     radar: [
         {
             source: ['medieval-china.club/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '首页',
     maintainers: ['artefaritaKuniklo'],
     handler,
     url: 'medieval-china.club/',

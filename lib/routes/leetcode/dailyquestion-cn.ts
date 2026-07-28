@@ -7,12 +7,14 @@ const host = 'https://leetcode.cn';
 
 export const route: Route = {
     path: '/dailyquestion/cn',
+    categories: ['programming'],
+    example: '/leetcode/dailyquestion/cn',
     radar: [
         {
             source: ['leetcode.cn/'],
         },
     ],
-    name: 'Unknown',
+    name: '每日一题',
     maintainers: [],
     handler,
     url: 'leetcode.cn/',

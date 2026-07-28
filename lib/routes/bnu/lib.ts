@@ -7,15 +7,21 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/lib/:category?',
+    categories: ['university'],
+    example: '/bnu/lib/zydt',
+    parameters: { category: '分类，见下表，默认为 `zydt`' },
     radar: [
         {
             source: ['www.lib.bnu.edu.cn/:category/index.htm'],
             target: '/lib/:category',
         },
     ],
-    name: 'Unknown',
+    name: '图书馆通知',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 资源动态 | 新闻动态 | 系列讲座 |
+| -------- | -------- | -------- |
+| zydt     | xwdt     | xljz1    |`,
 };
 
 async function handler(ctx) {

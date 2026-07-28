@@ -6,8 +6,16 @@ import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['other'],
+    example: '/qiyoujiage/shanghai',
+    parameters: { path: '路径' },
+    description: `::: tip
+路径处填写对应页面 URL 中 \`http://www.qiyoujiage.com/\` 和 \`.shtml\` 之间的字段。下面是一个例子。
+
+若订阅 [福建漳州龙海今日油价](http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml) 则将对应页面 URL <http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml> 中 \`http://www.qiyoujiage.com/\` 和 \`.shtml\` 之间的字段 \`fujian/zhangzhou/longhai\` 作为路径填入。此时路由为 [\`/qiyoujiage/fujian/zhangzhou/longhai\`](https://rsshub.app/qiyoujiage/fujian/zhangzhou/longhai)
+:::`,
+    name: '今日油价查询',
+    maintainers: ['TonyRL'],
     handler,
 };
 

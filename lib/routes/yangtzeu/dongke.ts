@@ -8,9 +8,17 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/dongke/*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/dongke/:path{.+}',
+    categories: ['university'],
+    example: '/yangtzeu/dongke/yqzl/tzgg',
+    parameters: { path: '路径，默认为学院新闻' },
+    description: `路径处填写网址中 \`https://dongke.yangtzeu.edu.cn\` 到末尾 \`.htm\` 之间的部分，默认为学院新闻。
+
+如订阅 [院情总览 - 通知公告](https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm)，网址为 \`https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm\`，截取 \`/yqzl/tzgg\` 作为参数，此时路由为 [\`/yangtzeu/dongke/yqzl/tzgg\`](https://rsshub.app/yangtzeu/dongke/yqzl/tzgg)。
+
+若订阅子分类 [学生工作](https://dongke.yangtzeu.edu.cn/xsgz.htm)，网址为 \`https://dongke.yangtzeu.edu.cn/xsgz.htm\`。截取 \`https://dongke.yangtzeu.edu.cn\` 到末尾 \`.htm\` 的部分 \`/xsgz\` 作为参数，此时路由为 [\`/yangtzeu/dongke/xsgz\`](https://rsshub.app/yangtzeu/dongke/xsgz)。`,
+    name: '动物科学学院',
+    maintainers: ['nczitzk'],
     handler,
 };
 

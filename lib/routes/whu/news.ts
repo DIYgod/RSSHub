@@ -11,9 +11,9 @@ export const route: Route = {
     path: '/news/:category{.+}?',
     categories: ['university'],
     example: '/whu/news',
-    parameters: { category: '新闻栏目，可选' },
+    parameters: { category: '分类，见下表，默认为 `wdzx/wdyw`， 即 **武大要闻**' },
     name: '新闻网',
-    maintainers: [],
+    maintainers: ['SChen1024', 'nczitzk'],
     handler,
     description: `category 参数可选，范围如下:
 

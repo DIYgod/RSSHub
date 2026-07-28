@@ -9,9 +9,17 @@ import { renderFigure } from './templates/figure';
 import { apiSlug, GetFilterId, rootUrl } from './utils';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['new-media'],
+    example: '/cbaigui',
+    parameters: { path: '路径，默认为首页' },
+    name: '通用',
+    maintainers: ['nczitzk'],
+    description: `若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 \`https://www.cbaigui.com/post-tag/妖\`。截取 \`https://www.cbaigui.com\` 到末尾的部分 \`/post-tag/妖\` 作为参数，此时路由为 [\`/cbaigui/post-tag/妖\`](https://rsshub.app/cbaigui/post-tag/妖)。
+
+若订阅 [分类：埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)，网址为 \`https://www.cbaigui.com/post-category/世界/非洲/埃及\`。截取 \`https://www.cbaigui.com\` 到末尾的部分 \`/post-category/世界/非洲/埃及\` 作为参数，此时路由为 [\`/cbaigui/post-category/世界/非洲/埃及\`](https://rsshub.app/cbaigui/post-category/世界/非洲/埃及)。
+
+若订阅 [词条：白泽图](https://www.cbaigui.com/post-category/词条/白泽图)，网址为 \`https://www.cbaigui.com/post-category/词条/白泽图\`。截取 \`https://www.cbaigui.com\` 到末尾的部分 \`/post-category/词条/白泽图\` 作为参数，此时路由为 [\`/cbaigui/post-category/词条/白泽图\`](https://rsshub.app/cbaigui/post-category/词条/白泽图)。`,
     handler,
 };
 

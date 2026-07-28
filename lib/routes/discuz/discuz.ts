@@ -79,9 +79,19 @@ async function loadContent(itemLink, charset, header) {
 
 export const route: Route = {
     path: ['/:ver{[7x]}/:cid{[0-9]{2}}/:link{.+}', '/:ver{[7x]}/:link{.+}', '/:link{.+}'],
-    name: 'Unknown',
-    maintainers: ['pseudoyu'],
+    categories: ['bbs'],
+    example: '/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html',
+    parameters: {
+        ver: 'discuz version，see below table',
+        cid: 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail',
+        link: 'link of subforum, require url encoded',
+    },
+    name: '通用子版块',
+    maintainers: ['junfengP', 'pseudoyu'],
     handler,
+    description: `| Discuz X Series | Discuz 7.x Series |
+| --------------- | ----------------- |
+| x               | 7                 |`,
 };
 
 async function handler(ctx) {

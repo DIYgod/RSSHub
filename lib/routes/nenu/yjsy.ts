@@ -8,8 +8,10 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/yjsy/*',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/nenu/yjsy',
+    name: '研究生院',
+    maintainers: ['nczitzk'],
     handler,
 };
 

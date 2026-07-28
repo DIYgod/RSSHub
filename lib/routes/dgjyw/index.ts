@@ -8,9 +8,29 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:category{.+}?',
+    categories: ['study'],
+    example: '/dgjyw/tz',
+    parameters: { category: '分类，见下表，默认为通知' },
+    radar: [
+        {
+            source: ['www.dgjyw.com/:category.htm'],
+            target: '/:category',
+        },
+    ],
+    name: '分类',
+    maintainers: ['nczitzk'],
+    description: `| 通知 | 动态 | 公示 |
+| ---- | ---- | ---- |
+| tz   | dt   | gs   |
+
+::: tip
+分类字段处填写的是对应东莞教研网网址中介于 \`https://www.dgjyw.com/\` 和 \`.htm\` 中间的一段。
+
+如 [通知](https://www.dgjyw.com/tz.htm) 的网址为 \`https://www.dgjyw.com/tz.htm\`，其中间字段为 \`tz\`，所以可得路由为 [\`/dgjyw/tz\`](https://rsshub.app/dgjyw/tz)；
+
+同理，[教育科研 - 科研文件](https://www.dgjyw.com/jyky/kywj.htm) 的网址为 \`https://www.dgjyw.com/jyky/kywj.htm\`，其中间字段为 \`jyky/kywj\`，所以可得路由为 [\`/dgjyw/jyky/kywj\`](https://rsshub.app/dgjyw/jyky/kywj)。
+:::`,
     handler,
 };
 

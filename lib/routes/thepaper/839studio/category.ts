@@ -5,6 +5,12 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/839studio/:id',
+    categories: ['traditional-media'],
+    example: '/thepaper/839studio/2',
+    parameters: { id: '分类 id，默认订阅全部分类' },
+    description: `| 视频 | 交互 | 信息图 | 数据故事 |
+| ---- | ---- | ------ | -------- |
+| 2    | 4    | 3      | 453      |`,
     radar: [
         {
             source: ['thepaper.cn/'],

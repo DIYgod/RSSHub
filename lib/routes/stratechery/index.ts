@@ -3,7 +3,9 @@ import buildData from '@/utils/common-config';
 
 export const route: Route = {
     path: '/',
-    name: 'Unknown',
+    categories: ['blog'],
+    example: '/stratechery',
+    name: 'Stratechery by Ben Thompson',
     maintainers: ['chazeon'],
     handler,
 };

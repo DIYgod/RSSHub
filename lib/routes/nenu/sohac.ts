@@ -7,10 +7,18 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/sohac/*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/sohac/:path{.+}?',
+    categories: ['university'],
+    example: '/nenu/sohac',
+    parameters: { path: '路径，默认为通知公告' },
+    name: '历史文化学院',
+    maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+若订阅 [通知公告](https://sohac.nenu.edu.cn/index/tzgg.htm)，网址为 \`https://sohac.nenu.edu.cn/index/tzgg.htm\`。截取 \`https://sohac.nenu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/tzgg\` 作为参数，此时路由为 [\`/nenu/sohac/index/tzgg\`](https://rsshub.app/nenu/sohac/index/tzgg)。
+
+若订阅 [学院信息](https://sohac.nenu.edu.cn/index/xyxx.htm)，网址为 \`https://sohac.nenu.edu.cn/index/xyxx.htm\`。截取 \`https://sohac.nenu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/xyxx\` 作为参数，此时路由为 [\`/nenu/sohac/index/xyxx\`](https://rsshub.app/nenu/sohac/index/xyxx)。
+:::`,
 };
 
 async function handler(ctx) {

@@ -6,8 +6,11 @@ import got from '@/utils/got';
 const host = 'https://www.douban.com/explore/column/';
 export const route: Route = {
     path: '/explore/column/:id',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['social-media'],
+    example: '/douban/explore/column/2',
+    parameters: { id: '分栏目id' },
+    name: '浏览发现分栏目',
+    maintainers: ['LogicJake'],
     handler,
 };
 

@@ -7,15 +7,21 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:channel?',
+    categories: ['new-media'],
+    example: '/biodiscover/reaseach',
+    parameters: { channel: '频道，见下表' },
     radar: [
         {
             source: ['www.biodiscover.com/:channel'],
             target: '/:channel',
         },
     ],
-    name: 'Unknown',
+    name: '频道',
     maintainers: ['aidistan'],
     handler,
+    description: `| Research | Interview | Industry | Activity |
+| -------- | --------- | -------- | -------- |
+| reaseach | interview | industry | activity |`,
 };
 
 async function handler(ctx) {

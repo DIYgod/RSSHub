@@ -6,14 +6,16 @@ const baseUrl = 'https://www.whwater.com';
 
 export const route: Route = {
     path: '/wuhan/:channelId?',
+    categories: ['forecast'],
+    example: '/tingshuitz/wuhan',
     radar: [
         {
             source: ['whwater.com/IWater.shtml', 'whwater.com/'],
             target: '/wuhan',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '武汉市',
+    maintainers: ['MoonBegonia'],
     handler,
     url: 'whwater.com/IWater.shtml',
 };
