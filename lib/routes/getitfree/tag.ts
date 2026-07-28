@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { id: '标签，见下表，可在对应标签页中找到，默认为所有标签' },
     radar: [
         {
-            source: ['/tag/:id'],
+            source: ['getitfree.cn/tag/:id'],
             target: '/tag/:id',
         },
     ],

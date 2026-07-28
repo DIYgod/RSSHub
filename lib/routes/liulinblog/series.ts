@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { id: '专题 id，可在对应标签页 URL 中找到，见下表' },
     radar: [
         {
-            source: ['/series/:id', '/'],
+            source: ['liulinblog.com/series/:id', 'liulinblog.com/'],
             target: '/series/:id',
         },
     ],

@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { keyword: '关键字' },
     radar: [
         {
-            source: ['/'],
+            source: ['getitfree.cn/'],
             target: (_, url) => {
                 const keyword = new URL(url).searchParams.get('s');
 

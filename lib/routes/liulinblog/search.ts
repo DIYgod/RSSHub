@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { keyword: '关键字' },
     radar: [
         {
-            source: ['/search/:keyword', '/'],
+            source: ['liulinblog.com/search/:keyword', 'liulinblog.com/'],
             target: '/search/:keyword',
         },
     ],

@@ -12,7 +12,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['/company/:id'],
+            source: ['logclub.com/company/:id'],
             target: '/company/:id',
         },
     ],

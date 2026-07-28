@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/aicaijing/latest',
     radar: [
         {
-            source: ['/'],
+            source: ['www.aicaijing.com/'],
             target: '/latest',
         },
     ],

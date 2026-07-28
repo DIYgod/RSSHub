@@ -15,11 +15,11 @@ export const route: Route = {
     parameters: { id: '资讯 id，见下表，可在对应资讯页 URL 中找到，默认为全部' },
     radar: [
         {
-            source: ['/news'],
+            source: ['logclub.com/news'],
             target: '/news',
         },
         {
-            source: ['/news/:id'],
+            source: ['logclub.com/news/:id'],
             target: '/news/:id',
         },
     ],

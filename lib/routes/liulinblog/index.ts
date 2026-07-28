@@ -13,7 +13,7 @@ export const route: Route = {
     parameters: { channel: '频道 id，可在对应频道页 URL 中找到，见下表，默认为最新' },
     radar: [
         {
-            source: ['/:channel', '/'],
+            source: ['liulinblog.com/:channel', 'liulinblog.com/'],
             target: '/:channel',
         },
     ],

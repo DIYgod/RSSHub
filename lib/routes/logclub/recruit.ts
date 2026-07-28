@@ -8,7 +8,7 @@ export const route: Route = {
     example: '/logclub/recruit',
     radar: [
         {
-            source: ['/recruit'],
+            source: ['logclub.com/recruit'],
             target: '/recruit',
         },
     ],

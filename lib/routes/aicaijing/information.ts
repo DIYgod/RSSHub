@@ -28,7 +28,7 @@ export const route: Route = {
 | 6       | 深度 - 文娱 |`,
     radar: [
         {
-            source: ['/information/:id', '/'],
+            source: ['www.aicaijing.com/information/:id', 'www.aicaijing.com/'],
             target: '/information/:id?',
         },
     ],

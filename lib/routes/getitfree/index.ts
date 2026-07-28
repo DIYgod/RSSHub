@@ -14,7 +14,7 @@ export const route: Route = {
     parameters: { id: '分类，见下表，可在对应分类页中找到，默认为所有类别' },
     radar: [
         {
-            source: ['/category/:id'],
+            source: ['getitfree.cn/category/:id'],
             target: '/category/:id',
         },
     ],

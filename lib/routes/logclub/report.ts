@@ -23,22 +23,22 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['/lc_report'],
+            source: ['logclub.com/lc_report'],
             target: '/lc_report',
         },
         {
             title: '报告 - 罗戈研究出品',
-            source: ['/lc_report'],
+            source: ['logclub.com/lc_report'],
             target: '/lc_report/Report',
         },
         {
             title: '报告 - 物流报告',
-            source: ['/lc_report'],
+            source: ['logclub.com/lc_report'],
             target: '/lc_report/IndustryReport',
         },
         {
             title: '报告 - 绿色双碳报告',
-            source: ['/lc_report'],
+            source: ['logclub.com/lc_report'],
             target: '/lc_report/GreenDualCarbonReport',
         },
     ],

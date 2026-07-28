@@ -8,7 +8,7 @@ export const route: Route = {
     example: '/aicaijing/recommend',
     radar: [
         {
-            source: ['/'],
+            source: ['www.aicaijing.com/'],
             target: '/recommend',
         },
     ],

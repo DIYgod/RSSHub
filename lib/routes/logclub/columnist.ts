@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { id: '专家 id，见下表，可在对应企业页 URL 中找到' },
     radar: [
         {
-            source: ['/columnist/articleList/:id'],
+            source: ['logclub.com/columnist/articleList/:id'],
             target: '/columnist/articleList/:id',
         },
     ],
