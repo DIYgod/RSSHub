@@ -7,19 +7,21 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['multimedia'],
+    example: '/netflav',
+    features: {
+        nsfw: true,
+    },
     radar: [
         {
             source: ['netflav.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Index',
     maintainers: ['TonyRL'],
     handler,
     url: 'netflav.com/',
-    features: {
-        nsfw: true,
-    },
 };
 
 async function handler() {

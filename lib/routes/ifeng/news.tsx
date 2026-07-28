@@ -4,23 +4,31 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/news/*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/news/:path{.+}?',
+    categories: ['new-media'],
+    example: '/ifeng/news',
+    parameters: { path: '路径，对应分类资讯页 URL 路径，默认为空' },
+    name: '资讯',
+    maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+路径处填写对应页面 URL 中 \`https://news.ifeng.com/\` 后的字段。下面是一个例子。
+
+若订阅 [大湾区\\_资讯\\_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL \`https://news.ifeng.com/shanklist/3-305565-\` 中 \`https://news.ifeng.com/\` 后的字段 \`shanklist/3-305565-\` 作为路径填入。此时路由为 [\`/ifeng/news/shanklist/3-305565-\`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
+:::`,
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
+    const path = ctx.req.param('path');
     const rootUrl = 'https://news.ifeng.com';
-    const currentUrl = `${rootUrl}${getSubPath(ctx).replace(/^\/news/, '')}`;
+    const currentUrl = `${rootUrl}${path ? `/${path}` : ''}`;
 
     const response = await got({
         method: 'get',

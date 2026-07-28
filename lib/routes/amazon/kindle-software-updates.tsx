@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Kindle Software Updates',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 

@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: '实时快讯',
-    maintainers: [],
+    maintainers: ['TonyRL'],
     handler,
     url: 'gelonghui.com/live',
 };

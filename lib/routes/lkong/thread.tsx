@@ -10,12 +10,17 @@ import { renderContent } from './templates/content';
 
 export const route: Route = {
     path: '/thread/:id',
+    categories: ['bbs'],
+    example: '/lkong/thread/3100275',
+    parameters: {
+        id: '帖子 id, 可在帖子的URL里找到',
+    },
     radar: [
         {
             source: ['lkong.com/thread/:id', 'lkong.com/'],
         },
     ],
-    name: 'Unknown',
+    name: '帖子',
     maintainers: ['nczitzk', 'ma6254'],
     handler,
 };

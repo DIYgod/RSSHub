@@ -11,7 +11,7 @@ export const route: Route = {
     categories: ['reading'],
     view: ViewType.Articles,
     name: 'HTML Clip',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 

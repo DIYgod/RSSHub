@@ -23,13 +23,15 @@ const renderDescription = (desc, headerImage) =>
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/tribalfootball',
     radar: [
         {
             source: ['tribalfootball.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Latest News',
     maintainers: ['Rongronggg9'],
     handler,
     url: 'tribalfootball.com/',
