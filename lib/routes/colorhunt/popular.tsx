@@ -1,5 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -21,7 +22,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -50,7 +51,11 @@ async function handler(ctx) {
             timeframe: '30',
         },
         headers: {
+            accept: '*/*',
+            origin: rootUrl,
             referer: `${rootUrl}/popular`,
+            'user-agent': config.trueUA,
+            'x-requested-with': 'XMLHttpRequest',
         },
     });
     const palettes = data as PaletteResponse[];
