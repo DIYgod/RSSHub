@@ -2,12 +2,15 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 import Palette from './templates/palette';
 
 const rootUrl = 'https://colorhunt.co';
+const popularUrl = `${rootUrl}/palettes/popular`;
 
 type PaletteResponse = {
     code: string;
@@ -29,19 +32,31 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['colorhunt.co/popular'],
+            source: ['colorhunt.co/palettes/popular'],
             target: '/popular/monthly',
         },
     ],
     name: 'Monthly Popular',
     maintainers: ['Noteles'],
     handler,
-    url: 'colorhunt.co/popular',
+    url: 'colorhunt.co/palettes/popular',
     description: 'Monthly popular color palettes.',
 };
 
 async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit')) || 30;
+    const cookies = await getCookies();
+    const headers: Record<string, string> = {
+        accept: '*/*',
+        origin: rootUrl,
+        referer: popularUrl,
+        'user-agent': config.trueUA,
+        'x-requested-with': 'XMLHttpRequest',
+    };
+
+    if (cookies.length > 0) {
+        headers.cookie = cookies.join('; ');
+    }
 
     const { data } = await got.post(`${rootUrl}/php/feed.php`, {
         form: {
@@ -50,13 +65,7 @@ async function handler(ctx) {
             tags: '',
             timeframe: '30',
         },
-        headers: {
-            accept: '*/*',
-            origin: rootUrl,
-            referer: `${rootUrl}/popular`,
-            'user-agent': config.trueUA,
-            'x-requested-with': 'XMLHttpRequest',
-        },
+        headers,
     });
     const palettes = data as PaletteResponse[];
 
@@ -77,13 +86,30 @@ async function handler(ctx) {
     return {
         title: 'Color Hunt - Monthly Popular',
         description: 'Monthly popular color palettes from Color Hunt.',
-        link: `${rootUrl}/popular`,
+        link: popularUrl,
         item: items,
         language: 'en',
         logo: `${rootUrl}/img/colorhunt-favicon.svg?2`,
         icon: `${rootUrl}/img/colorhunt-favicon.svg?2`,
     };
 }
+
+const getCookies = () =>
+    cache.tryGet(
+        'colorhunt:cookies',
+        async () => {
+            const response = await ofetch.raw(popularUrl, {
+                headers: {
+                    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'user-agent': config.trueUA,
+                },
+            });
+
+            return response.headers.getSetCookie().map((cookie) => cookie.split(';', 1)[0]);
+        },
+        300,
+        false
+    );
 
 function getColors(code: string): string[] {
     return code.match(/.{6}/g)?.map((color) => `#${color.toUpperCase()}`) ?? [];
