@@ -94,7 +94,7 @@ export const route: Route = {
 
                 return {
                     title: listTitle,
-                    itemLink: link,
+                    itemLink: `${baseUrl}${link}`,
                     imgUrl: `${baseUrl}${imgUrlRaw}`,
                 };
             });
