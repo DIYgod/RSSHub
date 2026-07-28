@@ -16,15 +16,6 @@ export const route: Route = {
         needTorrents: '需要输出种子文件，填写 true/yes 表示需要，默认需要',
         needImages: '需要显示大图，填写 true/yes 表示需要，默认需要',
     },
-    features: {
-        nsfw: true,
-    },
-    radar: [
-        {
-            source: ['e-hentai.org/:category', 'e-hentai.org/'],
-            target: '/category/:category',
-        },
-    ],
     name: '分类',
     maintainers: ['nczitzk'],
     description: `::: tip
@@ -46,6 +37,15 @@ export const route: Route = {
 | Non-H | Image Set | Cosplay | Asian Porn | Misc | Popular |
 | ----- | --------- | ------- | ---------- | ---- | ------- |
 | non-h | imageset  | cosplay | asianporn  | misc | popular |`,
+    features: {
+        nsfw: true,
+    },
+    radar: [
+        {
+            source: ['e-hentai.org/:category', 'e-hentai.org/'],
+            target: '/category/:category',
+        },
+    ],
     handler,
 };
 

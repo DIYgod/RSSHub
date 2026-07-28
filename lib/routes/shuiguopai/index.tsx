@@ -12,9 +12,6 @@ export const route: Route = {
     path: '/',
     categories: ['new-media'],
     example: '/shuiguopai',
-    features: {
-        nsfw: true,
-    },
     radar: [
         {
             source: ['shuiguopai.com/'],
@@ -25,6 +22,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'shuiguopai.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

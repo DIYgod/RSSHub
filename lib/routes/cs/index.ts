@@ -18,6 +18,7 @@ export const route: Route = {
     path: '/:category{.+}?',
     categories: ['finance'],
     example: '/cs',
+    name: '栏目',
     parameters: { category: '分类，见下表，默认为要闻' },
     features: {
         requireConfig: false,
@@ -179,7 +180,6 @@ export const route: Route = {
             target: '/yc/gsnjd',
         },
     ],
-    name: '栏目',
     maintainers: ['nczitzk'],
     description: `| 要闻 | 公司 | 市场 | 基金 |
 | ---- | ---- | ---- | ---- |

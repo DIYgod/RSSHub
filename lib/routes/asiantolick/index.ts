@@ -12,9 +12,6 @@ export const route: Route = {
     path: '/',
     categories: ['picture'],
     example: '/asiantolick',
-    features: {
-        nsfw: true,
-    },
     radar: [
         {
             source: ['asiantolick.com/'],
@@ -25,6 +22,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'asiantolick.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 export async function handler(ctx) {

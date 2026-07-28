@@ -9,12 +9,9 @@ export const route: Route = {
     path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
     example: '/141jav/popular/30',
-    parameters: { type: '类型，可查看下表的类型说明', keyword: '关键词，可查看下表的关键词说明' },
-    features: {
-        nsfw: true,
-    },
     name: '通用',
     maintainers: ['cgkings', 'nczitzk'],
+    parameters: { type: '类型，可查看下表的类型说明', keyword: '关键词，可查看下表的关键词说明' },
     handler,
     description: `**类型**
 
@@ -49,6 +46,9 @@ export const route: Route = {
 - \`/141jav/date/2020/07/30\`
 
   \`date\` 类型的关键词必须填写 **日期 (年 / 月 / 日)**`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
