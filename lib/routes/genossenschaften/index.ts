@@ -11,7 +11,7 @@ const PATH_PREFIX = '/genossenschaften/' as const;
 
 export const route: Route = {
     name: 'Immobiliensuche',
-    path: '*',
+    path: '/:path{.+}?',
     maintainers: ['sk22'],
     categories: ['other'],
     description: `Note that all parameters are optional and many can be specified multiple times
@@ -39,6 +39,7 @@ filters, copy the part of the URL after the \`?\`.
         '&status=available&status=construction&status=planned' +
         '&type=residence&type=project',
     parameters: {
+        path: 'Query parameters copied from the search URL, without the leading `?`, composed of the parameters below',
         // labels are in german language because it's the same on the website
         cost: 'Miete bis (in €, number)',
         district: 'Bezirk (string, multiple)',
@@ -62,7 +63,7 @@ filters, copy the part of the URL after the \`?\`.
         supportScihub: false,
     },
     async handler(ctx) {
-        let path = ctx.req.path.slice(PATH_PREFIX.length);
+        let path = ctx.req.param('path') ?? '';
         if (path.startsWith('&')) {
             // in case request url is something like `/genossenschaften/&cost=…`
             path = path.slice(1);
