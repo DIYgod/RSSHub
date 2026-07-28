@@ -21,7 +21,7 @@ export const route: Route = {
         },
     ],
     name: '标签',
-    maintainers: ['nczitzk', 'LogicJake'],
+    maintainers: ['LogicJake', 'nczitzk'],
     handler,
 };
 

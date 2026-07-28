@@ -21,7 +21,7 @@ export const route: Route = {
         },
     ],
     name: 'Daily Question Solution',
-    maintainers: [],
+    maintainers: ['woaidouya123'],
     handler,
     url: 'leetcode.com/',
 };

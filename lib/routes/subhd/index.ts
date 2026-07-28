@@ -27,7 +27,7 @@ export const route: Route = {
     description: `| 最新字幕 | 热门字幕 | 剧集字幕 | 电影字幕 |
 | -------- | -------- | -------- | -------- |
 | new      | top      | tv       | movie    |`,
-    maintainers: ['nczitzk', 'laampui'],
+    maintainers: ['laampui', 'nczitzk'],
     handler,
 };
 

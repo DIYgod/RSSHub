@@ -13,7 +13,7 @@ export const route: Route = {
     example: '/pubmed/trending',
     parameters: { filters: 'Filters, can be found in URL' },
     name: 'Trending articles',
-    maintainers: ['nczitzk', 'y9c'],
+    maintainers: ['y9c', 'nczitzk'],
     handler,
     description: `::: tip
 For the parameter **filter**, the \`filter\` parameter in the URL should be split into a string by \`,\`, here is an example.

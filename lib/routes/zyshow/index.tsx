@@ -14,7 +14,7 @@ export const route: Route = {
         antiCrawler: true,
     },
     name: '综艺',
-    maintainers: ['nczitzk', 'pharaoh2012'],
+    maintainers: ['pharaoh2012', 'nczitzk'],
     description: `地区，见下表，默认为空，即台湾
 
 | 台湾 | 韩国 | 大陆 |

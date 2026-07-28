@@ -10,7 +10,7 @@ export const route: Route = {
     categories: ['other'],
     example: '/aqara/cn/news',
     name: '新闻',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
 };
 

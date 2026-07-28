@@ -35,7 +35,6 @@ export const route: Route = {
 };
 
 export async function handler(ctx) {
-    // subsite (news / mil) comes from the route prefix, category is optional
     const [id, category = 'china'] = getSubPath(ctx).split('/').filter(Boolean);
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 

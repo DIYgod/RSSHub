@@ -15,7 +15,7 @@ export const route: Route = {
         },
     ],
     name: '每日一题',
-    maintainers: [],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'leetcode.cn/',
 };

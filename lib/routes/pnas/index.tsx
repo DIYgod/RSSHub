@@ -30,7 +30,7 @@ export const route: Route = {
         },
     ],
     name: 'Journal',
-    maintainers: ['emdoe', 'y9c', 'HenryQW'],
+    maintainers: ['emdoe', 'HenryQW', 'y9c'],
     handler,
     url: 'pnas.org/*topicPath',
     description: `::: tip

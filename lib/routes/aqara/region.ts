@@ -16,7 +16,7 @@ export const route: Route = {
 | ---- | ---- |
 | news | blog |`,
     name: '新闻、博客',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
 };
 
