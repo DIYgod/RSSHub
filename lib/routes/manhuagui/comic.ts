@@ -1,7 +1,7 @@
 import { type CheerioAPI, load } from 'cheerio';
 import LZString from 'lz-string';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -11,7 +11,7 @@ const getChapters = ($) => {
     let time_mark = 100;
     // 用于一次更新多个新章节的排序
     let new_time_mark = 0;
-    const result: DataItem[] = [];
+    const result: Array<{ link: string; title?: string; pub_date: Date; num: string; category: string }> = [];
     $('h4').each((_, ele) => {
         const categoryName = $(ele).text();
         let nextEle = ele.next;
