@@ -59,13 +59,13 @@ function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
         cache.set(query_count, 0 as unknown as string);
     } else {
-        const count = cache.get(query_count);
+        const count = cache.get(query_count) as unknown as number | null;
         if (count) {
             if (count > max_query_count) {
                 cache.set(query_count, 0 as unknown as string);
                 clearCookie();
             } else {
-                cache.set(query_count, count + 1);
+                cache.set(query_count, (count + 1) as unknown as string);
             }
         } else {
             cache.set(query_count, 1 as unknown as string);
