@@ -110,10 +110,10 @@ async function handler(ctx) {
             const content = item.content;
 
             return {
-                title: content.type === 'article' || content.type === 'zvideo' ? content.title : content.question.title,
+                title: content.type === 'article' || content.type === 'zvideo' ? content.title : content.question!.title,
                 link: content.url,
-                description: content.type === 'zvideo' ? `<img src=${content.video.url}/>` : content.content,
-                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time) * 1000),
+                description: content.type === 'zvideo' ? `<img src=${content.video!.url}/>` : content.content,
+                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time)! * 1000),
                 category: [item.collectionTitle],
             };
         }),
