@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
 
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
-const ROOT = 'http://paper.people.com.cn/rmrb/pc/layout';
+const ROOT = 'https://paper.people.com.cn/rmrb/pc/layout';
 
 export interface Edition {
     /** 版面编号，例如 `01` */
@@ -19,11 +20,10 @@ export interface ArticleRef {
 }
 
 /**
- * 获取某一天（或最新一期）人民日报的全部版面列表。
- * @param date 格式 `YYYYMMDD`，不传则抓取最新一期
+ * 获取最新一期人民日报的全部版面列表。
  */
-export async function getEditions(date?: string): Promise<Edition[]> {
-    const indexUrl = date ? `${ROOT}/${date.slice(0, 4)}${date.slice(4, 6)}/${date.slice(6, 8)}/index.html` : `${ROOT}/index.html`;
+export async function getEditions(): Promise<Edition[]> {
+    const indexUrl = `${ROOT}/index.html`;
 
     const html = await ofetch(indexUrl);
     const $ = load(html);
@@ -46,21 +46,22 @@ export async function getEditions(date?: string): Promise<Edition[]> {
 }
 
 /**
- * 从某个版面页中提取文章链接列表（已过滤责编等非正文条目）。
+ * 从某个版面页的文章列表（`.news-list`）中提取文章链接。
+ * 注：「本版责编」等非正文条目与文章结构完全一致（同为 li > a，href 同为 content_xxx.html），
+ * 无法用纯结构选择器区分，故保留针对其标题的最小过滤。
  */
 export async function getArticles(nodeUrl: string): Promise<ArticleRef[]> {
     const html = await ofetch(nodeUrl);
     const $ = load(html);
 
     const articles: ArticleRef[] = [];
-    $('a[href*="content_"]').each((_, el) => {
+    $('.news-list a').each((_, el) => {
         const a = $(el);
         const href = a.attr('href');
-        if (!href) {
+        if (!href || !/content_\d+\.html$/.test(href)) {
             return;
         }
         const title = a.text().replaceAll(/\s+/g, ' ').trim();
-        // 跳过「本版责编」「责任编辑」等排版说明
         if (!title || /责编|责任编辑/.test(title)) {
             return;
         }
@@ -91,10 +92,10 @@ export async function getArticleContent(articleUrl: string): Promise<{ descripti
 
     const description = $article.html()?.trim() ?? '';
 
-    // 尝试从页面日期标记解析发布时间，例如 `(2026年07月29日 01版)`
+    // 尝试从页面日期标记解析发布时间，例如 `(2026年07月29日 05版)`
     const dateText = $('.date').first().text();
     const dateMatch = dateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
-    const pubDate = dateMatch ? new Date(Number(dateMatch[1]), Number(dateMatch[2]) - 1, Number(dateMatch[3])) : undefined;
+    const pubDate = dateMatch ? parseDate(`${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`, 'YYYY-MM-DD') : undefined;
 
     return { description, pubDate };
 }
