@@ -1,5 +1,6 @@
 import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
+import type { JSX } from 'hono/jsx/jsx-runtime';
 
 interface ContentNode {
     type: string;
