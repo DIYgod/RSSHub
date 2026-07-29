@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 
 const FEED_LANGUAGE = 'de' as const;
@@ -12,17 +11,18 @@ const BASE_URL = `${SITE_URL}/immobilienangebot/` as const;
 export const route: Route = {
     name: 'Immobilienangebot',
     example: '/oesw/sofort-verfuegbar/objectType=1&financingType=2&region=1020',
-    path: '*',
+    path: '/:path{.+}?',
+    parameters: { path: 'Listing page (`immobiliensuche` by default), optionally followed by the query parameters, see the description below' },
     maintainers: ['sk22'],
     categories: ['other'],
     description: `Get your parameters on ${SITE_URL} under "Immobilienangebot".
 Make sure to remove the \`?\` at the beginning from the query parameters!`,
 
     async handler(ctx) {
-        // ['', 'sofort-verfuegbar', 'objectType=1&region=1010']
-        const parts = getSubPath(ctx).split('/');
-        const listingPage = parts[1] || 'immobiliensuche';
-        let params = parts[2] || '';
+        // ['sofort-verfuegbar', 'objectType=1&region=1010']
+        const parts = (ctx.req.param('path') ?? '').split('/');
+        const listingPage = parts[0] || 'immobiliensuche';
+        let params = parts[1] || '';
         if (params.startsWith('&')) {
             params = params.slice(1);
         }

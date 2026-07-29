@@ -40,15 +40,29 @@ const titles = {
 
 export const route: Route = {
     path: '/chp/:category?/:language?',
+    categories: ['government'],
+    example: '/hongkong/chp',
+    parameters: { category: 'Category, see below, Important Topics by default', language: 'Language, see below, zh_tw by default' },
     radar: [
         {
             source: ['dh.gov.hk/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Category',
     maintainers: ['nczitzk'],
     handler,
     url: 'dh.gov.hk/',
+    description: `Category
+
+| Important Topics | Press Releases     | Response Level | Periodicals & Publications | Health Notice |
+| ---------------- | ------------------ | -------------- | -------------------------- | ------------- |
+| important\\_ft    | press\\_data\\_index | ResponseLevel  | publication                | HealthAlert   |
+
+Language
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| en      | zh\\_cn   | zh\\_tw   |`,
 };
 
 async function handler(ctx) {

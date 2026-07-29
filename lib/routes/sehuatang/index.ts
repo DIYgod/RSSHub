@@ -41,6 +41,12 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
+    categories: ['multimedia'],
+    example: '/sehuatang/36/368',
+    parameters: {
+        subforumid: '版块 id 或板块名称（见下表）, 为空默认高清中文字幕',
+        type: '类型 id, 可在分区类型过滤后的 URL 中找到',
+    },
     name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     handler,

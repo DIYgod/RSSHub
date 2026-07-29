@@ -16,8 +16,170 @@ const decodeBufferByCharset = (buffer) => {
 
 export const route: Route = {
     path: '/:category{.+}?',
+    categories: ['finance'],
+    example: '/cs',
     name: '栏目',
-    parameters: { category: '分类，见下表，默认为首页' },
+    parameters: { category: '分类，见下表，默认为要闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            title: '要闻',
+            source: ['cs.com.cn/xwzx/'],
+            target: '/xwzx',
+        },
+        {
+            title: '公司',
+            source: ['cs.com.cn/ssgs/'],
+            target: '/ssgs',
+        },
+        {
+            title: '市场',
+            source: ['cs.com.cn/gppd/'],
+            target: '/gppd',
+        },
+        {
+            title: '基金',
+            source: ['cs.com.cn/tzjj/'],
+            target: '/tzjj',
+        },
+        {
+            title: '科创',
+            source: ['cs.com.cn/5g/'],
+            target: '/5g',
+        },
+        {
+            title: '产经',
+            source: ['cs.com.cn/cj2020/'],
+            target: '/cj2020',
+        },
+        {
+            title: '期货',
+            source: ['cs.com.cn/zzqh2020/'],
+            target: '/zzqh2020',
+        },
+        {
+            title: '海外',
+            source: ['cs.com.cn/hw2020/'],
+            target: '/hw2020',
+        },
+        {
+            title: '财经要闻',
+            source: ['cs.com.cn/xwzx/hg/'],
+            target: '/xwzx/hg',
+        },
+        {
+            title: '观点评论',
+            source: ['cs.com.cn/xwzx/jr/'],
+            target: '/xwzx/jr',
+        },
+        {
+            title: '民生消费',
+            source: ['cs.com.cn/xwzx/msxf/'],
+            target: '/xwzx/msxf',
+        },
+        {
+            title: '公司要闻',
+            source: ['cs.com.cn/ssgs/gsxw/'],
+            target: '/ssgs/gsxw',
+        },
+        {
+            title: '公司深度',
+            source: ['cs.com.cn/ssgs/gssd/'],
+            target: '/ssgs/gssd',
+        },
+        {
+            title: '公司巡礼',
+            source: ['cs.com.cn/ssgs/gsxl/'],
+            target: '/ssgs/gsxl',
+        },
+        {
+            title: 'A股市场',
+            source: ['cs.com.cn/gppd/gsyj/'],
+            target: '/gppd/gsyj',
+        },
+        {
+            title: '港股资讯',
+            source: ['cs.com.cn/gppd/ggzx/'],
+            target: '/gppd/ggzx',
+        },
+        {
+            title: '债市研究',
+            source: ['cs.com.cn/gppd/zqxw/'],
+            target: '/gppd/zqxw',
+        },
+        {
+            title: '海外报道',
+            source: ['cs.com.cn/gppd/hwbd/'],
+            target: '/gppd/hwbd',
+        },
+        {
+            title: '期货报道',
+            source: ['cs.com.cn/gppd/qhbd/'],
+            target: '/gppd/qhbd',
+        },
+        {
+            title: '基金动态',
+            source: ['cs.com.cn/tzjj/jjdt/'],
+            target: '/tzjj/jjdt',
+        },
+        {
+            title: '基金视点',
+            source: ['cs.com.cn/tzjj/jjks/'],
+            target: '/tzjj/jjks',
+        },
+        {
+            title: '基金持仓',
+            source: ['cs.com.cn/tzjj/jjcs/'],
+            target: '/tzjj/jjcs',
+        },
+        {
+            title: '私募基金',
+            source: ['cs.com.cn/tzjj/smjj/'],
+            target: '/tzjj/smjj',
+        },
+        {
+            title: '基民学苑',
+            source: ['cs.com.cn/tzjj/tjdh/'],
+            target: '/tzjj/tjdh',
+        },
+        {
+            title: '券商',
+            source: ['cs.com.cn/qs/'],
+            target: '/qs',
+        },
+        {
+            title: '银行',
+            source: ['cs.com.cn/yh/'],
+            target: '/yh',
+        },
+        {
+            title: '保险',
+            source: ['cs.com.cn/bx/'],
+            target: '/bx',
+        },
+        {
+            title: '中证快讯 7x24',
+            source: ['cs.com.cn/sylm/jsbd/'],
+            target: '/sylm/jsbd',
+        },
+        {
+            title: 'IPO鉴真',
+            source: ['cs.com.cn/yc/ipojz/'],
+            target: '/yc/ipojz',
+        },
+        {
+            title: '公司能见度',
+            source: ['cs.com.cn/yc/gsnjd/'],
+            target: '/yc/gsnjd',
+        },
+    ],
     maintainers: ['nczitzk'],
     description: `| 要闻 | 公司 | 市场 | 基金 |
 | ---- | ---- | ---- | ---- |
@@ -68,6 +230,7 @@ export const route: Route = {
 
 </details>`,
     handler,
+    url: 'www.cs.com.cn',
 };
 
 async function handler(ctx) {

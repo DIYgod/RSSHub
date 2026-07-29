@@ -8,9 +8,21 @@ import { parseArticle } from '../utils';
 
 export const route: Route = {
     path: '/app/channel/:id',
-    name: 'Unknown',
+    categories: ['traditional-media'],
+    example: '/oeeee/app/channel/50',
+    parameters: { id: '南都号 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '南都客户端（按南都号 ID）',
     maintainers: ['TimWu007'],
     handler,
+    description: '南都号的 UID 可通过 `m.mp.oeeee.com` 下的文章页面获取。点击文章上方的南都号头像，进入该南都号的个人主页，即可从 url 中获取。',
 };
 
 async function handler(ctx) {

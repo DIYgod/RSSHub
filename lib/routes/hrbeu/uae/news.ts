@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '水声工程学院',
-    maintainers: [],
+    maintainers: ['Derekmini'],
     handler,
     description: `| 新闻动态 | 通知公告 | 科学研究 / 科研动态 |
 | :------: | :------: | :-----------------: |

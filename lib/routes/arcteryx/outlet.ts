@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: 'Outlet',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     description: `Country
 

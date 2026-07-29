@@ -17,7 +17,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Videos by makers',
-    maintainers: [],
+    maintainers: ['Huzhixin00'],
     handler,
     description: `| videos with comments (by date) | everything (by date) |
 | ------------------------------ | -------------------- |

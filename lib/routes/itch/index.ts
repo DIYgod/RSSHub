@@ -2,21 +2,30 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['game'],
+    example: '/itch/games/new-and-popular/featured',
+    parameters: { path: 'Params' },
+    name: 'Browse',
+    maintainers: ['nczitzk'],
+    description: `The path is the field after \`itch.io\` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is \`https://itch.io/games/top-rated/tag-singleplayer\`, where the field after \`itch.io\` is \`/games/top-rated/tag-singleplayer\`.
+
+So the route is [\`/itch/games/top-rated/tag-singleplayer\`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
+
+::: tip
+You can browse all the tags [here](https://itch.io/tags).
+:::`,
     handler,
 };
 
 async function handler(ctx) {
     const rootUrl = 'https://itch.io';
-    const currentUrl = `${rootUrl}${getSubPath(ctx)}`;
+    const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? ''}`;
 
     const response = await got({
         method: 'get',

@@ -9,8 +9,11 @@ const baseUrl = 'http://www.dyyy.xjtu.edu.cn';
 
 export const route: Route = {
     path: '/dyyy/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/xjtu/dyyy/index/xsxx',
+    parameters: { path: '栏目路径，支持多级，不包括末尾的`.htm`' },
+    name: '第一附属医院新闻',
+    maintainers: ['TonyRL'],
     handler,
 };
 

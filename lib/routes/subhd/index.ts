@@ -2,37 +2,41 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const config = {
-    sub: {
-        title: '字幕',
-        category: 'new',
-    },
-    zu: {
-        title: '字幕组',
-        category: '14',
-    },
-    newest: {
-        category: 'for backwards compatibility',
-    },
+const defaultCategories = {
+    sub: 'new',
+    zu: '14',
 };
 
 export const route: Route = {
-    path: '/:type?/:category?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/sub/:category?',
+    categories: ['multimedia'],
+    example: '/subhd/sub/new',
+    parameters: { category: '分类，见下表，默认为最新' },
+    radar: [
+        {
+            source: ['subhd.tv/sub/:category', 'subhd.tv/'],
+            target: '/sub/:category?',
+        },
+    ],
+    name: '字幕',
+    description: `| 最新字幕 | 热门字幕 | 剧集字幕 | 电影字幕 |
+| -------- | -------- | -------- | -------- |
+| new      | top      | tv       | movie    |`,
+    maintainers: ['laampui', 'nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
-    const type = ctx.req.param('type') ?? 'sub';
-    const category = ctx.req.param('category') ?? config[type].category;
+export async function handler(ctx) {
+    const type = getSubPath(ctx).split('/', 2)[1];
+    const category = ctx.req.param('category') ?? defaultCategories[type];
 
     const rootUrl = 'https://subhd.tv';
-    const currentUrl = `${rootUrl}/${type === 'newest' ? 'sub/new' : `${type}/${category}${type === 'zu' ? '/l' : ''}`}`;
+    const currentUrl = `${rootUrl}/${type}/${category}${type === 'zu' ? '/l' : ''}`;
 
     const response = await got({
         method: 'get',

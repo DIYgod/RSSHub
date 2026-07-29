@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '话题',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     url: 'aamacau.com/',
     description: `| 即時報道     | 每週專題    | 藝文爛鬼樓 | 論盡紙本 | 新聞事件 | 特別企劃 |

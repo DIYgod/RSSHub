@@ -25,7 +25,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Latest Magazine',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     description: 'For instance, when doing search at <https://magazinelib.com> and you get url `https://magazinelib.com/?s=new+yorker`, the query is `new+yorker`',
 };

@@ -2,24 +2,44 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/news/:id?',
+    categories: ['new-media'],
+    example: '/logclub/news',
+    parameters: { id: '资讯 id，见下表，可在对应资讯页 URL 中找到，默认为全部' },
+    radar: [
+        {
+            source: ['logclub.com/news'],
+            target: '/news',
+        },
+        {
+            source: ['logclub.com/news/:id'],
+            target: '/news/:id',
+        },
+    ],
+    name: '资讯',
+    maintainers: ['nczitzk'],
     handler,
+    description: `| 供应链 | 快递 | 快运 / 运输 | 仓储 / 地产 | 物流综合 | 国际与跨境物流 | 科技创新 |
+| ------ | ---- | ----------- | ----------- | -------- | -------------- | -------- |
+| 10-16  | 11   | 30          | 9           | 32       | 114            | 107      |
+
+| 绿色供应链 | 低碳物流 | 碳中和碳达峰 |
+| ---------- | -------- | ------------ |
+| 213        | 214      | 215          |`,
 };
 
-async function handler(ctx) {
-    const { category = 'news' } = ctx.req.param();
+export async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const rootUrl = 'https://www.logclub.com';
-    const currentUrl = new URL(category, rootUrl).href;
+    const currentUrl = new URL(getSubPath(ctx), rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

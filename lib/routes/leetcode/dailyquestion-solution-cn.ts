@@ -12,13 +12,15 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/dailyquestion/solution/cn',
+    categories: ['programming'],
+    example: '/leetcode/dailyquestion/solution/cn',
     radar: [
         {
             source: ['leetcode.cn/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '每日一题题解',
+    maintainers: ['woaidouya123'],
     handler,
     url: 'leetcode.cn/',
 };

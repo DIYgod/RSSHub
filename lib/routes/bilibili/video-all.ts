@@ -8,7 +8,7 @@ import utils from './utils';
 export const route: Route = {
     path: '/user/video-all/:uid/:embed?',
     name: '用户所有视频',
-    maintainers: [],
+    maintainers: ['CcccFz'],
     handler,
     example: '/bilibili/user/video-all/2267573',
     parameters: {

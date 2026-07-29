@@ -2,13 +2,13 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
+    example: '/141jav/popular/30',
     name: '通用',
     maintainers: ['cgkings', 'nczitzk'],
     parameters: { type: '类型，可查看下表的类型说明', keyword: '关键词，可查看下表的关键词说明' },
@@ -64,11 +64,6 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-
-    if (getSubPath(ctx) === '/') {
-        ctx.set('redirect', `/141jav${$('.overview').first().attr('href')}`);
-        return;
-    }
 
     const items = $('.columns')
         .toArray()

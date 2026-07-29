@@ -6,13 +6,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['picture'],
+    example: '/wallpaperhub',
     radar: [
         {
             source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Wallpapers',
     maintainers: ['nczitzk'],
     handler,
     url: 'wallpaperhub.app/wallpaperhub',

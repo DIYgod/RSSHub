@@ -6,12 +6,23 @@ const host = `${baseUrl}/newscenter/notice/`;
 
 export const route: Route = {
     path: '/ss/notice',
+    categories: ['university'],
+    example: '/pku/ss/notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['ss.pku.edu.cn/index.php/newscenter/notice', 'ss.pku.edu.cn/'],
         },
     ],
-    name: 'Unknown',
+    name: '软件与微电子学院 - 通知公告',
     maintainers: ['legr4ndk'],
     handler,
     url: 'ss.pku.edu.cn/index.php/newscenter/notice',

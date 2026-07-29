@@ -20,7 +20,7 @@ export const route: Route = {
         },
     ],
     name: 'New Releases',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'bellroy.com/collection/new-releases',
 };

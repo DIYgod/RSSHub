@@ -6,13 +6,15 @@ import { renderEshopJpDescription } from './templates/eshop-jp';
 
 export const route: Route = {
     path: '/eshop/jp',
+    categories: ['game'],
+    example: '/nintendo/eshop/jp',
     radar: [
         {
             source: ['nintendo.co.jp/software/switch/index.html', 'nintendo.co.jp/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'eShop New Game Releases (JP)',
+    maintainers: ['HFO4'],
     handler,
     url: 'nintendo.co.jp/software/switch/index.html',
 };

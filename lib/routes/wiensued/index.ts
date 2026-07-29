@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 
 const FEED_LANGUAGE = 'de' as const;
@@ -11,15 +10,16 @@ const BASE_URL = 'https://www.wiensued.at/' as const;
 export const route: Route = {
     name: 'Objekte',
     example: '/wiensued/city=Wien&search=&space-from=30&space-to=100&room-from=2&room-to=4&rent=1&property=1&state[]=inplanung&state[]=inbau&state[]=sofort&state[]=bestand',
-    path: '*',
+    path: '/:path{.+}?',
+    parameters: { path: 'Query parameters and/or the path leading up to the listing, see the description below' },
     maintainers: ['sk22'],
     categories: ['other'],
     description: `Pass in the parameters (e.g. \`city=Wien&state[]=sofort\`) and/or the path
 leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)`,
 
     async handler(ctx) {
-        // ['', 'wohnen', 'sofort-verfuegbar', 'city=Wien']
-        const parts = getSubPath(ctx).split('/');
+        // ['wohnen', 'sofort-verfuegbar', 'city=Wien']
+        const parts = (ctx.req.param('path') ?? '').split('/');
         const subPaths = parts.filter((p) => p.length && !p.includes('='));
         if (subPaths.length === 0) {
             subPaths.push('wohnen');

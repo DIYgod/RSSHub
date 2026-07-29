@@ -7,9 +7,20 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/:subsite/:tag?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['new-media'],
+    example: '/9to5/mac/aapl',
+    parameters: {
+        subsite: 'Subsite name',
+        tag: 'Tag name inside the url of the tag page',
+    },
+    name: 'Sub-site',
+    maintainers: ['HenryQW'],
     handler,
+    description: `Supported sub-sites：
+
+| 9To5Mac | 9To5Google | 9To5Toys |
+| ------- | ---------- | -------- |
+| Mac     | Google     | Toys     |`,
 };
 
 async function handler(ctx) {
