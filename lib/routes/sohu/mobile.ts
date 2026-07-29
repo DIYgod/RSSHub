@@ -56,7 +56,7 @@ async function handler() {
                     const $d = load(detailResp);
 
                     let description = '';
-                    let pubDate = '';
+                    let pubDate: string | undefined = '';
                     if (item.link.includes('/xtopic/')) {
                         const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?', 1)[0]?.replace('www.sohu.com/', 'm.sohu.com/');
                         const response = await ofetch(`https:${fullArticleUrl}`);

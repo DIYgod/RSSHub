@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $el.find('h2').text();
             const pubDateStr: string | undefined = $el.find('p').text().split('：', 2)[1]?.trim();
             const linkUrl: string | undefined = $el.attr('href') ? new URL($el.attr('href') ?? '', baseUrl).href : undefined;
-            const categoryEls: Array<Cheerio<Element>> = [$el.find('h3').contents()].filter(Boolean);
+            const categoryEls: Array<Cheerio<AnyNode>> = [$el.find('h3').contents()].filter(Boolean);
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
             const image: string | undefined = $el.find('div.xylist_img img').attr('src') ? new URL($el.find('div.xylist_img img').attr('src') ?? '', baseUrl).href : undefined;
             const upDatedStr: string | undefined = pubDateStr;
