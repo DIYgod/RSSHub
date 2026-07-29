@@ -57,7 +57,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: parseDate(),
+                pubDate: undefined as DataItem['pubDate'],
                 author: undefined as DataItem['author'],
                 description: undefined as DataItem['description'],
             };
