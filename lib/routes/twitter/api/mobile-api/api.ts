@@ -257,7 +257,8 @@ const getUserTweets = async (id, params = {}) => {
     await Promise.all(
         [_getUserTweets, getUserTweetsAndReplies, getUserMedia].map(async (func) => {
             try {
-                tweets.push(...(await func(id, params)));
+                const result = await func(id, params);
+                tweets.push(...(result as any[]));
             } catch (error) {
                 logger.warn(`Failed to get tweets for ${id} with ${func.name}: ${error}`);
             }

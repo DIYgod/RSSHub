@@ -185,7 +185,7 @@ async function dealGovpublicPage(link, item) {
     const body = $('.gsj_htmlcon_bot');
     const [, year, month, date] = $('.pubtime')
         .text()
-        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/);
+        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/)!;
     const [, author] = $('.pubtime.source')
         ?.text()
         ?.match(/：(.+)/) ?? [null, ''];
