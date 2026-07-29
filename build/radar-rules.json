@@ -2639,8 +2639,8 @@
     "_name": "第一财经杂志",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/"
         ],
@@ -2728,8 +2728,8 @@
     "_name": "CuriousCat",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "User",
+        "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/:id"
         ],
@@ -3130,6 +3130,14 @@
         "target": "/gocn/jobs"
       },
       {
+        "title": "最新动态",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/gocn/news"
+      },
+      {
         "title": "每日新闻",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
@@ -3143,8 +3151,8 @@
     "_name": "HACKER TALK 黑客说",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新帖子",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/"
         ],
@@ -3305,8 +3313,8 @@
     "_name": "交流岛资源网",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/"
         ],
@@ -3425,16 +3433,16 @@
     "_name": "三联生活周刊",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/column/:channel"
         ],
         "target": "/lifeweek/channel/:channel"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/articleList/:tag"
         ],
@@ -3763,8 +3771,8 @@
     "_name": "Rare Historical Photos",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Home",
+        "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
           "/"
         ],
@@ -4016,7 +4024,7 @@
     "_name": "V2rayShare",
     ".": [
       {
-        "title": "Unknown",
+        "title": "免费节点",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -5274,8 +5282,8 @@
     "_name": "WallpaperHub",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Wallpapers",
+        "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
           "/wallpaperhub",
           "/"
@@ -5428,42 +5436,41 @@
       }
     ]
   },
-  "4gamers.com.tw": {
-    "_name": "4Gamers",
+  "aicaijing.com": {
+    "_name": "AI 财经社",
     "www": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/game",
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news",
           "/"
         ],
-        "target": "/4gamers/"
+        "target": "/aicaijing/latest"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/game",
+        "title": "封面文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news",
           "/"
         ],
-        "target": "/4gamers/category/:category"
+        "target": "/aicaijing/cover"
       },
       {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/game",
+        "title": "热点 & 深度",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news/tag/:tag"
+          "/information/:id",
+          "/"
         ],
-        "target": "/4gamers/tag/:tag"
+        "target": "/aicaijing/information/:id?"
       },
       {
-        "title": "主題",
-        "docs": "https://docs.rsshub.app/routes/game",
+        "title": "推荐资讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news/option-cfg/:topic"
+          "/"
         ],
-        "target": "/4gamers/topic/:topic"
+        "target": "/aicaijing/recommend"
       }
     ]
   },
@@ -5704,7 +5711,7 @@
     "_name": "香港 01",
     ".": [
       {
-        "title": "Unknown",
+        "title": "子栏目",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/channel/:id",
@@ -5722,7 +5729,7 @@
         "target": "/hk01/hot"
       },
       {
-        "title": "Unknown",
+        "title": "专题",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/issue/:id",
@@ -5740,7 +5747,7 @@
         "target": "/hk01/latest"
       },
       {
-        "title": "Unknown",
+        "title": "标签",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/tag/:id",
@@ -5749,7 +5756,7 @@
         "target": "/hk01/tag/:id?"
       },
       {
-        "title": "Unknown",
+        "title": "栏目",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/zone/:id",
@@ -6164,8 +6171,8 @@
     "_name": "龙空",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "帖子",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/thread/:id",
           "/"
@@ -6173,8 +6180,8 @@
         "target": "/lkong/thread/:id"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "分区",
+        "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/forum/:id",
           "/"
@@ -6520,7 +6527,7 @@
         "target": "/vcb-s/category/:cate"
       },
       {
-        "title": "Unknown",
+        "title": "最新文章",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/"
@@ -6548,6 +6555,44 @@
           "/update"
         ],
         "target": "/zaimanhua/update"
+      }
+    ]
+  },
+  "4gamers.com.tw": {
+    "_name": "4Gamers",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/category/:category/:categoryName"
+        ],
+        "target": "/4gamers/category/:category"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/tag/:tag"
+        ],
+        "target": "/4gamers/tag/:tag"
+      },
+      {
+        "title": "主題",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/option-cfg/:topic"
+        ],
+        "target": "/4gamers/topic/:topic"
+      },
+      {
+        "title": "最新消息",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/4gamers/"
       }
     ]
   },
@@ -8512,8 +8557,8 @@
     "_name": "经济 50 人论坛",
     "www": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "专家文章",
+        "docs": "https://docs.rsshub.app/routes/study",
         "source": [
           "/portal/list/index.html?id=6"
         ],
@@ -8522,8 +8567,8 @@
     ],
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "专家文章",
+        "docs": "https://docs.rsshub.app/routes/study",
         "source": [
           "/"
         ],
@@ -8626,7 +8671,7 @@
     "club": [
       {
         "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/:id/index.php",
           "/"
@@ -8635,7 +8680,7 @@
       },
       {
         "title": "新闻栏目",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/:id/index.php",
           "/"
@@ -9224,7 +9269,7 @@
     ".": [
       {
         "title": "存档列表 - NSFW",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -9232,7 +9277,7 @@
       },
       {
         "title": "存档列表",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -9376,8 +9421,8 @@
     "_name": "ACS Publications",
     "pubs": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/journal/:id",
           "/"
@@ -12116,19 +12161,6 @@
       }
     ]
   },
-  "asiantolick.com": {
-    "_name": "Asian to lick",
-    ".": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/asiantolick/:category{.+}?"
-      }
-    ]
-  },
   "asus.com": {
     "_name": "ASUS",
     "www": [
@@ -13028,19 +13060,6 @@
       }
     ]
   },
-  "biodiscover.com": {
-    "_name": "biodiscover.com 生物探索",
-    "www": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/:channel"
-        ],
-        "target": "/biodiscover/:channel"
-      }
-    ]
-  },
   "bioone.org": {
     "_name": "BioOne",
     ".": [
@@ -13371,7 +13390,7 @@
     ],
     "www.lib": [
       {
-        "title": "Unknown",
+        "title": "图书馆通知",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/:category/index.htm"
@@ -13778,8 +13797,8 @@
     "_name": "ui.dev",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Your weekly dose of JS",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/archives",
           "/"
@@ -13787,8 +13806,8 @@
         "target": "/bytes/"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "React Newsletter",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/issues",
           "/"
@@ -15134,7 +15153,7 @@
     "_name": "中国光大银行",
     ".": [
       {
-        "title": "Unknown",
+        "title": "外汇牌价 - 总览",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/site/ygzx/whpj/index.html",
@@ -15198,6 +15217,19 @@
       }
     ]
   },
+  "cfmmc.com": {
+    "_name": "中国期货市场监控中心",
+    ".": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:id"
+        ],
+        "target": "/cfmmcparams=>`/cfmmc${params.id?`/${params.id.replace(/\\/index\\.shtml/,\"\")}`:\"\"}`"
+      }
+    ]
+  },
   "cfr.org": {
     "_name": "Council on Foreign Relations",
     "www": [
@@ -15216,7 +15248,7 @@
     "_name": "链捕手 ChainCatcher",
     ".": [
       {
-        "title": "Unknown",
+        "title": "首页",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -15822,7 +15854,7 @@
     "_name": "有据",
     ".": [
       {
-        "title": "Unknown",
+        "title": "最新文章列表",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -15835,8 +15867,8 @@
     "_name": "中国新闻网",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
         ],
@@ -16622,7 +16654,7 @@
     "_name": "CNCF",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Reports",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/reports"
@@ -16635,7 +16667,7 @@
     "_name": "中国国家应急广播",
     ".": [
       {
-        "title": "Unknown",
+        "title": "预警信息",
         "docs": "https://docs.rsshub.app/routes/forecast",
         "source": [
           "/yjxx",
@@ -17673,6 +17705,251 @@
       }
     ]
   },
+  "cs.com.cn": {
+    "_name": "中证网",
+    ".": [
+      {
+        "title": "要闻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/xwzx/"
+        ],
+        "target": "/cs/xwzx"
+      },
+      {
+        "title": "公司",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/ssgs/"
+        ],
+        "target": "/cs/ssgs"
+      },
+      {
+        "title": "市场",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/gppd/"
+        ],
+        "target": "/cs/gppd"
+      },
+      {
+        "title": "基金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/tzjj/"
+        ],
+        "target": "/cs/tzjj"
+      },
+      {
+        "title": "科创",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/5g/"
+        ],
+        "target": "/cs/5g"
+      },
+      {
+        "title": "产经",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/cj2020/"
+        ],
+        "target": "/cs/cj2020"
+      },
+      {
+        "title": "期货",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/zzqh2020/"
+        ],
+        "target": "/cs/zzqh2020"
+      },
+      {
+        "title": "海外",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/hw2020/"
+        ],
+        "target": "/cs/hw2020"
+      },
+      {
+        "title": "财经要闻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/xwzx/hg/"
+        ],
+        "target": "/cs/xwzx/hg"
+      },
+      {
+        "title": "观点评论",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/xwzx/jr/"
+        ],
+        "target": "/cs/xwzx/jr"
+      },
+      {
+        "title": "民生消费",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/xwzx/msxf/"
+        ],
+        "target": "/cs/xwzx/msxf"
+      },
+      {
+        "title": "公司要闻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/ssgs/gsxw/"
+        ],
+        "target": "/cs/ssgs/gsxw"
+      },
+      {
+        "title": "公司深度",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/ssgs/gssd/"
+        ],
+        "target": "/cs/ssgs/gssd"
+      },
+      {
+        "title": "公司巡礼",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/ssgs/gsxl/"
+        ],
+        "target": "/cs/ssgs/gsxl"
+      },
+      {
+        "title": "A股市场",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/gppd/gsyj/"
+        ],
+        "target": "/cs/gppd/gsyj"
+      },
+      {
+        "title": "港股资讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/gppd/ggzx/"
+        ],
+        "target": "/cs/gppd/ggzx"
+      },
+      {
+        "title": "债市研究",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/gppd/zqxw/"
+        ],
+        "target": "/cs/gppd/zqxw"
+      },
+      {
+        "title": "海外报道",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/gppd/hwbd/"
+        ],
+        "target": "/cs/gppd/hwbd"
+      },
+      {
+        "title": "期货报道",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/gppd/qhbd/"
+        ],
+        "target": "/cs/gppd/qhbd"
+      },
+      {
+        "title": "基金动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/tzjj/jjdt/"
+        ],
+        "target": "/cs/tzjj/jjdt"
+      },
+      {
+        "title": "基金视点",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/tzjj/jjks/"
+        ],
+        "target": "/cs/tzjj/jjks"
+      },
+      {
+        "title": "基金持仓",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/tzjj/jjcs/"
+        ],
+        "target": "/cs/tzjj/jjcs"
+      },
+      {
+        "title": "私募基金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/tzjj/smjj/"
+        ],
+        "target": "/cs/tzjj/smjj"
+      },
+      {
+        "title": "基民学苑",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/tzjj/tjdh/"
+        ],
+        "target": "/cs/tzjj/tjdh"
+      },
+      {
+        "title": "券商",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/qs/"
+        ],
+        "target": "/cs/qs"
+      },
+      {
+        "title": "银行",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/yh/"
+        ],
+        "target": "/cs/yh"
+      },
+      {
+        "title": "保险",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/bx/"
+        ],
+        "target": "/cs/bx"
+      },
+      {
+        "title": "中证快讯 7x24",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/sylm/jsbd/"
+        ],
+        "target": "/cs/sylm/jsbd"
+      },
+      {
+        "title": "IPO鉴真",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/yc/ipojz/"
+        ],
+        "target": "/cs/yc/ipojz"
+      },
+      {
+        "title": "公司能见度",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/yc/gsnjd/"
+        ],
+        "target": "/cs/yc/gsnjd"
+      }
+    ]
+  },
   "csdn.net": {
     "_name": "CSDN",
     "blog": [
@@ -18306,8 +18583,8 @@
     "_name": "Deadline",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Latest Article",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -18819,6 +19096,19 @@
       }
     ]
   },
+  "dgjyw.com": {
+    "_name": "东莞教研网",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/:category.htm"
+        ],
+        "target": "/dgjyw/:category"
+      }
+    ]
+  },
   "dgtle.com": {
     "_name": "数字尾巴",
     "www": [
@@ -19197,8 +19487,8 @@
     "_name": "Distill",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
         ],
@@ -20111,32 +20401,16 @@
     "_name": "ELSEVIER",
     "www": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Special Issue",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
-          "/journal/:journal/*"
+          "/journal/:journal/vol/:issue"
         ],
-        "target": "/elsevier/:journal"
+        "target": "/elsevier/:journal/:issue"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/journal/:journal/*"
-        ],
-        "target": "/elsevier/:journal"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/journal/:journal/*"
-        ],
-        "target": "/elsevier/:journal"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/journal/:journal/*"
         ],
@@ -20682,8 +20956,8 @@
     "_name": "U.S. Food and Drug Administration",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "CDRHNew",
+        "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates",
           "/"
@@ -20751,8 +21025,8 @@
     "_name": "fish shell",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Release Notes",
+        "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
           "/"
         ],
@@ -21295,8 +21569,8 @@
     "_name": "趨勢科技防詐達人",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新詐騙情報",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -21648,8 +21922,8 @@
     "_name": "环球法律评论",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "期刊",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/Magazine/GetIssueContentList",
           "/"
@@ -21983,7 +22257,7 @@
         "target": "/guancha/:category?"
       },
       {
-        "title": "Unknown",
+        "title": "风闻话题",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -22009,8 +22283,8 @@
     "_name": "观海新闻",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -22109,8 +22383,8 @@
     "_name": "HackYourNews",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Index",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
         ],
@@ -22519,8 +22793,8 @@
     "_name": "HKJunkCall 資訊中心",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "近期資訊",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -22607,7 +22881,7 @@
     "_name": "Hong Kong Department of Health 香港卫生署",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Category",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/"
@@ -24083,8 +24357,8 @@
     "_name": "IELTS 雅思",
     "ielts": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新消息",
+        "docs": "https://docs.rsshub.app/routes/study",
         "source": [
           "/allnews"
         ],
@@ -25455,11 +25729,11 @@
     ]
   },
   "jseea.cn": {
-    "_name": "Unknown",
+    "_name": "江苏省教育考试院",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "新闻中心",
+        "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/webfile/news/:type"
         ],
@@ -26101,7 +26375,7 @@
     "_name": "LeetCode",
     ".": [
       {
-        "title": "Unknown",
+        "title": "每日一题题解",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
@@ -26109,7 +26383,7 @@
         "target": "/leetcode/dailyquestion/solution/cn"
       },
       {
-        "title": "Unknown",
+        "title": "每日一题",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
@@ -26122,7 +26396,7 @@
     "_name": "LeetCode",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Daily Question Solution",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
@@ -26130,7 +26404,7 @@
         "target": "/leetcode/dailyquestion/solution/en"
       },
       {
-        "title": "Unknown",
+        "title": "Daily Question",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/"
@@ -26265,8 +26539,8 @@
     "_name": "轻之国度",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "文章更新阅读",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/"
         ],
@@ -26326,7 +26600,7 @@
     "_name": "Literotica",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Category",
         "docs": "https://docs.rsshub.app/routes/reading",
         "source": [
           "/c/:category",
@@ -26354,35 +26628,6 @@
           "/:region*"
         ],
         "target": "/liveuamap/:region"
-      }
-    ]
-  },
-  "logonews.cn": {
-    "_name": "LogoNews 标志情报局",
-    ".": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/work/tags/:tag"
-        ],
-        "target": "/logonews/work/tags/:tag"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/work/tags/:tag"
-        ],
-        "target": "/logonews/tag/:tag"
-      },
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/work/tags/:tag"
-        ],
-        "target": "/logonews*"
       }
     ]
   },
@@ -26850,8 +27095,8 @@
     "_name": "中国的中古",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/reading",
         "source": [
           "/"
         ],
@@ -29887,7 +30132,7 @@
         "target": "/nature/highlight/:journal"
       },
       {
-        "title": "Unknown",
+        "title": "News & Comment",
         "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/latest-news",
@@ -30514,8 +30759,8 @@
     "_name": "Netflav",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Index",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
         ],
@@ -30731,7 +30976,7 @@
         "target": "/niaogebiji/cat/:cat"
       },
       {
-        "title": "Unknown",
+        "title": "首页",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/",
@@ -31783,7 +32028,7 @@
     ],
     "lib": [
       {
-        "title": "Unknown",
+        "title": "图书馆",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
@@ -32046,8 +32291,8 @@
     "_name": "OpenWrt",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Releases",
+        "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
           "/toh/:band/:model"
         ],
@@ -34625,7 +34870,7 @@
         "target": "/pianyuan/index"
       },
       {
-        "title": "Unknown",
+        "title": "搜索",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
@@ -34676,24 +34921,11 @@
       }
     ]
   },
-  "pikabu.ru": {
-    "_name": "Pikabu",
-    ".": [
-      {
-        "title": "User",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/:name"
-        ],
-        "target": "/pikabu/user/:name"
-      }
-    ]
-  },
   "pincong.rocks": {
     "_name": "品葱",
     ".": [
       {
-        "title": "Unknown",
+        "title": "话题",
         "docs": "https://docs.rsshub.app/routes/bbs",
         "source": [
           "/topic/:topic"
@@ -34959,8 +35191,8 @@
     "_name": "Proceedings of The National Academy of Sciences",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/*topicPath"
         ],
@@ -35621,38 +35853,6 @@
       }
     ]
   },
-  "pts.org.tw": {
-    "_name": "公視新聞網",
-    "news": [
-      {
-        "title": "整理報導",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/live/:id",
-          "/"
-        ],
-        "target": "/pts/live/:id"
-      },
-      {
-        "title": "專題策展",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/curations",
-          "/"
-        ],
-        "target": "/pts/curations"
-      },
-      {
-        "title": "數位敘事",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/projects",
-          "/"
-        ],
-        "target": "/pts/projects"
-      }
-    ]
-  },
   "publico.es": {
     "_name": "Público",
     ".": [
@@ -36121,8 +36321,8 @@
     "_name": "ResearchGate",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Publications",
+        "docs": "https://docs.rsshub.app/routes/study",
         "source": [
           "/profile/:username"
         ],
@@ -36205,8 +36405,8 @@
     "_name": "Routledge",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Book Series",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
           "/:bookName/book-series/:bookId"
         ],
@@ -37656,8 +37856,8 @@
     "_name": "水果派",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -37730,19 +37930,6 @@
           "/blog/:category"
         ],
         "target": "/simpleinfo/:category"
-      }
-    ]
-  },
-  "sinchew.com.my": {
-    "_name": "星洲网",
-    ".": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/sinchew*"
       }
     ]
   },
@@ -38583,8 +38770,8 @@
     "_name": "上海第二工业大学",
     "jwc": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "教务处",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/jwc/:listId/list.htm"
         ],
@@ -38593,8 +38780,8 @@
     ],
     "pe2016": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "体育部",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/:id/list.htm"
         ],
@@ -39035,7 +39222,7 @@
     "_name": "SupChina",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Feed",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/feed",
@@ -39833,8 +40020,8 @@
     "_name": "腾讯",
     "new": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/programming",
+        "title": "新型冠状病毒肺炎疫情实时追踪 - 中国本土数据统计",
+        "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/zt2020/page/feiyan.htm"
         ],
@@ -39871,8 +40058,8 @@
     ],
     "ac": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "title": "漫画",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/Comic/ComicInfo/id/:id",
           "/"
@@ -40344,7 +40531,7 @@
     "_name": "停水通知",
     ".": [
       {
-        "title": "Unknown",
+        "title": "武汉市",
         "docs": "https://docs.rsshub.app/routes/forecast",
         "source": [
           "/IWater.shtml",
@@ -40563,7 +40750,7 @@
         "target": "/tradingview/desktop"
       },
       {
-        "title": "Unknown",
+        "title": "Pine Script™ Release notes",
         "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
           "/pine-script-docs/en/:version/Release_notes.html"
@@ -40576,8 +40763,8 @@
     "_name": "Transcript Forest",
     "www": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Channel",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/en/channel"
         ],
@@ -40628,8 +40815,8 @@
     "_name": "Tribal Football",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -40750,8 +40937,8 @@
     "_name": "太原师范学院",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/index/tzgg.htm",
           "/index.htm",
@@ -41077,7 +41264,7 @@
         "target": "/uraaka-joshi/:id"
       },
       {
-        "title": "Unknown",
+        "title": "Homepage",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
@@ -41234,8 +41421,8 @@
     "_name": "v1tx",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
           "/"
         ],
@@ -42075,8 +42262,8 @@
     "_name": "世界新聞網",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "新聞",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/wj/*path"
         ],
@@ -42324,6 +42511,16 @@
         ],
         "target": "/xmnn/epaper/:id"
       }
+    ],
+    "news": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/xmnn/news/:category"
+      }
     ]
   },
   "xmu.edu.cn": {
@@ -42519,19 +42716,6 @@
           "/index/tzgg.htm"
         ],
         "target": "/xyu/index/tzgg"
-      }
-    ]
-  },
-  "xyzrank.com": {
-    "_name": "中文播客榜",
-    ".": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/xyzrank/:category?"
       }
     ]
   },
@@ -42870,8 +43054,8 @@
     "_name": "直播吧",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/bbs",
+        "title": "录像",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/:category/luxiang.htm"
         ],
@@ -43692,6 +43876,90 @@
       }
     ]
   },
+  "aljazeera.com": {
+    "_name": "Aljazeera",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/aljazeera/english/:category"
+      },
+      {
+        "title": "Official RSS",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/xml/rss/all.xml",
+          "/"
+        ],
+        "target": "/aljazeera/english/rss"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/aljazeera/english/tag/:id"
+      }
+    ]
+  },
+  "aljazeera.net": {
+    "_name": "Aljazeera",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/aljazeera/arabic/:category"
+      },
+      {
+        "title": "Official RSS",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/rss",
+          "/"
+        ],
+        "target": "/aljazeera/arabic/rss"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/aljazeera/arabic/tag/:id"
+      }
+    ],
+    "chinese": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/aljazeera/chinese/:category"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/aljazeera/chinese/tag/:id"
+      }
+    ]
+  },
   "apnews.com": {
     "_name": "AP News",
     ".": [
@@ -43734,6 +44002,51 @@
           "/:rss"
         ],
         "target": "/apnews/rss/:rss"
+      }
+    ]
+  },
+  "asiantolick.com": {
+    "_name": "Asian to lick",
+    ".": [
+      {
+        "title": "Top rated",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/asiantolick/"
+      },
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/category-:id"
+        ],
+        "target": "/asiantolick/category/:id"
+      },
+      {
+        "title": "Page",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/page/:id"
+        ],
+        "target": "/asiantolick/page/:id"
+      },
+      {
+        "title": "Search",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/search/:keyword"
+        ],
+        "target": "/asiantolick/search/:keyword"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/tag-:id"
+        ],
+        "target": "/asiantolick/tag/:id"
       }
     ]
   },
@@ -44156,6 +44469,27 @@
       }
     ]
   },
+  "cnjxol.com": {
+    "_name": "南湖清风",
+    ".": [
+      {
+        "title": "嘉兴日报",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/cnjxol/jxrb/:id"
+      },
+      {
+        "title": "南湖晚报",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/cnjxol/nhwb/:id"
+      }
+    ]
+  },
   "coindesk.com": {
     "_name": "CoinDesk",
     ".": [
@@ -44241,16 +44575,7 @@
         "target": "/cyzone/author/:id"
       },
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/channel/:id",
-          "/"
-        ],
-        "target": "/cyzone/:id"
-      },
-      {
-        "title": "Unknown",
+        "title": "资讯",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/channel/:id",
@@ -44424,6 +44749,38 @@
           "/bbs/newweb/pc/profile/:userId"
         ],
         "target": "/dxy/bbs/profile/thread/:userId"
+      }
+    ]
+  },
+  "e-hentai.org": {
+    "_name": "E-Hentai",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/e-hentai/category/:category"
+      },
+      {
+        "title": "搜索",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:keyword",
+          "/"
+        ],
+        "target": "/e-hentai/search/:keyword"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/tag/:tag",
+          "/"
+        ],
+        "target": "/e-hentai/tag/:tag"
       }
     ]
   },
@@ -44864,6 +45221,35 @@
           "/user/:id"
         ],
         "target": "/gelonghui/user/:id"
+      }
+    ]
+  },
+  "getitfree.cn": {
+    "_name": "正版中国",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/category/:id"
+        ],
+        "target": "/getitfree/category/:id"
+      },
+      {
+        "title": "搜索",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/getitfree(_,url)=>{const keyword=new URL(url).searchParams.get(\"s\");return`/getitfree/search${keyword?`/${keyword}`:\"\"}`}"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/tag/:id"
+        ],
+        "target": "/getitfree/tag/:id"
       }
     ]
   },
@@ -48357,8 +48743,8 @@
     "_name": "Grub Street",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -48627,8 +49013,8 @@
     "_name": "人人都是自媒体",
     "www": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "发现",
+        "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
@@ -48698,7 +49084,7 @@
         "target": "/javdb/home/:category?/:sort?/:filter?"
       },
       {
-        "title": "Unknown",
+        "title": "清单",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/"
@@ -48922,12 +49308,20 @@
     "_name": "雷峰网",
     ".": [
       {
-        "title": "Unknown",
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/:catname"
+        ],
+        "target": "/leiphone/category/:catname"
+      },
+      {
+        "title": "最新文章",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
-        "target": "/leiphone/:do?/:keyword?"
+        "target": "/leiphone/"
       },
       {
         "title": "业界资讯",
@@ -48959,7 +49353,7 @@
         "target": "/lfsyd/old_home"
       },
       {
-        "title": "Unknown",
+        "title": "用户的帖子",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/tz/people/:id",
@@ -48970,7 +49364,7 @@
     ],
     "mob": [
       {
-        "title": "Unknown",
+        "title": "分区",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/fine/:tagId"
@@ -49010,6 +49404,227 @@
           "/jobs/search"
         ],
         "target": "/linkedin(params,url)=>{const searchParams=new URLSearchParams(new URL(url).search);const fJT=parseRouteParam(searchParams.get(\"f_JT\"));const fE=parseRouteParam(searchParams.get(\"f_E\"));const keywords=encodeURIComponent(searchParams.get(\"keywords\")||\"\");const newSearchParams=new URLSearchParams;for(const[key,value]of searchParams){if(![\"f_JT\",\"f_E\",\"keywords\"].includes(key)){newSearchParams.append(key,value)}}return`/linkedin/jobs/${fJT}/${fE}/${keywords}/?${newSearchParams.toString()}`}"
+      }
+    ]
+  },
+  "liulinblog.com": {
+    "_name": "木木博客",
+    ".": [
+      {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:channel",
+          "/"
+        ],
+        "target": "/liulinblog/:channel"
+      },
+      {
+        "title": "60 秒读懂世界",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/kuaixun",
+          "/"
+        ],
+        "target": "/liulinblog/kuaixun"
+      },
+      {
+        "title": "搜索",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/search/:keyword",
+          "/"
+        ],
+        "target": "/liulinblog/search/:keyword"
+      },
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/series/:id",
+          "/"
+        ],
+        "target": "/liulinblog/series/:id"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/liulinblog/tag/:id"
+      }
+    ]
+  },
+  "logclub.com": {
+    "_name": "罗戈网",
+    ".": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/logclub/news"
+      },
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/:id"
+        ],
+        "target": "/logclub/news/:id"
+      },
+      {
+        "title": "报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lc_report"
+        ],
+        "target": "/logclub/lc_report"
+      },
+      {
+        "title": "报告 - 罗戈研究出品",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lc_report"
+        ],
+        "target": "/logclub/lc_report/Report"
+      },
+      {
+        "title": "报告 - 物流报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lc_report"
+        ],
+        "target": "/logclub/lc_report/IndustryReport"
+      },
+      {
+        "title": "报告 - 绿色双碳报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lc_report"
+        ],
+        "target": "/logclub/lc_report/GreenDualCarbonReport"
+      },
+      {
+        "title": "专家说",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/columnist/articleList/:id"
+        ],
+        "target": "/logclub/columnist/articleList/:id"
+      },
+      {
+        "title": "大企业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/company/:id"
+        ],
+        "target": "/logclub/company/:id"
+      },
+      {
+        "title": "原创",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/original"
+        ],
+        "target": "/logclub/original"
+      },
+      {
+        "title": "招聘",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/recruit"
+        ],
+        "target": "/logclub/recruit"
+      },
+      {
+        "title": "招投标",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tender"
+        ],
+        "target": "/logclub/tender"
+      }
+    ]
+  },
+  "logonews.cn": {
+    "_name": "LogoNews 标志情报局",
+    ".": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/"
+        ],
+        "target": "/logonews/"
+      },
+      {
+        "title": "文章分类",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/category/:category/:type"
+        ],
+        "target": "/logonews/category/:category/:type?"
+      },
+      {
+        "title": "文章标签",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/logonews/tag/:tag"
+      },
+      {
+        "title": "作品分类",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/work/categorys/:category"
+        ],
+        "target": "/logonews/work/categorys/:category"
+      },
+      {
+        "title": "作品标签",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/work/tags/:tag"
+        ],
+        "target": "/logonews/work/tags/:tag"
+      },
+      {
+        "title": "作品",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/work"
+        ],
+        "target": "/logonews/work"
+      }
+    ]
+  },
+  "m4.cn": {
+    "_name": "四月网",
+    "news": [
+      {
+        "title": "要闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/m4/news/:category"
+      }
+    ],
+    "mil": [
+      {
+        "title": "军事",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category",
+          "/"
+        ],
+        "target": "/m4/mil/:category"
       }
     ]
   },
@@ -49053,6 +49668,35 @@
           "/@:user"
         ],
         "target": "/medium/feed/:user"
+      }
+    ]
+  },
+  "metacritic.com": {
+    "_name": "Metacritic",
+    ".": [
+      {
+        "title": "Games",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/browse/game/*"
+        ],
+        "target": "/metacritic/game"
+      },
+      {
+        "title": "Movies",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/browse/movie/*"
+        ],
+        "target": "/metacritic/movie"
+      },
+      {
+        "title": "TV Shows",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/browse/tv/*"
+        ],
+        "target": "/metacritic/tv"
       }
     ]
   },
@@ -49215,7 +49859,7 @@
     "_name": "Nintendo",
     ".": [
       {
-        "title": "Unknown",
+        "title": "eShop New Game Releases (JP)",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/software/switch/index.html",
@@ -49238,7 +49882,7 @@
     "_name": "Nintendo",
     ".": [
       {
-        "title": "Unknown",
+        "title": "eShop New Game Releases (US)",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/store/games",
@@ -49261,7 +49905,7 @@
     "_name": "Nintendo",
     ".": [
       {
-        "title": "Unknown",
+        "title": "eShop New Game Releases (HK)",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/software/switch",
@@ -49284,7 +49928,7 @@
     "_name": "Nintendo",
     ".": [
       {
-        "title": "Unknown",
+        "title": "eShop New Game Releases (CN)",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/software",
@@ -49409,6 +50053,35 @@
       }
     ]
   },
+  "pikabu.ru": {
+    "_name": "Pikabu",
+    ".": [
+      {
+        "title": "Community",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/community/:name"
+        ],
+        "target": "/pikabu/community/:name"
+      },
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/:name"
+        ],
+        "target": "/pikabu/user/:name"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/tag/:name"
+        ],
+        "target": "/pikabu/tag/:name"
+      }
+    ]
+  },
   "pku.edu.cn": {
     "_name": "北京大学",
     "bbs": [
@@ -49494,7 +50167,7 @@
         "target": "/pku/ss/admission"
       },
       {
-        "title": "Unknown",
+        "title": "软件与微电子学院 - 通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/index.php/newscenter/notice",
@@ -49563,6 +50236,83 @@
       }
     ]
   },
+  "pts.org.tw": {
+    "_name": "公視新聞網",
+    "news": [
+      {
+        "title": "整理報導",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/live/:id",
+          "/"
+        ],
+        "target": "/pts/live/:id"
+      },
+      {
+        "title": "專題策展",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/curations",
+          "/"
+        ],
+        "target": "/pts/curations"
+      },
+      {
+        "title": "即時新聞",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/dailynews",
+          "/"
+        ],
+        "target": "/pts/dailynews"
+      },
+      {
+        "title": "數位敘事",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/projects",
+          "/"
+        ],
+        "target": "/pts/projects"
+      },
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/category/:id",
+          "/"
+        ],
+        "target": "/pts/category/:id"
+      },
+      {
+        "title": "觀點",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/opinion",
+          "/"
+        ],
+        "target": "/pts/opinion"
+      },
+      {
+        "title": "深度報導",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/report",
+          "/"
+        ],
+        "target": "/pts/report"
+      },
+      {
+        "title": "標籤",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/pts/tag/:id"
+      }
+    ]
+  },
   "ruancan.com": {
     "_name": "软餐",
     ".": [
@@ -49576,7 +50326,7 @@
         "target": "/ruancan/category/:category"
       },
       {
-        "title": "Unknown",
+        "title": "首页",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -49592,7 +50342,7 @@
         "target": "/ruancan/search/:keyword?"
       },
       {
-        "title": "Unknown",
+        "title": "用户文章",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/i/:id",
@@ -49791,6 +50541,37 @@
       }
     ]
   },
+  "sinchew.com.my": {
+    "_name": "星洲网",
+    ".": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/sinchew/"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/category/:category",
+          "/"
+        ],
+        "target": "/sinchew/category/:category"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/latest",
+          "/"
+        ],
+        "target": "/sinchew/latest"
+      }
+    ]
+  },
   "sjtu.edu.cn": {
     "_name": "上海交通大学",
     "www.cs": [
@@ -49933,6 +50714,29 @@
           "/"
         ],
         "target": "/studygolang/go/:id?"
+      }
+    ]
+  },
+  "subhd.tv": {
+    "_name": "Sub HD",
+    ".": [
+      {
+        "title": "字幕",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/sub/:category",
+          "/"
+        ],
+        "target": "/subhd/sub/:category?"
+      },
+      {
+        "title": "字幕组",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/zu/:category",
+          "/"
+        ],
+        "target": "/subhd/zu/:category?"
       }
     ]
   },
@@ -50478,6 +51282,82 @@
       }
     ]
   },
+  "thenewslens.com": {
+    "_name": "The News Lens 關鍵評論",
+    ".": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/latest-article/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/latest-article/:sort?"
+      },
+      {
+        "title": "作者",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/author/:id/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/author/:id/:sort?"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/:id/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/category/:id/:sort?"
+      },
+      {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/channel/:id/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/channel/:id/:sort?"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/news/:sort?"
+      },
+      {
+        "title": "评论",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/review/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/review/:sort?"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag/:id/:sort",
+          "/"
+        ],
+        "target": "/thenewslens/tag/:id/:sort?"
+      },
+      {
+        "title": "影音",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/videos/Projects/:sort"
+        ],
+        "target": "/thenewslens/videos/Projects/:sort?"
+      }
+    ]
+  },
   "factpaper.cn": {
     "_name": "澎湃新闻",
     ".": [
@@ -50496,7 +51376,7 @@
     ".": [
       {
         "title": "澎湃美数课作品集 - 分类",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
         ],
@@ -50768,6 +51648,51 @@
       }
     ]
   },
+  "toodaylab.com": {
+    "_name": "理想生活实验室",
+    ".": [
+      {
+        "title": "滚动",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/posts"
+        ],
+        "target": "/toodaylab/posts"
+      },
+      {
+        "title": "专栏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/:id"
+        ],
+        "target": "/toodaylab/column/:id"
+      },
+      {
+        "title": "领域",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/field/:id"
+        ],
+        "target": "/toodaylab/field/:id"
+      },
+      {
+        "title": "最热",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/posts"
+        ],
+        "target": "/toodaylab/hot"
+      },
+      {
+        "title": "话题",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topic/:id"
+        ],
+        "target": "/toodaylab/topic/:id"
+      }
+    ]
+  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
@@ -50828,7 +51753,7 @@
     "_name": "微信小程序",
     "mp": [
       {
-        "title": "Unknown",
+        "title": "公众号（微阅读来源）",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/",
@@ -51010,6 +51935,43 @@
           "/blog"
         ],
         "target": "/xunhupay/blog"
+      }
+    ]
+  },
+  "xyzrank.com": {
+    "_name": "中文播客榜",
+    ".": [
+      {
+        "title": "热门节目",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/xyzrank/"
+      },
+      {
+        "title": "新锐节目",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/xyzrank/hot-episodes-new"
+      },
+      {
+        "title": "热门播客",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/xyzrank/hot-podcasts"
+      },
+      {
+        "title": "新锐播客",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/xyzrank/new-podcasts"
       }
     ]
   },
