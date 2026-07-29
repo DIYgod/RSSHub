@@ -31,7 +31,7 @@ export const route: Route = {
         },
     ],
     name: '类别',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     description: `参数可以从链接中拿到，如：
 

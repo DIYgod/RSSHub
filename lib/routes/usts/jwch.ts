@@ -22,7 +22,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '教务处',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     description: `| 类型 | 教务动态 | 公告在线 | 选课通知 |
 | ---- | -------- | -------- | -------- |

@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '栏目',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     description: `| 栏目名称          | 栏目 id |
 | ----------------- | ------- |

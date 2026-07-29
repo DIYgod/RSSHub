@@ -29,7 +29,7 @@ export const route: Route = {
         },
     ],
     name: 'Research',
-    maintainers: [],
+    maintainers: ['fuergaosi233'],
     handler,
     description: `Language:
 

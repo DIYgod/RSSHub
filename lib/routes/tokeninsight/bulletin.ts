@@ -35,7 +35,7 @@ export const route: Route = {
         },
     ],
     name: 'Latest',
-    maintainers: [],
+    maintainers: ['fuergaosi233'],
     handler,
 };
 

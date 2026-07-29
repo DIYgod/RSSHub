@@ -20,7 +20,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Hinatazaka46 Blog 日向坂 46 博客',
-    maintainers: [],
+    maintainers: ['yj-qin', 'AkashiGakki'],
     handler,
     description: `Member ID
 
