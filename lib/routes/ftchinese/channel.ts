@@ -36,6 +36,5 @@ async function handler(ctx) {
     return await utils.getData({
         site: ctx.req.param('language') === 'simplified' ? 'www' : 'big5',
         channel: ctx.req.param('channel'),
-        ctx,
     });
 }

@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -35,7 +35,7 @@ async function loadContent(link) {
     // 请求文章页面
     const newsResp = await got.get(link);
     // 加载文章内容
-    const $ = load(newsResp.data, { decodeEntities: false });
+    const $ = load(newsResp.data, { decodeEntities: false } as CheerioOptions);
     // 图片相对链接处理
     $('img').attr('src', (n, v) => new URL(v, baseUrl).href);
     // 视频相对链接处理，替换原有播放方法 showVsbVideo

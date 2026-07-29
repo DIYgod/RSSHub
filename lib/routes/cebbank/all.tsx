@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
@@ -45,7 +45,7 @@ async function handler(ctx) {
             if (i < 2) {
                 return null;
             }
-            const c = load(e, { decodeEntities: false });
+            const c = load(e, { decodeEntities: false } as CheerioOptions);
             return {
                 title: c('td:nth-child(1)').text(),
                 description: renderToString(<CebbankRateDescription fcer={c('td:nth-child(2)').text()} pmc={c('td:nth-child(3)').text()} exrt={c('td:nth-child(4)').text()} mc={c('td:nth-child(5)').text()} />),

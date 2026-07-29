@@ -61,7 +61,7 @@ export const route: Route = {
     parameters: {
         type: '通知类型，留空则获取所有分类',
     },
-    feature: {
+    features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,

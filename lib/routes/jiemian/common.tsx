@@ -140,7 +140,7 @@ export const renderDescription = ({
 }: {
     image?: { src?: string; alt?: string; width?: string; height?: string };
     intro?: string;
-    video?: { src?: string; poster?: string; type?: string };
+    video?: { src?: string; poster?: string; type?: string; width?: string; height?: string };
     description?: string;
 }): string => {
     const imageAlt = image?.height ?? image?.width ?? image?.alt;

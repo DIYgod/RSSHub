@@ -104,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             description,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
             link: linkUrl ? new URL(item.link, baseUrl).href : undefined,
-            categories,
+            category: categories,
             author: authors,
             guid,
             id: guid,
@@ -116,7 +116,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
             language: language as Language,
-            uuid: item.uuid,
         };
 
         return processedItem;

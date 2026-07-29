@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -108,7 +108,7 @@ async function handler(ctx) {
                     url: item.link,
                 });
 
-                const c = load(detailResponse.data, { decodeEntities: false });
+                const c = load(detailResponse.data, { decodeEntities: false } as CheerioOptions);
                 c('.event .twitter').remove();
                 item.pubDate = parseDate(c('.datetime #publishdate').text(), 'YYYY-MM-DD');
                 item.author = c('.datetime #author').text();

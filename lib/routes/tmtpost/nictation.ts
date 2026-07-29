@@ -15,9 +15,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: {
-        source: ['www.tmtpost.com'],
-    },
+    radar: [
+        {
+            source: ['www.tmtpost.com'],
+        },
+    ],
     name: '快报',
     maintainers: ['defp'],
     handler,

@@ -13,8 +13,6 @@ export const route: Route = {
     example: '/bupt/jwc/tzgg',
     parameters: {
         type: {
-            type: 'string',
-            optional: false,
             description: '信息类型，可选值：tzgg（通知公告），xwzx（新闻资讯）',
         },
     },
