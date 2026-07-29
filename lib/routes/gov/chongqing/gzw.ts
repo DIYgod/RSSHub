@@ -13,7 +13,6 @@ export const route: Route = {
     parameters: {
         category: '分类，见下表，默认为通知公告',
     },
-    example: '/gov/chongqing/gzw',
     name: '国有资产监督管理委员会',
     url: 'gzw.cq.gov.cn',
     maintainers: ['nczitzk'],
