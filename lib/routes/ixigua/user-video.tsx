@@ -73,7 +73,7 @@ const IxiguaVideoDescription = ({ i, disableEmbed }: { i: any; disableEmbed?: st
     <>
         {disableEmbed ? null : (
             <>
-                <iframe width="720" height="405" frameborder="0" allowfullscreen src={`https://www.ixigua.com/iframe/${i.groupId}?autoplay=0`} referrerpolicy="unsafe-url" allowfullscreen></iframe>
+                <iframe width="720" height="405" frameborder="0" allowfullscreen src={`https://www.ixigua.com/iframe/${i.groupId}?autoplay=0`} referrerpolicy="unsafe-url"></iframe>
                 <br />
             </>
         )}

@@ -3,8 +3,8 @@ import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
+import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
-import type { JSX } from 'hono/jsx/jsx-runtime';
 import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
@@ -124,7 +124,7 @@ const renderDescription = (content): string =>
                 }
 
                 if (entry.type === 'title' && entry.subtype !== 'h1') {
-                    const TitleTag = (entry.subtype || 'h2') as keyof JSX.IntrinsicElements;
+                    const TitleTag = (entry.subtype || 'h2') as unknown as FC;
                     return <TitleTag key={`title-${index}`}>{entry.mime === 'text/html' ? raw(entry.content) : entry.content}</TitleTag>;
                 }
 
@@ -139,7 +139,7 @@ const renderDescription = (content): string =>
                     }
 
                     if (entry.subtype === 'subhead') {
-                        const SubheadTag = `h${entry.subhead_level || 4}` as keyof JSX.IntrinsicElements;
+                        const SubheadTag = `h${entry.subhead_level || 4}` as unknown as FC;
                         return (
                             <SubheadTag key={`subhead-${index}`}>
                                 {entry.mime === 'text/html' ? raw(entry.content) : entry.content}
