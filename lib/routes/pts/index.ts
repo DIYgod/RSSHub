@@ -10,15 +10,32 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/dailynews',
+    categories: ['traditional-media'],
+    example: '/pts/dailynews',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['news.pts.org.tw/dailynews', 'news.pts.org.tw/'],
+        },
+    ],
+    name: '即時新聞',
+    maintainers: ['nczitzk'],
     handler,
+    url: 'news.pts.org.tw/dailynews',
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const rootUrl = 'https://news.pts.org.tw';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/' ? '/dailynews' : getSubPath(ctx)}`;
+    const currentUrl = `${rootUrl}${getSubPath(ctx)}`;
 
     const response = await got({
         method: 'get',

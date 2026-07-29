@@ -7,13 +7,26 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/8world/realtime',
+    parameters: { category: '分类 id，见下表，默认为即时 REALTIME' },
+    description: `| 分类                   | id             |
+| ---------------------- | -------------- |
+| 即时 REALTIME          | realtime       |
+| 新加坡 SINGAPORE       | singapore      |
+| 东南亚 SOUTH-EAST ASIA | southeast-asia |
+| 中港台 GREATER CHINA   | greater-china  |
+| 国际 WORLD             | world          |
+| 财经 FINANCE           | finance        |
+| 体育 SPORTS            | sports         |
+| 社团 COMMUNITY         | community      |`,
+    name: '分类',
+    maintainers: ['nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const path = getSubPath(ctx) === '/' ? '/realtime' : getSubPath(ctx);
 
     const rootUrl = 'https://www.8world.com';

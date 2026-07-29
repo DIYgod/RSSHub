@@ -5,13 +5,15 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/',
+    categories: ['journal'],
+    example: '/globallawreview',
     radar: [
         {
             source: ['globallawreview.org/Magazine/GetIssueContentList', 'globallawreview.org/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '期刊',
     maintainers: ['nczitzk'],
     handler,
     url: 'globallawreview.org/Magazine/GetIssueContentList',

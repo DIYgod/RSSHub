@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -26,14 +27,36 @@ const renderDescription = (image, description, score) =>
     );
 
 export const route: Route = {
-    path: '/:type?/:sort?/:filter?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/game/:sort?/:filter?',
+    categories: ['new-media'],
+    example: '/metacritic/game',
+    parameters: {
+        sort: 'Sort, see below, `new` for Newest Releases by default',
+        filter: 'Filter',
+    },
+    description: `| Metascore | User Score | Most Popular | Newest Releases |
+| --------- | ---------- | ------------ | --------------- |
+| metascore | userscore  | popular      | new             |
+
+::: tip
+The Filter parameter comes from the corresponding page URL. The following is an example:
+
+The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5\\&genre=action) is \`https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action\`. The Filter parameter is \`platform=ps5&genre=action\` and the route is [\`/metacritic/game/new/platform=ps5&genre=action\`](https://rsshub.app/metacritic/game/new/platform=ps5\\&genre=action)
+:::`,
+    radar: [
+        {
+            source: ['metacritic.com/browse/game/*'],
+            target: '/game',
+        },
+    ],
+    name: 'Games',
+    maintainers: ['HenryQW', 'nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
-    const { type = 'game', sort = 'new', filter } = ctx.req.param();
+export async function handler(ctx) {
+    const type = getSubPath(ctx).split('/', 2)[1];
+    const { sort = 'new', filter } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.metacritic.com';

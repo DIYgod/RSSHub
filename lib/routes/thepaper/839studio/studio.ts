@@ -5,6 +5,8 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/839studio',
+    categories: ['traditional-media'],
+    example: '/thepaper/839studio',
     name: '澎湃美数课作品集',
     maintainers: ['umm233'],
     handler,

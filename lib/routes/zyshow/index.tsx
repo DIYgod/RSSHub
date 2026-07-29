@@ -2,20 +2,31 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['multimedia'],
+    example: '/zyshow/chongchongchong',
+    parameters: { path: '综艺 id，综艺详情对应页 URL 中找到' },
+    features: {
+        antiCrawler: true,
+    },
+    name: '综艺',
+    maintainers: ['pharaoh2012', 'nczitzk'],
+    description: `地区，见下表，默认为空，即台湾
+
+| 台湾 | 韩国 | 大陆 |
+| ---- | ---- | ---- |
+|      | kr   | dl   |`,
     handler,
 };
 
 async function handler(ctx) {
     const rootUrl = 'http://www.zyshow.net';
-    const currentUrl = `${rootUrl}${getSubPath(ctx).replace(/\/$/, '')}/`;
+    const path = ctx.req.param('path')?.replace(/\/$/, '');
+    const currentUrl = `${rootUrl}${path ? `/${path}` : ''}/`;
 
     const response = await got({
         method: 'get',

@@ -8,13 +8,15 @@ const md = MarkdownIt();
 
 export const route: Route = {
     path: '/',
+    categories: ['bbs'],
+    example: '/hackertalk',
     radar: [
         {
             source: ['hackertalk.net/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新帖子',
     maintainers: ['hyoban'],
     handler,
     url: 'hackertalk.net/',

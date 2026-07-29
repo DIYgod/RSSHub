@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/category/:category?',
     categories: ['new-media'],
     example: '/ruancan/category/news',
-    parameters: { category: '分类 id，可在对应分类页 URL 中找到，默认为业界' },
+    parameters: { category: '分类 id，可在对应分类页 URL 中找到' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '分类',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     url: 'ruancan.com/',
 };

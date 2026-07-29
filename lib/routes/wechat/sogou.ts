@@ -149,7 +149,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '公众号（搜狗来源）',
-    maintainers: ['EthanWng97', 'pseudoyu'],
+    maintainers: ['IvanWng97', 'pseudoyu'],
     handler,
 };
 

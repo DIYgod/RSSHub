@@ -6,13 +6,15 @@ const baseUrl = 'https://rarehistoricalphotos.com';
 
 export const route: Route = {
     path: '/',
+    categories: ['picture'],
+    example: '/rarehistoricalphotos',
     radar: [
         {
             source: ['rarehistoricalphotos.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Home',
     maintainers: ['TonyRL'],
     handler,
     url: 'rarehistoricalphotos.com/',

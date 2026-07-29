@@ -2,25 +2,34 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/:params{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/posts',
+    categories: ['new-media'],
+    example: '/toodaylab/posts',
+    radar: [
+        {
+            source: ['toodaylab.com/posts'],
+            target: '/posts',
+        },
+    ],
+    name: '滚动',
+    maintainers: ['nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
-    const { params = 'posts' } = ctx.req.param();
+export async function handler(ctx) {
+    const path = getSubPath(ctx);
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const isHot = params === 'hot';
+    const isHot = path === '/hot';
 
     const rootUrl = 'https://www.toodaylab.com';
-    const currentUrl = new URL(isHot ? 'posts' : params, rootUrl).href;
+    const currentUrl = new URL(isHot ? '/posts' : path, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

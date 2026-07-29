@@ -1,31 +1,45 @@
 import { load } from 'cheerio';
 
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/:id?/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/news/:category?',
+    categories: ['new-media'],
+    example: '/m4/news/china',
+    parameters: { category: '分类，见下表，默认为国内新闻' },
+    description: `| 分类                                  | ID         |
+| ------------------------------------- | ---------- |
+| [国内新闻](http://news.m4.cn/china/)  | china      |
+| [国际新闻](http://news.m4.cn/world/)  | world      |
+| [民生](http://news.m4.cn/livelihood/) | livelihood |
+| [社会](http://news.m4.cn/society/)    | society    |
+| [财经](http://news.m4.cn/finance/)    | finance    |
+| [科技](http://news.m4.cn/tech/)       | tech       |`,
+    radar: [
+        {
+            source: ['news.m4.cn/:category', 'news.m4.cn/'],
+            target: '/news/:category',
+        },
+    ],
+    name: '要闻',
+    maintainers: ['nczitzk'],
     handler,
+    url: 'news.m4.cn',
 };
 
-async function handler(ctx) {
-    const { id = 'news', category = 'china' } = ctx.req.param();
-    if (!isValidHost(id)) {
-        throw new InvalidParameterError('Invalid id');
-    }
+export async function handler(ctx) {
+    const [id, category = 'china'] = getSubPath(ctx).split('/').filter(Boolean);
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = `http://${id}.m4.cn`;
-    const currentUrl = new URL(category ? `/${category.replace(/\/$/, '')}/` : '/', rootUrl).href;
+    const currentUrl = new URL(`/${category}/`, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

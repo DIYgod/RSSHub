@@ -9,12 +9,18 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:bookName/book-series/:bookId',
+    categories: ['journal'],
+    example: '/routledge/A-Colour-Atlas/book-series/CRCACOLOATLA',
+    parameters: {
+        bookName: 'Book name, can be found in URL',
+        bookId: 'Book ID, can be found in URL',
+    },
     radar: [
         {
             source: ['routledge.com/:bookName/book-series/:bookId'],
         },
     ],
-    name: 'Unknown',
+    name: 'Book Series',
     maintainers: ['TonyRL'],
     handler,
 };

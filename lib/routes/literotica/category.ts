@@ -7,12 +7,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category',
+    categories: ['reading'],
+    example: '/literotica/category/anal-sex-stories',
+    parameters: {
+        category: 'Category, can be found in URL',
+    },
     radar: [
         {
             source: ['literotica.com/c/:category', 'literotica.com/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Category',
     maintainers: ['nczitzk'],
     handler,
     features: {

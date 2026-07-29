@@ -23,15 +23,31 @@ const parsePage = ($item, hyperlinkSelector, timeSelector) => {
 
 export const route: Route = {
     path: '/data258/:id?',
+    categories: ['new-media'],
+    example: '/wechat/data258/gh_cbbad4c1d33c',
+    parameters: { id: '公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['mp.data258.com/', 'mp.data258.com/article/category/:id'],
         },
     ],
-    name: 'Unknown',
+    name: '公众号（微阅读来源）',
     maintainers: ['Rongronggg9'],
     handler,
     url: 'mp.data258.com/',
+    description: `::: warning
+由于使用了一些针对反爬的缓解措施，本路由响应较慢。默认只抓取前 5 条，可通过 \`?limit=\` 改变（不推荐，容易被反爬）。
+
+该网站使用 IP 甄别访客，且应用严格的每日阅读量限额（约 15 次），请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号（假设公众号每日仅更新一次）；首页 / 分类页更新相当频繁，不推荐订阅。
+:::`,
 };
 
 async function handler(ctx) {
@@ -81,7 +97,7 @@ async function handler(ctx) {
 
     let err; // !!! let RSSHub throw an anti-crawler prompt if the route is empty !!!
 
-    /* eslint-disable no-await-in-loop */
+    /* oxlint-disable no-await-in-loop */
     for (const item of items) {
         // https://mp.data258.com/wx?id=${id}&t={token}, id is a permanent hex, token is a temporary base64
         const cacheId = item.link.match(/id=([\da-f]+)/)[1];

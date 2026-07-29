@@ -3,22 +3,55 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:what?/:id?/:needTorrents?/:needImages?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/category/:category?/:needTorrents?/:needImages?',
+    categories: ['multimedia'],
+    example: '/e-hentai/category/manga',
+    parameters: {
+        category: '分类，可在对应分类页中找到，默认为首页',
+        needTorrents: '需要输出种子文件，填写 true/yes 表示需要，默认需要',
+        needImages: '需要显示大图，填写 true/yes 表示需要，默认需要',
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    description: `::: tip
+参数 **需要输出种子文件** 设置为 \`true\` \`yes\` \`t\` \`y\` 等值后，RSS 会携带种子文件的路径，以供支持 RSS 的下载工具订阅下载。
+
+同理，参数 **需要显示大图** 启用后，RSS 会携带每项内容中的大图，而不只提供缩略图。
+
+当然，选择 **需要输出种子文件**、**需要显示大图** 后获取内容时间需要更久，同时若指定获取数量过多，可能会出现获取超时错误。此时，可以在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，或直接修改全局的超时参数 \`REQUEST_TIMEOUT\`（详见文档中的 [其他应用配置](https://docs.rsshub.app/install/#pei-zhi-qi-ta-ying-yong-pei-zhi)）。
+
+以下是一个例子：
+
+选择浏览 [Manga 分类](https://e-hentai.org/manga)，并指定 **不携带种子文件**，**只显示大图**，并只 **输出 5 个**。由于 [Manga 分类](https://e-hentai.org/manga) 的 URL \`https://e-hentai.org/manga\` 中对应分类字段为 \`manga\`，所以对应路由为 [\`/e-hentai/category/manga/no/yes?limit=5\`](https://rsshub.app/e-hentai/category/manga/no/yes?limit=5)
+:::
+
+| Doujinshi | Manga | Artist CG | Game CG | Western |
+| --------- | ----- | --------- | ------- | ------- |
+| doujinshi | manga | artistcg  | gamecg  | western |
+
+| Non-H | Image Set | Cosplay | Asian Porn | Misc | Popular |
+| ----- | --------- | ------- | ---------- | ---- | ------- |
+| non-h | imageset  | cosplay | asianporn  | misc | popular |`,
     features: {
         nsfw: true,
     },
+    radar: [
+        {
+            source: ['e-hentai.org/:category', 'e-hentai.org/'],
+            target: '/category/:category',
+        },
+    ],
     handler,
 };
 
-async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '';
-    const what = ctx.req.param('what') ?? '';
+export async function handler(ctx) {
+    const id = ctx.req.param('category') ?? ctx.req.param('tag') ?? ctx.req.param('keyword') ?? '';
+    const what = getSubPath(ctx).split('/', 2)[1];
     const needTorrents = /t|y/i.test(ctx.req.param('needTorrents') ?? 'true');
     const needImages = /t|y/i.test(ctx.req.param('needImages') ?? 'true');
 
@@ -128,7 +161,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${id || what || 'Front Page'} - E-Hentai Galleries`,
+        title: `${id || what} - E-Hentai Galleries`,
         link: currentUrl,
         item: items,
     };

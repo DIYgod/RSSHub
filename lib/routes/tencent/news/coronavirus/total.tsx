@@ -7,12 +7,14 @@ import { getData } from './utils';
 
 export const route: Route = {
     path: '/news/coronavirus/total',
+    categories: ['other'],
+    example: '/tencent/news/coronavirus/total',
     radar: [
         {
             source: ['new.qq.com/zt2020/page/feiyan.htm'],
         },
     ],
-    name: 'Unknown',
+    name: '新型冠状病毒肺炎疫情实时追踪 - 中国本土数据统计',
     maintainers: ['CaoMeiYouRen'],
     handler,
     url: 'new.qq.com/zt2020/page/feiyan.htm',

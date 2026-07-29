@@ -31,7 +31,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'New Arrivals',
-    maintainers: [],
+    maintainers: ['IvanWng97'],
     handler,
     description: `| Men's | Women's | Kids' & Baby | Packs & Gear |
 | ----- | ------- | ------------ | ------------ |

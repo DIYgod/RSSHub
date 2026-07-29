@@ -8,13 +8,15 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/chinafactcheck',
     radar: [
         {
             source: ['chinafactcheck.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新文章列表',
     maintainers: ['kdanfly'],
     handler,
     url: 'chinafactcheck.com/',

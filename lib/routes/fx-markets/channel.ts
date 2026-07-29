@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Channel',
-    maintainers: [],
+    maintainers: ['mikkkee'],
     handler,
     description: `| Trading | Infrastructure | Tech and Data | Regulation |
 | ------- | -------------- | ------------- | ---------- |

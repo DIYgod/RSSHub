@@ -2,22 +2,27 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['new-media'],
+    example: '/web3caff/zh/archives/category/news_zh',
+    parameters: { path: '路径，默认为首页' },
+    name: '发现',
+    maintainers: ['nczitzk'],
+    description: `路径处填写对应页面 URL 中 \`https://web3caff.com/\` 后的字段。下面是一个例子。
+
+若订阅 [叙事 - Web3Caff](https://web3caff.com/zh/archives/category/news_zh) 则将对应页面 URL <https://web3caff.com/zh/archives/category/news_zh> 中 \`https://web3caff.com/\` 后的字段 \`zh/archives/category/news_zh\` 作为路径填入。此时路由为 [\`/web3caff/zh/archives/category/news_zh\`](https://rsshub.app/web3caff/zh/archives/category/news_zh)`,
     handler,
 };
 
 async function handler(ctx) {
-    const params = getSubPath(ctx) === '/' ? '' : getSubPath(ctx);
+    const path = ctx.req.param('path');
 
     const rootUrl = 'https://web3caff.com';
-    const currentUrl = `${rootUrl}${params}`;
+    const currentUrl = path ? `${rootUrl}/${path}` : rootUrl;
 
     const response = await got({
         method: 'get',

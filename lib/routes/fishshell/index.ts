@@ -8,13 +8,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['program-update'],
+    example: '/fishshell',
     radar: [
         {
             source: ['fishshell.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Release Notes',
     maintainers: ['x2cf'],
     handler,
     url: 'fishshell.com/',

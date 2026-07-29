@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '数据科学与计算机学院动态',
-    maintainers: [],
+    maintainers: ['MegrezZhu', 'Neutrino3316', 'nczitzk'],
     handler,
     url: 'cse.sysu.edu.cn/',
 };

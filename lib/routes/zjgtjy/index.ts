@@ -4,8 +4,14 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:type?',
-    name: 'Unknown',
+    categories: ['government'],
+    example: '/zjgtjy/all',
+    parameters: { type: '分类名' },
+    name: '公告信息',
     maintainers: ['Fatpandac'],
+    description: `| 全部公告 | 挂牌公告 | 拍卖公告 | 补充公告 |
+| :------: | :------: | :------: | :------: |
+|    all   |   gpgg   |   pmgg   |   bcgg   |`,
     handler,
 };
 

@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '学校通知',
-    maintainers: [],
+    maintainers: ['vuhe'],
     handler,
     url: 'ncwu.edu.cn/xxtz.htm',
 };

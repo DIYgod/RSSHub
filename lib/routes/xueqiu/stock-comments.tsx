@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: '股票评论',
-    maintainers: [],
+    maintainers: ['zytomorrow'],
     handler,
 };
 

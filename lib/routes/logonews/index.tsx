@@ -9,25 +9,27 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/work/tags/:tag', '/tag/:tag', '*'],
+    path: '/',
+    categories: ['design'],
+    example: '/logonews',
     radar: [
         {
-            source: ['logonews.cn/work/tags/:tag'],
+            source: ['logonews.cn/'],
+            target: '/',
         },
     ],
-    name: 'Unknown',
+    name: '首页',
     maintainers: ['nczitzk'],
     handler,
     url: 'logonews.cn/',
-    description: '如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。',
 };
 
-async function handler(ctx) {
-    const params = getSubPath(ctx);
-    const isWork = params.indexOf('/work') === 0;
+export async function handler(ctx) {
+    const subPath = getSubPath(ctx);
+    const isWork = subPath.startsWith('/work');
 
     const rootUrl = 'https://www.logonews.cn';
-    const currentUrl = `${rootUrl}${params === '/' ? '' : params}`;
+    const currentUrl = subPath === '/' ? rootUrl : `${rootUrl}${subPath}`;
 
     const response = await got({
         method: 'get',

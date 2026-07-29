@@ -10,8 +10,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/imap/:email/:folder{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['other'],
+    example: '/mail/imap/rss@rsshub.app',
+    parameters: {
+        email: 'Email account',
+        folder: 'Inbox name, `INBOX` by default',
+    },
+    description: 'Only support IMAP protocol, email password and other settings refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)',
+    name: 'Inbox',
+    maintainers: ['kt286'],
     handler,
 };
 

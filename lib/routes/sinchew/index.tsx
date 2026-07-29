@@ -9,22 +9,26 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '*',
+    path: '/',
+    categories: ['traditional-media'],
+    example: '/sinchew',
     radar: [
         {
             source: ['sinchew.com.my/'],
-            target: '',
+            target: '/',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '首页',
+    maintainers: ['nczitzk'],
     handler,
     url: 'sinchew.com.my/',
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
+    const subPath = getSubPath(ctx);
+
     const rootUrl = 'https://www.sinchew.com.my';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/' ? '' : getSubPath(ctx)}`;
+    const currentUrl = `${rootUrl}${subPath === '/' ? '' : subPath}`;
 
     const response = await got({
         method: 'get',

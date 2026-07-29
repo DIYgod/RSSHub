@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: '最新研报',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     url: 'www.ulapia.com/',
 };

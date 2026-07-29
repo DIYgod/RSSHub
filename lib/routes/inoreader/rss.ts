@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'RSS',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 

@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 
 const FEED_TITLE = 'Wohnungen - Gesiba' as const;
@@ -16,7 +15,8 @@ const MAGIC_QUERY_PARAMS =
 export const route: Route = {
     name: 'Angebote',
     example: '/gesiba/verfuegbar=alle&plz[]=1100&plz[]=1120&size-from=45&size-to=80&rooms-from=2&rooms-to=3&betreuung=0',
-    path: '*',
+    path: '/:path{.+}?',
+    parameters: { path: 'Search filter parameters, see the description below' },
     maintainers: ['sk22'],
     categories: ['other'],
     description: `Note that, on <https://www.gesiba.at/immobilien/wohnungen>, filters are added to
@@ -24,7 +24,7 @@ the URL like \`&filter[plz]=1100,1120\`, but the endpoint used here expects it
 like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter`,
 
     async handler(ctx) {
-        let params = getSubPath(ctx).slice(1);
+        let params = ctx.req.param('path') ?? '';
         if (params.startsWith('&')) {
             params = params.slice(1);
         }

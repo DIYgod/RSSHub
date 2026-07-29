@@ -8,7 +8,7 @@ export const route: Route = {
     parameters: { type: '帖子分类, 见下表，默认为 hot，即热门帖子', order: '排序方式，见下表，默认为空，即最新回复' },
     name: '帖子',
     categories: ['bbs'],
-    maintainers: ['EthanWng97', 'DIYgod', 'nczitzk'],
+    maintainers: ['IvanWng97', 'DIYgod', 'nczitzk'],
     handler,
     url: 'instant.1point3acres.com/',
     description: `分类

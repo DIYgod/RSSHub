@@ -10,14 +10,17 @@ const baseUrl = 'https://www.worldjournal.com';
 
 export const route: Route = {
     path: '/:path{.+}?',
+    categories: ['new-media'],
+    example: '/worldjournal',
+    parameters: { path: 'URL 中 `/wj/` 後的路徑，預設為 `cate/breaking`' },
     radar: [
         {
             source: ['worldjournal.com/wj/*path'],
             target: '/:path',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '新聞',
+    maintainers: ['TonyRL'],
     handler,
     url: 'worldjournal.com/wj/*path',
 };

@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '习近平系列重要讲话',
-    maintainers: [],
+    maintainers: ['LogicJake'],
     handler,
     url: 'people.com.cn/',
 };

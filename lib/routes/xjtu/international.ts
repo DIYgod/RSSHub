@@ -7,8 +7,11 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/international/:subpath{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/xjtu/international/hzjl',
+    parameters: { subpath: '栏目路径，支持多级，不包括末尾的`.htm`' },
+    name: '国际处通知',
+    maintainers: ['guitaoliu'],
     handler,
 };
 

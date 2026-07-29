@@ -7,16 +7,19 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/indexers/pianyuan/results/search/api',
+    categories: ['multimedia'],
+    example: '/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖',
     radar: [
         {
             source: ['pianyuan.org/'],
             target: '/index',
         },
     ],
-    name: 'Unknown',
+    name: '搜索',
     maintainers: ['jerry1119'],
     handler,
     url: 'pianyuan.org/',
+    description: '搜索路由模仿 jackett 的搜索 api, 以提供给 nastools 使用，填写在 nastools 配置 indexer 中',
 };
 
 async function handler(ctx) {
