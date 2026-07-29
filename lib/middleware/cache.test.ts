@@ -190,7 +190,7 @@ describe('cache', () => {
 });
 
 describe('cache middleware error handling', () => {
-    const setSpy = vi.fn(() => null);
+    const setSpy = vi.fn<(...args: any[]) => null>(() => null);
     const getSpy = vi.fn(() => null);
 
     afterAll(() => {
