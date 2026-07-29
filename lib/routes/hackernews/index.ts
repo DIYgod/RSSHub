@@ -90,7 +90,7 @@ async function handler(ctx) {
             };
 
             item.link = `${rootUrl}/item?id=${item.guid}`;
-            item.guid = type === 'sources' ? item.guid : `${item.guid}${item.comments === 'discuss' ? '' : `-${item.comments}`}`;
+            item.guid = type === 'sources' ? item.guid : `${item.guid}${(item.comments as unknown as string) === 'discuss' ? '' : `-${item.comments}`}`;
             item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
 
             return item;
@@ -99,7 +99,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.guid!, async () => {
-                if (item.comments !== 'discuss' && type === 'comments') {
+                if ((item.comments as unknown as string) !== 'discuss' && type === 'comments') {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -129,7 +129,7 @@ async function handler(ctx) {
 
                         item.description += `<div>${content.html(leading)}${paragraphs}</div></div>`;
                     });
-                } else if (item.comments !== 'discuss' && type === 'comments_list') {
+                } else if ((item.comments as unknown as string) !== 'discuss' && type === 'comments_list') {
                     item.title = item.onStory;
                     item.description = item.currentComment;
                 }

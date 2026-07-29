@@ -42,7 +42,7 @@ async function handler(ctx) {
     const item = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                if (new URL(item.link).pathname.startsWith === '/content.jsp') {
+                if (new URL(item.link).pathname.startsWith('/content.jsp')) {
                     return item;
                 }
                 const resp = await got(item.link);

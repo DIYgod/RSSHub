@@ -109,7 +109,7 @@ function extractPlateBlockNewsLists(jsonData: any) {
     return result;
 }
 
-function extractPubDate($: CheerioAPI): string {
+function extractPubDate($: CheerioAPI): string | undefined {
     const timeElements = ['.time', '#videoPublicTime'];
     let date;
     for (const selector of timeElements) {

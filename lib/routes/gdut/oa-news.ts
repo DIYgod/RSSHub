@@ -142,7 +142,7 @@ async function handler(ctx) {
                 const node = $('#content');
                 // 清理样式
                 node.find('*')
-                    .filter((_, el) => el.type === 'comment' || el.tagName === 'meta' || el.tagName === 'style')
+                    .filter((_, el) => el.tagName === 'meta' || el.tagName === 'style')
                     .remove();
                 node.find('*')
                     .contents()
