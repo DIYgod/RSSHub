@@ -103,7 +103,7 @@ const ProcessItems = async (language, currentUrl) => {
                 });
                 item.pubDate = item.pubDate.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;
 
-                delete item.url;
+                delete (item as { url?: unknown }).url;
 
                 return item;
             })

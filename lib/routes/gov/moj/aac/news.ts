@@ -61,7 +61,7 @@ async function handler(ctx) {
                     $('.info, button').remove();
                     item.description = $('.cp').html()! + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '')! + ($('.file_download').length ? $('.file_download').html() : '');
                 }
-                delete item.isDownload;
+                delete (item as { isDownload?: unknown }).isDownload;
                 return item;
             })
         )

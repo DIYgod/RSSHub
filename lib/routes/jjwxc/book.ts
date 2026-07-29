@@ -107,7 +107,7 @@ async function handler(ctx) {
                           });
                       }
 
-                      delete item.isVip;
+                      delete (item as { isVip?: unknown }).isVip;
 
                       return item;
                   })

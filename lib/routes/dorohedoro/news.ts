@@ -84,7 +84,7 @@ async function handler(ctx) {
                     }
                 }
 
-                delete item.isNews;
+                delete (item as { isNews?: unknown }).isNews;
 
                 return item;
             })

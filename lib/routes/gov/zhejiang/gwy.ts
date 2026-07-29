@@ -115,7 +115,7 @@ async function handler(ctx) {
                     item.enclosure_url = file.prop('href');
                 }
 
-                delete item.tzid;
+                delete (item as { tzid?: unknown }).tzid;
 
                 return item;
             })
