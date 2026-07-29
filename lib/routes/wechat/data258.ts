@@ -97,7 +97,7 @@ async function handler(ctx) {
 
     let err; // !!! let RSSHub throw an anti-crawler prompt if the route is empty !!!
 
-    /* eslint-disable no-await-in-loop */
+    /* oxlint-disable no-await-in-loop */
     for (const item of items) {
         // https://mp.data258.com/wx?id=${id}&t={token}, id is a permanent hex, token is a temporary base64
         const cacheId = item.link.match(/id=([\da-f]+)/)[1];
