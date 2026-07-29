@@ -74,29 +74,37 @@ export async function getArticles(nodeUrl: string): Promise<ArticleRef[]> {
     return articles;
 }
 
-/** Fetch an article's body (with absolute image URLs) and its own publication date if present. */
-export async function getArticleContent(articleUrl: string): Promise<{ description: string; pubDate?: Date }> {
+/** Fetch an article's body (scoped to the content region) and its metadata. */
+export async function getArticleContent(articleUrl: string): Promise<{ description: string; pubDate?: Date; author?: string }> {
     const html = await ofetch(articleUrl);
     const $ = load(html);
 
     const $article = $('.article');
-    // Rewrite relative image URLs to absolute.
-    $article.find('img[src]').each((_, el) => {
+    // Scope the feed body to the real content region so the headline/byline/date
+    // wrapper is not duplicated inside `description`.
+    const $content = $article.find('#ozoom').length ? $article.find('#ozoom') : $article;
+    $content.find('img[src]').each((_, el) => {
         const img = $(el);
         const src = img.attr('src');
         if (src) {
             img.attr('src', new URL(src, articleUrl).href);
         }
     });
+    const description = $content.html()?.trim() ?? '';
 
-    const description = $article.html()?.trim() ?? '';
+    // The byline (author) is a text node inside `.sec`, before the `.date` span.
+    let author: string | undefined;
+    const $sec = $article.find('.sec').first();
+    if ($sec.length) {
+        author = $sec.contents().filter((_, el) => el.type === 'text').text().replaceAll(/\s+/g, ' ').trim() || undefined;
+    }
 
     // Parse the publication date from markers like `(2026年07月29日 05版)`.
-    const dateText = $('.date').first().text();
+    const dateText = $article.find('.date').first().text();
     const dateMatch = dateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
     const pubDate = dateMatch ? timezone(parseDate(`${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`, 'YYYY-MM-DD'), 8) : undefined;
 
-    return { description, pubDate };
+    return { description, pubDate, author };
 }
 
 export const route: Route = {
@@ -139,15 +147,13 @@ async function handler(ctx) {
     const page = ctx.req.param('page');
 
     // page semantics: undefined -> page 01; 'all' -> all pages; digits -> that page.
-    let pageNum: string | null = null;
+    let pageNum = '01';
     let isAll = false;
-    if (page === undefined) {
-        pageNum = '01';
-    } else if (page === 'all') {
+    if (page === 'all') {
         isAll = true;
     } else if (/^\d{1,2}$/.test(page)) {
         pageNum = page;
-    } else {
+    } else if (page !== undefined) {
         throw new InvalidParameterError(`版面编号应为 1-2 位数字或 "all"，收到：${page}`);
     }
 
@@ -166,14 +172,13 @@ async function handler(ctx) {
         };
     }
 
-    const pageToUse = pageNum ?? '01';
-    const target = editions.find((e) => e.page === pageToUse) ?? editions.find((e) => Number(e.page) === Number(pageToUse));
+    const target = editions.find((e) => Number(e.page) === Number(pageNum));
     if (!target) {
-        throw new InvalidParameterError(`未找到第 ${pageToUse} 版，请确认版面编号是否正确`);
+        throw new InvalidParameterError(`未找到第 ${pageNum} 版，请确认版面编号是否正确`);
     }
     const articles = await getArticles(target.url);
     const items = await buildItems(articles, resolvedDate);
-    const editionName = target.name || `第${pageToUse}版`;
+    const editionName = target.name || `第${pageNum}版`;
 
     return {
         title: `人民日报 - ${editionName}`,
@@ -187,11 +192,12 @@ function buildItems(articles: ArticleRef[], editionDate: string) {
     return Promise.all(
         articles.map((article) =>
             cache.tryGet(article.link, async () => {
-                const { description, pubDate } = await getArticleContent(article.link);
+                const { description, pubDate, author } = await getArticleContent(article.link);
                 return {
                     title: article.title,
                     link: article.link,
                     description,
+                    author,
                     pubDate: pubDate ?? (editionDate ? timezone(parseDate(editionDate, 'YYYY-MM-DD'), 8) : undefined),
                 };
             })
