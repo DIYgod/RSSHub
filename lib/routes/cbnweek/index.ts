@@ -5,13 +5,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['finance'],
+    example: '/cbnweek',
     radar: [
         {
             source: ['cbnweek.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '首页',
     maintainers: ['nczitzk'],
     handler,
     url: 'cbnweek.com/',

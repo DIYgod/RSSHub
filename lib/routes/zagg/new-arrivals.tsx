@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'New Arrivals',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     description: 'For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`',
 };

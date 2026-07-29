@@ -5,14 +5,20 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/releases/:brand/:model',
+    categories: ['program-update'],
+    example: '/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100',
+    parameters: {
+        brand: 'Device Model, can be found in url of `Table of Hardware` -> `Device Page`',
+        model: 'Same as above',
+    },
     radar: [
         {
             source: ['openwrt.org/toh/:band/:model'],
             target: '/releases/:model',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Releases',
+    maintainers: ['DIYgod'],
     handler,
 };
 

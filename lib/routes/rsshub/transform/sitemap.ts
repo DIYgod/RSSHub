@@ -7,8 +7,29 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/transform/sitemap/:url/:routeParams?',
-    name: 'Unknown',
+    categories: ['other'],
+    example: '/rsshub/transform/sitemap/https%3A%2F%2Fwww.sitemaps.org%2Fsitemap.xml',
+    parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
+    features: {
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
+                description: '',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Transformation - Sitemap',
     maintainers: ['flrngel'],
+    description: `Specify options (in the format of query string) in parameter \`routeParams\` parameter to extract data from Sitemap. (Follows Sitemap Protocol 0.9)
+
+| Key     | Meaning              | Accepted Values | Default                          |
+| ------- | -------------------- | --------------- | -------------------------------- |
+| \`title\` | The title of the RSS | \`string\`        | The first \`<loc>\` in the sitemap |`,
     handler,
 };
 

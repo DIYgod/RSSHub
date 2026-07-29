@@ -15,7 +15,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Exhibitions',
-    maintainers: [],
+    maintainers: ['chazeon'],
     handler,
 };
 

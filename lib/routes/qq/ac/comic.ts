@@ -7,14 +7,19 @@ import { mobileRootUrl, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/ac/comic/:id?',
+    categories: ['anime'],
+    example: '/qq/ac/comic/531490',
+    parameters: {
+        id: '编号，可在对应页 URL 中找到',
+    },
     radar: [
         {
             source: ['ac.qq.com/Comic/ComicInfo/id/:id', 'ac.qq.com/'],
             target: '/ac/comic/:id',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '漫画',
+    maintainers: ['nczitzk'],
     handler,
 };
 

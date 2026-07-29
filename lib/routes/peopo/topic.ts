@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: '新聞分類',
-    maintainers: [],
+    maintainers: ['TonyRL'],
     handler,
     description: `| 分類     | ID  |
 | -------- | --- |

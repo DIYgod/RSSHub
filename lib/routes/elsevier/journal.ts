@@ -10,15 +10,20 @@ import { renderDescription } from './templates/description';
 const cookieJar = new CookieJar();
 
 export const route: Route = {
-    path: ['/:journal/latest', '/:journal'],
+    path: '/:journal',
+    categories: ['journal'],
+    example: '/elsevier/signal-processing',
+    parameters: {
+        journal: 'Journal Name, the part of the URL after `/journal/`',
+    },
     radar: [
         {
             source: ['www.sciencedirect.com/journal/:journal/*'],
             target: '/:journal',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Journal',
+    maintainers: ['Derekmini', 'sunwolf-swb'],
     handler,
 };
 

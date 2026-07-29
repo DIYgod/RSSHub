@@ -8,7 +8,13 @@ import { getData } from './utils';
 
 export const route: Route = {
     path: '/news/coronavirus/data/:province?/:city?',
-    name: 'Unknown',
+    categories: ['other'],
+    example: '/tencent/news/coronavirus/data/湖北/武汉',
+    parameters: {
+        province: '省/直辖市名，缺省则返回国内数据',
+        city: '城市名，缺省则返回全省数据。直辖市请使用区/县名。',
+    },
+    name: '新型冠状病毒肺炎疫情实时追踪 - 省市疫情数据',
     maintainers: ['CaoMeiYouRen'],
     handler,
 };

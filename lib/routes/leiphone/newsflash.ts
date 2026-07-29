@@ -21,10 +21,11 @@ export const route: Route = {
     radar: [
         {
             source: ['leiphone.com/'],
+            target: '/newsflash',
         },
     ],
     name: '业界资讯',
-    maintainers: [],
+    maintainers: ['vlcheng'],
     handler,
     url: 'leiphone.com/',
 };

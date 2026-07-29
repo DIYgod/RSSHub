@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'Magazine',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'magnumphotos.com/',
 };

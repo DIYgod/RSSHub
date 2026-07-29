@@ -4,13 +4,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['blog'],
+    example: '/jiaoliudao',
     radar: [
         {
             source: ['jiaoliudao.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新文章',
     maintainers: ['TonyRL'],
     handler,
     url: 'jiaoliudao.com/',

@@ -9,9 +9,15 @@ const baseUrl = 'https://is.cas.cn';
 
 export const route: Route = {
     path: '/is/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/cas/is/xwdt2016/tzgg2016',
+    parameters: { path: '路径，可在 URL 找到' },
+    name: '软件研究所',
+    maintainers: ['Misaka13514'],
     handler,
+    description: `| 通知公告          | 科技动态          | 科普动态          |
+| ----------------- | ----------------- | ----------------- |
+| xwdt2016/tzgg2016 | xwdt2016/kjdt2016 | kxcb2016/kpdt2016 |`,
 };
 
 async function handler(ctx) {

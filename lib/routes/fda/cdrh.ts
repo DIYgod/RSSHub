@@ -7,14 +7,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/cdrh/:titleOnly?',
+    categories: ['government'],
+    example: '/fda/cdrh',
+    parameters: { titleOnly: 'Title only, empty by default which includes the full text, any other value shows the title only' },
     radar: [
         {
             source: ['fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates', 'fda.gov/'],
             target: '/cdrh/:titleOnly',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'CDRHNew',
+    maintainers: ['nczitzk'],
     handler,
     url: 'fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates',
 };

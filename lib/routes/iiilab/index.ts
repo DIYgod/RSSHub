@@ -5,13 +5,15 @@ const baseUrl = 'https://www.iiilab.com/';
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/iiilab',
     radar: [
         {
             source: ['www.iiilab.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '发现',
     maintainers: ['Joey'],
     handler,
     url: 'www.iiilab.com/',

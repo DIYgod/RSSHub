@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: [],
+    maintainers: ['TonyRL'],
     handler,
     url: 'cpuid.com/news.html',
 };

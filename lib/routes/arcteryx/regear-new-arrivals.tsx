@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'Regear New Arrivals',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'regear.arcteryx.com/shop/new-arrivals',
 };

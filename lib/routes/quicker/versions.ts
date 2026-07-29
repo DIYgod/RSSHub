@@ -5,8 +5,10 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/update', '/versions'],
-    name: 'Unknown',
+    path: '/versions',
+    categories: ['program-update'],
+    example: '/quicker/versions',
+    name: '版本更新',
     maintainers: ['Cesaryuan', 'nczitzk'],
     handler,
     url: 'getquicker.net/Help/Versions',

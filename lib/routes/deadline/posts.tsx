@@ -26,13 +26,15 @@ const renderDescription = (embedded, desc) =>
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/deadline',
     radar: [
         {
             source: ['deadline.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Latest Article',
     maintainers: ['TonyRL'],
     handler,
     url: 'deadline.com/',

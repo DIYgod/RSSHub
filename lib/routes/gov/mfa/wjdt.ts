@@ -20,6 +20,11 @@ const categories = {
 
 export const route: Route = {
     path: '/wjdt/:category?',
+    categories: ['government'],
+    example: '/gov/mfa/wjdt/fyrbt',
+    parameters: {
+        category: '分类，见下表，默认为领导人活动',
+    },
     name: '外交动态',
     maintainers: ['nicolaszf', 'nczitzk'],
     handler,

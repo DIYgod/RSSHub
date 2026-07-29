@@ -10,15 +10,21 @@ import { renderDescription } from './templates/description';
 const cookieJar = new CookieJar();
 
 export const route: Route = {
-    path: ['/:journal/vol/:issue', '/:journal/:issue'],
+    path: '/:journal/:issue',
+    categories: ['journal'],
+    example: '/elsevier/signal-processing/192',
+    parameters: {
+        journal: 'Journal Name, the part of the URL after `/journal/`',
+        issue: 'Release Number, the number in the URL after `/vol/` (If both Volume and Issue exist, must use the `Volume-Issue` form, e.g., `/elsevier/aace-clinical-case-reports/7-6`)',
+    },
     radar: [
         {
-            source: ['www.sciencedirect.com/journal/:journal/*'],
-            target: '/:journal',
+            source: ['www.sciencedirect.com/journal/:journal/vol/:issue'],
+            target: '/:journal/:issue',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Special Issue',
+    maintainers: ['Derekmini', 'sunwolf-swb'],
     handler,
 };
 

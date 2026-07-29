@@ -10,9 +10,15 @@ const rootURL = 'https://www.cmde.org.cn';
 
 export const route: Route = {
     path: '/:cate{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['government'],
+    example: '/cmde/xwdt/zxyw',
+    parameters: { cate: '路径，默认为最新要闻' },
+    name: '通用',
+    maintainers: ['run-ze'],
     handler,
+    description: `路径处填写对应页面 URL 中 \`https://www.cmde.org.cn/\` 与 \`/index.html\` 之间的字段，下面是一个例子。
+
+若订阅 [最新要闻](https://www.cmde.org.cn/xwdt/zxyw/index.html) 则将对应页面 URL <https://www.cmde.org.cn/xwdt/zxyw/index.html> 中 \`https://www.cmde.org.cn/\` 和 \`/index.html\` 之间的字段 \`xwdt/zxyw\` 作为路径填入。此时路由为 [\`/cmde/xwdt/zxyw\`](https://rsshub.app/cmde/xwdt/zxyw)`,
 };
 
 async function handler(ctx) {

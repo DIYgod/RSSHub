@@ -43,6 +43,8 @@ const getMappings = function (obj) {
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/layoffs',
     radar: [
         {
             source: ['layoffs.fyi/'],

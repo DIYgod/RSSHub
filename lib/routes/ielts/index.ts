@@ -12,13 +12,15 @@ const targetUrl = 'https://ielts.neea.cn/allnews?locale=zh_CN';
 
 export const route: Route = {
     path: '/',
+    categories: ['study'],
+    example: '/ielts',
     radar: [
         {
             source: ['ielts.neea.cn/allnews'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新消息',
     maintainers: ['zenxds'],
     handler,
     url: 'ielts.neea.cn/allnews',

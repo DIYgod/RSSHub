@@ -23,6 +23,10 @@ const renderDescription = ({ description, pics }) => {
 export const route: Route = {
     path: '/music/user/events/:id',
     categories: ['multimedia'],
+    example: '/163/music/user/events/585804522',
+    parameters: {
+        id: '用户 uid, 可在用户主页 URL 中找到',
+    },
     radar: [
         {
             source: ['music.163.com/user/event'],

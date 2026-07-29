@@ -3,14 +3,25 @@ import type { Route } from '@/types';
 import { apiRootUrl, getInfo, processItems, rootUrl } from './util';
 
 export const route: Route = {
-    path: ['/channel/:id?', '/:id?'],
+    path: '/:id?',
+    categories: ['new-media'],
+    example: '/cyzone',
+    parameters: { id: '频道 id，可在对应频道页 URL 中找到，默认为 news，即最新资讯' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['cyzone.cn/channel/:id', 'cyzone.cn/'],
             target: '/:id',
         },
     ],
-    name: 'Unknown',
+    name: '资讯',
     maintainers: ['nczitzk'],
     handler,
     description: `| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |

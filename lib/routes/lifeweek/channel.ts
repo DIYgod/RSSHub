@@ -10,14 +10,22 @@ const articleRootUrl = 'https://www.lifeweek.com.cn/article';
 
 export const route: Route = {
     path: '/channel/:id',
+    categories: ['traditional-media'],
+    example: '/lifeweek/channel/9',
+    parameters: { id: '栏目 ID' },
+    description: `提取文章全文，获得更好的阅读体验。支持所有频道，频道名称见 [杂志栏目](https://www.lifeweek.com.cn/classify?type=2)。例如 [调查栏目](https://www.lifeweek.com.cn/column/9) URL 最后的数字为栏目 ID
+
+| 调查 | 热点 | 人物 | 社会 | 经济 | 文化 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 9    | 6    | 10   | 2    | 3    | 4    |`,
     radar: [
         {
             source: ['lifeweek.com.cn/column/:channel'],
             target: '/channel/:channel',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '栏目',
+    maintainers: ['changren-wcr'],
     handler,
 };
 

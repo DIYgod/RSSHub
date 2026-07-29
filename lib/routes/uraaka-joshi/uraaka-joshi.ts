@@ -6,13 +6,15 @@ import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/uraaka-joshi',
     radar: [
         {
             source: ['uraaka-joshi.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Homepage',
     maintainers: ['SettingDust', 'Halcao'],
     handler,
     url: 'uraaka-joshi.com/',

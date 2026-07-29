@@ -7,7 +7,9 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
-    name: 'Unknown',
+    categories: ['new-media'],
+    example: '/onehu',
+    name: '首页',
     maintainers: ['ruoshui9527'],
     handler,
 };

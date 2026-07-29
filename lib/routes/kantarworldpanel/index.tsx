@@ -9,9 +9,82 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:region?/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['new-media'],
+    example: '/kantarworldpanel/cn-en/news',
+    parameters: { region: 'Region id, see below, Chinese Mainland English by default', category: 'Category, can be found in URL, News by default' },
+    name: 'News Centre',
+    maintainers: ['nczitzk'],
     handler,
+    description: `| Region      | id    |
+| ----------- | ----- |
+| China Eng   | cn-en |
+| China 中文  | cn    |
+| Indonesia   | id    |
+| Korea       | kr    |
+| Malaysia    | my    |
+| Philippines | ph    |
+| Taiwan      | tw    |
+| Thailand    | th    |
+| Vietnam     | vn    |
+
+<details>
+  <summary>More categories</summary>
+
+#### China Eng
+
+| News | Retail Snapshot | Publications         | In the media |
+| ---- | --------------- | -------------------- | ------------ |
+| news | publications    | publications/Reports | In-the-media |
+
+#### China 中文
+
+| 新闻发布 | 零售市场快报 | 市场报告                    | 媒体报道       |
+| -------- | ------------ | --------------------------- | -------------- |
+| news     | publications | publications/China-Insights | press-releases |
+
+#### Indonesia
+
+| News | Kantar Scoop                  | Video Series      | Podcast      | Ready, Steady, Shop!     | Asia Pulse      |
+| ---- | ----------------------------- | ----------------- | ------------ | ------------------------ | --------------- |
+| News | News/Kantar-Worldpanel-Series | News/video-series | News/podcast | News/asia-shopper-series | News/Asia-Pulse |
+
+#### Korea
+
+| News | Insight Reports | In the Media   |
+| ---- | --------------- | -------------- |
+| news | publications    | press-releases |
+
+#### Malaysia
+
+| News |
+| ---- |
+| news |
+
+#### Philippines
+
+| Latest Insights | In the Media | Events |
+| --------------- | ------------ | ------ |
+| Latest-Insights | In-the-Media | events |
+
+#### Taiwan
+
+| 聚焦台灣                 | WOW SPOT     | 市場報告     | 媒體報導       | 活動   |
+| ------------------------ | ------------ | ------------ | -------------- | ------ |
+| news/spotlight-on-taiwan | news/wowspot | publications | press-releases | events |
+
+#### Thailand
+
+| News |
+| ---- |
+| news |
+
+#### Vietnam
+
+| Insights | FMCG Monitor      | Ready, Steady, Shop!   | Asia Pulse      | IN THE MEDIA |
+| -------- | ----------------- | ---------------------- | --------------- | ------------ |
+| news     | news/FMCG-Monitor | news/ready-steady-shop | news/asia-pulse | In-the-media |
+
+</details>`,
 };
 
 async function handler(ctx) {

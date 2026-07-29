@@ -7,13 +7,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['programming'],
+    example: '/hackyournews',
     radar: [
         {
             source: ['hackyournews.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Index',
     maintainers: ['ftiasch'],
     handler,
     url: 'hackyournews.com/',

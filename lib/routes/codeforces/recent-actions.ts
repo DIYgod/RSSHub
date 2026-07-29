@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: 'Recent actions',
-    maintainers: [],
+    maintainers: ['ftiasch'],
     handler,
     url: 'codeforces.com/recent-actions',
 };

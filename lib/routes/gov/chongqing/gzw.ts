@@ -8,6 +8,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gzw/:category{.+}?',
+    categories: ['government'],
+    example: '/gov/chongqing/gzw',
     parameters: {
         category: '分类，见下表，默认为通知公告',
     },

@@ -7,14 +7,21 @@ import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/publications/:id',
+    categories: ['study'],
+    example: '/researchgate/publications/Somsak-Panha',
+    parameters: { id: 'Username, can be found in URL' },
+    features: {
+        requirePuppeteer: true,
+        antiCrawler: true,
+    },
     radar: [
         {
             source: ['researchgate.net/profile/:username'],
             target: '/publications/:username',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Publications',
+    maintainers: ['nczitzk'],
     handler,
 };
 

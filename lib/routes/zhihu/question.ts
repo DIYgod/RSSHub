@@ -30,7 +30,7 @@ export const route: Route = {
         },
     ],
     name: '问题',
-    maintainers: [],
+    maintainers: ['xyqfer', 'hacklu'],
     handler,
 };
 

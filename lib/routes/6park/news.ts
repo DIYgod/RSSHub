@@ -8,6 +8,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:site?/:id?/:keyword?',
+    categories: ['new-media'],
+    example: '/6park/news',
     radar: [
         {
             source: ['club.6parkbbs.com/:id/index.php', 'club.6parkbbs.com/'],
@@ -17,11 +19,16 @@ export const route: Route = {
     name: '新闻栏目',
     maintainers: ['nczitzk', 'cscnk52'],
     parameters: {
-        site: '分站，可选newspark、local，默认为 newspark',
-        id: '栏目 id，可选，默认为空',
-        keyword: '关键词，可选，默认为空',
+        site: '分站，见下表，默认为 newspark',
+        id: '栏目 id',
+        keyword: '关键字',
     },
-    description: `::: tip 提示
+    description: `分站
+
+| newspark | local |
+| -------- | ----- |
+
+::: tip 提示
 若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 <https://www.6parknews.com/newspark/index.php?type=1>，其中 \`newspark\` 为分站，\`1\` 为栏目 id。
 若订阅 [美国](https://local.6parknews.com/index.php?type_id=1)，其网址为 <https://local.6parknews.com/index.php?type_id=1>，其中 \`local\` 为分站，\`1\` 为栏目 id。
 :::`,

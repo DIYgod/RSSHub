@@ -9,8 +9,11 @@ import { getTokenAndSecret } from './utils';
 
 export const route: Route = {
     path: '/news/:path{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['new-media'],
+    example: '/qianp/news',
+    parameters: { path: '路径，可在URL中找到，默认为 `news/recommend`' },
+    name: '知识库／资讯',
+    maintainers: ['TonyRL'],
     handler,
 };
 

@@ -9,13 +9,15 @@ import { renderEshopHkDescription } from './templates/eshop-hk';
 
 export const route: Route = {
     path: '/eshop/hk',
+    categories: ['game'],
+    example: '/nintendo/eshop/hk',
     radar: [
         {
             source: ['nintendo.com.hk/software/switch', 'nintendo.com.hk/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'eShop New Game Releases (HK)',
+    maintainers: ['HFO4'],
     handler,
     url: 'nintendo.com.hk/software/switch',
 };

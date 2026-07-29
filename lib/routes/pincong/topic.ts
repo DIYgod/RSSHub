@@ -8,12 +8,23 @@ import { baseUrl, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
+    categories: ['bbs'],
+    example: '/pincong/topic/美国',
+    parameters: { topic: '话题，可在官网获取' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['pincong.rocks/topic/:topic'],
         },
     ],
-    name: 'Unknown',
+    name: '话题',
     maintainers: ['zphw'],
     handler,
 };

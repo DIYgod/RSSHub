@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: ['/lc_report/:id?', '/report/:id?'],
+    path: '/lc_report/:id?',
     categories: ['new-media'],
     example: '/logclub/lc_report',
     parameters: { id: '报告 id，见下表，默认为罗戈研究出品' },
@@ -21,6 +21,27 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report',
+        },
+        {
+            title: '报告 - 罗戈研究出品',
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report/Report',
+        },
+        {
+            title: '报告 - 物流报告',
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report/IndustryReport',
+        },
+        {
+            title: '报告 - 绿色双碳报告',
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report/GreenDualCarbonReport',
+        },
+    ],
     name: '报告',
     maintainers: ['nczitzk'],
     handler,

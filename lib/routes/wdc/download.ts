@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Download',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
 };
 

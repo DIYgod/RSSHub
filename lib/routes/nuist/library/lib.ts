@@ -10,12 +10,14 @@ const baseUrl = 'https://lib.nuist.edu.cn';
 
 export const route: Route = {
     path: '/lib',
+    categories: ['university'],
+    example: '/nuist/lib',
     radar: [
         {
             source: ['lib.nuist.edu.cn/', 'lib.nuist.edu.cn/index/tzgg.htm'],
         },
     ],
-    name: 'Unknown',
+    name: '图书馆',
     maintainers: ['gylidian'],
     handler,
     url: 'lib.nuist.edu.cn/',

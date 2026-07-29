@@ -8,9 +8,19 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/publish/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['other'],
+    example: '/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html',
+    parameters: {
+        category: 'Category, can be found in URL, `CRA-Reanalysis/2m-Temperature/6-hour/index.html` by default',
+    },
+    name: 'Publish',
+    maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+\`category\` is the text after \`publish/\` in the URL.
+
+eg. The URL for [Monitoring\\_CMA-RA\\_2m-Temperature\\_6-hour](http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html) is <http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html>. The \`category\` for route can be represented as [\`/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html\`](https://rsshub.app/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html).
+:::`,
 };
 
 async function handler(ctx) {

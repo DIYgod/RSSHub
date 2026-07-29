@@ -4,8 +4,11 @@ import { defaultLanguage, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: ['/videos/newentries/:language?', '/newentries/:language?'],
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['multimedia'],
+    example: '/javlibrary/newentries/en',
+    parameters: { language: 'Language, see below, Japanese by default, as `ja`' },
+    name: 'Recently Inserted Videos',
+    maintainers: ['nczitzk'],
     handler,
     features: {
         nsfw: true,

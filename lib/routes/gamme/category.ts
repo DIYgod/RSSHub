@@ -9,8 +9,14 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:domain/:category?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['new-media'],
+    example: '/gamme/news',
+    parameters: {
+        domain: '網站，`news` 為宅宅新聞，`sexynews` 為西斯新聞',
+        category: '分類名，可在 URL 找到，預設為全部',
+    },
+    name: '分類',
+    maintainers: ['TonyRL'],
     handler,
 };
 

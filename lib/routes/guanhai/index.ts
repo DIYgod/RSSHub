@@ -8,13 +8,15 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/guanhai',
     radar: [
         {
             source: ['guanhai.com.cn/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '首页',
     maintainers: ['TonyRL'],
     handler,
     url: 'guanhai.com.cn/',

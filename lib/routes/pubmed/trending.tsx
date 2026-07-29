@@ -9,9 +9,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/trending/:filters?',
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
+    categories: ['journal'],
+    example: '/pubmed/trending',
+    parameters: { filters: 'Filters, can be found in URL' },
+    name: 'Trending articles',
+    maintainers: ['y9c', 'nczitzk'],
     handler,
+    description: `::: tip
+For the parameter **filter**, the \`filter\` parameter in the URL should be split into a string by \`,\`, here is an example.
+
+In \`https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.clinicaltrial&filter=pubt.randomizedcontrolledtrial\`, the filter parameters are \`simsearch1.fha\`, \`pubt.clinicaltrial\`, and \`pubt.randomizedcontrolledtrial\`. Therefore, the filter corresponding to the route should be filled with \`simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial\`, and the route is [\`/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial\`](https://rsshub.app/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial)
+:::`,
 };
 
 async function handler(ctx) {

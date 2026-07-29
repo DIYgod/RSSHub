@@ -11,7 +11,6 @@ export const route: Route = {
     path: '/quotation/all',
     categories: ['other'],
     example: '/cebbank/quotation/all',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,7 +24,7 @@ export const route: Route = {
             source: ['cebbank.com/site/ygzx/whpj/index.html', 'cebbank.com/eportal/ui', 'cebbank.com/'],
         },
     ],
-    name: 'Unknown',
+    name: '外汇牌价 - 总览',
     maintainers: ['linbuxiao'],
     handler,
     url: 'cebbank.com/site/ygzx/whpj/index.html',

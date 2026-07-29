@@ -26,15 +26,21 @@ async function loadContent(link) {
 
 export const route: Route = {
     path: '/news/:type?',
+    categories: ['government'],
+    example: '/jseea/news/zkyw',
+    parameters: { type: '分类，默认为 `zkyw`，具体参数见下表' },
     radar: [
         {
             source: ['jseea.cn/webfile/news/:type'],
             target: '/news/:type',
         },
     ],
-    name: 'Unknown',
+    name: '新闻中心',
     maintainers: ['schen1024'],
     handler,
+    description: `| 招考要闻 | 教育动态 | 招考信息 | 政策文件 | 院校动态 |
+| :------: | :------: | :------: | :------: | :------: |
+|   zkyw   |   jydt   |   zkxx   |   zcwj   |   yxdt   |`,
 };
 
 async function handler(ctx) {

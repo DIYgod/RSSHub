@@ -8,13 +8,16 @@ const currentURL = 'https://reactnewsletter.com/issues';
 
 export const route: Route = {
     path: '/',
+    categories: ['programming'],
+    example: '/reactnewsletter',
     radar: [
         {
             source: ['bytes.dev/issues', 'bytes.dev/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'React Newsletter',
+    description: 'Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free.',
     maintainers: ['meixger'],
     handler,
     url: 'bytes.dev/issues',

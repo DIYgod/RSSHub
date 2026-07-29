@@ -10,9 +10,23 @@ import { getPageItemAndDate } from './utils/index';
 
 export const route: Route = {
     path: '/cxzx/:types?',
-    name: 'Unknown',
+    categories: ['university'],
+    example: '/jsu/cxzx/xkjs',
+    parameters: { types: '通知分类 默认为`xkjs`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '创新中心',
     maintainers: ['wenjia03'],
     handler,
+    description: `| 通知公告 | 学科竞赛公告 | 创新项目公告 | 竞赛新闻 | 竞赛通知 |
+| -------- | ------------ | ------------ | -------- | -------- |
+| tzgg     | xkjs         | cxtz         | jsxw     | jstz     |`,
 };
 
 async function handler(ctx) {
