@@ -184,7 +184,7 @@ describe('request-rewriter fetch retry', () => {
         expect(proxyMock.markProxyFailed).toHaveBeenCalledWith('http://proxy1.test');
         expect(proxyMock.getDispatcherForProxy).toHaveBeenCalledWith(proxies[1]);
 
-        const requestArg = fetchSpy.mock.calls[0][0] as Request;
+        const requestArg = fetchSpy.mock.calls[0][0] as unknown as Request;
         expect(requestArg.headers.get('x-prefer-proxy')).toBeNull();
     });
 

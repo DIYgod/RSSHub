@@ -106,7 +106,7 @@ describe('pkg', () => {
                     ],
                     allowEmpty: true,
                 }),
-            } as Route,
+            } as unknown as Route,
             {
                 name: 'Custom Namespace',
                 url: 'https://example.com',
@@ -130,7 +130,7 @@ describe('pkg', () => {
             path: '/hello',
             name: 'Custom Response',
             handler: () => new Response('ok'),
-        } as Route);
+        } as unknown as Route);
 
         const app = (await import('@/app')).default;
         const response = await app.request('/custom-response/hello');

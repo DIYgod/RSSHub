@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/)?.[1];
                     const idEls: Element[] = $$('a.news-column, div.label span').toArray();
-                    const categories: string[] = [...new Set([...(item.id as string[]), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
+                    const categories: string[] = [...new Set([...(item.id as unknown as string[]), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
                     const authors: DataItem['author'] = $$('span.news-date')
                         .text()
                         ?.split(/\d{4}-\d{2}-\d{2}/, 1)?.[0]

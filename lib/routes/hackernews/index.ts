@@ -82,7 +82,7 @@ async function handler(ctx) {
                 origin: $thing.find('.titleline').children('a').attr('href'),
                 onStory: $thing.find('.onstory').text().slice(2),
 
-                comments: $thing.next().find('a').last().text().split(' comment', 1)[0] as DataItem['comments'],
+                comments: $thing.next().find('a').last().text().split(' comment', 1)[0] as unknown as DataItem['comments'],
                 upvotes: $thing.next().find('.score').text().split(' point', 1)[0] as unknown as DataItem['upvotes'],
 
                 currentComment: $thing.find('.comment').text(),

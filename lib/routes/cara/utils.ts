@@ -33,7 +33,7 @@ export async function parseUserData(user: string) {
     return (await cache.tryGet(`${HOST}:${user}`, async () => {
         const data = await customFetch<UserNextData>(`${HOST}/_next/data/${buildId}/${user}.json`);
         return data.pageProps.user;
-    })) as Promise<UserNextData['pageProps']['user']>;
+    })) as UserNextData['pageProps']['user'];
 }
 
 export async function fetchPortfolioItem(item: PortfolioResponse['data'][number]) {
