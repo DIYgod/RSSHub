@@ -370,9 +370,9 @@ interface RouteItem {
 }
 
 export interface Route extends RouteItem {
-    ja?: RouteItem;
-    zh?: RouteItem;
-    'zh-TW'?: RouteItem;
+    ja?: Partial<RouteItem>;
+    zh?: Partial<RouteItem>;
+    'zh-TW'?: Partial<RouteItem>;
 }
 
 // radar

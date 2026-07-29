@@ -43,12 +43,14 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         data.map((item) =>
-            cache.tryGet(item.link, () => ({
-                title: item.title,
-                description: String(item.htmlText).replaceAll('\n', '<br><br>'),
-                link: `${rootUrl}/post/${item.id}`,
-                pubDate: parseDate(item.gmtCreate),
-            }))
+            cache.tryGet(item.link, () =>
+                Promise.resolve({
+                    title: item.title,
+                    description: String(item.htmlText).replaceAll('\n', '<br><br>'),
+                    link: `${rootUrl}/post/${item.id}`,
+                    pubDate: parseDate(item.gmtCreate),
+                })
+            )
         )
     );
 

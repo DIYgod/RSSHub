@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import type { Config } from '@/config';
 import unifyProxy, { unifyProxies } from '@/utils/proxy/unify-proxy';
 
 const emptyProxyObj = {
@@ -8,7 +9,7 @@ const emptyProxyObj = {
     port: undefined,
     auth: undefined,
     url_regex: '.*',
-};
+} as Config['proxy'];
 
 const effectiveExpect = ({ proxyUri, proxyObj }, expectUri, expectObj) => {
     expect(proxyUri).toBe(expectUri);

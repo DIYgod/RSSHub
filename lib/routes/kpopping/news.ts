@@ -33,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $aEl.text();
             const pubDateStr: string | undefined = $el.find('time.datetime-wr').attr('datetime');
             const linkUrl: string | undefined = $aEl.attr('href');
-            const categoryEls: Element[] = [$el.find('h4.title-wr a').first()];
+            const categoryEls: Array<Cheerio<Element>> = [$el.find('h4.title-wr a').first()];
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
             const authorEls: Element[] = $el.find('aside.author-wr').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {

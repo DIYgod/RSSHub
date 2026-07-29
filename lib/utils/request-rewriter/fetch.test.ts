@@ -171,7 +171,7 @@ describe('request-rewriter fetch retry', () => {
         const wrappedFetch = await loadWrappedFetch(proxyMock);
         const fetchSpy = vi.spyOn(undici, 'fetch');
         fetchSpy.mockRejectedValueOnce(new Error('boom'));
-        fetchSpy.mockResolvedValueOnce(new Response('ok'));
+        fetchSpy.mockResolvedValueOnce(new Response('ok') as unknown as Awaited<ReturnType<typeof undici.fetch>>);
 
         const response = await wrappedFetch('http://example.com/resource', {
             headers: new Headers({
@@ -209,7 +209,7 @@ describe('request-rewriter fetch retry', () => {
         const wrappedFetch = await loadWrappedFetch(proxyMock);
         const fetchSpy = vi.spyOn(undici, 'fetch');
         fetchSpy.mockRejectedValueOnce(new Error('boom'));
-        fetchSpy.mockResolvedValueOnce(new Response('ok'));
+        fetchSpy.mockResolvedValueOnce(new Response('ok') as unknown as Awaited<ReturnType<typeof undici.fetch>>);
 
         await wrappedFetch('http://example.com/resource', {
             headers: {

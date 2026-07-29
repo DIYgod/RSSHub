@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data } from '@/types';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -49,7 +49,7 @@ export const handler = async (ctx): Promise<Data> => {
     );
 
     return {
-        item: items,
+        item: items as DataItem[],
         ...feedMeta($, currentUrl),
     };
 };

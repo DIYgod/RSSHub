@@ -12,6 +12,7 @@ let cacheIndex = 0;
 
 export const route: Route = {
     path: '/:id/:params?',
+    example: '/test/1',
     name: 'Test',
     maintainers: ['DIYgod', 'NeverBehave'],
     handler,

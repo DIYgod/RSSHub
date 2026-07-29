@@ -42,7 +42,7 @@ export const route: Route = {
 async function handler() {
     const allProductSummaries: any[] = [];
 
-    const loadMoreRequest = async ({ moreToken }) => {
+    const loadMoreRequest = async ({ moreToken }: { moreToken?: string }) => {
         const response = await request({ moreToken });
         const { data } = response;
         allProductSummaries.push(data.productSummaries);

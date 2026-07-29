@@ -106,7 +106,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                     description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html() ?? undefined,
                 });
 
-                const processedItem: DataItem = {
+                const processedItem: Partial<DataItem> = {
                     description,
                 };
 

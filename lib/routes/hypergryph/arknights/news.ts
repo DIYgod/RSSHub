@@ -76,7 +76,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { group = 'ALL' } = ctx.req.param();
 
-    const initialData: Promise<InitialData> = await cache.tryGet(
+    const initialData: InitialData = await cache.tryGet(
         'hypergryph:arknights:news',
         async () => {
             const response = await ofetch('https://ak.hypergryph.com/news');

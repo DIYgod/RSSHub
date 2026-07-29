@@ -9,7 +9,18 @@ import { categoryTitle } from './category-title';
 import { indexPage } from './index-page';
 import { newsContent } from './news-content';
 
-export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTitle, baseDescription = '', baseDeparment = '', baseClass = 'div.article_list ul li:has(a)' }) => {
+export const getContent = async (
+    ctx,
+    {
+        baseHost,
+        baseCategory,
+        baseType,
+        baseTitle,
+        baseDescription = '',
+        baseDeparment = '',
+        baseClass = 'div.article_list ul li:has(a)',
+    }: { baseHost: string; baseCategory: string; baseType?: string; baseTitle: string; baseDescription?: string; baseDeparment?: string; baseClass?: string }
+) => {
     const { category = baseCategory, type = baseType, page = '1' } = ctx.req.param();
 
     const title = `${baseTitle} - ${categoryTitle(category)}`;
