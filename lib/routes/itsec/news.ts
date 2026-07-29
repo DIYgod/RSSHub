@@ -57,7 +57,7 @@ async function handler() {
                 pubDate: date ? timezone(parseDate(date), 8) : undefined,
             };
         })
-        .filter((item): item is { title: string; link: string; pubDate?: Date } => item !== null);
+        .filter((item): item is { title: string; link: string; pubDate: Date | undefined } => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
