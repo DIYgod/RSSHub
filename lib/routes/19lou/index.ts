@@ -15,7 +15,7 @@ const setCookie = function (cookieName, cookieValue, seconds, path, domain, secu
         expires = new Date();
         expires.setTime(expires.getTime() + seconds);
     }
-    return [encodeURI(cookieName), '=', encodeURI(cookieValue), expires ? '; expires=' + expires.toGMTString() : '', path ? '; path=' + path : '/', domain ? '; domain=' + domain : '', secure ? '; secure' : ''].join('');
+    return [encodeURI(cookieName), '=', encodeURI(cookieValue), expires ? '; expires=' + expires.toUTCString() : '', path ? '; path=' + path : '/', domain ? '; domain=' + domain : '', secure ? '; secure' : ''].join('');
 };
 
 export const route: Route = {

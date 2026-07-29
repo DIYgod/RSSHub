@@ -1,7 +1,7 @@
 import { type CheerioAPI, load } from 'cheerio';
 import LZString from 'lz-string';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 

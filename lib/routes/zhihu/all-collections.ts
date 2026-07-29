@@ -1,10 +1,11 @@
 import { config } from '@/config';
-import type { Collection, CollectionItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+import type { Collection, CollectionItem } from './types';
 import { header } from './utils';
 
 export const route: Route = {

@@ -1,3 +1,4 @@
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 const categoryMap = {

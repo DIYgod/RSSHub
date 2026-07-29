@@ -1,3 +1,4 @@
+/// <reference types="@cloudflare/vitest-pool-workers/types" />
 /// <reference types="@cloudflare/vitest-pool-workers" />
 import { env } from 'cloudflare:test';
 import { describe, expect, it, vi } from 'vitest';

@@ -2,7 +2,7 @@
 // This Worker manages the RSSHub container lifecycle and proxies requests
 
 import { Container } from '@cloudflare/containers';
-import type { KVNamespace } from '@cloudflare/workers-types';
+import type { DurableObjectNamespace, KVNamespace } from '@cloudflare/workers-types';
 
 const INSTANCE_COUNT = 20;
 
@@ -13,7 +13,7 @@ export class RSSHubContainer extends Container {
 }
 
 interface Env {
-    RSSHUB_CONTAINER: DurableObjectNamespace<RSSHubContainer>;
+    RSSHUB_CONTAINER: DurableObjectNamespace;
     CONFIG: KVNamespace;
 }
 
@@ -36,7 +36,7 @@ export default {
 
         // Randomly select an instance for load balancing
         const instanceIndex = Math.floor(Math.random() * INSTANCE_COUNT);
-        const container = env.RSSHUB_CONTAINER.getByName(`rsshub-${instanceIndex}`);
+        const container = env.RSSHUB_CONTAINER.getByName(`rsshub-${instanceIndex}`) as unknown as RSSHubContainer;
 
         // Start container with env vars and wait for port to be ready
         await container.startAndWaitForPorts({
