@@ -48,7 +48,7 @@ const handler = async (ctx) => {
                         item.author = $('.nr-zz h2').html() ?? undefined;
                     } else if (item.link.includes('app.upc.edu.cn')) {
                         const scriptContent = $('body script').first().html();
-                        let dataObj = null;
+                        let dataObj: Record<string, any> | null = null;
                         if (scriptContent) {
                             const match = scriptContent.match(/data\s*:\s*function\s*\(\)\s*\{\s*return\s*\{[^}]*data\s*:\s*(\{[\s\S]*?\})/);
                             if (match && match[1]) {
