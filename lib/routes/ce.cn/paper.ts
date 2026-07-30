@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -148,7 +149,7 @@ async function handler(ctx) {
     } else if (/^\d{1,2}$/.test(page)) {
         pageNum = page;
     } else if (page !== undefined) {
-        throw new Error(`版面编号应为 1-2 位数字或 "all"，收到：${page}`);
+        throw new InvalidParameterError(`版面编号应为 1-2 位数字或 "all"，收到：${page}`);
     }
 
     const editions = await getEditions();
@@ -168,7 +169,7 @@ async function handler(ctx) {
 
     const target = editions.find((e) => Number(e.page) === Number(pageNum));
     if (!target) {
-        throw new Error(`未找到第 ${pageNum} 版，请确认版面编号是否正确`);
+        throw new InvalidParameterError(`未找到第 ${pageNum} 版，请确认版面编号是否正确`);
     }
     const articles = await getArticles(target.url);
     const items = await buildItems(articles, resolvedDate);
