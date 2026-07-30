@@ -66,8 +66,7 @@ export const parseList = async (
 
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
                 if (isSingapore) {
-                    const ldJson = JSON.parse($1('#seo-article-page').text());
-                    const article = ldJson['@graph'].find((item) => item['@type'] === 'NewsArticle');
+                    const article = JSON.parse($1('script[type="application/ld+json"]:contains("NewsArticle")').text());
                     title = article.headline;
                     pubDate = parseDate(article.datePublished);
                     category = $1('meta[name="keywords"]')
