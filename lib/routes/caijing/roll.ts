@@ -66,7 +66,7 @@ async function handler() {
     return {
         title: '滚动新闻-财经网',
         image: 'https://www.caijing.com.cn/favicon.ico',
-        link: 'https://roll.caijing.com.cn/',
+        link: baseUrl,
         item: items,
     };
 }
