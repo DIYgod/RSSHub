@@ -58,27 +58,24 @@ export const parseList = async (
                 const response = await ofetch.raw(new URL($item.attr('href') as string, origin).href);
                 let $1 = load(response._data);
 
-                let title, pubDate, category, images;
-                const jsonText = $1('script[type="application/ld+json"]')
+                let category, images;
+                const jsonText = $1('script[type="application/ld+json"]:contains("NewsArticle")')
                     .text()
                     .replaceAll(/\p{Cc}/gu, '');
                 const ldJson = JSON.parse(jsonText);
 
+                const title = ldJson.headline;
+                const pubDate = parseDate(ldJson.datePublished);
+
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
                 if (isSingapore) {
-                    const ldJson = JSON.parse($1('#seo-article-page').text());
-                    const article = ldJson['@graph'].find((item) => item['@type'] === 'NewsArticle');
-                    title = article.headline;
-                    pubDate = parseDate(article.datePublished);
                     category = $1('meta[name="keywords"]')
                         .attr('content')
                         ?.split(',')
                         .map((s) => s.trim());
                     $1 = load($1('.articleBody').html(), null, false);
-                    images = [{ url: article.image.url }];
+                    images = [{ url: ldJson.image[0].url }];
                 } else {
-                    title = ldJson.headline;
-                    pubDate = parseDate(ldJson.datePublished);
                     category = ldJson.keywords?.split(',');
                 }
 
