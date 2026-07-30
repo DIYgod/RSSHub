@@ -7,6 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+// paper.ce.cn does not serve HTTPS (the gateway returns 504), so plain HTTP is used.
 const ROOT = 'http://paper.ce.cn/pc/layout';
 
 interface Edition {
@@ -25,22 +26,21 @@ interface ArticleRef {
 
 /** Fetch the list of all editions (pages) of the latest issue. */
 export async function getEditions(): Promise<Edition[]> {
-    const indexUrl = `${ROOT}/index.html`;
-    const html = await ofetch(indexUrl);
+    const html = await ofetch(`${ROOT}/index.html`);
     const $ = load(html);
 
     const editions: Edition[] = [];
     $('#list li a').each((_, el) => {
         const a = $(el);
         const href = a.attr('href');
-        if (!href || !/node_\d+\.html$/.test(href)) {
+        const pageMatch = href?.match(/node_(\d+)\.html$/);
+        if (!pageMatch) {
             return;
         }
-        const pageMatch = href.match(/node_(\d+)\.html$/);
         editions.push({
-            page: pageMatch ? pageMatch[1] : '',
+            page: pageMatch[1],
             name: a.text().replaceAll(/\s+/g, ' ').trim(),
-            url: new URL(href, indexUrl).href,
+            url: new URL(href, `${ROOT}/index.html`).href,
         });
     });
     return editions;
@@ -79,18 +79,15 @@ export async function getArticleContent(articleUrl: string): Promise<{ descripti
     const html = await ofetch(articleUrl);
     const $ = load(html);
 
-    // Scope the feed body to the real content region `#ozoom`; fall back to `.detail-art`.
-    const $content = $('#ozoom').length ? $('#ozoom') : $('.detail-art');
+    // Scope the feed body to the real content region `#ozoom`.
+    const $content = $('#ozoom');
     $content.find('img[src]').each((_, el) => {
         const img = $(el);
-        const src = img.attr('src');
-        if (src) {
-            img.attr('src', new URL(src, articleUrl).href);
-        }
+        img.attr('src', new URL(img.attr('src'), articleUrl).href);
     });
     const description = $content.html()?.trim() ?? '';
 
-    // The byline (author) is inside `#Author` (often empty for this paper).
+    // The byline (author) lives in `#Author` (often empty for this paper).
     const author = $('#Author').text().replaceAll(/\s+/g, ' ').trim() || undefined;
 
     // Parse the publication date from the hidden `<!--enpproperty <date>YYYY-MM-DD...-->` marker.
@@ -159,9 +156,10 @@ async function handler(ctx) {
     if (isAll) {
         const allArticles = (await Promise.all(editions.map((edition) => getArticles(edition.url)))).flat();
         const items = await buildItems(allArticles, resolvedDate);
+        // paper.ce.cn has no HTTPS (see ROOT), so the HTTP link is used here too.
         return {
             title: '经济日报 - 全部版面',
-            link: 'http://paper.ce.cn/pc/layout/index.html',
+            link: `${ROOT}/index.html`,
             description: `经济日报电子版 ${resolvedDate || '最新一期'} 全部版面`,
             item: items,
         };
