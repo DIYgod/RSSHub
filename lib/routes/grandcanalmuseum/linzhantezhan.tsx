@@ -8,9 +8,12 @@ import { parseDate } from '@/utils/parse-date';
 
 import { namespace } from './namespace';
 
-const formatExhibitionDate = (dateStr: string): string => {
+const formatExhibitionDate = (dateStr: string): string | undefined => {
     const normalized = dateStr.replaceAll(/[年月.]/g, '-').replace('日', '');
     const [y, m, d] = normalized.split('-', 3);
+    if (!y || !m || !d) {
+        return undefined;
+    }
     return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
 };
 
@@ -21,15 +24,21 @@ const parseExhibitionDuration = (fullDuration: string): { startDate: string | un
     }
 
     const parts = fullDuration.split(/[—-]/);
-
-    const startRaw = parts[0]?.trim();
-    const endRaw = parts[1]?.trim();
-    if (!startRaw) {
+    if (parts.length < 2) {
         return { startDate: undefined, endDate: undefined };
     }
 
+    const startRaw = parts[0].trim();
+    let endRaw = parts[1].trim();
+
     const startDate = formatExhibitionDate(startRaw);
-    const endDate = endRaw ? formatExhibitionDate(/\d{4}/.test(endRaw) ? endRaw : `${startDate.slice(0, 4)}年${endRaw}`) : undefined;
+
+    if (startDate && !/\d{4}/.test(endRaw)) {
+        const startYear = startDate.slice(0, 4);
+        endRaw = `${startYear}年${endRaw}`;
+    }
+
+    const endDate = formatExhibitionDate(endRaw);
 
     return { startDate, endDate };
 };
