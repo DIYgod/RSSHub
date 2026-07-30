@@ -11,6 +11,9 @@ export const getItem = async (item) => {
 
     $('.fs-text, .fs-pinglun, .hidden-xs').remove();
 
+    // Derive the title from the page when the caller did not supply one,
+    // so single-article routes don't have to pre-fetch just to read the title.
+    item.title ??= $('h1').first().text().trim() || $('head title').text().trim();
     item.author = $('.appellation').text();
     item.description = $('.highlight, .text').html() || $('.content').html();
     item.pubDate = parseDate(
