@@ -22,17 +22,14 @@ const parseExhibitionDuration = (fullDuration: string): { startDate: string | un
 
     const parts = fullDuration.split(/[—-]/);
 
-    const startRaw = parts[0];
-    let endRaw = parts[1];
-
-    const startDate = formatExhibitionDate(startRaw);
-
-    if (!/\d{4}/.test(endRaw)) {
-        const startYear = startDate.slice(0, 4);
-        endRaw = `${startYear}年${endRaw}`;
+    const startRaw = parts[0]?.trim();
+    const endRaw = parts[1]?.trim();
+    if (!startRaw) {
+        return { startDate: undefined, endDate: undefined };
     }
 
-    const endDate = formatExhibitionDate(endRaw);
+    const startDate = formatExhibitionDate(startRaw);
+    const endDate = endRaw ? formatExhibitionDate(/\d{4}/.test(endRaw) ? endRaw : `${startDate.slice(0, 4)}年${endRaw}`) : undefined;
 
     return { startDate, endDate };
 };
