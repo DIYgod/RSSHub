@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['roll.caijing.com.cn/index1.html', 'roll.caijing.com.cn/'],
+            source: ['roll.caijing.com.cn/'],
         },
     ],
     name: '滚动新闻',
@@ -66,7 +66,7 @@ async function handler() {
     return {
         title: '滚动新闻-财经网',
         image: 'https://www.caijing.com.cn/favicon.ico',
-        link: response.url,
+        link: 'https://roll.caijing.com.cn/',
         item: items,
     };
 }
