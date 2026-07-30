@@ -32,9 +32,8 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://roll.caijing.com.cn';
-    const response = await got(`${baseUrl}/ajax_lists.php`, {
+    const response = await got(`${baseUrl}/json/lists1.json`, {
         searchParams: {
-            modelid: 0,
             time: Math.random(),
         },
     });
