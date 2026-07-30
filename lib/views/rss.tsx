@@ -38,7 +38,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                 {data.item?.map((item) => (
                     <item>
                         <title>{item.title}</title>
-                        <description>{item.description || item.content?.html || item.content?.text}</description>
+                        <description>{item.description}</description>
                         <link>{item.link}</link>
                         <guid isPermaLink="false">{item.guid || item.link || item.title}</guid>
                         {item.pubDate && <pubDate>{item.pubDate}</pubDate>}
