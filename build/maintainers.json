@@ -2355,27 +2355,33 @@
   "/baidu/gushitong/index": [
     "CaoMeiYouRen"
   ],
+  "/baidu/tieba/forum/good/:kw/:cid?/:sortBy?": [
+    "u3u",
+    "FlanChanXwO"
+  ],
+  "/baidu/tieba/forum/:kw/:sortBy?": [
+    "u3u",
+    "FlanChanXwO"
+  ],
   "/baidu/search/:keyword": [
     "CaoMeiYouRen"
   ],
-  "/baidu/tieba/forum/good/:kw/:cid?/:sortBy?": [
-    "u3u"
-  ],
-  "/baidu/tieba/forum/:kw/:sortBy?": [
-    "u3u"
-  ],
   "/baidu/tieba/post/:id": [
-    "u3u"
+    "u3u",
+    "FlanChanXwO"
   ],
   "/baidu/tieba/post/lz/:id": [
-    "u3u"
+    "u3u",
+    "FlanChanXwO"
   ],
   "/baidu/tieba/search/:qw/:routeParams?": [
-    "JimenezLi"
+    "JimenezLi",
+    "FlanChanXwO"
   ],
   "/baidu/tieba/user/:uid": [
     "igxlin",
-    "nczitzk"
+    "nczitzk",
+    "FlanChanXwO"
   ],
   "/baidu/top/:board?": [
     "xyqfer"
