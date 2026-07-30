@@ -39003,7 +39003,6 @@ export default {
         "radar": [
           {
             "source": [
-              "roll.caijing.com.cn/index1.html",
               "roll.caijing.com.cn/"
             ]
           }
