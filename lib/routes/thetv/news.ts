@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const baseUrl = 'https://thetv.jp';
+const BASE_URL = 'https://thetv.jp';
 
 // thetv.jp/news/ 下的一级分类
 const categoryNameMap: Record<string, string> = {
@@ -44,7 +44,7 @@ export const route: Route = {
         },
     ],
     name: 'ニュース一覧',
-    maintainers: ['your-github-id'],
+    maintainers: ['fansi2020'],
     handler,
     url: 'thetv.jp/news',
 };
@@ -52,7 +52,7 @@ export const route: Route = {
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'news';
     // news（全部）没有单独子目录，其余分类都是 /news/:category/
-    const listUrl = category === 'news' ? `${baseUrl}/news/` : `${baseUrl}/news/${category}/`;
+    const listUrl = category === 'news' ? `${BASE_URL}/news/` : `${BASE_URL}/news/${category}/`;
 
     const response = await ofetch(listUrl);
     const $ = load(response);
@@ -67,41 +67,41 @@ async function handler(ctx) {
     //     <div class=timestamp>2026/07/31 18:55</div>
     //   <li class=masonrylist__item> ...
     // </ul>
-    // “新着ニュース”区块可能有多个 ul.masonrylist（中间插了广告），
+    // “ニュース”顶部底部区块可能有多个 ul.masonrylist（跳转链接），
     // 侧边栏排行榜用的是 ul.rankinglist，class 不同，天然不会被下面的选择器选中。
     const items = $('ul.masonrylist > li.masonrylist__item')
+    .toArray()
+    .map((el) => {
+        const $li = $(el);
+
+        const href = $li.find('a').attr('href') ?? '';
+        const link = href.startsWith('http') ? href : `${BASE_URL}${href}`;
+
+        const $img = $li.find('img.item-img');
+        const title = $li.find('p.item-text').text().trim() || ($img.attr('alt') ?? '').trim();
+
+        const coverSrc = $img.attr('src') ?? '';
+        const cover = coverSrc ? (coverSrc.startsWith('http') ? coverSrc : `${BASE_URL}${coverSrc}`) : '';
+
+        const tags = $li
+        .find('div.label__block a')
         .toArray()
-        .map((el) => {
-            const $li = $(el);
+        .map((tag) => $(tag).text().trim())
+        .filter(Boolean);
 
-            const href = $li.find('a').first().attr('href') ?? '';
-            const link = href.startsWith('http') ? href : `${baseUrl}${href}`;
+        const dateText = $li.find('div.timestamp').text().trim();
 
-            const $img = $li.find('img.item-img').first();
-            const title = $li.find('p.item-text').first().text().trim() || ($img.attr('alt') ?? '').trim();
-
-            const coverSrc = $img.attr('src') ?? '';
-            const cover = coverSrc ? (coverSrc.startsWith('http') ? coverSrc : `${baseUrl}${coverSrc}`) : '';
-
-            const tags = $li
-                .find('div.label__block a')
-                .toArray()
-                .map((tag) => $(tag).text().trim())
-                .filter(Boolean);
-
-            const dateText = $li.find('div.timestamp').first().text().trim();
-
-            return {
-                title,
-                link,
-                description: cover ? `<img src="${cover}"><br>${title}` : title,
-                pubDate: dateText ? timezone(parseDate(dateText, 'YYYY/MM/DD HH:mm'), +9) : undefined,
-                category: tags,
-                guid: link,
-            };
-        })
-        // 保险起见按链接去重（正常情况下不会重复，但防止页面结构变化产生脏数据）
-        .filter((item, index, all) => all.findIndex((i) => i.link === item.link) === index);
+        return {
+            title,
+            link,
+            description: cover ? `<img src="${cover}"><br>${title}` : title,
+            pubDate: dateText ? timezone(parseDate(dateText, 'YYYY/MM/DD HH:mm'), +9) : undefined,
+         category: tags,
+         guid: link,
+        };
+    })
+    // 保险起见按链接去重（清洗顶部和底部的多余的跳转链接）
+    //.filter((item, index, all) => all.findIndex((i) => i.link === item.link) === index);
 
     return {
         title: `WEBザテレビジョン - ${categoryNameMap[category] ?? category}`,

@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const baseUrl = 'https://www.animatetimes.com';
+const BASE_URL = 'https://www.animatetimes.com';
 
 export const route: Route = {
     path: '/news/:page?',
@@ -26,14 +26,14 @@ export const route: Route = {
         },
     ],
     name: '最新記事一覧',
-    maintainers: ['your-github-id'],
+    maintainers: ['fansi2020'],
     handler,
     url: 'animatetimes.com',
 };
 
 async function handler(ctx) {
     const page = ctx.req.param('page') || '1';
-    const listUrl = `${baseUrl}/index.php?p=${page}`;
+    const listUrl = `${BASE_URL}/index.php?p=${page}`;
 
     const response = await ofetch(listUrl);
     const $ = load(response);
@@ -60,13 +60,13 @@ async function handler(ctx) {
         .filter((el) => !$(el).hasClass('ranking'))
         .map((el) => {
             const $li = $(el);
-            const $a = $li.find('a.c-headline-link').first();
+            const $a = $li.find('a.c-headline-link');
 
             const link = $a.attr('href') ?? '';
-            const title = $li.find('.c-headline-text').first().text().trim();
-            const cover = $li.find('.c-headline-img img').first().attr('src') ?? '';
-            const dateText = $li.find('.c-headline-date').first().text().trim();
-            const categoryText = $li.find('.c-label').first().text().trim();
+            const title = $li.find('.c-headline-text').text().trim();
+            const cover = $li.find('.c-headline-img img').attr('src') ?? '';
+            const dateText = $li.find('.c-headline-date').text().trim();
+            const categoryText = $li.find('.c-label').text().trim();
 
             return {
                 title,
