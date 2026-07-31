@@ -6,8 +6,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { Album, RichIntro, TrackInfoResponse } from './types';
-import { decryptUrl, getRandom16 } from './utils';
+import type { Album, MobileTrack, RichIntro, TrackInfoResponse } from './types';
+import { decryptUrl, getRandom16, getXmSign } from './utils';
 
 const baseUrl = 'https://www.ximalaya.com';
 
@@ -50,13 +50,14 @@ function judgeTrue(str, ...validStrings) {
 }
 
 export const route: Route = {
-    path: '/:type/:id/:all/:shownote?',
+    path: '/:type/:id/:all?/:shownote?',
     categories: ['multimedia'],
     example: '/ximalaya/album/299146',
     parameters: {
         type: '专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到',
         id: '专辑 id, 可在对应专辑页面的 URL 中找到',
         all: '是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。',
+        shownote: '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。',
     },
     features: {
         requireConfig: [
@@ -143,6 +144,12 @@ async function handler(ctx) {
                 }
                 return _desc;
             });
+
+            const playPath = await cache.tryGet(`ximalaya:track:${item.trackId}`, async () => {
+                const track = await ofetch<MobileTrack>(`https://m.ximalaya.com/tracks/${item.trackId}.json`);
+                return { url: track.play_path_64 ?? track.play_path_32 ?? track.play_path ?? '' };
+            });
+            item.playPathAacv224 = playPath.url;
         })
     );
 
@@ -158,11 +165,12 @@ async function handler(ctx) {
                         headers: {
                             'user-agent': 'ting_6.7.9(GM1900,Android29)',
                             cookie: `1&_device=android&${randomToken}&6.7.9;1&_token=${token}`,
+                            'xm-sign': getXmSign(),
                         },
                     });
                     const trackInfo = trackPayInfoResponse.trackInfo;
                     const _item = {};
-                    if (!trackInfo.isAuthorized) {
+                    if (!trackInfo?.isAuthorized) {
                         return _item;
                     }
                     _item.playPathAacv224 = decryptUrl(trackInfo.playUrlList[0].url);
