@@ -416,7 +416,7 @@
   "/wikipedia/current-events/:includeToday?": [
     "aavanian"
   ],
-  "/ximalaya/:type/:id/:all/:shownote?": [
+  "/ximalaya/:type/:id/:all?/:shownote?": [
     "lengthmin",
     "jjeejj",
     "prnake"

@@ -3177,7 +3177,7 @@ export type RoutePath =
   | `/xidian/cs/:category?`
   | `/xidian/gr/:category?`
   | `/xidian/jwc/:category?`
-  | `/ximalaya/:type/:id/:all/:shownote?`
+  | `/ximalaya/:type/:id/:all?/:shownote?`
   | `/xinpianchang/:params?`
   | `/xinpianchang/discover/:params?`
   | `/xinpianchang/rank/:category?`
