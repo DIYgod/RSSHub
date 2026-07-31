@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import type { Album, MobileTrack, RichIntro, TrackInfoResponse } from './types';
-import { decryptUrl, getRandom16 } from './utils';
+import { decryptUrl, getRandom16, getXmSign } from './utils';
 
 const baseUrl = 'https://www.ximalaya.com';
 
@@ -165,6 +165,7 @@ async function handler(ctx) {
                         headers: {
                             'user-agent': 'ting_6.7.9(GM1900,Android29)',
                             cookie: `1&_device=android&${randomToken}&6.7.9;1&_token=${token}`,
+                            'xm-sign': getXmSign(),
                         },
                     });
                     const trackInfo = trackPayInfoResponse.trackInfo;
