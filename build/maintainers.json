@@ -308,6 +308,9 @@
   "/nio/nioradio/:albumid": [
     "marcosteam"
   ],
+  "/omegascans/series/:id": [
+    "ereneroglum"
+  ],
   "/polymarket/event/:slug": [
     "heqi201255"
   ],

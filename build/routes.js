@@ -5358,6 +5358,40 @@ export default {
       "name": "蔚来"
     }
   },
+  "omegascans": {
+    "routes": {
+      "/series/:id": {
+        "path": "/series/:id",
+        "name": "Series Chapters",
+        "url": "omegascans.org",
+        "maintainers": [
+          "ereneroglum"
+        ],
+        "example": "/omegascans/series/632",
+        "parameters": {
+          "id": "Series ID, can be found in API get request on series page"
+        },
+        "categories": [
+          "anime"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "location": "series.ts",
+        "module": () => import('@/routes/omegascans/series.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Omega Scans",
+    "url": "omegascans.org",
+    "description": "::: tip\nOmega Scans is a localization team working tirelessly to provide readers with high-quality Comics and Novels to read.\n:::"
+  },
   "polymarket": {
     "routes": {
       "/event/:slug": {

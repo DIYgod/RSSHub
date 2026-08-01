@@ -2202,6 +2202,7 @@ export type RoutePath =
   | `/olevod/vodlist`
   | `/ollama/blog`
   | `/ollama/library`
+  | `/omegascans/series/:id`
   | `/oncc/:language/:channel?`
   | `/oncc/money18/:id?`
   | `/onehu/`
