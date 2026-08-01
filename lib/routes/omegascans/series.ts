@@ -1,3 +1,4 @@
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -10,7 +11,6 @@ interface Chapter {
     chapter_slug: string;
     price: number;
     created_at: string;
-    free_at: string | null;
     series: {
         series_slug: string;
         id: number;
@@ -22,21 +22,13 @@ interface ChapterQueryResponse {
 }
 
 export const route: Route = {
-    path: '/series/:id/:freeOnly?',
+    path: '/series/:id',
     name: 'Series Chapters',
     url: 'omegascans.org',
     maintainers: ['ereneroglum'],
     example: '/omegascans/series/632',
     parameters: {
         id: 'Series ID, can be found in API get request on series page',
-        freeOnly: {
-            description: 'Filter paid chapters',
-            options: [
-                { value: 'true', label: 'Only free chapters' },
-                { value: 'false', label: 'Include paid chapters' },
-            ],
-            default: 'true',
-        },
     },
     categories: ['anime'],
     features: {
@@ -49,24 +41,24 @@ export const route: Route = {
         supportScihub: false,
     },
     handler: async (ctx) => {
-        const { id, freeOnly } = ctx.req.param();
+        const { id } = ctx.req.param();
 
         const response = await ofetch<ChapterQueryResponse>('https://api.omegascans.org/chapter/query', {
             query: {
                 page: 1,
-                perPage: 10000,
+                perPage: 30,
                 series_id: id,
             },
         });
 
-        let chapters = response.data;
-        if (freeOnly !== 'false') {
-            chapters = chapters.filter((chapter) => chapter.price === 0);
+        const chapters = response.data;
+        if (chapters.length === 0) {
+            throw new NotFoundError(`Series ${id} not found on Omega Scans`);
         }
 
-        const seriesSlug = chapters[0]?.series.series_slug;
-        const seriesTitle = seriesSlug ? seriesSlug.replaceAll('-', ' ').replaceAll(/\b\w/g, (c) => c.toUpperCase()) : `Series ${id}`;
-        const seriesLink = seriesSlug ? `https://omegascans.org/series/${seriesSlug}` : 'https://omegascans.org';
+        const seriesSlug = chapters[0].series.series_slug;
+        const seriesTitle = seriesSlug.replaceAll('-', ' ').replaceAll(/\b\w/g, (c) => c.toUpperCase());
+        const seriesLink = `https://omegascans.org/series/${seriesSlug}`;
 
         return {
             title: `Omega Scans - ${seriesTitle}`,
@@ -78,8 +70,8 @@ export const route: Route = {
                 pubDate: parseDate(chapter.created_at),
                 image: chapter.chapter_thumbnail ?? undefined,
                 guid: `omegascans-chapter-${chapter.id}`,
+                category: [chapter.price === 0 ? 'Free' : 'Paid'],
             })),
-            allowEmpty: true,
         };
     },
 };
