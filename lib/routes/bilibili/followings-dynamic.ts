@@ -174,7 +174,7 @@ async function handler(ctx) {
 
             // emoji
             let data_content = getDes(data);
-            if (item.display && item.display.emoji_info && showEmoji) {
+            if (item.display?.emoji_info?.emoji_details && showEmoji) {
                 const emoji = item.display.emoji_info.emoji_details;
                 for (const item of emoji) {
                     data_content = data_content.replaceAll(
