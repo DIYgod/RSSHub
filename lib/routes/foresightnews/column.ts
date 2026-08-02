@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { id: '专栏 id, 可在对应专栏页 URL 中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
