@@ -65692,24 +65692,6 @@ export default {
         "location": "arknights/japan.ts",
         "module": () => import('@/routes/hypergryph/arknights/japan.ts')
       },
-      "/arknights/announce/:platform?/:group?": {
-        "path": "/arknights/announce/:platform?/:group?",
-        "categories": [
-          "game"
-        ],
-        "example": "/hypergryph/arknights/announce",
-        "parameters": {
-          "platform": "平台，默认为 Android",
-          "group": "分组，默认为 ALL"
-        },
-        "name": "明日方舟 - 游戏内公告",
-        "maintainers": [
-          "swwind"
-        ],
-        "description": "平台\n\n|  安卓服 | iOS 服 |   B 服   |\n| :-----: | :----: | :------: |\n| Android |   IOS  | Bilibili |\n\n分组\n\n| 全部 | 系统公告 | 活动公告 |\n| :--: | :------: | :------: |\n|  ALL |  SYSTEM  | ACTIVITY |",
-        "location": "arknights/announce.ts",
-        "module": () => import('@/routes/hypergryph/arknights/announce.ts')
-      },
       "/arknights/arktca": {
         "path": "/arknights/arktca",
         "categories": [

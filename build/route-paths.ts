@@ -1505,7 +1505,6 @@ export type RoutePath =
   | `/huxiu/search/:keyword`
   | `/huxiu/tag/:id`
   | `/hyperdash/top-traders`
-  | `/hypergryph/arknights/announce/:platform?/:group?`
   | `/hypergryph/arknights/arktca`
   | `/hypergryph/arknights/japan`
   | `/hypergryph/arknights/news/:group?`

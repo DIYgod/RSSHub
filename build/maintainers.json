@@ -4607,9 +4607,6 @@
   "/hypergryph/arknights/japan": [
     "ofyark"
   ],
-  "/hypergryph/arknights/announce/:platform?/:group?": [
-    "swwind"
-  ],
   "/hypergryph/arknights/arktca": [
     "Bendancom"
   ],
