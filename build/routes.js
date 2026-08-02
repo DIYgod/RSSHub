@@ -119598,7 +119598,7 @@ export default {
           "finance"
         ],
         "view": 0,
-        "example": "/bloomberg/bbiz",
+        "example": "/bloomberg/business",
         "parameters": {
           "site": {
             "description": "Site ID, can be found below",
@@ -119608,11 +119608,11 @@ export default {
                 "label": "News"
               },
               {
-                "value": "bpol",
+                "value": "politics",
                 "label": "Politics"
               },
               {
-                "value": "bbiz",
+                "value": "business",
                 "label": "Business"
               },
               {
@@ -119624,32 +119624,28 @@ export default {
                 "label": "Technology"
               },
               {
-                "value": "green",
-                "label": "Green"
-              },
-              {
                 "value": "wealth",
                 "label": "Wealth"
-              },
-              {
-                "value": "pursuits",
-                "label": "Pursuits"
               },
               {
                 "value": "bview",
                 "label": "Opinion"
               },
               {
-                "value": "equality",
-                "label": "Equality"
-              },
-              {
                 "value": "businessweek",
                 "label": "Businessweek"
               },
               {
-                "value": "citylab",
-                "label": "CityLab"
+                "value": "economics",
+                "label": "Economics"
+              },
+              {
+                "value": "industries",
+                "label": "Industries"
+              },
+              {
+                "value": "crypto",
+                "label": "Crypto"
               }
             ]
           }
@@ -119666,7 +119662,7 @@ export default {
         "maintainers": [
           "bigfei"
         ],
-        "description": "| Site ID      | Title        |\n| ------------ | ------------ |\n| /            | News         |\n| bpol         | Politics     |\n| bbiz         | Business     |\n| markets      | Markets      |\n| technology   | Technology   |\n| green        | Green        |\n| wealth       | Wealth       |\n| pursuits     | Pursuits     |\n| bview        | Opinion      |\n| equality     | Equality     |\n| businessweek | Businessweek |\n| citylab      | CityLab      |",
+        "description": "| Site ID      | Title        |\n| ------------ | ------------ |\n| /            | News         |\n| politics     | Politics     |\n| business     | Business     |\n| markets      | Markets      |\n| technology   | Technology   |\n| wealth       | Wealth       |\n| bview        | Opinion      |\n| businessweek | Businessweek |\n| economics    | Economics    |\n| industries   | Industries   |\n| crypto       | Crypto       |\n\nLegacy site IDs `bpol` and `bbiz` still work as aliases of `politics` and `business`.",
         "location": "index.ts",
         "module": () => import('@/routes/bloomberg/index.ts')
       }
