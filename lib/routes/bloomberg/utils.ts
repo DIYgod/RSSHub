@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import { destr } from 'destr';
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -71,28 +70,6 @@ const redirectGot = (url) =>
         }),
     });
 
-const parseNewsList = async (url, ctx) => {
-    const resp = await got(url);
-    const $ = load(resp.data, {
-        xml: {
-            xmlMode: true,
-        },
-    });
-    const urls = $('urlset url');
-    return urls
-        .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
-        .map((u) => {
-            u = $(u);
-            const item = {
-                title: u.find(String.raw`news\:title`).text(),
-                link: u.find('loc').text(),
-                pubDate: parseDate(u.find(String.raw`news\:publication_date`).text()),
-            };
-            return item;
-        });
-};
-
 const parseArticle = (item) =>
     cache.tryGet(item.link, async () => {
         const group = regex
@@ -119,6 +96,7 @@ const parseArticle = (item) =>
                                 title: item.title,
                                 link: item.link,
                                 pubDate: item.pubDate,
+                                description: item.description,
                             };
                         }
                     }
@@ -130,6 +108,7 @@ const parseArticle = (item) =>
                         title: item.title,
                         link: item.link,
                         pubDate: item.pubDate,
+                        description: item.description,
                     };
                 }
 
@@ -611,4 +590,4 @@ const documentToHtmlString = async (document) => {
     return str;
 };
 
-export { parseArticle, parseNewsList, rootUrl };
+export { parseArticle, rootUrl };
