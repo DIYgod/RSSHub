@@ -837,6 +837,47 @@
     "url": "www.instagram.com",
     "lang": "en"
   },
+  "freebuf": {
+    "routes": {
+      "/articles/:type": {
+        "path": "/articles/:type",
+        "categories": [
+          "blog"
+        ],
+        "example": "/freebuf/articles/web",
+        "parameters": {
+          "type": "文章类别"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "freebuf.com/articles/:type/*.html",
+              "freebuf.com/articles/:type"
+            ]
+          }
+        ],
+        "name": "文章",
+        "maintainers": [
+          "trganda"
+        ],
+        "description": "::: tip\nFreebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。\n\n站点位于阿里云 WAF 之后，请求频繁的 IP 可能触发 405 JS 质询，此时路由会自动计算 `acw_sc__v2` Cookie 并重试。\n:::",
+        "location": "index.ts",
+        "module": "() => import('@/routes/freebuf/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "FreeBuf",
+    "url": "freebuf.com",
+    "lang": "zh-CN"
+  },
   "alipan": {
     "routes": {
       "/files/:share_id/:parent_file_id?": {
@@ -2349,47 +2390,6 @@
     "name": "Forward Future",
     "url": "forwardfuture.com",
     "lang": "en"
-  },
-  "freebuf": {
-    "routes": {
-      "/articles/:type": {
-        "path": "/articles/:type",
-        "categories": [
-          "blog"
-        ],
-        "example": "/freebuf/articles/web",
-        "parameters": {
-          "type": "文章类别"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "freebuf.com/articles/:type/*.html",
-              "freebuf.com/articles/:type"
-            ]
-          }
-        ],
-        "name": "文章",
-        "maintainers": [
-          "trganda"
-        ],
-        "description": "::: tip\nFreebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。\n:::",
-        "location": "index.ts",
-        "module": "() => import('@/routes/freebuf/index.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "FreeBuf",
-    "url": "freebuf.com",
-    "lang": "zh-CN"
   },
   "furaffinity": {
     "routes": {

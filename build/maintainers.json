@@ -75,6 +75,9 @@
   "/picnob.info/user/:id/:type?": [
     "TonyRL"
   ],
+  "/freebuf/articles/:type": [
+    "trganda"
+  ],
   "/alipan/files/:share_id/:parent_file_id?": [
     "DIYgod"
   ],
@@ -168,9 +171,6 @@
   ],
   "/forwardfuture/originals": [
     "ovo-Tim"
-  ],
-  "/freebuf/articles/:type": [
-    "trganda"
   ],
   "/furaffinity/art/:folder/:username/:mode?": [
     "TigerCubDen",

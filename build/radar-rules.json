@@ -158,6 +158,20 @@
       }
     ]
   },
+  "freebuf.com": {
+    "_name": "FreeBuf",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/articles/:type/*.html",
+          "/articles/:type"
+        ],
+        "target": "/freebuf/articles/:type"
+      }
+    ]
+  },
   "alipan.com": {
     "_name": "阿里云盘",
     "www": [
@@ -614,20 +628,6 @@
           "/"
         ],
         "target": "/forwardfuture/originals"
-      }
-    ]
-  },
-  "freebuf.com": {
-    "_name": "FreeBuf",
-    ".": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/blog",
-        "source": [
-          "/articles/:type/*.html",
-          "/articles/:type"
-        ],
-        "target": "/freebuf/articles/:type"
       }
     ]
   },
