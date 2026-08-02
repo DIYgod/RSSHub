@@ -5,6 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
+import { getTwitterUserCacheKey } from '@/utils/twitter-cache-key';
 
 interface ClientWrapper {
     client: TwitterApiReadOnly;
@@ -217,16 +218,14 @@ const getUserData = (id: string) =>
         return mapUserToLegacy(response?.data);
     });
 
-const cacheTryGet = async (_id: string, params: Record<string, any> | undefined, func: (id: string, params?: Record<string, any>) => Promise<any>) => {
+const cacheTryGet = async (_id: string, params: Record<string, any> | undefined, operationName: string, func: (id: string, params?: Record<string, any>) => Promise<any>) => {
     const userData: any = await getUserData(_id);
     const id = userData?.id_str;
     if (id === undefined) {
         cache.set(`twitter-userdata-${_id}`, '', config.cache.contentExpire);
         throw new InvalidParameterError('User not found');
     }
-    const funcName = func.name;
-    const paramsString = JSON.stringify(params);
-    return cache.tryGet(`twitter:${id}:${funcName}:${paramsString}`, () => func(id, params), config.cache.routeExpire, false);
+    return cache.tryGet(getTwitterUserCacheKey(id, operationName, params), () => func(id, params), config.cache.routeExpire, false);
 };
 
 const getUserTimeline = async (id: string, params?: Record<string, any>, options: Record<string, any> = {}) => {
@@ -242,18 +241,18 @@ const getUserTimeline = async (id: string, params?: Record<string, any>, options
     return mapTweetResponseToLegacy(response);
 };
 
-const getUserTweets = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, (id, params = {}) => getUserTimeline(id, params, { exclude: 'replies' }));
+const getUserTweets = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, 'getUserTweets', (id, params = {}) => getUserTimeline(id, params, { exclude: 'replies' }));
 
-const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, (id, params = {}) => getUserTimeline(id, params));
+const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, 'getUserTweetsAndReplies', (id, params = {}) => getUserTimeline(id, params));
 
 const getUserMedia = (id: string, params?: Record<string, any>) =>
-    cacheTryGet(id, params, async (id, params = {}) => {
+    cacheTryGet(id, params, 'getUserMedia', async (id, params = {}) => {
         const data = await getUserTimeline(id, params);
         return data.filter((tweet) => tweet.extended_entities?.media);
     });
 
 const getUserLikes = (id: string, params?: Record<string, any>) =>
-    cacheTryGet(id, params, async (id, params = {}) => {
+    cacheTryGet(id, params, 'getUserLikes', async (id, params = {}) => {
         const client = await getAppClient();
         const response = await client.v2.get(`users/${id}/liked_tweets`, {
             max_results: params.count ?? 20,
@@ -266,7 +265,7 @@ const getUserLikes = (id: string, params?: Record<string, any>) =>
     });
 
 const getUserTweet = (id: string, params?: Record<string, any>) =>
-    cacheTryGet(id, params, async (_id, params = {}) => {
+    cacheTryGet(id, params, 'getUserTweet', async (_id, params = {}) => {
         const client = await getAppClient();
         const tweetId = params.focalTweetId;
         if (!tweetId) {
