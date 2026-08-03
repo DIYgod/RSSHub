@@ -95,7 +95,7 @@ export const route: Route = {
                 return {
                     title: listTitle,
                     itemLink: `${baseUrl}${link}`,
-                    imgUrl: `${baseUrl}${imgUrlRaw}`,
+                    imgUrl: imgUrlRaw,
                 };
             });
 
@@ -129,7 +129,7 @@ export const route: Route = {
                     }
 
                     // Special path to return detail exhibition information
-                    let rawText = content('.content.f16').text() || ''; // get descption text from detail page
+                    let rawText = content('.content.f16').text(); // get descption text from detail page
 
                     rawText = rawText.replaceAll(/\s+/g, '');
 
@@ -163,7 +163,7 @@ export const route: Route = {
                         }
                     }
 
-                    const { startDate, endDate } = extractDates(fullDuration || '');
+                    const { startDate, endDate } = extractDates(fullDuration);
                     const { imgUrl, itemLink } = item;
 
                     const description = renderToString(
@@ -182,11 +182,9 @@ export const route: Route = {
                                 <b>闭展：</b>
                                 {endDate ?? '未定/常设'}
                             </p>
-                            {fullDuration && (
-                                <p>
-                                    <small>原始展期：{fullDuration}</small>
-                                </p>
-                            )}
+                            <p>
+                                <small>原始展期：{fullDuration}</small>
+                            </p>
                         </div>
                     );
 

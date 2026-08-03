@@ -71,18 +71,12 @@ others = 热点新闻 + 滚动新闻
 :::`,
 };
 
-interface ListItem {
-    title: string;
-    link: string;
-    pubDate?: DataItem['pubDate'];
-    description?: string | null;
-    author?: string;
-}
-
 async function handler(ctx) {
     const total = 10;
     const category = ctx.req.param('category') ?? 'all';
     const rootUrl = 'https://www.guancha.cn';
+
+    type ListItem = DataItem & { link: string };
 
     let newsList: ListItem[] = [],
         redianList: ListItem[] = [],

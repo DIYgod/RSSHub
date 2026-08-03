@@ -72,7 +72,7 @@ const handler: Route['handler'] = async () => {
                     })
                 )
             )
-        ).filter((item) => item !== null) as DataItem[],
+        ).filter((item): item is DataItem => item !== null),
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: 'https://rsshub.app/pacilution/latest',

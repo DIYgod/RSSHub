@@ -29,7 +29,7 @@ export const route: Route = {
 async function handler(ctx) {
     const gistId = ctx.req.param('gistId');
 
-    const headers = { Accept: 'application/vnd.github.v3+json', Authorization: undefined as any };
+    const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
     if (config.github && config.github.access_token) {
         headers.Authorization = `Bearer ${config.github.access_token}`;
     }

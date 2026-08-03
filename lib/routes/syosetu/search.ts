@@ -10,7 +10,6 @@ import { renderDescription } from './templates/description';
 import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
 
-// narou defines this type but does not export it through its package exports
 type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
 export const route: Route = {

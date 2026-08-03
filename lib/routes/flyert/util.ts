@@ -75,7 +75,7 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
                 });
         })
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const aEl = $(
@@ -97,7 +97,6 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
                 pubDate: pubDate ? parseDate(pubDate) : undefined,
                 link: new URL(aEl.prop('href')!, rootUrl).href,
                 author: $item.find('a.author_t').text().trim(),
-                language: undefined as DataItem['language'],
             };
         });
 

@@ -46,14 +46,9 @@ const handler = async (ctx) => {
                 };
             }),
     ]
-        .map((item) => ({
+        .map((item): DataItem & { slug: string; link: string } => ({
             ...item,
             slug: item.link.replace(rootUrl, ''),
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
-            updated: undefined as DataItem['updated'],
-            author: undefined as DataItem['author'],
-            category: undefined as DataItem['category'],
         }))
         .filter((item) => !item.slug.startsWith('/campaign'));
 

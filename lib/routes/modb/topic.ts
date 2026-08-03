@@ -36,7 +36,7 @@ async function handler(ctx) {
         },
     });
     const list = response.list.map((item) => {
-        let doc = { title: undefined as unknown as DataItem['title'], createdByName: undefined as any, tags: undefined as any };
+        let doc: { title?: DataItem['title']; createdByName?: string; tags?: string[] } = {};
         let baseLink = {};
         switch (item.type) {
             case 0:

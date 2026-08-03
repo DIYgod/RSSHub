@@ -2,8 +2,8 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { getTwitterUserCacheKey } from '@/utils/twitter-cache-key';
 
+import { getTwitterUserCacheKey } from '../../utils';
 import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 

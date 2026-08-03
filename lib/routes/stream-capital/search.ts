@@ -39,14 +39,14 @@ async function handler() {
         ),
     });
 
-    const list = (JSON.parse(decrypt(response.data)).list as WebBlog[]).map((item) => ({
+    const list = (JSON.parse(decrypt(response.data)).list as WebBlog[]).map((item): DataItem & { link: string } => ({
         title: item.title,
         author: item.userName,
         pubDate: timezone(parseDate(item.ctime, 'YYYY-MM-DD HH:mm:ss'), 8),
         link: `${baseUrl}/article/${item.id}`,
         description: item.content,
         category: item.tags.map((t) => t.tagName),
-        id: item.id as unknown as DataItem['id'],
+        id: String(item.id),
     }));
 
     const items = await Promise.all(

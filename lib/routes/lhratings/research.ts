@@ -26,11 +26,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('h2').text();
-            const pubDateStr: string | undefined = $el.find('p').text().split('：', 2)[1]?.trim();
-            const linkUrl: string | undefined = $el.attr('href') ? new URL($el.attr('href') ?? '', baseUrl).href : undefined;
+            const pubDateStr: string | undefined = $el.find('p').text().split('：', 2)[1];
+            const href: string | undefined = $el.attr('href');
+            const linkUrl: string | undefined = href ? new URL(href, baseUrl).href : undefined;
             const categoryEls: Array<Cheerio<AnyNode>> = [$el.find('h3').contents()].filter(Boolean);
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const image: string | undefined = $el.find('div.xylist_img img').attr('src') ? new URL($el.find('div.xylist_img img').attr('src') ?? '', baseUrl).href : undefined;
+            const imageSrc: string | undefined = $el.find('div.xylist_img img').attr('src');
+            const image: string | undefined = imageSrc ? new URL(imageSrc, baseUrl).href : undefined;
             const upDatedStr: string | undefined = pubDateStr;
 
             let processedItem: DataItem = {
@@ -59,6 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     const author = '联合资信评估股份有限公司';
+    const logoSrc: string | undefined = $('h1.logo a img').attr('src');
 
     return {
         title: `${author} - ${$('title').text()}`,
@@ -66,7 +69,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('h1.logo a img').attr('src') ? new URL($('h1.logo a img').attr('src') ?? '', baseUrl).href : undefined,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author,
         language: language as Language,
         id: targetUrl,

@@ -67,7 +67,7 @@ async function handler(ctx) {
                     .find(String.raw`news\:language`)
                     .text()
             );
-            let res = { link: $(e).find('loc').text(), pubDate: undefined as DataItem['pubDate'], lastmod: undefined as any };
+            let res: DataItem & { link: string; lastmod?: Date } = { link: $(e).find('loc').text(), title: '' };
             if (title) {
                 res = Object.assign(res, { title });
             }

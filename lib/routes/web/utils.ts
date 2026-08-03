@@ -42,7 +42,7 @@ export async function fetchItems(queryParam: string): Promise<DataItem[]> {
     const items = await Promise.all(
         data[0].map((item) => {
             const link = item[6];
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link, async (): Promise<DataItem> => {
                 const { data: articleHtml } = await got.get(link);
                 const $ = load(articleHtml as string);
                 const articleBody = $('.devsite-article-body');
@@ -54,7 +54,7 @@ export async function fetchItems(queryParam: string): Promise<DataItem[]> {
                     description: articleBody.html(),
                     link,
                 };
-            }) as unknown as DataItem;
+            });
         })
     );
 

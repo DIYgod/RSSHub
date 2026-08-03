@@ -45,7 +45,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $(selector)
         .toArray()
-        .map((item) => {
+        .map((item): (DataItem & { link: string; pubDateRaw: string }) | null => {
             const $item = $(item);
             const $link = $item.find('a');
             if ($link.length === 0 || !$link.attr('href')) {
@@ -59,8 +59,6 @@ async function handler() {
                 title: $link.text().trim(),
                 link,
                 pubDateRaw: rawDate,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         })
         .filter((item) => item !== null);

@@ -67,7 +67,7 @@ async function handler() {
     return {
         title,
         link,
-        item: list.toArray().map((item) => {
+        item: list.toArray().map((item): DataItem => {
             const $item = $(item);
 
             // remove event and styles
@@ -104,7 +104,7 @@ async function handler() {
                 description: $item.html(),
                 link: $item.find('.account-group-link-row').attr('href'),
                 pubDate: parseDate($item.find('.profile-char').attr('datetime')!),
-                guid: ($item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime()) as DataItem['guid'],
+                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime().toString(),
             };
         }),
     };

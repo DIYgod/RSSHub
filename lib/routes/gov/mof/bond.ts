@@ -43,17 +43,15 @@ async function handler(ctx) {
     const description = $('meta[name="ColumnDescription"]').prop('content');
     const indexes = $('ul.liBox li')
         .toArray()
-        .map((li) => {
+        .map((li): DataItem => {
             const a = $(li).find('a');
             const pubDate = $(li).find('span').text();
             const href = a.prop('href');
             const link = href!.startsWith('http') ? href : new URL(href!, currentUrl).href;
             return {
-                title: a.prop('title'),
+                title: a.prop('title') ?? '',
                 link,
                 pubDate: timezone(parseDate(pubDate), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

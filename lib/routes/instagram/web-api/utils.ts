@@ -172,7 +172,7 @@ const renderGuestItems = (items) => {
                               }
                           })
                           .join('')
-                    : renderImages(node);
+                    : renderImagesItem(node, summary);
                 break;
             case 'GraphVideo':
                 description = renderVideoItem(node, summary);

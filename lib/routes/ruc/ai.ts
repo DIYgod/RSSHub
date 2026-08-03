@@ -35,15 +35,13 @@ export const route: Route = {
         const pageTitle = $('title').text();
         const list = $('div.fr li')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem & { link: string } => {
                 const $item = $(item);
                 const a = $item.find('a').first();
                 const link = baseURL + a.attr('href');
                 return {
                     link,
-                    title: undefined as unknown as DataItem['title'],
-                    pubDate: undefined as DataItem['pubDate'],
-                    description: undefined as DataItem['description'],
+                    title: '',
                 };
             });
 

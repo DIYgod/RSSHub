@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     const list = $('.subcate-list__wrapper .subcate-list__link__text')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const url = $item.find('a').first().attr('href');
             return {
@@ -41,7 +41,6 @@ async function handler(ctx) {
                 description: $item.find('p').html(),
                 link: url!.includes('?from=') ? url!.split('?from=', 1)[0] : url,
                 pubDate: timezone(parseDate($item.find('.subcate-list__time--roc').text(), 'YYYY-MM-DD HH:mm'), 8),
-                categories: undefined as any,
             };
         });
 
@@ -65,7 +64,7 @@ async function handler(ctx) {
                 });
 
                 item.description = $('.article-content__paragraph').html();
-                item.categories = $('meta[name=news_keywords]').attr('content')?.split(',');
+                item.category = $('meta[name=news_keywords]').attr('content')?.split(',');
 
                 return item;
             })

@@ -37,16 +37,6 @@ const typeMap = {
     },
 };
 
-interface Article {
-    title: string;
-    guid: string;
-    link: string;
-    pubDate: Date;
-    author: string;
-    category: string;
-    description?: string;
-}
-
 function getArg(type) {
     return JSON.stringify([
         { page: 1, size: 50 },
@@ -119,7 +109,7 @@ async function handler(ctx) {
     }
 
     // 构造文章数组
-    const articles: Article[] = resp.data.data.map((item) => ({
+    const articles: Array<DataItem & { link: string }> = resp.data.data.map((item): DataItem & { link: string } => ({
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
@@ -218,6 +208,6 @@ async function handler(ctx) {
         title: '广东工业大学通知公文网 - ' + type.name,
         link: site,
         description: '广东工业大学通知公文网',
-        item: results as DataItem[],
+        item: results,
     };
 }

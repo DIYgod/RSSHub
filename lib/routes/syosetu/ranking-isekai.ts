@@ -7,7 +7,6 @@ import type { Data, DataItem } from '@/types';
 import { renderDescription } from './templates/description';
 import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, periodToPointField, RankingPeriod } from './types/ranking';
 
-// narou defines this type but does not export it through its package exports
 type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
 export function parseIsekaiRankingType(type: string): { period: RankingPeriod; category: IsekaiCategory; novelType: NovelType } {

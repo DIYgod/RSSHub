@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
@@ -23,18 +22,16 @@ type PaperArticle = DataItem & {
 
 const normalizeText = (text: string) => text.replaceAll(/\s+/g, ' ').trim();
 
-const fetchHtml = (url: string) => cache.tryGet(url, () => ofetch<string>(url));
-
 const getEditionDate = (url: string) => {
-    const match = url.match(/\/(\d{4})(\d{2})\/(\d{2})\//);
+    const match = url.match(/\/(\d{6})\/(\d{2})\//);
     if (!match) {
         throw new Error('Unable to determine the current People’s Daily edition date');
     }
-    return `${match[1]}年${match[2]}月${match[3]}日`;
+    return match[1] + match[2];
 };
 
 const getPages = async () => {
-    const html = await fetchHtml(indexUrl);
+    const html = await ofetch<string>(indexUrl);
     const $ = load(html);
     const pages = $('#list li a[href]')
         .toArray()
@@ -58,7 +55,7 @@ const getPages = async () => {
 };
 
 const getArticles = async (page: PaperPage, pubDate: Date): Promise<PaperArticle[]> => {
-    const html = await fetchHtml(page.url);
+    const html = await ofetch<string>(page.url);
     const $ = load(html);
     return $('.news-list a[href]')
         .toArray()
@@ -70,43 +67,25 @@ const getArticles = async (page: PaperPage, pubDate: Date): Promise<PaperArticle
         }));
 };
 
-const getArticleDetail = async (article: PaperArticle): Promise<PaperArticle> => {
-    try {
-        return await cache.tryGet(article.link, async () => {
-            const html = await ofetch<string>(article.link);
-            const $ = load(html);
-            const content = $('#ozoom');
+const getArticleDetail = (article: PaperArticle): Promise<PaperArticle> =>
+    cache.tryGet(article.link, async () => {
+        const html = await ofetch<string>(article.link);
+        const $ = load(html);
+        const content = $('#ozoom');
 
-            content.find('img[src]').each((_, image) => {
-                const src = $(image).attr('src');
-                if (src) {
-                    $(image).attr('src', new URL(src, article.link).href);
-                }
-            });
-            content.find('a[href]').each((_, anchor) => {
-                const href = $(anchor).attr('href');
-                if (href) {
-                    $(anchor).attr('href', new URL(href, article.link).href);
-                }
-            });
+        const byline = $('.article > .sec');
+        const date = normalizeText(byline.find('.newstime').text());
+        byline.find('.date').remove();
+        const author = normalizeText(byline.text());
 
-            const byline = $('.article > .sec').clone();
-            byline.find('.date').remove();
-            const author = normalizeText(byline.text());
-            const date = normalizeText($('.article > .sec .newstime').first().text());
-
-            return {
-                ...article,
-                title: normalizeText($('.article > h1').text()) || article.title,
-                description: content.html()?.trim(),
-                pubDate: date ? parseDate(date, 'YYYY年MM月DD日') : article.pubDate,
-                author: author || undefined,
-            };
-        });
-    } catch {
-        return article;
-    }
-};
+        return {
+            ...article,
+            title: normalizeText($('.article > h1').text()) || article.title,
+            description: content.html()?.trim(),
+            pubDate: date ? parseDate(date, 'YYYY年MM月DD日') : article.pubDate,
+            author: author || undefined,
+        };
+    });
 
 export const route: Route = {
     path: '/paper/:page?',
@@ -138,11 +117,11 @@ async function handler(ctx) {
     }
 
     const editionDate = getEditionDate(pages[0].url);
-    const pubDate = parseDate(editionDate, 'YYYY年MM月DD日');
+    const pubDate = parseDate(editionDate, 'YYYYMMDD');
     const targetPages = selectedPage ? [selectedPage] : pages;
-    const articleLists = await pMap(targetPages, (page) => getArticles(page, pubDate), { concurrency: 5 });
-    const uniqueArticles = new Map(articleLists.flat().map((article) => [article.link, article])).values().toArray().slice(0, limit);
-    const items = await pMap(uniqueArticles, getArticleDetail, { concurrency: 5 });
+    const articleLists = await Promise.all(targetPages.map((page) => getArticles(page, pubDate)));
+    const articles = articleLists.flat().slice(0, limit);
+    const items = await Promise.all(articles.map((article) => getArticleDetail(article)));
 
     return {
         title: `人民日报电子版${selectedPage ? ` - ${selectedPage.title}` : ''} - ${editionDate}`,

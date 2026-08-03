@@ -38,8 +38,7 @@ async function handler(ctx) {
         throw new CaptchaError('Test captcha error');
     }
     if (ctx.req.param('id') === 'redirect') {
-        ctx.set('redirect', '/test/1');
-        return null;
+        return ctx.set('redirect', '/test/1');
     }
     let item: DataItem[] = [];
     let image: string | null = null;

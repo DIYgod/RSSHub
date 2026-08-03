@@ -294,7 +294,7 @@ const processLedeMedia = async (story_json) => {
 };
 
 const processBody = async (body_html, story_json) => {
-    const removeSel = ['meta', 'script', '*[class$="-footnotes"]', '*[class$="for-you"]', '*[class$="-newsletter"]', '*[class$="page-ad"]', '*[class$="-recirc"]', '*[data-ad-placeholder="Advertisement"]'];
+    const removeSel = ['meta', '*[class$="-footnotes"]', '*[class$="for-you"]', '*[class$="-newsletter"]', '*[class$="page-ad"]', '*[class$="-recirc"]', '*[data-ad-placeholder="Advertisement"]'];
 
     const $ = load(body_html);
     for (const sel of removeSel) {

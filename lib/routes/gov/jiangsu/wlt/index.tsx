@@ -48,14 +48,13 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.tg_tb1')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const i = $(item);
             const id = i.prop('onclick').match(/openDetail\('(\d+)'\)/)?.[1] || '';
             return {
                 title: i.text(),
                 link: id ? `${baseUrl}/detail.do?iid=${id}` : '',
                 description: '',
-                pubDate: '' as DataItem['pubDate'],
             };
         })
         .filter((e) => e.link);

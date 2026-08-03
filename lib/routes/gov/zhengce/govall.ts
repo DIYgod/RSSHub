@@ -25,12 +25,11 @@ const getMonthBoundary = (yearValue: string | null, monthValue: string | null, e
     const year = Number(yearValue);
     const month = monthValue ? Number(monthValue) : end ? 12 : 1;
 
-    if (!Number.isSafeInteger(year) || !Number.isSafeInteger(month) || year < 1000 || year > 9999 || month < 1 || month > 12) {
+    if (!year || !month || month < 1 || month > 12) {
         return '';
     }
 
-    const chinaOffset = 8 * 60 * 60 * 1000;
-    return end ? Date.UTC(year, month, 1) - chinaOffset - 1 : Date.UTC(year, month - 1, 1) - chinaOffset;
+    return end ? timezone(new Date(year, month, 1), 8).getTime() - 1 : timezone(new Date(year, month - 1, 1), 8).getTime();
 };
 
 const buildSearchRequest = (advance?: string) => {

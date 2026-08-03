@@ -50,22 +50,24 @@ async function handler(ctx) {
     const guildInfo = await getGuild(guildId, authorization);
     const { name: guildName, icon: guidIcon } = guildInfo;
 
-    const messages = messagesRaw.map((message) => ({
-        title: message.content.split('\n', 1)[0],
-        description: renderDescription({ message, guildInfo }),
-        author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
-        pubDate: parseDate(message.timestamp),
-        updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,
-        category: `#${channelName}`,
-        link: `${baseUrl}/channels/${guildId}/${channelId}/${message.id}`,
-    }));
+    const messages = messagesRaw.map(
+        (message): DataItem => ({
+            title: message.content.split('\n', 1)[0],
+            description: renderDescription({ message, guildInfo }),
+            author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
+            pubDate: parseDate(message.timestamp),
+            updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,
+            category: `#${channelName}`,
+            link: `${baseUrl}/channels/${guildId}/${channelId}/${message.id}`,
+        })
+    );
 
     return {
         title: `#${channelName} - ${guildName} - Discord`,
         description: channelTopic,
         link: `${baseUrl}/channels/${guildId}/${channelId}`,
         image: `https://cdn.discordapp.com/icons/${guildId}/${guidIcon}.webp`,
-        item: messages as unknown as DataItem[],
+        item: messages,
         allowEmpty: true,
     };
 }

@@ -134,7 +134,7 @@ async function handler(ctx) {
             return {
                 title, // item title
                 description, // job description
-                pubDate: parseDate(job.pubDate), // data publish date
+                pubDate: job.pubDate ? parseDate(job.pubDate) : undefined, // data publish date
                 link: job.link, // job source link
             };
         }),

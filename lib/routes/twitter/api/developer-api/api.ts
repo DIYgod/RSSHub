@@ -5,7 +5,8 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
-import { getTwitterUserCacheKey } from '@/utils/twitter-cache-key';
+
+import { getTwitterUserCacheKey } from '../../utils';
 
 interface ClientWrapper {
     client: TwitterApiReadOnly;

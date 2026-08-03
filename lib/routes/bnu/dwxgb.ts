@@ -35,16 +35,7 @@ async function handler(ctx) {
     const rootUrl = 'https://dwxgb.bnu.edu.cn';
     const currentUrl = `${rootUrl}/${category}/${type}/index.html`;
 
-    let response;
-    try {
-        response = await got(currentUrl);
-    } catch {
-        try {
-            response = await got(`${rootUrl}/${category}/${type}/index.htm`);
-        } catch {
-            return null;
-        }
-    }
+    const response = await got(currentUrl);
 
     const $ = load(response.data);
 

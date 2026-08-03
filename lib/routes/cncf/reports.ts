@@ -29,8 +29,6 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.report-item')
         .toArray()
-        // `parseDate` mirrors the upstream code: the date is stored under this
-        // bogus key and never emitted as `pubDate`.
         .map((item): DataItem & { parseDate?: Date } => ({
             title: $(item).find('a.report-item__link').attr('title')!,
             link: $(item).find('a.report-item__link').attr('href'),

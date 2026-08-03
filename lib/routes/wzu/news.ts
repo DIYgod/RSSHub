@@ -79,17 +79,19 @@ async function handler(ctx) {
         title: newsTitle,
         link: newsLink,
         description: `温州大学 - ${newsTitle}`,
-        item: list.toArray().map(async (item) => {
-            const $ = load(item);
-            const $a1 = $('li>a');
-            const $originUrl = $a1.attr('href');
-            const $itemUrl = new URL($originUrl!, baseUrl).href;
-            return {
-                title: $a1.attr('title'),
-                description: await cache.tryGet($itemUrl, () => loadContent($itemUrl)),
-                pubDate: parseDate($('li>samp').text(), 'YYYY-MM-DD'),
-                link: $itemUrl,
-            };
-        }) as unknown as DataItem[],
+        item: await Promise.all(
+            list.toArray().map(async (item): Promise<DataItem> => {
+                const $ = load(item);
+                const $a1 = $('li>a');
+                const $originUrl = $a1.attr('href');
+                const $itemUrl = new URL($originUrl!, baseUrl).href;
+                return {
+                    title: $a1.attr('title') ?? '',
+                    description: await cache.tryGet($itemUrl, () => loadContent($itemUrl)),
+                    pubDate: parseDate($('li>samp').text(), 'YYYY-MM-DD'),
+                    link: $itemUrl,
+                };
+            })
+        ),
     };
 }

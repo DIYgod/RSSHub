@@ -70,7 +70,7 @@ export async function handler(ctx) {
     let items = $('table.gltc tbody tr')
         .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : needImages ? 16 : 26)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -84,7 +84,6 @@ export async function handler(ctx) {
                     .map((tag) => $(tag).attr('title')!.replace(/^:/, '')),
                 description: needImages ? '' : `<img src="${$item.find('div.glthumb div img').attr('data-src') ?? $item.find('div.glthumb div img').attr('src')}">`,
                 enclosure_url: needTorrents && $item.find('div.gldown a img[title="Show torrents"]').length > 0 ? $item.find('.gldown a').attr('href') : undefined,
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

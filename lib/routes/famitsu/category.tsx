@@ -110,7 +110,7 @@ async function handler(ctx) {
 
     const list = (data.pageProps.categoryArticleDataForPc as CategoryArticle[])
         .filter((item) => !item.advertiserName)
-        .map((item) => {
+        .map((item): DataItem & { link: string; publicationDate: string | undefined; articleId: string } => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');
             return {
                 title: item.title,
@@ -119,8 +119,6 @@ async function handler(ctx) {
                 category: [...new Set([item.mainCategory.nameJa, ...(item.subCategories?.map((c) => c.nameJa) ?? [])])],
                 publicationDate,
                 articleId: item.id,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

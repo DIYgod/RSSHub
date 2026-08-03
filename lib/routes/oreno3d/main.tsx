@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { sync_detail as get_sec_page_data } from './get-sec-page-data';
@@ -128,16 +127,13 @@ async function handler(ctx) {
                     </>
                 );
                 const title = `${video_name} - ${authors}`;
-                const realData = await cache.tryGet(oreno3d_link, () =>
-                    Promise.resolve({
-                        title,
-                        author: authors,
-                        link: oreno3d_link,
-                        category: tags.split(' '),
-                        description,
-                    })
-                );
-                return realData;
+                return {
+                    title,
+                    author: authors,
+                    link: oreno3d_link,
+                    category: tags.split(' '),
+                    description,
+                };
             })
         );
         return { items, title };

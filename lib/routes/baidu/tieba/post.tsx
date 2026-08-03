@@ -67,7 +67,7 @@ async function handler(ctx) {
     const html = await getPost(id, lz);
     const $ = load(html);
 
-    const title = $('.pb-title-wrap .pb-title').text().trim() || '';
+    const title = $('.pb-title-wrap .pb-title').text().trim();
 
     // 使用新的 Vue 渲染页面选择器 - 只选择 virtual-list-item 避免重复
     const list = $('.virtual-list-item');

@@ -71,7 +71,7 @@ async function handler(ctx) {
     const issue = $2('h2.app-journal-latest-issue__heading').text();
     const list = $2('ol.u-list-reset > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { doi: string; issue: string; img?: string; authors: string; abstract?: string } => {
             const title = $(item).find('h3.app-card-open__heading').find('a').text().trim();
             const link = $(item).find('h3.app-card-open__heading').find('a').attr('href');
             const doi = link!.replace('https://link.springer.com/article/', '');
@@ -88,8 +88,6 @@ async function handler(ctx) {
                 issue,
                 img,
                 authors,
-                description: undefined as DataItem['description'],
-                abstract: undefined as any,
             };
         });
 
