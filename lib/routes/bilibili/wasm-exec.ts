@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck https://github.com/golang/go/blob/master/lib/wasm/wasm_exec.js
 // oxlint-disable unicorn/prefer-math-trunc
 // oxlint-disable unicorn-js/no-this-outside-of-class
 // oxlint-disable unicorn-js/no-array-from-fill

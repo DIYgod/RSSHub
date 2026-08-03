@@ -45,10 +45,10 @@ if (config.isPackage) {
             namespaces = (await import('../assets/build/routes.js')).default;
             break;
         case 'test':
-            // @ts-expect-error
+            // @ts-expect-error: TS2322 the JSON module's inferred literal type is narrower than NamespacesType
             namespaces = await import('../assets/build/routes.json');
             if (namespaces.default) {
-                // @ts-ignore
+                // @ts-expect-error: TS2322 the JSON module's default export does not satisfy NamespacesType
                 namespaces = namespaces.default;
             }
             break;
