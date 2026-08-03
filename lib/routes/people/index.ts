@@ -20,7 +20,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { site = 'www' } = ctx.req.param();
     let { category = site === 'www' ? '59476' : '' } = ctx.req.param();
-    category = site === 'cpc' && category === '24h' ? '87228' : category;
+    category = site === 'cpc' && category === '24h' ? '64093/64387' : category;
 
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
         $(e).parent().remove();
     });
 
-    let items = $('.p6, div.p2j_list, div.headingNews, div.ej_list_box, .leftItem')
+    let items = $('.p6, div.p2j_list, div.headingNews, div.ej_list_box, .leftItem, div.p2j_con02 > div.fl')
         .find('a')
         .slice(0, limit)
         .toArray()
@@ -76,7 +76,7 @@ async function handler(ctx) {
 
                     content('.paper_num, #rwb_tjyd').remove();
 
-                    item.description = content('#rwb_zw').html();
+                    item.description = content('#rwb_zw, #rm_txt_zw').first().html();
                     item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1] || '', 'YYYY年MM月DD日 HH:mm'), 8);
                 } catch (error) {
                     item.description = String(error);
