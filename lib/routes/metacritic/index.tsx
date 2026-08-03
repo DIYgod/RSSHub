@@ -71,17 +71,22 @@ export async function handler(ctx) {
 
     const apiKey = currentResponse.match(/apiKey=(.*?)&/)[1];
 
-    const searchParams = {
+    const searchParams: {
+        sortBy: string;
+        productType: string;
+        limit: number;
+        apiKey: string;
+        genres?: string;
+        releaseType?: string;
+        releaseYearMin?: string;
+        releaseYearMax?: string;
+        gamePlatformIds?: string;
+        streamingNetworkIds?: string;
+    } = {
         sortBy: `-${sorts[sort].id}`,
         productType: types[type].id,
         limit,
         apiKey,
-        genres: undefined as any,
-        releaseType: undefined as any,
-        releaseYearMin: undefined as any,
-        releaseYearMax: undefined as any,
-        gamePlatformIds: undefined as any,
-        streamingNetworkIds: undefined as any,
     };
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();

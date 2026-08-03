@@ -128,9 +128,9 @@ async function handler(ctx) {
                 const [, presenter, monetaryType] = $('.type77 h5').text().split(' ', 3);
                 item.category = [
                     ...(item.category as string[]),
-                    $('.container-fluid .bg-status .col-md-8.p-0 h5 span,a')
+                    ...$('.container-fluid .bg-status .col-md-8.p-0 h5 span,a')
                         .toArray()
-                        .map((statusElem) => $(statusElem).text()) as unknown as string,
+                        .map((statusElem) => $(statusElem).text()),
                     presenter,
                     monetaryType,
                 ];

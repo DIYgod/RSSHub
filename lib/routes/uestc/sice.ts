@@ -60,7 +60,7 @@ async function handler() {
             return {
                 title: $item.find('a[href]').text(),
                 link: host + $item.find('a[href]').attr('href'),
-                pubDate: parseDate(date as unknown as Date),
+                pubDate: parseDate(date.toDate()),
             };
         });
 

@@ -89,7 +89,7 @@ async function handler() {
                 .filter((index, element) => element.nodeType === 3)
                 .text();
             const newsLink = host + $item.find('a[href]').attr('href');
-            const newsPubDate = parseDate(date as unknown as Date);
+            const newsPubDate = parseDate(date.toDate());
 
             let prefix = '【其他】';
             for (const code in prefixes) {

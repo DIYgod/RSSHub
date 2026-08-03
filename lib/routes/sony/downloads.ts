@@ -50,7 +50,7 @@ async function handler(ctx) {
         results = JSON.parse(match[1]).searchResults.results;
     }
     const list = results.map((item) => {
-        const data = { title: item.title, pubDate: item.publicationDate, url: undefined as any };
+        const data: { title: string; pubDate: string; url?: string } = { title: item.title, pubDate: item.publicationDate };
         const url = item.url;
         if (url.startsWith('http')) {
             data.url = url;

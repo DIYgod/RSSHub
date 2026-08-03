@@ -25,12 +25,10 @@ export const route: Route = {
 async function handler(ctx) {
     const { email, folder = 'INBOX' } = ctx.req.param();
     const { limit = 10 } = ctx.req.query();
-    const mailConfig = {
+    const mailConfig: { username: string; port: number | string; password?: string; host?: string } = {
         username: email,
         port: 993,
         ...Object.fromEntries(new URLSearchParams(config.email.config[email.replaceAll(/[.@]/g, '_')])),
-        password: undefined as any,
-        host: undefined as any,
     };
 
     if (!mailConfig.username || !mailConfig.password || !mailConfig.host || !mailConfig.port) {

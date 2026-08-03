@@ -24,5 +24,5 @@ async function handler(ctx) {
     const { site = 'beijing' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
-    return await processZxfkItems(site, 'tsjy', limit as unknown as string);
+    return await processZxfkItems(site, 'tsjy', limit);
 }

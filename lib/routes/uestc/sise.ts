@@ -94,7 +94,7 @@ async function handler(ctx) {
             }
             const newsTitle = $item.find('a').text().replace('&amp;', '').trim();
             const newsLink = baseUrl + $item.find('a').attr('href');
-            const newsPubDate = parseDate(date as unknown as Date);
+            const newsPubDate = parseDate(date.toDate());
 
             return {
                 title: newsTitle,

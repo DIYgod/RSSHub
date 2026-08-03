@@ -48,7 +48,7 @@ async function handler() {
                 .map((value) => {
                     if (value.includes('月')) {
                         const enMongth = cnMonth.findIndex((cnMonthStr) => value.includes(cnMonthStr));
-                        value = (enMongth + 1) as unknown as string;
+                        value = String(enMongth + 1);
                     }
                     return value;
                 });

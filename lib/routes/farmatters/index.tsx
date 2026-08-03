@@ -47,11 +47,10 @@ async function handler(ctx) {
     const { type, id, locale = 'zh-CN' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    const searchParams = {
+    const searchParams: Record<string, string | number> = {
         locale,
         page: 0,
         pagesize: limit,
-        subCatalogId: undefined as any,
     };
 
     if (type === 'wiki' && id) {

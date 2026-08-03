@@ -33,9 +33,8 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://macmenubar.com/wp-json/wp/v2/posts';
     const categories = ctx.req.param('category');
-    const searchParams = {
+    const searchParams: { per_page: number; categories?: string } = {
         per_page: 100,
-        categories: undefined as any,
     };
     if (categories) {
         searchParams.categories = await getCategoryId(categories);

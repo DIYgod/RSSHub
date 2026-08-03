@@ -15,7 +15,7 @@ const zxfkCategoryApis = {
     tsjy: 'www/complaint/complaintQuery?siteid=',
 };
 
-const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3') => {
+const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = 3) => {
     const apiUrl = new URL(`${zxfkCategoryApis[category]}${site}`, rootUrl).href;
     const currentUrl = new URL(`${site}/${category}/index.html`, rootUrl).href;
 
@@ -24,7 +24,7 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
     const $ = load(response);
 
     const items = $('#complaint')
-        .slice(0, limit as unknown as number)
+        .slice(0, limit)
         .toArray()
         .map((item) => {
             const $item = $(item);
