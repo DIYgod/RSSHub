@@ -1,9 +1,7 @@
 import { load } from 'cheerio';
 import { destr } from 'destr';
 
-import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -72,28 +70,6 @@ const redirectGot = (url) =>
         }),
     });
 
-const parseNewsList = async (url, ctx) => {
-    const resp = await got(url);
-    const $ = load(resp.data, {
-        xml: {
-            xmlMode: true,
-        },
-    });
-    const urls = $('urlset url');
-    return urls
-        .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
-        .map((u) => {
-            const $u = $(u);
-            const item = {
-                title: $u.find(String.raw`news\:title`).text(),
-                link: $u.find('loc').text(),
-                pubDate: parseDate($u.find(String.raw`news\:publication_date`).text()),
-            };
-            return item;
-        });
-};
-
 const parseArticle = (item) =>
     cache.tryGet(item.link, async () => {
         const group = regex
@@ -121,6 +97,7 @@ const parseArticle = (item) =>
                                 title: item.title,
                                 link: item.link,
                                 pubDate: item.pubDate,
+                                description: item.description,
                             };
                         }
                     }
@@ -132,6 +109,7 @@ const parseArticle = (item) =>
                         title: item.title,
                         link: item.link,
                         pubDate: item.pubDate,
+                        description: item.description,
                     };
                 }
 
@@ -194,7 +172,7 @@ const parseVideoPage = async (res, api, item) => {
                 content: { url: video_story.video?.thumbnail.url || '' },
                 thumbnails: { url: video_story.video?.thumbnail.url || '' },
             },
-            category: desc.keywords ?? [],
+            category: (desc as any).keywords ?? [],
         };
         return rss_item;
     }
@@ -203,7 +181,7 @@ const parseVideoPage = async (res, api, item) => {
 
 const parsePhotoEssaysPage = async (res, api, item) => {
     const $ = load(res.data.html);
-    const article_json = { id: undefined as DataItem['id'], headline: undefined as any, canonical: undefined as any, body: undefined as any, authors: undefined as any };
+    const article_json: Record<string, any> = {};
     for (const e of $(api.sel).toArray()) {
         const raw = $(e).html();
         if (raw !== null) {
@@ -402,7 +380,6 @@ const processVideo = async (bmmrId, summary?) => {
             mp4: video_json.downloadURLs ? video_json.downloadURLs['600'] : '',
             coverUrl: video_json.thumbnail?.baseUrl ?? '',
             caption: video_json.description || video_json.title || summary,
-            keywords: undefined as any,
         };
     }
     return {
@@ -618,4 +595,4 @@ const documentToHtmlString = async (document) => {
     return str;
 };
 
-export { parseArticle, parseNewsList, rootUrl };
+export { parseArticle, rootUrl };

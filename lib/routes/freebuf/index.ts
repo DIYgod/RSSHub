@@ -1,6 +1,10 @@
+import { FetchError } from 'ofetch';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import { getAcwScV2ByArg1 } from '../5eplay/utils';
 
 export const route: Route = {
     path: '/articles/:type',
@@ -10,7 +14,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -25,6 +29,8 @@ export const route: Route = {
     handler,
     description: `::: tip
 Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
+
+站点位于阿里云 WAF 之后，请求频繁的 IP 可能触发 405 JS 质询，此时路由会自动计算 \`acw_sc__v2\` Cookie 并重试。
 :::`,
 };
 
@@ -49,7 +55,7 @@ async function handler(ctx) {
         },
     };
 
-    const response = await ofetch(fapi, options);
+    const response = await fetchWithAcwChallenge(fapi, options);
 
     const items = response.data.data_list.map((item) => ({
         title: item.post_title,
@@ -64,4 +70,23 @@ async function handler(ctx) {
         link: rssLink,
         item: items,
     };
+}
+
+// 阿里云 WAF 会对被风控的 IP 返回 405 JS 质询，需计算 acw_sc__v2 Cookie 后重试
+async function fetchWithAcwChallenge(url, options) {
+    try {
+        return await ofetch(url, options);
+    } catch (error) {
+        const arg1 = error instanceof FetchError && typeof error.data === 'string' ? error.data.match(/var arg1='(.*?)';/)?.[1] : undefined;
+        if (!arg1) {
+            throw error;
+        }
+        return await ofetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                cookie: `acw_sc__v2=${getAcwScV2ByArg1(arg1)}`,
+            },
+        });
+    }
 }

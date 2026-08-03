@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    const items: DataItem[] = $('div.xlistNr ul li a')
+    const items: DataItem[] = $('div.xlistNr ul li a, div.hgjjNr ul li a')
         .slice(0, limit)
         .toArray()
         .map((el) => {
@@ -44,7 +44,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 language: language as Language,
             };
 
-            const enclosureUrl: string | undefined = linkUrl;
+            const enclosureUrl: string | undefined = linkUrl?.endsWith('.pdf') ? linkUrl : undefined;
 
             if (enclosureUrl) {
                 processedItem = {

@@ -21,7 +21,7 @@ export const findOrphanFiles = async (): Promise<string[]> => {
     const entries = await fs.readdir(path.join(repoRoot, 'lib'), { recursive: true, withFileTypes: true });
     const candidates = entries
         .filter((entry) => excludedDirs.every((dir) => !`${entry.parentPath}${path.sep}`.startsWith(dir)))
-        .filter((entry) => entry.isFile() && /\.test\.tsx?$/.test(entry.name))
+        .filter((entry) => entry.isFile() && /\.(?:spec|test)\.tsx?$/.test(entry.name))
         .map((entry) => {
             const absolute = path.join(entry.parentPath, entry.name);
             return { absolute, relative: path.relative(repoRoot, absolute).replaceAll('\\', '/') };
@@ -30,7 +30,7 @@ export const findOrphanFiles = async (): Promise<string[]> => {
 
     const orphans = await Promise.all(
         candidates.map(async ({ absolute, relative }) => {
-            const base = absolute.replace(/\.test\.tsx?$/, '');
+            const base = absolute.replace(/\.(?:spec|test)\.tsx?$/, '');
             const [tsExists, tsxExists] = await Promise.all([fileExists(`${base}.ts`), fileExists(`${base}.tsx`)]);
             return tsExists || tsxExists ? null : relative;
         })
