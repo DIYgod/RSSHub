@@ -769,6 +769,43 @@
       }
     ]
   },
+  "gitee.com": {
+    "_name": "Gitee",
+    ".": [
+      {
+        "title": "仓库提交",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:owner/:repo/commits"
+        ],
+        "target": "/gitee/commits/:owner/:repo"
+      },
+      {
+        "title": "仓库动态",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:owner/:repo"
+        ],
+        "target": "/gitee/events/:owner/:repo"
+      },
+      {
+        "title": "仓库 Releases",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:owner/:repo/releases"
+        ],
+        "target": "/gitee/releases/:owner/:repo"
+      },
+      {
+        "title": "用户公开动态",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:username"
+        ],
+        "target": "/gitee/events/:username"
+      }
+    ]
+  },
   "grupoanimal.mx": {
     "_name": "Grupo Animal",
     "www": [
@@ -787,6 +824,19 @@
           "/politica"
         ],
         "target": "/grupoanimal/grupoanimal/politica"
+      }
+    ]
+  },
+  "huawei.com": {
+    "_name": "华为开发者联盟",
+    "developer": [
+      {
+        "title": "HarmonyOS 示例代码",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/consumer/cn/samples"
+        ],
+        "target": "/huawei/huawei/developer/harmonyos/sample-code"
       }
     ]
   },
@@ -888,6 +938,19 @@
           "/:lang/news"
         ],
         "target": "/isct/news/:lang"
+      }
+    ]
+  },
+  "jetbrains.com": {
+    "_name": "JetBrains",
+    "youtrack": [
+      {
+        "title": "YouTrack Issue Comments",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/issue/:issueId"
+        ],
+        "target": "/jetbrains/youtrack/comments/:issueId"
       }
     ]
   },
@@ -3081,43 +3144,6 @@
       }
     ]
   },
-  "gitee.com": {
-    "_name": "Gitee",
-    ".": [
-      {
-        "title": "仓库提交",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:owner/:repo/commits"
-        ],
-        "target": "/gitee/commits/:owner/:repo"
-      },
-      {
-        "title": "仓库动态",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:owner/:repo"
-        ],
-        "target": "/gitee/events/:owner/:repo"
-      },
-      {
-        "title": "仓库 Releases",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:owner/:repo/releases"
-        ],
-        "target": "/gitee/releases/:owner/:repo"
-      },
-      {
-        "title": "用户公开动态",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:username"
-        ],
-        "target": "/gitee/events/:username"
-      }
-    ]
-  },
   "gocn.vip": {
     "_name": "GoCN",
     ".": [
@@ -3183,19 +3209,6 @@
           "/"
         ],
         "target": "/hnu/careers"
-      }
-    ]
-  },
-  "huawei.com": {
-    "_name": "华为开发者联盟",
-    "developer": [
-      {
-        "title": "HarmonyOS 示例代码",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/consumer/cn/samples"
-        ],
-        "target": "/huawei/huawei/developer/harmonyos/sample-code"
       }
     ]
   },
@@ -3293,19 +3306,6 @@
           "/3-2-1"
         ],
         "target": "/jamesclear/3-2-1"
-      }
-    ]
-  },
-  "jetbrains.com": {
-    "_name": "JetBrains",
-    "youtrack": [
-      {
-        "title": "YouTrack Issue Comments",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/issue/:issueId"
-        ],
-        "target": "/jetbrains/youtrack/comments/:issueId"
       }
     ]
   },
@@ -21638,6 +21638,15 @@
         "target": "/github/branches/:user/:repo"
       },
       {
+        "title": "Issue / Pull Request comments",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user/:repo/:type",
+          "/:user/:repo/:type/:number"
+        ],
+        "target": "/github/comments/:user/:repo/:number?"
+      },
+      {
         "title": "Repo Contributors",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
@@ -21645,6 +21654,16 @@
           "/:user/:repo"
         ],
         "target": "/github/contributors/:user/:repo"
+      },
+      {
+        "title": "Repo Discussions",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user/:repo/discussions",
+          "/:user/:repo/discussions/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/discussion/:user/:repo"
       },
       {
         "title": "File Commits",
@@ -21661,6 +21680,16 @@
           "/:user"
         ],
         "target": "/github/user/followers/:user"
+      },
+      {
+        "title": "Repo Issues",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user/:repo/issues",
+          "/:user/:repo/issues/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/issue/:user/:repo"
       },
       {
         "title": "Notifications",
@@ -21685,6 +21714,16 @@
           "/:user"
         ],
         "target": "/github/feed/:user"
+      },
+      {
+        "title": "Repo Pull Requests",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user/:repo/pulls",
+          "/:user/:repo/pulls/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/pull/:user/:repo"
       },
       {
         "title": "Repository Event",
@@ -21726,45 +21765,6 @@
           "/:username"
         ],
         "target": "/github/user_event/:username"
-      },
-      {
-        "title": "Issue / Pull Request comments",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:user/:repo/:type",
-          "/:user/:repo/:type/:number"
-        ],
-        "target": "/github/comments/:user/:repo/:number?"
-      },
-      {
-        "title": "Repo Discussions",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:user/:repo/discussions",
-          "/:user/:repo/discussions/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/discussion/:user/:repo"
-      },
-      {
-        "title": "Repo Issues",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:user/:repo/issues",
-          "/:user/:repo/issues/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/issue/:user/:repo"
-      },
-      {
-        "title": "Repo Pull Requests",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:user/:repo/pulls",
-          "/:user/:repo/pulls/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/pull/:user/:repo"
       },
       {
         "title": "Github Advisory Database RSS",

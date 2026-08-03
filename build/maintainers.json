@@ -121,6 +121,9 @@
   "/chlinlearn/daily-blog": [
     "huyyi"
   ],
+  "/chub/characters": [
+    "flameleaf"
+  ],
   "/codefather/posts/:category?/:sort?": [
     "JackyST0"
   ],
@@ -227,6 +230,18 @@
   "/galxe/quest/:alias": [
     "cxheng315"
   ],
+  "/gitee/commits/:owner/:repo": [
+    "TonyRL"
+  ],
+  "/gitee/events/:owner/:repo": [
+    "TonyRL"
+  ],
+  "/gitee/releases/:owner/:repo": [
+    "TonyRL"
+  ],
+  "/gitee/events/:username": [
+    "TonyRL"
+  ],
   "/grupoanimal/estados": [
     "Slayer015"
   ],
@@ -235,6 +250,9 @@
   ],
   "/home-assistant/hacs/repositories": [
     "DIYgod"
+  ],
+  "/huawei/developer/harmonyos/sample-code": [
+    "JiZhi-Error"
   ],
   "/hudsonrivertrading/blog/:section?": [
     "johan456789"
@@ -257,6 +275,9 @@
   "/isct/news/:lang": [
     "catyyy"
   ],
+  "/jetbrains/youtrack/comments/:issueId": [
+    "NekoAria"
+  ],
   "/jl1mall/forum/:type?/:key?": [
     "nczitzk"
   ],
@@ -266,6 +287,10 @@
   ],
   "/ktown4u/artistBrandlist/:grpNo/:grpNo2?": [
     "JamesWDGu"
+  ],
+  "/lemmy/:community/:sort?": [
+    "wb14123",
+    "pseudoyu"
   ],
   "/likeshop/:site": [
     "nickyfoto"
@@ -512,9 +537,6 @@
   "/chaping/news/:caty?": [
     "nczitzk"
   ],
-  "/chub/characters": [
-    "flameleaf"
-  ],
   "/cn-healthcare/index": [
     "qnloft"
   ],
@@ -643,18 +665,6 @@
   "/gitcode/commits/:owner/:repo/:branch?": [
     "JiZhi-Error"
   ],
-  "/gitee/commits/:owner/:repo": [
-    "TonyRL"
-  ],
-  "/gitee/events/:owner/:repo": [
-    "TonyRL"
-  ],
-  "/gitee/releases/:owner/:repo": [
-    "TonyRL"
-  ],
-  "/gitee/events/:username": [
-    "TonyRL"
-  ],
   "/gocn/jobs": [
     "AtlanCI",
     "CcccFz"
@@ -679,9 +689,6 @@
   ],
   "/hnu/careers": [
     "ningyougan"
-  ],
-  "/huawei/developer/harmonyos/sample-code": [
-    "JiZhi-Error"
   ],
   "/huoxian/zone": [
     "p7e4"
@@ -719,9 +726,6 @@
   "/jamesclear/3-2-1": [
     "Rjnishant530"
   ],
-  "/jetbrains/youtrack/comments/:issueId": [
-    "NekoAria"
-  ],
   "/jiaoliudao/": [
     "TonyRL"
   ],
@@ -752,10 +756,6 @@
     "magic-akari",
     "NekoAria",
     "sineeeee"
-  ],
-  "/lemmy/:community/:sort?": [
-    "wb14123",
-    "pseudoyu"
   ],
   "/lens/profile/:handle": [
     "DIYgod"
@@ -4125,8 +4125,15 @@
   "/github/branches/:user/:repo": [
     "max-arnold"
   ],
+  "/github/comments/:user/:repo/:number?": [
+    "TonyRL",
+    "FliegendeWurst"
+  ],
   "/github/contributors/:user/:repo/:order?/:anon?": [
     "zoenglinghou"
+  ],
+  "/github/discussion/:user/:repo/:state?/:category?": [
+    "waynzh"
   ],
   "/github/file/:user/:repo/:branch/:filepath{.+}": [
     "zengxs"
@@ -4137,6 +4144,10 @@
   "/github/gist/:gistId": [
     "TonyRL"
   ],
+  "/github/issue/:user/:repo/:state?/:labels?": [
+    "HenryQW",
+    "AndreyMZ"
+  ],
   "/github/notifications": [
     "zhzy0077"
   ],
@@ -4145,6 +4156,10 @@
   ],
   "/github/feed/:user/:types?": [
     "RtYkk"
+  ],
+  "/github/pull/:user/:repo/:state?/:labels?": [
+    "hashman",
+    "TonyRL"
   ],
   "/github/repo_event/:owner/:repo/:types?": [
     "mslxl"
@@ -4163,21 +4178,6 @@
   ],
   "/github/user_event/:username/:types?": [
     "mslxl"
-  ],
-  "/github/comments/:user/:repo/:number?": [
-    "TonyRL",
-    "FliegendeWurst"
-  ],
-  "/github/discussion/:user/:repo/:state?/:category?": [
-    "waynzh"
-  ],
-  "/github/issue/:user/:repo/:state?/:labels?": [
-    "HenryQW",
-    "AndreyMZ"
-  ],
-  "/github/pull/:user/:repo/:state?/:labels?": [
-    "hashman",
-    "TonyRL"
   ],
   "/github/advisor/data/:type?/:category?": [
     "sd0ric4"

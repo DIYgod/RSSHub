@@ -1459,6 +1459,30 @@ export default {
     "url": "daily-blog.chlinlearn.top",
     "lang": "zh-CN"
   },
+  "chub": {
+    "routes": {
+      "/characters": {
+        "path": "/characters",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/chub/characters",
+        "name": "Characters",
+        "maintainers": [
+          "flameleaf"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "location": "characters.ts",
+        "module": () => import('@/routes/chub/characters.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Chub",
+    "url": "chub.ai",
+    "lang": "en"
+  },
   "codefather": {
     "routes": {
       "/posts/:category?/:sort?": {
@@ -2911,6 +2935,141 @@ export default {
     },
     "lang": "zh-CN"
   },
+  "gitee": {
+    "routes": {
+      "/commits/:owner/:repo": {
+        "path": "/commits/:owner/:repo",
+        "categories": [
+          "programming"
+        ],
+        "example": "/gitee/commits/y_project/RuoYi",
+        "parameters": {
+          "owner": "用户名",
+          "repo": "仓库名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gitee.com/:owner/:repo/commits"
+            ]
+          }
+        ],
+        "name": "仓库提交",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "repos/commits.ts",
+        "module": () => import('@/routes/gitee/repos/commits.ts')
+      },
+      "/events/:owner/:repo": {
+        "path": "/events/:owner/:repo",
+        "categories": [
+          "programming"
+        ],
+        "example": "/gitee/events/y_project/RuoYi",
+        "parameters": {
+          "owner": "用户名",
+          "repo": "仓库名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gitee.com/:owner/:repo"
+            ]
+          }
+        ],
+        "name": "仓库动态",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "repos/events.ts",
+        "module": () => import('@/routes/gitee/repos/events.ts')
+      },
+      "/releases/:owner/:repo": {
+        "path": "/releases/:owner/:repo",
+        "categories": [
+          "programming"
+        ],
+        "example": "/gitee/releases/y_project/RuoYi",
+        "parameters": {
+          "owner": "用户名",
+          "repo": "仓库名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gitee.com/:owner/:repo/releases"
+            ]
+          }
+        ],
+        "name": "仓库 Releases",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "repos/releases.ts",
+        "module": () => import('@/routes/gitee/repos/releases.ts')
+      },
+      "/events/:username": {
+        "path": "/events/:username",
+        "categories": [
+          "programming"
+        ],
+        "example": "/gitee/events/y_project",
+        "parameters": {
+          "username": "用户名"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gitee.com/:username"
+            ]
+          }
+        ],
+        "name": "用户公开动态",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "users/events.ts",
+        "module": () => import('@/routes/gitee/users/events.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Gitee",
+    "url": "gitee.com",
+    "lang": "zh-CN"
+  },
   "grupoanimal": {
     "routes": {
       "/estados": {
@@ -2981,6 +3140,43 @@ export default {
     "name": "Home Assistant",
     "url": "www.home-assistant.io",
     "lang": "en"
+  },
+  "huawei": {
+    "routes": {
+      "/developer/harmonyos/sample-code": {
+        "path": "/developer/harmonyos/sample-code",
+        "categories": [
+          "programming"
+        ],
+        "example": "/huawei/developer/harmonyos/sample-code",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "developer.huawei.com/consumer/cn/samples"
+            ],
+            "target": "/huawei/developer/harmonyos/sample-code"
+          }
+        ],
+        "name": "HarmonyOS 示例代码",
+        "maintainers": [
+          "JiZhi-Error"
+        ],
+        "location": "developer/harmonyos/samplecode.ts",
+        "module": () => import('@/routes/huawei/developer/harmonyos/samplecode.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "华为开发者联盟",
+    "url": "developer.huawei.com",
+    "lang": "zh-CN"
   },
   "hudsonrivertrading": {
     "routes": {
@@ -3299,6 +3495,39 @@ export default {
     "ja": {
       "name": "東京科学大学"
     }
+  },
+  "jetbrains": {
+    "routes": {
+      "/youtrack/comments/:issueId": {
+        "path": "/youtrack/comments/:issueId",
+        "categories": [
+          "programming"
+        ],
+        "example": "/jetbrains/youtrack/comments/IJPL-174543",
+        "parameters": {
+          "issueId": "Issue ID (e.g., IJPL-174543)"
+        },
+        "radar": [
+          {
+            "source": [
+              "youtrack.jetbrains.com/issue/:issueId"
+            ],
+            "target": "/youtrack/comments/:issueId"
+          }
+        ],
+        "name": "YouTrack Issue Comments",
+        "maintainers": [
+          "NekoAria"
+        ],
+        "location": "comments.ts",
+        "module": () => import('@/routes/jetbrains/comments.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "JetBrains",
+    "url": "jetbrains.com",
+    "description": "JetBrains is a software development company that creates professional development tools and IDEs.",
+    "lang": "en"
   },
   "jl1mall": {
     "routes": {
@@ -4847,6 +5076,126 @@ export default {
     "apiRoutes": {},
     "name": "Ktown4u",
     "url": "ktown4u.com",
+    "lang": "en"
+  },
+  "lemmy": {
+    "routes": {
+      "/:community/:sort?": {
+        "path": "/:community/:sort?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/lemmy/technology@lemmy.world/Hot",
+        "parameters": {
+          "community": "Lemmmy community, for example technology@lemmy.world",
+          "sort": {
+            "description": "Sort by",
+            "options": [
+              {
+                "value": "Active",
+                "label": "Active"
+              },
+              {
+                "value": "Hot",
+                "label": "Hot"
+              },
+              {
+                "value": "New",
+                "label": "New"
+              },
+              {
+                "value": "Old",
+                "label": "Old"
+              },
+              {
+                "value": "TopDay",
+                "label": "TopDay"
+              },
+              {
+                "value": "TopWeek",
+                "label": "TopWeek"
+              },
+              {
+                "value": "TopMonth",
+                "label": "TopMonth"
+              },
+              {
+                "value": "TopYear",
+                "label": "TopYear"
+              },
+              {
+                "value": "TopAll",
+                "label": "TopAll"
+              },
+              {
+                "value": "MostComments",
+                "label": "MostComments"
+              },
+              {
+                "value": "NewComments",
+                "label": "NewComments"
+              },
+              {
+                "value": "TopHour",
+                "label": "TopHour"
+              },
+              {
+                "value": "TopSixHour",
+                "label": "TopSixHour"
+              },
+              {
+                "value": "TopTwelveHour",
+                "label": "TopTwelveHour"
+              },
+              {
+                "value": "TopThreeMonths",
+                "label": "TopThreeMonths"
+              },
+              {
+                "value": "TopSixMonths",
+                "label": "TopSixMonths"
+              },
+              {
+                "value": "TopNineMonths",
+                "label": "TopNineMonths"
+              },
+              {
+                "value": "Controversial",
+                "label": "Controversial"
+              },
+              {
+                "value": "Scaled",
+                "label": "Scaled"
+              }
+            ],
+            "default": "Active"
+          }
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": ""
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Community",
+        "maintainers": [
+          "wb14123",
+          "pseudoyu"
+        ],
+        "location": "index.ts",
+        "module": () => import('@/routes/lemmy/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Lemmy",
+    "url": "join-lemmy.org",
     "lang": "en"
   },
   "likeshop": {
@@ -7936,30 +8285,6 @@ export default {
     "url": "chaping.cn",
     "lang": "zh-CN"
   },
-  "chub": {
-    "routes": {
-      "/characters": {
-        "path": "/characters",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/chub/characters",
-        "name": "Characters",
-        "maintainers": [
-          "flameleaf"
-        ],
-        "features": {
-          "nsfw": true
-        },
-        "location": "characters.ts",
-        "module": () => import('@/routes/chub/characters.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Chub",
-    "url": "chub.ai",
-    "lang": "en"
-  },
   "cn-healthcare": {
     "routes": {
       "/index": {
@@ -9500,141 +9825,6 @@ export default {
     "url": "gitcode.com",
     "lang": "zh-CN"
   },
-  "gitee": {
-    "routes": {
-      "/commits/:owner/:repo": {
-        "path": "/commits/:owner/:repo",
-        "categories": [
-          "programming"
-        ],
-        "example": "/gitee/commits/y_project/RuoYi",
-        "parameters": {
-          "owner": "用户名",
-          "repo": "仓库名"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "gitee.com/:owner/:repo/commits"
-            ]
-          }
-        ],
-        "name": "仓库提交",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "repos/commits.ts",
-        "module": () => import('@/routes/gitee/repos/commits.ts')
-      },
-      "/events/:owner/:repo": {
-        "path": "/events/:owner/:repo",
-        "categories": [
-          "programming"
-        ],
-        "example": "/gitee/events/y_project/RuoYi",
-        "parameters": {
-          "owner": "用户名",
-          "repo": "仓库名"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "gitee.com/:owner/:repo"
-            ]
-          }
-        ],
-        "name": "仓库动态",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "repos/events.ts",
-        "module": () => import('@/routes/gitee/repos/events.ts')
-      },
-      "/releases/:owner/:repo": {
-        "path": "/releases/:owner/:repo",
-        "categories": [
-          "programming"
-        ],
-        "example": "/gitee/releases/y_project/RuoYi",
-        "parameters": {
-          "owner": "用户名",
-          "repo": "仓库名"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "gitee.com/:owner/:repo/releases"
-            ]
-          }
-        ],
-        "name": "仓库 Releases",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "repos/releases.ts",
-        "module": () => import('@/routes/gitee/repos/releases.ts')
-      },
-      "/events/:username": {
-        "path": "/events/:username",
-        "categories": [
-          "programming"
-        ],
-        "example": "/gitee/events/y_project",
-        "parameters": {
-          "username": "用户名"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "gitee.com/:username"
-            ]
-          }
-        ],
-        "name": "用户公开动态",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "users/events.ts",
-        "module": () => import('@/routes/gitee/users/events.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Gitee",
-    "url": "gitee.com",
-    "lang": "zh-CN"
-  },
   "gocn": {
     "routes": {
       "/jobs": {
@@ -9877,43 +10067,6 @@ export default {
     "apiRoutes": {},
     "name": "湖南大学",
     "url": "scc.hnu.edu.cn",
-    "lang": "zh-CN"
-  },
-  "huawei": {
-    "routes": {
-      "/developer/harmonyos/sample-code": {
-        "path": "/developer/harmonyos/sample-code",
-        "categories": [
-          "programming"
-        ],
-        "example": "/huawei/developer/harmonyos/sample-code",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "developer.huawei.com/consumer/cn/samples"
-            ],
-            "target": "/huawei/developer/harmonyos/sample-code"
-          }
-        ],
-        "name": "HarmonyOS 示例代码",
-        "maintainers": [
-          "JiZhi-Error"
-        ],
-        "location": "developer/harmonyos/samplecode.ts",
-        "module": () => import('@/routes/huawei/developer/harmonyos/samplecode.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "华为开发者联盟",
-    "url": "developer.huawei.com",
     "lang": "zh-CN"
   },
   "huoxian": {
@@ -10294,39 +10447,6 @@ export default {
     ],
     "lang": "en"
   },
-  "jetbrains": {
-    "routes": {
-      "/youtrack/comments/:issueId": {
-        "path": "/youtrack/comments/:issueId",
-        "categories": [
-          "programming"
-        ],
-        "example": "/jetbrains/youtrack/comments/IJPL-174543",
-        "parameters": {
-          "issueId": "Issue ID (e.g., IJPL-174543)"
-        },
-        "radar": [
-          {
-            "source": [
-              "youtrack.jetbrains.com/issue/:issueId"
-            ],
-            "target": "/youtrack/comments/:issueId"
-          }
-        ],
-        "name": "YouTrack Issue Comments",
-        "maintainers": [
-          "NekoAria"
-        ],
-        "location": "comments.ts",
-        "module": () => import('@/routes/jetbrains/comments.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "JetBrains",
-    "url": "jetbrains.com",
-    "description": "JetBrains is a software development company that creates professional development tools and IDEs.",
-    "lang": "en"
-  },
   "jiaoliudao": {
     "routes": {
       "/": {
@@ -10697,126 +10817,6 @@ export default {
     "name": "Konachan.com Anime Wallpapers",
     "url": "konachan.com",
     "description": "konachan post",
-    "lang": "en"
-  },
-  "lemmy": {
-    "routes": {
-      "/:community/:sort?": {
-        "path": "/:community/:sort?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/lemmy/technology@lemmy.world/Hot",
-        "parameters": {
-          "community": "Lemmmy community, for example technology@lemmy.world",
-          "sort": {
-            "description": "Sort by",
-            "options": [
-              {
-                "value": "Active",
-                "label": "Active"
-              },
-              {
-                "value": "Hot",
-                "label": "Hot"
-              },
-              {
-                "value": "New",
-                "label": "New"
-              },
-              {
-                "value": "Old",
-                "label": "Old"
-              },
-              {
-                "value": "TopDay",
-                "label": "TopDay"
-              },
-              {
-                "value": "TopWeek",
-                "label": "TopWeek"
-              },
-              {
-                "value": "TopMonth",
-                "label": "TopMonth"
-              },
-              {
-                "value": "TopYear",
-                "label": "TopYear"
-              },
-              {
-                "value": "TopAll",
-                "label": "TopAll"
-              },
-              {
-                "value": "MostComments",
-                "label": "MostComments"
-              },
-              {
-                "value": "NewComments",
-                "label": "NewComments"
-              },
-              {
-                "value": "TopHour",
-                "label": "TopHour"
-              },
-              {
-                "value": "TopSixHour",
-                "label": "TopSixHour"
-              },
-              {
-                "value": "TopTwelveHour",
-                "label": "TopTwelveHour"
-              },
-              {
-                "value": "TopThreeMonths",
-                "label": "TopThreeMonths"
-              },
-              {
-                "value": "TopSixMonths",
-                "label": "TopSixMonths"
-              },
-              {
-                "value": "TopNineMonths",
-                "label": "TopNineMonths"
-              },
-              {
-                "value": "Controversial",
-                "label": "Controversial"
-              },
-              {
-                "value": "Scaled",
-                "label": "Scaled"
-              }
-            ],
-            "default": "Active"
-          }
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
-              "description": ""
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Community",
-        "maintainers": [
-          "wb14123",
-          "pseudoyu"
-        ],
-        "location": "index.ts",
-        "module": () => import('@/routes/lemmy/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Lemmy",
-    "url": "join-lemmy.org",
     "lang": "en"
   },
   "lens": {
@@ -58866,6 +58866,34 @@ export default {
         "location": "branches.ts",
         "module": () => import('@/routes/github/branches.ts')
       },
+      "/comments/:user/:repo/:number?": {
+        "path": "/comments/:user/:repo/:number?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/comments/DIYgod/RSSHub/8116",
+        "parameters": {
+          "user": "User / Org name",
+          "repo": "Repo name",
+          "number": "Issue or pull number (if omitted: all)"
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/:type",
+              "github.com/:user/:repo/:type/:number"
+            ],
+            "target": "/comments/:user/:repo/:number?"
+          }
+        ],
+        "name": "Issue / Pull Request comments",
+        "maintainers": [
+          "TonyRL",
+          "FliegendeWurst"
+        ],
+        "location": "comments.ts",
+        "module": () => import('@/routes/github/comments.ts')
+      },
       "/contributors/:user/:repo/:order?/:anon?": {
         "path": "/contributors/:user/:repo/:order?/:anon?",
         "categories": [
@@ -58901,6 +58929,76 @@ export default {
         ],
         "location": "contributors.ts",
         "module": () => import('@/routes/github/contributors.ts')
+      },
+      "/discussion/:user/:repo/:state?/:category?": {
+        "path": "/discussion/:user/:repo/:state?/:category?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/discussion/DIYgod/RSSHub",
+        "parameters": {
+          "user": "User name",
+          "repo": "Repo name",
+          "state": {
+            "description": "The state of discussions",
+            "default": "open",
+            "options": [
+              {
+                "label": "Open",
+                "value": "open"
+              },
+              {
+                "label": "Closed",
+                "value": "closed"
+              },
+              {
+                "label": "Answered",
+                "value": "answered"
+              },
+              {
+                "label": "Unanswered",
+                "value": "unanswered"
+              },
+              {
+                "label": "Locked",
+                "value": "locked"
+              },
+              {
+                "label": "Unlocked",
+                "value": "unlocked"
+              },
+              {
+                "label": "All",
+                "value": "all"
+              }
+            ]
+          },
+          "category": "Category Name (case-sensitive). Default: `null`."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "GITHUB_ACCESS_TOKEN",
+              "description": "GitHub Access Token"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/discussions",
+              "github.com/:user/:repo/discussions/:id",
+              "github.com/:user/:repo"
+            ],
+            "target": "/discussion/:user/:repo"
+          }
+        ],
+        "name": "Repo Discussions",
+        "maintainers": [
+          "waynzh"
+        ],
+        "location": "discussions.ts",
+        "module": () => import('@/routes/github/discussions.ts')
       },
       "/file/:user/:repo/:branch/:filepath{.+}": {
         "path": "/file/:user/:repo/:branch/:filepath{.+}",
@@ -58990,6 +59088,54 @@ export default {
         ],
         "location": "gist.ts",
         "module": () => import('@/routes/github/gist.ts')
+      },
+      "/issue/:user/:repo/:state?/:labels?": {
+        "path": "/issue/:user/:repo/:state?/:labels?",
+        "categories": [
+          "programming"
+        ],
+        "view": 5,
+        "example": "/github/issue/DIYgod/RSSHub/open",
+        "parameters": {
+          "user": "GitHub username",
+          "repo": "GitHub repo name",
+          "state": {
+            "description": "the state of the issues.",
+            "default": "open",
+            "options": [
+              {
+                "label": "Open",
+                "value": "open"
+              },
+              {
+                "label": "Closed",
+                "value": "closed"
+              },
+              {
+                "label": "All",
+                "value": "all"
+              }
+            ]
+          },
+          "labels": "a list of comma separated label names"
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/issues",
+              "github.com/:user/:repo/issues/:id",
+              "github.com/:user/:repo"
+            ],
+            "target": "/issue/:user/:repo"
+          }
+        ],
+        "name": "Repo Issues",
+        "maintainers": [
+          "HenryQW",
+          "AndreyMZ"
+        ],
+        "location": "issue.ts",
+        "module": () => import('@/routes/github/issue.ts')
       },
       "/notifications": {
         "path": "/notifications",
@@ -59225,6 +59371,61 @@ export default {
         ],
         "location": "private-feed.ts",
         "module": () => import('@/routes/github/private-feed.ts')
+      },
+      "/pull/:user/:repo/:state?/:labels?": {
+        "path": "/pull/:user/:repo/:state?/:labels?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/pull/DIYgod/RSSHub",
+        "parameters": {
+          "user": "GitHub username",
+          "repo": "GitHub repo name",
+          "state": {
+            "description": "the state of pull requests.",
+            "default": "open",
+            "options": [
+              {
+                "label": "Open",
+                "value": "open"
+              },
+              {
+                "label": "Closed",
+                "value": "closed"
+              },
+              {
+                "label": "All",
+                "value": "all"
+              }
+            ]
+          },
+          "labels": "a list of comma separated label names"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/pulls",
+              "github.com/:user/:repo/pulls/:id",
+              "github.com/:user/:repo"
+            ],
+            "target": "/pull/:user/:repo"
+          }
+        ],
+        "name": "Repo Pull Requests",
+        "maintainers": [
+          "hashman",
+          "TonyRL"
+        ],
+        "location": "pulls.ts",
+        "module": () => import('@/routes/github/pulls.ts')
       },
       "/repo_event/:owner/:repo/:types?": {
         "path": "/repo_event/:owner/:repo/:types?",
@@ -59578,207 +59779,6 @@ export default {
         ],
         "location": "user-event.ts",
         "module": () => import('@/routes/github/user-event.ts')
-      },
-      "/comments/:user/:repo/:number?": {
-        "path": "/comments/:user/:repo/:number?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/comments/DIYgod/RSSHub/8116",
-        "parameters": {
-          "user": "User / Org name",
-          "repo": "Repo name",
-          "number": "Issue or pull number (if omitted: all)"
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user/:repo/:type",
-              "github.com/:user/:repo/:type/:number"
-            ],
-            "target": "/comments/:user/:repo/:number?"
-          }
-        ],
-        "name": "Issue / Pull Request comments",
-        "maintainers": [
-          "TonyRL",
-          "FliegendeWurst"
-        ],
-        "location": "comments.ts",
-        "module": () => import('@/routes/github/comments.ts')
-      },
-      "/discussion/:user/:repo/:state?/:category?": {
-        "path": "/discussion/:user/:repo/:state?/:category?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/discussion/DIYgod/RSSHub",
-        "parameters": {
-          "user": "User name",
-          "repo": "Repo name",
-          "state": {
-            "description": "The state of discussions",
-            "default": "open",
-            "options": [
-              {
-                "label": "Open",
-                "value": "open"
-              },
-              {
-                "label": "Closed",
-                "value": "closed"
-              },
-              {
-                "label": "Answered",
-                "value": "answered"
-              },
-              {
-                "label": "Unanswered",
-                "value": "unanswered"
-              },
-              {
-                "label": "Locked",
-                "value": "locked"
-              },
-              {
-                "label": "Unlocked",
-                "value": "unlocked"
-              },
-              {
-                "label": "All",
-                "value": "all"
-              }
-            ]
-          },
-          "category": "Category Name (case-sensitive). Default: `null`."
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "GITHUB_ACCESS_TOKEN",
-              "description": "GitHub Access Token"
-            }
-          ]
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user/:repo/discussions",
-              "github.com/:user/:repo/discussions/:id",
-              "github.com/:user/:repo"
-            ],
-            "target": "/discussion/:user/:repo"
-          }
-        ],
-        "name": "Repo Discussions",
-        "maintainers": [
-          "waynzh"
-        ],
-        "location": "discussions.ts",
-        "module": () => import('@/routes/github/discussions.ts')
-      },
-      "/issue/:user/:repo/:state?/:labels?": {
-        "path": "/issue/:user/:repo/:state?/:labels?",
-        "categories": [
-          "programming"
-        ],
-        "view": 5,
-        "example": "/github/issue/DIYgod/RSSHub/open",
-        "parameters": {
-          "user": "GitHub username",
-          "repo": "GitHub repo name",
-          "state": {
-            "description": "the state of the issues.",
-            "default": "open",
-            "options": [
-              {
-                "label": "Open",
-                "value": "open"
-              },
-              {
-                "label": "Closed",
-                "value": "closed"
-              },
-              {
-                "label": "All",
-                "value": "all"
-              }
-            ]
-          },
-          "labels": "a list of comma separated label names"
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user/:repo/issues",
-              "github.com/:user/:repo/issues/:id",
-              "github.com/:user/:repo"
-            ],
-            "target": "/issue/:user/:repo"
-          }
-        ],
-        "name": "Repo Issues",
-        "maintainers": [
-          "HenryQW",
-          "AndreyMZ"
-        ],
-        "location": "issue.ts",
-        "module": () => import('@/routes/github/issue.ts')
-      },
-      "/pull/:user/:repo/:state?/:labels?": {
-        "path": "/pull/:user/:repo/:state?/:labels?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/pull/DIYgod/RSSHub",
-        "parameters": {
-          "user": "GitHub username",
-          "repo": "GitHub repo name",
-          "state": {
-            "description": "the state of pull requests.",
-            "default": "open",
-            "options": [
-              {
-                "label": "Open",
-                "value": "open"
-              },
-              {
-                "label": "Closed",
-                "value": "closed"
-              },
-              {
-                "label": "All",
-                "value": "all"
-              }
-            ]
-          },
-          "labels": "a list of comma separated label names"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user/:repo/pulls",
-              "github.com/:user/:repo/pulls/:id",
-              "github.com/:user/:repo"
-            ],
-            "target": "/pull/:user/:repo"
-          }
-        ],
-        "name": "Repo Pull Requests",
-        "maintainers": [
-          "hashman",
-          "TonyRL"
-        ],
-        "location": "pulls.ts",
-        "module": () => import('@/routes/github/pulls.ts')
       },
       "/advisor/data/:type?/:category?": {
         "path": "/advisor/data/:type?/:category?",
