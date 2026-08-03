@@ -30,7 +30,7 @@ async function handler(ctx) {
 
     const response = await got.get(url);
     const $ = load(response.data);
-    const title = $('a.bt_link').last().text().replace('>', '');
+    const title = $('a.bt_link').last().text().replaceAll('>', '');
     const dataJs = $('div.left.zhengce_right > script[language="javascript"]').html() || $('div.centent_width > script[language="javascript"]').html();
     let items = dataJs!
         .match(/urls\[i\]='(.*?)';headers\[i\]="(.*?)";year\[i\]='(\d+)';month\[i\]='(\d+)';day\[i\]='(\d+)';/g)!

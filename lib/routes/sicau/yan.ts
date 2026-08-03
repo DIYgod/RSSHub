@@ -53,7 +53,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href')!.replace(/\.\./, '/')}`,
+                link: `${rootUrl}${$item.attr('href')!.replace(/^\.\./, '/')}`,
             };
         });
 

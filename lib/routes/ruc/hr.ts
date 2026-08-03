@@ -56,7 +56,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: `${rootUrl}${link!.startsWith('..') ? link!.replace(/\.\./, '') : `/${category}/${link}`}`,
+                link: `${rootUrl}${link!.startsWith('..') ? link!.replace(/^\.\./, '') : `/${category}/${link}`}`,
             };
         });
 

@@ -52,7 +52,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 pubDate: parseDate($item.prev().text()),
-                link: `${rootUrl}${$item.attr('href')!.replace(/\.\./, '/')}`,
+                link: `${rootUrl}${$item.attr('href')!.replace(/^\.\./, '/')}`,
             };
         });
 
