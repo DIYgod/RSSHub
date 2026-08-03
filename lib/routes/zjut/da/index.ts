@@ -63,9 +63,9 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.url?.trim() || `${apiUrl}/news?id=${item.id}`, async (): Promise<DataItem> => {
-                const link = item.url?.trim() || `${apiUrl}/news?id=${item.id}`;
-                if (item.url?.trim()) {
+            cache.tryGet(item.url || `${apiUrl}/news?id=${item.id}`, async (): Promise<DataItem> => {
+                const link = item.url || `${apiUrl}/news?id=${item.id}`;
+                if (item.url) {
                     return {
                         title: item.title,
                         description: item.content ? makeAbsolute(item.content) : `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`,
