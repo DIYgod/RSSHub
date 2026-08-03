@@ -54,18 +54,19 @@ const getPages = async () => {
     return pages;
 };
 
-const getArticles = async (page: PaperPage, pubDate: Date): Promise<PaperArticle[]> => {
-    const html = await ofetch<string>(page.url);
-    const $ = load(html);
-    return $('.news-list a[href]')
-        .toArray()
-        .map((element) => ({
-            title: normalizeText($(element).text()),
-            link: new URL($(element).attr('href') ?? '', page.url).href,
-            category: [page.title],
-            pubDate,
-        }));
-};
+const getArticles = (page: PaperPage, pubDate: Date): Promise<PaperArticle[]> =>
+    cache.tryGet(page.url, async () => {
+        const html = await ofetch<string>(page.url);
+        const $ = load(html);
+        return $('.news-list a[href]')
+            .toArray()
+            .map((element) => ({
+                title: normalizeText($(element).text()),
+                link: new URL($(element).attr('href') ?? '', page.url).href,
+                category: [page.title],
+                pubDate,
+            }));
+    });
 
 const getArticleDetail = (article: PaperArticle): Promise<PaperArticle> =>
     cache.tryGet(article.link, async () => {
