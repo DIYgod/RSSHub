@@ -53,8 +53,7 @@ export default async function buildData(data) {
             charset = (attr.split('=').pop() || 'utf-8').toLowerCase();
         }
     }
-    // @ts-expect-error custom property
-    const responseData = charset === 'utf-8' ? response._data : iconv.decode(await ofetch(data.url, { responseType: 'buffer' }), charset);
+    const responseData = charset === 'utf-8' ? response._data : iconv.decode(Buffer.from(await ofetch(data.url, { responseType: 'arrayBuffer' })), charset);
     const $ = load(responseData);
     const $item = $(data.item.item);
     // 这里应该是可以通过参数注入一些代码的，不过应该无伤大雅
