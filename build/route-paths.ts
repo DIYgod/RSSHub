@@ -2271,7 +2271,8 @@ export type RoutePath =
   | `/penguin-random-house/articles`
   | `/penguin-random-house/the-read-down`
   | `/people/:site?/:category{.+}?`
-  | `/people/liuyan/:id/:state?`
+  | `/people/liuyan/:id?/:state?`
+  | `/people/paper/:page?`
   | `/people/xjpjh/:keyword?/:year?`
   | `/peopo/topic/:topicId?`
   | `/perplexity/blog`

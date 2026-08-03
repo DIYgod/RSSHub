@@ -34776,14 +34776,14 @@
   },
   "people.com.cn": {
     "_name": "人民网",
-    "liuyan": [
+    "paper": [
       {
-        "title": "领导留言板",
+        "title": "人民日报电子版",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/"
+          "/rmrb/pc/layout/index.html"
         ],
-        "target": "/people/liuyan/:id/:state?"
+        "target": "/people/paper"
       }
     ],
     ".": [

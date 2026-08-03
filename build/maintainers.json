@@ -6103,12 +6103,16 @@
   "/penguin-random-house/the-read-down": [
     "StevenRCE0"
   ],
+  "/people/liuyan/:id?/:state?": [
+    "nczitzk",
+    "pseudoyu"
+  ],
   "/people/:site?/:category{.+}?": [
     "nczitzk",
     "pseudoyu"
   ],
-  "/people/liuyan/:id/:state?": [
-    "nczitzk"
+  "/people/paper/:page?": [
+    "pseudoyu"
   ],
   "/people/xjpjh/:keyword?/:year?": [
     "LogicJake"

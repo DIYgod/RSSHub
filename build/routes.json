@@ -89313,19 +89313,8 @@
   },
   "people": {
     "routes": {
-      "/:site?/:category{.+}?": {
-        "path": "/:site?/:category{.+}?",
-        "name": "首页头条",
-        "maintainers": [
-          "nczitzk",
-          "pseudoyu"
-        ],
-        "example": "/people",
-        "location": "index.ts",
-        "module": "() => import('@/routes/people/index.ts')"
-      },
-      "/liuyan/:id/:state?": {
-        "path": "/liuyan/:id/:state?",
+      "/liuyan/:id?/:state?": {
+        "path": "/liuyan/:id?/:state?",
         "categories": [
           "traditional-media"
         ],
@@ -89342,21 +89331,52 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "radar": [
-          {
-            "source": [
-              "liuyan.people.com.cn/"
-            ]
-          }
-        ],
         "name": "领导留言板",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "pseudoyu"
         ],
         "url": "liuyan.people.com.cn/",
         "description": "| 全部 | 待回复 | 办理中 | 已办理 |\n| ---- | ------ | ------ | ------ |\n| 1    | 2      | 3      | 4      |",
         "location": "liuyan.ts",
         "module": "() => import('@/routes/people/liuyan.ts')"
+      },
+      "/:site?/:category{.+}?": {
+        "path": "/:site?/:category{.+}?",
+        "name": "首页头条",
+        "maintainers": [
+          "nczitzk",
+          "pseudoyu"
+        ],
+        "example": "/people",
+        "location": "index.ts",
+        "module": "() => import('@/routes/people/index.ts')"
+      },
+      "/paper/:page?": {
+        "path": "/paper/:page?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/people/paper",
+        "parameters": {
+          "page": "版面编号，如 `01`；使用 `all` 或留空获取全部版面"
+        },
+        "radar": [
+          {
+            "source": [
+              "paper.people.com.cn/rmrb/pc/layout/index.html"
+            ],
+            "target": "/paper"
+          }
+        ],
+        "name": "人民日报电子版",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "url": "paper.people.com.cn/rmrb/pc/layout/index.html",
+        "description": "获取当日《人民日报》全部版面或指定版面的文章。",
+        "location": "paper.ts",
+        "module": "() => import('@/routes/people/paper.ts')"
       },
       "/xjpjh/:keyword?/:year?": {
         "path": "/xjpjh/:keyword?/:year?",
