@@ -1,10 +1,8 @@
 import type { Context } from 'hono';
 import { stream } from 'hono/streaming';
-import type { TelegramClient } from 'telegram';
-import { Api } from 'telegram';
-import type { IterDownloadFunction } from 'telegram/client/downloads.js';
-import { returnBigInt as bigInt } from 'telegram/Helpers.js';
-import { getAppropriatedPartSize } from 'telegram/Utils.js';
+import type { TelegramClient } from 'teleproto';
+import { Api } from 'teleproto';
+import { returnBigInt as bigInt } from 'teleproto/Helpers.js';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -86,30 +84,32 @@ export async function* streamThumbnail(client: TelegramClient, doc: Api.Document
 }
 
 export async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?: bigInt.BigInteger, limit?: bigInt.BigInteger) {
-    const chunkSize = (obj.size ? getAppropriatedPartSize(obj.size) : 64) * 1024;
-    const iterFileParams: IterDownloadFunction = {
-        file: new Api.InputDocumentFileLocation({
+    const requestSize = 512 * 1024; // MAX_CHUNK_SIZE
+    let skip = offset ? offset.mod(requestSize).toJSNumber() : 0;
+    const alignedOffset = offset?.subtract(skip);
+    // console.log('starting iterDownload');
+    const chunks = client.iterDownload(
+        new Api.InputDocumentFileLocation({
             id: obj.id,
             accessHash: obj.accessHash,
             fileReference: obj.fileReference,
             thumbSize,
         }),
-        chunkSize,
-        requestSize: 512 * 1024, // MAX_CHUNK_SIZE
-        dcId: obj.dcId,
-        offset: undefined,
-        limit: undefined,
-    };
-    if (offset) {
-        iterFileParams.offset = offset;
+        {
+            requestSize,
+            dcId: obj.dcId,
+            offset: alignedOffset,
+            limit: limit && alignedOffset ? limit.subtract(alignedOffset).add(1).valueOf() : undefined,
+        }
+    );
+    for await (const chunk of chunks) {
+        if (skip >= chunk.length) {
+            skip -= chunk.length;
+            continue;
+        }
+        yield skip ? chunk.subarray(skip) : chunk;
+        skip = 0;
     }
-    if (limit) {
-        iterFileParams.limit = limit.valueOf();
-    }
-    // console.log('starting iterDownload');
-    const stream = client.iterDownload(iterFileParams);
-    yield* stream;
-    await stream.close();
 }
 
 function parseRange(range: string, length: bigInt.BigInteger) {
