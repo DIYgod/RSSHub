@@ -1413,6 +1413,9 @@
   "/wise/pair/:source/:target": [
     "HenryQW"
   ],
+  "/wuzhongmuseum/exhibition/:type?": [
+    "magazian"
+  ],
   "/xkb/:channel": [
     "TimWu007"
   ],

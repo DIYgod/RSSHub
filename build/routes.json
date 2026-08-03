@@ -18961,6 +18961,40 @@
     "url": "wise.com",
     "lang": "en"
   },
+  "wuzhongmuseum": {
+    "routes": {
+      "/exhibition/:type?": {
+        "path": "/exhibition/:type?",
+        "categories": [
+          "travel"
+        ],
+        "example": "/wuzhongmuseum/exhibition",
+        "parameters": {
+          "type": "Exhibition type, supported values: short (特别展览), long (常设展览), online (线上展览). Default: all exhibitions."
+        },
+        "name": "Exhibition",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.wuzhongmuseum.com/portal/exhibition"
+            ],
+            "target": "/exhibition"
+          }
+        ],
+        "location": "exhibition.tsx",
+        "module": "() => import('@/routes/wuzhongmuseum/exhibition.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Museum of Wu",
+    "url": "www.wuzhongmuseum.com",
+    "zh": {
+      "name": "吴文化博物馆"
+    }
+  },
   "xkb": {
     "routes": {
       "/:channel": {

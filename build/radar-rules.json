@@ -5357,6 +5357,19 @@
       }
     ]
   },
+  "wuzhongmuseum.com": {
+    "_name": "Museum of Wu",
+    "www": [
+      {
+        "title": "Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/portal/exhibition"
+        ],
+        "target": "/wuzhongmuseum/exhibition"
+      }
+    ]
+  },
   "yoasobi-music.jp": {
     "_name": "Yoasobi Official",
     "www": [

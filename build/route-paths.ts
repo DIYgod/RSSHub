@@ -3147,6 +3147,7 @@ export type RoutePath =
   | `/wtu/:type`
   | `/wtu/job/:type`
   | `/wufazhuce/one`
+  | `/wuzhongmuseum/exhibition/:type?`
   | `/wyzxwk/article/:id?`
   | `/wzu/news/:type?`
   | `/x-mol/news/:tag?`
