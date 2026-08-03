@@ -34785,15 +34785,18 @@
         ],
         "target": "/people/paper"
       }
-    ],
-    ".": [
+    ]
+  },
+  "people.cn": {
+    "_name": "人民网",
+    "jhsjk": [
       {
         "title": "习近平系列重要讲话",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
         ],
-        "target": "/people/:site?/:category?"
+        "target": "/people/xjpjh"
       }
     ]
   },

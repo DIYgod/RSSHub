@@ -89399,16 +89399,16 @@ export default {
         "radar": [
           {
             "source": [
-              "people.com.cn/"
+              "jhsjk.people.cn/"
             ],
-            "target": "/:site?/:category?"
+            "target": "/xjpjh"
           }
         ],
         "name": "习近平系列重要讲话",
         "maintainers": [
           "LogicJake"
         ],
-        "url": "people.com.cn/",
+        "url": "jhsjk.people.cn",
         "location": "xjpjh.ts",
         "module": () => import('@/routes/people/xjpjh.ts')
       }
