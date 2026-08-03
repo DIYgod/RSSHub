@@ -1,6 +1,6 @@
-import { Api, TelegramClient } from 'telegram';
-import type { UserAuthParams } from 'telegram/client/auth';
-import { StringSession } from 'telegram/sessions/index.js';
+import { Api, TelegramClient } from 'teleproto';
+import type { UserAuthParams } from 'teleproto/client/auth';
+import { StringSession } from 'teleproto/sessions/index.js';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
