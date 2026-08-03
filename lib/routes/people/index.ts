@@ -48,7 +48,7 @@ async function handler(ctx) {
         $(e).parent().remove();
     });
 
-    let items = $('.p6, div.p2j_list, div.headingNews, div.ej_list_box, .leftItem, div.p2j_con02 > div.fl')
+    let items = $('.p6, div.p2j_list, div.headingNews, div.ej_list_box, .leftItem, div.p2j_con02 > div.fl, div.jsnew_line')
         .find('a')
         .slice(0, limit)
         .toArray()
