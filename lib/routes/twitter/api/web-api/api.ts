@@ -158,7 +158,8 @@ const getList = async (id: string, params?: Record<string, any>) =>
                 count: 20,
             },
             ['list', 'tweets_timeline', 'timeline']
-        )
+        ),
+        ['listConversation-']
     );
 
 const getUser = async (id: string) => {
