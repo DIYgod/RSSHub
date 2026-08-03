@@ -1,3 +1,4 @@
+import type { Context } from 'hono';
 import Parser from 'rss-parser';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
@@ -451,7 +452,7 @@ describe('anti-hotlink edge cases', () => {
             },
             get: (key: string) => store.get(key),
             set: (key: string, value: unknown) => store.set(key, value),
-        };
+        } as unknown as Context;
     };
 
     beforeAll(() => {
@@ -479,7 +480,7 @@ describe('anti-hotlink edge cases', () => {
         };
         const ctx = createCtx({ image_hotlink_template: 'https://img.test/${href}' }, data);
 
-        await antiHotlink(ctx as any, async () => {});
+        await antiHotlink(ctx, async () => {});
 
         expect(data.image).toBe('http://invalid url');
         expect(errorSpy).toHaveBeenCalled();
@@ -495,7 +496,7 @@ describe('anti-hotlink edge cases', () => {
         };
         const ctx = createCtx({ multimedia_hotlink_template: 'https://media.test/${href}' }, data);
 
-        await antiHotlink(ctx as any, async () => {});
+        await antiHotlink(ctx, async () => {});
 
         expect(data.image).toBe('https://example.com/img.jpg');
     });
