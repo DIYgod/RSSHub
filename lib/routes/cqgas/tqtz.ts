@@ -36,14 +36,13 @@ async function handler() {
     const contentUrl = (id) => `http://www.cqgas.cn/portal/article/content?contentId=${id}`;
     const list = $('ul.news_list > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const title = $item.find('a').first();
             return {
                 title: title.text(),
                 link: contentUrl(title.attr('contentid')),
                 pubDate: parseDate($item.find('span.right.txt_black2').text()),
-                description: undefined as DataItem['description'],
             };
         });
 

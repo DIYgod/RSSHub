@@ -35,7 +35,7 @@ export async function handler(ctx) {
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;
     const currentUrl = new URL(category.replace(/^(tag|category)?\/(\d+)/, '$1-$2'), rootUrl).href;
 
-    const searchParams = {} as Record<string, any>;
+    const searchParams: Record<string, any> = {};
     const matches = category.match(/^(tag|category|search|page)?[/-]?(\w+)/);
 
     if (matches) {
@@ -53,7 +53,7 @@ export async function handler(ctx) {
     let items = $('a.miniatura')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const image = $item.find('div.background_miniatura img');
@@ -77,9 +77,6 @@ export async function handler(ctx) {
                     .toArray()
                     .map((c) => $(c).text()),
                 guid: image ? image.prop('post-id') : ($item as any).link.match(/\/(\d+)/)[1],
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 

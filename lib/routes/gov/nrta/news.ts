@@ -54,14 +54,11 @@ async function handler(ctx) {
 
     const list = $('a', 'record')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 link: $item.attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
+                title: '',
             };
         });
     const items = await Promise.all(

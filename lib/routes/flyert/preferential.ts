@@ -43,16 +43,17 @@ async function handler() {
     const $ = load(gbk2utf8(response.data));
     const list = $('.comiis_wzli')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('.wzbt').text(),
-            link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
-            description: $(item).find('.wznr > div:first-child').text(),
-            pubDate: undefined as DataItem['pubDate'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('.wzbt').text(),
+                link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
+                description: $(item).find('.wznr > div:first-child').text(),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     responseType: 'buffer',
                 });

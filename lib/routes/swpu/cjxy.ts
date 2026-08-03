@@ -45,17 +45,17 @@ async function handler(ctx) {
 
     const items = $('.main_conRCb > ul > li')
         .toArray()
-        .map((elem) => ({
-            title: $('a[href]', elem).text().trim(),
-            pubDate: timezone(parseDate($('span', elem).text(), 'YYYY年MM月DD日'), 8),
-            link: `https://www.swpu.edu.cn/nccjxy/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
-            author: undefined as DataItem['author'],
-            description: undefined as DataItem['description'],
-        }));
+        .map(
+            (elem): DataItem => ({
+                title: $('a[href]', elem).text().trim(),
+                pubDate: timezone(parseDate($('span', elem).text(), 'YYYY年MM月DD日'), 8),
+                link: `https://www.swpu.edu.cn/nccjxy/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
+            })
+        );
 
     const out = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got(item.link);
                 const $ = load(res.data);
                 if ($('title').text().startsWith('系统提示')) {

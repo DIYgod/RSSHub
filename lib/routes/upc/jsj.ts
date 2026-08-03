@@ -59,7 +59,7 @@ async function handler(ctx) {
     // ## 获取列表
     const list = $('.list tbody table tr')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             const link = a.attr('href');
@@ -67,7 +67,6 @@ async function handler(ctx) {
                 title: a.attr('title')!,
                 link: link!.startsWith('http') ? link : `${baseUrl}${link}`,
                 pubDate: parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'),
-                description: undefined as DataItem['description'],
             };
         });
     // ## 定义输出的item

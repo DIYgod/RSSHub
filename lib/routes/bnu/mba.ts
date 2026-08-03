@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('ul.concrcc li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a.listlj');
@@ -32,16 +32,12 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('div.crq').text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

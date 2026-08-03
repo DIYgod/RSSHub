@@ -48,7 +48,7 @@ async function handler(ctx) {
     const list = $('.articlebox-compact')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.title a');
             return {
@@ -60,20 +60,19 @@ async function handler(ctx) {
                     .find('.category a')
                     .toArray()
                     .map((i) => $(i).text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
+                await page.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
                 });
 
@@ -83,7 +82,7 @@ async function handler(ctx) {
 
                 item.category = [
                     ...new Set([
-                        ...item.category,
+                        ...(item.category as string[]),
                         ...$('.article-hash-tag a')
                             .toArray()
                             .map((i) => $(i).text()),

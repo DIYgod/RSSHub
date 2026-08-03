@@ -53,7 +53,7 @@ async function handler(ctx) {
 
     const list = $('li.list_item.i1')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).find('a').attr('href');
             if (link!.includes('HrbeuJY')) {
                 link = `${rootUrl}${link}`;
@@ -62,7 +62,6 @@ async function handler(ctx) {
                 title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('.Article_PublishDate').text()),
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 

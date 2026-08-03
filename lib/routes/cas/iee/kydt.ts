@@ -41,14 +41,12 @@ async function handler() {
     const list = $('li.entry .entry-content-title')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

@@ -34,21 +34,18 @@ async function handler(ctx) {
     let items = $('ul.list-item li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -60,7 +57,7 @@ async function handler(ctx) {
                     parseDate(
                         content('p.content-info')
                             .text()
-                            .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)![1]
+                            .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)![0]
                     ),
                     8
                 );

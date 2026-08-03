@@ -36,7 +36,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $(nwafuMap.get(type)![1])
         .toArray()
-        .map((ele) => {
+        .map((ele): DataItem => {
             const itemTitle = $(ele).find(nwafuMap.get(type)![2]).text();
             const itemPubDate = parseDate($(ele).find('span').text(), 'YYYY/MM/DD');
             const itemLink = new URL($(ele).find(nwafuMap.get(type)![2]).attr('href')!, nwafuMap.get(type)![0]).href;
@@ -44,14 +44,13 @@ async function handler(ctx) {
                 title: itemTitle,
                 pubDate: itemPubDate,
                 link: itemLink,
-                description: undefined as DataItem['description'],
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (nwafuMap.get('forbiddenList')!.includes(new URL(item.link).hostname)) {
+            cache.tryGet(item.link!, async () => {
+                if (nwafuMap.get('forbiddenList')!.includes(new URL(item.link!).hostname)) {
                     return item;
                 }
                 const detailResponse = await got.get(item.link);

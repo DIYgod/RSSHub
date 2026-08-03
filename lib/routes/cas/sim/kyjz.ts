@@ -40,20 +40,18 @@ async function handler() {
     const list = $('.list-news li')
         .toArray()
         .filter((e) => !$(e).attr('style'))
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             return {
                 link: new URL($e.find('a').attr('href')!, link).href,
-                pubDate: $e.find('span').text().replace('[', '').replace(']', '') as DataItem['pubDate'],
-                title: undefined as unknown as DataItem['title'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
+                pubDate: $e.find('span').text().replace('[', '').replace(']', ''),
+                title: '',
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 

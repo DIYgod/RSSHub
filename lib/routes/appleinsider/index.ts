@@ -48,15 +48,12 @@ async function handler(ctx) {
     let items = $(`${category === '' ? '#news-river ' : ''}.river`)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).find('a').first();
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

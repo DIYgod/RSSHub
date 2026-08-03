@@ -91,7 +91,7 @@ async function handler(ctx) {
 
     const actList = $('div.item-77')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('a').text(),
@@ -100,11 +100,6 @@ async function handler(ctx) {
                     .find('label')
                     .toArray()
                     .map((l) => $(l).text()),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                upvotes: undefined as DataItem['upvotes'],
-                downvotes: undefined as DataItem['downvotes'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
@@ -114,7 +109,7 @@ async function handler(ctx) {
 
     const actListFull = await Promise.all(
         actList.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got({
                     url: item.link,
                     cookieJar,

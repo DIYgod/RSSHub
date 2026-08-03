@@ -76,7 +76,7 @@ async function handler(ctx) {
     let items = $('span.fl a, ul.dp_lia li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
@@ -84,9 +84,6 @@ async function handler(ctx) {
                 link: new URL($item.prop('href')!, rootUrl).href,
                 guid: `nsfc-${$item.prop('id')}`,
                 pubDate: parseDate($item.next().text().replaceAll('[]', '')),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 

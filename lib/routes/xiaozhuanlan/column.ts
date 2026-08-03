@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     let items = $('.xzl-topic-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             $item.find('.topic-has-suggested-item').remove();
             return {
@@ -50,14 +50,12 @@ async function handler(ctx) {
                 link: new URL($item.find('.topic-body-link').attr('href')!, baseUrl).href,
                 author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
                 pubDate: parseDate($item.find('.topic-header .timeago').attr('title')!),
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 

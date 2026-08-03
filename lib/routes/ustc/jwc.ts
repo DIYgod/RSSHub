@@ -54,11 +54,10 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const child = $(element).children();
-            const info = {
+            const info: DataItem = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
                 pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), 8),
-                description: undefined as DataItem['description'],
             };
             return info;
         });

@@ -50,14 +50,12 @@ async function handler(ctx) {
     let items = $('.lawul, .longul')
         .find('li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('p').text(),
                 link: `${currentUrl}/${$item.attr('href')}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

@@ -16,22 +16,19 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.box h1 a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.contents().first().text(),
                 pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
                 link: new URL($item.prop('href')!, currentUrl).href,
-                language: language as Language,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                content: undefined as DataItem['content'],
+                language,
             };
         });
 
@@ -60,7 +57,7 @@ export const handler = async (ctx) => {
                         html: description,
                         text: $$('div.v_news_content').text(),
                     };
-                    item.language = language as Language;
+                    item.language = language;
                 } catch {
                     // no-empty
                 }
@@ -81,7 +78,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language: language as Language,
+        language,
     };
 };
 

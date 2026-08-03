@@ -64,7 +64,7 @@ async function handler(ctx) {
 
     let items = $('.video')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { poster?: string; video?: string } => {
             const $item = $(item);
 
             const title = $item.find('.video-title a');
@@ -75,8 +75,6 @@ async function handler(ctx) {
                 link: title.attr('href'),
                 poster: $item.find('img').attr('data-src'),
                 video: $item.find('video').attr('data-src'),
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
             };
         });
 

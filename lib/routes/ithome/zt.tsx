@@ -24,7 +24,7 @@ export const handler = async (ctx) => {
     let items = $('div.newsbody')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.find('h2').text();
@@ -37,7 +37,7 @@ export const handler = async (ctx) => {
                         $item
                             .find('span.time script')
                             .text()
-                            .match(/'(.*?)'/) as unknown as string
+                            .match(/'(.*?)'/)?.[0] ?? ''
                     ),
                     8
                 ),
@@ -46,9 +46,6 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                content: undefined as DataItem['content'],
             };
         });
 

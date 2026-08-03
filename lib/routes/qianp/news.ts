@@ -33,16 +33,12 @@ async function handler(ctx) {
 
     const list = $('.newslist .infor')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
                 title: a.attr('title')!,
                 link: a.attr('href'),
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

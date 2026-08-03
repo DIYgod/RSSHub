@@ -18,7 +18,7 @@ const get_from_link = async (link) => {
     const $ = load(response);
     const articleList = $('div#wp_news_w2 table[width="100%"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = $(item).find('div[style="white-space:nowrap"]').first();
             // deal with article_link
@@ -31,7 +31,6 @@ const get_from_link = async (link) => {
                 title: a.text(),
                 link: articleLink,
                 pubDate: parseDate(date.text()),
-                description: undefined as DataItem['description'],
             };
         });
     return articleList;

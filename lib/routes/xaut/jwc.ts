@@ -51,7 +51,7 @@ async function handler(ctx) {
     const list = $('.main_conRCb a')
         .slice(0, 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const link = $item
                 .attr('href')!
@@ -61,7 +61,6 @@ async function handler(ctx) {
                 title: $item.find('em').text(),
                 link,
                 pubDate: parseDate($item.find('span').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -75,8 +74,8 @@ async function handler(ctx) {
         // 遍历此前获取的数据
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    if (!item.link.match('zhixing.xaut.edu.cn') && !item.link.match('xinwen.xaut.edu.cn')) {
+                cache.tryGet(item.link!, async () => {
+                    if (!item.link!.match('zhixing.xaut.edu.cn') && !item.link!.match('xinwen.xaut.edu.cn')) {
                         const res = await got({
                             method: 'get',
                             url: item.link,

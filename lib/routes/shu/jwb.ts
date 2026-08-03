@@ -41,13 +41,10 @@ async function handler(ctx) {
         .find('li')
         .slice(0, 10)
         .toArray()
-        .map((ele) => ({
+        .map((ele): DataItem & { date: string; link: string } => ({
             title: $(ele).find('a').text(),
             link: new URL($(ele).find('a').attr('href')!, host).href,
             date: $(ele).children('span').text(),
-            author: undefined as DataItem['author'],
-            pubDate: undefined as DataItem['pubDate'],
-            description: undefined as DataItem['description'],
         }));
 
     const all = await Promise.all(

@@ -43,7 +43,7 @@ async function handler() {
     const icon = new URL('/images/sfbgw_favicon.ico', rootUrl).href;
     const indexes = $('ul.newsMsgList_zzy li')
         .toArray()
-        .map((li) => {
+        .map((li): DataItem => {
             const a = $(li).find('a');
             const pubDate = $(li).find('div.rightData').text();
             const href = a.prop('href');
@@ -52,8 +52,6 @@ async function handler() {
                 title: a.text(),
                 link,
                 pubDate: timezone(parseDate(pubDate), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

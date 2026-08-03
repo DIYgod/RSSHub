@@ -48,7 +48,7 @@ async function handler(ctx) {
     const list = $('.item.product.product-item')
         .toArray()
         .map((element) => {
-            const data = { link: undefined as DataItem['link'], title: undefined as unknown as DataItem['title'], description: undefined as DataItem['description'] };
+            const data: DataItem = { title: '' };
             const details = $(element).find('.product.details-box').html();
             data.link = $(element).find('.product-item-link').eq(0).attr('href');
             data.title = $(element).find('.product-item-link').text();

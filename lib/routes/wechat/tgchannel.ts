@@ -159,11 +159,10 @@ async function handler(ctx) {
              * Considering that this is almost certain to happen, let's break guid consistency now by using
              * normalized URL from wechat-mp as guid to avoid similar issues in the future.
              */
-            const single = {
+            const single: DataItem = {
                 title,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
                 // guid: link,
             };
 

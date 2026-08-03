@@ -41,15 +41,12 @@ async function handler(ctx) {
 
     let items = $('td li a[title]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')!.startsWith('../..') ? $item.attr('href')!.replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${$item.attr('href')!.replace(/^\./, '')}`}`,
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -43,7 +43,7 @@ async function handler() {
 
     let items = $('.col-md a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -52,8 +52,6 @@ async function handler() {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : `${rootUrl}${link!.replace(/^\./, '/tzgg')}`,
                 pubDate: parseDate($item.parent().find('span').text()),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

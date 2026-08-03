@@ -35,7 +35,7 @@ async function handler() {
 
     const list = $('.right-nr .row .col-lg-4')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.li-img a');
             const pubDate = $item.find('.li-img a span');
@@ -49,7 +49,6 @@ async function handler() {
                         .replaceAll('日', '')
                 ),
                 itunes_item_image: `${baseUrl}${$item.find('.li-img img').attr('src')}`,
-                description: undefined as DataItem['description'],
             };
         });
 

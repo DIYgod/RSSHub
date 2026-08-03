@@ -50,15 +50,13 @@ async function handler(ctx) {
 
     let items = $('div.t-info > a, a.p-title')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `https://m.hupu.com/bbs${$item.attr('href')}`,
                 pubDate: timezone(parseDate($item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

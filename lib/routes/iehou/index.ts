@@ -17,12 +17,12 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('li.list-group-item div.subject h2')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.text();
@@ -35,12 +35,7 @@ export const handler = async (ctx) => {
                     .nextAll('a')
                     .toArray()
                     .map((c) => $(c).text()),
-                language: language as Language,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
+                language,
             };
         });
 
@@ -65,7 +60,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -79,7 +74,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         author: $('h1').text(),
-        language: language as Language,
+        language,
     };
 };
 

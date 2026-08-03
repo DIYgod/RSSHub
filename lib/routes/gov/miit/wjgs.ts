@@ -44,14 +44,12 @@ async function handler() {
 
     let items = list('.page-content ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = list(item);
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.fr').text(), 'YYYY-MM-DD'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

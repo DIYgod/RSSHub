@@ -49,14 +49,12 @@ async function handler(ctx) {
     const list = $('.info-2_P1UM a')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

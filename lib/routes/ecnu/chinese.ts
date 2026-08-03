@@ -27,11 +27,10 @@ export const route: Route = {
         const $ = load(response.data);
         const links = $('ul.news_list.list2 > li')
             .toArray()
-            .map((el) => ({
+            .map((el): DataItem & { link: string } => ({
                 pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').attr('title')!,
-                description: undefined as DataItem['description'],
             }));
         const items = await Promise.all(
             links.map((item) =>

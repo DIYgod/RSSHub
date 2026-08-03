@@ -51,19 +51,18 @@ async function handler(ctx) {
 
     let items = $('.column_list h2')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title')!,
                 link: `${rootUrl}${$item.find('a').attr('href')}`,
                 pubDate: timezone(parseDate($item.find('.dy_date').text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

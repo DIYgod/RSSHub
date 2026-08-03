@@ -51,14 +51,9 @@ async function handler(ctx) {
     const list = $(categoryMap[category].selector)
         .find('a')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).text(),
             link: baseUrl + $(item).attr('href'),
-            author: undefined as DataItem['author'],
-            category: undefined as DataItem['category'],
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
-            guid: undefined as DataItem['guid'],
         }));
 
     const items = await Promise.all(

@@ -36,7 +36,7 @@ async function handler(ctx) {
         .find('.list-body')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('.list-title');
@@ -44,10 +44,6 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

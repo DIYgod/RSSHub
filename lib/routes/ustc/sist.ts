@@ -55,7 +55,7 @@ async function handler(ctx) {
     let items = $('div[portletmode=simpleList]')
         .find('div.card')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('.card-title > a').attr('title');
             let link = $item.find('.card-title > a').attr('href');
@@ -65,7 +65,6 @@ async function handler(ctx) {
                 title: title!,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -74,7 +73,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('div.wp_articlecontent').html() ?? '';
+                    const desc = load(response.data)('div.wp_articlecontent').html();
                     item.description = desc;
                 } catch {
                     // intranet only contents

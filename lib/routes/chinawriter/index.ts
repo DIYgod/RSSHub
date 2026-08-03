@@ -158,7 +158,7 @@ async function handler(ctx) {
         .toArray()
         .filter((item) => /(?:\/\d{4}){2}\/\w+-\w+\.html/.test($(item).prop('href')!))
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.prop('href');
@@ -166,10 +166,6 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

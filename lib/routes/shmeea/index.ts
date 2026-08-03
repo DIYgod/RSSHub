@@ -43,13 +43,12 @@ async function handler(ctx) {
 
     const list = $('#main .pageList li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title') || $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, baseURL).href,
                 pubDate: parseDate($item.find('.listTime').text(), 'YYYY-MM-DD'),
-                description: undefined as DataItem['description'],
             };
         });
 

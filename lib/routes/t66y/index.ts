@@ -71,7 +71,7 @@ async function handler(ctx) {
     const list = $('#ajaxtable > tbody:nth-child(2) .tr3')
         .not('.tr2.tac')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const element = $(item);
 
             const tal = element.find('.tal');
@@ -88,13 +88,12 @@ async function handler(ctx) {
                 link: `${baseUrl}/${a.attr('href')}`,
                 author: td3.find('a').text(),
                 pubDate: parseDate(String(td3.find('span[data-timestamp]').data('timestamp')).slice(0, -1), 'X'),
-                description: undefined as DataItem['description'],
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
 
                 item.description = parseContent(response);

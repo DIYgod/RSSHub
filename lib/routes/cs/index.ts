@@ -249,16 +249,13 @@ async function handler(ctx) {
     let items = $('ul.ch_type3_list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('h3').text().trim(),
                 link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('em').text()), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 

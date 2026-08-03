@@ -43,7 +43,7 @@ async function handler(ctx) {
     const list = $('#posts-table>tbody>tr')
         .toArray()
         .slice(1)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
@@ -51,7 +51,6 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: parseDate($item.find('.time').text()),
                 author: $item.find('a').eq(1).text(),
-                description: undefined as DataItem['description'],
             };
         });
     const title = $('#content>h1').text();

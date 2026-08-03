@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     const list = $('.right-nr .row .col-lg-4')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.thr-box a');
             const pubDate = $item.find('.thr-box a span');
@@ -59,7 +59,6 @@ async function handler(ctx) {
                 title: $item.find('.thr-box a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -71,7 +70,7 @@ async function handler(ctx) {
                     const $ = load(response);
                     item.description = $('div.wp_articlecontent').html();
                 } catch (error) {
-                    const err = error as { response?: { status: number } };
+                    const err = error as { response?: { status?: number } };
                     if (err.response && err.response.status === 404) {
                         item.description = '';
                     } else {

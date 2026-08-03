@@ -48,7 +48,7 @@ const ProcessItems = async (language, currentUrl) => {
         .find('a')
         .toArray()
         .filter((i) => $(i).parent().hasClass('video') || $(i).parent().get(0)!.tagName === 'strong')
-        .map((item) => {
+        .map((item): DataItem & { url?: string } => {
             const $item = $(item);
 
             const table = $item.parentsUntil('table');
@@ -61,14 +61,12 @@ const ProcessItems = async (language, currentUrl) => {
                 title: $item.text(),
                 description: table.find('textarea').text(),
                 pubDate: parseDate(table.find('.date').text()),
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.url, async () => {
+            cache.tryGet(item.url!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.url,
@@ -101,9 +99,9 @@ const ProcessItems = async (language, currentUrl) => {
                         .map((img) => content(img).attr('src')!.replaceAll('-', 'jp-')),
                     videos: [...new Set(detailResponse.data.match(/(http[^"[\]]+\.mp4)/g))],
                 });
-                item.pubDate = item.pubDate.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;
+                item.pubDate = item.pubDate!.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;
 
-                delete (item as { url?: unknown }).url;
+                delete item.url;
 
                 return item;
             })

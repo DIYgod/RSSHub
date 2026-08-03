@@ -48,7 +48,7 @@ async function handler(ctx) {
     let items = $('item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { isNews?: boolean } => {
             const $item = $(item);
 
             const link = $item.find('permalink').text();
@@ -59,13 +59,12 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('date').text()),
                 link: `${rootUrl}${isNews ? `/news/${link}` : ''}`,
                 isNews,
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 if (item.isNews) {
                     try {
                         const detailResponse = await got({
@@ -84,7 +83,7 @@ async function handler(ctx) {
                     }
                 }
 
-                delete (item as { isNews?: unknown }).isNews;
+                delete item.isNews;
 
                 return item;
             })

@@ -91,7 +91,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.notice_l > ul > li > dl > dt')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $('a', item).attr('href');
             const type = pageType(href);
             return {
@@ -99,7 +99,6 @@ async function handler(ctx) {
                 link: type === 'in-site' ? oaa_base_url + href : href,
                 pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), 8),
                 type,
-                description: undefined as DataItem['description'],
             };
         });
 

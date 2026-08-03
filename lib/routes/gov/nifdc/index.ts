@@ -42,7 +42,7 @@ async function handler(ctx) {
     let items = $('div.list ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -52,11 +52,6 @@ async function handler(ctx) {
                 title: a.prop('title') || a.text(),
                 link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
                 pubDate: parseDate($item.find('span').text().replaceAll(/\(|\)/g, '')),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

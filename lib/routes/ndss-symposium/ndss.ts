@@ -44,7 +44,7 @@ async function handler() {
 
             const divMatch = $('div h3')
                 .toArray()
-                .map((item) => {
+                .map((item): DataItem => {
                     const $item = $(item);
                     const title = $item.text().trim();
                     return {
@@ -52,7 +52,6 @@ async function handler() {
                         author: $item.siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
                         link: $item.siblings('a').attr('href'),
                         pubDate,
-                        description: undefined as DataItem['description'],
                     };
                 });
             if (divMatch.length > 0) {

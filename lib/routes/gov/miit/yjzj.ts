@@ -57,11 +57,10 @@ async function handler() {
     const $ = load(response.data.data.html);
     const list = $('ul > li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('a').text(),
             link: new URL($(item).find('a').attr('href')!, rootUrl).href,
             pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD'),
-            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

@@ -37,7 +37,7 @@ export const route: Route = {
         // 解析列表页面中的所有通知项
         const list = $('.page-con-list-news .item')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const $link = $item.find('.t a');
                 const $dateDay = $item.find('.d .d-d');
@@ -58,7 +58,6 @@ export const route: Route = {
                     title: $link.text(),
                     link: linkStr,
                     pubDate: timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8),
-                    description: undefined as DataItem['description'],
                 };
             })
             .filter((item) => item.link); // 过滤掉没有链接的项目

@@ -52,7 +52,7 @@ async function handler(ctx) {
         .find('a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -60,8 +60,6 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : new URL(link!.replace(/^\.\./, ''), rootUrl).href,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

@@ -12,7 +12,7 @@ const getAritlces = async (category, url, cache) => {
     const spiderResult = $('ul.article-list')
         .children()
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             const link = a.attr('href');
@@ -22,7 +22,6 @@ const getAritlces = async (category, url, cache) => {
                 link,
                 pubDate: timezone(parseDate($item.find('span.time').text()), 8),
                 category,
-                description: undefined as DataItem['description'],
             };
         })
         .map((item) =>

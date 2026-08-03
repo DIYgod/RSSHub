@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
     let items = $('ul.doc_list li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -34,11 +34,6 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('span.date').text()),
                 link: a.prop('href'),
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                updated: undefined as DataItem['updated'],
             };
         });
 

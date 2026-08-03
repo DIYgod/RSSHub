@@ -28,13 +28,12 @@ export const route: Route = {
 
         const articles = $('.blog-posts.hfeed .date-outer').find('.post'); // 查找文章
 
-        const list = articles.toArray().map((elem) => {
+        const list = articles.toArray().map((elem): DataItem => {
             const a = $(elem).find('.post-title a'); // 获取标题链接
             return {
                 title: a.text(), // 标题
                 link: a.attr('href'), // 链接
-                category: [] as string[],
-                description: undefined as DataItem['description'], // 分类
+                category: [], // 分类
             };
         });
 

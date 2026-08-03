@@ -39,14 +39,11 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('a.ggrid')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.txt').text().trim(),
                 link: $item.attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
             };
         });
 

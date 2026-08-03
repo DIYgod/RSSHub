@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const items = $('.content h4')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.text();
@@ -53,7 +53,6 @@ async function handler(ctx) {
                 link: `${currentUrl}#${title.split(' – ', 1)[0]}`,
                 description: $item.next().html(),
                 pubDate: parseDate(title.match(/released (on )?(.*)$/)![2], 'MMMM DD, YYYY'),
-                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 

@@ -101,14 +101,11 @@ async function handler(ctx) {
 
     const list = $('h3.in_news_u_t a, h4.hkej_hl-news_topic_2014 a, div.hkej_toc_listingAll_news2_2014 h3 a, div.hkej_toc_cat_top_detail h3 a, div.allNews div.news h1 a, div#div_listingAll div.news2 h3 a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.text().trim(),
                 link: baseUrl + $item.attr('href')!.slice(0, $item.attr('href')!.lastIndexOf('/')),
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

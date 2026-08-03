@@ -46,24 +46,23 @@ async function handler(ctx) {
 
     const list = $('.news_list li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('.news_title').text(),
                 link: new URL($item.find('a').attr('href')!, host).href,
                 pubDate: timezone(parseDate($item.find('.news_meta').text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) => {
-            if (new URL(item.link).host === 'mp.weixin.qq.com') {
+            if (new URL(item.link!).host === 'mp.weixin.qq.com') {
                 return finishArticleItem({ ...item, guid: item.link });
             }
 
-            return cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
                 item.description = $('.wp_articlecontent').html() ?? '该通知无法直接预览，请点击原文链接查看';

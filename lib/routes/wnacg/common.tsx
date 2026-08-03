@@ -43,7 +43,7 @@ export async function handler(ctx) {
 
     const list = $('.gallary_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string; aid: string } => {
             const $item = $(item);
             const href = $item.find('a').attr('href');
             const aid = href!.match(/^\/photos-index-aid-(\d+)\.html$/)![1];
@@ -58,9 +58,6 @@ export async function handler(ctx) {
                     'YYYY-MM-DD'
                 ),
                 aid,
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
             };
         });
 

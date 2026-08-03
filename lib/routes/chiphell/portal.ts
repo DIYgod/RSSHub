@@ -16,7 +16,7 @@ const handler = async (ctx: Context) => {
 
     const list = $('dl.cl')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.xi2');
 
@@ -25,14 +25,13 @@ const handler = async (ctx: Context) => {
                 link: `https://www.chiphell.com/${a.attr('href')}`,
                 category: [$item.find('dd label').text()],
                 pubDate: timezone(parseDate($item.find('span.xg1').text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 $('#article_content div br').parent().remove();

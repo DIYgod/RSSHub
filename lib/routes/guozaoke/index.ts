@@ -43,7 +43,7 @@ async function handler() {
 
     const items = list
         .slice(0, maxItems)
-        .map((item) => {
+        .map((item): DataItem | undefined => {
             const $item = $(item);
             const title = $item.find('h3.title a').text();
             const url = $item.find('h3.title a').attr('href');
@@ -51,14 +51,14 @@ async function handler() {
             const lastTouched = $item.find('span.last-touched').text();
             const pubDate = parseRelativeDate(lastTouched);
             const link = url ? url.split('#', 1)[0] : undefined;
-            return link ? { title, link, author, pubDate, description: undefined as DataItem['description'] } : undefined;
+            return link ? { title, link, author, pubDate } : undefined;
         })
         .filter((item) => item !== undefined);
 
     const out = await pMap(
         items,
         (item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const url = `https://www.guozaoke.com${item.link}`;
                 const res = await got({
                     method: 'get',

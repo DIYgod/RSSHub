@@ -24,7 +24,7 @@ export const handler = async (ctx) => {
     let items = $('section.box-content div.card a.card-title')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).parent();
 
             const title = $item.find('a.card-title').text();
@@ -63,8 +63,6 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language: language as Language,
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
             };
         });
 

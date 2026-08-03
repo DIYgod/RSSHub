@@ -53,14 +53,12 @@ async function handler(ctx) {
 
     const list = $('.pandect-content-stuff')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.pandect-content-title a').text(),
                 link: $item.find('.pandect-content-title a').attr('href'),
                 pubDate: timezone(parseDate($item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm']), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

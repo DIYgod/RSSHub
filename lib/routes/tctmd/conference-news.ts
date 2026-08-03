@@ -42,7 +42,7 @@ async function handler() {
 
     const items = $('.views-row article.news-teaser')
         .toArray()
-        .map((el) => {
+        .map((el): DataItem | null => {
             const $el = $(el);
             const $link = $el.find('h2.algolia-search--title a');
             const href = $link.attr('href');
@@ -56,14 +56,13 @@ async function handler() {
                 pubDate: $el.find('time.datetime').attr('datetime') ? parseDate($el.find('time.datetime').attr('datetime')!) : undefined,
                 author: $el.find('.author__container--name').text().trim(),
                 image: $el.find('.field--name-field-teaser-image img').attr('src'),
-                description: undefined as DataItem['description'],
             };
         })
         .filter((item) => item !== null);
 
     const fullItems = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

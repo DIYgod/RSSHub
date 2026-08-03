@@ -72,15 +72,12 @@ async function handler(ctx) {
     let items = $('.center-center-jiazi')
         .find('a[title]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.attr('title')!,
                 link: `https:${$item.attr('href')}`,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     let items = $('div.media')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const a = $item.find('h4.media-heading a');
@@ -50,7 +50,6 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.find('span').first().text(), 'DDYYYY-MM'),
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -22,16 +22,13 @@ export const handler = async (ctx) => {
     let items = $('div.list_d ul li.q')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('a').text(),
                 pubDate: parseDate($item.find('span').text().trim()),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
-                language: undefined as DataItem['language'],
             };
         });
 

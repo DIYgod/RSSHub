@@ -33,15 +33,11 @@ async function handler(ctx) {
 
     const list = $('#category_new li a, .List-4 h3 a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.attr('title') || $item.text(),
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

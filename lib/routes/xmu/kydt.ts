@@ -33,7 +33,7 @@ async function handler() {
 
     const list = $('div.news li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('h4').text();
             const time = $item.find('h6').text();
@@ -44,14 +44,13 @@ async function handler() {
                 title,
                 link: fullUrl,
                 pubDate: time,
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.description = $('.v_news_content').html();

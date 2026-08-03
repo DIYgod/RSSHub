@@ -47,11 +47,10 @@ async function handler() {
                 const $ = load(response.data);
                 const item = $('dt.m-toggle__title div span a')
                     .toArray()
-                    .map((el) => ({
+                    .map((el): DataItem & { group: string } => ({
                         title: $('b', el).text().trim(),
                         link: baseUrl + $(el).attr('href'),
                         group: productGroup.groupName,
-                        description: undefined as DataItem['description'],
                     }));
                 return item;
             })
@@ -63,7 +62,7 @@ async function handler() {
 
     const items = await Promise.all(
         fullList.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);

@@ -47,7 +47,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.words > ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const date = $(item).find('span').text();
             const dateArr = date.split('-');
             const dateStr = Number.parseInt(dateArr[0]) + 1911 + '/' + dateArr[1] + '/' + dateArr[2];
@@ -56,7 +56,6 @@ async function handler(ctx) {
                 link: rootUrl + $(item).find('a').attr('href'),
                 title: $(item).find('a').attr('title')!,
                 pubDate: parseDate(dateStr, 'YYYY/MM/DD'),
-                description: undefined as DataItem['description'],
             };
         });
 

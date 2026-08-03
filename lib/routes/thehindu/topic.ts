@@ -42,17 +42,13 @@ async function handler(ctx) {
     const $api = load(apiResponse);
     const list = $('.element')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $api(item);
             const a = $item.find('.title a');
             return {
                 title: a.text().trim(),
                 link: a.attr('href'),
                 author: $item.find('.author-name').text(),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
-                category: undefined as DataItem['category'],
             };
         });
 

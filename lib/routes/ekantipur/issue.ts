@@ -51,7 +51,7 @@ async function handler(ctx) {
         // We use the `toArray()` method to retrieve all the DOM elements selected as an array.
         .toArray()
         // We use the `map()` method to traverse the array and parse the data we need from each element.
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
@@ -60,7 +60,6 @@ async function handler(ctx) {
                 link: `${baseUrl}${a.attr('href')}`,
                 author: $item.find('div.author').text(),
                 category: channel,
-                description: undefined as DataItem['description'],
             };
         });
 

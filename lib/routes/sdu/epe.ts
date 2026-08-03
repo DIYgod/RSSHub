@@ -40,14 +40,11 @@ async function handler(ctx) {
 
     let item = $('#page_right_main li a')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             return {
                 title: $e.attr('title')!,
                 link: $e.attr('href'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
@@ -55,7 +52,7 @@ async function handler(ctx) {
         item
             .filter((e) => e.link!.startsWith('../info'))
             .map((item) => {
-                item.link = new URL(item.link!.slice('3' as unknown as number), host).href;
+                item.link = new URL(item.link!.slice(3), host).href;
                 return cache.tryGet(item.link, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);

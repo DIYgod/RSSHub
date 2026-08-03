@@ -34,11 +34,9 @@ async function handler() {
         .map((item) => {
             const fullTitle = $(item).find('a').attr('title') || '';
             const result = fullTitle.match(/([^.]+)\.\D+([\d-]+)/);
-            const ret = {
+            const ret: DataItem = {
                 title: fullTitle,
                 link: new URL($(item).find('a').attr('href')!, baseUrl).href,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
             if (result !== null) {
                 ret.title = result[1];
@@ -51,7 +49,7 @@ async function handler() {
         link: response.url,
         item: await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     item.description = await getArticleDesc(item.link);
                     return item;
                 })

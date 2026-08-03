@@ -47,7 +47,7 @@ async function handler(ctx) {
     const list = $('.main')
         .toArray()
         .slice(0, -1) // last item is a template
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('h3 a');
             return {
@@ -56,13 +56,12 @@ async function handler(ctx) {
                 link: `${baseUrl}${a.attr('href')}`,
                 description: $item.find('.preview').text(),
                 category: $item.find('.classification').text().trim(),
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link, {
                     headers: {
                         Referer: url,

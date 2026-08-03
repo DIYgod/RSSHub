@@ -56,17 +56,13 @@ async function handler(ctx) {
     const $ = load(res);
     const list = $('.card--row-reversed .card-content')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('.article-title a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('.card__meta__date').text()),
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                doi: undefined as DataItem['doi'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -27,20 +27,19 @@ async function handler(ctx) {
     const $ = load(response.data);
     const items = $('.list-news ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, response.url).href,
                 pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
-                description: undefined as DataItem['description'],
             };
         });
 
     await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.startsWith(`${baseUrl}/`)) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.startsWith(`${baseUrl}/`)) {
                     return item;
                 }
 

@@ -19,7 +19,7 @@ const fetchItems = async (limit, currentUrl) => {
 
     let items = $('p.line')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -28,16 +28,12 @@ const fetchItems = async (limit, currentUrl) => {
                 title: a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
                 author: $item.find('span').last().text(),
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                guid: undefined as DataItem['guid'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link, {
                         responseType: 'buffer',
@@ -84,7 +80,7 @@ const fetchItems = async (limit, currentUrl) => {
                     });
                     item.author = details.find((detail) => detail.label === '作者')!.value;
                     item.category = [details.find((detail) => detail.label === '状态')!.value, details.find((detail) => detail.label === '类型')!.value.text].filter(Boolean);
-                    item.guid = `56kog-${item.link.match(/\/(\d+)\.html$/)![1]}#${pubDate}`;
+                    item.guid = `56kog-${item.link!.match(/\/(\d+)\.html$/)![1]}#${pubDate}`;
                     item.pubDate = timezone(parseDate(pubDate), 8);
                 } catch {
                     // no-empty

@@ -28,28 +28,23 @@ async function handler() {
 
     const recommand = $('.img-box ul > a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.attr('title')!,
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const list = [
         ...$('.pic-summary .title')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 return {
                     title: $item.find('a').attr('title')!,
                     link: $item.find('a').attr('href'),
                     pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
-                    author: undefined as any,
-                    description: undefined as any,
                 };
             }),
         ...recommand,

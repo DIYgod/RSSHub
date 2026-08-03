@@ -44,19 +44,17 @@ async function handler(ctx) {
     const $ = load(response._data);
     const list = $('div.al-article-items')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a.at-articleLink').text(),
-            link: new URL($(item).find('a.at-articleLink').attr('href')!, rootUrl).href,
-            author: undefined as DataItem['author'],
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
-            category: undefined as DataItem['category'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a.at-articleLink').text(),
+                link: new URL($(item).find('a.at-articleLink').attr('href')!, rootUrl).href,
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!, {
                     headers: {
                         Cookie: cookies,
                     },

@@ -12,8 +12,6 @@ async function fetch(address) {
         description: $('[name="_newscontent_fromname"]').html(),
         link: address,
         guid: address,
-        title: undefined as unknown as DataItem['title'],
-        pubDate: undefined as DataItem['pubDate'],
     };
 }
 
@@ -52,9 +50,12 @@ async function handler(ctx) {
             const title = $('a').text();
             const pubDate = $('span').text();
             return cache.tryGet(address, async () => {
-                const single = await fetch(address);
-                single.title = title;
-                single.pubDate = parseDate(pubDate, 'YYYY/MM/DD');
+                const fetched = await fetch(address);
+                const single: DataItem = {
+                    ...fetched,
+                    title,
+                    pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
+                };
                 return single;
             });
         })

@@ -66,7 +66,7 @@ async function handler(ctx) {
         .first()
         .children()
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
             const timeMatch = a.text().match(/\d+/);
@@ -78,24 +78,16 @@ async function handler(ctx) {
                 link: `${baseUrl}/../${a.attr('href')}`,
                 pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), 8) : null,
                 author: '时间|' + timestr,
-                guid: undefined as DataItem['guid'],
-                updated: undefined as DataItem['updated'],
-                itunes_item_image: undefined as DataItem['itunes_item_image'],
-                itunes_duration: undefined as DataItem['itunes_duration'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_length: undefined as DataItem['enclosure_length'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.slice(0, limit).map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const tenantId = detailResponse.match(/tenantid = '(\w+)';/)[1];
-                const articleId = item.link.match(/\/nbszxd\/(\d+)/)![1];
+                const articleId = item.link!.match(/\/nbszxd\/(\d+)/)![1];
 
                 const { data: apiResponse } = await got(apiUrl, {
                     searchParams: {

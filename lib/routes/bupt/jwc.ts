@@ -68,7 +68,7 @@ async function handler(ctx: Context) {
 
     const list = $('.txt-elise')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem | null => {
             const $item = $(item);
             const $link = $item.find('a');
             // Skip elements without links or with empty href
@@ -78,15 +78,13 @@ async function handler(ctx: Context) {
             return {
                 title: $link.text().trim(),
                 link: rootUrl + '/' + $link.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         })
         .filter(Boolean);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet<any>(item!.link, async () => {
+            cache.tryGet<any>(item!.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item!.link,

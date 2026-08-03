@@ -63,13 +63,12 @@ async function handler(ctx) {
 
     const list = $('div.study ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('a p').text().trim(),
                 pubDate: parseDate($item.find('span').text()),
                 link: new URL($item.find('a').attr('href')!, link).href,
-                description: undefined as DataItem['description'],
             };
         });
 

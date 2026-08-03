@@ -27,18 +27,17 @@ async function handler() {
     const $ = load(iconv.decode(response, 'gbk'));
     const list = $('.right .right_top .right_bot .list2 .ul1 ul')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const href: string = $item.find('a').attr('href')!;
             return {
                 title: $item.find('a').text(),
                 link: href.startsWith('http') ? href : `${baseUrl}${href}`,
-                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, { responseType: 'buffer' });
                 const $ = load(iconv.decode(response, 'gbk'));
                 item.description = $('.right .right_top .right_bot .articlebox').html();

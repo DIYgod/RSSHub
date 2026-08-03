@@ -140,14 +140,12 @@ async function handler(ctx) {
         .eq(timeRange[time].index + (category === 'whole' ? (type === 'click' ? -1 : 2) : type === 'click' ? 0 : 2))
         .find('table tbody tr td a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: $item.attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
+                title: '',
             };
         });
 

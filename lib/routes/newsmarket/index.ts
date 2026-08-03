@@ -51,15 +51,12 @@ async function handler(ctx) {
     const list = $('.title a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

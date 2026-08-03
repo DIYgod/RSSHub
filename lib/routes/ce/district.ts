@@ -59,22 +59,20 @@ async function handler(ctx) {
 
     const list = $('div.sec_left li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('a').text().trim();
             const link = new URL(element.find('a').attr('href')!, url).href;
             return {
                 title,
                 link,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const GB2312Response = await ofetch(item.link, { responseType: 'arrayBuffer' });
+            cache.tryGet(item.link!, async () => {
+                const GB2312Response = await ofetch(item.link!, { responseType: 'arrayBuffer' });
                 const response = new TextDecoder('gb2312').decode(new Uint8Array(GB2312Response));
                 const $ = load(response);
 

@@ -102,7 +102,7 @@ async function handler(ctx) {
         .find('li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -130,9 +130,6 @@ async function handler(ctx) {
                 ),
                 guid: link!.startsWith(rootUrl) ? `${link}#${title}` : link,
                 pubDate: parseDate($item.find('p.medGrey').text(), 'DD/MM/YYYY'),
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                category: undefined as DataItem['category'],
             };
         });
 

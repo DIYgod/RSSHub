@@ -60,15 +60,16 @@ async function handler(ctx) {
     const list = $('div.issue-item')
         .slice(0, 10)
         .toArray()
-        .map((item) => ({
-            title: $(item).find('h5.issue-item__title').text(),
-            link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
-            pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
-            description: undefined as DataItem['description'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('h5.issue-item__title').text(),
+                link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
+                pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
+            })
+        );
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link, {
                     headers: {
                         referer: cateUrl,

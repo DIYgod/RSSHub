@@ -38,13 +38,12 @@ async function handler() {
     const author = $('p.author').text().trim();
     const list = $('section#articles section')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('li').text(),
                 link: new URL($item.find('li a').attr('href')!, baseUrl).href,
                 author,
-                description: undefined as DataItem['description'],
             };
         });
 

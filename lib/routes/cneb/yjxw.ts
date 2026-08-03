@@ -63,7 +63,7 @@ async function handler(ctx) {
     let items = $('.list')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -72,8 +72,6 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

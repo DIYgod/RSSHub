@@ -44,7 +44,7 @@ async function handler() {
 
     let items = $('.e-ep')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('h2.e-ep__title a');
@@ -56,8 +56,6 @@ async function handler() {
                 enclosure_type: 'audio/mpeg',
                 enclosure_url: $item.find('audio source').attr('src'),
                 itunes_item_image: $item.find('.zoom-image-container-progression img').attr('src'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

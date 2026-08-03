@@ -161,7 +161,7 @@ async function handler(ctx) {
                         },
                     });
                     const trackInfo = trackPayInfoResponse.trackInfo;
-                    const _item = {} as Record<string, any>;
+                    const _item: Record<string, any> = {};
                     if (!trackInfo.isAuthorized) {
                         return _item;
                     }
@@ -188,15 +188,12 @@ async function handler(ctx) {
         const duration = item.duration; // 时间长度：单位（秒）
         const enclosureUrl = item.playPathAacv224 || item.playPathAacv164;
 
-        let resultItem = {
+        let resultItem: DataItem = {
             title,
             link,
             description: item.desc || '',
             pubDate,
             itunes_item_image: itunesItemImage,
-            enclosure_url: undefined as DataItem['enclosure_url'],
-            itunes_duration: undefined as DataItem['itunes_duration'],
-            enclosure_type: undefined as DataItem['enclosure_type'],
         };
 
         if (enclosureUrl) {

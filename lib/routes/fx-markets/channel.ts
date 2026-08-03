@@ -36,7 +36,7 @@ async function handler(ctx) {
     const title = `FX-Markets ${pageTitle}`;
 
     const items = $('div#listings').children();
-    const articles = items.toArray().map((el) => {
+    const articles = items.toArray().map((el): DataItem => {
         const $el = $(el);
         const $titleEl = $el.find('h5 > a');
         const articleURL = `https://www.fx-markets.com${$titleEl.attr('href')}`;
@@ -45,13 +45,12 @@ async function handler(ctx) {
             title: articleTitle!,
             link: articleURL,
             pubDate: parseDate($el.find('time').text()),
-            description: undefined as DataItem['description'],
         };
     });
 
     const result = await Promise.all(
         articles.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got(item.link);
                 const doc = load(res.data);
                 // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}

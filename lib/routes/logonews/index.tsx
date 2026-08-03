@@ -41,16 +41,12 @@ export async function handler(ctx) {
     let items = $(isWork ? 'h2 a' : 'a.article-link')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: $item.attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
+                title: '',
             };
         });
 

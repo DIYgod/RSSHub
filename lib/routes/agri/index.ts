@@ -24,7 +24,7 @@ export const handler = async (ctx) => {
     let items = $('div.list_li_con, div.nxw_video_com')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a').first();
@@ -55,16 +55,12 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language: language as Language,
-                author: undefined as DataItem['author'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

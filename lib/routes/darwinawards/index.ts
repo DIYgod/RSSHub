@@ -37,13 +37,12 @@ async function handler() {
 
     let items = $('#article_index a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
             };
         });
 

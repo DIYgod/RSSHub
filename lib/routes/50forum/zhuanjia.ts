@@ -40,7 +40,7 @@ async function handler() {
     let out = $('div.container div.list_list.mtop10 ul li')
         .find('a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const link = rootUrl + $item.attr('href');
             const reg = /^(.+) - (.*) - (.+)$/;
@@ -50,7 +50,6 @@ async function handler() {
                 author: keyword![2],
                 pubDate: timezone(parseDate(keyword![3], 'YYYY-MM-DD'), 8),
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 

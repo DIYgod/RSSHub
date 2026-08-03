@@ -41,12 +41,11 @@ async function handler(ctx) {
     const list = $('div.book-chapter-list ul li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
     const items = await Promise.all(

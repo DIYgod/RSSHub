@@ -25,20 +25,18 @@ async function handler(ctx) {
 
     const items = $('.list_right_con div li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, response.url).href,
                 pubDate: parseDate($item.find('.data').text()),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

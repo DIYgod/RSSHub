@@ -41,22 +41,18 @@ async function handler(ctx) {
     let items = $('.TOCLineItemBoldText')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).parent();
 
             return {
+                title: '',
                 link: `${rootUrl}${$item.attr('href')}`,
-                description: undefined as DataItem['description'],
-                title: undefined as unknown as DataItem['title'],
-                author: undefined as DataItem['author'],
-                doi: undefined as DataItem['doi'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);

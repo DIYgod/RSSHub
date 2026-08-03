@@ -38,13 +38,12 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#column_content > ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title')!,
                 link: `${baseUrl}${$item.find('a').attr('href')!.replace('ArticleDetail.do', 'InternalArticleDetail.do?')}`,
                 pubDate: timezone(parseDate($item.find('em').text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -48,13 +48,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#div_md > table > tbody > tr > td:nth-child(1) > a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.prop('innerText')!.replaceAll(/\s/g, ''),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
     const items = await Promise.all(

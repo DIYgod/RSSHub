@@ -38,22 +38,19 @@ async function handler(ctx) {
     let items = $('.items h4 a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const link = $item.attr('href')!.split('?', 1)[0];
 
             return {
                 title: $item.text(),
                 link: link.includes('http') ? link : `${rootUrl}${link}`,
-                description: undefined as DataItem['description'],
-                doi: undefined as DataItem['doi'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

@@ -29,15 +29,12 @@ async function handler(ctx) {
 
     const list = $('.article-card')
         .toArray()
-        .map((e) => ({
-            link: $(e).attr('href'),
-            title: $(e).find('h2').text(),
-            pubDate: undefined as DataItem['pubDate'],
-            updated: undefined as DataItem['updated'],
-            author: undefined as DataItem['author'],
-            category: undefined as DataItem['category'],
-            description: undefined as DataItem['description'],
-        }))
+        .map(
+            (e): DataItem => ({
+                link: $(e).attr('href'),
+                title: $(e).find('h2').text(),
+            })
+        )
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : Infinity);
 
     const items = await Promise.all(

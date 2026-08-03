@@ -70,16 +70,7 @@ async function handler(ctx) {
                 cache.tryGet(`18comic:album:${item.id}`, async () => {
                     const chapterApiUrl = `${getApiUrl()}/chapter?id=${item.id}`;
                     const chapterResult = await processApiItems(chapterApiUrl);
-                    const result = {
-                        title: undefined as unknown as DataItem['title'],
-                        link: undefined as DataItem['link'],
-                        guid: undefined as DataItem['guid'],
-                        updated: undefined as DataItem['updated'],
-                        pubDate: undefined as DataItem['pubDate'],
-                        category: undefined as DataItem['category'],
-                        author: undefined as DataItem['author'],
-                        description: undefined as DataItem['description'],
-                    };
+                    const result: DataItem = { title: '' };
                     const chapterNum = index + 1;
                     result.title = `第${chapterNum}話 ${item.name === '' ? chapterNum : item.name}`;
                     result.link = `${rootUrl}/photo/${item.id}`;

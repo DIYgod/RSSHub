@@ -42,14 +42,13 @@ async function handler(ctx) {
 
     const chapter_list = $('tr[bgcolor]')
         .toArray()
-        .map((chapter) => {
+        .map((chapter): DataItem => {
             const $_chapter = $(chapter);
             const chapter_link = $_chapter.find('a');
             return {
                 title: chapter_link.text(),
                 link: chapter_link.attr('href'),
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), 9),
-                description: undefined as DataItem['description'],
             };
         })
         .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))

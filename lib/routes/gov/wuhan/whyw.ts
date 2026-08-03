@@ -39,21 +39,19 @@ async function handler() {
 
     const list = $('.articleList li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('.time').text()), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

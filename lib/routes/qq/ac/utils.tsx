@@ -18,15 +18,13 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
     let items = $(`${time ? `.${time}-month-data ` : ''}.text-overflow`)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { guid: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 guid: `${rootUrl}${$item.attr('href')}`,
                 link: `${mobileRootUrl}${$item.attr('href')!.replace(/Comic\/ComicInfo/, 'comic/index')}`,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

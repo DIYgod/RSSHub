@@ -28,14 +28,11 @@ async function handler() {
     const $ = load(response);
     const list = $('h2.entry-title a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
-                description: undefined as DataItem['description'],
             };
         });
 

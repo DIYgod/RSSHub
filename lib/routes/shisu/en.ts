@@ -31,7 +31,7 @@ async function process(baseUrl: string, section: any) {
     const $ = load(r);
     const itemsoup = $('.tab-con:nth-child(1) ul li')
         .toArray()
-        .map((i0) => {
+        .map((i0): DataItem & { link: string } => {
             const i = $(i0);
             const img = i.find('img').attr('src');
             const link = `${baseUrl}${i.find('h3>a').attr('href')}`;
@@ -40,7 +40,6 @@ async function process(baseUrl: string, section: any) {
                 link,
                 pubDate: parseDate(i.find('p.time').text()),
                 itunes_item_image: `${baseUrl}${img}`,
-                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(

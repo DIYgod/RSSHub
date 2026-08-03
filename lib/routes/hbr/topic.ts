@@ -60,7 +60,7 @@ async function handler(ctx) {
     const list = $(`stream-content[data-stream-name="${type}"]`)
         .find('.stream-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -68,15 +68,13 @@ async function handler(ctx) {
                 author: $item.attr('data-authors'),
                 category: $item.attr('data-topic'),
                 link: `${rootUrl}${$item.attr('data-url')}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
 
                 const content = load(detailResponse);
 

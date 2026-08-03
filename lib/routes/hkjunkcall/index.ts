@@ -34,15 +34,12 @@ async function handler() {
 
     const list = $('.hh15')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).parent();
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                guid: undefined as DataItem['guid'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

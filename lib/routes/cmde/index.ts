@@ -45,13 +45,11 @@ async function handler(ctx) {
             description: $('meta[name=ColumnDescription]').attr('content'),
             items: $('.list ul li')
                 .toArray()
-                .map((item) => {
+                .map((item): DataItem & { link: string } => {
                     const $item = $(item);
                     return {
                         title: $($item).find('a').attr('title')!,
                         link: new URL($($item).find('a').attr('href')!, url).href,
-                        description: undefined as DataItem['description'],
-                        pubDate: undefined as DataItem['pubDate'],
                     };
                 }),
         };

@@ -47,22 +47,21 @@ async function handler() {
             const pubDate = parseDate($('meta[property=article:modified_time]').attr('content')!);
             return $('article.node-paper')
                 .toArray()
-                .map((item) => {
+                .map((item): DataItem => {
                     const $item = $(item);
                     return {
                         title: $item.find('h2.node-title > a').text().trim(),
                         link: `${url}${$item.find('h2.node-title > a').attr('href')}`,
                         author: $item.find('div.field.field-name-field-paper-people-text.field-type-text-long.field-label-hidden p').text(),
                         pubDate,
-                        description: undefined as DataItem['description'],
                     };
                 });
         });
 
     const items = await Promise.allSettled(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 item.description = $('.content').html();
 

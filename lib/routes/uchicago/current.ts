@@ -52,13 +52,9 @@ async function handler(ctx) {
 
     const list = $('.issue-item__title')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             link: `${baseUrl}${$(item).find('a').attr('href')}`,
-            title: undefined as unknown as DataItem['title'],
-            pubDate: undefined as DataItem['pubDate'],
-            doi: undefined as DataItem['doi'],
-            author: undefined as DataItem['author'],
-            description: undefined as DataItem['description'],
+            title: '',
         }));
 
     const items = await Promise.all(

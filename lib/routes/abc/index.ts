@@ -67,7 +67,7 @@ async function handler(ctx) {
     });
 
     let items = response.collection.slice(0, limit).map((i) => {
-        const item = {
+        const item: DataItem = {
             title: i.title.children ?? i.title,
             link: i.link.startsWith('https://') ? i.link : new URL(i.link, rootUrl).href,
             description: renderDescription({
@@ -82,9 +82,6 @@ async function handler(ctx) {
             guid: `abc-${i.id}`,
             pubDate: parseDate(i.dates.firstPublished),
             updated: i.dates.lastUpdated ? parseDate(i.dates.lastUpdated) : undefined,
-            enclosure_type: undefined as DataItem['enclosure_type'],
-            itunes_item_image: undefined as DataItem['itunes_item_image'],
-            itunes_duration: undefined as DataItem['itunes_duration'],
         };
 
         if (i.mediaIndicator) {

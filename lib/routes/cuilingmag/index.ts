@@ -23,7 +23,7 @@ export const handler = async (ctx) => {
     let items = $('div.new-list-div, div.item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.find('h3.new-list-h3, h3.title-font').text().trim();
@@ -53,15 +53,12 @@ export const handler = async (ctx) => {
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                content: undefined as DataItem['content'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

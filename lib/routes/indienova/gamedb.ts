@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const list = $('.related-game')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item
@@ -46,13 +46,12 @@ async function handler(ctx) {
                     .text(),
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseRelativeDate($item.find('small').first().text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

@@ -27,7 +27,7 @@ async function handler() {
 
     const list = $('.hot-news.visible-lg')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const elem = $(item);
             const title = elem.find('h4 a').text().trim();
             const link = elem.find('h4 a').attr('href');
@@ -47,13 +47,12 @@ async function handler() {
                 category,
                 author,
                 description,
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

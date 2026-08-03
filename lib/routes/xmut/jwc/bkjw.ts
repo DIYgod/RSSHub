@@ -27,7 +27,7 @@ async function handler(ctx) {
     const $ = load(res.data);
     const itemsArray = $('#result_list table tbody tr')
         .toArray()
-        .map((row) => {
+        .map((row): DataItem => {
             const res = $('td', row).eq(0);
             const resDate = $('td', row).eq(1);
             const resLink = $('a', res).attr('href');
@@ -44,12 +44,11 @@ async function handler(ctx) {
                 title: title!,
                 link,
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(
         itemsArray.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got(item.link, {
                     headers: {
                         referer: xmut,

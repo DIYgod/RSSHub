@@ -48,7 +48,7 @@ export async function handler(ctx) {
     let items = $('li.layui-row, li.layui-timeline-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('div.newslist-txt h3 a, a.article_title').first();
@@ -65,17 +65,12 @@ export async function handler(ctx) {
                     intro: $item.find('p.newslist-intro, div.newslist-info-intro').text(),
                 }),
                 itunes_item_image: image,
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);

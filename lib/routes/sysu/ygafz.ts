@@ -45,21 +45,19 @@ async function handler(ctx) {
 
     const list = $('.list-content a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('p').text(),
                 link: `${baseUrl}${$item.attr('href')}`,
-                pubDate: parseDate($item.find('.date').text()),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'], // 2023-03-22
+                pubDate: parseDate($item.find('.date').text()), // 2023-03-22
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const data = await ofetch(item.link!);
                 const $ = load(data);
 
                 item.author = $('.article-submit')

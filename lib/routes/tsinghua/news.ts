@@ -38,7 +38,7 @@ async function handler(ctx) {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const list = [
+    const list: DataItem[] = [
         ...$('.left li a')
             .toArray()
             .map((item) => {
@@ -49,7 +49,6 @@ async function handler(ctx) {
                     title: $item.find('.bt').text().trim(),
                     link: new URL($item.attr('href')!, baseUrl).href?.replace('http://', 'https://'),
                     pubDate: parseDate(`${sj.find('span').text().trim()}.${sj.find('p').text().trim()}`, 'YYYY.MM.DD'),
-                    description: undefined as any,
                 };
             }),
         ...($('.qhrw2_first').length
@@ -58,7 +57,6 @@ async function handler(ctx) {
                       title: $('.qhrw2_first .bt').text().trim(),
                       link: $('.qhrw2_first a').attr('href')?.replace('http://', 'https://'),
                       pubDate: parseDate(`${$('.qhrw2_first .sj span').text().trim()}.${$('.qhrw2_first .sj p').text().trim()}`, 'YYYY.MM.DD'),
-                      description: undefined as DataItem['description'],
                   },
               ]
             : []),

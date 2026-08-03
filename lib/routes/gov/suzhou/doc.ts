@@ -37,22 +37,19 @@ async function handler() {
     const $ = load(response);
     const list = $('.tr_main_value_odd')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a');
             return {
                 title: title.attr('title')!,
                 link: `https://www.suzhou.gov.cn${title.attr('href')}`,
                 pubDate: timezone(parseDate($item.find('td:nth-child(3)').text().trim()), 8),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

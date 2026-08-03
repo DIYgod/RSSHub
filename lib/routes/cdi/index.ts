@@ -42,20 +42,18 @@ async function handler(ctx) {
 
     let items = $('.a-full')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: `${rootUrl}${$item.attr('href')}`,
-                title: undefined as unknown as DataItem['title'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

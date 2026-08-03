@@ -52,7 +52,7 @@ async function handler(ctx) {
 
     const list = $('ul.news_list.list2 li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const title = element.find('a').text().trim();
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
@@ -63,8 +63,6 @@ async function handler(ctx) {
                 title,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

@@ -52,7 +52,7 @@ async function handler(ctx) {
 
     const list = $('.comp_contents_1x article')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('h2 a');
@@ -70,13 +70,12 @@ async function handler(ctx) {
                     ),
                     9
                 ),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

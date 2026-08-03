@@ -86,14 +86,12 @@ async function handler(ctx) {
 
     let items = $('h3 a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

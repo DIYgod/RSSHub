@@ -42,15 +42,12 @@ async function handler() {
 
     const list = $(String.raw`.lg\:text-2xl`)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).parent();
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
             };
         });
 

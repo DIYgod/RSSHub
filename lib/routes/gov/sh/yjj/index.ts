@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     let items = $('.pageList li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -52,7 +52,6 @@ async function handler(ctx) {
                 title: $item.text(),
                 pubDate: parseDate($item.next().text()),
                 link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -48,14 +48,12 @@ async function handler(ctx) {
     const list = $('.list-4 a[title]')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')!.replace(/\.\./, '/')}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

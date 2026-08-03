@@ -43,7 +43,7 @@ async function handler(ctx) {
     const title = $('h2').text();
     const items = $('li.wow.fadeInUp')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('a').attr('title');
             let link = $(item).find('a').attr('href');
             if (!link!.startsWith('http')) {
@@ -59,7 +59,6 @@ async function handler(ctx) {
                 title: title!,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 

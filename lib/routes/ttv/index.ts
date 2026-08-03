@@ -36,15 +36,12 @@ async function handler(ctx) {
     let items = $('div.news-list li')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: $($item).find('a').attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
+                title: '',
             };
         });
 

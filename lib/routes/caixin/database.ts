@@ -41,20 +41,17 @@ async function handler() {
 
     const list = $('h4 a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: $item.attr('href')!.replace('http://', 'https://'),
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

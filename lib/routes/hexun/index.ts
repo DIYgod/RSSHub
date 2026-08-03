@@ -30,7 +30,7 @@ async function handler() {
 
     const list = $('.listNews li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const a = element.find('a');
 
@@ -45,7 +45,6 @@ async function handler() {
                 title,
                 link,
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 

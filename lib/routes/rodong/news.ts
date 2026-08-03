@@ -43,20 +43,19 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('.date_news_list .row')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.media-body').text(),
                 link: `${host}/${language}/${$item.find('.media-body a').attr('href')}`,
                 author: $item.find('.col-sm-3').text(),
                 pubDate: parseDate($item.find('.news_date').text(), 'YYYY.M.D.'),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

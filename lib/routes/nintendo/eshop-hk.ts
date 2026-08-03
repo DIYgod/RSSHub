@@ -49,11 +49,11 @@ async function handler(ctx) {
                         price: $('meta[property="product:price:amount"]').attr('content'),
                         currency: $('meta[property="product:price:currency"]').attr('content'),
                     };
-                    const gallery = JSON.parse(
-                        $('[type=text/x-magento-init]')
-                            .text()
-                            .match(/\{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder\]": \{\n\s+"mage(?:\/gal{2}ery){2}".*?\}{4}(?:\s+\}\n){3}/s) as unknown as string
-                    );
+                    const galleryMatch = $('[type=text/x-magento-init]')
+                        .text()
+                        .match(/\{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder\]": \{\n\s+"mage(?:\/gal{2}ery){2}".*?\}{4}(?:\s+\}\n){3}/s);
+                    // Keep the upstream no-match behavior: JSON.parse(null) yields null
+                    const gallery = JSON.parse(galleryMatch ? galleryMatch[0] : 'null');
 
                     description = renderEshopHkDescription({
                         attributes,

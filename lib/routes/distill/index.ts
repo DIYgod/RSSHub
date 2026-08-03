@@ -33,22 +33,18 @@ async function handler() {
 
     let items = $('.post-preview')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('.title').text(),
                 link: `${rootUrl}/${$item.children('a').attr('href')}`,
-                doi: undefined as DataItem['doi'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

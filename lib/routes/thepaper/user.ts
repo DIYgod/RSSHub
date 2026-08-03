@@ -138,20 +138,18 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.data.list.map((item) => ({
+    const list = response.data.list.map((item): DataItem & { contId: string } => ({
         title: item.name,
         link: `https://www.thepaper.cn/newsDetail_forward_${item.contId}`,
         pubDate: parseDate(item.pubTimeLong),
         author: item.authorInfo.sname,
         contId: item.contId,
         image: item.pic,
-        description: undefined as DataItem['description'],
-        updated: undefined as DataItem['updated'],
     }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await ofetch(`https://m.thepaper.cn/_next/data/${mobileBuildId}/detail/${item.contId}.json`, {
                     query: {
                         id: item.contId,

@@ -39,13 +39,13 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('ul.bl > li')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('h2 > a').text(),
-            link: $(item).find('h2 > a').attr('href'),
-            pubDate: timezone(parseDate($(item).find('div.c').attr('data-ot')!), 8),
-            description: undefined as DataItem['description'],
-            author: undefined as DataItem['author'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('h2 > a').text(),
+                link: $(item).find('h2 > a').attr('href'),
+                pubDate: timezone(parseDate($(item).find('div.c').attr('data-ot')!), 8),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>

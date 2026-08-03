@@ -29,21 +29,19 @@ async function handler() {
 
     const list = $('a[class^="note"]')
         .toArray()
-        .map((element) => {
+        .map((element): DataItem => {
             const $e = $(element);
             return {
                 title: $e.find('h2, h3').text().trim(),
                 link: `${baseUrl}/${$e.attr('href')}`,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.pubDate = parseDate($('d-article p').first().text().trim());

@@ -56,7 +56,7 @@ async function handler(ctx) {
     let items = $('article')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('h2 a');
@@ -65,8 +65,6 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 pubDate: parseDate($item.find('time').text()),
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
             };
         });
 

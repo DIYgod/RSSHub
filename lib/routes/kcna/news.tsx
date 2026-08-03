@@ -69,7 +69,7 @@ async function handler(ctx: Context) {
 
     const list = $('.article h5')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             const dateString = $item
@@ -81,7 +81,6 @@ async function handler(ctx: Context) {
                 title: a.text().trim(),
                 link: new URL(a.attr('href')!, rootUrl).href,
                 pubDate: timezone(parseDate(dateString, 'YYYY.M.D'), 9),
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -91,8 +90,8 @@ async function handler(ctx: Context) {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const container = $('article .container');

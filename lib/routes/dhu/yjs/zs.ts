@@ -40,21 +40,20 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('.list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
                 title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate($item.find('.Article_PublishDate').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     // item content
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.description = $('.wp_articlecontent').first().html();

@@ -38,20 +38,18 @@ async function handler() {
 
     const list = $('.steam-game')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('h3').attr('title')!,
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 author: $item.find('span').text(),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

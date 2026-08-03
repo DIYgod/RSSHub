@@ -61,17 +61,16 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#top-content-news > div')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('div.md > a').text(),
-            link: new URL($(item).find('div.md > a').attr('href')!, rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
-            pubDate: undefined as DataItem['pubDate'],
-            author: undefined as DataItem['author'],
-            description: undefined as DataItem['description'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('div.md > a').text(),
+                link: new URL($(item).find('div.md > a').attr('href')!, rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 

@@ -32,7 +32,7 @@ async function handler() {
 
         let items = $('[class="min-h-[90vh] mt-4"] .grid a')
             .toArray()
-            .map((element) => {
+            .map((element): DataItem => {
                 const $element = $(element);
                 const $title = $element.find('div.font-semibold.text-sm.text-primary.line-clamp-1.overflow-ellipsis');
                 const $date = $element.find(String.raw`span.text-xs.text-muted-foreground.md\:w-24.text-end`);
@@ -45,16 +45,15 @@ async function handler() {
                     pubDate: $date.text().trim(),
                     author: $author.text().replace('OpenAI', '').trim(),
                     category: $tags.toArray().map((tag) => $(tag).text().trim()),
-                    description: undefined as DataItem['description'],
                 };
             });
 
         items = (
             await Promise.all(
                 items.map((item) =>
-                    cache.tryGet(item.link, async () => {
+                    cache.tryGet(item.link!, async () => {
                         try {
-                            const detailResponse = await ofetch(item.link);
+                            const detailResponse = await ofetch(item.link!);
                             const $ = load(detailResponse);
 
                             item.description = $(String.raw`article.prose.prose-sm.sm\:prose-base.max-w-none.dark\:prose-invert`).html();

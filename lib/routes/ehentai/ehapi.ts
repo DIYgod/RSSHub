@@ -8,7 +8,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
 
-const headers = {} as Record<string, any>;
+const headers: Record<string, any> = {};
 const has_cookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
 const from_ex = has_cookie && config.ehentai.igneous;
 if (has_cookie) {
@@ -105,15 +105,11 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
         const description = `<img src='${thumbnail}' alt='thumbnail'>`;
         if (title && link) {
-            const item = {
+            const item: DataItem & { bittorrent_page_url?: string } = {
                 title,
                 description,
                 pubDate,
                 link,
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                author: undefined as DataItem['author'],
-                bittorrent_page_url: undefined as any,
             };
             if (get_bittorrent) {
                 const el_down = el.find('div.gldown');

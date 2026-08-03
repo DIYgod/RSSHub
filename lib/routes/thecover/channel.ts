@@ -58,16 +58,15 @@ async function handler(ctx) {
     const list = $('a.link-to-article')
         .toArray()
         .filter((item) => $(item).attr('href')!.startsWith('/'))
-        .map((item) => ({
-            link: rootUrl + $(item).attr('href'),
-            title: undefined as unknown as DataItem['title'],
-            description: undefined as DataItem['description'],
-            author: undefined as DataItem['author'],
-            pubDate: undefined as DataItem['pubDate'],
-        }));
+        .map(
+            (item): DataItem => ({
+                link: rootUrl + $(item).attr('href'),
+                title: '',
+            })
+        );
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

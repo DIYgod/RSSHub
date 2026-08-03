@@ -38,11 +38,10 @@ async function handler() {
     const type = (filename) => filename.split('.').pop();
     const links = $('.list_list_wrap #wp_news_w10002 ul > li')
         .toArray()
-        .map((el) => ({
+        .map((el): DataItem & { link: string } => ({
             pubDate: timezone(parseDate($(el).find('.news-time2').text()), 8),
             link: new URL($(el).find('a').attr('href')!, baseUrl).href,
             title: $(el).find('a').text(),
-            description: undefined as DataItem['description'],
         }));
 
     return {

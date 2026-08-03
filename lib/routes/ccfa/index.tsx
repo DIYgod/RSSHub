@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('div.page_right ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -30,18 +30,13 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.includes('ccfa.org.cn')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.includes('ccfa.org.cn')) {
                     return item;
                 }
 

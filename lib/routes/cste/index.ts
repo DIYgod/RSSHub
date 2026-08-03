@@ -43,20 +43,19 @@ async function handler(ctx) {
     let items = $('a.list-group-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('h5').text(),
                 link: `${rootUrl}${$item.attr('href')}`,
                 pubDate: parseDate($item.find('small').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

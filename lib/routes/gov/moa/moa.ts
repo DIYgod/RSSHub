@@ -87,7 +87,7 @@ async function dealChannel(suburl, selectors) {
 
     const pageInfos = $(listSelector)
         .toArray()
-        .map((e) => {
+        .map((e): DataItem & { pageType: string; link: string } => {
             const element = $(e);
             const titleElement = element.find(titleSelector);
 
@@ -103,7 +103,6 @@ async function dealChannel(suburl, selectors) {
                 // 如果是正常文章的话可以在那里提取更精确的时间
                 // 如果是公示文章或者站外文章的话只能用这个保底了
                 pubDate: parseRelativeDate(dateraw),
-                description: undefined as DataItem['description'],
             };
         });
 

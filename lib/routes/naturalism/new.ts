@@ -26,19 +26,18 @@ async function handler() {
 
     const list = $('.view-what-s-new .field-content a')
         .toArray()
-        .map((element) => {
+        .map((element): DataItem => {
             const a = $(element);
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const content = $('#content');

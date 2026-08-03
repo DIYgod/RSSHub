@@ -55,7 +55,7 @@ async function handler(ctx) {
     const list = $('#delform tr:not(.th)')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('th>a').first();
             const category = $item.find('.xg1').first().text();
@@ -65,16 +65,12 @@ async function handler(ctx) {
                 link: baseUrl + a.attr('href'),
                 // pubDate: '',
                 author: $('.mt').first().text(),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
+            cache.tryGet(info.link!, async () => {
                 const response = await got(info.link, {
                     headers: {
                         Cookie: config.sehuatang.cookie,

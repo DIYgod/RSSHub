@@ -47,7 +47,7 @@ async function handler(ctx) {
         .find('a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const regExp = new RegExp(String.raw`\/sgcc\/${category}\/\.\.\.`);
@@ -59,7 +59,6 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('span').text()),
                 enclosure_url: link,
                 enclosure_type: `application/${link.split(/\./).pop()}`,
-                description: undefined as DataItem['description'],
             };
         });
 

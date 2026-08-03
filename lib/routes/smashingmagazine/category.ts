@@ -74,7 +74,7 @@ async function handler(ctx) {
 
     const listItems = $('article.article--post')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('h2.article--post__title a');
             const description = $item
@@ -91,7 +91,6 @@ async function handler(ctx) {
                 pubDate,
                 description,
                 author,
-                category: undefined as DataItem['category'],
             };
         });
 

@@ -47,26 +47,24 @@ async function handler() {
     const $ = load(html);
     const list = $('font.newslist_style')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a[title]');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailPage = await context.newPage();
                 await detailPage.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
-                await detailPage.goto(item.link, {
+                await detailPage.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
                 });
                 const detailHtml = await detailPage.evaluate(() => document.documentElement.getHTML());

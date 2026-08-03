@@ -64,15 +64,12 @@ async function handler(ctx) {
     const list = $('.pro_title')
         .slice(0, 12)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).parent();
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

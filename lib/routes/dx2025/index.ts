@@ -60,14 +60,11 @@ async function handler(ctx) {
     const list = $('.entry-title a')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

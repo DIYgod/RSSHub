@@ -39,14 +39,13 @@ async function handler() {
     const list = $('div.list_right_con ul li')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, 'http://gs.xjtu.edu.cn/').href,
                 pubDate: parseDate($item.find('span.time').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -55,7 +54,7 @@ async function handler() {
         link: rootUrl,
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const res = await got(item.link);
                     const content = load(res.data);
                     item.description = content('#vsb_content').html()! + (content('form ul').length > 0 ? content('form ul').html() : '')!;

@@ -48,7 +48,7 @@ async function handler(ctx) {
 
     let items = $('.aw-question-content')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('h4 a');
@@ -59,7 +59,6 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 author: $item.find('.aw-user-name').text(),
                 pubDate: timezone(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

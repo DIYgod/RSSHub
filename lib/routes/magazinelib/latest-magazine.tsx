@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://magazinelib.com';
@@ -51,22 +51,20 @@ async function handler(ctx) {
     }
 
     const items = response.data.map((obj) => {
+        const $ = load(obj.content.rendered);
+        const content = $('.vk-att');
+        content.find('img[src="https://magazinelib.com/wp-includes/images/media/default.png"]').remove();
+        const contentHtml = content.html();
+        const imgUrl = obj._embedded['wp:featuredmedia'][0].source_url;
         const data = {
             date: obj.date_gmt,
             link: obj.link,
             featuredMediaLink: obj._links['wp:featuredmedia'][0].href,
             title: obj.title.rendered,
-            content: undefined as DataItem['description'],
-            description: undefined as DataItem['description'],
-            categories: undefined as any,
+            content: contentHtml,
+            description: contentHtml + renderImage(imgUrl),
+            categories: obj._embedded['wp:term'][0].map((item) => item.name),
         };
-        const $ = load(obj.content.rendered);
-        const content = $('.vk-att');
-        content.find('img[src="https://magazinelib.com/wp-includes/images/media/default.png"]').remove();
-        data.content = content.html();
-        const imgUrl = obj._embedded['wp:featuredmedia'][0].source_url;
-        data.description = data.content + renderImage(imgUrl);
-        data.categories = obj._embedded['wp:term'][0].map((item) => item.name);
         return data;
     });
 

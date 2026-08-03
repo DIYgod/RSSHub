@@ -18,7 +18,7 @@ const handler = async (ctx) => {
     const list = $('li.wp-manga-chapter')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const itemDate = $item.find('i').text().replaceAll(' ', '');
 
@@ -26,8 +26,7 @@ const handler = async (ctx) => {
                 title: $item.find('a').text(),
                 link: $item.find('a').attr('href'),
                 guid: $item.find('a').attr('href'),
-                pubDate: itemDate as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
+                pubDate: itemDate,
             };
         });
 

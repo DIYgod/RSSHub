@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     let items = $('#wp_news_w6 > .wp_article_list > .list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const elem = $(item);
             const title = elem.find('.Article_Title > a').attr('title')!.trim();
             let link = elem.find('.Article_Title > a').attr('href');
@@ -71,7 +71,6 @@ async function handler(ctx) {
                 title,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -80,7 +79,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('div.wp_articlecontent').html() ?? '';
+                    const desc = load(response.data)('div.wp_articlecontent').html();
                     item.description = desc;
                 } catch {
                     // Intranet only contents

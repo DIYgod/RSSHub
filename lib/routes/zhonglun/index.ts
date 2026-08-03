@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('div#dataList > dl > dd, div#dataList > ul > li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const description = renderDescription({
@@ -34,10 +34,6 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('span').text()),
                 link: $item.find('h3 > a').prop('href'),
                 language,
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
             };
         });
 

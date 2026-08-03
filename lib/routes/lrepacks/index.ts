@@ -23,7 +23,7 @@ export const handler = async (ctx) => {
     let items = $('#main article')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.find('h3.entry-title').text();
@@ -40,12 +40,6 @@ export const handler = async (ctx) => {
                     .toArray()
                     .map((c) => $(c).text()),
                 language: language as Language,
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
-                updated: undefined as DataItem['updated'],
             };
         });
 

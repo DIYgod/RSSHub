@@ -19,15 +19,12 @@ export const fetchFeed = async (ctx, currentUrl) => {
     let items = $('.item-title a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

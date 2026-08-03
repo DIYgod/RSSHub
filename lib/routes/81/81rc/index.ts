@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
     let items = $('div.left-news ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -30,9 +30,6 @@ export const handler = async (ctx) => {
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
                 link: $item.find('a').prop('href'),
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
             };
         });
 

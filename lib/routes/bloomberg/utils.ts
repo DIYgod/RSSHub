@@ -205,7 +205,10 @@ const parsePhotoEssaysPage = async (res, api, item) => {
     const $ = load(res.data.html);
     const article_json = { id: undefined as DataItem['id'], headline: undefined as any, canonical: undefined as any, body: undefined as any, authors: undefined as any };
     for (const e of $(api.sel).toArray()) {
-        Object.assign(article_json, JSON.parse($(e).html() ?? ''));
+        const raw = $(e).html();
+        if (raw !== null) {
+            Object.assign(article_json, JSON.parse(raw));
+        }
     }
     const rss_item = {
         title: article_json.headline || item.title,

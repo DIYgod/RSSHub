@@ -58,7 +58,7 @@ async function handler(ctx) {
     let items = $('#d_list ul li, #thread_list li, .t_l .t_subject')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a').first();
@@ -67,9 +67,6 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: link!.startsWith('http') ? link : `${rootUrl}/${link!.startsWith('view') ? `newspark/${link}` : link}`,
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

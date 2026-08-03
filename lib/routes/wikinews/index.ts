@@ -36,7 +36,7 @@ async function handler() {
     const $ = load(resp.data);
     const urls = $('url')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find(String.raw`news\:title`).text(),
@@ -47,7 +47,6 @@ async function handler() {
                     .split(',')
                     .map((item) => item.trim()),
                 link: $item.find('loc').text(),
-                description: undefined as DataItem['description'],
             };
         });
 

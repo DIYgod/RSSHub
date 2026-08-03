@@ -36,14 +36,12 @@ async function handler(ctx) {
 
     let items = $('.title.game_link')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

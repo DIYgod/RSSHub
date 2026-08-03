@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     const list = $('.qoo-post-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { postId?: string } => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -45,7 +45,6 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
                 author: $item.find('cite.name').text(),
                 postId: a.attr('href')!.split('/').pop(),
-                description: undefined as DataItem['description'],
             };
         });
 

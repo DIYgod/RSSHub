@@ -49,7 +49,7 @@ async function handler(ctx) {
     let items = $('div.eph-num')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -60,7 +60,6 @@ async function handler(ctx) {
                 pubDate: parseDate($item.find('span.chapterdate').text(), 'MMMM DD'),
                 enclosure_url: $item.next().find('a.dload').prop('href'),
                 enclosure_type: 'application/zip',
-                description: undefined as DataItem['description'],
             };
         });
 

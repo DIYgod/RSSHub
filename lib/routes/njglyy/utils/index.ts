@@ -12,19 +12,17 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
 
     const list = $(listSelector)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find(titleSelector).text(),
                 link: host + $item.find(itemSelector).attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 if (response.redirectUrls.length) {
                     item.link = response.redirectUrls[0];

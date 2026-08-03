@@ -47,7 +47,7 @@ export const route: Route = {
         const list = $('#wp_news_w9')
             .find('a[title]')
             .toArray()
-            .map((element, index) => {
+            .map((element, index): DataItem => {
                 const $a = $(element);
                 let linkStr = $a.attr('href') || '';
 
@@ -58,13 +58,12 @@ export const route: Route = {
                     title: $a.text(),
                     link: linkStr,
                     pubDate: timezone(parseDate(dateList[index]), 8),
-                    description: undefined as DataItem['description'],
                 };
             });
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link.toString(), async () => {
+                cache.tryGet(item.link!.toString(), async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
                     item.description = $('.read').html();

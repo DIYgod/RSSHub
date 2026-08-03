@@ -136,7 +136,7 @@ async function handler(ctx) {
     let items = $('span.cont')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.parent();
@@ -145,14 +145,12 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: new URL(a.prop('href')!, currentUrl).href,
                 pubDate: parseDate(a.find('span.time').text(), '[YYYY.MM.DD]'),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);

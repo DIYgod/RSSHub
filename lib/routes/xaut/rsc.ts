@@ -51,7 +51,7 @@ async function handler(ctx) {
     // 这个列表指通知公告详情列表
     const list = $('.vsb-space.n_right .list .cleafix')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             // 工作动态栏目里有一些是外链，这里做个判断
             const a = $item.find('.list_wen a').eq(0).attr('href');
@@ -61,8 +61,6 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
     return {

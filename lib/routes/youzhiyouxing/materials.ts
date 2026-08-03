@@ -64,21 +64,19 @@ async function handler(ctx) {
 
     let items = $('li[id*="material"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.find('a').attr('href')}`,
                 pubDate: parseDate($item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

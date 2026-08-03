@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const list = $('ul.notice-list li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const title = $item.find('a').text();
             const time = $item.find('.notice-date').text();
@@ -49,7 +49,6 @@ async function handler(ctx) {
                 title,
                 link: fullUrl,
                 pubDate: time,
-                description: undefined as DataItem['description'],
             };
         });
 

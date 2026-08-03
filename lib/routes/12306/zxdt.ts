@@ -42,11 +42,10 @@ async function handler(ctx) {
 
     const list = $('#newList > ul > li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('a').text(),
             link: new URL($(item).find('a').attr('href')!, link).href,
             pubDate: parseDate($(item).find('span').text().slice(1, -1)),
-            description: undefined as DataItem['description'],
         }));
 
     const out = await Promise.all(

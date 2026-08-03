@@ -171,8 +171,8 @@ const constructTopicEntry = async (ctx, url) => {
 
             return data;
         },
-        false as unknown as number,
-        config.cache.routeExpire as unknown as boolean
+        config.cache.routeExpire,
+        false
     );
 
     if (data.length === 0) {

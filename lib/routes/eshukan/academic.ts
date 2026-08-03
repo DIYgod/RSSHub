@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
     let items = $('ul.article li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -48,13 +48,12 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $item.find('p').text(),
                 },
-                author: undefined as DataItem['author'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

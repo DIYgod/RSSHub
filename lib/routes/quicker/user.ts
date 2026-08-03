@@ -44,21 +44,18 @@ async function handler(ctx) {
     let items = $('table tbody tr')
         .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).find('td a').first();
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

@@ -41,22 +41,18 @@ export async function handler(ctx) {
 
     let items = $('div[data-column="Two-Third"] .article-title .article-link')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

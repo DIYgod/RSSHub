@@ -49,15 +49,12 @@ async function handler(ctx) {
     let items = $('.c-postedArticle-info a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
             };
         });
 

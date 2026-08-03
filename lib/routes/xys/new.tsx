@@ -49,7 +49,7 @@ async function handler(ctx) {
     let items = $('li a')
         .slice(4, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             let link = $item.attr('href');
             /^https?:\/\//.test(link!) || (link = rootUrl + '/' + link!.replace(/^\//, ''));
@@ -59,7 +59,6 @@ async function handler(ctx) {
                 title: $item.text(),
                 link,
                 pubDate: date,
-                description: undefined as DataItem['description'],
             };
         });
 

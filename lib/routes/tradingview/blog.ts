@@ -77,7 +77,7 @@ async function handler(ctx) {
     const list = $('article[id]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.find('div.title').text();
@@ -100,7 +100,6 @@ async function handler(ctx) {
                     .map((c) => $(c).text()),
                 guid: `tradingview-blog-${category}-${$item.prop('id')}`,
                 pubDate: parseDate($item.find('div.date').text(), 'MMM D, YYYY'),
-                author: undefined as DataItem['author'],
             };
         });
 

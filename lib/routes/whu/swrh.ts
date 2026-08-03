@@ -65,24 +65,22 @@ async function handler(ctx) {
         type === 0
             ? $('div.my_box_nei')
                   .toArray()
-                  .map((item) => {
+                  .map((item): DataItem & { link: string } => {
                       const $item = $(item);
                       return {
                           title: $item.find('a b.am-text-truncate').text().trim(),
                           pubDate: $item.find('a i').text(),
                           link: new URL($item.find('a').attr('href')!, baseUrl).href,
-                          description: undefined as DataItem['description'],
                       };
                   })
             : $('div.list_txt.am-fr ul.am-list li')
                   .toArray()
-                  .map((item) => {
+                  .map((item): DataItem & { link: string } => {
                       const $item = $(item);
                       return {
                           title: $item.find('a span').text().trim(),
                           pubDate: $item.find('a i').text(),
                           link: new URL($item.find('a').attr('href')!, baseUrl).href,
-                          description: undefined as any,
                       };
                   });
 

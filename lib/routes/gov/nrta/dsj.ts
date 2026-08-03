@@ -41,7 +41,7 @@ async function handler(ctx) {
     const items = $('img[src="/site/styles/default/images/icon_arrow_r.gif"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item).next();
 
             const pubDateMatches = $item.text().match(/(\d+年\d+月)/);
@@ -50,7 +50,6 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1], ['YYYY年MM月', 'YYYY年M月']) : undefined,
-                description: undefined as DataItem['description'],
             };
         });
 

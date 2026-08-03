@@ -37,7 +37,7 @@ async function handler() {
     const list = $('div article')
         .toArray()
         .slice(0, -1) // last one is a dummy
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const meta = $item.find('h5').first().text();
             return {
@@ -45,7 +45,6 @@ async function handler() {
                 link: $item.find('h3 a').attr('href'),
                 author: meta.split('|', 1)[0].trim(),
                 pubDate: parseDate(meta.split('|', 2)[1].trim()),
-                description: undefined as DataItem['description'],
             };
         });
 

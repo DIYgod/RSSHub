@@ -47,16 +47,15 @@ async function handler(ctx) {
     let items = $('li > figure.thumb')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
         .toArray()
-        .map((item) => ({
-            title: $(item).find('img.lazyload').attr('data-src')!.split('/').pop()!,
-            description: $(item)
-                .html()!
-                .match(/<img.*?>/)![0],
-            link: $(item).find('a.preview').attr('href'),
-            author: undefined as DataItem['author'],
-            pubDate: undefined as DataItem['pubDate'],
-            category: undefined as DataItem['category'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('img.lazyload').attr('data-src')!.split('/').pop()!,
+                description: $(item)
+                    .html()!
+                    .match(/<img.*?>/)![0],
+                link: $(item).find('a.preview').attr('href'),
+            })
+        );
     if (needDetails) {
         items = await Promise.all(
             items.map((item) =>

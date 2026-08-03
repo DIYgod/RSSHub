@@ -42,7 +42,7 @@ async function handler(ctx) {
     let items = $('ul.tab-item li.clearfix')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -54,15 +54,12 @@ async function handler(ctx) {
                     rootUrl
                 ).href,
                 pubDate: parseDate($item.find('span').text()),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);

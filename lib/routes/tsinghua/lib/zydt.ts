@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('ul.notice-list li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
@@ -33,8 +33,6 @@ export const handler = async (ctx) => {
                     .toArray()
                     .map((c) => $(c).text()),
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
             };
         });
 

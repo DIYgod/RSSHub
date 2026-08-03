@@ -137,13 +137,12 @@ async function handler(ctx) {
 
     const list = $('.wp_article_list_table .border9')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem & { link: string } => {
             const $e = $(e);
             return {
                 title: $e.find('a').attr('title')!,
                 link: new URL($e.find('a').attr('href')!, baseUrl).href,
                 pubDate: parseDate($e.find('.date').text()),
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -29,16 +29,14 @@ async function handler() {
 
     const list = $('.list-items .list-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('h3 a.title-link');
             return {
                 title: a.find('strong').text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
-                description: $item.find('p').text()?.trim() as DataItem['description'],
+                description: $item.find('p').text()?.trim(),
                 pubDate: parseDate($item.find('h4').text()),
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
             };
         });
 

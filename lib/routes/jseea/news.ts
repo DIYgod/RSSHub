@@ -54,7 +54,7 @@ async function handler(ctx) {
     // 获取当前页面的 list
     const list = $('div.content-list-div ul li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item
@@ -64,14 +64,13 @@ async function handler(ctx) {
                     .trim(),
                 link: `https:${$item.attr('href')}`,
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
-                description: undefined as DataItem['description'],
             };
         });
 
     const result = await Promise.all(
         // 遍历每一篇文章
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 item.description = await loadContent(item.link);
                 // 合并解析后的结果集作为该篇文章最终的输出结果
                 return item;

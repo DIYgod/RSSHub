@@ -99,7 +99,7 @@ async function handler(ctx) {
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const hasCategory = $item.find('th em a').length;
             return {
@@ -107,16 +107,13 @@ async function handler(ctx) {
                 link: host + $item.find('a.xst').attr('href'),
                 pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
                 author: $item.find('td.by cite a').first().text(),
-                description: undefined as DataItem['description'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                const response = await ofetch(info.link, {
+            cache.tryGet(info.link!, async () => {
+                const response = await ofetch(info.link!, {
                     headers,
                 });
 

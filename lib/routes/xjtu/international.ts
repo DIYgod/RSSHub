@@ -26,7 +26,7 @@ async function handler(ctx) {
     const name = $('div.pageTitle').text();
     const list = $('.news-list-a > .c')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a').attr('title');
             const pubDate = parseDate($item.find('p.list-time').text());
@@ -35,14 +35,13 @@ async function handler(ctx) {
                 title: title!,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 
     const item = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (new URL(item.link).pathname.startsWith('/content.jsp')) {
+            cache.tryGet(item.link!, async () => {
+                if (new URL(item.link!).pathname.startsWith('/content.jsp')) {
                     return item;
                 }
                 const resp = await got(item.link);

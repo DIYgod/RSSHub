@@ -62,7 +62,7 @@ async function handler(ctx) {
 
     let item = $('.list_box li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             const a = $e.find('a');
             const link = a.attr('href')!.startsWith('tz_content') || a.attr('href')!.startsWith('content') ? host + a.attr('href') : a.attr('href');
@@ -70,7 +70,6 @@ async function handler(ctx) {
                 title: a.text().trim(),
                 link,
                 pubDate: parseDate($e.find('span').text().trim(), 'YYYY-MM-DD'),
-                description: undefined as DataItem['description'],
             };
         });
 

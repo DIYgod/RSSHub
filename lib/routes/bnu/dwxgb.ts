@@ -50,20 +50,19 @@ async function handler(ctx) {
 
     const list = $('ul.container.list > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const link = $(item).find('a').attr('href');
             const absoluteLink = new URL(link!, currentUrl).href;
             return {
                 title: $(item).find('a').text().trim(),
                 pubDate: parseDate($(item).find('span').text()),
                 link: absoluteLink,
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.article.typo').html();

@@ -20,23 +20,19 @@ export const handler = async (ctx) => {
     let items = $('div#sse_list_1 dl dd')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('a').text().trim(),
                 pubDate: parseDate($item.find('span').text().trim()),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                updated: undefined as DataItem['updated'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

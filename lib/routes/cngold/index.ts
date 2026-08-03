@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('ul.newsList li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
@@ -29,9 +29,6 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD']),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
             };
         });
 

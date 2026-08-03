@@ -60,13 +60,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.zx_ml_list ul li span.tit')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).find('a');
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

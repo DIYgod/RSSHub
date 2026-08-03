@@ -51,7 +51,7 @@ export async function handler(ctx) {
 
     let items = $('.link-dark')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const pubDate = $item.parent().parent().find('.align-text-top').last().text();
@@ -62,13 +62,12 @@ export async function handler(ctx) {
                 author: $item.parent().parent().find('.text-dark').last().text(),
                 pubDate: timezone(parseDate(pubDate.includes('-') ? pubDate : `${today} ${pubDate}`), 8),
                 title: `${$item.parent().parent().find('.align-middle').text()} ${$item.text().replace(/ - SubHD/, '')}`,
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     const list = $('ul.wp_article_list li.list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span.Article_PublishDate').text().trim();
@@ -60,7 +60,6 @@ async function handler(ctx) {
                 title: element.find('a').text().trim(),
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -78,7 +77,10 @@ async function handler(ctx) {
 
                 content.find('[style]').removeAttr('style');
                 content.find('font').contents().unwrap();
-                content.html(content.html()?.replaceAll('&nbsp;', '') as string);
+                const cleaned = content.html()?.replaceAll('&nbsp;', '');
+                if (cleaned !== undefined) {
+                    content.html(cleaned);
+                }
                 content.find('[align]').removeAttr('align');
 
                 return {

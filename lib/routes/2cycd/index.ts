@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     const list = $('tbody[id^="normalthread_"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const xst = $item.find('a.s.xst');
             const author = $item.find('td.by cite a').eq(0).text();
@@ -53,8 +53,6 @@ async function handler(ctx) {
                 title: xst.text(),
                 link: xst.attr('href'),
                 author,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
     // console.log(list);

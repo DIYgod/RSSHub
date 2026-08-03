@@ -43,7 +43,7 @@ async function handler(ctx) {
     const count = list
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((each) => {
+        .map((each): DataItem => {
             const $each = $(each);
             const floor = $each.find('th.new a.s.xst').text();
             const floorUrl = $each.find('th.new a.s.xst').attr('href');
@@ -52,13 +52,12 @@ async function handler(ctx) {
                 link: new URL(floorUrl!, `${host}/2b/`).href,
                 author: $each.find('td.by cite').text(),
                 pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 
     const resultItems = await Promise.all(
         count.map((i) =>
-            cache.tryGet(i.link, async () => {
+            cache.tryGet(i.link!, async () => {
                 i.description = await fetchContent(i.link);
                 return i;
             })

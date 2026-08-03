@@ -45,15 +45,13 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const list = (isNumber ? $('.panel-body').eq(id).find('.examName a') : $('.panel-body ul li a')).toArray().map((item) => {
+    const list = (isNumber ? $('.panel-body').eq(id).find('.examName a') : $('.panel-body ul li a')).toArray().map((item): DataItem => {
         const $item = $(item);
         const link = $item.attr('href');
 
         return {
             title: $item.text(),
             link: link!.startsWith('//') ? (link!.startsWith('https') ? link : `https:${link}`) : `${rootUrl}${link}/news/bulletin`,
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
         };
     });
 

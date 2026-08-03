@@ -73,10 +73,9 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
 
-            const result = {
+            const result: DataItem = {
                 link: $item.attr('href')!.startsWith('http') ? $item.attr('href') : `${rootUrl}/${$item.attr('href')!.replace(/^[./]+/, '')}`,
-                title: undefined as unknown as DataItem['title'],
-                pubDate: undefined as DataItem['pubDate'],
+                title: '',
             };
 
             if (site === 'fldpj') {

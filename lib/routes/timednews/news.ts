@@ -89,14 +89,11 @@ async function handler(ctx) {
 
     const list = $('#content li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const c = load(e);
             return {
                 title: c('a').text().trim(),
                 link: c('a').attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

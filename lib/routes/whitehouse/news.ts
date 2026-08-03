@@ -46,7 +46,7 @@ async function handler(ctx) {
 
     const list = $('.post')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a').first();
@@ -55,7 +55,6 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: parseDate($item.find('time').attr('datetime')!),
                 category: [$item.find('a[rel^=tag]').first().text()],
-                description: undefined as DataItem['description'],
             };
         });
 

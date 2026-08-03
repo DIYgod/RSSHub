@@ -55,7 +55,7 @@ async function handler(ctx) {
     const forumCategory = $('.nex_bkinterls_top .nex_bkinterls_ls a').text();
     let items = $('[id^="normalthread"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const nexAuthorBtms = $item.find('.nex_author_btms');
             const nexForumtitTopA = $item.find('.nex_forumtit_top a').first();
@@ -67,12 +67,11 @@ async function handler(ctx) {
                 category: nexAuthorBtms.find('em a').text().trim(),
                 link: baseUrl + '/' + nexForumtitTopA.attr('href'),
                 author: $item.find('.nex_threads_author').find('a').text().trim(),
-                description: undefined as DataItem['description'],
             };
         });
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const resp = await got(item.link, {
                     headers,
                 });

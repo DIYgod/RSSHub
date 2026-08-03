@@ -27,15 +27,13 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.article-list .boxlist ul li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             const a = $e.find('a');
             return {
                 title: $e.find('a span').text(),
                 link: a.attr('href')!.startsWith('http') ? a.attr('href') : 'https://jwb.bnu.edu.cn' + a.attr('href')!.slice(2),
                 pubDate: parseDate($e.find('span.fr.text-muted').text(), 'YYYY-MM-DD'),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

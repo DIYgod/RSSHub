@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const articles = $('div.articleBox.clearfix')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.articleTitle').text(),
@@ -54,13 +54,12 @@ async function handler(ctx) {
                         .map((tag) => $(tag).text().trim()),
                     catName,
                 ],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         articles.map((element) =>
-            cache.tryGet(element.link, async () => {
+            cache.tryGet(element.link!, async () => {
                 const response = await got(element.link);
                 const $ = load(response.data);
 

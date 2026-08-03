@@ -66,12 +66,10 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) => {
             const $1 = $(item);
-            const result = {
+            const result: DataItem = {
                 title: $1.find('.title a').attr('title')!,
                 author: $1.find('a').eq(1).text(),
                 link: $1.find('.title a').attr('href'),
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
             return cache.tryGet(result.link!, async () => {
                 try {

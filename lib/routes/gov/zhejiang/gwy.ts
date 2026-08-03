@@ -74,7 +74,7 @@ async function handler(ctx) {
     let items = $('a[onclick^="queryDetail"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { tzid?: string } => {
             const $item = $(item);
 
             const matches = $item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
@@ -82,18 +82,16 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: detailUrl,
-                category: matches![1] as DataItem['category'],
+                category: matches![1],
                 guid: `zjks-${matches![1]}-${matches![2]}`,
                 pubDate: parseDate($item.parent().next().text()),
                 tzid: matches![2],
-                description: undefined as DataItem['description'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 const { data: detailResponse } = await got.post(detailUrl, {
                     form: {
                         mkxh: item.category,
@@ -115,7 +113,7 @@ async function handler(ctx) {
                     item.enclosure_url = file.prop('href');
                 }
 
-                delete (item as { tzid?: unknown }).tzid;
+                delete item.tzid;
 
                 return item;
             })

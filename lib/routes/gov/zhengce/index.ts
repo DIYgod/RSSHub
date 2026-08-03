@@ -47,7 +47,7 @@ export async function handler(ctx) {
 
     let items = $('h4 a, div.subtitle a[title]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.prop('href');
@@ -55,12 +55,6 @@ export async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                guid: undefined as DataItem['guid'],
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
             };
         });
 

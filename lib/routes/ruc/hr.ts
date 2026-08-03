@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     let items = $('a[title]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -57,14 +57,12 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `${rootUrl}${link!.startsWith('..') ? link!.replace(/\.\./, '') : `/${category}/${link}`}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',

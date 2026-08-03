@@ -44,7 +44,7 @@ async function handler() {
     const list = $('#wp_news_w9')
         .find('li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const date = $item.find('.column-news-date').text();
 
@@ -55,7 +55,6 @@ async function handler() {
                 title: $item.find('a').attr('title')!,
                 link,
                 pubDate: timezone(parseDate(date), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

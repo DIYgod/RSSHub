@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
     let items = $('div.zwxxkg-result tr')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const a = $item.find('a.xxgk_list1');
@@ -32,12 +32,6 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('td').last().text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 

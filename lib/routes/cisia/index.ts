@@ -20,7 +20,7 @@ export const handler = async (ctx) => {
     let items = $('ul.list_first li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -29,16 +29,13 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.time').text()),
                 link: new URL(a.prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link!)) {
                     return item;
                 }
 

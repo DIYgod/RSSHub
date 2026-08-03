@@ -45,7 +45,7 @@ export const route: Route = {
         const list = $('#wp_news_w49 table tr')
             .slice(1) // 跳过表头
             .toArray()
-            .map((tr) => {
+            .map((tr): DataItem | null => {
                 const $tr = $(tr);
                 const cells = $tr.find('td');
 
@@ -75,7 +75,6 @@ export const route: Route = {
                     link,
                     pubDate: timezone(parseDate(dateStr), 8),
                     author: publisher,
-                    description: undefined as DataItem['description'],
                 };
             })
             .filter((item) => item && item.link); // 过滤掉空项目和没有链接的项目
@@ -84,7 +83,7 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) =>
                 item
-                    ? cache.tryGet(item.link, async () => {
+                    ? cache.tryGet(item.link!, async () => {
                           try {
                               const { data: response } = await got(item.link);
                               const $ = load(response);

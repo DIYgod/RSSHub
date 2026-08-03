@@ -43,7 +43,7 @@ async function handler(ctx) {
     let items = $('.entry-title a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const parent = $item.parent().parent();
@@ -53,7 +53,6 @@ async function handler(ctx) {
                 link: $item.attr('href'),
                 author: parent.find('.td-post-author-name a').text(),
                 pubDate: parseDate(parent.find('.td-post-date time').attr('datetime')!),
-                description: undefined as DataItem['description'],
             };
         });
 

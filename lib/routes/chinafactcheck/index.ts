@@ -32,14 +32,12 @@ async function handler() {
 
     const articlesLink = $('.post-info-box .post-thumb a')
         .toArray()
-        .map((item) => ({
-            link: $(item).attr('href'),
-            title: undefined as unknown as DataItem['title'],
-            author: undefined as DataItem['author'],
-            pubDate: undefined as DataItem['pubDate'],
-            description: undefined as DataItem['description'],
-            category: undefined as DataItem['category'],
-        }));
+        .map(
+            (item): DataItem => ({
+                link: $(item).attr('href'),
+                title: '',
+            })
+        );
 
     const articles = await Promise.all(
         articlesLink.map((item) =>

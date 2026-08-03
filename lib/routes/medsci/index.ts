@@ -83,7 +83,7 @@ async function handler(ctx) {
     let items = $('#articleList')
         .find('.ms-link')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const pubDate = $item.parent().parent().find('.item-meta-item').first().text();
@@ -92,15 +92,12 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, '')}`,
                 pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

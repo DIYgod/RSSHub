@@ -52,7 +52,7 @@ async function handler(ctx) {
 
     const list = $('li[id^=line_u10]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span').text().trim();
@@ -61,8 +61,6 @@ async function handler(ctx) {
                 title: element.find('a').text().trim(),
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

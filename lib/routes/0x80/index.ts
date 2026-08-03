@@ -37,7 +37,7 @@ async function handler() {
 
     const list = alist
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const link = $item.attr('href') || '';
@@ -47,10 +47,8 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: pubDate as DataItem['pubDate'],
+                pubDate,
                 category: 'Uncategoried',
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         })
         .filter((item) => item.link.startsWith('notesen'));

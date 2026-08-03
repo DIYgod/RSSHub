@@ -58,14 +58,13 @@ async function handler(ctx) {
     let items = $('.half-img-blk__title, .img-plate-blk__title')
         .find('a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
                 pubDate: parseDate($item.parent().prev().find('li').first().text(), 'YYYY.MM'),
-                description: undefined as DataItem['description'],
             };
         });
 

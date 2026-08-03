@@ -32,17 +32,18 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.new-artice-list-box')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('p.new-article-title > a').text(),
-            link: new URL($(item).find('p.new-article-title > a').attr('href')!, rootUrl).href,
-            pubDate: parseDate($(item).find('p.new-article-date > span.left-span').text()),
-            category: $(item).find('p.new-article-date > span:nth-child(1)').text(),
-            description: undefined as DataItem['description'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('p.new-article-title > a').text(),
+                link: new URL($(item).find('p.new-article-title > a').attr('href')!, rootUrl).href,
+                pubDate: parseDate($(item).find('p.new-article-date > span.left-span').text()),
+                category: $(item).find('p.new-article-date > span:nth-child(1)').text(),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.article-content').html();

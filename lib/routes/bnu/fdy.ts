@@ -28,20 +28,19 @@ async function handler(ctx) {
 
     const list = $('.listconrl li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: parseDate($item.find('.news-dates').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.description = $('.listconrc-newszw').html();

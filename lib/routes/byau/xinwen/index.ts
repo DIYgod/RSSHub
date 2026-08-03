@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const list = $('.news')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $$ = load(item);
 
             const originalItemUrl = $$('a').attr('href');
@@ -49,7 +49,6 @@ async function handler(ctx) {
                 title: $$('a').text(),
                 link: itemUrl,
                 pubDate: timezone(parseDate($$('.news_meta').text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

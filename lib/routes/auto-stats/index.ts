@@ -44,7 +44,7 @@ async function handler(ctx) {
     let items = $('a.dnews font')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.text();
@@ -54,13 +54,12 @@ async function handler(ctx) {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],
                 link: new URL($item.parent().prop('href')!, rootUrl).href,
                 pubDate: timezone(parseDate(pubDate!, 'YYYY/M/D H:mm:ss'), 8),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link, {
                     responseType: 'buffer',
                 });

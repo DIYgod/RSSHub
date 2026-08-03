@@ -63,7 +63,7 @@ async function handler(ctx) {
         // category-nav rows (href="/?type=…") and external ad rows (href="http://…",
         // e.g. the "國產原创" entries). Real torrent rows always link to /view.
         .filter((el) => $(el).find('td:nth-of-type(2) > a').attr('href')?.startsWith('/view'))
-        .map((el) => {
+        .map((el): DataItem & { link: string } => {
             const item = $(el);
             const a = item.find('td:nth-of-type(2) > a');
             const guid = rootURL + a.attr('href');
@@ -74,7 +74,6 @@ async function handler(ctx) {
                 pubDate: item.find('td:nth-of-type(5)').text(),
                 enclosure_url: item.find('td:nth-of-type(3) > a:nth-of-type(2)').attr('href'),
                 enclosure_type: 'application/x-bittorrent',
-                description: undefined as DataItem['description'],
             };
         });
 

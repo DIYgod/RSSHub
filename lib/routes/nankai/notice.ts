@@ -34,7 +34,7 @@ export const route: Route = {
 
         const list = $('ul.newslist li')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const $time = $item.find('.time');
                 const day = $time.find('.time-d').text();
@@ -49,15 +49,14 @@ export const route: Route = {
                     title: $link.text(),
                     link: href,
                     pubDate,
-                    description: undefined as DataItem['description'],
                 };
             });
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     // 判断link如果是https://xb.nankai.edu.cn/的则为校内访问的
-                    if (item.link.includes('xb.nankai.edu.cn')) {
+                    if (item.link!.includes('xb.nankai.edu.cn')) {
                         item.description = '该通知可能需要校内访问权限';
                     } else {
                         const { data: detailResponse } = await got(item.link);

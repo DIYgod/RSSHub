@@ -51,17 +51,15 @@ async function handler(ctx) {
         ? await Promise.all(
               $('.title')
                   .toArray()
-                  .map((item) => {
+                  .map((item): DataItem => {
                       const $item = $(item);
                       return {
                           title: $item.find('.title').text(),
                           link: `${rootUrl}${$item.parent().attr('href')}`,
-                          description: undefined as DataItem['description'],
-                          pubDate: undefined as DataItem['pubDate'],
                       };
                   })
                   .map((item) =>
-                      cache.tryGet(item.link, async () => {
+                      cache.tryGet(item.link!, async () => {
                           const detailResponse = await got({
                               method: 'get',
                               url: item.link,

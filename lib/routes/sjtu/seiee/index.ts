@@ -59,14 +59,12 @@ async function handler(ctx) {
 
     const list = $(catID ? 'li' : '.u10 li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('.name').text().trim(),
                 link: $item.find('a').attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

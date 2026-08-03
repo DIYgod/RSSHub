@@ -54,7 +54,7 @@ async function handler(ctx) {
     let items = $('a.list-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string; category: string[] } => {
             const $item = $(item);
 
             const image = $item.find('div.img img');
@@ -76,7 +76,6 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => $(c).text()),
                 pubDate: timezone(parseDate($item.find('span.time').text()), 8),
-                author: undefined as DataItem['author'],
             };
         });
 

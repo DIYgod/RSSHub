@@ -54,7 +54,7 @@ async function handler(ctx) {
         .find(`div:nth-child(${columns[cate].order})`)
         .find('.mobile_none li , .mobile_clear li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const title = $(item).find('a.cjcx_biaob').text();
             const href = $(item).find('a').attr('href');
 
@@ -70,8 +70,6 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -92,7 +90,7 @@ async function handler(ctx) {
                         const video_source = content('.neiright_JPZ_GK_CP source');
                         const video_href = video_source.attr('src');
                         const _title_href = item.link.split('/').at(-1);
-                        const _video_src = item.link.replace(_title_href, () => video_href!.slice(2));
+                        const _video_src = item.link.replace(_title_href!, () => video_href!.slice(2));
                         video_source.attr('src', _video_src);
                     }
                     item.description = content('.neiright_JPZ_GK_CP').html();

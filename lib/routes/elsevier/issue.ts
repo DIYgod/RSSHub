@@ -41,7 +41,7 @@ async function handler(ctx) {
     const jrnlName = $('.anchor.js-title-link').text();
     const list = $('.js-article')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { id?: string; authors: string; issue: string; abstract?: string } => {
             const title = $(item).find('.js-article-title').text();
             const authors = $(item).find('.js-article__item__authors').text();
             const link = $(item).find('.article-content-title').attr('href');
@@ -52,9 +52,6 @@ async function handler(ctx) {
                 id,
                 authors,
                 issue,
-                doi: undefined as DataItem['doi'],
-                description: undefined as DataItem['description'],
-                abstract: undefined as any,
             };
         });
 

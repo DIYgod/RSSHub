@@ -35,7 +35,7 @@ export const route: Route = {
         const list = content
             .find('.group')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const link = $item.find('a').first().attr('href');
                 const description = $item.find('p').first().text();
@@ -45,19 +45,14 @@ export const route: Route = {
                     link: `https://podwise.ai${link}`,
                     description,
                     pubDate: timezone(parseDate(pubDate, 'DD MMM YYYY', 'en'), 8),
-                    title: undefined as unknown as DataItem['title'],
-                    author: undefined as DataItem['author'],
-                    itunes_item_image: undefined as DataItem['itunes_item_image'],
-                    itunes_duration: undefined as DataItem['itunes_duration'],
-                    enclosure_url: undefined as DataItem['enclosure_url'],
-                    enclosure_type: undefined as DataItem['enclosure_type'],
+                    title: '',
                 };
             });
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
 
                     item.description = $('summary').first().html() ?? '';

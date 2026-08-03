@@ -46,7 +46,7 @@ async function handler(ctx) {
     let items = $('article.excerpt')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('h2 a');
@@ -61,7 +61,6 @@ async function handler(ctx) {
                     .map((c) => $(c).text()),
                 pubDate: timezone(parseDate($item.find('p.auth-span span.muted').first().text().trim()), 8),
                 upvotes: $item.find('span.count').text() ? Number($item.find('span.count').text()) : 0,
-                author: undefined as DataItem['author'],
             };
         });
 

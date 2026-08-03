@@ -25,7 +25,7 @@ async function handler() {
     // 从 RSS XML 中直接提取文章信息
     const list = $('item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('title').text(),
@@ -37,13 +37,12 @@ async function handler() {
                         .text()
                         .match(/>([^<]+)</)?.[1] || '',
                 pubDate: parseDate($item.find('pubDate').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: articleData } = await got(item.link);
                 const $article = load(articleData);
 

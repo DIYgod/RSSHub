@@ -45,7 +45,7 @@ async function handler(ctx) {
     const desc = $('.meeting').text().trim();
     let items = $('.content-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const c1 = $item.find('.baike-content-t1');
             const c3 = $item.find('.baike-content-t3').find('span');
@@ -54,8 +54,6 @@ async function handler(ctx) {
                 // pubDate: parseDate(c3.first().text().trim()),
                 link: $item.find('a').attr('href'),
                 author: c3.last().text().trim(),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
     items = await Promise.all(

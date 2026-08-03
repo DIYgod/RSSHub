@@ -43,25 +43,19 @@ async function handler(ctx) {
     let items = $('item')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: $item.find('guid').text(),
                 author: $item.find(String.raw`itunes\:author`).text(),
-                title: undefined as unknown as DataItem['title'],
-                itunes_item_image: undefined as DataItem['itunes_item_image'],
-                itunes_duration: undefined as DataItem['itunes_duration'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

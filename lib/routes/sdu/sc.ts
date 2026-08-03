@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     let item = $('.newlist01 li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             const a = $e.find('a');
             let link = a.attr('href');
@@ -48,14 +48,12 @@ async function handler(ctx) {
                 title: a.text().trim(),
                 link,
                 pubDate: parseDate($e.find('.date').text().trim()),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     item = await Promise.all(
         item.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);

@@ -39,21 +39,19 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('section.as-container-column')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.icon-chevronright').parent();
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($item.find('.note').text(), ['MMMM D, YYYY', 'D MMMM YYYY', 'YYYY 年 M 月 D 日']),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $$ = load(response.data);
 

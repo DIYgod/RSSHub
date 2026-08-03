@@ -47,17 +47,12 @@ export async function handler(ctx) {
     let items = $('h1 a,h2 a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -128,16 +128,15 @@ async function handler(ctx) {
                     </>
                 );
                 const title = `${video_name} - ${authors}`;
-                const realData = await cache.tryGet(oreno3d_link, (() => {
-                    const result = {
+                const realData = await cache.tryGet(oreno3d_link, () =>
+                    Promise.resolve({
                         title,
                         author: authors,
                         link: oreno3d_link,
                         category: tags.split(' '),
                         description,
-                    };
-                    return result;
-                }) as unknown as () => Promise<Record<string, any>>);
+                    })
+                );
                 return realData;
             })
         );

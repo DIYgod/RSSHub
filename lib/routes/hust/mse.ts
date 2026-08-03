@@ -17,12 +17,12 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.list ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -31,17 +31,14 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.time').text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                language: language as Language,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
+                language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.includes(domain)) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.includes(domain)) {
                     return item;
                 }
 
@@ -69,7 +66,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.v_news_content').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -87,7 +84,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/, 1)[0]?.trim(),
-        language: language as Language,
+        language,
     };
 };
 

@@ -19,7 +19,7 @@ const handler = async (ctx) => {
 
     const list = $('.title a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const meta = $item.parent().next();
             return {
@@ -37,8 +37,6 @@ const handler = async (ctx) => {
                     ),
                     8
                 ),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -33,21 +33,20 @@ async function handler() {
 
     const list = $('.grid__column')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.news-teaser__title').text(),
                 link: `${baseUrl}${$item.find('.news-teaser').attr('href')}`,
                 pubDate: parseDate($item.find('.news-teaser__date').text(), 'DD.MM.YYYY'),
                 description: $item.find('.news-teaser__text').text(),
-                category: undefined as DataItem['category'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const content = $('.newsentry');

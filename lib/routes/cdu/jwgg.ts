@@ -38,7 +38,7 @@ async function handler() {
     const list = $('.ListTable.dataTable.no-footer tbody tr[role="row"].odd')
         .slice(0, 10)
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('tr.odd a').text().trim(); /* 1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。
                                                                     2..text()：该方法获取选中元素的文本内容。
@@ -48,20 +48,19 @@ async function handler() {
                 .find('tr.odd td.columnDate')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = timezone(parseDate(date as unknown as string), 8);
+            const pubDate = timezone(parseDate(date?.[0] ?? ''), 8);
 
             return {
                 title,
                 link: 'https://jw.cdu.edu.cn/' + link,
                 author: '成都大学教务处通知公告',
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const itemReponse = await got.get(item.link);
                 const data = itemReponse.data;
                 const itemElement = load(data);

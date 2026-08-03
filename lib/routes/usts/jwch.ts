@@ -38,17 +38,16 @@ async function handler(ctx) {
     const title = $('div.mainWrap.cleafix > div > div.right.fr > div.local.fl > h3').text();
     const list = $('div.list > ul > li')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href')!, rootURL).href,
-            description: undefined as DataItem['description'],
-            author: undefined as DataItem['author'],
-            pubDate: undefined as DataItem['pubDate'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a').text(),
+                link: new URL($(item).find('a').attr('href')!, rootURL).href,
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

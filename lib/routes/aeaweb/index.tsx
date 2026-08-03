@@ -64,23 +64,18 @@ async function handler(ctx) {
 
     let items = $('h4.title a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
+                title: '',
                 link: `${rootUrl}${$item.attr('href')!.split('&', 1)[0]}`,
-                doi: undefined as DataItem['doi'],
-                guid: undefined as DataItem['guid'],
-                title: undefined as unknown as DataItem['title'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

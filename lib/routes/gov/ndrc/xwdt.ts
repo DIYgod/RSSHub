@@ -45,7 +45,7 @@ async function handler(ctx) {
     const list = $('.u-list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             let link = $item.attr('href');
             if (link!.startsWith('../../..')) {
@@ -56,8 +56,6 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

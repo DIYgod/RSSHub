@@ -20,7 +20,7 @@ const ProcessItems = async (ctx, title, currentUrl) => {
 
     let items = $('div.list-body')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -29,7 +29,6 @@ const ProcessItems = async (ctx, title, currentUrl) => {
                 title: a.text(),
                 link: a.attr('href'),
                 guid: a.attr('href')!.replace('95mm.vip', '95mm.org'),
-                description: undefined as DataItem['description'],
             };
         });
 

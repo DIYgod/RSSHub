@@ -31,12 +31,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('.zebra tr')
-        .filter(
-            (element) =>
-                $(element as unknown as string)
-                    .find('.progress-bar span')
-                    .text() !== '0%'
-        )
+        .filter((_, element) => $(element).find('.progress-bar span').text() !== '0%')
         .toArray()
         .map((e) => $(e).find('.title').attr('href'))
         .slice(0, 3);

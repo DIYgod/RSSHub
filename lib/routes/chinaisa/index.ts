@@ -188,7 +188,7 @@ async function handler(ctx) {
     let items = $('ul.list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -196,14 +196,12 @@ async function handler(ctx) {
                 link: new URL(`gxportal/xfgl/portal/${$item.prop('href')}`, rootUrl).href,
                 guid: $item.prop('href')!.match(/articleId=(\w+)/)![1],
                 pubDate: parseDate($item.parent().find('span.times').text().replaceAll('[]', '')),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(apiArticleUrl, {
                     method: 'POST',
                     headers: {

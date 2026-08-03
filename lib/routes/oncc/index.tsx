@@ -69,7 +69,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#focusNews > div.focusItem[type=article]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('div.focusTitle > span').text();
             const link = rootUrl + $(item).find('a:nth-child(1)').attr('href');
             const pubDate = parseDate($(item).attr('edittime')!, 'YYYYMMDDHHmmss');
@@ -78,13 +78,12 @@ async function handler(ctx) {
                 title,
                 link,
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map(async (item) => {
-            const desc = await cache.tryGet(item.link, async () => {
+            const desc = await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const $ = load(detailResponse.data);
                 const imageUrl = rootUrl + $('img').eq(0).attr('src');

@@ -53,15 +53,12 @@ async function handler(ctx) {
 
     let items = $('.row .well')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { poster?: string } => {
             const $item = $(item);
             return {
                 title: $item.find('.video-title').text(),
                 link: $item.find('a').attr('href'),
                 poster: $item.find('.img-responsive').attr('src'),
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 

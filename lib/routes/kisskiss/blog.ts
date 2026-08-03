@@ -44,7 +44,7 @@ async function handler(ctx) {
         .map((item) => {
             const title = $(item);
             const body = title.next('div.blog_frame_middle');
-            const i = {
+            const i: DataItem = {
                 title: title.find('tbody tr td').text(),
                 link: title.find('tbody tr td a').attr('href'),
                 pubDate: timezone(
@@ -57,7 +57,6 @@ async function handler(ctx) {
                     ),
                     9
                 ),
-                description: undefined as DataItem['description'],
             };
             body.find('a img').each((_, el) => {
                 $(el).attr('src', $(el).parent('a').attr('href'));

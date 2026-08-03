@@ -106,23 +106,18 @@ async function handler(ctx) {
 
     let items = $('#threadlist table')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const a = $(item).find('.subject_link');
 
             return {
                 title: a.text(),
                 link: `${rootUrl}/${a.attr('href')}`,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

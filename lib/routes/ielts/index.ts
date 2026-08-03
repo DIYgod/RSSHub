@@ -53,13 +53,12 @@ async function handler() {
 
     const list = $('#newsListUl li')
         .toArray()
-        .map((elem) => {
+        .map((elem): DataItem => {
             const $elem = $(elem);
             return {
                 title: $elem.find('a').text(),
                 link: $elem.find('a').attr('href'),
-                pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim(), 8 as unknown as string)),
-                description: undefined as DataItem['description'],
+                pubDate: timezone(parseDate($elem.find('span').eq(-1).text().replaceAll(/[[\]]/g, '').trim()), 8),
             };
         });
 

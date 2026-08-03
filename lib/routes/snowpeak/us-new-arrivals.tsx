@@ -52,37 +52,30 @@ async function handler() {
     const list = $('.element.product-tile')
         .toArray()
         .map((element) => {
-            const data = {
-                title: undefined as unknown as DataItem['title'],
-                link: undefined as DataItem['link'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
-                variants: undefined as any,
-            };
             const product = $(element).find('.product-data').data('product') as Product;
-            data.title = product.title;
-            data.link = `${host}/products/${product.handle}`;
-            data.pubDate = new Date(product.published_at).toUTCString();
-            data.category = product.tags;
-            data.variants = product.variants.map((item) => item.name);
-            data.description =
-                product.description +
-                renderToString(
-                    <div>
-                        Variant:
-                        <br />
-                        {product.variants.map((variant) => (
-                            <>
-                                {variant.name}
-                                <br />
-                            </>
-                        ))}
-                        {product.images.map((image) => (
-                            <img src={image} />
-                        ))}
-                    </div>
-                );
+            const data: DataItem = {
+                title: product.title,
+                link: `${host}/products/${product.handle}`,
+                pubDate: new Date(product.published_at).toUTCString(),
+                category: product.tags,
+                description:
+                    product.description +
+                    renderToString(
+                        <div>
+                            Variant:
+                            <br />
+                            {product.variants.map((variant) => (
+                                <>
+                                    {variant.name}
+                                    <br />
+                                </>
+                            ))}
+                            {product.images.map((image) => (
+                                <img src={image} />
+                            ))}
+                        </div>
+                    ),
+            };
 
             return data;
         });

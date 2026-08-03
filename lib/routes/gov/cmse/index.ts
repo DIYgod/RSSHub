@@ -25,7 +25,7 @@ export async function handler(ctx) {
     let items = $('#list li a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const pubDate = $item.next().text();
@@ -35,13 +35,12 @@ export async function handler(ctx) {
                 title: $item.text(),
                 pubDate: parseDate(pubDate),
                 link: link.endsWith('.html') ? link : `${link}#${pubDate}`,
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

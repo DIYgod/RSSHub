@@ -38,18 +38,16 @@ async function handler(ctx) {
 
     const list = $('.pressItem.clearfix')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const c = load(e);
             return {
                 title: c('.hd a').text(),
                 link: `${utils.BASE_URL}${c('.hd a').attr('href')}`,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

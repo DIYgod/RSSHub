@@ -55,7 +55,7 @@ export default {
                 pubDate = parseRelativeDate(contentDetail.pubTime);
             }
 
-            const rss_item = {
+            const rss_item: DataItem = {
                 title: contentDetail.name || contentDetail.shareName,
                 link: itemUrl,
                 description,
@@ -70,9 +70,6 @@ export default {
                         url: item.sharePic || contentDetail.sharePic,
                     },
                 },
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                itunes_item_image: undefined as DataItem['itunes_item_image'],
             };
             if (contentDetail.voiceInfo?.isHaveVoice) {
                 rss_item.enclosure_type = 'audio/mpeg';

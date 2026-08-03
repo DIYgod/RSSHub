@@ -36,20 +36,19 @@ async function handler(ctx) {
 
     const list = $('#datalist_wap .li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
                 title: a.text().trim(),
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate($item.find('.d').text(), 'YYYY.MM.DD'),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 

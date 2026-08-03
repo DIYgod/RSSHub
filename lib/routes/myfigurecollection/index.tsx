@@ -60,21 +60,20 @@ async function handler(ctx) {
     let items = $('.item-icon, .picture-icon')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).find('a');
 
             const link = $item.attr('href')!;
 
             return {
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
-                title: undefined as unknown as DataItem['title'],
-                description: undefined as DataItem['description'],
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',
@@ -84,7 +83,7 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     item.title = content('.headline').text();
-                    const pictures = /myfigurecollection\.net\/picture\//.test(item.link)
+                    const pictures = /myfigurecollection\.net\/picture\//.test(item.link!)
                         ? [{ src: content('meta[property="og:image"]').attr('content') }]
                         : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content')!));
                     item.description = renderDescription(
@@ -97,7 +96,7 @@ async function handler(ctx) {
                             }))
                     );
                 } catch {
-                    item.title = `Item #${item.link.split('/').pop()}`;
+                    item.title = `Item #${item.link!.split('/').pop()}`;
                 }
 
                 return item;

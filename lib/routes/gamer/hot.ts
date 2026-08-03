@@ -33,14 +33,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.popular__card-list div.popular__card-img a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 link: $item.attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
+                title: '',
             };
         });
 
@@ -60,7 +57,7 @@ async function handler(ctx) {
                 item.title = content('.c-post__header__title').text();
                 item.description = content('div.c-post__body').html();
                 item.author = `${content('a.username').eq(0).text()} (${content('a.userid').eq(0).text()})`;
-                item.pubDate = timezone(parseDate(content('a.edittime').eq(0).attr('data-mtime')!, 8 as unknown as string));
+                item.pubDate = timezone(parseDate(content('a.edittime').eq(0).attr('data-mtime')!), 8);
 
                 return item;
             })

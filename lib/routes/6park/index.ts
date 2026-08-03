@@ -45,23 +45,20 @@ async function handler(ctx) {
     let items = $('#d_list ul li, #thread_list li, .t_l .t_subject')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a').first();
 
             return {
                 link: `${rootUrl}/${id}/${a.attr('href')}`,
-                title: undefined as unknown as DataItem['title'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

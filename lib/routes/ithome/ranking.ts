@@ -57,11 +57,9 @@ async function handler(ctx) {
     const list = $(`#${id} > li`)
         .toArray()
         .map((item) => {
-            const info = {
+            const info: DataItem = {
                 title: $(item).find('a').text(),
                 link: $(item).find('a').attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
             return info;
         });

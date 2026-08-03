@@ -36,16 +36,16 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#mainleft > div.zkcontent > div.gooditem')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a.goodname').text().trim(),
-            link: new URL($(item).find('div.iteminfoarea > h2 > a').attr('href')!, host).href,
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a.goodname').text().trim(),
+                link: new URL($(item).find('div.iteminfoarea > h2 > a').attr('href')!, host).href,
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 

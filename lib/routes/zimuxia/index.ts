@@ -40,15 +40,12 @@ async function handler(ctx) {
 
     const list = $('.pg-item a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('h2').text(),
                 link: $item.attr('href'),
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                description: undefined as DataItem['description'],
             };
         });
 

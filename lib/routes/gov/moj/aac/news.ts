@@ -37,7 +37,7 @@ async function handler(ctx) {
     $('.num').remove();
     const list = $('.list ul li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { isDownload?: boolean; link: string } => {
             const $item = $(item);
             const isDownload = /檔案下載/.test($item.attr('title')!);
             const title = isDownload ? $item.text().trim() : $item.attr('title');
@@ -45,8 +45,6 @@ async function handler(ctx) {
                 title: title!,
                 link: new URL($item.attr('href')!, baseUrl).href,
                 isDownload,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -61,7 +59,7 @@ async function handler(ctx) {
                     $('.info, button').remove();
                     item.description = $('.cp').html()! + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '')! + ($('.file_download').length ? $('.file_download').html() : '');
                 }
-                delete (item as { isDownload?: unknown }).isDownload;
+                delete item.isDownload;
                 return item;
             })
         )

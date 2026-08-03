@@ -662,16 +662,13 @@ async function handler(ctx) {
     let items = $('ul.u-list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.prop('title') || $item.text(),
                 link: new URL($item.prop('href')!, currentUrl).href,
                 pubDate: parseDate($item.next().text(), 'YYYY/MM/DD'),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 

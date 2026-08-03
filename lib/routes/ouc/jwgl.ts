@@ -38,7 +38,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.datalist table tbody tr')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             const noticeId = $e
                 .find('a')
@@ -49,13 +49,12 @@ async function handler() {
                 title: tds.eq(2).text(),
                 link: 'http://jwgl.ouc.edu.cn/public/viewSchoolNoticeDetail.action?schoolNoticeId=' + noticeId,
                 pubDate: parseDate(tds.eq(3).text(), 'YYYY-MM-DD HH:mm'),
-                description: undefined as DataItem['description'],
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.description = $('div.notice').html();

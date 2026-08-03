@@ -24,7 +24,7 @@ export const handler = async (ctx) => {
     let items = $('a.a9-rich-card-list_item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const image = $item.find('img.a9-rich-card-list_image');
@@ -45,13 +45,12 @@ export const handler = async (ctx) => {
                 }),
                 pubDate: timezone(parseDate($item.find('div.a9-rich-card-list_infos').text()), 8),
                 language: language as Language,
-                author: undefined as DataItem['author'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

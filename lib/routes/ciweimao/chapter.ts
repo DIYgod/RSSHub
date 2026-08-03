@@ -48,14 +48,13 @@ async function handler(ctx) {
     const list = $c('ul.book-chapter li a')
         .slice(-limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { chapterLocked: boolean } => {
             const $item = $(item);
             return {
                 chapterLocked: $item.find('h3 i.icon-lock').length > 0,
                 title: $item.find('h3').text(),
                 pubDate: timezone(parseDate($item.find('p').text().replace('发布于 ', '')), 8),
                 link: $item.attr('href'),
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -37,14 +37,13 @@ async function handler(ctx) {
 
     const list = $('.news_list ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.title a');
             return {
                 title: a.text(),
                 link: a.attr('href')!.startsWith('http') ? a.attr('href') : baseURL + a.attr('href'),
                 pubDate: parseDate($item.find('.date').text(), 'YYYY.MM.DD'),
-                description: undefined as DataItem['description'],
             };
         });
 

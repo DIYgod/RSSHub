@@ -56,19 +56,18 @@ async function handler(ctx) {
     // 解析搜索结果
     const list = $('div.wrap-content li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title')!,
                 link: `${baseUrl}${$item.find('a').attr('href')}`,
                 pubDate: parseDate($item.find('span').text()),
-                description: undefined as DataItem['description'],
             };
         });
     // 获取公告详情
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 let description: string;
                 try {
                     const contentResponse = await got(item.link);

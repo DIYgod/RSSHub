@@ -61,7 +61,7 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#post-list > div.content > div > div:nth-child(3) span')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
 
@@ -81,13 +81,12 @@ async function handler(ctx) {
                     image: imageSrc,
                     by: user,
                 }),
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -97,7 +96,7 @@ async function handler(ctx) {
                 const statisticsStr = statisticsTages.text();
 
                 const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/g;
-                const result = {} as Record<string, any>;
+                const result: Record<string, any> = {};
                 for (const match of statisticsStr.matchAll(regex)) {
                     const { key, value } = match.groups ?? ({} as { key: string; value: string });
                     result[key.trim().toLocaleLowerCase()] = value.trim();

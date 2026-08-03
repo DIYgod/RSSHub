@@ -27,7 +27,7 @@ export const handler = async (ctx) => {
     let items = $('li.media.thread.tap:not(li.hidden-sm)')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const subjectEl = $item.find('div.subject').children('a').first();
@@ -45,13 +45,6 @@ export const handler = async (ctx) => {
                 ].filter(Boolean),
                 author: $item.find('a.username').text(),
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_title: undefined as DataItem['enclosure_title'],
             };
         });
 

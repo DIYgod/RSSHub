@@ -53,17 +53,13 @@ async function handler(ctx) {
 
     let items = $('.title')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { guid: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.parent().attr('href')}`,
                 guid: `https://18comic.org${$item.parent().attr('href')}`,
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
             };
         });
 

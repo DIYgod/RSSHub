@@ -37,7 +37,7 @@ async function handler(ctx) {
     let items = $('div[role="main"] a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -45,10 +45,6 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
-                guid: undefined as DataItem['guid'],
             };
         });
 

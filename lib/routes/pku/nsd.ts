@@ -52,7 +52,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.maincontent > ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $(item).find('a').attr('href');
             const type = pageType(href);
             return {
@@ -60,7 +60,6 @@ async function handler() {
                 link: type === 'in-site' ? baseUrl + href : href,
                 pubDate: parseDate($(item).find('span').first().text(), 'YYYY-MM-DD'),
                 type,
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -44,7 +44,7 @@ async function handler(ctx) {
     let items = $('.p_news-box li')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 12)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const link = $item.find('a');
@@ -53,7 +53,6 @@ async function handler(ctx) {
                 title: link.text(),
                 link: new URL(link.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.contents().last().text().trim()),
-                description: undefined as DataItem['description'],
             };
         });
 

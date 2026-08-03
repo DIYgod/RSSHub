@@ -44,22 +44,18 @@ async function handler(ctx) {
     const list = $('.page-main-list .list-item a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: rootUrl + $item.attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
+                title: '',
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

@@ -35,20 +35,19 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.text-list ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a[title]');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.find('span').text().trim()),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

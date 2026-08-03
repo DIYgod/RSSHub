@@ -41,14 +41,13 @@ async function handler(ctx) {
         .first()
         .children()
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('span').text();
             const link = rootUrl + $(item).find('a').attr('href');
 
             return {
                 title,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -57,14 +56,13 @@ async function handler(ctx) {
         .first()
         .children()
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('span').text();
             const link = rootUrl + $(item).find('a').attr('href');
 
             return {
                 title,
                 link,
-                description: undefined as any,
             };
         });
 
@@ -73,7 +71,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         combinedList.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
                 item.description = renderToString(

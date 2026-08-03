@@ -55,7 +55,7 @@ async function handler(ctx) {
     const data = $('.main_conRCb ul li')
         .slice(0, 16)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const pubDate = $item.children('span').text();
             const title = $item.find('a em').text();
@@ -67,8 +67,6 @@ async function handler(ctx) {
                 pubDate: parseDate(pubDate),
                 title,
                 link,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -79,7 +77,7 @@ async function handler(ctx) {
         language: 'zh-CN' as Language,
         item: await Promise.all(
             data.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const response = await got({
                         method: 'get',
                         url: item.link,

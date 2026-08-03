@@ -44,15 +44,11 @@ async function handler(ctx) {
         ...new Set(
             $('#bigNewsSlide .item, #news_3 .item')
                 .toArray()
-                .map((item) => {
+                .map((item): DataItem => {
                     const $item = $(item);
                     return {
                         link: $item.find('a').eq(0).attr('href'),
-                        title: undefined as unknown as DataItem['title'],
-                        author: undefined as DataItem['author'],
-                        pubDate: undefined as DataItem['pubDate'],
-                        category: undefined as DataItem['category'],
-                        description: undefined as DataItem['description'],
+                        title: '',
                     };
                 })
         ),

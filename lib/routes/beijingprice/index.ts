@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('div.jgzx.rightcontent ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -47,17 +47,13 @@ export const handler = async (ctx) => {
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureType,
                 enclosure_title: enclosureUrl ? title : undefined,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.includes('www.beijingprice.cn') || item.link.endsWith('.pdf')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.includes('www.beijingprice.cn') || item.link!.endsWith('.pdf')) {
                     return item;
                 }
 

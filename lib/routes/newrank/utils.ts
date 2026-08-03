@@ -74,7 +74,7 @@ function shouldUpdateCookie(forcedUpdate = false) {
 }
 
 function clearCookie() {
-    cache.set(newrank_cookie_token, null as unknown as string);
+    cache.set(newrank_cookie_token, '');
 }
 
 // 加了验证码失效了

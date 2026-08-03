@@ -56,16 +56,12 @@ async function handler(ctx) {
     let items = selection
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text().trim(),
                 link: $item.attr('href'),
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
             };
         });
 

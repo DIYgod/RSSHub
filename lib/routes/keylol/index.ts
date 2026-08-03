@@ -49,7 +49,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let queryParams = {} as Record<string, any>;
+    let queryParams: Record<string, any> = {};
     const path = ctx.req.param('path');
     if (/^f\d+-\d+/.test(path)) {
         queryParams.fid = path.match(/^f(\d+)-\d+/)[1];
@@ -88,7 +88,7 @@ async function handler(ctx) {
     let items = $('tbody[id^="normalthread_"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -96,17 +96,13 @@ async function handler(ctx) {
                 link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
                 pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                updated: undefined as DataItem['updated'],
-                comments: undefined as DataItem['comments'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const threadId = threadIdRegex.test(item.link) ? item.link.match(threadIdRegex)![1] : queryString.parseUrl(item.link).query.tid;
+            cache.tryGet(item.link!, async () => {
+                const threadId = threadIdRegex.test(item.link!) ? item.link!.match(threadIdRegex)![1] : queryString.parseUrl(item.link!).query.tid;
                 const { data: detailResponse } = await got({
                     method: 'get',
                     url: item.link,

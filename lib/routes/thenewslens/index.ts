@@ -45,7 +45,7 @@ export async function handler(ctx) {
         .find('a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -53,10 +53,6 @@ export async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: /\/article\//.test(link!) ? `${link}/fullpage` : link,
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -39,14 +39,12 @@ async function handler(ctx) {
 
     const list = $('.postlist a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.attr('title')!,
                 link: new URL($item.attr('href')!, currentUrl).href,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

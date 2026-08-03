@@ -32,7 +32,7 @@ async function handler() {
 
     let items = $('.postIndexItem')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('.title a').text().trim();
             const link = new URL($item.find('.title a').attr('href')!, currentUrl).href;
@@ -43,13 +43,12 @@ async function handler() {
                 title,
                 link,
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got(item.link);
                     const $detail = load(detailResponse.data);

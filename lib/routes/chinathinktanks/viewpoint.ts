@@ -85,20 +85,19 @@ async function handler(ctx) {
 
     let items = $('.main-content-left-list-item')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             return {
                 title: $e.find('.title span').text(),
                 link: baseUrl + $e.attr('href'),
                 author: $e.find('.author-by span').text(),
                 pubDate: $e.find('.author-time').text() as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     url: item.link,
                     cookieJar,

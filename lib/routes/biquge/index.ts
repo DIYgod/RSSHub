@@ -82,7 +82,7 @@ async function handler(ctx) {
         .toArray()
         .toReversed()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 1)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             let link: string;
@@ -100,13 +100,12 @@ async function handler(ctx) {
                 link,
                 author,
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     responseType: 'buffer',
                 });

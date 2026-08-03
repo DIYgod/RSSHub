@@ -109,18 +109,13 @@ async function handler(ctx) {
         .last()
         .nextAll('.tr3')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string; guid: string } => {
             const $item = $(item).find('a.subject');
 
             return {
                 title: $item.text(),
                 link: `${currentHost}/${$item.attr('href')}`,
                 guid: `${rootUrl}/2048/${$item.attr('href')}`,
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                description: undefined as DataItem['description'],
             };
         })
         .filter((item) => !item.link.includes('undefined'));

@@ -40,20 +40,18 @@ async function handler(ctx) {
     let items = $('div[class^="flex justify-center"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('h2').text(),
                 link: rootUrl + $item.find('a').attr('href'),
                 pubDate: parseDate($item.find('span[class^=date]').text()),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

@@ -46,7 +46,7 @@ async function handler(ctx) {
         .find(category === '' ? 'a:has(h2)' : 'h2 a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -54,9 +54,6 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : `${currentUrl}/${$item.attr('href')}`,
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

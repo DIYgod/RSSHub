@@ -98,23 +98,12 @@ async function handler(ctx) {
     let items = $('div.nex_cmo_piv a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 link: new URL($item.prop('href')!, rootUrl).href,
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_title: undefined as DataItem['enclosure_title'],
-                title: undefined as unknown as DataItem['title'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
-                language: undefined as DataItem['language'],
+                title: '',
             };
         });
 

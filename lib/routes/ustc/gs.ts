@@ -55,7 +55,7 @@ async function handler(ctx) {
     let items = $('div.r-box > ul')
         .find('li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a').text();
             const link = $item.find('a').attr('href')!.startsWith('/article') ? host + $item.find('a').attr('href') : $item.find('a').attr('href');
@@ -64,7 +64,6 @@ async function handler(ctx) {
                 title,
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -73,7 +72,7 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('article.article').html() ?? '';
+                    const desc = load(response.data)('article.article').html();
                     item.description = desc;
                 } catch {
                     // intranet only contents

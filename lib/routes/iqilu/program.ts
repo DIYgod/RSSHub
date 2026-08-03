@@ -53,7 +53,7 @@ async function handler(ctx) {
     let items = $('#jmzhanshi1 dl')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a').first();
@@ -62,7 +62,7 @@ async function handler(ctx) {
             $item.find('dd').last().remove();
 
             return {
-                title: a.prop('title'),
+                title: a.prop('title') ?? '',
                 link: a.prop('href'),
                 description: renderDescription({
                     image: {
@@ -78,8 +78,6 @@ async function handler(ctx) {
                         .match(/(\d{4}-\d{2}-\d{2})/)![1]
                 ),
                 itunes_item_image: image.prop('src'),
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

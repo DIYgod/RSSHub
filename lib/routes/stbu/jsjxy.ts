@@ -46,14 +46,12 @@ async function handler() {
     const $ = load(gbk2utf8(response));
     const list = $('.content dl h4')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 

@@ -53,11 +53,10 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('dd')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('span.name > a').text().trim(),
             link: `${rootUrl}/kcms/detail/${new URLSearchParams(new URL(`${rootUrl}/${$(item).find('span.name > a').attr('href')}`).search).get('url')}.html`,
             pubDate: parseDate($(item).find('span.company').text(), 'YYYY-MM-DD HH:mm:ss'),
-            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

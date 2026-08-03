@@ -61,7 +61,7 @@ async function handler(ctx) {
     const list = $('ul.reco-job-list li')
         .slice(0, 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a.reco-job-title');
             const company = $item.find('div.reco-job-com a');
@@ -78,13 +78,12 @@ async function handler(ctx) {
                 title: `${company.text()} | ${title.text()}`,
                 link: new URL(title.attr('href')!, rootUrl).href,
                 pubDate: date.toUTCString(),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     const list = $('li.txt-elise')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).find('a').attr('href');
             if (link!.includes('info') && id !== '') {
                 link = new URL(link!, rootUrl).href;
@@ -47,7 +47,6 @@ async function handler(ctx) {
                 title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('span').text()),
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 

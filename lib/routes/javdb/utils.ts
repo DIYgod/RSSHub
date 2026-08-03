@@ -47,30 +47,25 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     let items = $('div.item')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const element = $(item);
             return {
                 title: element.find('.video-title').text(),
                 link: `${rootUrl}${element.find('.box').attr('href')}`,
                 pubDate: parseDate(element.find('.meta').text()),
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
+                await page.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
                 });
                 const detailResponse = await page.content();

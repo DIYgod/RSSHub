@@ -43,7 +43,7 @@ async function handler() {
 
     const list = $('.b-46t')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('.p-48y');
@@ -59,7 +59,6 @@ async function handler() {
                     .text()
                     .replace(/Submitted by/, '')
                     .trim(),
-                description: undefined as DataItem['description'],
             };
         });
 

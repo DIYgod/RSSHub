@@ -43,27 +43,18 @@ async function handler(ctx) {
 
     let items = $('.article__title a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, currentUrl).href,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
-                itunes_item_image: undefined as DataItem['itunes_item_image'],
-                itunes_duration: undefined as DataItem['itunes_duration'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

@@ -60,14 +60,13 @@ async function handler(ctx) {
 
     let items = $('.list ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const link = $item.find('a').attr('href');
             return {
                 title: $item.find('p').text(),
                 link: link!.startsWith('http') ? link : new URL(link!, host).href,
                 pubDate: parseDate($item.find('span').text()),
-                description: undefined as DataItem['description'],
             };
         });
 

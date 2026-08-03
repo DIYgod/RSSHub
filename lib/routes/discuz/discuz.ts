@@ -132,7 +132,7 @@ async function handler(ctx) {
         const list = $('tbody[id^="normalthread"] > tr')
             .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const a = $item.find('span[id^=thread] a');
                 return {
@@ -140,13 +140,12 @@ async function handler(ctx) {
                     link: fixUrl(a.attr('href'), link),
                     pubDate: $item.find('td.author em').length ? parseDate($item.find('td.author em').text().trim()) : undefined,
                     author: $item.find('td.author cite a').text().trim(),
-                    description: undefined as DataItem['description'],
                 };
             });
 
         items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { description } = await loadContent(item.link, charset, header);
 
                     item.description = description;
@@ -160,7 +159,7 @@ async function handler(ctx) {
         const list = $('tbody[id^="normalthread"] > tr')
             .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const a = $item.find('a.xst');
                 return {
@@ -168,13 +167,12 @@ async function handler(ctx) {
                     link: fixUrl(a.attr('href'), link),
                     pubDate: $item.find('td.by:nth-child(3) em span').last().length ? parseDate($item.find('td.by:nth-child(3) em span').last().text().trim()) : undefined,
                     author: $item.find('td.by:nth-child(3) cite a').text().trim(),
-                    description: undefined as DataItem['description'],
                 };
             });
 
         items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { description } = await loadContent(item.link, charset, header);
 
                     item.description = description;

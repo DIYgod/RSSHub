@@ -39,7 +39,7 @@ async function handler(ctx) {
     const list = $('#ctl00_ctl00_body_NewsList')
         .find('tr.gridline')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.Title').text(),
@@ -52,15 +52,12 @@ async function handler(ctx) {
                         .replaceAll(/[[\]]+/g, ''),
                     'YYYY.MM.DD'
                 ),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
-                find: undefined as any,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
@@ -71,10 +68,9 @@ async function handler(ctx) {
                     item.author = authorMatch ? authorMatch[1].trim() : undefined;
                     item.pubDate = timezone(
                         parseDate(
-                            item
-                                .find('.zzxx')
+                            $('.zzxx')
                                 .text()
-                                .match(/发布时间:(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/)[1]
+                                .match(/发布时间:(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/)![1]
                         ),
                         8
                     );

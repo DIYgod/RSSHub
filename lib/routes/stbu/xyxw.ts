@@ -41,20 +41,18 @@ async function handler() {
     const $ = load(gbk2utf8(response));
     const list = $('.style_2 .Simple_title')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     responseType: 'buffer',
                 });

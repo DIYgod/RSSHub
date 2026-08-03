@@ -100,18 +100,13 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
     let items = $('.video-title')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { guid: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text().trim(),
                 link: `${rootUrl}${$item.prev().find('a').attr('href')}`,
                 guid: `18comic:${$item.prev().find('a').attr('href')}`,
-                pubDate: undefined as DataItem['pubDate'],
-                updated: undefined as DataItem['updated'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -95,7 +95,7 @@ async function handler(ctx) {
     const list = $('td.table_left_right > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr')
         .slice(1, -1)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $('td > a', item).attr('href');
             const type = pageType(href);
             return {
@@ -103,7 +103,6 @@ async function handler(ctx) {
                 link: type === 'in-site' ? yzb_base_url + path + href : href,
                 pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), 8),
                 type,
-                description: undefined as DataItem['description'],
             };
         });
 

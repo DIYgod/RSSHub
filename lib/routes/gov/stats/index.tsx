@@ -92,22 +92,19 @@ async function handler(ctx) {
     let items = $($('a.pchide').length === 0 ? 'a[title]' : '.list-content a.pchide')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.attr('title')!,
                 link: new URL($item.attr('href')!, currentUrl).href,
-                pubDate: undefined as DataItem['pubDate'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!, {
                     headers: {
                         Cookie: sid,
                         Referer: rootUrl,
@@ -118,7 +115,7 @@ async function handler(ctx) {
 
                 // articles from www.news.cn or www.gov.cn
 
-                if (/news\.cn|www\.gov\.cn/.test(item.link)) {
+                if (/news\.cn|www\.gov\.cn/.test(item.link!)) {
                     if (content('.year').text()) {
                         item.pubDate = timezone(parseDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`, 'YYYY/MM/DD HH:mm:ss'), 8);
                         item.author = content('.source')
@@ -152,7 +149,7 @@ async function handler(ctx) {
                         .map((a) => {
                             const $a = $(a);
                             return {
-                                link: new URL($a.attr('href')!, item.link).href,
+                                link: new URL($a.attr('href')!, item.link!).href,
                                 name: $a.text().trim(),
                             };
                         }),

@@ -38,7 +38,7 @@ async function handler() {
     const list = $('.ll_con_r_b li')
         .slice(0, 15)
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('.ll_con_r_b_title a').text();
             const link = element.find('a').attr('href');
@@ -46,20 +46,19 @@ async function handler() {
                 .find('.ll_con_r_b_time')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = timezone(parseDate(date as unknown as string), 8);
+            const pubDate = timezone(parseDate(date?.[0] ?? ''), 8);
 
             return {
                 title,
                 link: 'http://kyc.bjfu.edu.cn/tztg/' + link,
                 author: '北京林业大学科技处通知公告',
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const itemReponse = await got.get(item.link);
                 const data = itemReponse.data;
                 const itemElement = load(data);

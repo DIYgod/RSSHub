@@ -46,22 +46,19 @@ async function handler(ctx) {
     let items = $('a.xn-item, a.t-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('div.xn-d, div.t-e').text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: parseDate($item.find('div.xn-time, div.t-f').text()),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);

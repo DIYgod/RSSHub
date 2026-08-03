@@ -35,7 +35,7 @@ export const getContent = async (
 
     const list = $(baseClass)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -46,8 +46,6 @@ export const getContent = async (
             return {
                 title,
                 link,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -42,16 +42,13 @@ async function handler(ctx) {
     const list = $('.entry-title a')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
                 pubDate: parseDate($item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1]),
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                description: undefined as DataItem['description'],
             };
         });
 

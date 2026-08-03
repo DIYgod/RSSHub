@@ -47,13 +47,12 @@ async function handler(ctx) {
     const list = $('body > div.dataBox > table > tbody > tr')
         .slice(1)
         .toArray()
-        .map((elem) => {
+        .map((elem): DataItem => {
             const $elem = $(elem);
             return {
                 title: $elem.find('td:nth-child(2) > a').text(),
                 link: $elem.find('td:nth-child(2) > a').attr('href'),
                 pubDate: timezone(parseDate($elem.find('td:nth-child(5)').text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

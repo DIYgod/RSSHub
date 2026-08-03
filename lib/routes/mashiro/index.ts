@@ -29,7 +29,7 @@ export const route: Route = {
         const links = $('.archives-group article')
             .toArray()
             .slice(0, 10)
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const a = $item.find('a').first();
 
@@ -41,14 +41,13 @@ export const route: Route = {
                     title,
                     link,
                     pubDate,
-                    description: undefined as DataItem['description'],
                 };
             });
 
         const items = await Promise.all(
             links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
                     item.description = $('.article-content').html();
                     return item;

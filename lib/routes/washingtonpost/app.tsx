@@ -68,13 +68,12 @@ async function handler(ctx) {
         main.items[0].items
             .filter((item) => item.is_from_feed === true)
             .map((item) => {
-                const object = {
+                const object: DataItem = {
                     id: item.id,
                     title: item.headline.text,
                     link: item.link.url,
                     pubDate: item.link.display_date,
                     updated: item.link.last_modified,
-                    description: undefined as DataItem['description'],
                 };
                 if (item.blurbs?.items[0]?.text) {
                     object.description = item.blurbs?.items[0]?.text;

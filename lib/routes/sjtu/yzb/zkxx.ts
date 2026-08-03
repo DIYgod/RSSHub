@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     const list = $('li[id^="line"] a')
         .toArray()
-        .map((elem) => ({
+        .map((elem): DataItem & { link: string } => ({
             link: new URL(elem.attribs.href, pageUrl).href,
             title: $(elem).text(),
             pubDate: parseDate(
@@ -47,7 +47,6 @@ async function handler(ctx) {
                     .text()
                     .trim()
             ),
-            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

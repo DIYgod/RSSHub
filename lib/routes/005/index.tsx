@@ -23,7 +23,7 @@ export const handler = async (ctx) => {
     let items = $('div.article-list ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const title = $item.find('h3').text();
@@ -52,7 +52,6 @@ export const handler = async (ctx) => {
                 image,
                 banner: image,
                 language: language as Language,
-                category: undefined as DataItem['category'],
             };
         });
 

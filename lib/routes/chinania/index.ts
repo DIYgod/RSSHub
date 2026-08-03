@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('ul.notice_list_ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -29,9 +29,6 @@ export const handler = async (ctx) => {
                 pubDate: parseDate($item.find('p').last().text()),
                 link: $item.find('a').prop('href'),
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
             };
         });
 
@@ -47,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('div.article_title p').last().text().split('：') as unknown as string);
+                item.pubDate = parseDate($$('div.article_title p').last().text().split('：', 2)[1] ?? '');
                 item.author = $$("meta[name='keywords']").prop('content');
                 item.content = {
                     html: description,

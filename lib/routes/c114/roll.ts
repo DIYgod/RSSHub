@@ -25,7 +25,7 @@ export const handler = async (ctx) => {
     let items = $('div.new_list_c')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -34,14 +34,12 @@ export const handler = async (ctx) => {
                 link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
                 author: $item.find('div.new_list_author').text().trim(),
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link, {
                     responseType: 'buffer',
                 });

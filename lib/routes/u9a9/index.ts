@@ -42,7 +42,7 @@ async function handler(ctx) {
     const list = $('table tr')
         .slice(1) // skip thead
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('td').eq(1).find('a');
             const { size, unit } = $item
@@ -58,7 +58,6 @@ async function handler(ctx) {
                 enclosure_url: $item.find('td').eq(2).find('a').eq(1).attr('href'),
                 enclosure_length: Number.parseInt((size * (unit === 'GB' ? 1024 * 1024 * 1024 : 1024 * 1024)) as unknown as string),
                 enclosure_type: 'application/x-bittorrent',
-                description: undefined as DataItem['description'],
             };
         });
 

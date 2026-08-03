@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     const list = $('div.col_news_con li.news')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span.news_meta').text();
@@ -60,7 +60,6 @@ async function handler(ctx) {
                 title: element.find('a').text().trim(),
                 pubDate,
                 link,
-                description: undefined as DataItem['description'],
             };
         });
 

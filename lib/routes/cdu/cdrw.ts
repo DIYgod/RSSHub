@@ -39,7 +39,7 @@ async function handler() {
     const list = $('.row-f1 ul.ul-mzw-news-a2 li a.con')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const element = $(item);
             // 优先使用title属性内容，避免内容被截断
             const title = element.attr('title') || element.find('.tit').text().trim();
@@ -53,7 +53,6 @@ async function handler() {
                 link: link!.startsWith('http') ? link : new URL(link!, baseUrl).href,
                 pubDate,
                 author: '成都大学新闻网',
-                description: undefined as DataItem['description'],
             };
         });
 

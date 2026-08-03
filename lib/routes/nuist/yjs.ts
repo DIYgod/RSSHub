@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     let items = $('.gridlinediv')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a').last();
@@ -49,13 +49,12 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: parseDate($item.next().text(), 'YYYY年MM月DD日'),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

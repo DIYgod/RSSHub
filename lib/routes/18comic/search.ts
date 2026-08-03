@@ -67,15 +67,11 @@ async function handler(ctx) {
     const results = await Promise.all(
         filteredItemsByCategory.map((item) =>
             cache.tryGet(`18comic:search:${item.id}`, async () => {
-                const result = {
+                const result: DataItem & { category?: string[] } = {
                     title: item.name,
                     link: `${rootUrl}/album/${item.id}`,
                     guid: `18comic:/album/${item.id}`,
                     updated: parseDate(item.update_at),
-                    pubDate: undefined as DataItem['pubDate'],
-                    category: undefined as string[] | undefined,
-                    author: undefined as DataItem['author'],
-                    description: undefined as DataItem['description'],
                 };
                 const apiUrl = `${getApiUrl()}/album?id=${item.id}`;
                 const apiResult = await processApiItems(apiUrl);

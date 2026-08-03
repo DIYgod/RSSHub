@@ -37,19 +37,18 @@ async function handler(ctx) {
     const $ = load(response.data);
     let items = $('ul.list-text > li > a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.tit').text(),
                 link: new URL($item.attr('href')!, listUrl).href,
                 pubDate: parseDate($item.find('.date .mon').text() + '-' + $item.find('.date .day').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detail = await got(item.link);
                 const $ = load(detail.data);
 

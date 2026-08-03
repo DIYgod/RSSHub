@@ -39,7 +39,7 @@ async function handler() {
     const $ = load(response);
     const list = $('.li_body')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.list_text_title');
             return {
@@ -47,13 +47,12 @@ async function handler() {
                 link: `${baseUrl}${a.attr('href')}`,
                 author: $item.find('.name').text(),
                 pubDate: timezone(parseDate($item.find('.time').attr('title')!), 9),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

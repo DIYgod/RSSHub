@@ -36,12 +36,11 @@ async function handler() {
 
     const list = Object.values<{ category: string; title: string; author: string; content: DataItem['description']; url: string }>(data)
         .filter((i) => i.category === 'new')
-        .map((i) => ({
+        .map((i): DataItem & { link: string } => ({
             title: i.title,
             author: i.author,
             description: i.content,
             link: `${host}${i.url}`,
-            pubDate: undefined as DataItem['pubDate'],
         }));
 
     const items = await Promise.all(

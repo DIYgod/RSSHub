@@ -74,14 +74,13 @@ async function handler(ctx) {
     const list = $('table.details_rows tbody tr')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
                 title: a.text(),
                 link: a.attr('href'),
                 pubDate: new Date($item.find('span.source').text().split(' | ', 1)[0] + ' GMT+1').toUTCString(),
-                description: undefined as DataItem['description'],
             };
         });
 

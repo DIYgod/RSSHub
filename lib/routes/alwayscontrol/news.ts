@@ -43,7 +43,7 @@ async function handler() {
     // 解析新闻列表
     const list = $('div.grid > a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const image = $item.find('img').attr('src');
 
@@ -52,20 +52,17 @@ async function handler() {
                 link: new URL($item.attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('h3').next().text(), 'YYYY.MM.DD'),
                 image: image ? new URL(image, baseUrl).href : '',
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                category: undefined as DataItem['category'],
             };
         });
 
     // 获取每篇新闻的详细内容
     const items = await Promise.all(
         list.map((item) => {
-            if (new URL(item.link).host === 'mp.weixin.qq.com') {
+            if (new URL(item.link!).host === 'mp.weixin.qq.com') {
                 return finishArticleItem({ ...item, guid: item.link });
             }
 
-            return cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $detail = load(detailResponse.data);
 

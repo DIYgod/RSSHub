@@ -33,20 +33,19 @@ const handler = async (ctx) => {
         .toArray()
         .toReversed()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, addresses[Math.floor(Math.random() * addresses.length)]).href,
                 guid: new URL($item.attr('href')!, jjmhw).href,
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const comicpage = $('.comicpage');

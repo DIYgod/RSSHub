@@ -38,16 +38,16 @@ async function handler() {
     const $ = load(response.data);
     const list = $('ul#list li')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a').text(),
+                link: new URL($(item).find('a').attr('href')!, rootUrl).href,
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

@@ -42,13 +42,12 @@ async function handler(ctx) {
 
     const list = $('td[align=left] b')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             return {
                 title: $e.find('a').attr('title')!,
                 link: `${baseUrl}${$e.find('a').attr('href')}`,
                 pubDate: timezone(parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
-                description: undefined as DataItem['description'],
             };
         })
         .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
@@ -56,7 +55,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((e) =>
-            cache.tryGet(e.link, async () => {
+            cache.tryGet(e.link!, async () => {
                 const { data } = await got.get(e.link);
                 const $ = load(data);
 

@@ -222,19 +222,18 @@ async function handler(ctx) {
         },
     });
 
-    const list = [...response.entities.region.regionArticles, ...response.entities.global.globalArticles].map((i) => ({
+    const list = [...response.entities.region.regionArticles, ...response.entities.global.globalArticles].map((i): DataItem & { slug: string } => ({
         title: i.title,
         link: `${baseUrl}/${region}/news/${i.slug}`,
         pubDate: parseDate(i.rawPublishedDate),
         category: [...new Set([...i.categories.map((category) => category.label), ...i.locations.map((location) => location.label)])],
         image: i.heroImage?.url ? `https:${i.heroImage.url.replace('?w=2560', '')}` : undefined,
         slug: i.slug,
-        description: undefined as DataItem['description'],
     }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await ofetch('https://about.netflix.com/api/data/entity', {
                     query: {
                         language: region,

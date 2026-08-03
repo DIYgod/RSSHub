@@ -103,19 +103,14 @@ async function handler(ctx) {
     let items = $('.movie-box')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: $item.attr('href'),
                 guid: $item.find('date').first().text(),
                 pubDate: parseDate($item.find('date').last().text()),
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
-                author: undefined as DataItem['author'],
-                title: undefined as unknown as DataItem['title'],
-                category: undefined as DataItem['category'],
-                description: undefined as DataItem['description'],
+                title: '',
             };
         });
 

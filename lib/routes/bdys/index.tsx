@@ -123,7 +123,7 @@ async function handler(ctx) {
     const list = $('.card-body .card a')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const link = $item.attr('href')!.split(';jsessionid=');
             jsessionid = link[1];
@@ -132,10 +132,6 @@ async function handler(ctx) {
                 title: next.find('h3').text(),
                 link: `${rootUrl}${link[0]}`,
                 pubDate: parseDate(next.find('.text-muted').text()),
-                description: undefined as DataItem['description'],
-                guid: undefined as DataItem['guid'],
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 
@@ -146,7 +142,7 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -154,7 +150,7 @@ async function handler(ctx) {
                 });
                 const downloadResponse = await got({
                     method: 'get',
-                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/', 5)[4].split('.', 1)[0]}`,
+                    url: `${rootUrl}/downloadInfo/list?mid=${item.link!.split('/', 5)[4].split('.', 1)[0]}`,
                     headers,
                 });
                 const content = load(detailResponse.data);

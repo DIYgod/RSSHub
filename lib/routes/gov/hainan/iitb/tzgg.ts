@@ -29,7 +29,7 @@ async function handler() {
 
     const alist = $('.list_div');
 
-    const list = alist.toArray().map((item) => {
+    const list = alist.toArray().map((item): DataItem & { link: string } => {
         const elem = $(item);
 
         const titleElement = elem.find('.list-right_title a');
@@ -43,8 +43,6 @@ async function handler() {
             link: new URL(link, baseUrl).href,
             pubDate: parseDate(dateText),
             category: department,
-            author: undefined as DataItem['author'],
-            description: undefined as DataItem['description'],
         };
     });
 

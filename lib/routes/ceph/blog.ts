@@ -40,7 +40,7 @@ async function handler(ctx: Context): Promise<Data> {
     const $ = load(data);
     const list = $('#main .section li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('a').text();
             const pubDate = parseDate(element.find('time').attr('datetime')!);
@@ -48,14 +48,12 @@ async function handler(ctx: Context): Promise<Data> {
                 title,
                 link: new URL(element.find('a').attr('href')!, 'https://ceph.io').href,
                 pubDate,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const itemReponse = await got.get(item.link);
                 const data = itemReponse.data;
                 const item$ = load(data);

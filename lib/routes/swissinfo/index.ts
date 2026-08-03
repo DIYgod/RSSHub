@@ -54,22 +54,19 @@ async function handler(ctx) {
     let items = $('.si-teaser__link')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 link: `${rootUrl}${$item.attr('href')}`,
                 title: $item.find('.si-teaser__title').text(),
                 pubDate: parseDate($item.find('.si-teaser__date').attr('datetime')!),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                guid: undefined as DataItem['guid'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

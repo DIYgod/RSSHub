@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const list = $("div[class='list_right fr'] ul li")
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             const date = parseDate($item.find('span').text());
@@ -50,7 +50,6 @@ async function handler(ctx) {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(date, 8),
-                description: undefined as DataItem['description'],
             };
         });
 
@@ -59,7 +58,7 @@ async function handler(ctx) {
         link: baseUrl,
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const res = await got(item.link);
                     const content = load(res.data);
                     item.title = content('tr td[class^=titlestyle]').text();

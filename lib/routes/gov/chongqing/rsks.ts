@@ -27,21 +27,20 @@ async function handler() {
     // 获取考试信息标题
     const list = $('div.page-list .tab-item > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('a').first();
             return {
                 title: title.text(),
                 link: `${rsksUrl}${title.attr('href')}`,
                 pubDate: parseDate($item.find('span').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     // 获取考试信息正文
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')!) ?? item.pubDate;

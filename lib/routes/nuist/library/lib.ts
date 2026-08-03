@@ -30,21 +30,19 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.list2 li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('a').attr('title')!,
                 category: '通知',
                 link: new URL($item.find('a').attr('href')!, link).href,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 

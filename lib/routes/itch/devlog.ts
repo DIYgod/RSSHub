@@ -53,15 +53,13 @@ async function handler(ctx) {
     let items = $('.title')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
                 pubDate: timezone(parseDate($item.text()), 8),
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

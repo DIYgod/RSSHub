@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
     let items = $('div.btlist ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
@@ -29,8 +29,6 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('span.time').text()),
                 link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
             };
         });
 

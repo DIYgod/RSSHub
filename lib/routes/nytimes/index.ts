@@ -127,12 +127,11 @@ async function handler(ctx) {
                 }
             }
 
-            const single = {
+            const single: DataItem = {
                 title: item.title!,
                 pubDate: item.pubDate,
                 link,
                 author: item['dc:creator'],
-                description: undefined as DataItem['description'],
             };
 
             const result = utils.ProcessFeed(response, hasEnVersion);

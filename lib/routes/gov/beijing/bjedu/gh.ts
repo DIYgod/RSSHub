@@ -45,21 +45,19 @@ async function handler(ctx) {
 
     const list = $('.content li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text().trim(),
                 link: $item.attr('href')!.startsWith('http') ? $item.attr('href')!.replace(/^http:/, 'https:') : new URL($item.attr('href')!, link).href,
                 pubDate: $item.prev().length ? timezone(parseDate($item.prev().text(), 'YYYY-MM-DD'), 8) : null,
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.endsWith('.html')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.endsWith('.html')) {
                     return item;
                 }
                 const { data: response } = await got(item.link);

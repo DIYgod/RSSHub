@@ -78,7 +78,7 @@ async function handler(ctx) {
     const $ = load(listStr);
     const list = $('.newsList')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const $date = $item.find("li[class='span2 y']").text();
             const $linkLi = $item.find('li>a');
@@ -87,7 +87,6 @@ async function handler(ctx) {
                 title: $linkLi.text(),
                 pubDate: parseDate($date, 'YYYY-MM-DD'),
                 link: $url,
-                description: undefined as DataItem['description'],
             };
         });
     // 获取全文信息

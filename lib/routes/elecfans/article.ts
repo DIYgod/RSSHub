@@ -31,16 +31,12 @@ export const route: Route = {
         const $ = load(response);
         const list = $('#mainContent li')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem & { link: string } => {
                 const $item = $(item);
                 const a = $item.find('a').eq(1);
                 return {
                     title: a.text(),
                     link: String(a.attr('href')),
-                    pubDate: undefined as DataItem['pubDate'],
-                    author: undefined as DataItem['author'],
-                    description: undefined as DataItem['description'],
-                    category: undefined as DataItem['category'],
                 };
             });
         const items = await Promise.all(

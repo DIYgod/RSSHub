@@ -28,12 +28,13 @@ async function handler(ctx) {
     const $ = load(response._data);
     const items = $('div.list div.list div.node p')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('b').text(),
-            link: new URL($(item).find('a').attr('href')!, baseUrl).href,
-            pubDate: parseDate($(item).next().next().next().find('span').first().text()),
-            description: undefined as DataItem['description'],
-        }))
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('b').text(),
+                link: new URL($(item).find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($(item).next().next().next().find('span').first().text()),
+            })
+        )
         .filter((item) => item.title.length !== 0);
 
     return {
@@ -41,7 +42,7 @@ async function handler(ctx) {
         link: response.url,
         item: await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     item.description = await getArticleDesc(item.link);
                     return item;
                 })

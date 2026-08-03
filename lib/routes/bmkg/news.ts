@@ -34,7 +34,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div .ms-slide')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             const img = $item.find('img');
@@ -43,13 +43,12 @@ async function handler() {
                 title: a.text(),
                 link: `${url}/${a.attr('href')}`,
                 itunes_item_image: img.attr('data-src'),
-                description: undefined as DataItem['description'],
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 const p = $('div .blog-grid').find('p');

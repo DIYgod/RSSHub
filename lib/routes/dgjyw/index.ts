@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     let items = $('div.text-list ul li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -54,14 +54,13 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: `${link!.startsWith('http') ? '' : `${rootUrl}/`}${link}`,
                 pubDate: parseDate($item.next().text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/dgjyw\.com/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (/dgjyw\.com/.test(item.link!)) {
                     const detailResponse = await got(item.link);
 
                     const content = load(detailResponse.data);

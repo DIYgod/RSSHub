@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = (category ? $('.module-items a') : $('.bdl[data-target="1"]').eq(1).find('a')).toArray().map((item) => {
+    let items = (category ? $('.module-items a') : $('.bdl[data-target="1"]').eq(1).find('a')).toArray().map((item): DataItem => {
         const $item = $(item);
 
         const link = $item.attr('href');
@@ -48,15 +48,12 @@ async function handler(ctx) {
         return {
             title: $item.attr('title')!,
             link: `${link!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
-            description: undefined as DataItem['description'],
-            pubDate: undefined as DataItem['pubDate'],
-            category: undefined as DataItem['category'],
         };
     });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

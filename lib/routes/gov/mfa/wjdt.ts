@@ -57,15 +57,12 @@ async function handler(ctx) {
     let items = $('ul.list1 li a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 35)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href')!.replace(/^\./, () => currentUrl),
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
-                category: undefined as DataItem['category'],
             };
         });
 

@@ -45,13 +45,12 @@ function ProcessFeed(list, caches) {
                     }
                 }
 
-                const single = {
+                const single: DataItem = {
                     title: item.plaintextPrimaryHeadline,
                     link: itemUrl,
                     guid: itemUrl,
                     pubDate: item.date,
                     author: bylineString,
-                    description: undefined as DataItem['description'],
                 };
 
                 const { description } = await loadContent(itemUrl);

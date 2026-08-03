@@ -102,15 +102,14 @@ async function handler(ctx) {
                 items: $('.datalist tr')
                     .toArray()
                     .slice(1)
-                    .map((item) => {
+                    .map((item): DataItem => {
                         const $item = $(item);
                         const title = $item.find('td').eq(1).text();
                         const pubDate = $item.find('td').eq(2).text();
                         return {
                             title,
-                            pubDate: pubDate as DataItem['pubDate'],
+                            pubDate,
                             guid: `${title}:${pubDate}`,
-                            description: undefined as DataItem['description'],
                         };
                     })
                     .filter((item) => item.title !== 'null'),

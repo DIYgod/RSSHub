@@ -21,22 +21,16 @@ export const handler = async (ctx) => {
     let items = $('div.ztst_list_contBox_inner ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             const a = $item.find('a.content');
 
             return {
-                title: a.prop('title'),
+                title: a.prop('title') ?? '',
                 pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop()!, 'YYYY.MM.DD'),
                 link: new URL(a.prop('href')!, currentUrl).href,
                 language: language as Language,
-                description: undefined as DataItem['description'],
-                category: undefined as DataItem['category'],
-                author: undefined as DataItem['author'],
-                guid: undefined as DataItem['guid'],
-                id: undefined as DataItem['id'],
-                content: undefined as DataItem['content'],
             };
         });
 

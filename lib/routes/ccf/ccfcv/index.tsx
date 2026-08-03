@@ -47,21 +47,19 @@ async function handler(ctx) {
 
     let items = $('div.article-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { status?: number } => {
             const $item = $(item);
             return {
                 title: $item.find('h3 a').text(),
                 link: (cate === 'xsqy' ? rootUrl : '') + $item.find('h3 a').attr('href'),
                 pubDate: parseDate($item.find('div p').text()),
-                description: undefined as DataItem['description'],
-                status: undefined as any,
             };
         });
 
     if (cate === 'xsqy') {
         items = await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     let detailResponse;
 
                     try {

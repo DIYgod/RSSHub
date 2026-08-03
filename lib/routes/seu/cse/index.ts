@@ -51,20 +51,19 @@ async function handler(ctx) {
 
     const list = $('.news_list .news')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const $e = $(e);
             const a = $e.find('.news_title a');
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, host).href,
                 pubDate: parseDate($e.find('.news_meta').text()),
-                description: undefined as DataItem['description'],
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 let response;
                 try {
                     response = await got(item.link);

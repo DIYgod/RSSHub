@@ -30,7 +30,7 @@ async function handler() {
 
     const list = $('.newspost')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { category: string[]; link: string } => {
             const $item = $(item);
             const a = $item.find('h1 a');
             const date = $item.find('time').attr('datetime');
@@ -43,7 +43,6 @@ async function handler() {
                     .find('.byline .flags span')
                     .toArray()
                     .map((item) => $(item).text().trim()),
-                description: undefined as DataItem['description'],
             };
         });
 

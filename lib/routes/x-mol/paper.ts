@@ -42,7 +42,7 @@ async function handler(ctx) {
     const newsItem = $('.magazine-model-content-new li')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('.magazine-text-title a').text().trim(),
@@ -52,13 +52,10 @@ async function handler(ctx) {
                         $item
                             .find('.magazine-text-atten')
                             .text()
-                            .match(/\d{4}-\d{2}-\d{2}/)![0],
-                        8 as unknown as string
-                    )
+                            .match(/\d{4}-\d{2}-\d{2}/)![0]
+                    ),
+                    8
                 ),
-                doi: undefined as DataItem['doi'],
-                author: undefined as DataItem['author'],
-                description: undefined as DataItem['description'],
             };
         });
 

@@ -25,11 +25,10 @@ export const route: Route = {
         const $ = load(response.data);
         const links = $('#wp_news_w3 > table > tbody > tr')
             .toArray()
-            .map((el) => ({
+            .map((el): DataItem & { link: string } => ({
                 pubDate: timezone(parseDate($(el).find('div[style="white-space:nowrap"]').text()), 8),
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
-                description: undefined as DataItem['description'],
             }));
         const items = await Promise.all(
             links.map((item) =>

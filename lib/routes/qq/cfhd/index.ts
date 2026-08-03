@@ -26,18 +26,13 @@ export const handler = async (ctx) => {
     let items = $('div.news-list-item ul li.list-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('p').text(),
                 pubDate: parseDate($item.find('span.date').text()),
                 link: new URL($item.find('a.clearfix').prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
-                language: undefined as DataItem['language'],
             };
         });
 

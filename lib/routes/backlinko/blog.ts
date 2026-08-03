@@ -40,18 +40,17 @@ async function handler() {
         props: { pageProps },
     } = nextData;
 
-    const posts = [...pageProps.posts.nodes, ...pageProps.backlinkoLockedPosts.nodes].map((post) => ({
+    const posts = [...pageProps.posts.nodes, ...pageProps.backlinkoLockedPosts.nodes].map((post): DataItem & { apiUrl: string } => ({
         title: post.title,
         link: `${baseUrl}/${post.slug}`,
         pubDate: parseDate(post.modified),
         author: post.author.node.name,
         apiUrl: `${baseUrl}/_next/data/${buildId}/${post.slug}.json`,
-        description: undefined as DataItem['description'],
     }));
 
     const items = await Promise.all(
         posts.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.apiUrl);
                 const post = data.pageProps.post || data.pageProps.lockedPost;
 

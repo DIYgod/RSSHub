@@ -21,7 +21,7 @@ export const handler = async (ctx) => {
     let items = $('div.news_box ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const title = $item.find('h2').text();
@@ -34,10 +34,6 @@ export const handler = async (ctx) => {
                 description,
                 pubDate: parseDate($item.find('span').text(), 'YYYY/M/D'),
                 link: $item.find('a').first().prop('href'),
-                author: undefined as DataItem['author'],
-                content: undefined as DataItem['content'],
-                image: undefined as DataItem['image'],
-                banner: undefined as DataItem['banner'],
             };
         });
 

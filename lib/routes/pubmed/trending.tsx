@@ -37,15 +37,12 @@ async function handler(ctx) {
 
     let items = $('a[data-article-id]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('data-article-id')}`,
-                doi: undefined as DataItem['doi'],
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

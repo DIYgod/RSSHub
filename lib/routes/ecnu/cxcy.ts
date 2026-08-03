@@ -48,11 +48,10 @@ export const route: Route = {
         const $ = load(response.data);
 
         const filteredEls = $(`div.limit_style1[frag="${fragList[type].frag}"]`).find('table > tbody > tr > td').toArray();
-        const links = filteredEls.map((el) => ({
+        const links = filteredEls.map((el): DataItem & { link: string } => ({
             pubDate: timezone(parseDate($(el).find('.data').text()), 8),
             link: new URL($(el).find('a').attr('href')!, baseUrl).href,
             title: $(el).find('.news_title').text(),
-            description: undefined as DataItem['description'],
         }));
         const items = await Promise.all(
             links.map((item) =>

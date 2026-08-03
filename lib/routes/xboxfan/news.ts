@@ -46,12 +46,10 @@ async function handler() {
     const items = $(`div.homeItem[v-if="showFeedLevel == 'read'"]`)
         .toArray()
         .map((item) => {
-            const data = {
+            const data: DataItem = {
                 title: '资讯',
                 author: $(item).find('div.homeName').text(),
                 pubDate: parseRelativeDate($(item).find('div.homeTime').first().text().split(' ', 1)[0]),
-                guid: undefined as DataItem['guid'],
-                description: undefined as DataItem['description'],
             };
 
             $(item).find('div.homeName').remove();

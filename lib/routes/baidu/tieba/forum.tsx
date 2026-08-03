@@ -32,7 +32,7 @@ async function handler(ctx) {
 
     // PC端：https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}
     // 移动端接口：https://tieba.baidu.com/mo/q/m?kw=${encodeURIComponent(kw)}&lp=5024&forum_recommend=1&lm=0&cid=0&has_url_param=1&pn=0&is_ajax=1
-    const params = { kw: encodeURIComponent(kw), tab: undefined as any, cid: undefined as any };
+    const params: { kw: string; tab: string | undefined; cid: string | undefined } = { kw: encodeURIComponent(kw), tab: undefined, cid: undefined };
     ctx.req.path.includes('good') && (params.tab = 'good');
     cid && (params.cid = cid);
     const { data } = await got('https://tieba.baidu.com/f', {

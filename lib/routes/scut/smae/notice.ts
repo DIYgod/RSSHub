@@ -48,7 +48,7 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#wp_news_w6 ul li.news')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             const pubDate = $item.find('span.news_meta');
@@ -56,12 +56,11 @@ async function handler(ctx) {
                 title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
-                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

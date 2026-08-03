@@ -52,13 +52,12 @@ async function handler(ctx) {
     let items = $('div.cont-main li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('p.txt').text(),
                 link: $item.find('a').attr('href'),
                 pubDate: new Date($item.find('time').attr('datetime')!),
-                description: undefined as DataItem['description'],
             };
         });
 

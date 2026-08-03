@@ -38,7 +38,7 @@ async function handler() {
     const $ = load(response);
     const list = $('div.mr245')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const aEle = $item.find('a').first();
             const href = aEle.attr('href');
@@ -50,8 +50,6 @@ async function handler() {
                 link: href,
                 author,
                 category,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
     const items = await Promise.all(

@@ -101,7 +101,7 @@ async function handler(ctx) {
         .not('[data-news-id]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             // a label with div / a label without div
             const aLabelNode = $item.find('h1').length === 0 ? $item.find('a') : $item.find('h1').find('a');
@@ -110,16 +110,13 @@ async function handler(ctx) {
             return {
                 title: '[' + tag + ']' + aLabelNode.text(),
                 link: aLabelNode.attr('href')!.replace('//', 'https://'),
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
     const items = await pMap(
         list,
         async (item) => {
-            item.description = await cache.tryGet(item.link, async () => {
+            item.description = await cache.tryGet(item.link!, async () => {
                 const response = await got.get(item.link);
                 let component: string;
                 const urlReg = /window\.lazySizesConfig/g;

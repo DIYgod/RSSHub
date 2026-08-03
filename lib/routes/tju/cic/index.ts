@@ -84,15 +84,13 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.wenzi_list_ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $('a', item).attr('href');
             const type = pageType(href);
             return {
                 title: $('a', item).text(),
                 link: type === 'in-site' ? cic_base_url + href : href,
                 type,
-                pubDate: undefined as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
             };
         });
 

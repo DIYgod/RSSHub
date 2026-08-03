@@ -64,11 +64,10 @@ async function handler(ctx) {
     const title = $('div.categories-list > div > div > div > ul > li.active').text();
     const list = $('div.post-item')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('div.title').text(),
             link: new URL($(item).find('a').attr('href')!, host).href,
             pubDate: parseDate($(item).find('div.metas > a > span').text().replace('・', '')),
-            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

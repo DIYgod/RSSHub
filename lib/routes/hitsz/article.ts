@@ -38,11 +38,10 @@ async function handler(ctx) {
 
     const lists = $('.mainside_news ul li')
         .toArray()
-        .map((el) => ({
+        .map((el): DataItem & { link: string } => ({
             title: $('a', el).text().trim(),
             link: `${host}${$('a', el).attr('href')}`,
             pubDate: timezone(parseDate($('span[class=date]', el).text()), 8),
-            description: undefined as DataItem['description'],
         }));
 
     const items = await Promise.all(

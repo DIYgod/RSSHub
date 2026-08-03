@@ -73,14 +73,13 @@ async function handler(ctx) {
     } else {
         const list = $('#list li')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem & { link: string } => {
                 const $item = $(item);
                 const a = $item.find('a');
                 return {
                     title: a.text(),
                     link: `${baseUrl}${a.attr('href')}`,
                     pubDate: timezone(parseDate($item.find('.data').text(), 'YYYY-MM-DD'), 8),
-                    description: undefined as DataItem['description'],
                 };
             });
 

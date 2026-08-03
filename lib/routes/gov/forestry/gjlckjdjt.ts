@@ -47,7 +47,7 @@ async function handler(ctx) {
     let items = $('a.items')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string; description: string } => {
             const $item = $(item);
 
             const title = $item.find('p.name').text();
@@ -64,8 +64,6 @@ async function handler(ctx) {
                     },
                 }),
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1]) : undefined,
-                enclosure_url: undefined as DataItem['enclosure_url'],
-                enclosure_type: undefined as DataItem['enclosure_type'],
             };
         });
 

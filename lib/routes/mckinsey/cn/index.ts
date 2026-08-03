@@ -84,7 +84,7 @@ async function handler(ctx) {
 
     const list = $('.fl-post-grid-post')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('h2 a');
             return {
@@ -92,7 +92,6 @@ async function handler(ctx) {
                 description: $item.find('.fl-post-grid-content').html()?.trim(),
                 link: a.attr('href'),
                 pubDate: $item.find('[itemprop="datePublished"]').length ? parseDate($item.find('[itemprop="datePublished"]').attr('content')!) : undefined,
-                guid: undefined as DataItem['guid'],
             };
         });
 

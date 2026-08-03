@@ -53,11 +53,10 @@ async function handler() {
                 } else {
                     description = itemTitle;
                 }
-                const result = {
+                const result: DataItem = {
                     title: itemTitle,
                     link: itemUrl,
                     description,
-                    pubDate: undefined as DataItem['pubDate'],
                 };
                 if (itemDate) {
                     result.pubDate = parseDate(itemDate, 'YYYY年MM月DD日');

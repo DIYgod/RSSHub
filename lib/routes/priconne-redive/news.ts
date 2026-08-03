@@ -74,11 +74,9 @@ async function handler(ctx) {
                     const $item = $(item);
                     const link = $item.find('a').attr('href');
                     return cache.tryGet(link!, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: $item.find('h4').text(),
                             link,
-                            description: undefined as DataItem['description'],
-                            pubDate: undefined as DataItem['pubDate'],
                         };
 
                         const response = await got(link);
@@ -127,11 +125,9 @@ async function handler(ctx) {
                     const link = `http://www.princessconnect.so-net.tw${title.attr('href')}`;
 
                     return cache.tryGet(link, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: title.text().trim(),
                             link,
-                            description: undefined as DataItem['description'],
-                            pubDate: undefined as DataItem['pubDate'],
                         };
 
                         const response = await got(link);
@@ -162,11 +158,10 @@ async function handler(ctx) {
                     const link = `https://game.bilibili.com/pcr/news.html#detail=${item.id}`;
 
                     return cache.tryGet(link, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: item.title,
                             link,
                             pubDate: parseDate(item.ctime),
-                            description: undefined as DataItem['description'],
                         };
                         const resp = await got({ method: 'get', url: `https://api.biligame.com/news/${item.id}` });
                         rssitem.description = resp.data.data.content;

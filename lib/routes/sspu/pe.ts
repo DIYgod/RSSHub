@@ -79,22 +79,20 @@ async function handler(ctx) {
     let items = $('table.wp_article_list_table a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: parseDate($item.prev().text()) as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
-                author: undefined as DataItem['author'],
+                pubDate: parseDate($item.prev().text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.endsWith('htm')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.endsWith('htm')) {
                     const { data: detailResponse } = await got(item.link);
 
                     const content = load(detailResponse);

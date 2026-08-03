@@ -25,7 +25,7 @@ async function handler(ctx) {
     $('.listline').remove();
     const list = $('.txtList_01 li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const date =
                 $item.find('span').length === 0
@@ -41,7 +41,6 @@ async function handler(ctx) {
                 title: $item.find('a').attr('title')!,
                 link: host + $item.find('a').attr('href'),
                 pubDate: timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY年M月D']), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

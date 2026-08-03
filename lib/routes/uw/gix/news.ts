@@ -62,7 +62,7 @@ async function handler(ctx) {
 
     const list = $(listSelector)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { time: string } => {
             const $item = $(item);
             const content = $item.find('header').find('h2').find('a');
             const time = $item.find('header').find('span.h4').text();
@@ -71,9 +71,7 @@ async function handler(ctx) {
                 // title: content.text(),
                 time,
                 link: content.attr('href'),
-                title: undefined as unknown as DataItem['title'],
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
+                title: '',
             };
         });
 

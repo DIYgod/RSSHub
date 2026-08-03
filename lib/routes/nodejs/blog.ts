@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     let items = $('article')
         .toArray()
-        .map((article) => {
+        .map((article): DataItem => {
             const $article = load(article);
 
             const author = $article('footer p').text();
@@ -70,17 +70,16 @@ async function handler(ctx) {
             const href = $article('a[aria-label]').attr('href');
 
             return {
-                title,
+                title: title!,
                 link: `${rootUrl}${href}`,
                 author,
                 pubDate,
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

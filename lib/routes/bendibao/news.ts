@@ -63,7 +63,7 @@ async function handler(ctx) {
 
     let items = $('ul.focus-news li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item).find('a');
 
             const link = $item.attr('href');
@@ -71,8 +71,6 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
-                description: undefined as DataItem['description'],
-                pubDate: undefined as DataItem['pubDate'],
             };
         });
 
@@ -93,7 +91,7 @@ async function handler(ctx) {
 
         items = $('#listNewsTimeLy div.info')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item).find('a');
 
                 const link = $item.attr('href');
@@ -101,8 +99,6 @@ async function handler(ctx) {
                 return {
                     title: $item.text(),
                     link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
-                    description: undefined as DataItem['description'],
-                    pubDate: undefined as DataItem['pubDate'],
                 };
             });
     }

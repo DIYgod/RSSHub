@@ -40,7 +40,7 @@ export async function handler(ctx) {
     let items = $('.title .internalLink')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const link = $item.attr('href');
@@ -49,7 +49,6 @@ export async function handler(ctx) {
                 title: $item.attr('data-title')!,
                 link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
                 pubDate: timezone(parseDate($item.text()), 8),
-                description: undefined as DataItem['description'],
             };
         });
 

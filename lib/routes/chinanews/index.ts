@@ -34,18 +34,17 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit');
     const list = $('a', '.dd_bt')
         .toArray()
-        .map((item) => ({
-            link: rootUrl + $(item).attr('href'),
-            title: $(item).text(),
-            description: undefined as DataItem['description'],
-            author: undefined as DataItem['author'],
-            pubDate: undefined as DataItem['pubDate'],
-        }))
+        .map(
+            (item): DataItem => ({
+                link: rootUrl + $(item).attr('href'),
+                title: $(item).text(),
+            })
+        )
         .slice(0, limit ? Number.parseInt(limit) : 50);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

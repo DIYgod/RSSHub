@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
     let items = $('div.divmore ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('div.zxcont1 a');
@@ -31,14 +31,12 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('div.zxtime1').text(), 'YY/MM/DD'),
                 link: new URL(a.prop('href')!, rootUrl).href,
-                description: undefined as DataItem['description'],
-                content: undefined as DataItem['content'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);

@@ -60,11 +60,12 @@ async function handler(ctx) {
     const list = $(channelSelector[channel])
         .find('div.new_item')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a').text(),
-            link: $(item).find('a').attr('href'),
-            description: undefined as DataItem['description'],
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a').text(),
+                link: $(item).find('a').attr('href'),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>

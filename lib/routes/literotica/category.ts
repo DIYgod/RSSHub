@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const list = $('.b-slb-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('h3 a');
@@ -50,7 +50,6 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 author: $item.find('.b-user-info-name').text(),
                 pubDate: parseDate($item.find('.b-slib-date').text(), 'MM/DD/YY'),
-                description: undefined as DataItem['description'],
             };
         });
 

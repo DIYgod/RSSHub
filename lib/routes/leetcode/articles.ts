@@ -47,20 +47,19 @@ async function handler() {
         .toArray()
         .filter((e) => $(e).find('h4.media-heading i').length === 0)
         .map((item) => {
-            const info = {
+            const info: DataItem = {
                 title: $(item).find('h4.media-heading').text().trim(),
                 author: $(item).find('.text-500').text(),
                 link: new URL($(item).attr('href')!, host).href,
-                pubDate: $(item).find('p.pull-right.media-date strong').text().trim() as DataItem['pubDate'],
-                description: undefined as DataItem['description'],
+                pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
             };
             return info;
         });
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                const titleSlug = info.link.split('/', 5)[4];
+            cache.tryGet(info.link!, async () => {
+                const titleSlug = info.link!.split('/', 5)[4];
 
                 const questionContent = await ofetch(gqlEndpoint, {
                     method: 'POST',

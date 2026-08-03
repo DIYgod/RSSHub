@@ -35,19 +35,18 @@ async function handler(ctx) {
     let items = dataJs!
         .match(/urls\[i\]='(.*?)';headers\[i\]="(.*?)";year\[i\]='(\d+)';month\[i\]='(\d+)';day\[i\]='(\d+)';/g)!
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
-        .map((item) => {
+        .map((item): DataItem => {
             const result = item.match(/urls\[i\]='(.*?)';headers\[i\]="(.*?)";year\[i\]='(\d+)';month\[i\]='(\d+)';day\[i\]='(\d+)';/);
             return {
                 title: load(result![2])('a').attr('title') || result![2],
                 link: new URL(result![1], rootUrl).href,
                 pubDate: parseDate(`${result![3]}-${result![4]}-${result![5]}`, 'YYYY-MM-DD'),
-                description: undefined as DataItem['description'],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const content = await got.get(item.link);
                 const $ = load(content.data);
                 item.description = $('#zoom').html() || $('div.left.zhengce_right').html();

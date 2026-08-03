@@ -39,7 +39,7 @@ async function handler(ctx) {
     const listSelector = $('[class^="container_"]  [class^="default_"]:has(article)');
     const paidSelector = 'img[class^="icon_"]';
 
-    let list = listSelector.toArray().map((item) => {
+    let list = listSelector.toArray().map((item): DataItem & { paywall: boolean } => {
         const $item = $(item);
         $item.find('p a').remove();
         return {
@@ -51,8 +51,6 @@ async function handler(ctx) {
                 .toArray()
                 .map((item) => $(item).text()),
             paywall: !!$item.find(paidSelector).length,
-            pubDate: undefined as DataItem['pubDate'],
-            description: undefined as DataItem['description'],
         };
     });
 
@@ -82,7 +80,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

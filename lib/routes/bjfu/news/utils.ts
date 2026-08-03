@@ -18,7 +18,7 @@ async function loadContent(link) {
         parseDate(
             $('.article')
                 .text()
-                .match(/\d{4}(?:\/\d{2}){2}/) as unknown as string
+                .match(/\d{4}(?:\/\d{2}){2}/)?.[0] ?? ''
         ),
         8
     );

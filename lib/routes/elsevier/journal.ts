@@ -51,7 +51,7 @@ async function handler(ctx) {
     const $2 = load(response2.data);
     const list = $2('.js-article')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { id?: string; authors: string; issue: string; abstract?: string } => {
             const title = $2(item).find('.js-article-title').text();
             const authors = $2(item).find('.js-article__item__authors').text();
             const link = $2(item).find('.article-content-title').attr('href');
@@ -62,9 +62,6 @@ async function handler(ctx) {
                 id,
                 authors,
                 issue,
-                doi: undefined as DataItem['doi'],
-                description: undefined as DataItem['description'],
-                abstract: undefined as any,
             };
         });
 

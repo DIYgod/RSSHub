@@ -74,12 +74,11 @@ async function handler(ctx) {
             data &&
             data.data &&
             data.data.map((item) => {
-                const ret = {
+                const ret: DataItem = {
                     title: item.title,
                     author: item.publisher,
                     pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), 8),
                     link: item.url,
-                    category: undefined as DataItem['category'],
                 };
                 if (type === 'ggtz') {
                     ret.category = item.f1;
