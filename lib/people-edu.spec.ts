@@ -6,7 +6,7 @@ import { route } from '@/routes/people';
 import type { Data } from '@/types';
 
 const rootUrl = 'http://edu.people.com.cn';
-const currentUrl = `${rootUrl}/GB/`;
+const currentUrl = `${rootUrl}/`;
 const firstArticleUrl = `${rootUrl}/n1/2026/0803/c1006-40772728.html`;
 const secondArticleUrl = `${rootUrl}/n1/2026/0803/c1006-40772725.html`;
 
@@ -25,6 +25,7 @@ describe('GET /people/edu', () => {
         const secondDetailRequest = vi.fn();
 
         server.use(
+            http.get(`${rootUrl}/GB/`, () => HttpResponse.text('Legacy path must not be used', { status: 500 })),
             http.get(currentUrl, () =>
                 HttpResponse.html(`
                     <html>
