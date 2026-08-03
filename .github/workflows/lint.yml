@@ -29,6 +29,8 @@ jobs:
             - run: pnpm i
             - name: Install oxlint to SARIF converter
               run: pnpm i -g oxlint-json-to-sarif
+            - name: Typecheck
+              run: pnpm typecheck
             - name: Lint
               run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
                   --format=json | oxlint-json-to-sarif > oxlint-results.sarif
