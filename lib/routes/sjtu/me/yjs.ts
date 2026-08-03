@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -10,9 +9,7 @@ import timezone from '@/utils/timezone';
 const baseUrl = 'https://me.sjtu.edu.cn';
 const request = got.extend({
     headers: {
-        accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         referer: `${baseUrl}/YanJS/`,
-        'user-agent': config.trueUA,
     },
 });
 
@@ -82,7 +79,7 @@ export const route: Route = {
         target: `/me/yjs/${type}`,
     })),
     name: '机械与动力工程学院研究生教学网',
-    maintainers: ['yyh'],
+    maintainers: ['yuhangyao211-beep'],
     handler,
     url: 'me.sjtu.edu.cn/YanJS/indexnotice.html',
     description: `| 首页通知公告 | 博士研究生通知公告 | 硕士研究生通知公告 | 教学动态  | 教师事务       | 学生事务       | 常见问题 |
