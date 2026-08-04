@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import MarkdownIt from 'markdown-it';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -104,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             description,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
             link: linkUrl ? new URL(item.link, baseUrl).href : undefined,
-            categories,
+            category: categories,
             author: authors,
             guid,
             id: guid,
@@ -115,8 +115,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
-            language,
-            uuid: item.uuid,
+            language: language as Language,
         };
 
         return processedItem;
@@ -129,7 +128,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const projectId = item.guid.replace(/^oshwhub-/, '');
+                const projectId = item.guid!.replace(/^oshwhub-/, '');
                 const detailUrl = new URL(`api/project/${projectId}`, baseUrl).href;
                 const detailResponse = await ofetch(detailUrl);
 
@@ -198,7 +197,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 const attachment = attachments?.[0];
@@ -236,7 +235,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/-/).pop()?.trim(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

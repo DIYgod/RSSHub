@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -85,19 +85,19 @@ async function handler(ctx) {
 
     let items = $('.main-content-left-list-item')
         .toArray()
-        .map((e) => {
-            e = $(e);
+        .map((e): DataItem => {
+            const $e = $(e);
             return {
-                title: e.find('.title span').text(),
-                link: baseUrl + e.attr('href'),
-                author: e.find('.author-by span').text(),
-                pubDate: e.find('.author-time').text(),
+                title: $e.find('.title span').text(),
+                link: baseUrl + $e.attr('href'),
+                author: $e.find('.author-by span').text(),
+                pubDate: $e.find('.author-time').text(),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     url: item.link,
                     cookieJar,
@@ -105,7 +105,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const content = $('#art');
                 item.description = content.html();
-                item.pubDate = item.pubDate.includes('-') ? timezone(parseDate(item.pubDate, 'YYYY-MM-DD'), 8) : parseRelativeDate(item.pubDate);
+                item.pubDate = (item.pubDate as string).includes('-') ? timezone(parseDate(item.pubDate as string, 'YYYY-MM-DD'), 8) : parseRelativeDate(item.pubDate as string);
 
                 return item;
             })

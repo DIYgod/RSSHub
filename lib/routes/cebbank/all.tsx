@@ -1,7 +1,7 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
@@ -45,11 +45,11 @@ async function handler(ctx) {
             if (i < 2) {
                 return null;
             }
-            const c = load(e, { decodeEntities: false });
+            const c = load(e, { decodeEntities: false } as CheerioOptions);
             return {
                 title: c('td:nth-child(1)').text(),
                 description: renderToString(<CebbankRateDescription fcer={c('td:nth-child(2)').text()} pmc={c('td:nth-child(3)').text()} exrt={c('td:nth-child(4)').text()} mc={c('td:nth-child(5)').text()} />),
-                pubDate: timezone(parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true), 8),
+                pubDate: timezone(parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true as unknown as string), 8),
                 guid: md5(c('td:nth-child(1)').text() + $('#t_id span').text().slice(5)),
             };
         });
@@ -58,10 +58,10 @@ async function handler(ctx) {
         title: '中国光大银行',
         description: '中国光大银行 外汇牌价',
         link,
-        item: items,
+        item: items as DataItem[],
     };
 
-    const pubDate = parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true);
+    const pubDate = parseDate($('#t_id span').text().slice(5), 'YYYY-MM-DD HH:mm', true as unknown as string);
     ctx.set('json', {
         ...ret,
         pubDate: timezone(pubDate, 0),

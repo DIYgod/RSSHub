@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Comment } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -53,12 +54,15 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const { data } = JSON.parse(
-        $('#sanRoot')
-            .contents()
-            .filter((e) => e.nodeType === 8)
-            .prevObject[0].data.match(/s-data:(.*)/)[1]
-    );
+    const sDataMatch = $('#sanRoot')
+        .contents()
+        .toArray()
+        .find((e): e is Comment => e.nodeType === 8)
+        ?.data.match(/s-data:(.*)/);
+    if (!sDataMatch) {
+        throw new Error('Unable to find s-data in page');
+    }
+    const { data } = JSON.parse(sDataMatch[1]);
 
     const items = data.cards[0].content.map((item) => ({
         title: item.word,

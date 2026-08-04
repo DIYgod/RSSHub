@@ -42,11 +42,11 @@ async function handler(ctx) {
         item: list
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('.cept-tt').text(),
-                    description: `${item.find('.thread-listImgCell').html()}<br>${item.find('.cept-vote-temp').html()}<br>${item.find('.overflow--fade').html()}<br>${item.find('.threadGrid-body .userHtml').html()}`,
-                    link: item.find('.cept-tt').attr('href'),
+                    title: $item.find('.cept-tt').text(),
+                    description: `${$item.find('.thread-listImgCell').html()}<br>${$item.find('.cept-vote-temp').html()}<br>${$item.find('.overflow--fade').html()}<br>${$item.find('.threadGrid-body .userHtml').html()}`,
+                    link: $item.find('.cept-tt').attr('href'),
                 };
             })
             .toReversed(),

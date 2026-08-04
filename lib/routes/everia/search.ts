@@ -41,7 +41,7 @@ async function handler(ctx) {
             itemRaw.map((e) => {
                 const item = $(e);
                 const link = item.find('h2.entry-title a').attr('href');
-                return cache.tryGet(link, () => loadArticle(link));
+                return cache.tryGet(link!, () => loadArticle(link));
             })
         ),
     };

@@ -26,12 +26,12 @@ async function handler() {
     const items = $('div.post-block')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(item.find('time').attr('datetime')),
+                pubDate: parseDate($item.find('time').attr('datetime')!),
             };
         });
 

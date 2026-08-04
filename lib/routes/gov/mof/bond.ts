@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,13 +43,13 @@ async function handler(ctx) {
     const description = $('meta[name="ColumnDescription"]').prop('content');
     const indexes = $('ul.liBox li')
         .toArray()
-        .map((li) => {
+        .map((li): DataItem => {
             const a = $(li).find('a');
             const pubDate = $(li).find('span').text();
             const href = a.prop('href');
-            const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
+            const link = href!.startsWith('http') ? href : new URL(href!, currentUrl).href;
             return {
-                title: a.prop('title'),
+                title: a.prop('title') ?? '',
                 link,
                 pubDate: timezone(parseDate(pubDate), 8),
             };
@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         indexes.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
                 const content = load(detailResponse);
                 item.description = content('div.my_doccontent').html();

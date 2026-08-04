@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -66,15 +66,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a.nn-tab-link');
+            const a = $item.find('a.nn-tab-link');
 
             const descriptionMatches = a
                 .parent()
                 .prop('data-boxover')
                 ?.match(/<td class='news_tooltip-tab'>(.*?)<\/td>/);
-            const authorMatches = item
+            const authorMatches = $item
                 .find('use')
                 .first()
                 .prop('href')
@@ -85,7 +85,7 @@ async function handler(ctx) {
                 link: a.prop('href'),
                 description: descriptionMatches ? descriptionMatches[1] : undefined,
                 author: authorMatches ? authorMatches[1].replaceAll('-', ' ') : 'finviz',
-                pubDate: timezone(parseDate(item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
+                pubDate: timezone(parseDate($item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
             };
         })
         .filter((item) => item.title);
@@ -97,8 +97,8 @@ async function handler(ctx) {
         title: `finviz - ${category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'en-US',
-        image: new URL($('a.logo svg use').first().prop('href'), rootUrl).href,
+        language: 'en-us' as Language,
+        image: new URL($('a.logo svg use').first().prop('href')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('title').text(),

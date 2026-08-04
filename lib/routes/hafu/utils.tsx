@@ -1,3 +1,4 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
@@ -33,7 +34,7 @@ export const parseList = async (ctx, type) => {
 };
 
 async function tryGetFullText(href, link, type) {
-    let articleData = '';
+    let articleData: CheerioAPI | string = '';
     let description: string;
     // for some unexpected href link
     try {
@@ -95,7 +96,7 @@ async function ggtzParse(ctx, $) {
             const result = await cache.tryGet(link, async () => {
                 const { articleData, description } = await tryGetFullText(href, link, 'ggtz');
                 let author = '';
-                let pubDate: string;
+                let pubDate: Date;
                 if (typeof articleData === 'function') {
                     const header = articleData('h1').next().text();
                     const index = header.indexOf('日期');
@@ -174,7 +175,7 @@ async function zsjycParse(ctx, $) {
             const result = await cache.tryGet(link, async () => {
                 const { articleData, description } = await tryGetFullText(href, link, 'zsjyc');
 
-                let pubDate: string;
+                let pubDate: Date;
                 if (typeof articleData === 'function') {
                     const date = articleData('span[class=timestyle127702]').text();
                     pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');

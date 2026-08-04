@@ -45,8 +45,8 @@ async function handler(ctx) {
     const $ = load(csrfresponse._data);
     const token = $('meta[name="csrf-token"]').attr('content');
     const cookies = csrfresponse.headers.getSetCookie().toString();
-    const xsrf_token = cookies.match(/XSRF-TOKEN=[^\s;]+/)[0];
-    const laravel_session = cookies.match(/laravel_session[^\s;]+/)[0];
+    const xsrf_token = cookies.match(/XSRF-TOKEN=[^\s;]+/)![0];
+    const laravel_session = cookies.match(/laravel_session[^\s;]+/)![0];
 
     const keykind = ctx.req.param('keykind') || '';
     let formdata;

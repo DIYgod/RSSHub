@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -90,7 +90,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: locale.insightsUrl,
         item: items,
         allowEmpty: true,
-        language: locale.apiLang,
+        language: locale.apiLang as Language,
     };
 };
 

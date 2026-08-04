@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -43,7 +43,7 @@ async function handler(ctx) {
     const topicPath = ctx.req.param('topicPath');
     const link = `${baseUrl}/${topicPath ?? 'latest'}`;
 
-    let cookieJar = await cache.get('pnas:cookieJar');
+    let cookieJar: any = await cache.get('pnas:cookieJar');
     const cacheMiss = !cookieJar;
     cookieJar = cacheMiss ? new CookieJar() : CookieJar.fromJSON(cookieJar);
     const { data: res } = await got(link, {
@@ -56,13 +56,13 @@ async function handler(ctx) {
     const $ = load(res);
     const list = $('.card--row-reversed .card-content')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('.article-title a');
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const a = $item.find('.article-title a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.card__meta__date').text()),
+                link: new URL(a.attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('.card__meta__date').text()),
             };
         });
 
@@ -91,7 +91,7 @@ async function handler(ctx) {
                 const PNASdataLayer = JSON.parse(
                     $('script')
                         .text()
-                        .match(/PNASdataLayer =(.*?);/)[1]
+                        .match(/PNASdataLayer =(.*?);/)![1]
                 );
 
                 $('.signup-alert-ad, .citations-truncation button').remove();
@@ -131,7 +131,7 @@ async function handler(ctx) {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,
         description: $('.banner-widget__content p').text(),
         image: 'https://www.pnas.org/favicon.ico',
-        language: 'en-US',
+        language: 'en-us' as Language,
         link,
         item: out,
     };

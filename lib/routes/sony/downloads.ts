@@ -45,12 +45,12 @@ async function handler(ctx) {
     const regex = /window\.__PRELOADED_STATE__\.downloads\s*=\s*(\{.*?\});\s*window\.__PRELOADED_STATE__/s;
 
     const match = contents.match(regex);
-    let results = {};
+    let results = {} as Record<string, any>;
     if (match) {
         results = JSON.parse(match[1]).searchResults.results;
     }
     const list = results.map((item) => {
-        const data = { title: item.title, pubDate: item.publicationDate };
+        const data: { title: string; pubDate: string; url?: string } = { title: item.title, pubDate: item.publicationDate };
         const url = item.url;
         if (url.startsWith('http')) {
             data.url = url;

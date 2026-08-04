@@ -31,7 +31,9 @@ const ProcessFeed = (list) =>
 
                 const $ = load(article.content, null, false);
 
-                $('div.draft--imgNormal').each((_, elem) => (elem.name = 'figure'));
+                $('div.draft--imgNormal').each((_, elem) => {
+                    elem.name = 'figure';
+                });
                 $('.image-block-prerender').each((_, elem) => {
                     elem.name = 'img';
                     elem.attribs.src = elem.attribs['data-src'].split('?', 1)[0];

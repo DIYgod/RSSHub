@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,11 +46,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.paragraph li')
         .toArray()
-        .map((e) => ({
-            link: new URL($('span span a', e).attr('href'), host).href,
+        .map((e): DataItem & { link: string } => ({
+            link: new URL($('span span a', e).attr('href')!, host).href,
             title: $('span span a', e).text(),
             author: $('div a', e).attr('hreflang', 'zh-hans').text(),
-            pubDate: timezone(parseDate($('span span a', e).attr('href').split('/').slice(-4, -1).join(','), 'YYYYMMDD'), 8),
+            pubDate: timezone(parseDate($('span span a', e).attr('href')!.split('/').slice(-4, -1).join(','), 'YYYYMMDD'), 8),
         }));
 
     const out = await Promise.all(

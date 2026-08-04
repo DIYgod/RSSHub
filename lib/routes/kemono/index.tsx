@@ -225,7 +225,7 @@ const renderPostFiles = (post: KemonoPost & { files?: KemonoFile[] }) =>
         <>
             {post.files?.map((file) => {
                 const extension = file.extension;
-                const typeSuffix = file.extention ?? '';
+                const typeSuffix = file.extension ?? '';
 
                 if (['jpg', 'png', 'webp', 'jpeg', 'jfif'].includes(extension)) {
                     return <img src={file.path} />;

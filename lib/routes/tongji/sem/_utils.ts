@@ -28,8 +28,8 @@ export async function getNotifByPage(url): Promise<Array<{ title: string; link: 
             const time = aTagSecond.text();
 
             return {
-                title,
-                link: href,
+                title: title!,
+                link: href!,
                 pubDate: parseDate(time, 'YYYY-MM-DD'),
             };
         });

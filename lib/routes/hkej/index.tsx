@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -101,11 +101,11 @@ async function handler(ctx) {
 
     const list = $('h3.in_news_u_t a, h4.hkej_hl-news_topic_2014 a, div.hkej_toc_listingAll_news2_2014 h3 a, div.hkej_toc_cat_top_detail h3 a, div.allNews div.news h1 a, div#div_listingAll div.news2 h3 a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.text().trim(),
-                link: baseUrl + item.attr('href').slice(0, item.attr('href').lastIndexOf('/')),
+                title: $item.text().trim(),
+                link: baseUrl + $item.attr('href')!.slice(0, $item.attr('href')!.lastIndexOf('/')),
             };
         });
 
@@ -145,10 +145,10 @@ async function handler(ctx) {
 
                     // fix article image
                     const articleImg = (content('div.hkej_detail_thumb_2014 td a').length ? content('div.hkej_detail_thumb_2014 td a') : content('div.thumb td a')).toArray().map((e) => {
-                        e = $(e);
+                        const $e = $(e);
                         return {
-                            href: e.attr('href'),
-                            title: e.attr('title'),
+                            href: $e.attr('href'),
+                            title: $e.attr('title'),
                         };
                     });
 
@@ -170,7 +170,7 @@ async function handler(ctx) {
         link: baseUrl + cat.link,
         description: `信報網站(www.hkej.com)即時新聞${cat.name}，提供${cat.description}。`,
         item: items,
-        language: 'zh-hk',
+        language: 'zh-HK' as Language,
     };
 
     ctx.set('json', {

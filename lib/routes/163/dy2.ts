@@ -38,12 +38,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const itemImg = item.find('a.img img');
+            const $item = $(item);
+            const itemImg = $item.find('a.img img');
             return {
-                title: item.find('h4 a').text(),
-                link: item.find('a').first().attr('href'),
-                pubDate: timezone(parseDate(item.find('.time').text()), 8),
+                title: $item.find('h4 a').text(),
+                link: $item.find('a').first().attr('href'),
+                pubDate: timezone(parseDate($item.find('.time').text()), 8),
                 imgsrc: itemImg.attr('src') ?? itemImg.attr('_src'),
             };
         });

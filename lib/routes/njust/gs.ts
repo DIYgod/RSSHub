@@ -49,13 +49,13 @@ async function handler(ctx) {
         list.map(async (index, item) => {
             const url = $(item).find('a').attr('href');
             let desc = '';
-            if (url.startsWith('/')) {
+            if (url!.startsWith('/')) {
                 const data = await getContent(host + url);
-                desc = load(data)('.wp_articlecontent').html();
+                desc = load(data)('.wp_articlecontent').html() ?? '';
             }
 
             return {
-                title: $(item).find('a').attr('title').trim(),
+                title: $(item).find('a').attr('title')!.trim(),
                 description: desc,
                 pubDate: timezone(parseDate($(item).find('span').text(), 'YYYY-MM-DD'), 8),
                 link: url,

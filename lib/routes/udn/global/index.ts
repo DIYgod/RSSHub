@@ -64,7 +64,7 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const a = $(item);
-                const rawLink = a.attr('href').split('?', 1)[0];
+                const rawLink = a.attr('href')!.split('?', 1)[0];
                 return {
                     title: config.titleExtractor(a),
                     link: rawLink.startsWith('http') ? rawLink : `${rootUrl}${rawLink}`,
@@ -94,7 +94,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.author = content('.article-content__authors .article-content__authors-name').text();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
 
                 const mainImage = content('.article-content__focus').html();
                 const articleBodyHtml = content('.article-content__editor')
@@ -104,7 +104,7 @@ async function handler(ctx) {
                     .join('');
 
                 item.description = mainImage + articleBodyHtml;
-                item.category = content('meta[name="news_keywords"]').attr('content').split(',');
+                item.category = content('meta[name="news_keywords"]').attr('content')!.split(',');
 
                 return item;
             })

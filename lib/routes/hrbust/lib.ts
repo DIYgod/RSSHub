@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -51,9 +51,9 @@ async function handler(ctx) {
 
     const list = $('ul.tu_b3 li:not([class])')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span').text().trim();
             const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {
@@ -77,7 +77,10 @@ async function handler(ctx) {
 
                 content.find('[style]').removeAttr('style');
                 content.find('font').contents().unwrap();
-                content.html(content.html()?.replaceAll('&nbsp;', ''));
+                const cleaned = content.html()?.replaceAll('&nbsp;', '');
+                if (cleaned !== undefined) {
+                    content.html(cleaned);
+                }
                 content.find('[align]').removeAttr('align');
 
                 return {
@@ -93,7 +96,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学图书馆`,
         link: columnUrl,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

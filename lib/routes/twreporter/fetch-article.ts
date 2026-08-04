@@ -1,10 +1,11 @@
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderImage } from './templates/image';
 import { renderYouTube } from './templates/youtube';
 
-export default async function fetch(slug: string) {
+export default async function fetch(slug: string): Promise<DataItem> {
     const url = `https://go-api.twreporter.org/v2/posts/${slug}?full=true`;
     const res = await ofetch(url);
     const post = res.data;
@@ -106,5 +107,6 @@ export default async function fetch(slug: string) {
         link: `https://www.twreporter.org/a/${slug}`,
         guid: `https://www.twreporter.org/a/${slug}`,
         pubDate: parseDate(time, 'YYYY-MM-DDTHH:mm:ssZ'),
+        title: '',
     };
 }

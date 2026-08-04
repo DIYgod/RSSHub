@@ -33,9 +33,9 @@ export type Category =
 export type DataItem = {
     title: string;
     description?: string | null;
-    pubDate?: number | string | Date;
+    pubDate?: number | string | Date | null;
     link?: string;
-    category?: string[];
+    category?: string[] | string;
     author?:
         | string
         | Array<{
@@ -62,6 +62,9 @@ export type DataItem = {
     itunes_duration?: number | string;
     itunes_item_image?: string;
     media?: Record<string, Record<string, string>>;
+    upvotes?: number;
+    downvotes?: number;
+    comments?: number;
     attachments?: Array<{
         url: string;
         mime_type: string;
@@ -203,6 +206,7 @@ export type Language =
     | 'sv-se'
     | 'tr'
     | 'uk'
+    | 'zh'
     | 'zh-CN'
     | 'zh-HK'
     | 'zh-TW'
@@ -283,7 +287,7 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data | null | Response> | Data | null | Response;
+    handler: (ctx: Context) => Promise<Data | null | Response | void> | Data | null | Response | void;
 
     /**
      * An example URL of the route
@@ -366,9 +370,9 @@ interface RouteItem {
 }
 
 export interface Route extends RouteItem {
-    ja?: RouteItem;
-    zh?: RouteItem;
-    'zh-TW'?: RouteItem;
+    ja?: Partial<RouteItem>;
+    zh?: Partial<RouteItem>;
+    'zh-TW'?: Partial<RouteItem>;
 }
 
 // radar

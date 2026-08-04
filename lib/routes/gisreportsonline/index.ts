@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,12 +29,17 @@ async function handler(ctx) {
 
     const list = $('article h3 a')
         .toArray()
-        .map((e) => ({ link: $(e).attr('href'), title: $(e).text() }));
+        .map(
+            (e): DataItem => ({
+                link: $(e).attr('href'),
+                title: $(e).text(),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const html = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const html = await ofetch(item.link!);
                 const content = load(html);
                 const ldjson = JSON.parse(content('script.rank-math-schema-pro').text())['@graph'].find((e) => e['@type'] === 'NewsArticle');
 

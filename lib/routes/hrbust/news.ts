@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -52,9 +52,9 @@ async function handler(ctx) {
 
     const list = $('li[id^=line_u10]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span').text().trim();
             const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 }
 
                 const author = content('p.xinxi span:contains("作者：")').text().replace('作者：', '').trim();
-                item.author = author || null;
+                item.author = author || undefined;
 
                 const newsContent = content('div.v_news_content') || '解析正文失败';
                 const listAttachments = content('ul[style="list-style-type:none;"] a');
@@ -100,7 +100,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学新闻网`,
         link: columnUrl,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

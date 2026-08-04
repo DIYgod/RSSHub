@@ -65,7 +65,7 @@ describe('redis cache module', () => {
     it('marks redis unavailable on error', async () => {
         const redisCache = (await import('@/utils/cache/redis')).default;
         redisCache.init();
-        const client = redisCache.clients.redisClient as RedisMock;
+        const client = redisCache.clients.redisClient as unknown as RedisMock;
 
         client.emit('error', new Error('boom'));
 

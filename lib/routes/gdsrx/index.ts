@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,19 +46,19 @@ async function handler(ctx) {
     let items = $('a.xn-item, a.t-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('div.xn-d, div.t-e').text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: parseDate(item.find('div.xn-time, div.t-f').text()),
+                title: $item.find('div.xn-d, div.t-e').text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+                pubDate: parseDate($item.find('div.xn-time, div.t-f').text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -92,7 +92,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

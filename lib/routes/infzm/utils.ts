@@ -14,7 +14,7 @@ export async function fetchArticles(data) {
 
             return cache.tryGet(link, async () => {
                 const cookie = config.infzm.cookie;
-                const response = await got.get<string>({
+                const response = await got.get({
                     method: 'get',
                     url: link,
                     headers: {

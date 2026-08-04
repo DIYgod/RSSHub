@@ -68,29 +68,29 @@ async function handler(ctx) {
     const items = $('.columns')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const id = item.find('.title a').text();
-            const size = item.find('.title span').text();
-            const pubDate = item.find('.subtitle a').attr('href').split('/date/').pop();
-            const description = item.find('.has-text-grey-dark').text();
-            const actresses = item
+            const id = $item.find('.title a').text();
+            const size = $item.find('.title span').text();
+            const pubDate = $item.find('.subtitle a').attr('href')!.split('/date/').pop();
+            const description = $item.find('.has-text-grey-dark').text();
+            const actresses = $item
                 .find('.panel-block')
                 .toArray()
                 .map((a) => $(a).text().trim());
-            const tags = item
+            const tags = $item
                 .find('.tag')
                 .toArray()
                 .map((t) => $(t).text().trim());
-            const magnet = item.find('a[title="Magnet torrent"]').attr('href');
-            const link = item.find('a[title="Download .torrent"]').attr('href');
-            const image = item.find('.image').attr('src');
+            const magnet = $item.find('a[title="Magnet torrent"]').attr('href');
+            const link = $item.find('a[title="Download .torrent"]').attr('href');
+            const image = $item.find('.image').attr('src');
 
             return {
                 title: `${id} ${size}`,
-                pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
-                link: new URL(item.find('a').first().attr('href'), rootUrl).href,
-                description: renderToString(<JavDescription image={image} id={id} size={size} pubDate={pubDate} description={description} actresses={actresses} tags={tags} magnet={magnet} link={link} />),
+                pubDate: parseDate(pubDate!, 'YYYY/MM/DD'),
+                link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
+                description: renderToString(<JavDescription image={image} id={id} size={size} pubDate={pubDate!} description={description} actresses={actresses} tags={tags} magnet={magnet} link={link} />),
                 author: actresses.join(', '),
                 category: [...tags, ...actresses],
                 enclosure_type: 'application/x-bittorrent',

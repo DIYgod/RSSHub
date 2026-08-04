@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,34 +24,34 @@ export const handler = async (ctx) => {
     let items = $('div.newsbody')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const title = item.find('h2').text();
-            const image = item.find('img').prop('data-original') ?? item.find('img').prop('src');
+            const title = $item.find('h2').text();
+            const image = $item.find('img').prop('data-original') ?? $item.find('img').prop('src');
 
             return {
                 title,
                 pubDate: timezone(
                     parseDate(
-                        item
+                        $item
                             .find('span.time script')
                             .text()
-                            .match(/'(.*?)'/)
+                            .match(/'(.*?)'/)?.[0] ?? ''
                     ),
                     8
                 ),
-                link: item.find('a').first().prop('href'),
-                author: item.find('div.editor').contents().first().text(),
+                link: $item.find('a').first().prop('href'),
+                author: $item.find('div.editor').contents().first().text(),
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -59,13 +59,13 @@ export const handler = async (ctx) => {
                 $$('p.ad-tips, a.topic-bar').remove();
 
                 $$('div#paragraph p img').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    const src = el.prop('data-original');
+                    const src = $el.prop('data-original');
 
                     if (src) {
-                        const alt = el.prop('alt');
-                        el.replaceWith(renderToString(<figure>{alt ? <img src={src} alt={alt} /> : <img src={src} />}</figure>));
+                        const alt = $el.prop('alt');
+                        $el.replaceWith(renderToString(<figure>{alt ? <img src={src} alt={alt} /> : <img src={src} />}</figure>));
                     }
                 });
 
@@ -85,8 +85,8 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div#paragraph').text(),
                 };
-                item.image = image;
-                item.banner = image;
+                item.image = image!;
+                item.banner = image!;
                 item.language = language;
 
                 return item;
@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 

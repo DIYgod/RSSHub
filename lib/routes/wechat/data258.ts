@@ -116,17 +116,17 @@ async function handler(ctx) {
                 if (response.data.includes('今日浏览次数已达上限')) {
                     // !!! as long as cache hits, the link will not be crawled and consume the limit !!!
                     // !!! so that's not a big problem if the RSSHub instance is self-hosted !!!
-                    err = new got.RequestError(response.data, {}, response.request);
-                    return null;
+                    err = new (got as any).RequestError(response.data, {}, response.request);
+                    return '';
                 }
                 const $ = load(response.data);
                 const jmpJS = $('script')
-                    .filter((_, e) => $(e).html().includes('location.href'))
+                    .filter((_, e) => $(e).html()!.includes('location.href'))
                     .html();
-                return jmpJS.match(/location\.href='([^']+)'/)[1];
+                return jmpJS!.match(/location\.href='([^']+)'/)![1];
             } catch (error) {
                 err = error;
-                return null;
+                return '';
             }
         });
         if (realLink) {

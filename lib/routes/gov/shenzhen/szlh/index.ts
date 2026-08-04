@@ -54,8 +54,8 @@ async function handler(ctx) {
     const items = $('div.lists ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
 
             // Extract the date from <i>
             const date = a.find('i').text();

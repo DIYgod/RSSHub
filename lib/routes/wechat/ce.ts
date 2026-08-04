@@ -48,7 +48,7 @@ async function handler(ctx) {
         feed.items.splice(0, 10).map((item) => {
             // generally speaking, changing `item.link` of an existing route could potentially break `item.guid`
             // but since the route has been down for at least 8 months, it's probably safe
-            item.link = item.link.replace(/^http:\/\//, 'https://');
+            item.link = item.link!.replace(/^http:\/\//, 'https://');
             return cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link, {
                     headers: {
@@ -60,7 +60,7 @@ async function handler(ctx) {
 
                 const description = fixArticleContent($('.post'));
 
-                let pubDate = item.pubDate;
+                let pubDate: string | Date | undefined = item.pubDate;
                 if (!pubDate || pubDate === 'Invalid Date') {
                     // sometimes the pubDate is not available in the official feed
                     const postDate = $('.post-date')
@@ -74,7 +74,7 @@ async function handler(ctx) {
                 }
 
                 return {
-                    title: item.title,
+                    title: item.title!,
                     description,
                     pubDate,
                     link: item.link,

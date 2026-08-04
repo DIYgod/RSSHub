@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -39,20 +39,20 @@ async function handler(ctx) {
     let items = $('h4 a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.prop('title') || item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                author: item.find('.author').text(),
-                pubDate: parseDate(item.parent().find('span.time').text().trim()),
+                title: $item.prop('title') || $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+                author: $item.find('.author').text(),
+                pubDate: parseDate($item.parent().find('span.time').text().trim()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -69,14 +69,14 @@ async function handler(ctx) {
 
     const author = $('meta[name="SiteName"]').prop('content');
     const subtitle = $('meta[name="ColumnName"]').prop('content');
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         subtitle,
         author,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -64,7 +64,7 @@ async function handler() {
                 description,
             };
         })
-        .filter(Boolean);
+        .filter(Boolean) as DataItem[];
 
     return {
         title: 'meteoblue Weather News',

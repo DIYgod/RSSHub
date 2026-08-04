@@ -87,7 +87,7 @@ async function handler(ctx) {
         link: `${baseUrl}/speedsearch`,
         allowEmpty: true,
         item: json.map((entity) => {
-            const contentBuilder = [];
+            const contentBuilder: string[] = [];
             const { NEW_DID, LOCATION_C, M, O_TIME } = entity;
             for (const mappingsKey in mappings) {
                 contentBuilder.push(`${mappings[mappingsKey]} ${entity[mappingsKey]}`);

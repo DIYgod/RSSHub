@@ -1,7 +1,7 @@
 import { type CheerioAPI, load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -137,7 +137,7 @@ async function handler(ctx) {
     return {
         title: 'GIGAZINE - English News',
         link: LIST_URL,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

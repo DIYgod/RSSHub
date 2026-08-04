@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,18 +40,18 @@ async function handler(ctx) {
     let items = $('p.e_text-22.s_title a, p.e_text-18.s_title a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -65,14 +65,14 @@ async function handler(ctx) {
     );
 
     const image = $('img[la="la"]').first().prop('src');
-    const icon = new URL($('link[rel="shortcut icon "]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon "]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

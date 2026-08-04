@@ -39,7 +39,7 @@ async function handler() {
             const title = $(item).find('a').text();
             const link = $(item).find('a').attr('href');
 
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link!, async () => {
                 const { data: response } = await got(link);
                 const $ = load(response);
                 $('div.widget-content').remove();

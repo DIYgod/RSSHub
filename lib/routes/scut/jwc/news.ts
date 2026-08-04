@@ -100,7 +100,7 @@ async function handler() {
             const articleData = articleApiResponse.data.data;
             articleData.id = articleMeta.id;
 
-            let articleFullText = null;
+            let articleFullText: string | null = null;
             if (!isRedirectPage(articleData)) {
                 articleFullText = generateArticleFullText(articleData);
             }

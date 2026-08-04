@@ -85,7 +85,7 @@ async function handler(ctx) {
                         const $link = $item.find('a');
                         const $details = $item.find('p');
                         const $relativeTime = $details.find('relative-time');
-                        $relativeTime.replaceWith($relativeTime.attr('datetime'));
+                        $relativeTime.replaceWith($relativeTime.attr('datetime') ?? '');
                         return {
                             link: { text: $link.text(), url: $link.attr('href') },
                             details: $details.text(),

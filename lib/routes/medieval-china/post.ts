@@ -29,7 +29,7 @@ async function handler(ctx) {
     const posts = JSON.parse(
         $('script:contains("window.localPosts")')
             .text()
-            .match(/window\.localPosts = JSON\.parse\('(.*)'\);/)[1]
+            .match(/window\.localPosts = JSON\.parse\('(.*)'\);/)![1]
     )
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
         .map((item) => ({

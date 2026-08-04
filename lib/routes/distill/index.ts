@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,18 +33,18 @@ async function handler() {
 
     let items = $('.post-preview')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('.title').text(),
-                link: `${rootUrl}/${item.children('a').attr('href')}`,
+                title: $item.find('.title').text(),
+                link: `${rootUrl}/${$item.children('a').attr('href')}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -59,7 +59,7 @@ async function handler() {
                 });
 
                 item.doi = content('meta[name="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published"]').attr('content')!);
                 item.description = content('d-article')
                     .children()
                     .toArray()

@@ -19,22 +19,20 @@ export const route: Route = {
     maintainers: ['ladeng07'],
     handler,
     url: 'aqicn.org',
-    descriptions: `
-|   参数   | 污染成分 |
-| -------- | -------- |
-|   pm25   |  PM2.5   |
-|   pm10   |  PM10    |
-|   o3     |  O3      |
-|   no2    |  NO2     |
-|   so2    |  SO2     |
-|   co     |  CO      |
+    description: `| 参数 | 污染成分 |
+| ---- | -------- |
+| pm25 | PM2.5    |
+| pm10 | PM10     |
+| o3   | O3       |
+| no2  | NO2      |
+| so2  | SO2      |
+| co   | CO       |
 
-举例: [https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25,pm10)
+举例: <https://rsshub.app/aqicn/beijing/pm25,pm10>
 
-1. 显示单个污染成分，例如「pm25」, [https://rsshub.app/aqicn/beijing/pm25](https://rsshub.app/aqicn/beijing/pm25)
-2. 逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25,pm10)
-3. 城市子站 ID 获取方法：右键显示网页源代码，搜索 "idx" （带双冒号），后面的 ID 就是子站的 ID，如你给的链接 ID 是 4258，RSS 地址就是 [https://rsshub.app/aqicn/4258](https://rsshub.app/aqicn/4258)
-`,
+1. 显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
+2. 逗号分隔显示多个污染成分，例如「pm25,pm10」，<https://rsshub.app/aqicn/beijing/pm25,pm10>
+3. 城市子站 ID 获取方法：右键显示网页源代码，搜索 "idx" （带双冒号），后面的 ID 就是子站的 ID，如你给的链接 ID 是 4258，RSS 地址就是 <https://rsshub.app/aqicn/4258>`,
 };
 
 async function handler(ctx) {

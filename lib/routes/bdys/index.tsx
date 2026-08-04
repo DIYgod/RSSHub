@@ -5,7 +5,7 @@ import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -123,11 +123,11 @@ async function handler(ctx) {
     const list = $('.card-body .card a')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const link = item.attr('href').split(';jsessionid=');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const link = $item.attr('href')!.split(';jsessionid=');
             jsessionid = link[1];
-            const next = item.next();
+            const next = $item.next();
             return {
                 title: next.find('h3').text(),
                 link: `${rootUrl}${link[0]}`,
@@ -142,7 +142,7 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -150,7 +150,7 @@ async function handler(ctx) {
                 });
                 const downloadResponse = await got({
                     method: 'get',
-                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/', 5)[4].split('.', 1)[0]}`,
+                    url: `${rootUrl}/downloadInfo/list?mid=${item.link!.split('/', 5)[4].split('.', 1)[0]}`,
                     headers,
                 });
                 const content = load(detailResponse.data);

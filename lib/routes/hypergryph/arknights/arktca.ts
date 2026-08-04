@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -94,7 +94,7 @@ async function handler() {
                             const comments = Number.parseInt($$('span.wl-num').text());
                             return {
                                 title,
-                                language,
+                                language: language as Language,
                                 author,
                                 pubDate,
                                 category,
@@ -119,7 +119,7 @@ async function handler() {
         logo: logoUrl,
         image: logoUrl,
         author,
-        language: 'zh-CN',
-        item: journals.flat(Infinity),
+        language: 'zh-CN' as Language,
+        item: journals.flat(Infinity) as DataItem[],
     };
 }

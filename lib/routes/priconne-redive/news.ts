@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -71,11 +71,11 @@ async function handler(ctx) {
 
             const out = await Promise.all(
                 list.map((index, item) => {
-                    item = $(item);
-                    const link = item.find('a').attr('href');
-                    return cache.tryGet(link, async () => {
-                        const rssitem = {
-                            title: item.find('h4').text(),
+                    const $item = $(item);
+                    const link = $item.find('a').attr('href');
+                    return cache.tryGet(link!, async () => {
+                        const rssitem: DataItem = {
+                            title: $item.find('h4').text(),
                             link,
                         };
 
@@ -93,7 +93,7 @@ async function handler(ctx) {
             return {
                 title: '公主链接日服-新闻',
                 link: 'https://priconne-redive.jp/news/',
-                language: 'ja',
+                language: 'ja' as Language,
                 item: out,
             };
         }
@@ -125,7 +125,7 @@ async function handler(ctx) {
                     const link = `http://www.princessconnect.so-net.tw${title.attr('href')}`;
 
                     return cache.tryGet(link, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: title.text().trim(),
                             link,
                         };
@@ -158,7 +158,7 @@ async function handler(ctx) {
                     const link = `https://game.bilibili.com/pcr/news.html#detail=${item.id}`;
 
                     return cache.tryGet(link, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: item.title,
                             link,
                             pubDate: parseDate(item.ctime),
@@ -177,6 +177,6 @@ async function handler(ctx) {
             };
         }
         default:
-        // Do nothing
+            return null;
     }
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const handler = async (ctx) => {
@@ -20,22 +20,22 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('font').text() || item.text();
-            const link = new URL(item.prop('href'), rootUrl).href;
+            const title = $item.find('font').text() || $item.text();
+            const link = new URL($item.prop('href')!, rootUrl).href;
 
             return {
                 title,
                 link,
-                language,
+                language: language as Language,
                 enclosure_url: link,
                 enclosure_type: link ? 'application/pdf' : undefined,
                 enclosure_title: title,
             };
         });
 
-    const image = new URL($('div.m-headerLogo img').first().prop('src'), rootUrl).href;
+    const image = new URL($('div.m-headerLogo img').first().prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

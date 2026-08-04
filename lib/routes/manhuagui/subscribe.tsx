@@ -77,7 +77,7 @@ async function handler() {
             const pubDate = $(item).find('.co_1.c_space').first().next().text();
             const publishDate = parseRelativeDate(pubDate); // 处理相对时间
             const single = {
-                title,
+                title: title!,
                 link,
                 description,
                 pubDate: publishDate,

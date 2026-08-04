@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,23 +64,23 @@ async function handler(ctx) {
 
     let items = $('.video')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { poster?: string; video?: string } => {
+            const $item = $(item);
 
-            const title = item.find('.video-title a');
+            const title = $item.find('.video-title a');
             return {
                 title: title.text(),
-                author: item.find('.video-channel').text(),
-                pubDate: parseDate(item.find('.small').text()),
+                author: $item.find('.video-channel').text(),
+                pubDate: parseDate($item.find('.small').text()),
                 link: title.attr('href'),
-                poster: item.find('img').attr('data-src'),
-                video: item.find('video').attr('data-src'),
+                poster: $item.find('img').attr('data-src'),
+                video: $item.find('video').attr('data-src'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

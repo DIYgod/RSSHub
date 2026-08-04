@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -64,7 +64,7 @@ async function handler(ctx) {
     return {
         title: `${items[0].author} 的 Keep 动态`,
         link: `https://show.gotokeep.com/users/${id}`,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

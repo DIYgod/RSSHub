@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,7 +46,7 @@ async function handler(ctx) {
 
     const list = $('.news_list li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
@@ -58,11 +58,11 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) => {
-            if (new URL(item.link).host === 'mp.weixin.qq.com') {
+            if (new URL(item.link!).host === 'mp.weixin.qq.com') {
                 return finishArticleItem({ ...item, guid: item.link });
             }
 
-            return cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
                 item.description = $('.wp_articlecontent').html() ?? '该通知无法直接预览，请点击原文链接查看';

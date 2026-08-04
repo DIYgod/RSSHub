@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -38,11 +38,11 @@ async function handler() {
     const author = $('p.author').text().trim();
     const list = $('section#articles section')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('li').text(),
-                link: new URL(item.find('li a').attr('href'), baseUrl).href,
+                title: $item.find('li').text(),
+                link: new URL($item.find('li a').attr('href')!, baseUrl).href,
                 author,
             };
         });

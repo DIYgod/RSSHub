@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -32,7 +32,7 @@ async function handler(ctx) {
         .map((element) => {
             const info = {
                 title: $(element).find('h3').text(),
-                link: new URL($(element).attr('href'), rootUrl).href,
+                link: new URL($(element).attr('href')!, rootUrl).href,
             };
             return info;
         });
@@ -50,6 +50,6 @@ async function handler(ctx) {
         title: '虚词 p-articles',
         link: authorUrl,
         item: items,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
     };
 }

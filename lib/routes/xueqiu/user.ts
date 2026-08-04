@@ -37,6 +37,15 @@ export const route: Route = {
 | 0      | 2    | 4    | 9    | 11   |`,
 };
 
+interface Status {
+    id: number;
+    target: string;
+    created_at: number;
+    mark?: number;
+    legal_user_visible?: boolean;
+    user?: { screen_name?: string; profile_image_url?: string; photo_domain?: string };
+}
+
 const stripHtml = (html: string): string => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
 
 // Build a feed item from the timeline list data alone (no detail request).
@@ -114,7 +123,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+    const data: Status[] = response.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
 
     // Use p-map to limit concurrency and avoid triggering Xueqiu show.json rate limiting.
     const items = await pMap(

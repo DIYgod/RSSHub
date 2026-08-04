@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -55,7 +55,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: baseUrl + a.attr('href'),
-                pubDate: parseDate($item.find('.date time').attr('datetime')), // 2023-05-21T16:05:14+00:00
+                pubDate: parseDate($item.find('.date time').attr('datetime')!), // 2023-05-21T16:05:14+00:00
                 author: $item
                     .find('.author')
                     .contents()
@@ -89,7 +89,7 @@ async function handler(ctx) {
     return {
         title: 'Reviews | TechPowerUp',
         link: url.href,
-        language: 'en',
+        language: 'en' as Language,
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
     };

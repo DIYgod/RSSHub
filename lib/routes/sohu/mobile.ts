@@ -56,12 +56,12 @@ async function handler() {
                     const $d = load(detailResp);
 
                     let description = '';
-                    let pubDate = '';
+                    let pubDate: string | undefined = '';
                     if (item.link.includes('/xtopic/')) {
                         const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?', 1)[0]?.replace('www.sohu.com/', 'm.sohu.com/');
                         const response = await ofetch(`https:${fullArticleUrl}`);
                         const $ = load(response);
-                        description = getDescription($);
+                        description = getDescription($) ?? '';
                         pubDate = extractPubDate($);
                     }
 
@@ -86,7 +86,7 @@ async function handler() {
 
 function extractPlateBlockNewsLists(jsonData: any) {
     const result: any[] = [];
-    for (const [key, plateBlock] of Object.entries(jsonData)) {
+    for (const [key, plateBlock] of Object.entries<any>(jsonData)) {
         if (!key.startsWith('PlateBlock')) {
             continue;
         }
@@ -109,7 +109,7 @@ function extractPlateBlockNewsLists(jsonData: any) {
     return result;
 }
 
-function extractPubDate($: CheerioAPI): string {
+function extractPubDate($: CheerioAPI): string | undefined {
     const timeElements = ['.time', '#videoPublicTime'];
     let date;
     for (const selector of timeElements) {
@@ -127,8 +127,8 @@ function extractPubDate($: CheerioAPI): string {
     const img = $('meta[name="share_img"]')
         .toArray()
         .map((i) => $(i).attr('src'))
-        .find((i) => i.includes('images01'));
-    date = img ? parseDate(img?.match(/images01\/(\d{8})\//i)?.[1]) : '';
+        .find((i) => i!.includes('images01'));
+    date = img ? parseDate(img.match(/images01\/(\d{8})\//i)![1]) : '';
     if (date) {
         return date;
     }
@@ -137,7 +137,7 @@ function extractPubDate($: CheerioAPI): string {
 function getDescription($: CheerioAPI): string | null {
     const content = $('#articleContent');
     if (content.length) {
-        return content.first().html()?.trim();
+        return content.first().html()?.trim() ?? null;
     }
     const video = $('#videoPlayer div');
     if (video.length) {

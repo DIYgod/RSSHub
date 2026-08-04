@@ -43,10 +43,10 @@ async function handler(ctx) {
             .slice('window.user = '.length + 1)
             .split(';', 1)[0]
             .replaceAll(/\s/g, '');
-        const authorId = user.match(/id:"(\d+)"/)[1];
-        const authorName = user.match(/name:"(.*?)"/)[1];
-        const avatar = user.match(/avatar:"(.*?)"/)[1];
-        const introduce = user.match(/introduce:"(.*?)"/)[1];
+        const authorId = user.match(/id:"(\d+)"/)![1];
+        const authorName = user.match(/name:"(.*?)"/)![1];
+        const avatar = user.match(/avatar:"(.*?)"/)![1];
+        const introduce = user.match(/introduce:"(.*?)"/)![1];
 
         const {
             data: { data },

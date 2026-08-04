@@ -50,17 +50,17 @@ async function handler() {
     const out = $('.notice p')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             const now = dayjs();
-            let date = dayjs(now.year() + '-' + item.find('a.date').text());
+            let date = dayjs(now.year() + '-' + $item.find('a.date').text());
             if (now < date) {
-                date = dayjs(now.year() - 1 + '-' + item.find('a.date').text());
+                date = dayjs(now.year() - 1 + '-' + $item.find('a.date').text());
             }
 
             return {
-                title: item.find('a[href]').text(),
-                link: host + item.find('a[href]').attr('href'),
-                pubDate: parseDate(date),
+                title: $item.find('a[href]').text(),
+                link: host + $item.find('a[href]').attr('href'),
+                pubDate: parseDate(date.toDate()),
             };
         });
 

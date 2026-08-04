@@ -46,7 +46,7 @@ async function fetchCollection(collectionID, limit, offset = 0) {
         link: data.blogInfo.homePageUrl || 'https://www.lofter.com/',
         description: data.collection.description || 'No description provided.',
         items: data.items,
-    } as object;
+    };
 }
 
 async function handler(ctx) {

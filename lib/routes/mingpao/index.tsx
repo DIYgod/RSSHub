@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -39,7 +39,7 @@ const fixFancybox = (element, $) => {
     const url = new URL($e.attr('href'));
     let video;
     if (url.hostname === 'videop.mingpao.com') {
-        video = new URL(url.searchParams.get('file'));
+        video = new URL(url.searchParams.get('file')!);
         video.hostname = 'cfrvideo.mingpao.com'; // use cloudflare cdn
         video = video.href;
     }
@@ -117,8 +117,8 @@ async function handler(ctx) {
     const feed = await parser.parseURL(link);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!, {
                     headers: {
                         Referer: 'https://news.mingpao.com/',
                     },
@@ -172,8 +172,8 @@ async function handler(ctx) {
                 delete item.isoDate;
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
-                item.pubDate = parseDate(item.pubDate);
-                item.guid = item.link.includes('?') ? item.link : item.link.slice(0, item.link.lastIndexOf('/'));
+                item.pubDate = parseDate(item.pubDate!) as unknown as string;
+                item.guid = item.link!.includes('?') ? item.link : item.link!.slice(0, item.link!.lastIndexOf('/'));
 
                 return item;
             })
@@ -181,11 +181,11 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items,
-        image: feed.image.url,
+        item: items as DataItem[],
+        image: feed.image!.url,
         language: feed.language,
     };
 }

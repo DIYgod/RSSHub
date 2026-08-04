@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             ? $('div#text')
                   .slice(0, limit)
                   .toArray()
-                  .map((el): Element => {
+                  .map((el) => {
                       const $el: Cheerio<Element> = $(el);
 
                       const timeStrArray = $el
@@ -39,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                       const title = `${pubDateStr} - ${$el.find('div.title').text().replaceAll(/\s/g, '')}`;
                       const description: string | undefined = renderDescription({
-                          description: $el.find('div.writing').html(),
+                          description: $el.find('div.writing').html() ?? undefined,
                       });
 
                       const linkUrl: string | undefined = targetUrl;
@@ -51,7 +51,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           .split(/\s/)
                           .filter(Boolean)
                           .map((name) => ({
-                              name: name.split(/：/).pop(),
+                              name: name.split(/：/).pop()!,
                               url: undefined,
                               avatar: undefined,
                           }));
@@ -71,7 +71,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               text: description,
                           },
                           updated: timezone(parseDate(upDatedStr, 'HH:mm YYYY/MM/DD'), 8),
-                          language,
+                          language: language as Language,
                       };
 
                       return processedItem;
@@ -79,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             : $('div[data-img]')
                   .slice(0, limit)
                   .toArray()
-                  .map((el): Element => {
+                  .map((el) => {
                       const $el: Cheerio<Element> = $(el);
 
                       const image: string | undefined = $el.attr('data-img');
@@ -118,7 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           image,
                           banner: image,
                           updated: timezone(parseDate(upDatedStr), 8),
-                          language,
+                          language: language as Language,
                       };
 
                       return processedItem;
@@ -132,7 +132,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('a.navbar-brand img').attr('src'),
         author: $('meta[name="description"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

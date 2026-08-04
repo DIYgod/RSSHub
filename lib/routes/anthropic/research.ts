@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -70,17 +70,19 @@ async function handler() {
     const publicationSections = sections.filter((section) => section?.title === 'Publications');
     const posts = publicationSections
         .flatMap((section) => section?.posts ?? [])
-        .map((post) => ({
-            title: post.title,
-            link: `https://www.anthropic.com/research/${post.slug.current}`,
-            pubDate: parseDate(post.publishedOn),
-        }));
+        .map(
+            (post): DataItem => ({
+                title: post.title,
+                link: `https://www.anthropic.com/research/${post.slug.current}`,
+                pubDate: parseDate(post.publishedOn),
+            })
+        );
 
     const items = await pMap(
         posts,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const content = $('#main-content > article');

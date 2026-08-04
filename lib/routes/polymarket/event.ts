@@ -42,7 +42,7 @@ async function handler(ctx) {
         throw new Error('Event not found');
     }
 
-    const items = event.markets.map((market) => ({
+    const items = event.markets!.map((market) => ({
         title: market.question,
         description: `
             <p><strong>Odds:</strong> ${formatOddsDisplay(market)}</p>

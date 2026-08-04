@@ -88,7 +88,7 @@ async function handler() {
                 guid: id,
                 title: [
                     bgm.title,
-                    Object.values(bgm.titleTranslate)
+                    Object.values<string[]>(bgm.titleTranslate)
                         .map((t) => t.join('｜'))
                         .join('｜'),
                 ]

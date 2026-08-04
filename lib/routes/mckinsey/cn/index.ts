@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -84,11 +84,11 @@ async function handler(ctx) {
 
     const list = $('.fl-post-grid-post')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('h2 a');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 description: $item.find('.fl-post-grid-content').html()?.trim(),
                 link: a.attr('href'),
                 pubDate: $item.find('[itemprop="datePublished"]').length ? parseDate($item.find('[itemprop="datePublished"]').attr('content')!) : undefined,
@@ -97,8 +97,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!, {
                     headers,
                 });
                 const $ = load(response);

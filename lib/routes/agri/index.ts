@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,15 +24,15 @@ export const handler = async (ctx) => {
     let items = $('div.list_li_con, div.nxw_video_com')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             const title = a.text();
-            const image = item.find('img').first().prop('src') ? new URL(item.find('img').first().prop('src'), rootUrl).href : undefined;
+            const image = $item.find('img').first().prop('src') ? new URL($item.find('img').first().prop('src')!, rootUrl).href : undefined;
             const description = renderDescription({
-                intro: item.find('p.con_text').text() || undefined,
+                intro: $item.find('p.con_text').text() || undefined,
                 images: image
                     ? [
                           {
@@ -46,21 +46,21 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.con_date_span').text() || `${item.find('div.com_time_p2').text().trim()}${item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.find('span.con_date_span').text() || `${$item.find('div.com_time_p2').text().trim()}${$item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
+                link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
-                    text: item.find('p.con_text').text() || undefined,
+                    text: $item.find('p.con_text').text() || undefined,
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.content_body_box').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 item.enclosure_url = $$('div.content_body_box video').prop('src') ?? undefined;
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
@@ -89,7 +89,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -97,7 +97,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         image,
-        language,
+        language: language as Language,
     };
 };
 

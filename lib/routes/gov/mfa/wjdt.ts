@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -57,12 +57,12 @@ async function handler(ctx) {
     let items = $('ul.list1 li a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 35)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href').replace(/^\./, () => currentUrl),
+                title: $item.text(),
+                link: $item.attr('href')!.replace(/^\./, () => currentUrl),
             };
         });
 

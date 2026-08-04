@@ -3,6 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,15 +43,15 @@ export async function handler(ctx) {
 
     const list = $('.gallary_item')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const href = item.find('a').attr('href');
-            const aid = href.match(/^\/photos-index-aid-(\d+)\.html$/)[1];
+        .map((item): DataItem & { link: string; aid: string } => {
+            const $item = $(item);
+            const href = $item.find('a').attr('href');
+            const aid = href!.match(/^\/photos-index-aid-(\d+)\.html$/)![1];
             return {
-                title: item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: `${baseUrl}${href}`,
                 pubDate: parseDate(
-                    item
+                    $item
                         .find('.info_col')
                         .text()
                         .replace(/\d+張照片，\n創建於/, ''),
@@ -85,7 +86,7 @@ export async function handler(ctx) {
 
                 const imgListMatch = $('script')
                     .text()
-                    .match(/var imglist = (\[.*\]);"\);/)[1];
+                    .match(/var imglist = (\[.*\]);"\);/)![1];
 
                 const imgList = JSON.parse(imgListMatch.replaceAll('url:', '"url":').replaceAll('caption:', '"caption":').replaceAll('fast_img_host+\\', '').replaceAll('\\', ''));
 

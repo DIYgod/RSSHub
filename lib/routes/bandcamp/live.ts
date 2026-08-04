@@ -43,18 +43,18 @@ async function handler() {
     const items = $('.live-listing')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: item.find('.title-link').attr('href'),
-                title: item.find('.show-title').text(),
-                author: item.find('.show-artist').text(),
-                pubDate: parseDate(item.find('.show-time-container').text().trim().split(' UTC', 1)[0]),
+                link: $item.find('.title-link').attr('href'),
+                title: $item.find('.show-title').text(),
+                author: $item.find('.show-artist').text(),
+                pubDate: parseDate($item.find('.show-time-container').text().trim().split(' UTC', 1)[0]),
                 description: `<img src="${
-                    item
+                    $item
                         .find('.show-thumb-image')
-                        .attr('style')
-                        .match(/background-image: url\((.*)\);/)[1]
+                        .attr('style')!
+                        .match(/background-image: url\((.*)\);/)![1]
                 }">`,
             };
         });

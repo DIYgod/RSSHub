@@ -46,7 +46,7 @@ const ProcessFeed = async () => {
     });
 
     const data = response.data.data;
-    const playList = [];
+    const playList: any[] = [];
     for (const dailyPicks of data) {
         const pubDate = new Date(dailyPicks.date + ' 00:00:00 +0800').toUTCString();
         for (const pick of dailyPicks.picks) {

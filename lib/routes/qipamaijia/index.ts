@@ -43,7 +43,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('div.content').text(),
             link: $(item).find('a').attr('href'),
-            description: $(item).find('div.content').html() + $(item).find('div.thumb').html(),
+            description: $(item).find('div.content').html()! + $(item).find('div.thumb').html()!,
         }));
 
     return {

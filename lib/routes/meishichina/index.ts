@@ -75,24 +75,24 @@ export const handler = async (ctx) => {
               .slice(0, limit)
               .toArray()
               .map((item) => {
-                  item = $(item);
+                  const $item = $(item);
 
-                  const title = item.find('div.detail h2').text();
-                  const description = item.find('div.detail').html();
-                  const guid = `meishichina-${item.prop('data-id')}`;
-                  const image = item.find('div.pic img').prop('src').split(/\?/, 1)[0];
+                  const title = $item.find('div.detail h2').text();
+                  const description = $item.find('div.detail').html();
+                  const guid = `meishichina-${$item.prop('data-id')}`;
+                  const image = $item.find('div.pic img').prop('src')!.split(/\?/, 1)[0];
 
                   return {
                       title,
                       description,
-                      link: item.find('div.detail h2 a').prop('href'),
-                      category: item.find('p.subcontent').text().replace(/。$/, '').split('、'),
-                      author: item.find('p.subline a').text(),
+                      link: $item.find('div.detail h2 a').prop('href'),
+                      category: $item.find('p.subcontent').text().replace(/。$/, '').split('、'),
+                      author: $item.find('p.subline a').text(),
                       guid,
                       id: guid,
                       content: {
                           html: description,
-                          text: item.find('div.detail').text(),
+                          text: $item.find('div.detail').text(),
                       },
                       image,
                       banner: image,

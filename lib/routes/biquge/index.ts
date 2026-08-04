@@ -3,7 +3,7 @@ import iconv from 'iconv-lite';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -76,27 +76,27 @@ async function handler(ctx) {
 
     const $ = load(iconv.decode(response.data, encoding));
     const author = $('meta[property="og:novel:author"]').attr('content');
-    const pubDate = timezone(parseDate($('meta[property="og:novel:update_time"]').attr('content')), 8);
+    const pubDate = timezone(parseDate($('meta[property="og:novel:update_time"]').attr('content')!), 8);
 
     let items = $('dl dd a')
         .toArray()
         .toReversed()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 1)
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             let link: string;
-            const url = item.attr('href');
-            if (url.startsWith('http')) {
-                link = url;
-            } else if (url.startsWith('/')) {
+            const url = $item.attr('href');
+            if (url!.startsWith('http')) {
+                link = url!;
+            } else if (url!.startsWith('/')) {
                 link = `${rootUrl}${url}`;
             } else {
                 link = `${currentUrl}/${url}`;
             }
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
                 author,
                 pubDate,
@@ -105,7 +105,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     responseType: 'buffer',
                 });

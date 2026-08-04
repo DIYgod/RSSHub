@@ -28,7 +28,7 @@ async function handler(ctx) {
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
     const bittorrent = routeParams.get('bittorrent') || false;
     const embed_thumb = routeParams.get('embed_thumb') || false;
-    const items = await EhAPI.getTagItems(cache, tag, page, bittorrent, embed_thumb);
+    const items = await EhAPI.getTagItems(cache, tag, page, bittorrent as unknown as boolean, embed_thumb as unknown as boolean);
 
     return EhAPI.from_ex
         ? {

@@ -89,7 +89,7 @@ async function handler(ctx) {
         }
     }
 
-    const fullData = [];
+    const fullData: any[] = [];
 
     async function fetchNextPage(url) {
         const response = await ofetch(url, {
@@ -114,7 +114,7 @@ async function handler(ctx) {
             }
 
             // Check if item.tags exist and match the criteria based on tagStrategy
-            const itemTags = item.tags;
+            const itemTags: Record<string, { name: string }> | undefined = item.tags;
 
             if (!itemTags) {
                 return false; // If item has no tags and tag filter is applied, exclude it

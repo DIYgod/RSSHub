@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -137,12 +137,12 @@ async function handler(ctx) {
 
     const list = $('.wp_article_list_table .border9')
         .toArray()
-        .map((e) => {
-            e = $(e);
+        .map((e): DataItem & { link: string } => {
+            const $e = $(e);
             return {
-                title: e.find('a').attr('title'),
-                link: new URL(e.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(e.find('.date').text()),
+                title: $e.find('a').attr('title')!,
+                link: new URL($e.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($e.find('.date').text()),
             };
         });
 

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
         description: 'And the story behind them...',
         link: baseUrl,
         image: 'https://rarehistoricalphotos.com/wp-content/uploads/2022/04/cropped-rarehistoricalphotos-32x32.png',
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

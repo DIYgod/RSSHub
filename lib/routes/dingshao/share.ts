@@ -46,7 +46,7 @@ async function handler(ctx: Context) {
     const channelProfile = response.value.bundle.channels.find((channel) => channel.id === response.value.channel)?.profile;
 
     return {
-        title: channelProfile?.name,
+        title: channelProfile!.name,
         description: channelProfile?.description,
         link: `${baseUrl}/share/${shortId}`,
         image: channelProfile?.image,

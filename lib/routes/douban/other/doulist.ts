@@ -71,7 +71,7 @@ async function handler(ctx) {
                 title,
                 link,
                 description,
-                pubDate: new Date(date).toUTCString(),
+                pubDate: new Date(date!).toUTCString(),
             };
             return single;
         });

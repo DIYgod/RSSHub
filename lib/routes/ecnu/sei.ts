@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,9 +25,9 @@ export const route: Route = {
         const $ = load(response.data);
         const links = $('ul.data-list > li')
             .toArray()
-            .map((el) => ({
+            .map((el): DataItem & { link: string } => ({
                 pubDate: timezone(parseDate($(el).find('.data-list-time').text()), 8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).href,
+                link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
         const items = await Promise.all(

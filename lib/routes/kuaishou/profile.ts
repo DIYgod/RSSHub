@@ -30,7 +30,7 @@ async function handler(ctx) {
 
     let retryCount = 0;
     let userInfo;
-    const { promise, resolve } = Promise.withResolvers();
+    const { promise, resolve } = Promise.withResolvers<any>();
     await page.route('**/*', (route) => {
         const resourceType = route.request().resourceType();
         if (['image', 'media', 'font', 'stylesheet', 'ping'].includes(resourceType)) {

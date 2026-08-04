@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -13,8 +13,6 @@ export const route: Route = {
     example: '/bupt/jwc/tzgg',
     parameters: {
         type: {
-            type: 'string',
-            optional: false,
             description: '信息类型，可选值：tzgg（通知公告），xwzx（新闻资讯）',
         },
     },
@@ -70,7 +68,7 @@ async function handler(ctx: Context) {
 
     const list = $('.txt-elise')
         .toArray()
-        .map((item) => {
+        .map((item): (DataItem & { link: string }) | null => {
             const $item = $(item);
             const $link = $item.find('a');
             // Skip elements without links or with empty href
@@ -82,7 +80,7 @@ async function handler(ctx: Context) {
                 link: rootUrl + '/' + $link.attr('href'),
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>

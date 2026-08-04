@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,15 +54,16 @@ async function handler(ctx) {
 
     const list = $('a', 'record')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
+                title: '',
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -80,7 +81,7 @@ async function handler(ctx) {
         title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

@@ -11,7 +11,7 @@ const cookie = Cookie.fromJSON({
     path: '/',
 });
 (async () => {
-    await cookieJar.setCookie(cookie, 'http://www.playno1.com/');
+    await cookieJar.setCookie(cookie!, 'http://www.playno1.com/');
 })();
 
 const processArticle = (items, cache) =>

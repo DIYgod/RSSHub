@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -39,23 +39,23 @@ export async function handler(ctx) {
         ? $('div.hot-list a')
               .slice(0, limit)
               .toArray()
-              .map((item) => {
-                  item = $(item);
+              .map((item): DataItem => {
+                  const $item = $(item);
 
                   return {
-                      title: item.find('div.hot-item p').text(),
-                      link: new URL(item.prop('href'), rootUrl).href,
+                      title: $item.find('div.hot-item p').text(),
+                      link: new URL($item.prop('href')!, rootUrl).href,
                   };
               })
         : $('div.single-post')
               .slice(0, limit)
               .toArray()
-              .map((item) => {
-                  item = $(item);
+              .map((item): DataItem => {
+                  const $item = $(item);
 
-                  const a = item.find('p.title a');
+                  const a = $item.find('p.title a');
 
-                  const pubDate = item
+                  const pubDate = $item
                       .find('div.left-infos p')
                       .text()
                       .trim()
@@ -64,16 +64,16 @@ export async function handler(ctx) {
 
                   return {
                       title: a.text(),
-                      link: new URL(a.prop('href'), rootUrl).href,
-                      description: item.find('p.excerpt').html(),
-                      author: item.find('div.left-infos p a').text().trim(),
-                      pubDate: timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8),
+                      link: new URL(a.prop('href')!, rootUrl).href,
+                      description: $item.find('p.excerpt').html(),
+                      author: $item.find('div.left-infos p a').text().trim(),
+                      pubDate: timezone(/[年日月]/.test(pubDate!) ? parseDate(pubDate!, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate!), 8),
                   };
               });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -91,7 +91,7 @@ export async function handler(ctx) {
                     .slice(1)
                     .toArray()
                     .map((c) => content(c).text().replace(/#/, ''));
-                item.pubDate ??= timezone(/[年日月]/.test(pubDate) ? parseDate(pubDate, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate), 8);
+                item.pubDate ??= timezone(/[年日月]/.test(pubDate!) ? parseDate(pubDate!, ['YYYY年M月D日 HH:mm', 'M月D日 HH:mm']) : parseRelativeDate(pubDate!), 8);
                 item.upvotes = content('#like_count').text() ? Number(content('#like_count').text()) : 0;
                 item.comments = Number(content('div.right-infos a').first().text()) || 0;
 
@@ -108,7 +108,7 @@ export async function handler(ctx) {
         title: isHot ? title.replace(/[^|]+/, '最热 ') : title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('h3.logo a img').prop('src'),
         icon,
         logo: icon,

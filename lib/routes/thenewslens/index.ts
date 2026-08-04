@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -45,20 +45,20 @@ export async function handler(ctx) {
         .find('a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: /\/article\//.test(link) ? `${link}/fullpage` : link,
+                title: $item.text(),
+                link: /\/article\//.test(link!) ? `${link}/fullpage` : link,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -74,19 +74,19 @@ export async function handler(ctx) {
                 content('.article-img-container').each((_, el) => {
                     content(el).replaceWith(
                         renderDescription({
-                            image: content(el).find('img')?.attr('data-srcset').split('?', 1)[0] ?? undefined,
+                            image: content(el).find('img').attr('data-srcset')!.split('?', 1)[0] ?? undefined,
                         })
                     );
                 });
 
                 item.author = content('meta[property="article:author"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
                 item.category = content('meta[property="article:tag"]')
                     .toArray()
-                    .map((t) => content(t).attr('content'));
+                    .map((t) => content(t).attr('content')!);
                 item.description = renderDescription({
-                    image: content('meta[property="og:image"]')?.attr('content').split('?', 1)[0] ?? undefined,
-                    description: content('.article-main-box, article[itemprop="articleBody"]').html(),
+                    image: content('meta[property="og:image"]').attr('content')!.split('?', 1)[0] ?? undefined,
+                    description: content('.article-main-box, article[itemprop="articleBody"]').html() ?? undefined,
                 });
 
                 return item;

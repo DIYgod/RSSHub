@@ -66,32 +66,32 @@ const ProcessItems = async (ctx) => {
                 (item) =>
                     $(item)
                         .find('a')
-                        .attr('href')
-                        .match(/_id\/(.*?)\.html/)[1]
+                        .attr('href')!
+                        .match(/_id\/(.*?)\.html/)![1]
             )
             .join(',')
     );
 
     const items = works.toArray().map((item) => {
-        item = $(item).parentsUntil('tbody, ul');
+        const $item = $(item).parentsUntil('tbody, ul');
 
-        const a = item.find('.work_name a');
+        const a = $item.find('.work_name a');
 
         const title = a.text();
         const link = a.attr('href');
-        const guid = link.match(/_id\/(.*?)\.html/)[1];
+        const guid = link!.match(/_id\/(.*?)\.html/)![1];
 
-        const description = item.find('.work_text').text();
-        const authors = item
+        const description = $item.find('.work_text').text();
+        const authors = $item
             .find('.maker_name a')
             .toArray()
             .map((a) => ({
                 name: $(a).text(),
                 link: $(a).attr('href'),
             }));
-        let images = item.find('div[data-samples]').length === 0 ? [] : JSON.parse(item.find('div[data-samples]').attr('data-samples').replaceAll("'", '"')).map((s) => s.thumb);
+        let images = $item.find('div[data-samples]').length === 0 ? [] : JSON.parse($item.find('div[data-samples]').attr('data-samples')!.replaceAll("'", '"')).map((s) => s.thumb);
 
-        const workCategories = item
+        const workCategories = $item
             .find('.work_category')
             .find('a')
             .toArray()
@@ -100,7 +100,7 @@ const ProcessItems = async (ctx) => {
                 link: $(i).attr('href'),
             }));
 
-        const workGenres = item
+        const workGenres = $item
             .find('.work_genre')
             .find('span[title]')
             .toArray()
@@ -108,7 +108,7 @@ const ProcessItems = async (ctx) => {
                 text: $(i).text(),
             }));
 
-        const searchTags = item
+        const searchTags = $item
             .find('.search_tag')
             .find('a')
             .toArray()
@@ -117,7 +117,7 @@ const ProcessItems = async (ctx) => {
                 link: $(i).attr('href'),
             }));
 
-        const nameTags = item
+        const nameTags = $item
             .find('.icon_wrap')
             .find('span[title]')
             .toArray()

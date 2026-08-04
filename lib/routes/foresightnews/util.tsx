@@ -4,6 +4,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { parseDate } from '@/utils/parse-date';
+import type { Page } from '@/utils/playwright';
 import { getPlaywrightPage } from '@/utils/playwright';
 
 const constants = {
@@ -46,16 +47,19 @@ const processItems = async (apiUrl, limit, ...parameters) => {
     }
 
     // Cloudflare fingerprints the HTTP client, so browser-like headers alone are insufficient.
-    const { page, destroy } = await getPlaywrightPage(requestUrl.href, {
+    let responsePromise: ReturnType<Page['waitForResponse']> | undefined;
+    const { destroy } = await getPlaywrightPage(requestUrl.href, {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 route.request().resourceType() === 'document' ? route.continue() : route.abort();
             });
+            responsePromise = page.waitForResponse(requestUrl.href);
         },
     });
     let response;
     try {
-        response = JSON.parse((await page.textContent('body')) ?? '');
+        const apiResponse = await responsePromise!;
+        response = await apiResponse.json();
     } finally {
         await destroy();
     }
@@ -102,7 +106,7 @@ const processItems = async (apiUrl, limit, ...parameters) => {
                     ) : null}
                 </>
             ),
-            author: item.column?.title ?? item.author?.username ?? undefined,
+            author: item.column?.title ?? item.author?.username,
             category: categories,
             guid: `foresightnews-${sourceType}#${item.id}`,
             pubDate: item.published_at ? parseDate(item.published_at * 1000) : undefined,

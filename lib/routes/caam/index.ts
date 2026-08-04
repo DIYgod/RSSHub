@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -136,21 +136,21 @@ async function handler(ctx) {
     let items = $('span.cont')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.parent();
+            const a = $item.parent();
 
             return {
-                title: item.text(),
-                link: new URL(a.prop('href'), currentUrl).href,
+                title: $item.text(),
+                link: new URL(a.prop('href')!, currentUrl).href,
                 pubDate: parseDate(a.find('span.time').text(), '[YYYY.MM.DD]'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -176,7 +176,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         subtitle,
         author,

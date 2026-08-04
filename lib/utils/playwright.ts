@@ -23,7 +23,7 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
     const username = currentProxy.urlHandler?.username;
     const password = currentProxy.urlHandler?.password;
     if (username || password) {
-        if (currentProxy.urlHandler.protocol !== 'http:') {
+        if (currentProxy.urlHandler!.protocol !== 'http:') {
             logger.warn('SOCKS/HTTPS proxy with authentication is not supported by playwright, continue without proxy');
             return {};
         }
@@ -31,7 +31,7 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
         return {
             proxy: {
                 password: decodeURIComponent(password ?? ''),
-                server: proxyServerFromUrl(currentProxy.urlHandler),
+                server: proxyServerFromUrl(currentProxy.urlHandler!),
                 username: decodeURIComponent(username ?? ''),
             },
         } satisfies Pick<LaunchOptions, 'proxy'>;

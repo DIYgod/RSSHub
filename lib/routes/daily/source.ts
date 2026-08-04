@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -178,6 +178,6 @@ async function handler(ctx) {
         image: userData.image,
         logo: userData.image,
         icon: userData.image,
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

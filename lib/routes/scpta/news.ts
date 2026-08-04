@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -56,25 +56,25 @@ async function handler(ctx) {
     // 解析搜索结果
     const list = $('div.wrap-content li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: `${baseUrl}${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('a').attr('title')!,
+                link: `${baseUrl}${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('span').text()),
             };
         });
     // 获取公告详情
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 let description: string;
                 try {
                     const contentResponse = await got(item.link);
                     const content = load(contentResponse.data);
 
                     // 提取公告正文
-                    description = content('div.wrap-content.news-content').html();
+                    description = content('div.wrap-content.news-content').html() ?? '';
                 } catch {
                     // 如果详情页获取失败，使用默认描述
                     description = '公告内容获取失败';

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -54,11 +54,11 @@ async function handler(ctx) {
         const $ = load(item.content.rendered, null, false);
 
         $('.c-lazy-image__img').each((_, img) => {
-            img = $(img);
-            if (img.attr('data-lazy-src')) {
-                img.attr('src', img.attr('data-lazy-src').split('?', 1)[0]);
-                img.removeAttr('data-lazy-src');
-                img.removeAttr('data-lazy-srcset');
+            const $img = $(img);
+            if ($img.attr('data-lazy-src')) {
+                $img.attr('src', $img.attr('data-lazy-src')!.split('?', 1)[0]);
+                $img.removeAttr('data-lazy-src');
+                $img.removeAttr('data-lazy-srcset');
             }
         });
         $('[class^="lrv-a-crop-"]').contents().unwrap();
@@ -79,7 +79,7 @@ async function handler(ctx) {
         title: 'Deadline – Hollywood Entertainment Breaking News',
         description: 'Deadline.com is always the first to break up-to-the-minute entertainment, Hollywood and media news, with an unfiltered, no-holds-barred analysis of events.',
         link: baseUrl,
-        language: 'en-US',
+        language: 'en-us' as Language,
         image: `${baseUrl}/wp-content/themes/pmc-deadline-2019/assets/app/icons/apple-touch-icon.png`,
         item: items,
     };

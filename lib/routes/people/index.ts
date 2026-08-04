@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -44,22 +44,22 @@ async function handler(ctx) {
         .find('a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: link.indexOf('http') === 0 ? link : new URL(link.replace(/^\.\./, ''), articleRootUrl).href,
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : new URL(link!.replace(/^\.\./, ''), articleRootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
-                    const detailPage = await fetchPage(item.link);
+                    const detailPage = await fetchPage(item.link!);
 
                     detailPage.$('.paper_num, #rwb_tjyd').remove();
 

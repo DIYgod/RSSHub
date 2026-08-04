@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -71,14 +71,14 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('td a');
+            const a = $item.find('td a');
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
-                pubDate: parseDate(item.find('td').last().text()),
+                link: new URL(a.prop('href')!, rootUrl).href,
+                pubDate: parseDate($item.find('td').last().text()),
             };
         });
 
@@ -93,8 +93,8 @@ async function handler(ctx) {
         title: `${siteName} - ${columnName}`,
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
-        language: $('html').prop('lang'),
-        image: new URL($('div.top-logo img').prop('src'), rootUrl).href,
+        language: $('html').prop('lang') as Language,
+        image: new URL($('div.top-logo img').prop('src')!, rootUrl).href,
         subtitle: columnName,
         author: siteName,
         allowEmpty: true,

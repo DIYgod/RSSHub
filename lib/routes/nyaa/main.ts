@@ -3,7 +3,7 @@ import MarkdownIt from 'markdown-it';
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -33,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const parser = new Parser({
+    const parser = new Parser<Record<string, any>, Record<string, any>>({
         customFields: {
             item: ['magnet', ['nyaa:infoHash', 'infoHash']],
         },
@@ -75,8 +75,8 @@ async function handler(ctx) {
         const limit = Number.parseInt(ctx.req.query('limit')) || 6; // prevent 429 rate limiting
         const items = await Promise.all(
             feed.items.slice(0, limit).map((item) =>
-                cache.tryGet(item.guid, async () => {
-                    const response = await ofetch(item.guid);
+                cache.tryGet(item.guid!, async () => {
+                    const response = await ofetch(item.guid!);
                     const $ = load(response);
 
                     item.description = md.render($('div#torrent-description.panel-body[markdown-text]').text());
@@ -88,10 +88,10 @@ async function handler(ctx) {
         );
 
         return {
-            title: feed.title,
+            title: feed.title!,
             link: currentLink,
             description: feed.description,
-            item: items,
+            item: items as DataItem[],
         };
     }
     feed.items.map((item) => {
@@ -102,9 +102,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: currentLink,
         description: feed.description,
-        item: feed.items,
+        item: feed.items as DataItem[],
     };
 }

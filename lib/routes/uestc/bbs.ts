@@ -61,7 +61,7 @@ export const route: Route = {
                 authorization: bbsAuthStr,
             },
         });
-        const itemsRaw = Object.entries(data.data.top_list).flatMap(([label, items]) => items.map((item) => ({ ...item, label })));
+        const itemsRaw = Object.entries<Array<Record<string, any>>>(data.data.top_list).flatMap(([label, items]) => items.map((item) => ({ ...item, label }) as Record<string, any>));
         const items = await Promise.all(
             itemsRaw.map((item) =>
                 cache.tryGet(`https://bbs.uestc.edu.cn/forum.php?mod=viewthread&tid=${item.thread_id}`, async () => {

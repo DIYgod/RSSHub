@@ -73,24 +73,24 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('div.news_title').text(),
-                link: new URL(item.find('div.news_title span.newst a').prop('href'), rootUrl).href,
+                title: $item.find('div.news_title').text(),
+                link: new URL($item.find('div.news_title span.newst a').prop('href')!, rootUrl).href,
                 description: renderToString(
                     <>
-                        {item.find('a.newsimg img').prop('src') ? (
+                        {$item.find('a.newsimg img').prop('src') ? (
                             <figure>
-                                <img src={item.find('a.newsimg img').prop('src')} />
+                                <img src={$item.find('a.newsimg img').prop('src')} />
                             </figure>
                         ) : null}
                     </>
                 ),
-                author: item.find('p.tname').text(),
-                guid: item.prop('data-id'),
-                pubDate: timezone(parseDate(item.find('p.ttime').text()), 8),
-                comments: item.find('a.tpinglun').text() ? Number(item.find('a.tpinglun').text()) : 0,
+                author: $item.find('p.tname').text(),
+                guid: $item.prop('data-id'),
+                pubDate: timezone(parseDate($item.find('p.ttime').text()), 8),
+                comments: $item.find('a.tpinglun').text() ? Number($item.find('a.tpinglun').text()) : 0,
             };
         });
 

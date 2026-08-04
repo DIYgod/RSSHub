@@ -35,10 +35,10 @@ const pixivGot = got.extend({
                 if (!config.pixiv.bypassCdn) {
                     return;
                 }
-                let hostname = null;
-                const isIP = ipRegex({ exact: true }).test(config.pixiv.bypassCdnHostname);
+                let hostname: string | null = null;
+                const isIP = ipRegex({ exact: true }).test(config.pixiv.bypassCdnHostname!);
                 if (isIP) {
-                    hostname = config.pixiv.bypassCdnHostname;
+                    hostname = config.pixiv.bypassCdnHostname!;
                 } else {
                     const addresses = await dohResolve(config.pixiv.bypassCdnHostname, config.pixiv.bypassCdnDoh);
                     if (addresses.length) {

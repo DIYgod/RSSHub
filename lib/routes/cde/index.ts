@@ -121,7 +121,7 @@ async function handler(ctx) {
         method: 'post',
         url,
         headers: {
-            cookie: await utils.getCookie(ctx),
+            cookie: await utils.getCookie(),
         },
         form: requestData[channel][cate],
     });
@@ -143,7 +143,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link, {
                     headers: {
-                        cookie: await utils.getCookie(ctx),
+                        cookie: await utils.getCookie(),
                     },
                 });
                 const $ = load(detailResponse.data);

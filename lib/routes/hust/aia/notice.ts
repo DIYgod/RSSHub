@@ -40,12 +40,12 @@ async function handler(ctx) {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a h2').text(),
-                    description: item.find('a div').text() || title,
-                    pubDate: parseDate(item.find('.date3').text(), 'DDYYYY-MM'),
-                    link: new URL(item.find('a').attr('href'), link).href,
+                    title: $item.find('a h2').text(),
+                    description: $item.find('a div').text() || title,
+                    pubDate: parseDate($item.find('.date3').text(), 'DDYYYY-MM'),
+                    link: new URL($item.find('a').attr('href')!, link).href,
                 };
             }),
     };

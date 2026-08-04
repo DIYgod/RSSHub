@@ -48,7 +48,7 @@ async function handler(ctx) {
         .filter((_, node) => node.type === 'text')
         .text();
     let finished = false;
-    let newOneDate = finished_text.split(',', 2)[1];
+    let newOneDate: string | Date = finished_text.split(',', 2)[1];
     if (newOneDate.includes('月') && newOneDate.includes('號')) {
         const month = Number.parseInt(newOneDate.split('月', 1)[0]);
         const date = Number.parseInt(newOneDate.split('月', 2)[1].split('號', 1)[0]);
@@ -64,9 +64,9 @@ async function handler(ctx) {
     // 最新一话的地址
     const updatedOne = $('div.detail-list-form-title span.s a').attr('href');
     const items = list.toArray().map((item) => {
-        item = $(item);
-        const itemTitle = item.text();
-        const itemUrl = item.attr('href');
+        const $item = $(item);
+        const itemTitle = $item.text();
+        const itemUrl = $item.attr('href');
         const itemDate = itemUrl === updatedOne ? parseDate(newOneDate) : '';
         return {
             title: itemTitle,

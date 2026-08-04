@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const urlList = $('body')
         .find('ul li span a')
-        .map((e) => $(e).attr('href'));
+        .map((e: any) => $(e).attr('href'));
 
     const titleList = $('body')
         .find('ul li span a')
@@ -49,14 +49,14 @@ async function handler(ctx) {
         .map((e) => $(e).text());
 
     const out = await Promise.all(
-        urlList.map((itemUrl, index) => {
+        urlList.map((itemUrl: any, index: any) => {
             itemUrl = new URL(itemUrl, host).href;
             if (itemUrl.includes('.htm')) {
                 return cache.tryGet(itemUrl, async () => {
                     const response = await got(itemUrl);
                     if (response.redirectUrls.length !== 0) {
                         const single = {
-                            title: titleList[index],
+                            title: titleList[index]!,
                             link: itemUrl,
                             description: '该通知无法直接预览, 请点击原文链接↑查看',
                             pubDate: parseDate(dateList[index]),
@@ -68,7 +68,7 @@ async function handler(ctx) {
                         title: $('title').text(),
                         link: itemUrl,
                         description: $('.v_news_content')
-                            .html()
+                            .html()!
                             .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
                             .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                             .trim(),
@@ -78,7 +78,7 @@ async function handler(ctx) {
                 });
             }
             const single = {
-                title: titleList[index],
+                title: titleList[index]!,
                 link: itemUrl,
                 description: '该通知为文件，请点击原文链接↑下载',
                 pubDate: parseDate(dateList[index]),

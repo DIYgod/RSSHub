@@ -20,4 +20,5 @@ export const route: Route = {
 
 function handler(ctx) {
     ctx.set('redirect', '/scmp/topics/coronavirus-pandemic-all-stories');
+    return null;
 }

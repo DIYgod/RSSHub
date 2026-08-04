@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -41,7 +41,7 @@ async function handler(ctx) {
     const bookInfoEl = bookEl.parent();
 
     const bookName = bookEl.text();
-    const bookUrl = new URL(bookEl.prop('href'), rootUrl).href;
+    const bookUrl = new URL(bookEl.prop('href')!, rootUrl).href;
     const bookStatus = bookInfoEl.find('font').first().text();
     const bookWords = bookInfoEl.find('font').eq(1).text();
     const bookUpdatedTime = bookInfoEl.parent().contents().last().text().trim();
@@ -102,7 +102,7 @@ async function handler(ctx) {
         title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author} - 最近更新`,
         link: currentUrl,
         description: $('span[itemprop="description"]').text(),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

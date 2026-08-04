@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const chapter_list = $('tr[bgcolor]')
         .toArray()
-        .map((chapter) => {
+        .map((chapter): DataItem => {
             const $_chapter = $(chapter);
             const chapter_link = $_chapter.find('a');
             return {
@@ -51,7 +51,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), 9),
             };
         })
-        .toSorted((a, b) => b.pubDate - a.pubDate)
+        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
         .slice(0, limit);
 
     const item_list = await Promise.all(
@@ -70,7 +70,7 @@ async function handler(ctx) {
         title,
         description,
         link,
-        language: 'ja',
+        language: 'ja' as Language,
         item: item_list,
     };
 }

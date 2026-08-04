@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,30 +45,30 @@ async function handler(ctx) {
 
     let items = $('div.text-list ul li a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: `${link.startsWith('http') ? '' : `${rootUrl}/`}${link}`,
-                pubDate: parseDate(item.next().text()),
+                title: $item.text(),
+                link: `${link!.startsWith('http') ? '' : `${rootUrl}/`}${link}`,
+                pubDate: parseDate($item.next().text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/dgjyw\.com/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (/dgjyw\.com/.test(item.link!)) {
                     const detailResponse = await got(item.link);
 
                     const content = load(detailResponse.data);
 
                     content('.cont-tit').remove();
-                    content('.art-body').html(content('.v_news_content').html());
+                    content('.art-body').html(content('.v_news_content').html() as string);
 
-                    item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), 8);
+                    item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
                     item.description = content('form[name="_newscontent_fromname"]').html();
                 }
 

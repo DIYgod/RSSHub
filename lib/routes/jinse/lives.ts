@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -99,14 +99,14 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

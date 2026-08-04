@@ -27,7 +27,7 @@ async function handler() {
     const response = await got(software_url);
 
     // 获取Nuxt对象
-    const result = await util.nuxtReader(response.data);
+    const result = (await util.nuxtReader(response.data)) as Record<string, any>;
 
     /* expectedReleaseNS[]
         coverImageUrl: "//switch-cn.gtgres.com/global-images/c50e3390-14e5-11ea-9b40-236e671bca9e.png"

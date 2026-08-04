@@ -36,7 +36,7 @@ export const route: Route = {
 
 async function handler() {
     const cookie = config.pkubbs.cookie;
-    const headers = {};
+    const headers = {} as Record<string, any>;
     if (cookie) {
         headers.cookie = cookie;
     }
@@ -45,7 +45,7 @@ async function handler() {
     const listItems = $('#list-content .list-item')
         .toArray()
         .map((element) => ({
-            url: new URL($(element).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2/').href,
+            url: new URL($(element).find('> a.link').attr('href')!, 'https://bbs.pku.edu.cn/v2/').href,
             title: $(element).find('.title').text(),
         }))
         .slice(0, 10);

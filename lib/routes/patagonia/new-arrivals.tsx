@@ -14,7 +14,7 @@ const categoryMap = {
 function extractSfrmUrl(url) {
     const urlObj = new URL(url);
     const sfrmValue = urlObj.searchParams.get('sfrm');
-    urlObj.search = new URLSearchParams({ sfrm: sfrmValue }).toString();
+    urlObj.search = new URLSearchParams({ sfrm: sfrmValue as string }).toString();
     return urlObj.href;
 }
 export const route: Route = {
@@ -56,12 +56,12 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const data = {
-                title: $(element).find('.product-tile').data('tealium').product_name[0],
+                title: ($(element).find('.product-tile').data('tealium') as { product_name: string[] }).product_name[0],
                 link: host + '/' + $(element).find('[itemprop="url"]').attr('href'),
                 description: '',
                 category: $(element).find('[itemprop="category"]').attr('content'),
             };
-            let imgUrl = new URL($(element).find('[itemprop="image"]').attr('content'));
+            let imgUrl: string | URL = new URL($(element).find('[itemprop="image"]').attr('content')!);
             imgUrl = extractSfrmUrl(imgUrl);
 
             const price = $(element).find('[itemprop="price"]').eq(0).text();

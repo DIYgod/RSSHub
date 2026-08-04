@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -67,7 +68,7 @@ const webFetchCb = (response) => {
         icon: 'https://www.phoronix.com/android-chrome-192x192.png',
         image: 'https://www.phoronix.com/android-chrome-192x192.png',
         logo: 'https://www.phoronix.com/phxcms7-css/phoronix.png',
-        category: $('meta[name="keywords"]').attr('content').split(', '),
+        category: $('meta[name="keywords"]').attr('content')!.split(', '),
     };
 };
 
@@ -76,7 +77,8 @@ const webFetch = (url) =>
         try {
             return webFetchCb(await got(url));
         } catch (error) {
-            if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
+            const err = error as { name: string; response: { statusCode: number } };
+            if ((err.name === 'HTTPError' || err.name === 'FetchError') && err.response.statusCode === 404) {
                 return '404';
             }
             throw error;
@@ -173,7 +175,7 @@ async function handler(ctx) {
                     .slice(0, -2)
                     .toArray()
                     .map((e) => $(e).text());
-                const category = [];
+                const category: string[] = [];
                 if (item.link.includes('/news/')) {
                     category.push('News');
                 } else if (item.link.includes('/review/')) {
@@ -186,7 +188,7 @@ async function handler(ctx) {
                 let pubDate;
                 if (!item.pubDate) {
                     // the text next to the category is the date
-                    let pubDateReadable = categorySelector.length && categorySelector[0].nextSibling?.nodeValue;
+                    let pubDateReadable = categorySelector.length && (categorySelector[0].nextSibling as Text | null)?.nodeValue;
                     if (pubDateReadable) {
                         pubDateReadable = pubDateReadable.replaceAll(/on|at|\./g, '').trim();
                         pubDate = /\d{4}$/.test(pubDateReadable)
@@ -227,11 +229,11 @@ async function handler(ctx) {
                                 const html = response.data;
                                 const $$ = load(html);
                                 const page = $$('.content');
-                                return page.html();
+                                return page.html() ?? '';
                             })
                         )
                     );
-                    content.append(pages);
+                    content.append(pages as unknown as string);
                 }
 
                 const images = content.find('img');

@@ -25,7 +25,7 @@ leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)`,
             subPaths.push('wohnen');
         }
 
-        let params = parts.at(-1).includes('=') ? parts.at(-1) : '';
+        let params = parts.at(-1)!.includes('=') ? parts.at(-1)! : '';
         if (params.startsWith('&')) {
             params = params.slice(1);
         }

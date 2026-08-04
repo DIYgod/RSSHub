@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,10 +21,10 @@ export const handler = async (ctx) => {
     let items = $('div.jgzx.rightcontent ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const link = a.prop('href');
             const msg = a.prop('msg');
 
@@ -41,9 +41,9 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: parseDate(item.contents().last().text()),
-                link: enclosureUrl ?? (link.startsWith('http') ? link : new URL(link, rootUrl).href),
-                language,
+                pubDate: parseDate($item.contents().last().text()),
+                link: enclosureUrl ?? (link!.startsWith('http') ? link : new URL(link!, rootUrl).href),
+                language: language as Language,
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureType,
                 enclosure_title: enclosureUrl ? title : undefined,
@@ -52,8 +52,8 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.includes('www.beijingprice.cn') || item.link.endsWith('.pdf')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.includes('www.beijingprice.cn') || item.link!.endsWith('.pdf')) {
                     return item;
                 }
 
@@ -79,14 +79,14 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.news-content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
         )
     );
 
-    const image = new URL($('a.header-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('a.header-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -96,7 +96,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="keywords"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

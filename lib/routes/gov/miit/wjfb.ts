@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,7 +42,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => ({
             url: `${rootUrl}${indexContent(item).attr('url')}`,
-            queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll(/['|]/g, '"')),
+            queryData: JSON.parse(indexContent(item).attr('querydata')!.replaceAll('"', '|').replaceAll(/['|]/g, '"')),
         }))[0];
 
     const dataUrl = `${dataRequestUrl.url}?${Object.entries(dataRequestUrl.queryData)
@@ -58,9 +58,9 @@ async function handler(ctx) {
     const $ = load(response.data.data.html);
     const list = $('ul > li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href'), rootUrl).href,
+            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
             pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD'),
         }));
 

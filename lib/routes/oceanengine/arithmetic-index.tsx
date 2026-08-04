@@ -7,7 +7,7 @@ import { routePath } from 'hono/route';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -76,7 +76,6 @@ const searchLinkNames = ['今日热榜', '百度', '谷歌', '知乎', '微博',
 const createContent = (keyword, queryList, queryListText) =>
     renderToString(
         <OceanengineContent
-            keyword={keyword}
             queryListText={queryListText}
             queries={queryList.map((query) => ({
                 links: searchLinkUrls(encodeURIComponent(query)).map((url, index) => `<a href="${url}" rel="noopener noreferrer" target="_blank">${searchLinkNames[index]}</a>`),
@@ -163,7 +162,7 @@ export async function handler(ctx) {
         title: `${keyword} - ${channelName}指数波峰`,
         link,
         description: `巨量算数 - ${channelName}算数指数 | 关键词: ${keyword}`,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item,
     };
 }

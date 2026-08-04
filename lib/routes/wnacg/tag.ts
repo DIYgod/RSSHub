@@ -10,7 +10,7 @@ export const route: Route = {
     radar: [
         {
             source: ['wnacg.com/*'],
-            target: (_, url) => `/wnacg/tag/${new URL(url).pathname.match(/albums-index-tag-(.+?)\.html$/)[1]}`,
+            target: (_, url) => `/wnacg/tag/${new URL(url).pathname.match(/albums-index-tag-(.+?)\.html$/)![1]}`,
         },
     ],
     handler,

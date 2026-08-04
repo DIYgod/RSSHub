@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -41,17 +41,18 @@ export async function handler(ctx) {
     let items = $(isWork ? 'h2 a' : 'a.article-link')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -65,14 +66,14 @@ export async function handler(ctx) {
                     content(el).attr(
                         'src',
                         content(el)
-                            .attr('data-src')
+                            .attr('data-src')!
                             .replace(/_logonews/, '')
                     );
                 });
 
                 item.title = content('title').text();
                 item.author = content('.author-links').text();
-                item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="og:release_date"]').attr('content')!);
                 item.category = content('a.category_link, a[rel="tag"]')
                     .toArray()
                     .map((c) => content(c).text().replaceAll(' · ', ''));

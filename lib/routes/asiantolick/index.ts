@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -35,7 +35,7 @@ export async function handler(ctx) {
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;
     const currentUrl = new URL(category.replace(/^(tag|category)?\/(\d+)/, '$1-$2'), rootUrl).href;
 
-    const searchParams = {};
+    const searchParams: Record<string, any> = {};
     const matches = category.match(/^(tag|category|search|page)?[/-]?(\w+)/);
 
     if (matches) {
@@ -53,14 +53,14 @@ export async function handler(ctx) {
     let items = $('a.miniatura')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const image = item.find('div.background_miniatura img');
+            const image = $item.find('div.background_miniatura img');
 
             return {
-                title: item.find('div.base_tt').text(),
-                link: item.prop('href'),
+                title: $item.find('div.base_tt').text(),
+                link: $item.prop('href'),
                 description: renderDescription({
                     images: image
                         ? [
@@ -71,25 +71,25 @@ export async function handler(ctx) {
                           ]
                         : undefined,
                 }),
-                author: item.find('.author').text(),
-                category: item
+                author: $item.find('.author').text(),
+                category: $item
                     .find('.category')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: image ? image.prop('post-id') : item.link.match(/\/(\d+)/)[1],
+                guid: image ? image.prop('post-id') : ($item as any).link.match(/\/(\d+)/)[1],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
 
                 item.title = content('h1').text();
                 item.description = renderDescription({
-                    description: content('#metadata_qrcode').html(),
+                    description: content('#metadata_qrcode').html() ?? undefined,
                     images: content('div.miniatura')
                         .toArray()
                         .map((i) => ({
@@ -124,7 +124,7 @@ export async function handler(ctx) {
         title: title === 'Asian To Lick' ? title : `Asian To Lick - ${title}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

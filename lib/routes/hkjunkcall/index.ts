@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,18 +34,18 @@ async function handler() {
 
     const list = $('.hh15')
         .toArray()
-        .map((item) => {
-            item = $(item).parent();
+        .map((item): DataItem => {
+            const $item = $(item).parent();
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -55,7 +55,7 @@ async function handler() {
 
                 content('.card').find('div, h2').remove();
 
-                item.guid = item.link.split('/').pop();
+                item.guid = item.link!.split('/').pop();
                 item.description = content('.card').html();
                 item.pubDate = parseDate(detailResponse.data.match(/<br \/>(\d+-\d+-\d+)<\/div><\/a>/)[1]);
 

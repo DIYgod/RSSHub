@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -76,14 +76,14 @@ async function handler(ctx) {
     let items = $('span.fl a, ul.dp_lia li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.prop('title') ?? item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                guid: `nsfc-${item.prop('id')}`,
-                pubDate: parseDate(item.next().text().replace(/\[\]/g, '', ['YYYY-MM-DD', 'YY-MM-DD'])),
+                title: $item.prop('title') ?? $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+                guid: `nsfc-${$item.prop('id')}`,
+                pubDate: parseDate($item.next().text().replaceAll('[]', '')),
             };
         });
 
@@ -101,7 +101,7 @@ async function handler(ctx) {
                 item.pubDate = parseDate(
                     content('div.line_xilan')
                         .text()
-                        .match(/日期 (\d{4}-\d{2}-\d{2})/)[1]
+                        .match(/日期 (\d{4}-\d{2}-\d{2})/)![1]
                 );
 
                 return item;
@@ -118,7 +118,7 @@ async function handler(ctx) {
             .join(' - ')}`,
         link: currentUrl,
         description: $('meta[name="DESCRIPTION"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         subtitle: $('meta[name="KEYWORDS"]').prop('content'),
         author: $('meta[name="AUTHOR"]').prop('content'),
     };

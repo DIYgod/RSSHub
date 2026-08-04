@@ -267,7 +267,7 @@ async function fetchMultipleWikiContent(pageNames: string[]): Promise<Record<str
         const data = JSON.parse(response.body);
 
         if (data.query && data.query.pages) {
-            for (const page of Object.values(data.query.pages)) {
+            for (const page of Object.values<{ title: string; revisions: Array<{ slots: { main: Record<string, string> } }> }>(data.query.pages)) {
                 if (!(page.revisions && page.revisions[0] && page.revisions[0].slots && page.revisions[0].slots.main)) {
                     continue;
                 }

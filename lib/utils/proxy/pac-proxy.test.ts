@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
+import type { Config } from '@/config';
 import pacProxy from '@/utils/proxy/pac-proxy';
 
 const emptyProxyObj = {
@@ -8,7 +9,7 @@ const emptyProxyObj = {
     port: undefined,
     auth: undefined,
     url_regex: '.*',
-};
+} as Config['proxy'];
 
 const effectiveExpect = ({ proxyUri, proxyObj }, expectUri, expectObj) => {
     expect(proxyUri).toBe(expectUri);
@@ -101,7 +102,7 @@ describe('pac-proxy error handling', () => {
 
     it('logs error when PAC_SCRIPT is not a string', async () => {
         const freshPacProxy = (await import('@/utils/proxy/pac-proxy')).default;
-        freshPacProxy(undefined, { invalid: true } as any, {});
+        freshPacProxy(undefined, { invalid: true } as any, {} as Config['proxy']);
 
         expect(errorSpy).toHaveBeenCalledWith('Invalid PAC_SCRIPT, use PAC_URI instead');
     });

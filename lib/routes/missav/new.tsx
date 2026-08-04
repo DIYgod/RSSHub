@@ -64,9 +64,9 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const title = $item.find('.text-secondary');
-            const poster = new URL($item.find('img').data('src'));
+            const poster = new URL($item.find('img').data('src') as string);
             poster.searchParams.set('class', 'normal');
-            const video = $item.find('video').data('src');
+            const video = $item.find('video').data('src') as string;
             return {
                 title: title.text().trim(),
                 link: title.attr('href'),

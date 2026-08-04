@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -71,7 +71,7 @@ async function handler(ctx) {
 
         content('p img').each((_, el) => {
             const image = content(el);
-            const src = image.prop('src').split('!', 1)[0];
+            const src = image.prop('src')!.split('!', 1)[0];
             const width = image.prop('width');
             const height = image.prop('height');
 
@@ -107,7 +107,7 @@ async function handler(ctx) {
         title: `纪妖${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

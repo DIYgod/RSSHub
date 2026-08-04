@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,15 +40,15 @@ async function handler(ctx) {
 
     const articles = $('div.articleBox.clearfix')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('.articleTitle').text(),
-                description: item.find('.articleContentInner').text(),
-                author: item.find('.author').text(),
-                link: new URL(item.find('a').first().attr('href'), link).href,
+                title: $item.find('.articleTitle').text(),
+                description: $item.find('.articleContentInner').text(),
+                author: $item.find('.author').text(),
+                link: new URL($item.find('a').first().attr('href')!, link).href,
                 category: [
-                    ...item
+                    ...$item
                         .find('.art_tag')
                         .toArray()
                         .map((tag) => $(tag).text().trim()),
@@ -59,12 +59,12 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         articles.map((element) =>
-            cache.tryGet(element.link, async () => {
+            cache.tryGet(element.link!, async () => {
                 const response = await got(element.link);
                 const $ = load(response.data);
 
                 element.pubDate = timezone(parseDate($('.writeTime3').text()), 8);
-                element.description = $('.pc_content').html();
+                element.description = $('.pc_content').html() ?? '';
 
                 return element;
             })

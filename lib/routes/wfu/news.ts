@@ -33,7 +33,7 @@ async function loadContent(link) {
         response = await got.get(link);
     } catch (error) {
         // 如果网络问题 直接出错
-        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+        if ((error as Error).name && ['HTTPError', 'RequestError', 'FetchError'].includes((error as Error).name)) {
             description = 'Page 404 Please Check!';
         }
         return { description };
@@ -42,7 +42,7 @@ async function loadContent(link) {
     const $ = load(response.data);
 
     // 提取文章内容
-    description = $('div.wp_articlecontent').html();
+    description = $('div.wp_articlecontent').html() ?? '';
     // 返回解析的结果
     return { description };
 }

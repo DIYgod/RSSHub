@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -79,6 +79,6 @@ async function handler(ctx) {
         title: `${keyword} - 百度搜索`,
         description: `${keyword} - 百度搜索`,
         link: url,
-        item: items,
+        item: items as DataItem[],
     };
 }

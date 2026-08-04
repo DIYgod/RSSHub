@@ -104,9 +104,9 @@ const gdgov = async (info, ctx) => {
     pathname = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname : pathname + '/';
     const currentUrl = `${rootUrl}/${pathname}`;
 
-    let $ = '';
+    let $ = load('');
     let name: string;
-    let list: string;
+    let list: any;
     // 判断是否处于特殊目录
     if (pathname.startsWith('gkmlpt')) {
         title_element = undefined;
@@ -137,7 +137,7 @@ const gdgov = async (info, ctx) => {
             case 'element':
                 name_element = name_element.split(',').filter((item) => item !== '');
                 for (let index = 0; index < name_element.length; index++) {
-                    name_element[index] = $(name_element[index].trim()).text().match(name_match)[1];
+                    name_element[index] = $(name_element[index].trim()).text().match(name_match)![1];
                 }
                 name = name_element.join(name_join);
                 break;
@@ -154,7 +154,7 @@ const gdgov = async (info, ctx) => {
         if (pathname.startsWith('gkmlpt')) {
             link = i.url;
         } else {
-            link = $(item).attr('href');
+            link = $(item).attr('href')!;
             // 判断获取到的链接是否完整，不完整则补全。
             if (!link.startsWith('http')) {
                 link.startsWith('/') ? (link = `${rootUrl}${link}`) : (link = `${rootUrl}/${link}`);
@@ -199,13 +199,13 @@ const gdgov = async (info, ctx) => {
                 const content = load(res);
 
                 // 获取来源
-                const author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)[1].trim().replaceAll(/(-*$)/g, '');
+                const author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)![1].trim().replaceAll(/(-*$)/g, '');
 
                 // 获取发布时间
-                const pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)[1].trim().replaceAll(/(-*$)/g, '');
+                const pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)![1].trim().replaceAll(/(-*$)/g, '');
 
                 // 获取标题
-                const title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)[1];
+                const title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)![1];
                 // 获取正文
                 const description_content = description_element.split(',').filter((item) => item !== '');
                 for (let index = 0; index < description_content.length; index++) {
@@ -215,10 +215,10 @@ const gdgov = async (info, ctx) => {
 
                 return {
                     link,
-                    title,
+                    title: title!,
                     description,
-                    pubDate: timezone(parseDate(pubDate, pubDate_format), 8),
-                    author: /本/.test(author) ? authorisme : author,
+                    pubDate: timezone(parseDate(pubDate!, pubDate_format), 8),
+                    author: /本/.test(author!) ? authorisme : author,
                 };
             });
         })

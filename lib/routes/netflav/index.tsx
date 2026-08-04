@@ -41,7 +41,7 @@ async function handler() {
         link: `https://netflav.com/video?id=${item.videoId}`,
         pubDate: parseDate(item.sourceDate),
         author: [...new Set(item.actors.map((a) => a.replace(/^(\w{2}:)/, '')))].join(', '),
-        category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))],
+        category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))] as string[],
     }));
 
     return {

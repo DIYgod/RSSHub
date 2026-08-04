@@ -8,6 +8,7 @@ type DescriptionImage = {
 
 type DescriptionProps = {
     images?: DescriptionImage[];
+    intro?: string;
     description?: string;
 };
 

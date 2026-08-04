@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -60,7 +60,7 @@ async function handler(ctx) {
     // Otherwise, if only a specific TV show or movie ID is provided,
     // add that item alone to the "to be processed" array.
 
-    let items = isCategory
+    let items: any[] = isCategory
         ? await getItems(currentUrl, id, 'div.rowMod', 'ul.slides li a')
         : [
               {
@@ -86,7 +86,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('img.logo-img').prop('src'),
         icon,
         logo: icon,

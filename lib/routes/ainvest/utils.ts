@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -6,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 const contentStreamUrl = 'https://news.ainvest.com/news-w-ds-hxcmp-content-stream/content_stream/api/stream_item/v1/query_content_stream';
 const contentPageUrl = 'https://news.ainvest.com/content-page/v1/page';
 
-const normalizeItem = (item) => ({
+const normalizeItem = (item): DataItem & { seoKey?: string } => ({
     title: item.title,
     link: item.h5_url,
     pubDate: parseDate(item.ctime, 'X'),
@@ -40,7 +41,7 @@ export const fetchContentItems = async (streamIds, limit) => {
 
     return Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await ofetch(`${contentPageUrl}/${item.seoKey}`);
                 const { data } = response;
 

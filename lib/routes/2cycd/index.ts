@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,10 +45,10 @@ async function handler(ctx) {
 
     const list = $('tbody[id^="normalthread_"]')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const xst = item.find('a.s.xst');
-            const author = item.find('td.by cite a').eq(0).text();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const xst = $item.find('a.s.xst');
+            const author = $item.find('td.by cite a').eq(0).text();
             return {
                 title: xst.text(),
                 link: xst.attr('href'),
@@ -58,7 +58,7 @@ async function handler(ctx) {
     // console.log(list);
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -67,7 +67,7 @@ async function handler(ctx) {
                 const first_post = content('td[id^="postmessage_"]').first();
                 const dateobj = content('em[id^="authorposton"]').first();
                 item.description = first_post.html();
-                item.pubDate = timezone(parseDate(dateobj.find('span').attr('title'), 'YYYY-M-D HH:mm:ss'), 8);
+                item.pubDate = timezone(parseDate(dateobj.find('span').attr('title')!, 'YYYY-M-D HH:mm:ss'), 8);
 
                 return item;
             })

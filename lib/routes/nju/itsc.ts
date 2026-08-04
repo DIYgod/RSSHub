@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -40,8 +41,8 @@ async function handler() {
 
             const data = response.data;
             const $ = load(data);
-            const tmp = $('.list2')[0].children;
-            const infos = [];
+            const tmp = $('.list2')[0].children as Element[];
+            const infos: Element[] = [];
             for (const element of tmp) {
                 if (element.children) {
                     infos.push(element);
@@ -50,12 +51,12 @@ async function handler() {
 
             // only read first page
             return infos.map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    description: item.find('a').attr('title'),
-                    link: 'https://itsc.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
+                    title: $item.find('a').attr('title')!,
+                    description: $item.find('a').attr('title'),
+                    link: 'https://itsc.nju.edu.cn' + $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
                     category: category_dict[0],
                 };
             });

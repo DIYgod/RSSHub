@@ -39,10 +39,10 @@ async function handler() {
         title: 'Nintendo Switch 本体更新情報',
         link: url,
         item: list.map((update) => {
-            update = $(update);
-            const heading = update.text();
+            const $update = $(update);
+            const heading = $update.text();
             const matched_date = /(\d+)年(\d+)月(\d+)日/.exec(heading);
-            const update_info = update.nextUntil('.c-heading-lv3');
+            const update_info = $update.nextUntil('.c-heading-lv3');
             const update_infos = update_info
                 .toArray()
                 .map((element) => $(element).html())
@@ -54,8 +54,8 @@ async function handler() {
                 author: 'Nintendo',
                 description: update_infos,
                 link: url,
-                guid: `${url}#${matched_version[0]}`,
-                pubDate: new Date(Number.parseInt(matched_date[1]), Number.parseInt(matched_date[2]) - 1, Number.parseInt(matched_date[3])),
+                guid: `${url}#${matched_version![0]}`,
+                pubDate: new Date(Number.parseInt(matched_date![1]), Number.parseInt(matched_date![2]) - 1, Number.parseInt(matched_date![3])),
             };
         }),
     };

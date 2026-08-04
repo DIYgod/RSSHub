@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -49,18 +49,18 @@ async function handler(ctx) {
     let items = $('.c-postedArticle-info a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -78,7 +78,7 @@ async function handler(ctx) {
                 item.pubDate = timezone(parseDate(content('.e-date').first().text()), 9);
                 item.category = content('.c-hashTagList-item')
                     .toArray()
-                    .map((t) => content(t).text().split('#').pop().trim());
+                    .map((t) => content(t).text().split('#').pop()!.trim());
 
                 return item;
             })

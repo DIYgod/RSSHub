@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,12 +42,12 @@ async function handler(ctx) {
     const feed = await parser.parseURL(`https://www.eprice.com.${region}/news/rss.xml`);
 
     for (const e of feed.items) {
-        e.link = e.link.replace(/^http:\/\//i, 'https://');
+        e.link = e.link!.replace(/^http:\/\//i, 'https://');
     }
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
 
                 const $ = load(response.data);
@@ -67,23 +67,23 @@ async function handler(ctx) {
 
                 // fix lazyload image
                 $('a').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('href') && e.attr('href').endsWith('.jpg')) {
-                        e.after(
+                    const $e = $(e);
+                    if ($e.attr('href') && $e.attr('href')!.endsWith('.jpg')) {
+                        $e.after(
                             renderToString(
                                 <figure>
-                                    <img src={e.attr('href')} alt={e.attr('title') ?? ''} title={e.attr('title') ?? ''} />
-                                    <figcaption>{e.attr('title') ?? ''}</figcaption>
+                                    <img src={$e.attr('href')} alt={$e.attr('title') ?? ''} title={$e.attr('title') ?? ''} />
+                                    <figcaption>{$e.attr('title') ?? ''}</figcaption>
                                 </figure>
                             )
                         );
-                        e.remove();
+                        $e.remove();
                     }
                 });
                 $('img').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('data-original')) {
-                        e.attr('src', e.attr('data-original'));
+                    const $e = $(e);
+                    if ($e.attr('data-original')) {
+                        $e.attr('src', $e.attr('data-original'));
                     }
                 });
 
@@ -97,7 +97,7 @@ async function handler(ctx) {
 
                 // tw || tw || hk || hk || hk
                 item.description = $('div.user-comment-block').html() || $('div.content').html() || $('li.inner').html() || $('div.section-content').html() || $('.article__content').html();
-                item.pubDate = parseDate(item.pubDate);
+                (item as DataItem).pubDate = parseDate(item.pubDate!);
 
                 return item;
             })
@@ -105,11 +105,11 @@ async function handler(ctx) {
     );
 
     const ret = {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items,
-        image: feed.image.url,
+        item: items as DataItem[],
+        image: feed.image!.url,
         language: feed.language,
     };
 

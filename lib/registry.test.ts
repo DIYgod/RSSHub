@@ -64,6 +64,7 @@ describe('registry', () => {
         vi.stubEnv('DISABLE_NSFW', 'true');
 
         const { namespaces } = await import('./registry');
+        // @ts-ignore build artifact of pnpm build:routes
         const routesModule = await import('../assets/build/routes.json');
         const rawNamespaces = (routesModule.default ?? routesModule) as Record<string, { routes?: Record<string, { features?: { nsfw?: boolean } }> }>;
         const nsfwNamespaces = Object.entries(rawNamespaces).filter(([, namespace]) => Object.values(namespace.routes ?? {}).some((route) => route.features?.nsfw));
@@ -165,7 +166,7 @@ const perDirectoryMock = (fakeDirectories: Record<string, Record<string, unknown
 };
 
 const wrap = (registry: Hono) => {
-    const app = new Hono();
+    const app = new Hono<{ Variables: { data: Record<string, unknown>; apiData: Record<string, unknown> } }>();
     app.use(async (ctx, next) => {
         const response = await next();
         const apiData = ctx.get('apiData');

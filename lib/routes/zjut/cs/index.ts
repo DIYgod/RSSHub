@@ -87,7 +87,7 @@ async function handler(ctx) {
                     } else {
                         const response = await ofetch(item.link);
                         const $ = load(response);
-                        newItem.description = $('div.news1content').html();
+                        newItem.description = $('div.news1content').html() ?? '';
                     }
                 } else {
                     // 涉及到其他站点，不方便做统一的 html 解析，直接返回链接

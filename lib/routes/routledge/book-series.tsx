@@ -47,15 +47,15 @@ async function handler(ctx) {
     const list = $('.row.book')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('h3 a');
-            const description = item.find('p.description');
-            const meta = item.find('p.description').prev().text().split('\n');
+            const $item = $(item);
+            const title = $item.find('h3 a');
+            const description = $item.find('p.description');
+            const meta = $item.find('p.description').prev().text().split('\n');
             return {
                 title: title.text(),
                 link: title.attr('href'),
                 description: description.text(),
-                pubDate: parseDate(meta.pop().trim(), 'MMMM DD, YYYY'),
+                pubDate: parseDate(meta.pop()!.trim(), 'MMMM DD, YYYY'),
                 author: meta
                     .map((i) => i.trim())
                     .filter(Boolean)
@@ -65,7 +65,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
                 const isbn = $('meta[property="books:isbn"]').attr('content');

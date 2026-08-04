@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,25 +54,25 @@ async function handler(ctx) {
 
     const list = $('.article-item')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('.title').text(),
-                link: item.find('a').first().attr('href'),
-                category: item.find('.category').text(),
+                title: $item.find('.title').text(),
+                link: $item.find('a').first().attr('href'),
+                category: $item.find('.category').text(),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const result = await got(item.link);
                 const content = load(result.data);
                 item.author = content('meta[property="article:author"]').attr('content');
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
                 item.description = renderDescription({
                     image: content('meta[property="og:image"]').attr('content'),
-                    description: content('.article-content').first().html(),
+                    description: content('.article-content').first().html() ?? undefined,
                 });
                 return item;
             })
@@ -82,7 +82,7 @@ async function handler(ctx) {
     return {
         title,
         link,
-        language: 'zh-tw',
+        language: 'zh-TW' as Language,
         item: items,
     };
 }

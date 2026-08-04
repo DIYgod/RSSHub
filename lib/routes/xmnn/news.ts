@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -56,20 +56,20 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('h1').text().trim(),
-                link: item.prop('href'),
-                description: item.find('div.abstract').html(),
-                author: item.find('div.source').text(),
-                pubDate: timezone(parseDate(item.find('div.time').text()), 8),
+                title: $item.find('h1').text().trim(),
+                link: $item.prop('href'),
+                description: $item.find('div.abstract').html(),
+                author: $item.find('div.source').text() as string | string[],
+                pubDate: timezone(parseDate($item.find('div.time').text()), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -87,14 +87,14 @@ async function handler(ctx) {
     );
 
     const title = $('title').text();
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
-        item: items,
+        item: items as DataItem[],
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         icon,
         logo: icon,
         subtitle: $('div.h').text(),

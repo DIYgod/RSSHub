@@ -42,21 +42,21 @@ async function handler(ctx) {
     const list = $(isArcPost ? '.selectarcpost' : '.selectpost')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             if (isArcPost) {
                 return {
-                    title: item.find('.bt').text(),
-                    link: item.attr('href'),
-                    description: item.find('p').text(),
-                    pubDate: timezone(parseDate(item.find('.time').text()), 8),
+                    title: $item.find('.bt').text(),
+                    link: $item.attr('href'),
+                    description: $item.find('p').text(),
+                    pubDate: timezone(parseDate($item.find('.time').text()), 8),
                 };
             }
-            const a = item.find('.text a');
+            const a = $item.find('.text a');
             return {
                 title: a.first().text(),
                 link: a.attr('href'),
-                description: item.find('.miaoshu').text(),
-                pubDate: timezone(parseDate(item.find('.time').text()), 8),
+                description: $item.find('.miaoshu').text(),
+                pubDate: timezone(parseDate($item.find('.time').text()), 8),
             };
         });
 

@@ -42,15 +42,15 @@ async function handler() {
     const items = $('.version')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.parent().text().split('in').pop();
+            const title = $item.parent().text().split('in').pop();
 
             return {
-                title,
-                link: `${rootUrl}/~sgtatham/putty/${item.attr('href')}`,
-                description: item.parent().next().html(),
-                pubDate: parseDate(title.match(/\(released (.*)\)/)[1]),
+                title: title!,
+                link: `${rootUrl}/~sgtatham/putty/${$item.attr('href')}`,
+                description: $item.parent().next().html(),
+                pubDate: parseDate(title!.match(/\(released (.*)\)/)![1]),
             };
         });
 

@@ -44,13 +44,13 @@ async function handler(ctx) {
     const items = $('.reverse .bottom-chapter-item .chapter-link')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
                 author,
-                title: item.text(),
-                description: `<img src="${item.find('.cover-image').attr('src')}">`,
-                link: `${rootUrl}${item.attr('href').replace(/chapter/, 'ComicView')}`,
+                title: $item.text(),
+                description: `<img src="${$item.find('.cover-image').attr('src')}">`,
+                link: `${rootUrl}${$item.attr('href')!.replace(/chapter/, 'ComicView')}`,
             };
         });
 

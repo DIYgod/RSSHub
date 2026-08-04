@@ -70,12 +70,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.parent().find('span').text()), 8),
+                title: $item.text(),
+                link: new URL($item.prop('href')!, currentUrl).href,
+                pubDate: timezone(parseDate($item.parent().find('span').text()), 8),
             };
         });
 

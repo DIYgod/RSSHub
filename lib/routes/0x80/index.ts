@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,11 +37,11 @@ async function handler() {
 
     const list = alist
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const link = item.attr('href') || '';
-            const title = item.text();
+            const link = $item.attr('href') || '';
+            const title = $item.text();
             const pubDate = extractDateFromURL(link);
 
             return {

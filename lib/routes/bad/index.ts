@@ -35,18 +35,18 @@ async function handler(ctx) {
     const items = $('.entry')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a.title');
+            const a = $item.find('a.title');
 
-            item.find('img').each((_, el) => {
+            $item.find('img').each((_, el) => {
                 $(el).attr('src', $(el).attr('data-echo'));
                 $(el).removeClass('lazy');
                 $(el).removeAttr('data-echo');
                 $(el).removeAttr('id');
             });
 
-            item.find('video').each((_, el) => {
+            $item.find('video').each((_, el) => {
                 $(el).attr('poster', $(el).attr('data-echo'));
                 $(el).removeAttr('data-echo');
                 $(el).removeAttr('onerror');
@@ -56,10 +56,10 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                description: item.find('.coverdiv').html(),
-                author: item.find('.author').text().trim(),
-                pubDate: timezone(parseDate(item.find('time').attr('datetime')), 8),
-                category: item
+                description: $item.find('.coverdiv').html(),
+                author: $item.find('.author').text().trim(),
+                pubDate: timezone(parseDate($item.find('time').attr('datetime')!), 8),
+                category: $item
                     .find('.label')
                     .toArray()
                     .map((l) => $(l).text().trim()),

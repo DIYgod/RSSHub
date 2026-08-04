@@ -68,8 +68,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const getPageUrl = (tid, authorId, page = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
-    const getPage = async (tid, authorId, pageId = 1) => {
+    const getPageUrl = (tid, authorId, page: string | number = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
+    const getPage = async (tid, authorId, pageId: string | number = 1) => {
         const link = getPageUrl(tid, authorId, pageId);
         const timestamp = Math.floor(Date.now() / 1000);
         let cookieString = `guestJs=${timestamp};`;
@@ -90,7 +90,7 @@ async function handler(ctx) {
     const getLastPageId = async (tid, authorId) => {
         const $ = await getPage(tid, authorId);
         const nav = $('#pagebtop');
-        const match = nav.html().match(/\{0:'\/read\.php\?tid=(\d)[^']*',1:(\d+),[^}]*\}/);
+        const match = nav.html()!.match(/\{0:'\/read\.php\?tid=(\d)[^']*',1:(\d+),[^}]*\}/);
         return match ? match[2] : 1;
     };
 
@@ -103,7 +103,7 @@ async function handler(ctx) {
     const posterMap = JSON.parse(
         $('script')
             .text()
-            .match(/commonui\.userInfo\.setAll\((.*)\)$/m)[1]
+            .match(/commonui\.userInfo\.setAll\((.*)\)$/m)![1]
     );
     const authorName = authorId ? posterMap[authorId].username : undefined;
 
@@ -116,8 +116,8 @@ async function handler(ctx) {
             const posterId = post
                 .find('.posterinfo a')
                 .first()
-                .attr('href')
-                .match(/&uid=(-?\d+)$/)[1];
+                .attr('href')!
+                .match(/&uid=(-?\d+)$/)![1];
             const poster = authorName || posterMap[posterId].username;
             const content = post.find('.postcontent').first();
             const description = formatContent(content.html());

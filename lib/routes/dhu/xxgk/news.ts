@@ -36,9 +36,9 @@ async function handler() {
         $('.cols_list > li')
             .toArray()
             .map(async (item) => {
-                item = $(item);
-                const colsTitle = item.find('.cols_title > a');
-                const colsMeta = item.find('.cols_meta');
+                const $item = $(item);
+                const colsTitle = $item.find('.cols_title > a');
+                const colsMeta = $item.find('.cols_meta');
 
                 // article meta
                 const link = colsTitle.attr('href');
@@ -55,7 +55,7 @@ async function handler() {
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);
-                        description = $('.wp_articlecontent').html();
+                        description = $('.wp_articlecontent').html() ?? '';
                     } catch {
                         description = '';
                     }

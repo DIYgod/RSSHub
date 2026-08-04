@@ -39,12 +39,12 @@ async function handler(ctx) {
         throw new Error('pianyuan 搜索失败');
     }
 
-    const detailLinks = [];
+    const detailLinks: Array<string | undefined> = [];
 
     await Promise.all(
         searchLinks.map(async (e) => {
-            const link = new URL(e, link_base).href;
-            const single = await cache.tryGet(link, async () => {
+            const link = new URL(e!, link_base).href;
+            const single = await cache.tryGet(link, async (): Promise<any> => {
                 const res = await utils.request(link, cache);
                 const content = load(res.data);
                 detailLinks.push(

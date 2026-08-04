@@ -36,9 +36,9 @@ async function handler() {
     items = await Promise.all(
         items.map(
             async (item) =>
-                await cache.tryGet(item.link, async () => {
+                await cache.tryGet(item.link!, async () => {
                     try {
-                        const response = await ofetch(item.link);
+                        const response = await ofetch(item.link!);
                         const $ = load(response);
                         item.description = $('.post-content').html() || 'No content found';
                     } catch {

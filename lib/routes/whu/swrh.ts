@@ -3,7 +3,7 @@
 // import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { fetchArticle } from '@/utils/wechat-mp';
@@ -65,22 +65,22 @@ async function handler(ctx) {
         type === 0
             ? $('div.my_box_nei')
                   .toArray()
-                  .map((item) => {
-                      item = $(item);
+                  .map((item): DataItem & { link: string } => {
+                      const $item = $(item);
                       return {
-                          title: item.find('a b.am-text-truncate').text().trim(),
-                          pubDate: item.find('a i').text(),
-                          link: new URL(item.find('a').attr('href'), baseUrl).href,
+                          title: $item.find('a b.am-text-truncate').text().trim(),
+                          pubDate: $item.find('a i').text(),
+                          link: new URL($item.find('a').attr('href')!, baseUrl).href,
                       };
                   })
             : $('div.list_txt.am-fr ul.am-list li')
                   .toArray()
-                  .map((item) => {
-                      item = $(item);
+                  .map((item): DataItem & { link: string } => {
+                      const $item = $(item);
                       return {
-                          title: item.find('a span').text().trim(),
-                          pubDate: item.find('a i').text(),
-                          link: new URL(item.find('a').attr('href'), baseUrl).href,
+                          title: $item.find('a span').text().trim(),
+                          pubDate: $item.find('a i').text(),
+                          link: new URL($item.find('a').attr('href')!, baseUrl).href,
                       };
                   });
 
@@ -95,7 +95,7 @@ async function handler(ctx) {
                               const response = await got(item.link);
                               const $ = load(response.data);
 
-                              return $('.v_news_content').length ? $('.v_news_content').html().trim() : $('.prompt').length ? $('.prompt').html() : item.title;
+                              return $('.v_news_content').length ? $('.v_news_content').html()!.trim() : $('.prompt').length ? $('.prompt').html() : item.title;
                           } catch {
                               return item.title;
                           }

@@ -36,12 +36,13 @@ async function handler(): Promise<{
     const rootUrl = 'https://i.jandan.net';
     const feed = await parser.parseURL(`${rootUrl}/feed/`);
     const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link || '', async () => {
-                if (!item.link) {
-                    return undefined as unknown as DataItem;
-                }
-                const response = await ofetch(item.link);
+        feed.items.map((item) => {
+            const link = item.link;
+            if (!link) {
+                return;
+            }
+            return cache.tryGet(link, async () => {
+                const response = await ofetch(link);
                 const $ = load(response);
                 $('.wechat-hide').prev().nextAll().remove();
                 $('img').replaceWith((i, e) => {
@@ -59,13 +60,13 @@ async function handler(): Promise<{
                     category: item.categories,
                 };
                 return single;
-            })
-        )
+            });
+        })
     );
 
     return {
         title: '煎蛋',
         link: rootUrl,
-        item: items,
+        item: items.filter((item): item is DataItem => item !== undefined),
     };
 }

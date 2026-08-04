@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -35,15 +35,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('div.tips a');
+            const a = $item.find('div.tips a');
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
-                author: item.find('div.name').text(),
-                pubDate: parseDate(item.find('div.times').text()),
+                link: new URL(a.prop('href')!, rootUrl).href,
+                author: $item.find('div.name').text(),
+                pubDate: parseDate($item.find('div.times').text()),
             };
         });
 
@@ -51,7 +51,7 @@ async function handler(ctx) {
         item: await ProcessFeed(limit, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: new URL('images/logo_toplist.jpg', ossUrl).href,
         subtitle: title,
     };

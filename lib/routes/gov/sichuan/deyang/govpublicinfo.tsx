@@ -31,7 +31,7 @@ const getInfoUrlList = async (rootUrl, infoBasicUrl) => {
     const infoList = $('.list_div li')
         .toArray()
         .map((item) => ({
-            title: $('a', item).attr('title'),
+            title: $('a', item).attr('title')!,
             url: `${rootUrl}${$('a', item).attr('href')}`,
         }));
     return infoList;
@@ -110,7 +110,7 @@ async function handler(ctx) {
             description: renderToString(
                 item._isCompleteInfo ? (
                     <>
-                        <table border="1" cellpadding="2" cellspacing="0" align="center">
+                        <table border={1} cellpadding={2} cellspacing={0} align="center">
                             <tbody>
                                 <tr>
                                     <td>索引号</td>

@@ -1,7 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -115,7 +115,7 @@ async function handler(ctx) {
     let playList = trackInfoResponse.data.list;
 
     if (shouldAll) {
-        const promises = [];
+        const promises: Array<Promise<TrackInfoResponse>> = [];
         for (let i = 2; i <= maxPageId; i++) {
             // string + number -> string
             promises.push(
@@ -169,7 +169,7 @@ async function handler(ctx) {
                         },
                     });
                     const trackInfo = trackPayInfoResponse.trackInfo;
-                    const _item = {};
+                    const _item: Record<string, any> = {};
                     if (!trackInfo?.isAuthorized) {
                         return _item;
                     }
@@ -190,13 +190,13 @@ async function handler(ctx) {
     const resultItems = playList.map((item) => {
         const title = item.title;
         const trackId = item.trackId;
-        const itunesItemImage = item.coverLarge.split('!', 1)[0] ?? albumCover;
+        const itunesItemImage = item.coverLarge.split('!', 1)[0];
         const link = `${baseUrl}/sound/${trackId}`;
         const pubDate = parseDate(item.createdAt, 'x');
         const duration = item.duration; // 时间长度：单位（秒）
         const enclosureUrl = item.playPathAacv224 || item.playPathAacv164;
 
-        let resultItem = {
+        let resultItem: DataItem = {
             title,
             link,
             description: item.desc || '',

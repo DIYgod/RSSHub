@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,15 +48,15 @@ async function handler(ctx) {
     let items = $('item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { isNews?: boolean } => {
+            const $item = $(item);
 
-            const link = item.find('permalink').text();
+            const link = $item.find('permalink').text();
             const isNews = /news_\d+_\d+\.html/.test(link);
 
             return {
-                title: item.find('title').text(),
-                pubDate: parseDate(item.find('date').text()),
+                title: $item.find('title').text(),
+                pubDate: parseDate($item.find('date').text()),
                 link: `${rootUrl}${isNews ? `/news/${link}` : ''}`,
                 isNews,
             };
@@ -64,7 +64,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 if (item.isNews) {
                     try {
                         const detailResponse = await got({

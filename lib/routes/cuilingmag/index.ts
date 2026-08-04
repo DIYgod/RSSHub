@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,12 +23,12 @@ export const handler = async (ctx) => {
     let items = $('div.new-list-div, div.item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const title = item.find('h3.new-list-h3, h3.title-font').text().trim();
+            const title = $item.find('h3.new-list-h3, h3.title-font').text().trim();
 
-            const src = item.find('img').first().prop('src');
+            const src = $item.find('img').first().prop('src');
             const image = src ? new URL(src, rootUrl).href : undefined;
 
             const description = renderDescription({
@@ -45,11 +45,11 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                link: new URL(item.find('a').first().prop('href'), rootUrl).href,
-                author: item.find('a.new-list-p, div.author').text().trim(),
+                link: new URL($item.find('a').first().prop('href')!, rootUrl).href,
+                author: $item.find('a.new-list-p, div.author').text().trim(),
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -58,7 +58,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
                                   },
                               ]
                             : undefined,
-                        description: $$('div.article-content').html(),
+                        description: $$('div.article-content').html() ?? undefined,
                     });
 
                 item.title = title;
@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
                     text: $$('div.article-content').text(),
                 };
                 item.banner = banner;
-                item.language = language;
+                item.language = language as Language;
                 item.enclosure_url = banner ?? item.enclosure_url;
                 item.enclosure_type = banner ? `image/${banner.split(/\./).pop()}` : item.enclosure_type;
                 item.enclosure_title = title;
@@ -115,7 +115,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text().trim();
-    const image = new URL($('div.nav-logo a img').prop('src'), rootUrl).href;
+    const image = new URL($('div.nav-logo a img').prop('src')!, rootUrl).href;
 
     return {
         title,
@@ -125,7 +125,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

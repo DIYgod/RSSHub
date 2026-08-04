@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,20 +21,20 @@ export const handler = async (ctx) => {
     let items = $('ul.notice_list_ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('p').first().text(),
-                pubDate: parseDate(item.find('p').last().text()),
-                link: item.find('a').prop('href'),
-                language,
+                title: $item.find('p').first().text(),
+                pubDate: parseDate($item.find('p').last().text()),
+                link: $item.find('a').prop('href'),
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -44,13 +44,13 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('div.article_title p').last().text().split('：'));
+                item.pubDate = parseDate($$('div.article_title p').last().text().split('：', 2)[1] ?? '');
                 item.author = $$("meta[name='keywords']").prop('content');
                 item.content = {
                     html: description,
                     text: $$('div.article_content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -58,7 +58,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('img.logo').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo').prop('src')!, rootUrl).href;
 
     return {
         title,
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $("meta[name='keywords']").prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

@@ -22,12 +22,12 @@ async function handler() {
     const list = $('#board article')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.index-header').text(),
-                link: item.find('.index-header').children('a').attr('href'),
-                description: item.find('.index-excerpt.index-excerpt__noimg').children('div').text(),
-                pubDate: timezone(parseDate(item.find('.post-meta.mr-3').children('time').attr('datetime'), 'YYYY年MM月DD日 HH:mm'), 8),
+                title: $item.find('.index-header').text(),
+                link: $item.find('.index-header').children('a').attr('href'),
+                description: $item.find('.index-excerpt.index-excerpt__noimg').children('div').text(),
+                pubDate: timezone(parseDate($item.find('.post-meta.mr-3').children('time').attr('datetime')!, 'YYYY年MM月DD日 HH:mm'), 8),
             };
         });
 

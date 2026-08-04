@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -36,7 +36,7 @@ async function handler(ctx) {
 
     const list = $('.related-game')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item
@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -64,7 +64,7 @@ async function handler(ctx) {
                 const article = $('.row article');
                 article.find('#showHiddenText').remove();
 
-                item.description = $('.cover-image').prop('outerHTML') + $('.tab-container').html() + article.html();
+                item.description = $('.cover-image').prop('outerHTML')! + $('.tab-container').html()! + article.html();
                 item.pubDate = $('.gamedb-release').length ? timezone(parseDate($('.gamedb-release').text().replaceAll(/[()]/g, '')), 8) : item.pubDate;
 
                 return item;

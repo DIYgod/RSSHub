@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -92,7 +92,7 @@ async function handler(ctx) {
         description: preloadedState.transformed['head.description'],
         link,
         image: `${baseUrl}${preloadedState.transformed.logo.sources.sm.url}`,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

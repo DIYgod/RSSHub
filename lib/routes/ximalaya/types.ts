@@ -48,6 +48,7 @@ interface Track {
     intro: string;
     labelList: string[];
     isTrailer: number;
+    desc?: string;
 }
 
 export interface TrackInfoResponse {

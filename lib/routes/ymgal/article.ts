@@ -38,7 +38,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 'all';
 
     const link = `${host}/co/topic/list` + types[type];
-    let data = [];
+    let data: any[] = [];
     if (type === 'all') {
         await Promise.all(
             Object.values(types).map(async (type) => {
@@ -58,7 +58,7 @@ async function handler(ctx) {
             return cache.tryGet(itemUrl, async () => {
                 const result = await got(itemUrl);
                 const $ = load(result.data);
-                const description = $('article').html().trim();
+                const description = $('article').html()!.trim();
                 return {
                     title: item.title,
                     link: itemUrl,

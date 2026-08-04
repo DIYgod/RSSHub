@@ -41,20 +41,20 @@ async function handler(ctx) {
     const items = await pMap(
         $('#newslist-top a[title]').slice(0, limit),
         (item) => {
-            item = $(item);
-            const link = item.attr('href');
-            return cache.tryGet(link, async () => {
+            const $item = $(item);
+            const link = $item.attr('href');
+            return cache.tryGet(link!, async () => {
                 const response = await got(link);
                 const $ = load(response.data);
                 const author = $('.artical-content p:eq(0)').text().trim();
                 $('.artical-content p:eq(0), .artical-content .flexbox').remove();
 
                 return {
-                    title: item.attr('title'),
+                    title: $item.attr('title')!,
                     author,
                     description: $('.artical-content').html(),
                     category: $('meta[property="article:section"]').attr('content'),
-                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
                     link,
                 };
             });

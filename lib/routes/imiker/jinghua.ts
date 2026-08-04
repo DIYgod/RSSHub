@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -86,7 +86,7 @@ async function handler(ctx) {
 
                 item.title = content('div.title h1').text();
                 item.description += renderDescription({
-                    description: content('div#warp').html(),
+                    description: content('div#warp').html() ?? undefined,
                 });
                 item.author = content('div.name').text();
 
@@ -104,7 +104,7 @@ async function handler(ctx) {
         title: `${author} - ${description}`,
         link: currentUrl,
         description,
-        language: 'zh',
+        language: 'zh' as Language,
         icon,
         logo: icon,
         subtitle: description,

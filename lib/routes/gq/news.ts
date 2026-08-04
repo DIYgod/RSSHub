@@ -36,15 +36,15 @@ async function handler() {
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const data = await ofetch(item.link!);
                 const $ = load(data);
                 const description = $('#main-content');
                 description.find('.article-body__footer').remove();
                 description.find('[class*="ContentHeaderContributorImage"]').remove();
                 description.find('h1').remove();
                 return {
-                    title: item.title,
+                    title: item.title!,
                     pubDate: item.pubDate,
                     link: item.link,
                     category: item.categories,

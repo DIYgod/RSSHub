@@ -27,14 +27,14 @@ async function handler() {
     const resultItem = $('.media')
         .toArray()
         .map((elem) => {
-            elem = $(elem);
-            const $link = elem.find('dt a');
+            const $elem = $(elem);
+            const $link = $elem.find('dt a');
             return {
                 title: $link.text(),
-                description: elem.find('dd').eq(0).text(),
+                description: $elem.find('dd').eq(0).text(),
                 link: $link.attr('href'),
-                author: elem.find('.small a').eq(0).text(),
-                pubDate: elem.find('dd').eq(1).text().split('\n', 3)[2],
+                author: $elem.find('.small a').eq(0).text(),
+                pubDate: $elem.find('dd').eq(1).text().split('\n', 3)[2],
             };
         });
     return {

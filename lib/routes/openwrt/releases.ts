@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -34,7 +34,7 @@ async function handler(ctx) {
         title: $('h1').text() + ' - OpenWrt Releases',
         link: url,
         description: $('.dw-content div.level1').text(),
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: [
             {
                 title: table.find('.supported_current_rel').text(),

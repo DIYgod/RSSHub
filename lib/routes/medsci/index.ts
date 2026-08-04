@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -83,21 +83,21 @@ async function handler(ctx) {
     let items = $('#articleList')
         .find('.ms-link')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const pubDate = item.parent().parent().find('.item-meta-item').first().text();
+            const pubDate = $item.parent().parent().find('.item-meta-item').first().text();
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href').replace(/;jsessionid=[\dA-Z]+/, '')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')!.replace(/;jsessionid=[\dA-Z]+/, '')}`,
                 pubDate: pubDate.indexOf('-') > 0 ? parseDate(pubDate) : parseRelativeDate(pubDate),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

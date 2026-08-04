@@ -46,12 +46,12 @@ async function handler() {
         link: 'https://www.notateslaapp.com/software-updates/history/',
         description: '特斯拉系统更新 - 最新发布',
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.container h1').text(),
-                description: item.find('.notes-container').text(),
+                title: $item.find('.container h1').text(),
+                description: $item.find('.notes-container').text(),
                 pubDate: null,
-                link: item.find('.notes-container > .button-container > a').attr('href'),
+                link: $item.find('.notes-container > .button-container > a').attr('href'),
             };
         }),
     };

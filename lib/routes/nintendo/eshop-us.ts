@@ -26,8 +26,8 @@ async function handler(ctx) {
         },
         json: {
             params: new URLSearchParams({
-                hitsPerPage: 40,
-                page: 0,
+                hitsPerPage: '40',
+                page: '0',
                 facetFilters: JSON.stringify([['availability:Available now', 'availability:Pre-order']]),
             }).toString(),
         },

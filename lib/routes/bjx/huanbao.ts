@@ -1,3 +1,4 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -39,11 +40,11 @@ async function handler() {
     let items = $('.cc-layout-3 .cc-list-content li')
         .toArray()
         .map((e) => {
-            e = $(e);
+            const $e = $(e);
             return {
-                title: e.find('a').attr('title'),
-                link: e.find('a').attr('href'),
-                pubDate: parseDate(e.find('span').text()),
+                title: $e.find('a').attr('title')!,
+                link: $e.find('a').attr('href'),
+                pubDate: parseDate($e.find('span').text()),
             };
         });
 
@@ -64,7 +65,7 @@ async function handler() {
 const fetchPage = (link) =>
     cache.tryGet(link, async () => {
         // 可能一篇文章过长会分成多页
-        const pages = [];
+        const pages: CheerioAPI[] = [];
 
         const result = await got(link);
         const $page = load(result.data);
@@ -79,7 +80,7 @@ const fetchPage = (link) =>
                 if (!/^\d+$/.test($a.text().trim())) {
                     continue;
                 }
-                const sublink = new URL($a.attr('href'), link).href;
+                const sublink = new URL($a.attr('href')!, link).href;
                 /* eslint-disable no-await-in-loop */
                 const result = await got(sublink);
                 pages.push(load(result.data));

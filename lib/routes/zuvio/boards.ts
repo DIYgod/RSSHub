@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 
 import { getBoards, rootUrl } from './utils';
 
@@ -29,6 +29,6 @@ async function handler() {
         image: 'https://s3.hicloud.net.tw/zuvio.public/public/system/images/irs_v4/chicken/shared/webshare.png',
         link: `${rootUrl}/articles`,
         item: items,
-        language: 'zh-Hant',
+        language: 'zh-TW' as Language,
     };
 }

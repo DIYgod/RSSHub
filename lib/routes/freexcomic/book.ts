@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -10,7 +10,7 @@ const getLatestAddress = () =>
     cache.tryGet('freexcomic:getLatestAddress', async () => {
         const portalResponse = await ofetch('https://www.freexcomic.com');
         const $portal = load(portalResponse);
-        const portalUrl = new URL($portal('.alert-btn').attr('href')).href.replace('http:', 'https:');
+        const portalUrl = new URL($portal('.alert-btn').attr('href')!).href.replace('http:', 'https:');
 
         const addressList = await ofetch(portalUrl);
         const $address = load(addressList);
@@ -33,19 +33,19 @@ const handler = async (ctx) => {
         .toArray()
         .toReversed()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: new URL($item.attr('href'), addresses[Math.floor(Math.random() * addresses.length)]).href,
-                guid: new URL($item.attr('href'), jjmhw).href,
+                link: new URL($item.attr('href')!, addresses[Math.floor(Math.random() * addresses.length)]).href,
+                guid: new URL($item.attr('href')!, jjmhw).href,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 const comicpage = $('.comicpage');

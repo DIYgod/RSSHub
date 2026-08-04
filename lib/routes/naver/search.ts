@@ -95,7 +95,7 @@ function extractItems(response: string, templateId: string) {
     return segments
         .slice(0, -1)
         .map((segment) => (templateId === 'videoItem' ? extractVideoItem(segment) : extractGenericItem(segment, templateId)))
-        .filter(Boolean);
+        .filter(Boolean) as DataItem[];
 }
 
 function extractVideoItem(segment: string) {

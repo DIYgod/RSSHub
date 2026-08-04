@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -94,7 +94,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.description += renderDescription({
-                    description: content('section.js-article-content').html() || content('div.js-article').html(),
+                    description: (content('section.js-article-content').html() || content('div.js-article').html()) ?? undefined,
                 });
                 item.category = content('section.js-article-tag_state_1 a span')
                     .toArray()
@@ -111,14 +111,14 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -31,7 +31,7 @@ async function process(baseUrl: string, section: any) {
     const $ = load(r);
     const itemsoup = $('.tab-con:nth-child(1) ul li')
         .toArray()
-        .map((i0) => {
+        .map((i0): DataItem & { link: string } => {
             const i = $(i0);
             const img = i.find('img').attr('src');
             const link = `${baseUrl}${i.find('h3>a').attr('href')}`;

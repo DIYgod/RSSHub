@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -45,11 +45,11 @@ async function handler(ctx) {
             description: $('meta[name=ColumnDescription]').attr('content'),
             items: $('.list ul li')
                 .toArray()
-                .map((item) => {
-                    item = $(item);
+                .map((item): DataItem & { link: string } => {
+                    const $item = $(item);
                     return {
-                        title: $(item).find('a').attr('title'),
-                        link: new URL($(item).find('a').attr('href'), url).href,
+                        title: $($item).find('a').attr('title')!,
+                        link: new URL($($item).find('a').attr('href')!, url).href,
                     };
                 }),
         };
@@ -72,7 +72,7 @@ async function handler(ctx) {
                 await page.close();
                 const $ = load(html);
                 item.description = $('.text').html();
-                item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8);
                 return item;
             })
         )

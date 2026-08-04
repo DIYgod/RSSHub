@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -61,29 +61,29 @@ async function handler(ctx) {
     const list = $('ul.reco-job-list li')
         .slice(0, 30)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('a.reco-job-title');
-            const company = item.find('div.reco-job-com a');
-            const time = item.find('div.reco-job-detail span').eq(1).text();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const title = $item.find('a.reco-job-title');
+            const company = $item.find('div.reco-job-com a');
+            const time = $item.find('div.reco-job-detail span').eq(1).text();
             const date = new Date();
             if (time.includes('天')) {
                 const day = time.split('天', 1)[0];
-                date.setDate(date.getDate() - day);
+                date.setDate(date.getDate() - Number(day));
             } else if (time.includes('小时')) {
                 const hour = time.split('小时', 1)[0];
-                date.setHours(date.getHours() - hour);
+                date.setHours(date.getHours() - Number(hour));
             }
             return {
                 title: `${company.text()} | ${title.text()}`,
-                link: new URL(title.attr('href'), rootUrl).href,
+                link: new URL(title.attr('href')!, rootUrl).href,
                 pubDate: date.toUTCString(),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

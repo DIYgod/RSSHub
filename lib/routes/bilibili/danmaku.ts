@@ -59,7 +59,7 @@ async function handler(ctx) {
 
     danmakuText = await ((danmakuText[0] & 0x0f) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
 
-    let danmakuList = [];
+    let danmakuList: any[] = [];
     const $ = load(danmakuText, { xmlMode: true });
     $('d').each((index, item) => {
         danmakuList.push({ p: $(item).attr('p'), text: $(item).text() });

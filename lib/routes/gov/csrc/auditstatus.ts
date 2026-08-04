@@ -38,9 +38,9 @@ async function handler(ctx) {
     const out = $('tr[height="50"]')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const itemTitle = item.find('li.templateTip').text();
-            const audit_status_td = item.find('td[style="font-weight:100 ;color: black ;position: relative;left:20px"]');
+            const $item = $(item);
+            const itemTitle = $item.find('li.templateTip').text();
+            const audit_status_td = $item.find('td[style="font-weight:100 ;color: black ;position: relative;left:20px"]');
             const audit_status = audit_status_td.eq(-1).text();
             const title = '【' + audit_status + '】' + itemTitle;
             const audit_date = audit_status_td.eq(-1).next('td').text();

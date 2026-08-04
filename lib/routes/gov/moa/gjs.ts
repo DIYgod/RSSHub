@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('ul#div li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const aEl: Cheerio<Element> = $el.find('a');
@@ -39,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: parseDate(pubDateStr),
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 updated: parseDate(upDatedStr),
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('meta[name="ArticleTitle"]').attr('content') ?? '';
@@ -77,7 +77,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     const $enclosureEl: Cheerio<Element> = $$('div.sj_fujianxia_right ul li a').first();
@@ -115,7 +115,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: new URL('images/logo-china.png', baseUrl).href,
         author,
-        language,
+        language: language as Language,
     };
 };
 

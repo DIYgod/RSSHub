@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -57,7 +57,7 @@ async function handler(ctx) {
         item,
         image: $book('.bi-img img').attr('src'),
         author: $book('.bi-wt a').text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
     };
 }
 

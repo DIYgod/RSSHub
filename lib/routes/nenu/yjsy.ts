@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,21 +38,21 @@ async function handler(ctx) {
     let items = $('a.tit')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/yjsy\.nenu\.edu\.cn/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (/yjsy\.nenu\.edu\.cn/.test(item.link!)) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -65,7 +65,7 @@ async function handler(ctx) {
                     item.pubDate = parseDate(
                         content('h3')
                             .text()
-                            .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                            .match(/(\d{4}-\d{2}-\d{2})/)![1]
                     );
                 }
 

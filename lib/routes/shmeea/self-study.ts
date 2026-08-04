@@ -12,7 +12,7 @@ function load_detail(list, cache) {
             const notice_item = load(item);
             const href = notice_item('a').attr('href');
             const url = 'http://www.shmeea.edu.cn' + href;
-            if (href[0] !== '/') {
+            if (!href!.startsWith('/')) {
                 return {
                     title: notice_item('a').attr('title'),
                     description: `<a href="${href}" >附件</a>`,

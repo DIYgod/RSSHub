@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -52,21 +52,21 @@ async function handler(ctx) {
     let items = $('div.cont-main li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('p.txt').text(),
-                link: item.find('a').attr('href'),
-                pubDate: new Date(item.find('time').attr('datetime')),
+                title: $item.find('p.txt').text(),
+                link: $item.find('a').attr('href'),
+                pubDate: new Date($item.find('time').attr('datetime')!),
             };
         });
 
     items = await Promise.all(
         items.map((item) => {
-            if (!item.link.startsWith(`${baseUrl}/information/`)) {
+            if (!item.link!.startsWith(`${baseUrl}/information/`)) {
                 return item;
             }
-            return cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link!, async () => {
                 const contentResponse = await got(item.link);
 
                 const content = load(contentResponse.data);
@@ -89,6 +89,6 @@ async function handler(ctx) {
                 .text(),
         link: url,
         item: items,
-        language: 'ja',
+        language: 'ja' as Language,
     };
 }

@@ -1,7 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -72,7 +72,7 @@ async function handler(ctx) {
         title: [author, subtitle, category].filter(Boolean).join(' - '),
         link: currentUrl,
         description: '向公众提供服务和开展互动交流',
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

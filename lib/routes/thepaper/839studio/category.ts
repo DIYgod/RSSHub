@@ -46,11 +46,11 @@ async function handler(ctx) {
         link,
         description: desc,
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.archive_up a').text(),
-                description: `描述：${item.find('.imgdown p').text()}`,
-                link: item.find('.archive_up a').attr('href'),
+                title: $item.find('.archive_up a').text(),
+                description: `描述：${$item.find('.imgdown p').text()}`,
+                link: $item.find('.archive_up a').attr('href'),
             };
         }),
     };

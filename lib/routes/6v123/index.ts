@@ -4,7 +4,7 @@ import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import iconv from 'iconv-lite';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('ul.list li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('a').text();
@@ -47,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid,
                 id: guid,
                 updated: upDatedStr ? parseDate(upDatedStr, ['MM-DD', 'YYYY-MM-DD']) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -60,7 +60,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link, {
+                const detailResponse = await ofetch(item.link!, {
                     responseType: 'arrayBuffer',
                 });
                 const $$: CheerioAPI = load(iconv.decode(Buffer.from(detailResponse), encoding));
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 const $enclosureEl: Cheerio<Element> = $$('td a[href^="magnet"]').last();
@@ -125,7 +125,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: new URL('images/logo.gif', baseUrl).href,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

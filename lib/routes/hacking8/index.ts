@@ -47,16 +47,16 @@ async function handler(ctx) {
     const items = $('div.media')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('div.link a');
+            const a = $item.find('div.link a');
 
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), rootUrl).href,
-                description: item.find('div.media-body pre').text(),
-                pubDate: timezone(parseDate(item.parent().parent().find('td').first().text(), 'YYYY年M月D日 HH:mm'), 8),
-                category: item
+                link: new URL(a.attr('href')!, rootUrl).href,
+                description: $item.find('div.media-body pre').text(),
+                pubDate: timezone(parseDate($item.parent().parent().find('td').first().text(), 'YYYY年M月D日 HH:mm'), 8),
+                category: $item
                     .parent()
                     .parent()
                     .find('span.label')

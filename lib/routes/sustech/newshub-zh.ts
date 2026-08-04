@@ -48,17 +48,17 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
-                const itemPicUrl = item
+                const $item = $(item);
+                const itemPicUrl = $item
                     .find('.u-pic div')
-                    .attr('style')
-                    .match(/url\('(.+?)'\)/)[1];
-                const itemPubdate = item.find('.mobi').text();
+                    .attr('style')!
+                    .match(/url\('(.+?)'\)/)![1];
+                const itemPubdate = $item.find('.mobi').text();
                 return {
                     pubDate: parseDate(itemPubdate, 'YYYY-MM-DD'),
-                    title: item.find('.f-clamp').text(),
-                    description: `<img src="${baseUrl}${itemPicUrl}"><br>${item.find('.f-clamp4').text()}`,
-                    link: `${baseUrl}${item.find('a').attr('href')}`,
+                    title: $item.find('.f-clamp').text(),
+                    description: `<img src="${baseUrl}${itemPicUrl}"><br>${$item.find('.f-clamp4').text()}`,
+                    link: `${baseUrl}${$item.find('a').attr('href')}`,
                 };
             }),
     };

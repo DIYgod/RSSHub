@@ -17,7 +17,7 @@ const ProcessFeed = (list, cache, current) =>
             })
             .map((item) => {
                 let $ = load(item, null, false);
-                const $url = new URL($('a').attr('href'), current.url).href;
+                const $url = new URL($('a').attr('href')!, current.url).href;
                 return cache.tryGet($url, async () => {
                     // 加载新闻内容页面
                     const response = await got($url);
@@ -37,7 +37,7 @@ const ProcessFeed = (list, cache, current) =>
 
                     const single = {
                         title,
-                        description: $(current.selector.content).html() + ($('ul[style]').length ? $('ul[style]').html() : ''),
+                        description: $(current.selector.content).html()! + ($('ul[style]').length ? $('ul[style]').html() : '')!,
                         link: $url,
                         pubDate: dateMatch ? timezone(parseDate(dateMatch[0], 'YYYY-MM-DD HH:mm'), 8) : undefined, // 混有发表时间和点击量，取出时间
                         author: '深圳大学研究生招生网',

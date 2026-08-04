@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -33,16 +33,17 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.popular__card-list div.popular__card-img a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
+                title: '',
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     url: item.link,
                     headers: {
@@ -56,7 +57,7 @@ async function handler(ctx) {
                 item.title = content('.c-post__header__title').text();
                 item.description = content('div.c-post__body').html();
                 item.author = `${content('a.username').eq(0).text()} (${content('a.userid').eq(0).text()})`;
-                item.pubDate = timezone(parseDate(content('a.edittime').eq(0).attr('data-mtime'), 8));
+                item.pubDate = timezone(parseDate(content('a.edittime').eq(0).attr('data-mtime')!), 8);
 
                 return item;
             })

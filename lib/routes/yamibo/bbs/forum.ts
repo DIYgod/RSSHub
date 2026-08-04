@@ -49,7 +49,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const params = new URLSearchParams();
     params.set('mod', 'forumdisplay');
-    params.set('fid', fid);
+    params.set('fid', fid!);
     params.set('orderby', 'dateline');
     if (type) {
         params.set('filter', 'typeid');

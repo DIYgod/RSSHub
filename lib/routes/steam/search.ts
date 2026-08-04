@@ -27,7 +27,7 @@ async function handler(ctx) {
     return {
         title: 'Steam search result',
         description: `Query: ${query.toString()}`,
-        link: /g_strUnfilteredURL\s=\s'(.*)'/.exec(html)[1],
+        link: /g_strUnfilteredURL\s=\s'(.*)'/.exec(html)![1],
         item: $('#search_result_container a')
             .toArray()
             .map((a) => {
@@ -38,7 +38,7 @@ async function handler(ctx) {
 
                 let desc = '';
                 if (isBundle) {
-                    const bundle = JSON.parse($el.attr('data-ds-bundle-data'));
+                    const bundle = JSON.parse($el.attr('data-ds-bundle-data')!);
                     desc += 'Bundle\n';
                     if (bundle.m_bRestrictGifting) {
                         desc += 'Restrict gifting\n';
@@ -61,7 +61,7 @@ async function handler(ctx) {
                     description: desc.replaceAll('\n', '<br>'),
                     media: {
                         thumbnail: {
-                            url: $el.find('.search_capsule img').attr('src'),
+                            url: $el.find('.search_capsule img').attr('src')!,
                         },
                     },
                 };

@@ -32,10 +32,10 @@ async function handler(ctx) {
     const list = $('div.notice_right ul li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const url = `http://${domain}` + item.find('a').attr('href').slice(1);
-            const title = item.find('a div.title').text();
-            const publish_time = parseDate(item.find('a p').text());
+            const $item = $(item);
+            const url = `http://${domain}` + $item.find('a').attr('href')!.slice(1);
+            const title = $item.find('a div.title').text();
+            const publish_time = parseDate($item.find('a p').text());
             return {
                 title,
                 link: url,

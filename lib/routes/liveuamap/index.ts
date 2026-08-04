@@ -48,11 +48,11 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('div.title').text(),
-                description: item.find('div.title').text(),
-                link: item.attr('data-link'),
+                title: $item.find('div.title').text(),
+                description: $item.find('div.title').text(),
+                link: $item.attr('data-link'),
             };
         });
 

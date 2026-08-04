@@ -39,11 +39,11 @@ async function handler() {
     let items = $('.c-article-item__content')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h3').text(),
-                link: baseUrl + item.find('a').attr('href'),
-                pubDate: parseDate(item.find('.c-article-item__date').text()),
+                title: $item.find('h3').text(),
+                link: baseUrl + $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('.c-article-item__date').text()),
             };
         });
 

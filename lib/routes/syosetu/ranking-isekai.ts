@@ -1,12 +1,13 @@
 import type { SearchParams } from 'narou';
 import { BigGenre, NarouNovelFetch, SearchBuilder } from 'narou';
-import type { Join } from 'narou/util/type';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem } from '@/types';
 
 import { renderDescription } from './templates/description';
 import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, periodToPointField, RankingPeriod } from './types/ranking';
+
+type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
 export function parseIsekaiRankingType(type: string): { period: RankingPeriod; category: IsekaiCategory; novelType: NovelType } {
     const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_', 3);
@@ -44,7 +45,7 @@ function getIsekaiSearchParams(period, category, novelType, limit): SearchParams
             searchParams.biggenre = BigGenre.Fantasy;
             break;
         case IsekaiCategory.OTHER:
-            searchParams.biggenre = `${BigGenre.Bungei}-${BigGenre.Sf}-${BigGenre.Sonota}` as Join<BigGenre>;
+            searchParams.biggenre = `${BigGenre.Bungei}-${BigGenre.Sf}-${BigGenre.Sonota}` as unknown as Join<BigGenre>;
             break;
         default:
             throw new InvalidParameterError(`Invalid Isekai category: ${category}`);

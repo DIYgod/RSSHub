@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -26,13 +26,13 @@ export const handler = async (ctx) => {
     let items = $('div.news-list-item ul li.list-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('p').text(),
-                pubDate: parseDate(item.find('span.date').text()),
-                link: new URL(item.find('a.clearfix').prop('href'), rootUrl).href,
+                title: $item.find('p').text(),
+                pubDate: parseDate($item.find('span.date').text()),
+                link: new URL($item.find('a.clearfix').prop('href')!, rootUrl).href,
             };
         });
 
@@ -58,7 +58,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -75,7 +75,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

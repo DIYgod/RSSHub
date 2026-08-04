@@ -10,9 +10,9 @@ function getDomList($, detailUrl) {
     const list = $('.down-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').attr('title');
-            const downurl = item.find('a').attr('href');
+            const $item = $(item);
+            const title = $item.find('a').attr('title');
+            const downurl = $item.find('a').attr('href');
             const urlType = getUrlType(downurl);
             const enclosureUrl = urlType === 'magnet' ? composeMagnetUrl(downurl) : downurl;
             return {

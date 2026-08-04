@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,8 +37,8 @@ export async function handler(ctx) {
 
         fixImage(content);
         content.find('.player').each((_, elem) => {
-            elem = $(elem);
-            fixVideo(elem);
+            const $elem = $(elem);
+            fixVideo($elem);
         });
         return {
             title: data.name,
@@ -52,7 +52,7 @@ export async function handler(ctx) {
     return {
         title: response.data.title,
         link: `${baseUrl}/${type}/${name}`,
-        language: 'ru-RU',
+        language: 'ru-ru' as Language,
         item: items,
     };
 }

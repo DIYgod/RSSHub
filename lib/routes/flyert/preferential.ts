@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,15 +43,17 @@ async function handler() {
     const $ = load(gbk2utf8(response.data));
     const list = $('.comiis_wzli')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('.wzbt').text(),
-            link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
-            description: $(item).find('.wznr > div:first-child').text(),
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('.wzbt').text(),
+                link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
+                description: $(item).find('.wznr > div:first-child').text(),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -60,7 +62,7 @@ async function handler() {
                 // remove top ad
                 content('div.artical_top').remove();
 
-                item.description = content('#artMain').html();
+                item.description = content('#artMain').html() ?? '';
                 item.pubDate = timezone(parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|', 1)[0], 'YYYY-M-D HH:mm'), 8);
                 return item;
             })

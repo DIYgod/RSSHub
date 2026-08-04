@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -67,7 +67,7 @@ async function handler(ctx) {
     });
 
     let items = response.collection.slice(0, limit).map((i) => {
-        const item = {
+        const item: DataItem = {
             title: i.title.children ?? i.title,
             link: i.link.startsWith('https://') ? i.link : new URL(i.link, rootUrl).href,
             description: renderDescription({
@@ -107,11 +107,11 @@ async function handler(ctx) {
                         .children()
                         .each((_, el) => {
                             const element = content(el);
-                            if (element.prop('tagName').toLowerCase() === 'figure') {
+                            if (element.prop('tagName')!.toLowerCase() === 'figure') {
                                 element.replaceWith(
                                     renderDescription({
                                         image: {
-                                            src: element.find('img').prop('src').split(/\?/, 1)[0],
+                                            src: element.find('img').prop('src')!.split(/\?/, 1)[0],
                                             alt: element.find('figcaption').text().trim(),
                                         },
                                     })
@@ -178,7 +178,7 @@ async function handler(ctx) {
         title: $('title').first().text(),
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('meta[property="og:image"]').prop('content').split('?', 1)[0],
         icon,
         logo: icon,

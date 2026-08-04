@@ -70,7 +70,7 @@ async function handler(ctx) {
             });
             hasArticle = true;
         } catch (error) {
-            if (error.code === 'ERR_NON_2XX_3XX_RESPONSE') {
+            if ((error as { code?: string }).code === 'ERR_NON_2XX_3XX_RESPONSE') {
                 hasArticle = false;
                 apiUrl = toApiUrl(dayjs().subtract(++i, 'day').format('YYYYMMDD'));
             }
@@ -110,7 +110,7 @@ async function handler(ctx) {
     if (id !== 'ipo') {
         items = await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -121,8 +121,8 @@ async function handler(ctx) {
                     item.description = renderDescription({
                         images: content('.photo img')
                             .toArray()
-                            .map((i) => content(i).attr('src')),
-                        description: content('.content').html(),
+                            .map((i) => content(i).attr('src')!),
+                        description: content('.content').html() ?? undefined,
                     });
 
                     return item;

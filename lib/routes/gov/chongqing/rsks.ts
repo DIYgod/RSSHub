@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,23 +27,23 @@ async function handler() {
     // 获取考试信息标题
     const list = $('div.page-list .tab-item > li')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const title = $item.find('a').first();
             return {
                 title: title.text(),
                 link: `${rsksUrl}${title.attr('href')}`,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 
     // 获取考试信息正文
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')) ?? item.pubDate;
+                item.pubDate = parseDate($('meta[name="PubDate"]').attr('content')!) ?? item.pubDate;
                 item.description = $('.view.TRS_UEDITOR.trs_paper_default.trs_word').first().html();
                 return item;
             })

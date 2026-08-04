@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,7 +42,7 @@ async function handler() {
 
     const items = $('.views-row article.news-teaser')
         .toArray()
-        .map((el) => {
+        .map((el): DataItem | null => {
             const $el = $(el);
             const $link = $el.find('h2.algolia-search--title a');
             const href = $link.attr('href');
@@ -58,11 +58,11 @@ async function handler() {
                 image: $el.find('.field--name-field-teaser-image img').attr('src'),
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const fullItems = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -102,6 +102,6 @@ async function handler() {
         description: 'Latest conference news coverage from TCTMD, the leading source for interventional cardiology news',
         link: `${rootUrl}/news/conference-news`,
         image: 'https://www.tctmd.com/themes/tctmd/logo.svg',
-        item: fullItems,
+        item: fullItems as DataItem[],
     };
 }

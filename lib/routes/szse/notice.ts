@@ -56,11 +56,11 @@ async function handler() {
     const list = $('.article-list .newslist li')
         .toArray()
         .map((element) => {
-            element = $(element);
+            const $element = $(element);
             const info = {
-                title: getData(element.find('script').text(), 'title'),
-                link: new URL(getData(element.find('script').text(), 'url'), link).href,
-                date: element.find('span.time').text().trim(), // trim移除多余的空格
+                title: getData($element.find('script').text(), 'title'),
+                link: new URL(getData($element.find('script').text(), 'url'), link).href,
+                date: $element.find('span.time').text().trim(), // trim移除多余的空格
             };
             return info;
         });

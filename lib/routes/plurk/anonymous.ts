@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 import { baseUrl, getPlurk } from './utils';
@@ -38,12 +38,12 @@ async function handler(ctx) {
     delete apiResponse.pids;
     delete apiResponse.count;
 
-    const items = await Promise.all(Object.values(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ')));
+    const items = await Promise.all(Object.values<Record<string, any>>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ')));
 
     return {
         title: 'Anonymous - Plurk',
         image: 'https://s.plurk.com/2c1574c02566f3b06e91.png',
         link: `${baseUrl}/anonymous`,
-        item: items,
+        item: items as DataItem[],
     };
 }

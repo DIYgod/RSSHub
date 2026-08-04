@@ -44,14 +44,12 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            let link = $item.find('link').text();
-            link = new URL(link);
-            link.search = '';
-            link = link.href;
+            const linkUrl = new URL($item.find('link').text());
+            linkUrl.search = '';
             return {
                 title: $item.find('title').text(),
                 description: $item.find('description').text(),
-                link,
+                link: linkUrl.href,
                 guid: $item.find('guid').text(),
                 pubDate: parseDate($item.find('pubDate').text()),
                 author: $item.find(String.raw`dc\:creator`).text(),
@@ -67,7 +65,7 @@ async function handler() {
 
                 const title = $('head > title').text().replace(' - Tribal Football', '');
 
-                let desc = $('.articleBody');
+                const desc = $('.articleBody');
                 desc.find('.ad').remove();
                 // <p><br><i>AD</i><span></span></p>
                 const ad = desc.find('p > br:first-child').next('i');
@@ -75,11 +73,10 @@ async function handler() {
                 if (adNextSpan.length && !adNextSpan.text() && !adNextSpan.next().length) {
                     ad.parent().remove();
                 }
-                desc = desc.html();
-                desc = renderDescription(desc, item._header_image);
+                const rendered = renderDescription(desc.html(), item._header_image);
 
                 item.title = title || item.title;
-                item.description = desc || item.description;
+                item.description = rendered || item.description;
                 delete item._header_image;
                 return item;
             })

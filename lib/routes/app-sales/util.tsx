@@ -135,7 +135,7 @@ const processItems = ($: CheerioAPI, selector: string): DataItem[] =>
     $(selector)
         .toArray()
         .map((el) => {
-            const $el: Cheerio<Element> = $(el);
+            const $el = $(el) as Cheerio<Element>;
 
             const appName: string = $el.find('p.app-name').text()?.trim();
             const appDev: string = $el.find('p.app-dev').text()?.trim();

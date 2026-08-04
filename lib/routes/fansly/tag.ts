@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, findAccountById, getTagId, getTagSuggestion, icon, parseDescription } from './utils';
@@ -50,7 +50,7 @@ async function handler(ctx) {
         image: icon,
         icon,
         logo: icon,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

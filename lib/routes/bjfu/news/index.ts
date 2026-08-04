@@ -69,7 +69,7 @@ async function handler(ctx) {
     const data = response.data;
     let $ = load(iconv.decode(data, 'utf-8'));
     const charset = $('meta[http-equiv="Content-Type"]')
-        .attr('content')
+        .attr('content')!
         .match(/charset=(.*)/)?.[1];
     if (charset?.toLowerCase() !== 'utf-8') {
         $ = load(iconv.decode(data, charset ?? 'utf-8'));

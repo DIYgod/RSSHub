@@ -44,12 +44,12 @@ async function handler() {
     let items = $('.headline-list li .content-headline h3 a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                description: item.parent().next().html(),
-                link: `${rootUrl}${item.attr('href').replace(/\.shtml$/, '_s.shtml')}`,
-                pubDate: timezone(parseDate(item.parents('div').first().find('span').text()), 8),
+                title: $item.text(),
+                description: $item.parent().next().html(),
+                link: `${rootUrl}${$item.attr('href')!.replace(/\.shtml$/, '_s.shtml')}`,
+                pubDate: timezone(parseDate($item.parents('div').first().find('span').text()), 8),
             };
         });
 
@@ -63,7 +63,7 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                item.description += content('.all-txt').html();
+                item.description! += content('.all-txt').html()!;
 
                 return item;
             })

@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 type VideoItem = {
     url: string;
     width?: number | string;
+    height?: number | string;
 };
 
 type VideoRenderOptions = {

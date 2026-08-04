@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -35,16 +35,16 @@ async function handler(ctx) {
 
     const list = $('li.txt-elise')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).find('a').attr('href');
-            if (link.includes('info') && id !== '') {
-                link = new URL(link, rootUrl).href;
+            if (link!.includes('info') && id !== '') {
+                link = new URL(link!, rootUrl).href;
             }
-            if (link.includes('info') && id === '') {
+            if (link!.includes('info') && id === '') {
                 link = `${rootUrl}/${link}`;
             }
             return {
-                title: $(item).find('a').attr('title'),
+                title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('span').text()),
                 link,
             };
@@ -52,8 +52,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.includes('info')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.includes('info')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('div.v_news_content').html();

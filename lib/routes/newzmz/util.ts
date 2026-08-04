@@ -30,10 +30,10 @@ const getItems = async (homeUrl, id, modSelector, itemSelector) => {
         .find(itemSelector)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: new URL(item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 };
@@ -66,7 +66,7 @@ const getItemInfo = (itemUrl) =>
                 content('span.duration')
                     .first()
                     .text()
-                    .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                    .match(/(\d{4}-\d{2}-\d{2})/)![1]
             ),
             description: {
                 image: content('div.details-bg img').prop('src'),
@@ -77,11 +77,11 @@ const getItemInfo = (itemUrl) =>
                 links: content('div.ep-infos a[title]')
                     .toArray()
                     .map((a) => {
-                        a = content(a);
+                        const $a = content(a);
 
                         return {
-                            title: a.prop('title'),
-                            link: a.prop('href'),
+                            title: $a.prop('title'),
+                            link: $a.prop('href'),
                         };
                     }),
             },
@@ -112,26 +112,26 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
     return content(itemSelector)
         .toArray()
         .map((item) => {
-            item = content(item);
+            const $item = content(item);
 
-            const categories = item
+            const categories = $item
                 .find(categorySelector)
                 .toArray()
                 .map((c) => content(c).text());
 
-            const downLinks = item
+            const downLinks = $item
                 .find(downLinkSelector)
                 .toArray()
                 .map((downLink) => {
-                    downLink = content(downLink);
+                    const $downLink = content(downLink);
 
                     return {
-                        title: downLink.find('p.link-name').text(),
-                        link: downLink.find('a[title]').prop('href'),
+                        title: $downLink.find('p.link-name').text(),
+                        link: $downLink.find('a[title]').prop('href'),
                     };
                 });
 
-            const subtitle = item
+            const subtitle = $item
                 .find('span.up')
                 .text()
                 .replaceAll(/[\s-]+/g, '');

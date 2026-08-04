@@ -60,7 +60,7 @@ async function handler(ctx) {
         method: 'post',
         url: apiUrl,
         body: new URLSearchParams({
-            callCount: 1,
+            callCount: '1',
             scriptSessionId: '${scriptSessionId}187',
             httpSessionId: '',
             'c0-scriptName': 'TagBean',
@@ -75,7 +75,7 @@ async function handler(ctx) {
             'c0-param6': `number:${pageSize}`,
             'c0-param7': `number:${startingIndex}`,
             'c0-param8': 'number:0',
-            batchId: 493053,
+            batchId: '493053',
         }),
         headers: {
             Referer: `https://www.lofter.com/tag/${encodeURI(name)}`,

@@ -24,14 +24,14 @@ async function handler(ctx) {
     const city = ctx.req.param('city') || '';
 
     const link = 'https://news.qq.com/zt2020/page/feiyan.htm#/';
-    const item = [];
+    const item: any[] = [];
 
     const diseaseh5Shelf = (await getData(['diseaseh5Shelf']))?.data?.diseaseh5Shelf || {};
     const { lastUpdateTime, areaTree } = diseaseh5Shelf;
     const nationalData = areaTree?.[0];
     const provinceList = nationalData?.children;
 
-    let coronavirusData: Record<string, unknown>;
+    let coronavirusData: Record<string, any>;
     let placeName: string;
 
     if (!province || province === '中国' || province === '全国') {

@@ -38,8 +38,8 @@ async function handler() {
     const list = $('body > div.container.container-fluid.dynava.no-padding.cleafix > div.con_wz_fr.fr.cleafix > div:nth-child(2) > ul > li').toArray();
     const out = await Promise.all(
         list.map((item) => {
-            item = $(item);
-            const link = new URL(item.find('a').attr('href'), baseUrl).href;
+            const $item = $(item);
+            const link = new URL($item.find('a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const description = await getPageItemAndDate(
                     '#vsb_content',

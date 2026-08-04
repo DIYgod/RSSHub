@@ -1,7 +1,7 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -76,7 +76,7 @@ async function handler(ctx) {
     return {
         title: `爆料公社${sort === '1' ? '最新' : '熱門'}動態`,
         link: baseUrl,
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
         image: 'https://img.bc3ts.net/image/web/main/logo-white-new-2023.png',
         icon: 'https://img.bc3ts.net/image/web/main/logo/logo_icon_6th_2024_192x192.png',
         item: items,

@@ -28,7 +28,7 @@ export const route: Route = {
     maintainers: ['hualiong'],
     handler: async (ctx) => {
         const baseURL = 'https://www.samd.org.cn/home';
-        const typeId = ctx.req.param('typeId');
+        const typeId = ctx.req.param('typeId')!;
 
         const { rows } = await ofetch('/GetNewsByTagId', {
             baseURL,

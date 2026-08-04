@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ async function handler() {
 
     const alist = $('.list_div');
 
-    const list = alist.toArray().map((item) => {
+    const list = alist.toArray().map((item): DataItem & { link: string } => {
         const elem = $(item);
 
         const titleElement = elem.find('.list-right_title a');

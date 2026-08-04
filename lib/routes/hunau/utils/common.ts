@@ -1,6 +1,7 @@
 // common.js
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -8,7 +9,18 @@ import { categoryTitle } from './category-title';
 import { indexPage } from './index-page';
 import { newsContent } from './news-content';
 
-export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTitle, baseDescription = '', baseDeparment = '', baseClass = 'div.article_list ul li:has(a)' }) => {
+export const getContent = async (
+    ctx,
+    {
+        baseHost,
+        baseCategory,
+        baseType,
+        baseTitle,
+        baseDescription = '',
+        baseDeparment = '',
+        baseClass = 'div.article_list ul li:has(a)',
+    }: { baseHost: string; baseCategory: string; baseType?: string; baseTitle: string; baseDescription?: string; baseDeparment?: string; baseClass?: string }
+) => {
     const { category = baseCategory, type = baseType, page = '1' } = ctx.req.param();
 
     const title = `${baseTitle} - ${categoryTitle(category)}`;
@@ -23,13 +35,13 @@ export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTi
 
     const list = $(baseClass)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const href = a.attr('href');
             const title = a.text();
-            const link = href.startsWith('./') && !href.endsWith('.pdf') ? `${baseURl}${href.replace('./', '/')}` : href;
+            const link = href!.startsWith('./') && !href!.endsWith('.pdf') ? `${baseURl}${href!.replace('./', '/')}` : href;
 
             return {
                 title,
@@ -39,7 +51,7 @@ export const getContent = async (ctx, { baseHost, baseCategory, baseType, baseTi
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const content = await newsContent(item.link, baseDeparment);
 
                 item.pubDate = content.pubDate;

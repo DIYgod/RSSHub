@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('ul.news_list li a')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.attr('title') ?? $el.find('span.fl').text();
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -50,7 +50,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h2.center').text();
@@ -67,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 return {
@@ -86,7 +86,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('a.logo img').attr('src'),
         author: $('meta[name="keywords"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

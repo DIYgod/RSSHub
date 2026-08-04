@@ -39,4 +39,6 @@ async function handler(ctx) {
         baseDeparment: 'xky',
         baseClass: 'div.right_list ul li:has(a)',
     });
+
+    return null;
 }

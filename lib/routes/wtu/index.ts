@@ -36,9 +36,9 @@ async function handler(ctx) {
 
     const typeInt = Number.parseInt(ctx.req.param('type'));
     const value = map.get(typeInt);
-    const title = value.title;
-    const columnId = value.id;
-    const type = value.type;
+    const title = value!.title;
+    const columnId = value!.id;
+    const type = value!.type;
     const res = await got({
         method: 'get',
         url: `${apiUrl}${columnId}`,

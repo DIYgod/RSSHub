@@ -102,7 +102,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${Object.values(meta.config.navigation.header).find((h) => h.keyname === 'topstories')?.name} | NHK WORLD-JAPAN News`,
+        title: `${Object.values<any>(meta.config.navigation.header).find((h) => h.keyname === 'topstories')?.name} | NHK WORLD-JAPAN News`,
         link: `${baseUrl}/nhkworld/${lang}/news/list/`,
         item: items,
     };

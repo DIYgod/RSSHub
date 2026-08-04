@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -20,22 +20,22 @@ export const handler = async (ctx) => {
     let items = $('ul.list_first li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('span.time').text()),
-                link: new URL(a.prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('span.time').text()),
+                link: new URL(a.prop('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link!)) {
                     return item;
                 }
 
@@ -63,7 +63,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

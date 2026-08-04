@@ -42,7 +42,7 @@ const formatText = (item) => {
     return text.trim().replaceAll('\n', '<br>');
 };
 
-const ProcessFeed = (ctx, { data = [] }, params = {}) => {
+const ProcessFeed = (ctx, { data = [] as any[] }, params = {} as Record<string, any>) => {
     // undefined and strings like "exclude_rts_replies" is also safely parsed, so no if branch is needed
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
 
@@ -99,7 +99,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
 
     const formatVideo = (media, extraAttrs = '') => {
         let content = '';
-        let bestVideo = null;
+        let bestVideo: any = null;
 
         for (const item of media.video_info.variants) {
             if (!bestVideo || (item.bitrate || 0) > (bestVideo.bitrate || -Infinity)) {
@@ -389,7 +389,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
 
         description += item.full_text;
         // 从 description 提取 话题作为 category，放在此处是为了避免 匹配到 quote 中的 # 80808030 颜色字符
-        const category = description.match(/(\s)?(#[^\s;<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]);
+        const category = description.match(/(\s)?(#[^\s;<]+)/g)?.map((e) => e?.match(/#([^\s<]+)/)?.[1]) as string[] | undefined;
         description += img;
         description += quote;
         if (readable) {
@@ -477,7 +477,7 @@ const parseRouteParams = (routeParams) => {
 
         default: {
             const parsed = new URLSearchParams(routeParams);
-            count = fallback(undefined, queryToInteger(parsed.get('count')));
+            count = fallback(undefined, queryToInteger(parsed.get('count')), undefined);
             include_replies = fallback(undefined, queryToBoolean(parsed.get('includeReplies')), false);
             include_rts = fallback(undefined, queryToBoolean(parsed.get('includeRts')), true);
             force_web_api = fallback(undefined, queryToBoolean(parsed.get('forceWebApi')), false);
@@ -488,7 +488,7 @@ const parseRouteParams = (routeParams) => {
 };
 
 export const excludeRetweet = function (tweets) {
-    const excluded = [];
+    const excluded: any[] = [];
     for (const t of tweets) {
         if (t.retweeted_status) {
             continue;
@@ -502,6 +502,8 @@ export const keepOnlyMedia = function (tweets) {
     const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
     return excluded;
 };
+
+export const getTwitterUserCacheKey = (id: string, operationName: string, params: Record<string, unknown> | undefined) => `twitter:${id}:${operationName}:${JSON.stringify(params)}`;
 
 export default {
     ProcessFeed,

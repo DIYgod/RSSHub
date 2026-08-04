@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -78,7 +78,7 @@ async function handler(ctx) {
                     const content = load(detailResponse);
 
                     item.description += renderDescription({
-                        description: content('#detailContent').html(),
+                        description: content('#detailContent').html() ?? undefined,
                     });
                 } catch {
                     // no-empty
@@ -98,7 +98,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: title.split(/_/, 1)[0],
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

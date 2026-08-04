@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,16 +47,16 @@ async function handler(ctx) {
         .find('a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             const regExp = new RegExp(String.raw`\/sgcc\/${category}\/\.\.\.`);
-            const link = new URL(`${category}/${item.prop('href').replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
+            const link = new URL(`${category}/${$item.prop('href')!.replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
 
             return {
-                title: item.contents().first().text(),
+                title: $item.contents().first().text(),
                 link,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
                 enclosure_url: link,
                 enclosure_type: `application/${link.split(/\./).pop()}`,
             };
@@ -77,15 +77,15 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: 'zh',
-        image: new URL($('#imag').prop('src'), rootUrl).href,
+        language: 'zh' as Language,
+        image: new URL($('#imag').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('meta[name="ColumnName"]').prop('content'),

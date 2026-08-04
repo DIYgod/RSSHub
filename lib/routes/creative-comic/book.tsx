@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
@@ -62,7 +62,7 @@ async function handler(ctx) {
                                 const realKey = getRealKey(imgKey);
                                 const encrypted = await getImgEncrypted(p.id, quality);
 
-                                return cache.tryGet(`${apiHost}/fs/chapter_content/encrypt/${p.id}/${quality}`, () => decrypt(encrypted, realKey));
+                                return cache.tryGet(`${apiHost}/fs/chapter_content/encrypt/${p.id}/${quality}`, () => Promise.resolve(decrypt(encrypted, realKey)));
                             })
                         );
                     }
@@ -86,7 +86,7 @@ async function handler(ctx) {
         link: book.share_link,
         image: book.image1,
         item: items,
-        language: 'zh-hant',
+        language: 'zh-hant' as Language,
     };
 }
 

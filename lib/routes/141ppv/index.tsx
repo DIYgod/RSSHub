@@ -68,31 +68,31 @@ async function handler(ctx) {
     const items = $('.columns')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const id = item.find('.title a').text();
-            const size = item.find('.title span').text();
-            const pubDate = item.find('.subtitle a').attr('href').split('/date/').pop();
-            const description = item.find('.has-text-grey-dark').text();
-            const actresses = item
+            const id = $item.find('.title a').text();
+            const size = $item.find('.title span').text();
+            const pubDate = $item.find('.subtitle a').attr('href')!.split('/date/').pop();
+            const description = $item.find('.has-text-grey-dark').text();
+            const actresses = $item
                 .find('.panel-block')
                 .toArray()
                 .map((a) => $(a).text().trim());
-            const tags = item
+            const tags = $item
                 .find('.tag')
                 .toArray()
                 .map((t) => $(t).text().trim());
-            const magnet = item.find('a[title="Magnet torrent"]').attr('href');
-            const link = item.find('a[title="Download .torrent"]').attr('href');
-            const onErrorAttr = item.find('.image').attr('onerror');
+            const magnet = $item.find('a[title="Magnet torrent"]').attr('href');
+            const link = $item.find('a[title="Download .torrent"]').attr('href');
+            const onErrorAttr = $item.find('.image').attr('onerror');
             const backupImageRegex = /this\.src='(.*?)'/;
-            const match = backupImageRegex.exec(onErrorAttr);
-            const image = match ? match[1] : item.find('.image').attr('src');
+            const match = backupImageRegex.exec(onErrorAttr!);
+            const image = match ? match[1] : $item.find('.image').attr('src');
 
             return {
                 title: `${id} ${size}`,
-                pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
-                link: new URL(item.find('a').first().attr('href'), rootUrl).href,
+                pubDate: parseDate(pubDate!, 'YYYY/MM/DD'),
+                link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
                 description: renderToString(
                     <>
                         {image ? <img src={image} /> : null}

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,7 +50,7 @@ export async function handler(ctx) {
                     id: guid,
                     image,
                     banner: image,
-                    language,
+                    language: language as Language,
                 };
             }) ?? [];
 
@@ -99,6 +99,6 @@ export async function handler(ctx) {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 }

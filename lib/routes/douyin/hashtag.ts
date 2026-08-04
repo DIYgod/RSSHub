@@ -49,7 +49,7 @@ async function handler(ctx) {
         async () => {
             const context = await playwright();
             const page = await context.newPage();
-            let awemeList = '';
+            let awemeList: any = '';
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
@@ -64,11 +64,11 @@ async function handler(ctx) {
                 waitUntil: 'networkidle',
             });
             await page.waitForSelector('#RENDER_DATA');
-            const html = await page.evaluate(() => document.querySelector('#RENDER_DATA').textContent);
+            const html = await page.evaluate(() => document.querySelector('#RENDER_DATA')!.textContent);
             await context.close();
 
             const renderData = JSON.parse(decodeURIComponent(html));
-            const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail);
+            const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail)!;
             renderData[dataKey].defaultData = awemeList.aweme_list;
             return renderData[dataKey];
         },

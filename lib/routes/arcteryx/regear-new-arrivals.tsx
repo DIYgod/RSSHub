@@ -43,7 +43,7 @@ async function handler() {
     const $ = load(data);
     const contents = $('script:contains("window.__PRELOADED_STATE__")').text();
     const regex = /\{.*\}/;
-    let items = JSON.parse(contents.match(regex)[0]).shop.items;
+    let items = JSON.parse(contents.match(regex)![0]).shop.items;
     items = items.filter((item) => item.availableSizes.length !== 0);
 
     const list = items.map((item) => {

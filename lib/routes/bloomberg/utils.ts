@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { renderAudioMedia } from './templates/audio-media';
 import { renderChartMedia } from './templates/chart-media';
 import { renderImageFigure } from './templates/image-figure';
-import { renderLedeMedia } from './templates/lede-media';
+import { type LedeMedia, renderLedeMedia } from './templates/lede-media';
 import { renderVideoMedia } from './templates/video-media';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
@@ -87,7 +87,8 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+                    const err = error as Error;
+                    if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -130,7 +131,7 @@ const parseArticle = (item) =>
     });
 
 const parseAudioPage = async (res, api, item) => {
-    const audio_json = JSON.parse(load(res.data)(api.sel).html()).props.pageProps;
+    const audio_json = JSON.parse(load(res.data)(api.sel).html() ?? '').props.pageProps;
     const episode = audio_json.episode;
     const rss_item = {
         title: episode.title || item.title,
@@ -171,7 +172,7 @@ const parseVideoPage = async (res, api, item) => {
                 content: { url: video_story.video?.thumbnail.url || '' },
                 thumbnails: { url: video_story.video?.thumbnail.url || '' },
             },
-            category: desc.keywords ?? [],
+            category: (desc as any).keywords ?? [],
         };
         return rss_item;
     }
@@ -180,9 +181,12 @@ const parseVideoPage = async (res, api, item) => {
 
 const parsePhotoEssaysPage = async (res, api, item) => {
     const $ = load(res.data.html);
-    const article_json = {};
+    const article_json: Record<string, any> = {};
     for (const e of $(api.sel).toArray()) {
-        Object.assign(article_json, JSON.parse($(e).html()));
+        const raw = $(e).html();
+        if (raw !== null) {
+            Object.assign(article_json, JSON.parse(raw));
+        }
     }
     const rss_item = {
         title: article_json.headline || item.title,
@@ -203,7 +207,8 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+        const err = error as Error;
+        if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
             return {
                 title: item.title,
                 link: item.link,
@@ -214,7 +219,7 @@ const parseReactRendererPage = async (res, api, item) => {
 };
 
 const parseStoryJson = async (story_json, item) => {
-    const media_img = story_json.ledeImageUrl || Object.values(story_json.imageAttachments ?? {})[0]?.url;
+    const media_img = story_json.ledeImageUrl || Object.values<any>(story_json.imageAttachments ?? {})[0]?.url;
     const rss_item = {
         title: story_json.headline || item.title,
         link: story_json.url || item.link,
@@ -249,7 +254,7 @@ const processLedeMedia = async (story_json) => {
             src: story_json.ledeImageUrl,
             video: kind === 'video' && (await processVideo(story_json.ledeAttachment.bmmrId)),
         };
-        return renderLedeMedia(media);
+        return renderLedeMedia(media as unknown as LedeMedia);
     }
     if (story_json.lede) {
         const lede = story_json.lede;
@@ -262,7 +267,7 @@ const processLedeMedia = async (story_json) => {
         return renderImageFigure(image);
     }
     if (story_json.imageAttachments) {
-        const attachment = Object.values(story_json.imageAttachments)[0];
+        const attachment = Object.values<any>(story_json.imageAttachments)[0];
         if (attachment) {
             const image = {
                 src: attachment.baseUrl || attachment.url,
@@ -289,7 +294,7 @@ const processLedeMedia = async (story_json) => {
 };
 
 const processBody = async (body_html, story_json) => {
-    const removeSel = ['meta', 'script', '*[class$="-footnotes"]', '*[class$="for-you"]', '*[class$="-newsletter"]', '*[class$="page-ad"]', '*[class$="-recirc"]', '*[data-ad-placeholder="Advertisement"]'];
+    const removeSel = ['meta', '*[class$="-footnotes"]', '*[class$="for-you"]', '*[class$="-newsletter"]', '*[class$="page-ad"]', '*[class$="-recirc"]', '*[data-ad-placeholder="Advertisement"]'];
 
     const $ = load(body_html);
     for (const sel of removeSel) {
@@ -307,7 +312,7 @@ const processBody = async (body_html, story_json) => {
         if (imageType === 'audio') {
             let audio = {};
             if (story_json.audios) {
-                const attachment = story_json.audios.find((a) => a.id.toString() === $(e).data('id').toString());
+                const attachment = story_json.audios.find((a) => a.id.toString() === ($(e).data('id') as string | number).toString());
                 audio = {
                     img: attachment.image?.url || $(e).find('img').attr('src'),
                     src: attachment.url || $(e).find('audio source').attr('src'),
@@ -328,18 +333,18 @@ const processBody = async (body_html, story_json) => {
             new_figure = renderAudioMedia(audio);
         } else if (imageType === 'video') {
             if (story_json.videoAttachments) {
-                const attachment = story_json.videoAttachments[$(e).data('id')];
+                const attachment = story_json.videoAttachments[$(e).data('id') as string];
                 const video = await processVideo(attachment.bmmrId);
                 new_figure = renderVideoMedia(video);
             }
         } else if (imageType === 'photo' || imageType === 'image' || type === 'image') {
             let src, alt;
             if (story_json.imageAttachments) {
-                const attachment = story_json.imageAttachments[$(e).data('id')];
+                const attachment = story_json.imageAttachments[$(e).data('id') as string];
                 alt = attachment?.alt || $(e).find('img').attr('alt')?.trim();
                 src = attachment?.baseUrl;
             } else {
-                alt = $(e).find('img').attr('alt').trim();
+                alt = $(e).find('img').attr('alt')!.trim();
                 src = $(e).find('img').data('native-src');
             }
             const caption = $(e).find('[class$="text"], .caption, .photo-essay__text').html()?.trim() ?? '';

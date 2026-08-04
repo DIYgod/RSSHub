@@ -186,7 +186,7 @@ async function handler(ctx) {
         44: { 417: '文案/策划', 798: 'VR设计', 683: '独立游戏', 45: '其他', 824: '文章' },
     };
 
-    const queries = {
+    const queries: Record<string, string> = {
         cate: '0',
         subCate: ctx.req.param('subCate') ?? '0',
         city: ctx.req.param('city') ?? '0',

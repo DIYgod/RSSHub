@@ -4,7 +4,7 @@ import iconv from 'iconv-lite';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ async function fetchWithAntiBot(url: string, header: Record<string, string>) {
         headers: header,
     });
 
-    let responseData = Buffer.from(response._data);
+    let responseData = Buffer.from(response._data!);
     const initialHtml = iconv.decode(responseData, 'utf-8');
 
     if (initialHtml.includes('document.location.reload()')) {
@@ -41,7 +41,7 @@ async function fetchWithAntiBot(url: string, header: Record<string, string>) {
                 responseType: 'arrayBuffer',
                 headers: { ...header, Cookie: [header.Cookie, cookieStr].filter(Boolean).join('; ') },
             });
-            responseData = Buffer.from(response._data);
+            responseData = Buffer.from(response._data!);
         }
     }
 
@@ -63,11 +63,11 @@ async function loadContent(itemLink, charset, header) {
 
     // fix lazyload image
     post.find('img').each((_, img) => {
-        img = $(img);
-        if (img.attr('src')?.endsWith('none.gif') && img.attr('file')) {
-            img.attr('src', img.attr('file') || img.attr('zoomfile'));
-            img.removeAttr('file');
-            img.removeAttr('zoomfile');
+        const $img = $(img);
+        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
+            $img.attr('src', $img.attr('file') || $img.attr('zoomfile'));
+            $img.removeAttr('file');
+            $img.removeAttr('zoomfile');
         }
     });
 
@@ -132,20 +132,20 @@ async function handler(ctx) {
         const list = $('tbody[id^="normalthread"] > tr')
             .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
-            .map((item) => {
-                item = $(item);
-                const a = item.find('span[id^=thread] a');
+            .map((item): DataItem => {
+                const $item = $(item);
+                const a = $item.find('span[id^=thread] a');
                 return {
                     title: a.text().trim(),
                     link: fixUrl(a.attr('href'), link),
-                    pubDate: item.find('td.author em').length ? parseDate(item.find('td.author em').text().trim()) : undefined,
-                    author: item.find('td.author cite a').text().trim(),
+                    pubDate: $item.find('td.author em').length ? parseDate($item.find('td.author em').text().trim()) : undefined,
+                    author: $item.find('td.author cite a').text().trim(),
                 };
             });
 
         items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { description } = await loadContent(item.link, charset, header);
 
                     item.description = description;
@@ -159,20 +159,20 @@ async function handler(ctx) {
         const list = $('tbody[id^="normalthread"] > tr')
             .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5)
             .toArray()
-            .map((item) => {
-                item = $(item);
-                const a = item.find('a.xst');
+            .map((item): DataItem => {
+                const $item = $(item);
+                const a = $item.find('a.xst');
                 return {
                     title: a.text(),
                     link: fixUrl(a.attr('href'), link),
-                    pubDate: item.find('td.by:nth-child(3) em span').last().length ? parseDate(item.find('td.by:nth-child(3) em span').last().text().trim()) : undefined,
-                    author: item.find('td.by:nth-child(3) cite a').text().trim(),
+                    pubDate: $item.find('td.by:nth-child(3) em span').last().length ? parseDate($item.find('td.by:nth-child(3) em span').last().text().trim()) : undefined,
+                    author: $item.find('td.by:nth-child(3) cite a').text().trim(),
                 };
             });
 
         items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { description } = await loadContent(item.link, charset, header);
 
                     item.description = description;

@@ -1,3 +1,4 @@
+import type { Context } from 'hono';
 import Parser from 'rss-parser';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
@@ -19,8 +20,8 @@ const runMiddleware = async (data: any, query: Record<string, string | undefined
         },
         get: (key: string) => store.get(key),
         set: (key: string, value: unknown) => store.set(key, value),
-    };
-    await middleware(ctx as any, async () => {});
+    } as unknown as Context;
+    await middleware(ctx, async () => {});
     return store.get('data') as any;
 };
 

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 import { apiBase, baseUrl, getUserInfo, renderLive } from './utils';
@@ -46,7 +46,7 @@ async function handler(ctx) {
         image: userInfo.avatar_url,
         icon: userInfo.avatar_url,
         logo: userInfo.avatar_url,
-        language: 'ja',
+        language: 'ja' as Language,
         author: userInfo.name,
         itunes_author: userInfo.name,
         item: casts,

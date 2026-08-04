@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data } from '@/types';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -49,7 +49,7 @@ export const handler = async (ctx): Promise<Data> => {
     );
 
     return {
-        item: items,
+        item: items as DataItem[],
         ...feedMeta($, currentUrl),
     };
 };
@@ -95,7 +95,7 @@ export const fetchArticle = (item) =>
                   }
                 : undefined,
             intro: content('div.article-header p').text(),
-            description: content('div.article-content').html(),
+            description: content('div.article-content').html() ?? undefined,
         });
         item.author = content('span.author')
             .first()
@@ -140,7 +140,7 @@ export const renderDescription = ({
 }: {
     image?: { src?: string; alt?: string; width?: string; height?: string };
     intro?: string;
-    video?: { src?: string; poster?: string; type?: string };
+    video?: { src?: string; poster?: string; type?: string; width?: string; height?: string };
     description?: string;
 }): string => {
     const imageAlt = image?.height ?? image?.width ?? image?.alt;

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -63,8 +63,8 @@ async function handler(ctx) {
     const feed = await parser.parseURL(url);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                item.pubDate = lang === 'ko' ? parseDate(item.pubDate) : timezone(parseDate(item.pubDate), 9); // Timezone is only included in the pubDate of the Korean language RSS
+            cache.tryGet(item.link!, async () => {
+                item.pubDate = (lang === 'ko' ? parseDate(item.pubDate!) : timezone(parseDate(item.pubDate!), 9)) as unknown as string; // Timezone is only included in the pubDate of the Korean language RSS
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.author =
@@ -83,10 +83,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         language: feed.language ?? lang,
-        item: items,
+        item: items as DataItem[],
     };
 }

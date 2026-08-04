@@ -29,11 +29,11 @@ async function handler() {
         title: '澎湃美数课作品集',
         link: 'http://projects.thepaper.cn/thepaper-cases/839studio/',
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.imgup a').text(),
-                description: `描述：${item.find('.imgdown p').text()}`,
-                link: item.find('.imgup a').attr('href'),
+                title: $item.find('.imgup a').text(),
+                description: `描述：${$item.find('.imgdown p').text()}`,
+                link: $item.find('.imgup a').attr('href'),
             };
         }),
     };

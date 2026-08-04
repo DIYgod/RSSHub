@@ -2,13 +2,13 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll("'", '&quot;')?.replaceAll("'", '&#039;') ?? text;
+const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll('"', '&quot;')?.replaceAll("'", '&#039;') ?? text;
 
 const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeHtml(child.text)).join('');
 
@@ -120,7 +120,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 text: description,
             },
             updated: updated ? parseDate(updated) : undefined,
-            language,
+            language: language as Language,
         };
 
         return processedItem;
@@ -172,7 +172,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: updated ? parseDate(updated) : undefined,
-                    language,
+                    language: language as Language,
                 };
 
                 return {
@@ -193,7 +193,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/\|/).pop()?.trim(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

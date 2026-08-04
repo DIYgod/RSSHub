@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -39,10 +39,10 @@ async function handler(ctx) {
     const list = $('.ag-post-item__link')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${baseUrl}${item.attr('href')}`,
+                title: $item.text(),
+                link: `${baseUrl}${$item.attr('href')}`,
             };
         });
 
@@ -53,6 +53,6 @@ async function handler(ctx) {
         link,
         description: ldJson['@graph'][0].description,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

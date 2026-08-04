@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,21 +25,21 @@ async function handler(ctx) {
     $('.listline').remove();
     const list = $('.txtList_01 li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             const date =
-                item.find('span').length === 0
-                    ? item
+                $item.find('span').length === 0
+                    ? $item
                           .find('a')
-                          .attr('title')
-                          .match(/(\d{4}年\d{1,2}月\d{1,2})/)[1]
-                    : item
+                          .attr('title')!
+                          .match(/(\d{4}年\d{1,2}月\d{1,2})/)![1]
+                    : $item
                           .find('span')
                           .text()
-                          .match(/((\d{4}-\d{2}-\d{2})(\s\d{2}:\d{2}:\d{2})?)/)[1];
+                          .match(/((\d{4}-\d{2}-\d{2})(\s\d{2}:\d{2}:\d{2})?)/)![1];
             return {
-                title: item.find('a').attr('title'),
-                link: host + item.find('a').attr('href'),
+                title: $item.find('a').attr('title')!,
+                link: host + $item.find('a').attr('href'),
                 pubDate: timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY年M月D']), 8),
             };
         });
@@ -65,7 +65,7 @@ async function handler(ctx) {
                 } else {
                     item.description = $('.art-con').html() || /* xwfb/xwztfbh */ $('.textlive').html();
                 }
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content'), 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
 
                 return item;
             })

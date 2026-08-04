@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,14 +41,14 @@ async function handler(ctx) {
     const items = $('img[src="/site/styles/default/images/icon_arrow_r.gif"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item).next();
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item).next();
 
-            const pubDateMatches = item.text().match(/(\d+年\d+月)/);
+            const pubDateMatches = $item.text().match(/(\d+年\d+月)/);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1], ['YYYY年MM月', 'YYYY年M月']) : undefined,
             };
         });
@@ -75,7 +75,7 @@ async function handler(ctx) {
         title: `${$('title').text()}-${$('div.headbottom_menu_selected').text()}`,
         link: currentUrl,
         description: $('td').last().text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('img').first().prop('src'),
         author: '国家广播电影电视总局电视剧管理司',
     };

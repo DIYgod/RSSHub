@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -71,7 +71,18 @@ export async function handler(ctx) {
 
     const apiKey = currentResponse.match(/apiKey=(.*?)&/)[1];
 
-    const searchParams = {
+    const searchParams: {
+        sortBy: string;
+        productType: string;
+        limit: number;
+        apiKey: string;
+        genres?: string;
+        releaseType?: string;
+        releaseYearMin?: string;
+        releaseYearMax?: string;
+        gamePlatformIds?: string;
+        streamingNetworkIds?: string;
+    } = {
         sortBy: `-${sorts[sort].id}`,
         productType: types[type].id,
         limit,
@@ -163,14 +174,14 @@ export async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop(), rootUrl).href;
+    const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop()!, rootUrl).href;
 
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('link[rel="icon"]').prop('content'),
         icon,
         logo: icon,

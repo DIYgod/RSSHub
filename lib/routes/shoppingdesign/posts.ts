@@ -38,9 +38,9 @@ async function handler() {
     const items = await pMap(
         $('article-item').toArray(),
         (item) => {
-            item = $(item);
-            const link = item.attr('url');
-            return cache.tryGet(link, async () => {
+            const $item = $(item);
+            const link = $item.attr('url');
+            return cache.tryGet(link!, async () => {
                 const response = await got(`${link}?sn_f=1`);
                 const $ = load(response.data);
                 const article = $('.left article .htmlview');
@@ -53,7 +53,7 @@ async function handler() {
                     author: $('meta[name="my:author"]').attr('content'),
                     description: article.html(),
                     category: $('meta[name="my:category"]').attr('content'),
-                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')),
+                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')!),
                     link,
                 };
             });
@@ -63,7 +63,7 @@ async function handler() {
     );
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content')!,
         link: currentUrl,
         description: $('meta[property="og:description"]').attr('content'),
         item: items,

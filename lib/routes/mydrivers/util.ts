@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,7 +26,7 @@ const categories = {
  */
 const convertToQueryString = (path) => {
     const parts = path.split('/');
-    const queryStringParams = [];
+    const queryStringParams: string[] = [];
 
     for (let i = 0; i < parts.length; i += 2) {
         const key = parts[i];
@@ -44,13 +45,13 @@ const convertToQueryString = (path) => {
  * @param {number|undefined} [range] - The index value of the range (optional).
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
-const getInfo = (url, range) =>
+const getInfo = (url, range?) =>
     cache.tryGet(url, async () => {
         const { data: response } = await got(url);
 
         const $ = load(response);
 
-        const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href'), rootUrl).href;
+        const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href')!, rootUrl).href;
         const image = `https:${$('div.logo a img').prop('src')}`;
         const ranges = $('div.hottime a')
             .toArray()
@@ -60,7 +61,7 @@ const getInfo = (url, range) =>
             title: `${title} - ${range !== undefined && ranges ? ranges[range] : $(`a[data-id="${url.split(/=/).pop()}"]`).text() || $('#newsEventSwitch a.cur').text()}`,
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-cn',
+            language: 'zh-CN' as Language,
             image,
             icon,
             logo: icon,

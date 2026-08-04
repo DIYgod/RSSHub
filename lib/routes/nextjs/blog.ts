@@ -41,7 +41,7 @@ const handler: Route['handler'] = async () => {
     return {
         title: 'Next.js Blog',
         link: 'https://nextjs.org/blog',
-        language: 'en-US',
+        language: 'en-us',
         item,
     };
 };

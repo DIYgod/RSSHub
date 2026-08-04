@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -56,19 +56,19 @@ async function handler(ctx) {
     let items = selection
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text().trim(),
-                link: item.attr('href'),
+                title: $item.text().trim(),
+                link: $item.attr('href'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/bast\.net\.cn/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (/bast\.net\.cn/.test(item.link!)) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -76,10 +76,10 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    item.title = content('meta[name="ArticleTitle"]').attr('content');
+                    item.title = content('meta[name="ArticleTitle"]').attr('content')!;
                     item.author = content('meta[name="contentSource"]').attr('content');
-                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')), 8);
-                    item.category = [content('meta[name="ColumnName"]').attr('content')];
+                    item.pubDate = timezone(parseDate(content('meta[name="pubdate"]').attr('content')!), 8);
+                    item.category = [content('meta[name="ColumnName"]').attr('content')!];
 
                     item.description = content('.arccont').html();
                 }

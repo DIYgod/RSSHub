@@ -45,12 +45,12 @@ async function handler(ctx) {
             title: '政府采购意向公开',
             link: url,
             item: list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    description: item.find('a').text(),
-                    link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                    title: $item.find('a').attr('title')!,
+                    description: $item.find('a').text(),
+                    link: 'https://zbb.nju.edu.cn' + $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
                 };
             }),
         };
@@ -77,12 +77,12 @@ async function handler(ctx) {
             const list = $('dd[cid]');
 
             return list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    description: item.find('a').text(),
-                    link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                    title: $item.find('a').attr('title')!,
+                    description: $item.find('a').text(),
+                    link: 'https://zbb.nju.edu.cn' + $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
                     category: category_dict[c],
                 };
             });

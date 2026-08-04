@@ -64,7 +64,7 @@ const handler: Route['handler'] = async () => {
                                 image: 'http://www.pacilution.com/img/top_banner.jpg',
                                 content,
                                 updated: date,
-                                language: 'zh-cn',
+                                language: 'zh-CN',
                             };
                         } catch {
                             return null as unknown as DataItem;
@@ -72,9 +72,9 @@ const handler: Route['handler'] = async () => {
                     })
                 )
             )
-        ).filter((item) => item !== null) as DataItem[],
+        ).filter((item): item is DataItem => item !== null),
         allowEmpty: true,
-        language: 'zh-cn',
+        language: 'zh-CN',
         feedLink: 'https://rsshub.app/pacilution/latest',
         id: 'https://rsshub.app/pacilution/latest',
     };

@@ -5,7 +5,7 @@ const defaultProtocol = 'http';
 const possibleProtocol = ['http', 'https', 'socks', 'socks4', 'socks4a', 'socks5', 'socks5h'];
 
 const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['proxy']) => {
-    proxyObj ||= {};
+    proxyObj ||= {} as Config['proxy'];
     const [oriProxyUri, oriProxyObj] = [proxyUri, proxyObj];
     proxyObj = { ...proxyObj };
 

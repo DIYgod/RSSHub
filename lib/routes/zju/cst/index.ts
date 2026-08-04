@@ -31,11 +31,11 @@ async function getPage(id) {
     const list = $('.lm_new').find('li');
 
     return list.toArray().map((item) => {
-        item = $(item);
+        const $item = $(item);
         return {
-            title: item.find('a').text(),
-            pubDate: parseDate(item.find('.fr').text()),
-            link: new URL(item.find('a').attr('href'), host).href,
+            title: $item.find('a').text(),
+            pubDate: parseDate($item.find('.fr').text()),
+            link: new URL($item.find('a').attr('href')!, host).href,
         };
     });
 }
@@ -63,8 +63,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const link = host + map.get(type).id;
-    let items = [];
+    const link = host + map.get(type)!.id;
+    let items: any[] = [];
     if (type === 0) {
         const tasks = Array.from(map.values(), (value) => getPage(value.id));
         const results = await Promise.all(tasks);
@@ -72,7 +72,7 @@ async function handler(ctx) {
             items = [...items, ...result];
         }
     } else {
-        items = await getPage(map.get(type).id);
+        items = await getPage(map.get(type)!.id);
     }
 
     const out = await Promise.all(
@@ -93,7 +93,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link,
         item: out,
     };

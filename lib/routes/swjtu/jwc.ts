@@ -31,7 +31,8 @@ const getItem = (item, cache) => {
                 description: newsText,
             };
         } catch (error) {
-            if (error.response && error.response.status === 404) {
+            const err = error as { response?: { status: number } };
+            if (err.response && err.response.status === 404) {
                 return {
                     title: newsTitle,
                     pubDate: parseDate(String(newsTime)),

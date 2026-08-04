@@ -28,15 +28,15 @@ async function handler() {
     const items = $('.version')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h2 a');
+            const a = $item.find('h2 a');
 
             return {
                 title: a.text().trim(),
                 link: `${rootUrl}${a.attr('href')}`,
-                description: item.find('.article-content').html(),
-                pubDate: parseDate(item.find('.text-secondary').first().text()),
+                description: $item.find('.article-content').html(),
+                pubDate: parseDate($item.find('.text-secondary').first().text()),
             };
         });
 

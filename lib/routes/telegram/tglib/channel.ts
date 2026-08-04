@@ -142,7 +142,7 @@ export default async function handler(ctx: Context) {
 
     let peerCache = await cache.get(`telegram:inputEntity:${username}`);
     if (!peerCache) {
-        const p = await client.getInputEntity(username);
+        const p = await client.getInputEntity(username!);
         peerCache = JSON.stringify(p.toJSON());
         await cache.set(`telegram:inputEntity:${username}`, peerCache);
     }
@@ -176,7 +176,7 @@ export default async function handler(ctx: Context) {
             }
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username, message.id);
+            const src = getMessageMediaUrl(ctx.req.url, username!, message.id);
             attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
@@ -209,7 +209,6 @@ export default async function handler(ctx: Context) {
 
     return {
         title: getDisplayName(entity),
-        language: null,
         link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,12 +41,12 @@ async function handler(ctx) {
 
     let items = $('td li a[title]')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href').startsWith('../..') ? item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${item.attr('href').replace(/^\./, '')}`}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')!.startsWith('../..') ? $item.attr('href')!.replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${$item.attr('href')!.replace(/^\./, '')}`}`,
             };
         });
 
@@ -61,7 +61,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.author = content('meta[name="ContentSource"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="PubDate"]').attr('content')!);
                 item.description = content('.TRS_Editor, .content').html();
 
                 return item;

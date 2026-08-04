@@ -49,7 +49,7 @@ async function handler() {
                     return {
                         title: $('#dev_page_title').text(),
                         link,
-                        pubDate: parseDate($('[property="article:published_time"]').attr('content')),
+                        pubDate: parseDate($('[property="article:published_time"]').attr('content')!),
                         description: $('#dev_page_content_wrap').html(),
                     };
                 });

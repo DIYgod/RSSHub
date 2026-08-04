@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -63,12 +63,12 @@ async function handler(ctx) {
         // category-nav rows (href="/?type=…") and external ad rows (href="http://…",
         // e.g. the "國產原创" entries). Real torrent rows always link to /view.
         .filter((el) => $(el).find('td:nth-of-type(2) > a').attr('href')?.startsWith('/view'))
-        .map((el) => {
+        .map((el): DataItem & { link: string } => {
             const item = $(el);
             const a = item.find('td:nth-of-type(2) > a');
             const guid = rootURL + a.attr('href');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 guid,
                 link: guid,
                 pubDate: item.find('td:nth-of-type(5)').text(),

@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -17,13 +18,13 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
     let items = $(`${time ? `.${time}-month-data ` : ''}.text-overflow`)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { guid: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                guid: `${rootUrl}${item.attr('href')}`,
-                link: `${mobileRootUrl}${item.attr('href').replace(/Comic\/ComicInfo/, 'comic/index')}`,
+                title: $item.text(),
+                guid: `${rootUrl}${$item.attr('href')}`,
+                link: `${mobileRootUrl}${$item.attr('href')!.replace(/Comic\/ComicInfo/, 'comic/index')}`,
             };
         });
 

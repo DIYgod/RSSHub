@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -54,7 +55,7 @@ export const route: Route = {
                 const item = $(item_);
                 const title = item.find('.remarkup-header').first();
                 const subtitle = item.find('.phui-document-summary-subtitle').first();
-                const date = subtitle.find('strong').first()[0].nextSibling.data.slice(4); // parse starts after ' on '
+                const date = (subtitle.find('strong').first()[0].nextSibling as Text).data.slice(4); // parse starts after ' on '
                 return {
                     title: title.text(),
                     // We need an absolute URL for `link`, but `a.attr('href')` returns a relative URL.

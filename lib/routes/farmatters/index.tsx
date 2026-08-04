@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -47,7 +47,7 @@ async function handler(ctx) {
     const { type, id, locale = 'zh-CN' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    const searchParams = {
+    const searchParams: Record<string, string | number> = {
         locale,
         page: 0,
         pagesize: limit,
@@ -98,8 +98,8 @@ async function handler(ctx) {
         title: `${$('title').text().split(/-/, 1)[0].trim()} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
-        image: new URL($('img').first().prop('src'), rootUrl).href,
+        language: $('html').prop('lang') as Language,
+        image: new URL($('img').first().prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle,

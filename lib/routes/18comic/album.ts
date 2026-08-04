@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 
 import { renderDescription } from './templates/description';
@@ -70,7 +70,7 @@ async function handler(ctx) {
                 cache.tryGet(`18comic:album:${item.id}`, async () => {
                     const chapterApiUrl = `${getApiUrl()}/chapter?id=${item.id}`;
                     const chapterResult = await processApiItems(chapterApiUrl);
-                    const result = {};
+                    const result: DataItem = { title: '' };
                     const chapterNum = index + 1;
                     result.title = `第${chapterNum}話 ${item.name === '' ? chapterNum : item.name}`;
                     result.link = `${rootUrl}/photo/${item.id}`;

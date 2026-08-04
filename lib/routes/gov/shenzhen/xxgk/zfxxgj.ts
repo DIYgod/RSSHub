@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,22 +60,22 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.zx_ml_list ul li span.tit')
         .toArray()
-        .map((item) => {
-            item = $(item).find('a');
+        .map((item): DataItem => {
+            const $item = $(item).find('a');
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.news_cont_d_wrap').html();
                 if (content('div.fjdown').html() !== null) {
-                    item.description += content('div.fjdown').html();
+                    item.description! += content('div.fjdown').html()!;
                 }
                 item.pubDate = timezone(
                     parseDate(

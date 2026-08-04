@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -91,7 +91,7 @@ async function handler() {
     return {
         title: 'HumanLayer Blog',
         link: listUrl,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

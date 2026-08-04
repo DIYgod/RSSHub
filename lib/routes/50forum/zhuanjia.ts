@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,21 +34,21 @@ async function handler() {
     });
     const data = response.data;
     if (!data) {
-        return;
+        return null;
     }
     const $ = load(data);
     let out = $('div.container div.list_list.mtop10 ul li')
         .find('a')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const link = rootUrl + item.attr('href');
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const link = rootUrl + $item.attr('href');
             const reg = /^(.+) - (.*) - (.+)$/;
-            const keyword = reg.exec(item.text().trim());
+            const keyword = reg.exec($item.text().trim());
             return {
-                title: keyword[1],
-                author: keyword[2],
-                pubDate: timezone(parseDate(keyword[3], 'YYYY-MM-DD'), 8),
+                title: keyword![1],
+                author: keyword![2],
+                pubDate: timezone(parseDate(keyword![3], 'YYYY-MM-DD'), 8),
                 link,
             };
         });

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -36,18 +36,18 @@ async function handler(ctx) {
 
     let items = $('.title.game_link')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -59,8 +59,8 @@ async function handler(ctx) {
                 item.description = renderDescription({
                     images: content('.screenshot')
                         .toArray()
-                        .map((i) => content(i).attr('src')),
-                    description: content('.formatted_description').html(),
+                        .map((i) => content(i).attr('src')!),
+                    description: content('.formatted_description').html() ?? undefined,
                 });
 
                 return item;

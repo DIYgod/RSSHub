@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,15 +34,17 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit');
     const list = $('a', '.dd_bt')
         .toArray()
-        .map((item) => ({
-            link: rootUrl + $(item).attr('href'),
-            title: $(item).text(),
-        }))
+        .map(
+            (item): DataItem => ({
+                link: rootUrl + $(item).attr('href'),
+                title: $(item).text(),
+            })
+        )
         .slice(0, limit ? Number.parseInt(limit) : 50);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -78,7 +80,7 @@ async function handler(ctx) {
         title: '中国新闻网',
         link: currentUrl,
         description: '中国新闻网（简称“中新网”），由中国新闻社主办，为中央重点新闻网站。',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

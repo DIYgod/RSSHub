@@ -21,7 +21,7 @@ async function getArticles() {
                 title: $title.text(),
                 link: $title.attr('href'),
                 description: $description.text(),
-                pubDate: parseDate($date.attr('title')),
+                pubDate: parseDate($date.attr('title')!),
                 guid: $title.attr('href'),
             };
         });

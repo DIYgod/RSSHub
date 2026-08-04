@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,13 +27,13 @@ async function handler(ctx) {
     const $ = load(res.data);
     const itemsArray = $('#result_list table tbody tr')
         .toArray()
-        .map((row) => {
+        .map((row): DataItem => {
             const res = $('td', row).eq(0);
             const resDate = $('td', row).eq(1);
             const resLink = $('a', res).attr('href');
             let link;
-            if (resLink.startsWith('../../')) {
-                const parsedUrl = new URL(resLink, xmut);
+            if (resLink!.startsWith('../../')) {
+                const parsedUrl = new URL(resLink!, xmut);
                 link = parsedUrl.href;
             } else {
                 link = resLink;
@@ -41,14 +41,14 @@ async function handler(ctx) {
             const title = $('a', res).attr('title');
             const pubDate = parseDate(resDate.text());
             return {
-                title,
+                title: title!,
                 link,
                 pubDate,
             };
         });
     const items = await Promise.all(
         itemsArray.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got(item.link, {
                     headers: {
                         referer: xmut,

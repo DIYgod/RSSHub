@@ -111,7 +111,7 @@ function tryFixStatus(status) {
     return result;
 }
 
-function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
+function getContentByActivity(ctx, item, params = {} as Record<string, any>, picsPrefixes: string[] = []) {
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
     const mergedParams = {
@@ -274,7 +274,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
 
     let text = status.text;
     let lastIndex = 0;
-    const replacedTextSegements = [];
+    const replacedTextSegements: any[] = [];
     for (const entity of status.entities) {
         replacedTextSegements.push(
             text.slice(lastIndex, entity.start),
@@ -311,7 +311,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         }
         picsPrefixes.push(picsPrefix);
 
-        const imageUrls: Array<string | undefined> = Array.from(status.images, (image) => image?.large?.url);
+        const imageUrls: Array<string | undefined> = Array.from(status.images, (image: any) => image?.large?.url);
         description += prepareImages(imageUrls);
     }
 
@@ -407,7 +407,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
             description += '<br clear="both" /><div style="clear: both"></div></blockquote>';
         }
         if (status.card.images_block) {
-            const imageUrls: Array<string | undefined> = Array.from(status.card.images_block.images, (image) => image.image?.large?.url);
+            const imageUrls: Array<string | undefined> = Array.from(status.card.images_block.images, (image: any) => image.image?.large?.url);
             description += prepareImages(imageUrls);
         }
     }

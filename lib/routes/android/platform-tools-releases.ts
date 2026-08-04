@@ -48,20 +48,20 @@ async function handler() {
     const items = $('h4')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.attr('data-text');
+            const title = $item.attr('data-text');
 
             let description = '';
-            item.nextUntil('h4').each((_, el) => {
+            $item.nextUntil('h4').each((_, el) => {
                 description += $(el).html();
             });
 
             return {
-                title,
+                title: title!,
                 description,
-                link: `${currentUrl}#${item.attr('id')}`,
-                pubDate: parseDate(title.match(/\((.*)\)/)[1], 'MMMM YYYY'),
+                link: `${currentUrl}#${$item.attr('id')}`,
+                pubDate: parseDate(title!.match(/\((.*)\)/)![1], 'MMMM YYYY'),
             };
         });
 

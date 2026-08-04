@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,19 +27,19 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.article-list .boxlist ul li')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('a');
             return {
-                title: e.find('a span').text(),
-                link: a.attr('href').startsWith('http') ? a.attr('href') : 'https://jwb.bnu.edu.cn' + a.attr('href').slice(2),
-                pubDate: parseDate(e.find('span.fr.text-muted').text(), 'YYYY-MM-DD'),
+                title: $e.find('a span').text(),
+                link: a.attr('href')!.startsWith('http') ? a.attr('href') : 'https://jwb.bnu.edu.cn' + a.attr('href')!.slice(2),
+                pubDate: parseDate($e.find('span.fr.text-muted').text(), 'YYYY-MM-DD'),
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.author = '北京师范大学教务部';

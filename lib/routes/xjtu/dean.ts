@@ -53,13 +53,13 @@ async function handler(ctx) {
     const list = $('#ny-main > div.ny.wp > ul > li')
         .toArray()
         .map((item: any) => {
-            item = $(item);
-            const title = item.find('a').text();
-            const link = new URL(item.find('a').attr('href'), base).href;
+            const $item = $(item);
+            const title = $item.find('a').text();
+            const link = new URL($item.find('a').attr('href')!, base).href;
             return {
                 title,
                 link,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
         });
 
@@ -83,6 +83,6 @@ async function handler(ctx) {
     return {
         title: `西安交大教务处 - ${subName}`,
         link: url,
-        item: out.filter((item) => item !== ''),
+        item: out.filter((item) => (item as DataItem | string) !== ''),
     } as Data;
 }

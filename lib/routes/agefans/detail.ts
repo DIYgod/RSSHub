@@ -39,11 +39,11 @@ async function handler(ctx) {
         .find('li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
-                link: a.attr('href').replace('http://', 'https://'),
+                link: a.attr('href')!.replace('http://', 'https://'),
             };
         })
         .toReversed();

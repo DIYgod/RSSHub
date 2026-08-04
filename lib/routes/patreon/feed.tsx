@@ -198,12 +198,12 @@ async function handler(ctx) {
             link: attributes.url,
             pubDate: parseDate(attributes.published_at),
             image: attributes.thumbnail?.url ?? attributes.image?.url,
-            category: relationships.user_defined_tags?.map((tag) => tag.attributes.value),
+            category: (relationships.user_defined_tags as unknown as Array<{ attributes: { value: string } }> | undefined)?.map((tag) => tag.attributes.value),
         };
     });
 
     return {
-        title: creatorData.attributes.name,
+        title: creatorData.attributes.name!,
         description: creatorData.attributes.creation_name,
         link,
         image:

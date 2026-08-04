@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -24,8 +25,8 @@ export async function handler(ctx) {
     const listItems = $('div.list-news')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('div.explainer-subtext a');
+            const $item = $(item);
+            const a = $item.find('div.explainer-subtext a');
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
@@ -81,6 +82,6 @@ export async function handler(ctx) {
         description: 'Latest News on dnaIndia.com',
         logo: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         icon: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

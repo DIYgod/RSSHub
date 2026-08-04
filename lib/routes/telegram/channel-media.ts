@@ -194,7 +194,7 @@ Serves telegram media like pictures, video or files.
 export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramClient, ctx: Context) {
     if (media instanceof Api.MessageMediaPhoto) {
         const buf = await client.downloadMedia(media);
-        return new Response(buf, { headers: { 'Content-Type': 'image/jpeg' } });
+        return new Response(buf as BodyInit, { headers: { 'Content-Type': 'image/jpeg' } });
     }
 
     const doc = getDocument(media);

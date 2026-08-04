@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
 
     const items = processItems(apiTagProcs?.slice(0, limit) ?? []);
 
-    const image = new URL($('img.logo').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo').prop('src')!, rootUrl).href;
 
     const author = $('title').text().split(/_/).pop();
 

@@ -56,13 +56,13 @@ async function handler(ctx) {
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: a.attr('href'),
-                pubDate: timezone(parseDate(item.find('span').text(), 'YY-MM-DD'), 0),
+                pubDate: timezone(parseDate($item.find('span').text(), 'YY-MM-DD'), 0),
             };
         });
 

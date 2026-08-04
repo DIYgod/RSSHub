@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,19 +27,19 @@ async function handler(ctx) {
     const $ = load(response.data);
     const items = $('.list-news ul li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), response.url).href,
-                pubDate: parseDate(item.find('span').text().replaceAll('[]', '')),
+                title: $item.find('a').text(),
+                link: new URL($item.find('a').attr('href')!, response.url).href,
+                pubDate: parseDate($item.find('span').text().replaceAll('[]', '')),
             };
         });
 
     await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.startsWith(`${baseUrl}/`)) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.startsWith(`${baseUrl}/`)) {
                     return item;
                 }
 

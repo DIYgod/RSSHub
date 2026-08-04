@@ -98,9 +98,9 @@ const getInfoUrlList = async (url) => {
     const infoList = $('div.sl')
         .toArray()
         .map((item) => ({
-            title: $('a', item).attr('title'),
+            title: $('a', item).attr('title')!,
             url: `${rootUrl}${$('a', item).attr('href')}`,
-            pubDate: parseDate(timezone($('div > div:nth-child(4)', item).html().trim()), 8),
+            pubDate: timezone(parseDate($('div > div:nth-child(4)', item).html()!.trim()), 8),
         }));
     return infoList;
 };

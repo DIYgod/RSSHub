@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,17 +33,17 @@ async function handler(ctx) {
 
     const list = $('#category_new li a, .List-4 h3 a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.attr('title') || item.text(),
-                link: item.attr('href'),
+                title: $item.attr('title') || $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
@@ -62,7 +62,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((tag) => $(tag).text());
                 $('.social_block, .tags').remove();
-                item.pubDate = parseDate($('.postDate').attr('content'));
+                item.pubDate = parseDate($('.postDate').attr('content')!);
                 item.description = $('.entry').html();
 
                 return item;

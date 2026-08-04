@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -44,15 +44,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
+                link: new URL(a.prop('href')!, rootUrl).href,
                 author: a.text().split('：', 1)[0],
-                pubDate: timezone(parseDate(item.find('span').text()), 8),
+                pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
         });
 
@@ -61,7 +61,7 @@ async function handler(ctx) {
         title: `爱思想 - ${title}`,
         link: currentUrl,
         description: $('div.tips p').text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: new URL('images/logo_zhuanti.jpg', ossUrl).href,
         subtitle: title,
     };

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 
 import { apiRootUrl, icon, image, processItems, rootUrl } from './util';
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
         title: 'Foresight News - 快讯',
         link: currentUrl,
         description: '快讯 - Foresight News',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image,
         icon,
         logo: icon,

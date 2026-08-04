@@ -38,15 +38,15 @@ async function handler(ctx) {
     const items = $('.articleul li');
     const out = await Promise.all(
         items.map(async (index, item) => {
-            item = $(item);
-            const anchor = item.find('a');
-            const dateElement = item.find('div:last-of-type');
+            const $item = $(item);
+            const anchor = $item.find('a');
+            const dateElement = $item.find('div:last-of-type');
             const dateText = dateElement.text();
             dateElement.remove();
             const href = anchor.attr('href');
-            const link = href.startsWith('http') ? href : baseUrl + href;
-            const title = item.text();
-            const { description, author: exactAuthor, exactDate } = await cache.tryGet(link, () => extractor(link));
+            const link = href!.startsWith('http') ? href : baseUrl + href;
+            const title = $item.text();
+            const { description, author: exactAuthor, exactDate } = (await cache.tryGet(link!, () => extractor(link))) as Record<string, any>;
             const author = exactAuthor ?? '教务处';
             const pubDate = exactDate ?? timezone(parseDate(dateText.slice(1, -1), 'YYYY-MM-DD'), 8);
             return {

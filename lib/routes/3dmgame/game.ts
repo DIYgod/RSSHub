@@ -33,12 +33,12 @@ async function handler(ctx) {
     const listSelector = type === 'resource' ? $('.ZQ_Left .Llis_4 .lis li, .zq_left .rigtbox7 li').toArray() : $('.ZQ_Left .lis, .zq_left .newsleft li').toArray();
 
     const list = listSelector.map((i) => {
-        i = $(i);
-        const a = i.find('a[href]').last();
-        const time = i.find('.time');
+        const $i = $(i);
+        const a = $i.find('a[href]').last();
+        const time = $i.find('.time');
         return {
             title: a.text(),
-            description: i.find('.miaoshu').text(),
+            description: $i.find('.miaoshu').text(),
             link: a.attr('href'),
             pubDate: time.length ? parseDate(time.text().trim()) : null, // 2020-12-31
         };

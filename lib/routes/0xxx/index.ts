@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('table#home-table tr:not(.gore)')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const $categoryEl: Cheerio<Element> = $el.find('td.category');
@@ -44,11 +44,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                category: $categoryEl.html(),
-                catalogue: $catalogueEl.html(),
+                category: $categoryEl.html() ?? undefined,
+                catalogue: $catalogueEl.html() ?? undefined,
                 title,
                 size: $el.find('td.size').text(),
-                date: $dateEl.html(),
+                date: $dateEl.html() ?? undefined,
             });
             const pubDateStr: string | undefined = $dateEl.text();
             const linkUrl: string | undefined = $el.find('td.title a').attr('href');
@@ -68,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr, 'DD.MM.YYYY') : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -81,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 const description: string | undefined =
@@ -117,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('div.logo img').attr('src') ? new URL($('div.logo img').attr('src') as string, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };
@@ -146,7 +146,7 @@ To subscribe to [Movie HD 1080p](https://0xxx.ws?category=Movie-HD-1080p), where
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
-        nfsw: true,
+        nsfw: true,
     },
     radar: [
         {

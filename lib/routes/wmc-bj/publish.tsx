@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -50,7 +50,7 @@ async function handler(ctx) {
             description: renderToString(
                 img.prop('src') ? (
                     <figure>
-                        <img src={img.prop('src').replace(/\/medium\//, '/')} />
+                        <img src={img.prop('src')!.replace(/\/medium\//, '/')} />
                     </figure>
                 ) : null
             ),
@@ -67,7 +67,7 @@ async function handler(ctx) {
         item: items,
         title,
         link: currentUrl,
-        language: 'en',
+        language: 'en' as Language,
         image,
         icon,
         logo: icon,

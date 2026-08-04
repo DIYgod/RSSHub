@@ -1,10 +1,11 @@
 import { config } from '@/config';
-import type { Collection, CollectionItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+import type { Collection, CollectionItem } from './types';
 import { header } from './utils';
 
 export const route: Route = {
@@ -109,11 +110,11 @@ async function handler(ctx) {
             const content = item.content;
 
             return {
-                title: content.type === 'article' || content.type === 'zvideo' ? content.title : content.question.title,
+                title: (content.type === 'article' || content.type === 'zvideo' ? content.title : content.question!.title)!,
                 link: content.url,
-                description: content.type === 'zvideo' ? `<img src=${content.video.url}/>` : content.content,
-                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time) * 1000),
-                category: [item.collectionTitle],
+                description: content.type === 'zvideo' ? `<img src=${content.video!.url}/>` : content.content,
+                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time)! * 1000),
+                category: [item.collectionTitle!],
             };
         }),
     };

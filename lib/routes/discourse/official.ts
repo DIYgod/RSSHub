@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
 
@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { link, key } = getConfig(ctx);
+    const { link, key } = getConfig(ctx) as unknown as { link: string; key: string };
     const path = ctx.req.param('path');
 
     const url = `${link}/${path}.rss`;
@@ -52,5 +52,5 @@ async function handler(ctx) {
         ...e,
     }));
 
-    return { item: feed.items, ...feed };
+    return { item: feed.items, ...feed } as unknown as Data;
 }

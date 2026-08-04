@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -69,10 +69,10 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#focusNews > div.focusItem[type=article]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('div.focusTitle > span').text();
             const link = rootUrl + $(item).find('a:nth-child(1)').attr('href');
-            const pubDate = parseDate($(item).attr('edittime'), 'YYYYMMDDHHmmss');
+            const pubDate = parseDate($(item).attr('edittime')!, 'YYYYMMDDHHmmss');
 
             return {
                 title,
@@ -83,14 +83,14 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map(async (item) => {
-            const desc = await cache.tryGet(item.link, async () => {
+            const desc = await cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const $ = load(detailResponse.data);
                 const imageUrl = rootUrl + $('img').eq(0).attr('src');
                 const content = $('div.breakingNewsContent').html();
                 const description = renderArticleDescription({
                     imageUrl,
-                    content,
+                    content: content ?? undefined,
                 });
 
                 return description;

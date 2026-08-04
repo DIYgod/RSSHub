@@ -73,7 +73,7 @@ export const parseList = async (
                         .attr('content')
                         ?.split(',')
                         .map((s) => s.trim());
-                    $1 = load($1('.articleBody').html(), null, false);
+                    $1 = load($1('.articleBody').html()!, null, false);
                     images = [{ url: ldJson.image[0].url }];
                 } else {
                     category = ldJson.keywords?.split(',');

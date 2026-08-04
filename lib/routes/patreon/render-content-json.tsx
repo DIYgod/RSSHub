@@ -1,4 +1,6 @@
+import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
+import type { JSX } from 'hono/jsx/jsx-runtime';
 
 interface ContentNode {
     type: string;
@@ -45,7 +47,7 @@ const ContentNode = ({ node }: { node: ContentNode }) => {
             return <br />;
         case 'heading': {
             const level = Math.min(6, Math.max(1, Number(node.attrs?.level) || 3));
-            const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+            const Tag = `h${level}` as unknown as FC;
             return (
                 <Tag>
                     {node.content?.map((child, index) => (

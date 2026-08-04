@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -70,20 +70,20 @@ export async function handler(ctx) {
     let items = $('table.gltc tbody tr')
         .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : needImages ? 16 : 26)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('div.glink').text(),
-                author: item.find('td.glhide div a').text(),
-                link: item.find('td.glname a').attr('href'),
-                pubDate: parseDate(item.find('div.ir').prev().text()),
-                category: item
+                title: $item.find('div.glink').text(),
+                author: $item.find('td.glhide div a').text(),
+                link: $item.find('td.glname a').attr('href'),
+                pubDate: parseDate($item.find('div.ir').prev().text()),
+                category: $item
                     .find('div.gt')
                     .toArray()
-                    .map((tag) => $(tag).attr('title').replace(/^:/, '')),
-                description: needImages ? '' : `<img src="${item.find('div.glthumb div img').attr('data-src') ?? item.find('div.glthumb div img').attr('src')}">`,
-                enclosure_url: needTorrents && item.find('div.gldown a img[title="Show torrents"]').length > 0 ? item.find('.gldown a').attr('href') : undefined,
+                    .map((tag) => $(tag).attr('title')!.replace(/^:/, '')),
+                description: needImages ? '' : `<img src="${$item.find('div.glthumb div img').attr('data-src') ?? $item.find('div.glthumb div img').attr('src')}">`,
+                enclosure_url: needTorrents && $item.find('div.gldown a img[title="Show torrents"]').length > 0 ? $item.find('.gldown a').attr('href') : undefined,
             };
         });
 
@@ -91,7 +91,7 @@ export async function handler(ctx) {
         items.map(async (item) => {
             if (item.enclosure_url) {
                 let forms = '',
-                    torrents = await cache.get(item.enclosure_url);
+                    torrents: any = await cache.get(item.enclosure_url);
 
                 if (!torrents) {
                     const torrentResponse = await got({
@@ -102,15 +102,15 @@ export async function handler(ctx) {
                     const torrent = load(torrentResponse.data);
 
                     torrent('h1, input[name="torrent_info"]').remove();
-                    forms = torrent('form').parent().html();
+                    forms = torrent('form').parent().html() ?? '';
 
                     torrents = torrent('table tbody tr td a')
                         .toArray()
                         .map((t) => {
-                            t = torrent(t);
-                            return { link: t.attr('href'), title: t.text() };
+                            const $t = torrent(t);
+                            return { link: $t.attr('href'), title: $t.text() };
                         });
-                    cache.set(item.enclosure_url, torrents);
+                    cache.set(item.enclosure_url, torrents ?? '');
                 }
                 item.description += forms;
                 item.enclosure_url = torrents[0].link;
@@ -118,7 +118,7 @@ export async function handler(ctx) {
             }
 
             if (needImages) {
-                let images = await cache.get(item.link);
+                let images: any = await cache.get(item.link!);
 
                 if (!images) {
                     const imageResponse = await got({
@@ -132,7 +132,7 @@ export async function handler(ctx) {
                         content('.gdtm a')
                             .toArray()
                             .map((i) =>
-                                cache.tryGet(content(i).attr('href'), async () => {
+                                cache.tryGet(content(i).attr('href')!, async () => {
                                     const imageResponse = await got({
                                         method: 'get',
                                         url: content(i).attr('href'),
@@ -140,11 +140,11 @@ export async function handler(ctx) {
 
                                     const image = load(imageResponse.data);
 
-                                    return image('#img').attr('src');
+                                    return image('#img').attr('src')!;
                                 })
                             )
                     );
-                    cache.set(item.link, images);
+                    cache.set(item.link!, images);
                 }
                 item.description += renderToString(
                     <>

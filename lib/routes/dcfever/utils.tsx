@@ -61,7 +61,7 @@ const parseItem = (item) =>
         const pageLinks = $('.article_multi_page a')
             .not('.selected')
             .toArray()
-            .map((i) => ({ link: new URL($(i).attr('href'), item.link).href }));
+            .map((i) => ({ link: new URL($(i).attr('href')!, item.link).href }));
 
         if (pageLinks.length) {
             const pages = await Promise.all(
@@ -71,7 +71,7 @@ const parseItem = (item) =>
                     return $('div[itemprop="articleBody"]').html();
                 })
             );
-            content.append(pages);
+            content.append(pages as unknown as string);
         }
 
         content.find('img').each((_, e) => {
@@ -95,7 +95,7 @@ const parseItem = (item) =>
         });
 
         item.description = content.html();
-        item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content'));
+        item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
 
         return item;
     });

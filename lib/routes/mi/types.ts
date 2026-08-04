@@ -28,6 +28,7 @@ export interface CrowdfundingDetailInfo {
     project_desc: string;
     project_id: number;
     project_name: string;
+    send_info: string;
     start_time: number;
     start_time_desc: string; // injected
     support_list: CrowdfundingDetailSupportList[];

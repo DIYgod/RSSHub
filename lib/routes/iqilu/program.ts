@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,16 +53,16 @@ async function handler(ctx) {
     let items = $('#jmzhanshi1 dl')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').first();
-            const image = item.find('img').first();
+            const a = $item.find('a').first();
+            const image = $item.find('img').first();
 
-            item.find('dd').last().remove();
+            $item.find('dd').last().remove();
 
             return {
-                title: a.prop('title'),
+                title: a.prop('title') ?? '',
                 link: a.prop('href'),
                 description: renderDescription({
                     image: {
@@ -71,11 +71,11 @@ async function handler(ctx) {
                     },
                 }),
                 pubDate: parseDate(
-                    item
+                    $item
                         .find('dd')
                         .last()
                         .text()
-                        .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                        .match(/(\d{4}-\d{2}-\d{2})/)![1]
                 ),
                 itunes_item_image: image.prop('src'),
             };
@@ -83,7 +83,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -109,7 +109,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
     const author = $('div.host_pic dl dd a')
         .toArray()
         .map((a) => $(a).text())
@@ -120,7 +120,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('div.s_logo img').prop('src'),
         icon,
         logo: icon,

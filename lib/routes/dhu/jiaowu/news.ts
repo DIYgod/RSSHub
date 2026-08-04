@@ -45,9 +45,9 @@ async function handler(ctx) {
         $('.list2 > li')
             .toArray()
             .map(async (item) => {
-                item = $(item);
-                const newsTitle = item.find('.news_title > a');
-                const newsMeta = item.find('.news_meta');
+                const $item = $(item);
+                const newsTitle = $item.find('.news_title > a');
+                const newsMeta = $item.find('.news_meta');
 
                 // article meta
                 const link = newsTitle.attr('href');
@@ -64,7 +64,7 @@ async function handler(ctx) {
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);
-                        description = $('.wp_articlecontent').html();
+                        description = $('.wp_articlecontent').html() ?? '';
                     } catch {
                         description = '';
                     }

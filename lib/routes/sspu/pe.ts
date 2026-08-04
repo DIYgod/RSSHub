@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -79,20 +79,20 @@ async function handler(ctx) {
     let items = $('table.wp_article_list_table a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: parseDate(item.prev().text()),
+                title: $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+                pubDate: parseDate($item.prev().text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.endsWith('htm')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.endsWith('htm')) {
                     const { data: detailResponse } = await got(item.link);
 
                     const content = load(detailResponse);
@@ -112,14 +112,14 @@ async function handler(ctx) {
 
     const author = '上海第二工业大学';
     const subtitle = $('title').text();
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('div.tyb_headtitle1').text(),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle,

@@ -1,9 +1,9 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
+import type { AnyNode, Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -22,15 +22,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('div.xlistNr ul li a, div.hgjjNr ul li a')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('h2').text();
-            const pubDateStr: string | undefined = $el.find('p').text().split('：', 2)[1]?.trim();
-            const linkUrl: string | undefined = $el.attr('href') ? new URL($el.attr('href') ?? '', baseUrl).href : undefined;
-            const categoryEls: Array<Cheerio<Element>> = [$el.find('h3').contents()].filter(Boolean);
+            const pubDateStr: string | undefined = $el.find('p').text().split('：', 2)[1];
+            const href: string | undefined = $el.attr('href');
+            const linkUrl: string | undefined = href ? new URL(href, baseUrl).href : undefined;
+            const categoryEls: Array<Cheerio<AnyNode>> = [$el.find('h3').contents()].filter(Boolean);
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const image: string | undefined = $el.find('div.xylist_img img').attr('src') ? new URL($el.find('div.xylist_img img').attr('src') ?? '', baseUrl).href : undefined;
+            const imageSrc: string | undefined = $el.find('div.xylist_img img').attr('src');
+            const image: string | undefined = imageSrc ? new URL(imageSrc, baseUrl).href : undefined;
             const upDatedStr: string | undefined = pubDateStr;
 
             let processedItem: DataItem = {
@@ -41,7 +43,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language,
+                language: language as Language,
             };
 
             const enclosureUrl: string | undefined = linkUrl?.endsWith('.pdf') ? linkUrl : undefined;
@@ -59,6 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     const author = '联合资信评估股份有限公司';
+    const logoSrc: string | undefined = $('h1.logo a img').attr('src');
 
     return {
         title: `${author} - ${$('title').text()}`,
@@ -66,9 +69,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('h1.logo a img').attr('src') ? new URL($('h1.logo a img').attr('src') ?? '', baseUrl).href : undefined,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

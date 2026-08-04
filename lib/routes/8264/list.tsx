@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -103,20 +103,20 @@ async function handler(ctx) {
         .find('a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.prop('href');
+            const link = $item.prop('href');
 
             return {
-                title: item.text(),
-                link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -127,7 +127,7 @@ async function handler(ctx) {
                 content('i.pstatus').remove();
                 content('div.crly').remove();
 
-                const pubDate = content('span.pub-time').text() || content('span.fby span').first().prop('title') || content('span.fby').first().text().split('发表于').pop().trim();
+                const pubDate = content('span.pub-time').text() || content('span.fby span').first().prop('title') || content('span.fby').first().text().split('发表于').pop()!.trim();
 
                 content('img').each((_, el) => {
                     content(el).replaceWith(
@@ -160,7 +160,7 @@ async function handler(ctx) {
         title: `${$('span.country, h2').text()} - ${description.split(',').pop()}`,
         link: currentUrl,
         description,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content').trim(),

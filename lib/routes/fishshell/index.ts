@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ async function handler() {
     return {
         link,
         title: 'Release notes — fish-shell',
-        language: 'en',
+        language: 'en' as Language,
         item: $('#release-notes > section')
             .toArray()
             .map((item) => {
@@ -37,7 +37,7 @@ async function handler() {
                 const date = title.match(/\(released (.+?)\)/)?.[1];
                 return {
                     title,
-                    link: new URL($(item).find('a').attr('href'), link).href,
+                    link: new URL($(item).find('a').attr('href')!, link).href,
                     pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
                     description: $(item).html(),
                 };

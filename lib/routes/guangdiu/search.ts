@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -32,18 +32,20 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#mainleft > div.zkcontent > div.gooditem')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a.goodname').text().trim(),
-            link: `${host}/${$(item).find('a.goodname').attr('href')}`,
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a.goodname').text().trim(),
+                link: `${host}/${$(item).find('a.goodname').attr('href')}`,
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = $('#dabstract').html() + $('a.dgotobutton').html('前往购买');
+                item.description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
                 item.pubDate = parseRelativeDate($('span.latesttime').text());
 
                 return item;
@@ -54,7 +56,7 @@ async function handler(ctx) {
     const match = /q=(.+)/.exec(query);
 
     return {
-        title: `逛丢 - ${match[1]}`,
+        title: `逛丢 - ${match![1]}`,
         link: url,
         item: items,
     };

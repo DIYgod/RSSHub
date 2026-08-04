@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -62,32 +62,32 @@ export async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h2.entry-title a');
+            const a = $item.find('h2.entry-title a');
 
             return {
                 title: a.prop('title'),
                 link: a.prop('href'),
-                description: item.find('div.entry-excerpt').html(),
-                author: item
+                description: $item.find('div.entry-excerpt').html(),
+                author: $item
                     .find('span.meta-author a')
                     .toArray()
                     .map((a) => $(a).prop('title'))
                     .join(' / '),
-                category: item
+                category: $item
                     .find('span.meta-category-dot a[rel="category"]')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: `liulinblog-${item.prop('id')}`,
-                pubDate: parseDate(item.find('span.meta-date time').prop('datetime')),
-                comments: item.find('span.meta-comment').text() ? Number(item.find('span.meta-comment').text().trim()) : 0,
+                guid: `liulinblog-${$item.prop('id')}`,
+                pubDate: parseDate($item.find('span.meta-date time').prop('datetime')),
+                comments: $item.find('span.meta-comment').text() ? Number($item.find('span.meta-comment').text().trim()) : 0,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -130,7 +130,7 @@ export async function handler(ctx) {
         title: `${title} - ${subPath === '/' ? '最新' : $('h1.term-title').text().split('搜索到', 1)[0]}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('img.logo').prop('src'),
         icon,
         logo: icon,

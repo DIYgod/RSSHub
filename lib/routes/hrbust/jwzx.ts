@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -55,9 +55,9 @@ async function handler(ctx) {
 
     const list = $('div.articleList li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const title = element.find('a').text().trim();
             const pubDateText = element.find('span').text();
             const pubDate = timezone(parseDate(pubDateText), 8);
@@ -81,7 +81,10 @@ async function handler(ctx) {
                 const body = $('div.body');
                 body.find('[style]').removeAttr('style');
                 body.find('font').contents().unwrap();
-                body.html(body.html()?.replaceAll('&nbsp;', ''));
+                const cleaned = body.html()?.replaceAll('&nbsp;', '');
+                if (cleaned !== undefined) {
+                    body.html(cleaned);
+                }
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
                 if (item.description === null) {
@@ -95,7 +98,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学教务处`,
         link: columnUrl,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

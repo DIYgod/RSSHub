@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -60,14 +60,16 @@ async function handler(ctx) {
     const list = $('div.issue-item')
         .slice(0, 10)
         .toArray()
-        .map((item) => ({
-            title: $(item).find('h5.issue-item__title').text(),
-            link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
-            pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('h5.issue-item__title').text(),
+                link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
+                pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
+            })
+        );
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link, {
                     headers: {
                         referer: cateUrl,
@@ -76,7 +78,7 @@ async function handler(ctx) {
                     },
                 });
                 const detail = load(detailResponse.data);
-                item.description = renderDescription(detail('div.accordion-tabbed.loa-accordion').text(), detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html());
+                item.description = renderDescription(detail('div.accordion-tabbed.loa-accordion').text(), detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html() ?? '');
 
                 return item;
             })

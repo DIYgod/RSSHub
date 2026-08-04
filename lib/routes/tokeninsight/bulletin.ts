@@ -48,7 +48,7 @@ async function handler(ctx) {
         const description = await cache.tryGet(articleUrl, async () => {
             const res = await got(articleUrl);
             const $ = load(res.data);
-            return $('.detail_html_box').html();
+            return $('.detail_html_box').html() ?? '';
         });
         return {
             // 文章标题

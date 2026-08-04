@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,20 +40,20 @@ async function handler(ctx: Context): Promise<Data> {
     const $ = load(data);
     const list = $('#main .section li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('a').text();
-            const pubDate = parseDate(element.find('time').attr('datetime'));
+            const pubDate = parseDate(element.find('time').attr('datetime')!);
             return {
                 title,
-                link: new URL(element.find('a').attr('href'), 'https://ceph.io').href,
+                link: new URL(element.find('a').attr('href')!, 'https://ceph.io').href,
                 pubDate,
             };
         });
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const itemReponse = await got.get(item.link);
                 const data = itemReponse.data;
                 const item$ = load(data);

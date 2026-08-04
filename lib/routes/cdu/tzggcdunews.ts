@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -39,7 +39,7 @@ async function handler() {
     const list = $('.row-f1 ul.ul-mzw-news-a2 li a.con')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const element = $(item);
             // 优先使用title属性内容，避免内容被截断
             const title = element.attr('title') || element.find('.tit').text().trim();
@@ -50,7 +50,7 @@ async function handler() {
             return {
                 title,
                 // 处理相对路径链接
-                link: link.startsWith('http') ? link : new URL(link, baseUrl).href,
+                link: link!.startsWith('http') ? link : new URL(link!, baseUrl).href,
                 pubDate,
                 author: '成都大学官网通知公告',
             };
@@ -58,7 +58,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got.get(item.link);
                 const $ = load(response.data);
 

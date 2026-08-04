@@ -3,11 +3,12 @@ import path from 'node:path';
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
 
-const headers = {};
+const headers: Record<string, any> = {};
 const has_cookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
 const from_ex = has_cookie && config.ehentai.igneous;
 if (has_cookie) {
@@ -104,7 +105,12 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
         const description = `<img src='${thumbnail}' alt='thumbnail'>`;
         if (title && link) {
-            const item = { title, description, pubDate, link };
+            const item: DataItem & { bittorrent_page_url?: string } = {
+                title,
+                description,
+                pubDate,
+                link,
+            };
             if (get_bittorrent) {
                 const el_down = el.find('div.gldown');
                 const bittorrent_page_url = el_down.find('a').attr('href');
@@ -130,13 +136,13 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
     }
 
-    const item_Promises = [];
+    const item_Promises: Array<Promise<any>> = [];
     galleries.children().each((index, element) => {
         item_Promises.push(parseElement(cache, element));
     });
     const items_with_null = await Promise.all(item_Promises);
 
-    const items = [];
+    const items: any[] = [];
     for (const item of items_with_null) {
         if (item) {
             items.push(item);

@@ -61,7 +61,7 @@ async function handler(ctx) {
             const res = await got(reportUrl);
             const $ = load(res.data);
             const description = $('.detail_html_box').html();
-            return description;
+            return description ?? '';
         });
         return {
             // 文章标题

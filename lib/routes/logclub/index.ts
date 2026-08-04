@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -48,21 +48,21 @@ export async function handler(ctx) {
     let items = $('li.layui-row, li.layui-timeline-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('div.newslist-txt h3 a, a.article_title').first();
-            const image = item.find('img.img-hover').prop('src')?.split(/\?/, 1)[0] ?? undefined;
+            const a = $item.find('div.newslist-txt h3 a, a.article_title').first();
+            const image = $item.find('img.img-hover').prop('src')?.split(/\?/, 1)[0] ?? undefined;
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
+                link: new URL(a.prop('href')!, rootUrl).href,
                 description: renderDescription({
                     image: {
                         src: image,
                         alt: a.text(),
                     },
-                    intro: item.find('p.newslist-intro, div.newslist-info-intro').text(),
+                    intro: $item.find('p.newslist-intro, div.newslist-info-intro').text(),
                 }),
                 itunes_item_image: image,
             };
@@ -70,22 +70,22 @@ export async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
 
                 content('a.dl_file').each((_, el) => {
-                    el = content(el);
-                    el.parent().remove();
+                    const $el = content(el);
+                    $el.parent().remove();
                 });
                 content('img').each((_, el) => {
-                    el = content(el);
-                    el.replaceWith(
+                    const $el = content(el);
+                    $el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                                alt: el.prop('title'),
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
                             },
                         })
                     );
@@ -104,7 +104,7 @@ export async function handler(ctx) {
                         src: item.enclosure_url,
                         type: item.enclosure_type,
                     },
-                    description: content('div.article-cont').html(),
+                    description: content('div.article-cont').html() ?? undefined,
                 });
                 item.author = content('div.article-info-r a')
                     .toArray()
@@ -131,7 +131,7 @@ export async function handler(ctx) {
                               )
                                   .text()
                                   .split(/：/)
-                                  .pop()
+                                  .pop()!
                                   .trim()
                           )
                         : parseDate(content('span.aritlceIn-time').text().trim());
@@ -141,7 +141,7 @@ export async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
     const author = subtitle.split(/,/, 1)[0];
 
@@ -150,8 +150,8 @@ export async function handler(ctx) {
         title: $('title').text().split(/-/, 1)[0].trim(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
-        image: new URL($('div.logo_img img').prop('src'), rootUrl).href,
+        language: 'zh' as Language,
+        image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),

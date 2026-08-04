@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,18 +43,18 @@ async function handler(ctx) {
 
     let items = $('.article__title a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.attr('href'), currentUrl).href,
+                title: $item.text(),
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
@@ -62,7 +62,7 @@ async function handler(ctx) {
 
                 const ldJson = JSON.parse(content('script[type="application/ld+json"]:contains("NewsArticle")').text());
 
-                item.description = content('.t-content__chapo').prop('outerHTML') + content('.t-content__main-media').prop('outerHTML') + content('.t-content__body').html();
+                item.description = content('.t-content__chapo').prop('outerHTML')! + content('.t-content__main-media').prop('outerHTML')! + content('.t-content__body').html();
                 item.pubDate = ldJson.datePublished ? parseDate(ldJson.datePublished) : undefined;
                 item.updated = ldJson.dateModified ? parseDate(ldJson.dateModified) : undefined;
                 item.author = ldJson.author?.map((author) => author.name).join(', ');
@@ -93,9 +93,9 @@ async function handler(ctx) {
         description: $('meta[name="description"]').attr('content'),
         link: currentUrl,
         image: $('meta[property="og:image"]').attr('content'),
-        icon: new URL($('link[rel="apple-touch-icon"]').attr('href'), currentUrl).href,
-        logo: new URL($('link[rel="apple-touch-icon"]').attr('href'), currentUrl).href,
+        icon: new URL($('link[rel="apple-touch-icon"]').attr('href')!, currentUrl).href,
+        logo: new URL($('link[rel="apple-touch-icon"]').attr('href')!, currentUrl).href,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

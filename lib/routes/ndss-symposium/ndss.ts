@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,13 +44,13 @@ async function handler() {
 
             const divMatch = $('div h3')
                 .toArray()
-                .map((item) => {
-                    item = $(item);
-                    const title = item.text().trim();
+                .map((item): DataItem => {
+                    const $item = $(item);
+                    const title = $item.text().trim();
                     return {
                         title,
-                        author: item.siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
-                        link: item.siblings('a').attr('href'),
+                        author: $item.siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
+                        link: $item.siblings('a').attr('href'),
                         pubDate,
                     };
                 });
@@ -77,11 +77,11 @@ async function handler() {
             const pMatch = $('p strong')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
-                    const title = item.text().trim();
+                    const $item = $(item);
+                    const title = $item.text().trim();
                     return {
                         title,
-                        author: item
+                        author: $item
                             .parent()
                             .contents()
                             .filter((_, e) => e.nodeType === 3)

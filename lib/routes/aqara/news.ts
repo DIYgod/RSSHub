@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,14 +49,14 @@ async function handler(ctx) {
         )
     );
 
-    const icon = $('link[rel="shortcut icon"]').prop('href').split('?', 1)[0];
+    const icon = $('link[rel="shortcut icon"]').prop('href')!.split('?', 1)[0];
 
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('meta[property="og:image"]').prop('content'),
         icon,
         logo: icon,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -49,9 +49,9 @@ export async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             return {
                 title: a.text(),
@@ -59,22 +59,22 @@ export async function handler(ctx) {
                 description: renderDescription({
                     images: [
                         {
-                            src: item.parent().find('div.aimg0 a img').prop('src'),
+                            src: $item.parent().find('div.aimg0 a img').prop('src'),
                             alt: a.text(),
                         },
                     ],
                 }),
-                category: item
+                category: $item
                     .find('a.aclass')
                     .toArray()
                     .map((c) => $(c).text().replaceAll('[]', '').trim()),
-                pubDate: timezone(parseDate(item.find('span.atime').text()), 8),
+                pubDate: timezone(parseDate($item.find('span.atime').text()), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -102,7 +102,7 @@ export async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: $('meta[name="author"]').prop('content'),

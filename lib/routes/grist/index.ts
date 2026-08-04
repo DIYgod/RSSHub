@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 
 import { getData, getList } from './utils';
 
@@ -32,6 +32,6 @@ async function handler() {
         description: 'Latest Articles on grist.org',
         logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
         icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

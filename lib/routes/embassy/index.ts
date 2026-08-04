@@ -40,12 +40,12 @@ async function handler(ctx) {
     const res = await got(link);
     const $ = load(res.data);
 
-    const list = [];
+    const list: any[] = [];
 
     $(config.list)
         .slice(0, 10)
         .each((i, e) => {
-            const temp = new URL($(e).attr('href'), link);
+            const temp = new URL($(e).attr('href')!, link);
             if (temp.hostname === hostname) {
                 list.push(temp);
             }

@@ -89,7 +89,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     items = await Promise.all(
         items.map((item: DataItem) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.data);
                 const nextData = JSON.parse(content('script#__NEXT_DATA__').text());

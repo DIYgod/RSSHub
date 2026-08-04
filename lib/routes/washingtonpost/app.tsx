@@ -3,11 +3,11 @@ import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
+import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
-import type { JSX } from 'hono/jsx/jsx-runtime';
 import { FetchError } from 'ofetch';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -40,7 +40,7 @@ For example, the category for <https://www.washingtonpost.com/national/investiga
 };
 
 function handleDuplicates(array) {
-    const objects = {};
+    const objects: Record<string, any> = {};
     for (const obj of array) {
         const existing = objects[obj.id];
         objects[obj.id] = existing ? Object.assign(existing, obj) : obj;
@@ -68,7 +68,7 @@ async function handler(ctx) {
         main.items[0].items
             .filter((item) => item.is_from_feed === true)
             .map((item) => {
-                const object = {
+                const object: DataItem = {
                     id: item.id,
                     title: item.headline.text,
                     link: item.link.url,
@@ -84,7 +84,7 @@ async function handler(ctx) {
     const feed = handleDuplicates(list);
     const items = await Promise.all(
         feed.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<any> => {
                 let response;
                 try {
                     response = await got(`https://rainbowapi-a.wpdigital.net/rainbow-data-service/rainbow/content-by-url.json?followLinks=false&url=${item.link}`, { headers });
@@ -110,7 +110,7 @@ async function handler(ctx) {
     return {
         title,
         link,
-        item: items,
+        item: items as DataItem[],
     };
 }
 
@@ -123,7 +123,7 @@ const renderDescription = (content): string =>
                 }
 
                 if (entry.type === 'title' && entry.subtype !== 'h1') {
-                    const TitleTag = (entry.subtype || 'h2') as keyof JSX.IntrinsicElements;
+                    const TitleTag = (entry.subtype || 'h2') as unknown as FC;
                     return <TitleTag key={`title-${index}`}>{entry.mime === 'text/html' ? raw(entry.content) : entry.content}</TitleTag>;
                 }
 
@@ -138,7 +138,7 @@ const renderDescription = (content): string =>
                     }
 
                     if (entry.subtype === 'subhead') {
-                        const SubheadTag = `h${entry.subhead_level || 4}` as keyof JSX.IntrinsicElements;
+                        const SubheadTag = `h${entry.subhead_level || 4}` as unknown as FC;
                         return (
                             <SubheadTag key={`subhead-${index}`}>
                                 {entry.mime === 'text/html' ? raw(entry.content) : entry.content}

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,24 +44,24 @@ async function handler() {
 
     let items = $('.e-ep')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('h2.e-ep__title a');
+            const a = $item.find('h2.e-ep__title a');
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('.whitespace-nowrap').text()),
+                pubDate: parseDate($item.find('.whitespace-nowrap').text()),
                 enclosure_type: 'audio/mpeg',
-                enclosure_url: item.find('audio source').attr('src'),
-                itunes_item_image: item.find('.zoom-image-container-progression img').attr('src'),
+                enclosure_url: $item.find('audio source').attr('src'),
+                itunes_item_image: $item.find('.zoom-image-container-progression img').attr('src'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

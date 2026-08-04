@@ -61,7 +61,7 @@ export const route: Route = {
         return {
             title: 'AI日报',
             description: '每天三分钟关注AI行业趋势',
-            language: 'zh-cn',
+            language: 'zh-CN',
             link: 'https://www.aibase.com/zh/daily',
             item: items,
             allowEmpty: true,

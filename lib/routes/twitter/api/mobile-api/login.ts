@@ -17,7 +17,21 @@ const ENDPOINT = 'https://api.x.com/1.1/onboarding/task.json';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 
-const headers = {
+const headers: {
+    'User-Agent': string;
+    'X-Twitter-API-Version': string;
+    'X-Twitter-Client': string;
+    'X-Twitter-Client-Version': string;
+    'OS-Version': string;
+    'System-User-Agent': string;
+    'X-Twitter-Active-User': string;
+    'Content-Type': string;
+    Authorization: string;
+    // Assigned during the login flow
+    att?: string;
+    'X-Twitter-Client-DeviceID'?: string;
+    'x-guest-token'?: string;
+} = {
     'User-Agent': 'TwitterAndroid/10.21.0-release.0 (310210000-r-0) ONEPLUS+A3010/9 (OnePlus;ONEPLUS+A3010;OnePlus;OnePlus3;0;;1;2016)',
     'X-Twitter-API-Version': '5',
     'X-Twitter-Client': 'TwitterAndroid',
@@ -153,7 +167,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                         },
                     }
                 );
-                headers.att = _headers.get('att');
+                headers.att = _headers.get('att') ?? undefined;
                 let task = { data: _data };
 
                 logger.debug('Twitter login flow start.');

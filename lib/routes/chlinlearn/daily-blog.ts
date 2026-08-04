@@ -33,7 +33,7 @@ export const route: Route = {
             headers: {
                 Referer: 'https://daily-blog.chlinlearn.top/blogs/1',
                 'x-req-nonce': r,
-                'x-req-timestamp': n,
+                'x-req-timestamp': String(n),
                 'x-req-key': o,
             },
         });

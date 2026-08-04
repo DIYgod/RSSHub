@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('div.paper')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('a.title-link').text();
@@ -62,7 +62,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid,
                 id: guid,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 0) : undefined,
-                language,
+                language: language as Language,
             };
 
             const $enclosureEl: Cheerio<Element> = $el.find('a.title-pdf');
@@ -105,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
-        language,
+        language: language as Language,
         feedLink: `${targetUrl}/feed`,
         id: targetUrl,
     };

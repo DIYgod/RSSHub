@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -28,7 +28,7 @@ export const route: Route = {
 
         const articles = $('.blog-posts.hfeed .date-outer').find('.post'); // 查找文章
 
-        const list = articles.toArray().map((elem) => {
+        const list = articles.toArray().map((elem): DataItem => {
             const a = $(elem).find('.post-title a'); // 获取标题链接
             return {
                 title: a.text(), // 标题
@@ -41,8 +41,8 @@ export const route: Route = {
             list.map(
                 async (item) =>
                     // 使用缓存以避免重复请求
-                    await cache.tryGet(item.link, async () => {
-                        const response = await ofetch(item.link); // 请求文章链接
+                    await cache.tryGet(item.link!, async () => {
+                        const response = await ofetch(item.link!); // 请求文章链接
                         const $ = load(response); // 加载文章页面
 
                         // 获取文章的完整描述

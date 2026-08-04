@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -64,7 +64,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('li.cfix')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('h2 a');
 
@@ -78,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const [detailResponse, finalUrl] = await getFinalContentAndUrl(item.link);
+                const [detailResponse, finalUrl] = await getFinalContentAndUrl(item.link!);
 
                 const $$: CheerioAPI = load(detailResponse);
 
@@ -113,7 +113,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 return {
@@ -132,7 +132,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('div.cul_logo img').attr('src') ? `https:${$('div.cul_logo img').attr('src')}` : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

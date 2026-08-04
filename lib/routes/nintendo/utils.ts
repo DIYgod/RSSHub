@@ -51,7 +51,7 @@ async function loadNews(link) {
     const $ = load(data);
     let description = $('.detail-body-container').html();
     const date = $('.topics-articleHead__date').text();
-    description = description.replaceAll('src="/topics/', 'src="https://www.nintendo.com.hk/topics/');
+    description = description!.replaceAll('src="/topics/', 'src="https://www.nintendo.com.hk/topics/');
     return {
         content: description,
         pubDate: parseDate(date, 'YYYY.M.D'),

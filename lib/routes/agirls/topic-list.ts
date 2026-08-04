@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { baseUrl } from './utils';
@@ -40,11 +40,11 @@ async function handler() {
     const items = $('.ag-topic')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.ag-topic__link').text(),
-                description: item.find('.ag-topic__summery').text(),
-                link: `${baseUrl}${item.find('.ag-topic__link').attr('href')}`,
+                title: $item.find('.ag-topic__link').text(),
+                description: $item.find('.ag-topic__summery').text(),
+                link: `${baseUrl}${$item.find('.ag-topic__link').attr('href')}`,
             };
         });
 
@@ -53,6 +53,6 @@ async function handler() {
         link,
         description: $('head meta[name=description]').attr('content'),
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

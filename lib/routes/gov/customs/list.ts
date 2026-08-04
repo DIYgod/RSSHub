@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -71,11 +71,11 @@ async function handler(ctx) {
             const list = $('[class^="conList_ul"] li')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        title: item.find('a').attr('title'),
-                        link: new URL(item.find('a').attr('href'), host).href,
-                        date: parseDate(item.find('span').text()),
+                        title: $item.find('a').attr('title')!,
+                        link: new URL($item.find('a').attr('href')!, host).href,
+                        date: parseDate($item.find('span').text()),
                     };
                 });
             return list;
@@ -101,7 +101,7 @@ async function handler(ctx) {
                 const description = $('.easysite-news-peruse').html();
 
                 return {
-                    title: info.title,
+                    title: info.title!,
                     link: info.link,
                     description,
                     pubDate: date || info.date,
@@ -115,7 +115,7 @@ async function handler(ctx) {
     return {
         title: `中国海关-${channelName}`,
         link,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: out,
     };
 }

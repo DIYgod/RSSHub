@@ -45,7 +45,7 @@ export const route: Route = {
             item,
             image: $('.bookimg2>img').attr('src'),
             author: $('.booknav2>p:first-of-type>a').text(),
-            language: 'zh-cn',
+            language: 'zh-CN',
         };
     },
 };

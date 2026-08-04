@@ -18,11 +18,11 @@ const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('div.update-container')
         .slice(0, limit)
         .toArray()
-        .map((el): DataItem => {
+        .map((el): DataItem | null => {
             const $entry = $(el);
             const version = $entry.find('[data-component-part="update-label"]').text();
             if (!version) {
-                return null as unknown as DataItem;
+                return null;
             }
 
             const dateText = $entry.find('[data-component-part="update-description"]').text();
@@ -40,7 +40,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 id: `claude-code-${version}`,
             };
         })
-        .filter(Boolean);
+        .filter((item): item is DataItem => item !== null);
 
     return {
         title: 'Claude Code Changelog',

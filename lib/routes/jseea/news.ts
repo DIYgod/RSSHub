@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,23 +54,23 @@ async function handler(ctx) {
     // 获取当前页面的 list
     const list = $('div.content-list-div ul li a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item
+                title: $item
                     .contents()
                     .filter((_, e) => e.nodeType === 3)
                     .text()
                     .trim(),
-                link: `https:${item.attr('href')}`,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), 8),
+                link: `https:${$item.attr('href')}`,
+                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
         });
 
     const result = await Promise.all(
         // 遍历每一篇文章
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 item.description = await loadContent(item.link);
                 // 合并解析后的结果集作为该篇文章最终的输出结果
                 return item;

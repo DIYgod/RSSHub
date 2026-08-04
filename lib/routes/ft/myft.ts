@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
@@ -74,6 +74,6 @@ async function handler(ctx) {
         title: 'FT.com - myFT',
         link,
         description: 'FT.com - myFT',
-        item: items,
+        item: items as DataItem[],
     };
 }

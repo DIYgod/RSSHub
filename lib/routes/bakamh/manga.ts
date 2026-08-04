@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -18,7 +18,7 @@ const handler = async (ctx) => {
     const list = $('li.wp-manga-chapter')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const itemDate = $item.find('i').text().replaceAll(' ', '');
 
@@ -36,14 +36,14 @@ const handler = async (ctx) => {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 const comicpage = $('div.reading-content img');
                 const containerDiv = $('<div class="image-container"></div>');
                 comicpage.appendTo(containerDiv);
                 item.description = containerDiv.html();
-                item.pubDate = parseDate(item.pubDate, 'YYYY年M月D日');
+                item.pubDate = parseDate(item.pubDate!, 'YYYY年M月D日');
                 return item;
             })
         )

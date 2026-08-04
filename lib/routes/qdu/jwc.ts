@@ -42,15 +42,15 @@ async function handler() {
     const list = $('.notice_item').children();
     const items = await Promise.all(
         list.map((i, item) => {
-            item = $(item);
-            const itemTitle = item.find('.active').text();
-            const itemDate = item.find('span').text();
-            const path = item.find('.active').attr('href');
+            const $item = $(item);
+            const itemTitle = $item.find('.active').text();
+            const itemDate = $item.find('span').text();
+            const path = $item.find('.active').attr('href');
             let itemUrl = '';
-            itemUrl = path.startsWith('http') ? path : base + path;
+            itemUrl = (path!.startsWith('http') ? path : base + path)!;
             return cache.tryGet(itemUrl, async () => {
                 let description: string;
-                if (path.startsWith('http')) {
+                if (path!.startsWith('http')) {
                     description = itemTitle;
                 } else {
                     const result = await got(itemUrl);
@@ -58,7 +58,7 @@ async function handler() {
                     description =
                         $('title').text() === '系统提示'
                             ? itemTitle // 内网限制访问内容，仅返回标题
-                            : $('.v_news_content').html().trim();
+                            : $('.v_news_content').html()!.trim();
                 }
                 return {
                     title: itemTitle,

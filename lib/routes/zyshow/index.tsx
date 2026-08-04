@@ -40,16 +40,16 @@ async function handler(ctx) {
         .find('tr td a img.icon-play')
         .toArray()
         .map((item) => {
-            item = $(item).parentsUntil('tbody');
+            const $item = $(item).parentsUntil('tbody');
 
-            const a = item.find('a[title]').first();
-            const guests = item.find('td').eq(2).text();
+            const a = $item.find('a[title]').first();
+            const guests = $item.find('td').eq(2).text();
 
             return {
                 title: a.text(),
-                link: `${currentUrl}v/${a.attr('href').split('/v/').pop()}`,
-                pubDate: parseDate(a.text().match(/(\d{8})$/)[1], 'YYYYMMDD'),
-                description: renderToString(<ZyshowDescription date={item.find('td').first().text()} subject={item.find('td').eq(1).text()} guests={guests} link={`${currentUrl}v/${a.attr('href').split('/v/').pop()}`} />),
+                link: `${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`,
+                pubDate: parseDate(a.text().match(/(\d{8})$/)![1], 'YYYYMMDD'),
+                description: renderToString(<ZyshowDescription date={$item.find('td').first().text()} subject={$item.find('td').eq(1).text()} guests={guests} link={`${currentUrl}v/${a.attr('href')!.split('/v/').pop()}`} />),
                 category: guests.split(/,|;/),
             };
         });

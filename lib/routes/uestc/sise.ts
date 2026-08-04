@@ -86,15 +86,15 @@ async function handler(ctx) {
     const out = $(items)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             const now = dayjs();
-            let date = dayjs(now.year() + '-' + item.find('span').text().replace('/', '-'));
+            let date = dayjs(now.year() + '-' + $item.find('span').text().replace('/', '-'));
             if (now < date) {
-                date = dayjs(now.year() - 1 + '-' + item.find('span').text().replace('/', '-'));
+                date = dayjs(now.year() - 1 + '-' + $item.find('span').text().replace('/', '-'));
             }
-            const newsTitle = item.find('a').text().replace('&amp;', '').trim();
-            const newsLink = baseUrl + item.find('a').attr('href');
-            const newsPubDate = parseDate(date);
+            const newsTitle = $item.find('a').text().replace('&amp;', '').trim();
+            const newsLink = baseUrl + $item.find('a').attr('href');
+            const newsPubDate = parseDate(date.toDate());
 
             return {
                 title: newsTitle,

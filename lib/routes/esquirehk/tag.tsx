@@ -4,7 +4,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -30,23 +30,23 @@ const handler = async (ctx) => {
         ...$('div[class^="max-w-[100%]"] > div > div:nth-child(2) > a')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.text().trim(),
-                    link: new URL(item.attr('href'), currentUrl).href,
+                    title: $item.text().trim(),
+                    link: new URL($item.attr('href')!, currentUrl).href,
                 };
             }),
         ...$('div.list-item > div > div:nth-child(2) > a')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.text().trim(),
-                    link: new URL(item.attr('href'), currentUrl).href,
+                    title: $item.text().trim(),
+                    link: new URL($item.attr('href')!, currentUrl).href,
                 };
             }),
     ]
-        .map((item) => ({
+        .map((item): DataItem & { slug: string; link: string } => ({
             ...item,
             slug: item.link.replace(rootUrl, ''),
         }))

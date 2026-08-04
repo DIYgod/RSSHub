@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -40,10 +40,10 @@ async function handler(ctx) {
     const $ = load(response);
 
     $('h4[data-identifyelement]').each((_, el) => {
-        el = $(el);
+        const $el = $(el);
 
-        if (el.text().trim() === '') {
-            el.remove();
+        if ($el.text().trim() === '') {
+            $el.remove();
         }
     });
 
@@ -51,10 +51,10 @@ async function handler(ctx) {
         .toArray()
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
-            const description = $.html(item.nextUntil('h4'));
+            const title = $item.text();
+            const description = $.html($item.nextUntil('h4'));
             const content = load(description);
 
             return {
@@ -71,14 +71,14 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const titleSplits = title.split(/—/);
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title,
         link: currentUrl,
         description: titleSplits[0],
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle: titleSplits[0],

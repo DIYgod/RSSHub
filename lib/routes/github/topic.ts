@@ -49,17 +49,17 @@ async function handler(ctx) {
         item: $('article.border')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
 
-                const title = item.find('h3').text().trim();
+                const title = $item.find('h3').text().trim();
                 const author = title.split('/', 1)[0];
-                const description = (item.find('a img').prop('outerHTML') ?? '') + item.find('div > div > p').text();
-                const link = `https://github.com${item.find('h3 a').last().attr('href')}`;
-                const category = item
+                const description = ($item.find('a img').prop('outerHTML') ?? '') + $item.find('div > div > p').text();
+                const link = `https://github.com${$item.find('h3 a').last().attr('href')}`;
+                const category = $item
                     .find('.topic-tag')
                     .toArray()
                     .map((item) => $(item).text());
-                const pubDate = parseDate(item.find('relative-time').attr('datetime'));
+                const pubDate = parseDate($item.find('relative-time').attr('datetime')!);
 
                 return {
                     title,

@@ -40,7 +40,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const $trList = $('div > div > table > tbody > tr');
     const items = $trList
-        .filter((_, el) => !publicOnly || $(el).find('i').attr('class').includes('green'))
+        .filter((_, el) => !publicOnly || $(el).find('i').attr('class')!.includes('green'))
         .toArray()
         .map((el) => {
             const $tdList = $(el).find('td');

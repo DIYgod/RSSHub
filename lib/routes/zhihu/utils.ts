@@ -161,7 +161,7 @@ const generateZseCk = async (url: string, apiPath: string, configuredDc0: string
             configurable: true,
             get: cookieDescriptor.get,
             set(value: string) {
-                Reflect.apply(cookieDescriptor.set, window.document, [value]);
+                Reflect.apply(cookieDescriptor.set!, window.document, [value]);
                 const token = value.match(/__zse_ck=([^;]+)/)?.[1];
                 if (token?.includes('-')) {
                     resolve(token);

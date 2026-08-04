@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,17 +58,17 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.view-list-title')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
+                title: $item.find('a').text(),
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
@@ -77,7 +77,7 @@ async function handler(ctx) {
                     .toArray()
                     .map((item) => $(item).find('a').text());
                 item.pubDate = timezone(parseDate($('.submitted span').text()), 8);
-                item.description = ($('.field-name-field-video-id .field-items').text() ? $('.field-name-field-video-id input').attr('value') : '') + $('.post_text_s .field-items').html();
+                item.description = ($('.field-name-field-video-id .field-items').text() ? $('.field-name-field-video-id input').attr('value') : '')! + $('.post_text_s .field-items').html()!;
 
                 return item;
             })
@@ -87,7 +87,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link: url,
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
         item: items,
     };
 }

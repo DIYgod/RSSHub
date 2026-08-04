@@ -37,12 +37,12 @@ async function handler() {
     const list = $('div.news-item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: '「' + item.find('a.dw').text() + '」' + item.find('a.dw').next().text(),
-                description: item.find('div.detail').text(),
-                pubDate: parseDate(item.find('div.month').text() + '-' + item.find('div.day').text(), 'YYYY-MM-DD'),
-                link: item.find('a.dw').next().attr('href'),
+                title: '「' + $item.find('a.dw').text() + '」' + $item.find('a.dw').next().text(),
+                description: $item.find('div.detail').text(),
+                pubDate: parseDate($item.find('div.month').text() + '-' + $item.find('div.day').text(), 'YYYY-MM-DD'),
+                link: $item.find('a.dw').next().attr('href'),
             };
         });
 

@@ -52,7 +52,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.description = $('.news_contents_editor').html();
+                item.description = $('.news_contents_editor').html() ?? '';
                 return item;
             })
         )

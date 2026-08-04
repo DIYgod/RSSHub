@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,7 +38,7 @@ async function handler() {
     const list = $('.ll_con_r_b li')
         .slice(0, 15)
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('.ll_con_r_b_title a').text();
             const link = element.find('a').attr('href');
@@ -46,7 +46,7 @@ async function handler() {
                 .find('.ll_con_r_b_time')
                 .text()
                 .match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = timezone(parseDate(date), 8);
+            const pubDate = timezone(parseDate(date?.[0] ?? ''), 8);
 
             return {
                 title,
@@ -58,7 +58,7 @@ async function handler() {
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const itemReponse = await got.get(item.link);
                 const data = itemReponse.data;
                 const itemElement = load(data);

@@ -171,7 +171,7 @@ describe('request-rewriter fetch retry', () => {
         const wrappedFetch = await loadWrappedFetch(proxyMock);
         const fetchSpy = vi.spyOn(undici, 'fetch');
         fetchSpy.mockRejectedValueOnce(new Error('boom'));
-        fetchSpy.mockResolvedValueOnce(new Response('ok'));
+        fetchSpy.mockResolvedValueOnce(new Response('ok') as unknown as Awaited<ReturnType<typeof undici.fetch>>);
 
         const response = await wrappedFetch('http://example.com/resource', {
             headers: new Headers({
@@ -184,7 +184,7 @@ describe('request-rewriter fetch retry', () => {
         expect(proxyMock.markProxyFailed).toHaveBeenCalledWith('http://proxy1.test');
         expect(proxyMock.getDispatcherForProxy).toHaveBeenCalledWith(proxies[1]);
 
-        const requestArg = fetchSpy.mock.calls[0][0] as Request;
+        const requestArg = fetchSpy.mock.calls[0][0] as unknown as Request;
         expect(requestArg.headers.get('x-prefer-proxy')).toBeNull();
     });
 
@@ -209,7 +209,7 @@ describe('request-rewriter fetch retry', () => {
         const wrappedFetch = await loadWrappedFetch(proxyMock);
         const fetchSpy = vi.spyOn(undici, 'fetch');
         fetchSpy.mockRejectedValueOnce(new Error('boom'));
-        fetchSpy.mockResolvedValueOnce(new Response('ok'));
+        fetchSpy.mockResolvedValueOnce(new Response('ok') as unknown as Awaited<ReturnType<typeof undici.fetch>>);
 
         await wrappedFetch('http://example.com/resource', {
             headers: {

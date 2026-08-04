@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -249,13 +249,13 @@ async function handler(ctx) {
     let items = $('ul.ch_type3_list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('h3').text().trim(),
-                link: new URL(item.prop('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('em').text()), 8),
+                title: $item.find('h3').text().trim(),
+                link: new URL($item.prop('href')!, currentUrl).href,
+                pubDate: timezone(parseDate($item.find('em').text()), 8),
             };
         });
 
@@ -287,7 +287,7 @@ async function handler(ctx) {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo_cs a img').prop('src'), currentUrl).href;
+    const image = new URL($('div.logo_cs a img').prop('src')!, currentUrl).href;
     const icon = new URL('favicon.ico', rootUrl).href;
 
     return {
@@ -295,11 +295,11 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="Description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,
         subtitle: $('meta[name="Keywords"]').prop('content'),
-        author: title.split('-').pop().trim(),
+        author: title.split('-').pop()!.trim(),
     };
 }

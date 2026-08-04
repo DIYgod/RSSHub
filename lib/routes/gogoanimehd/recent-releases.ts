@@ -48,7 +48,7 @@ async function handler() {
         const formattedDescription = `<h2>${episode}</h2><br/><img src='${img}' alt='${title}'>`;
 
         const structuredData = {
-            title,
+            title: title!,
             description: formattedDescription,
             link,
         };

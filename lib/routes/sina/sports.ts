@@ -38,10 +38,10 @@ async function handler(ctx) {
     const list = $(query)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href').replace('http://', 'https://'),
+                title: $item.text(),
+                link: $item.attr('href')!.replace('http://', 'https://'),
             };
         });
 

@@ -44,7 +44,7 @@ async function handler(ctx) {
         item: list.toArray().map((item) => ({
             title: $(item).find('h4 a').text().trim(),
             link: baseUrl + $(item).find('h4 a').attr('href'),
-            pubDate: parseDate($(item).attr('data-created-at') * 1000),
+            pubDate: parseDate(Number($(item).attr('data-created-at')) * 1000),
         })),
     };
 }

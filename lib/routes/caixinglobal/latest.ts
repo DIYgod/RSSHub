@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -74,7 +74,7 @@ async function handler(ctx) {
                     content = data.data.content;
                 }
 
-                item.description = $('.cons-photo').prop('outerHTML') + content;
+                item.description = $('.cons-photo').prop('outerHTML')! + content!;
 
                 return item;
             })
@@ -84,7 +84,7 @@ async function handler(ctx) {
     return {
         title: 'The Latest Top Headlines on China - Caixin Global',
         description: 'The latest headlines on China finance, companies, politics, international affairs and other China-related issues from around the world. Caixin Global',
-        language: 'en',
+        language: 'en' as Language,
         link: 'https://www.caixinglobal.com/news/',
         item: items,
     };

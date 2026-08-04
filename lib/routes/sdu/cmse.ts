@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -39,21 +39,21 @@ async function handler(ctx) {
 
     let item = $('.article_list li')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('a');
             return {
                 title: a.text().trim(),
                 link: a.attr('href'),
-                pubDate: parseDate(e.find('.date').text(), 'YYYY/MM/DD'),
+                pubDate: parseDate($e.find('.date').text(), 'YYYY/MM/DD'),
             };
         });
 
     item = await Promise.all(
         item
-            .filter((e) => e.link.startsWith('../info'))
+            .filter((e) => e.link!.startsWith('../info'))
             .map((item) => {
-                item.link = new URL(item.link.slice('3'), host).href;
+                item.link = new URL(item.link!.slice(3), host).href;
                 return cache.tryGet(item.link, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
@@ -65,7 +65,7 @@ async function handler(ctx) {
                             .eq(1)
                             .text()
                             .trim()
-                            .match(/作者：(.*)/)[1] || '山东大学材料科学与工程学院';
+                            .match(/作者：(.*)/)![1] || '山东大学材料科学与工程学院';
                     $('.contentTitle, .contentTitle2').remove();
                     item.description = $('.content_detail').html();
 

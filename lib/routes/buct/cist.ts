@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -32,15 +32,17 @@ async function handler() {
     const $ = load(response.data);
     const list = $('ul.wp_article_list > li.list_item')
         .toArray()
-        .map((item) => ({
-            pubDate: $(item).find('.Article_PublishDate').text(),
-            title: $(item).find('a').attr('title'),
-            link: `${rootUrl}${$(item).find('a').attr('href')}`,
-        }));
+        .map(
+            (item): DataItem => ({
+                pubDate: $(item).find('.Article_PublishDate').text(),
+                title: $(item).find('a').attr('title')!,
+                link: `${rootUrl}${$(item).find('a').attr('href')}`,
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 

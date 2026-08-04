@@ -189,7 +189,7 @@ async function handlePostList(type: string, sub: string): Promise<DataItem[]> {
     const category = categoryMap[type];
     if (sub === 'all') {
         const subMap = category.sub;
-        urlList = Object.values(subMap).map((value) => {
+        urlList = Object.values<{ path: string }>(subMap).map((value) => {
             const subtype = value;
             return {
                 url: `${baseUrl}/${category.path}/${subtype.path}.htm`,

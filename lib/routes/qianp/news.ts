@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,26 +33,26 @@ async function handler(ctx) {
 
     const list = $('.newslist .infor')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: a.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     headers,
                 });
                 const $ = load(response);
 
-                item.category = [...new Set($('meta[name=keywords]').attr('content').split('，'))];
+                item.category = [...new Set($('meta[name=keywords]').attr('content')!.split('，'))];
                 item.author = $('meta[name=author]').attr('content');
-                item.pubDate = parseDate($('meta[property="bytedance:published_time"]').attr('content'));
+                item.pubDate = parseDate($('meta[property="bytedance:published_time"]').attr('content')!);
 
                 item.description = $('.news_center').html();
 

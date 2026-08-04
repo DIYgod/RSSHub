@@ -1,5 +1,3 @@
-import { escapeText } from 'entities';
-
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -31,7 +29,7 @@ type ApiResponse = {
     success: boolean;
 };
 
-const formatText = (text: string) => escapeText(text).replaceAll(/\r?\n/g, '<br>');
+const formatText = (text: string) => text.replaceAll(/\r?\n/g, '<br>');
 
 const getDescription = (message: Message) => {
     const content = `<p>${formatText(message.content)}</p>`;
@@ -39,12 +37,12 @@ const getDescription = (message: Message) => {
         return content;
     }
 
-    const organization = escapeText(message.answerOrganization ?? '官方回复');
+    const organization = message.answerOrganization ?? '官方回复';
     return `${content}<hr><p><strong>${organization}</strong></p><p>${formatText(message.answerContent)}</p>`;
 };
 
 export const route: Route = {
-    path: '/liuyan/:id?/:state?',
+    path: '/liuyan/:id/:state?',
     categories: ['traditional-media'],
     example: '/people/liuyan/539',
     parameters: { id: '编号，可在对应人物页 URL 中找到', state: '状态，见下表，默认为全部' },
@@ -67,9 +65,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const fid = ctx.req.param('id');
-    if (!fid) {
-        throw new InvalidParameterError('Forum id is required');
-    }
     if (!/^\d+$/.test(fid)) {
         throw new InvalidParameterError(`Invalid forum id '${fid}'`);
     }

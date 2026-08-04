@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -11,7 +11,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const ids = id?.split(/\//) ?? [];
-    const titles = [];
+    const titles: string[] = [];
 
     const rootUrl = 'http://cmdp.ncc-cma.net';
     const currentUrl = new URL('cn/index.htm', rootUrl).href;
@@ -23,18 +23,18 @@ export const handler = async (ctx) => {
     const $ = load(iconv.decode(response, 'gbk'));
 
     const author = '国家气候中心';
-    const language = 'zh';
+    const language = 'zh' as Language;
 
     const items = $('ul.img-con-new-con li img[id]')
         .toArray()
         .filter((item) => ids.length === 0 || ids.includes($(item).prop('id')))
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const id = item.prop('id');
+            const id = $item.prop('id');
             const title = $(`li[data-id="${id}"]`).text() || undefined;
-            const image = new URL(item.prop('src'), currentUrl).href;
+            const image = new URL($item.prop('src')!, currentUrl).href;
             const date =
                 image
                     .match(/_(\d{4})(\d{2})(\d{2})_/)
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
                 description,
                 pubDate: parseDate(date),
                 link: currentUrl,
-                category: [title],
+                category: [title!],
                 author,
                 guid,
                 id: guid,

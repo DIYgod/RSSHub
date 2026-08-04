@@ -16,8 +16,10 @@ const md = MarkdownIt({
 
 const baseUrl = 'https://www.dgtle.com';
 
+type LiveDataItem = DataItem & { live_status?: any };
+
 const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> => {
-    let items: DataItem[] = dataList.slice(0, limit).map((item): DataItem => {
+    let items: LiveDataItem[] = dataList.slice(0, limit).map((item): LiveDataItem => {
         const title: string = item.title || item.content;
         const image: string | undefined = item.cover;
         const description: string | undefined = renderDescription({
@@ -44,7 +46,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
         const guid = `dgtle-${item.id}`;
         const updated: number | string = pubDate;
 
-        const processedItem: DataItem = {
+        const processedItem: LiveDataItem = {
             title,
             description,
             pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
@@ -76,7 +78,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
             delete item.live_status;
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 $$('div.logo').remove();
@@ -101,10 +103,10 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                 });
 
                 const description: string | undefined = renderDescription({
-                    description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html(),
+                    description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html() ?? undefined,
                 });
 
-                const processedItem: DataItem = {
+                const processedItem: Partial<DataItem> = {
                     description,
                 };
 

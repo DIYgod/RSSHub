@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -60,19 +60,21 @@ async function handler(ctx) {
     const list = $(channelSelector[channel])
         .find('div.new_item')
         .toArray()
-        .map((item) => ({
-            title: $(item).find('a').text(),
-            link: $(item).find('a').attr('href'),
-        }));
+        .map(
+            (item): DataItem => ({
+                title: $(item).find('a').text(),
+                link: $(item).find('a').attr('href'),
+            })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
                 item.description = content('#js_content')
-                    .html()
+                    .html()!
                     .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
 
                 return item;

@@ -64,7 +64,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('b > a').text(),
             link: $(item).find('b > a').attr('href'),
-            description: $(item).find('img').html() + $(item).find('div:nth-child(2)').remove('b').end().html(),
+            description: $(item).find('img').html()! + $(item).find('div:nth-child(2)').remove('b').end().html()!,
         }));
 
     return {

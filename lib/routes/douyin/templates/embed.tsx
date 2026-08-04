@@ -2,7 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 type EmbedData = {
     img?: string;
-    duration?: string;
+    duration?: number;
     videoList?: string[];
 };
 

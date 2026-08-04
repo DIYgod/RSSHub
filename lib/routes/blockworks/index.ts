@@ -44,10 +44,7 @@ async function handler(ctx): Promise<Data> {
 
     const items = await Promise.all(
         limitedItems
-            .map((item) => ({
-                ...item,
-                link: item.link?.split('?', 1)[0],
-            }))
+            .map((item) => ({ ...item, link: item.link?.split('?', 1)[0] }) as typeof item & { author?: DataItem['author'] })
             .map((item) =>
                 cache.tryGet(item.link!, async () => {
                     // Get cached content or fetch new content

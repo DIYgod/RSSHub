@@ -44,7 +44,7 @@ async function handler() {
         ?.trim()
         .replaceAll('undefined', 'null');
 
-    const data = JSON.parse(match);
+    const data = JSON.parse(match!);
     const todayList = data.find((event) => event.type === 'next' && event.value.data.homefeed).value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0').node;
     // 0: Top Products Launching Today
     // 1: Yesterday's Top Products

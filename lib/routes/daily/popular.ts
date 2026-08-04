@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
@@ -157,6 +157,6 @@ async function handler(ctx) {
         description: 'daily.dev is the easiest way to stay updated on the latest programming news. Get the best content from the top tech publications on any topic you want.',
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

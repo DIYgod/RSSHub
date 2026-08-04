@@ -17,7 +17,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
         <table>
             <tbody>
                 <tr>
-                    <th colspan="4">办事信息</th>
+                    <th colspan={4}>办事信息</th>
                 </tr>
                 <tr>
                     <th>服务对象</th>
@@ -27,33 +27,33 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                 </tr>
                 <tr>
                     <th>办理地点</th>
-                    <td colspan="3">{serviceInfo.processingLocation}</td>
+                    <td colspan={3}>{serviceInfo.processingLocation}</td>
                 </tr>
                 <tr>
                     <th>办理时间</th>
-                    <td colspan="3">{serviceInfo.processingTime}</td>
+                    <td colspan={3}>{serviceInfo.processingTime}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">申请信息</th>
+                    <th colspan={4}>申请信息</th>
                 </tr>
                 <tr>
                     <th>受理条件</th>
-                    <td colspan="3">{applicationInfo.acceptanceConditions}</td>
+                    <td colspan={3}>{applicationInfo.acceptanceConditions}</td>
                 </tr>
                 <tr>
                     <th>禁止性要求</th>
-                    <td colspan="3">{applicationInfo.prohibitedRequirements}</td>
+                    <td colspan={3}>{applicationInfo.prohibitedRequirements}</td>
                 </tr>
                 <tr>
                     <th>数量限制</th>
-                    <td colspan="3">{applicationInfo.quantityRestrictions}</td>
+                    <td colspan={3}>{applicationInfo.quantityRestrictions}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">结果信息</th>
+                    <th colspan={4}>结果信息</th>
                 </tr>
                 <tr>
                     <th>审批结果名称</th>
-                    <td colspan="3">{resultInfo.approvalResult}</td>
+                    <td colspan={3}>{resultInfo.approvalResult}</td>
                 </tr>
                 <tr>
                     <th>审批结果样本</th>
@@ -62,7 +62,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                     <td>{resultInfo.approvalResultType}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">收费信息</th>
+                    <th colspan={4}>收费信息</th>
                 </tr>
                 <tr>
                     <th>是否收费</th>
@@ -71,11 +71,11 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                     <td>{feeInfo.isOnlinePaymentSupported}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">审批信息</th>
+                    <th colspan={4}>审批信息</th>
                 </tr>
                 <tr>
                     <th>权力来源</th>
-                    <td colspan="3">{approvalInfo.authoritySource}</td>
+                    <td colspan={3}>{approvalInfo.authoritySource}</td>
                 </tr>
                 <tr>
                     <th>行使层级</th>
@@ -84,7 +84,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                     <td>{approvalInfo.implementingEntity}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">送达信息</th>
+                    <th colspan={4}>送达信息</th>
                 </tr>
                 <tr>
                     <th>是否支持物流快递</th>
@@ -94,17 +94,17 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                 </tr>
                 <tr>
                     <th>送达方式</th>
-                    <td colspan="3">{deliveryInfo.deliveryMethods}</td>
+                    <td colspan={3}>{deliveryInfo.deliveryMethods}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">中介服务信息</th>
+                    <th colspan={4}>中介服务信息</th>
                 </tr>
                 <tr>
                     <th>中介服务事项名称</th>
-                    <td colspan="3">{agentService}</td>
+                    <td colspan={3}>{agentService}</td>
                 </tr>
                 <tr>
-                    <th colspan="4">其他信息</th>
+                    <th colspan={4}>其他信息</th>
                 </tr>
                 <tr>
                     <th>部门名称</th>
@@ -114,7 +114,7 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                 </tr>
                 <tr>
                     <th>受理机构</th>
-                    <td colspan="3">{otherInfo.acceptingInstitution}</td>
+                    <td colspan={3}>{otherInfo.acceptingInstitution}</td>
                 </tr>
                 <tr>
                     <th>基本编码</th>
@@ -169,21 +169,21 @@ const renderDescription = ({ serviceInfo, applicationInfo, resultInfo, feeInfo, 
                     ) : (
                         <>
                             <th>法人主题分类</th>
-                            <td colspan="3">{otherInfo.naturalPersonThemeClassification}</td>
+                            <td colspan={3}>{otherInfo.naturalPersonThemeClassification}</td>
                         </>
                     )}
                 </tr>
                 <tr>
                     <th>行政相对人权利和义务</th>
-                    <td colspan="3">{otherInfo.rightsAndObligationsOfAdministrativeCounterparties}</td>
+                    <td colspan={3}>{otherInfo.rightsAndObligationsOfAdministrativeCounterparties}</td>
                 </tr>
                 <tr>
                     <th>适用对象说明</th>
-                    <td colspan="3">{otherInfo.applicableObjectDescription}</td>
+                    <td colspan={3}>{otherInfo.applicableObjectDescription}</td>
                 </tr>
                 <tr>
                     <th>涉及的内容</th>
-                    <td colspan="3">{otherInfo.contentInvolved}</td>
+                    <td colspan={3}>{otherInfo.contentInvolved}</td>
                 </tr>
             </tbody>
         </table>
@@ -232,11 +232,11 @@ async function handler() {
     const list = $('li.clearfix')
         .toArray()
         .map((item: any) => {
-            item = $(item);
-            const title = item.find('a').first().text();
-            const time = timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), 8);
-            const a = item.find('a').first().attr('href');
-            const fullUrl = new URL(a, host).href;
+            const $item = $(item);
+            const title = $item.find('a').first().text();
+            const time = timezone(parseDate($item.find('span').first().text(), 'YYYY-MM-DD'), 8);
+            const a = $item.find('a').first().attr('href');
+            const fullUrl = new URL(a!, host).href;
 
             return {
                 title,
@@ -254,7 +254,7 @@ async function handler() {
                     const content = await crawler(item, context);
                     const $ = load(content);
                     item.category = $('meta[name="ColumnType"]').attr('content');
-                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')));
+                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')) as any);
                     item.author = '浙江政务服务网';
                 } else {
                     // 其他正常抓取

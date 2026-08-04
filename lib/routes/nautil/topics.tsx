@@ -61,11 +61,11 @@ async function handler(ctx) {
         $('.primis-ad, .article-ad, .editorskit-no-mobile').remove();
         // lazyload images
         $('img').each((_, e) => {
-            e = $(e);
-            e.attr('src', e.attr('data-src') ?? e.attr('srcset'));
-            e.attr('src', e.attr('src').split('?', 1)[0]);
-            e.removeAttr('data-src');
-            e.removeAttr('srcset');
+            const $e = $(e);
+            $e.attr('src', $e.attr('data-src') ?? $e.attr('srcset'));
+            $e.attr('src', $e.attr('src')!.split('?', 1)[0]);
+            $e.removeAttr('data-src');
+            $e.removeAttr('srcset');
         });
         return {
             title: item.title.rendered,

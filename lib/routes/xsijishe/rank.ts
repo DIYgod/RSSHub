@@ -73,10 +73,10 @@ async function handler(ctx) {
             .find('.nex_recons_demens dl dd')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const title = item.find('h5').text().trim();
-                const link = item.find('a').attr('href');
-                const description = item.find('img').prop('outerHTML') ?? '';
+                const $item = $(item);
+                const title = $item.find('h5').text().trim();
+                const link = $item.find('a').attr('href');
+                const description = $item.find('img').prop('outerHTML') ?? '';
 
                 if (!title || !link) {
                     return;

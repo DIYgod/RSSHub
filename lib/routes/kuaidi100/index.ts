@@ -43,7 +43,7 @@ async function handler(ctx) {
     const time = new Date().toString();
 
     if (status) {
-        const query = await utils.getQuery(number, id, phone);
+        const query: any = await utils.getQuery(number, id, phone);
         data =
             query.status === '200'
                 ? query.data

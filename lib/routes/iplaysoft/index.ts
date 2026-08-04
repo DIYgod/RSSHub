@@ -24,7 +24,7 @@ export const handler = async (ctx): Promise<Data> => {
         filteredItems.map(
             (item) =>
                 cache.tryGet(item.link as string, async () => {
-                    const response = await ofetch(item.link);
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
 
                     $('.entry-content').find('div[style*="overflow:hidden"]').remove();

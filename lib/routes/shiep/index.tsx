@@ -4,7 +4,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -76,13 +76,13 @@ async function handler(ctx) {
 
     const list = $(listSelector)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const pubDateText = item.find(pubDateSelector).text().trim();
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const pubDateText = $item.find(pubDateSelector).text().trim();
             const match = pubDateText.match(/\b(\d{4}-\d{2}-\d{2})\b/);
             return {
-                title: item.find('a').attr('title') || item.find('h3').text() || item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), host).href,
+                title: $item.find('a').attr('title') || $item.find('h3').text() || $item.find('a').text(),
+                link: new URL($item.find('a').attr('href')!, host).href,
                 pubDate: match ? parseDate(match[0], 'YYYY-MM-DD') : null,
             };
         })

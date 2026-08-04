@@ -59,11 +59,11 @@ const ProcessFeed = async (type, id, order) => {
         item: $('.hpoi-glyphicons-list li')
             .toArray()
             .map((_item) => {
-                _item = $(_item);
+                const $_item = $(_item);
                 return {
-                    title: _item.find('.hpoi-detail-grid-title a').text(),
-                    link: host + '/' + _item.find('a').attr('href'),
-                    description: `<img src="${_item.find('img').attr('src').replace('/s/', '/n/')}">${_item.find('.hpoi-detail-grid-info').html().replaceAll('span>', 'p>')}`,
+                    title: $_item.find('.hpoi-detail-grid-title a').text(),
+                    link: host + '/' + $_item.find('a').attr('href'),
+                    description: `<img src="${$_item.find('img').attr('src')!.replace('/s/', '/n/')}">${$_item.find('.hpoi-detail-grid-info').html()!.replaceAll('span>', 'p>')}`,
                 };
             }),
     };

@@ -19,7 +19,7 @@ const getArticleDetails = async (items) => {
                 let data = JSON.parse($('script#__NEXT_DATA__').text());
 
                 const list = data.props.pageProps.urqlState;
-                const keyWithContent = Object.keys(list).filter((key) => list[key].data.includes('content'));
+                const keyWithContent = Object.keys(list).find((key) => list[key].data.includes('content'))!;
                 data = JSON.parse(list[keyWithContent].data).article;
 
                 item.title = data.shareTitle;

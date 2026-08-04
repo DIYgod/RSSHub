@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,19 +45,20 @@ async function handler(ctx) {
     let items = $('#d_list ul li, #thread_list li, .t_l .t_subject')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             return {
                 link: `${rootUrl}/${id}/${a.attr('href')}`,
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -69,7 +70,7 @@ async function handler(ctx) {
                 item.author = detailResponse.data.match(/送交者:[^>]*>([^<]*)<\/a>/)[1].trim();
                 item.pubDate = timezone(parseDate(detailResponse.data.match(/于 (.*) 已读/)[1], 'YYYY-MM-DD h:m'), 8);
                 item.description = content('pre')
-                    .html()
+                    .html()!
                     .replaceAll('<p></p>', '')
                     .replaceAll(/<font color="#E6E6DD">6park.com<\/font>/g, '');
 

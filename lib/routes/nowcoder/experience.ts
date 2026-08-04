@@ -45,7 +45,7 @@ async function handler(ctx) {
     const link = new URL('/discuss/experience/json', host);
 
     // const link = `https://www.nowcoder.com/discuss/experience/json?tagId=${tagId}&order=${order}&companyId=${companyId}&phaseId=${phaseId}`;
-    link.search = params;
+    link.search = params.toString();
     const response = await got.get(link.href);
     const data = response.data.data;
 
