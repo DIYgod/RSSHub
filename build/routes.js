@@ -105919,6 +105919,35 @@ export default {
   },
   "tsinghua": {
     "routes": {
+      "/lib/notice": {
+        "path": "/lib/notice",
+        "categories": [
+          "university"
+        ],
+        "example": "/tsinghua/lib/notice",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "lib.tsinghua.edu.cn/tzgg.htm"
+            ]
+          }
+        ],
+        "name": "图书馆通知公告",
+        "maintainers": [
+          "Aquarius-Situla"
+        ],
+        "location": "lib/notice.ts",
+        "module": () => import('@/routes/tsinghua/lib/notice.ts')
+      },
       "/lib/tzgg/:category": {
         "path": "/lib/tzgg/:category",
         "categories": [

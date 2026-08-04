@@ -40859,6 +40859,14 @@
         "title": "图书馆通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
+          "/tzgg.htm"
+        ],
+        "target": "/tsinghua/lib/notice"
+      },
+      {
+        "title": "图书馆通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
           "/tzgg/:category"
         ],
         "target": "/tsinghua/lib/tzgg/:category"

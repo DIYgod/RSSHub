@@ -2942,6 +2942,7 @@ export type RoutePath =
   | `/tribalfootball/`
   | `/trow/portal`
   | `/tsdm39/bd/:type?`
+  | `/tsinghua/lib/notice`
   | `/tsinghua/lib/tzgg/:category`
   | `/tsinghua/lib/zydt/:category?`
   | `/tsinghua/news/:category?`
