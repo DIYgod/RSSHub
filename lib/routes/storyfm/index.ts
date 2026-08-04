@@ -38,7 +38,7 @@ async function handler() {
             const $item = load(ele);
             const img = $item('.isotope-img-container img').attr('src');
             const infoNode = $item('.isotope-index-text').first();
-            const title = infoNode.find('.soundbyte-podcast-progression-title');
+            const title = infoNode.find('.soundbyte-podcast-progression-title').text();
             const link = infoNode.find('a.soundbyte-podcast-play-progression').attr('href');
             const time = infoNode.find('.fa-clock-o').text();
             const date = infoNode.find('.soundbyte-podcast-date-progression').text();
@@ -55,7 +55,7 @@ async function handler() {
 
             const pubDate = new Date(`${year}-${month}-${day} ${time}`).toUTCString();
             return {
-                title: title as unknown as string,
+                title,
                 description: [`<img src="${img}"/>`, title].join('<br/>'),
                 link,
                 pubDate,

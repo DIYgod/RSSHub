@@ -23,11 +23,11 @@ type PaperArticle = DataItem & {
 const normalizeText = (text: string) => text.replaceAll(/\s+/g, ' ').trim();
 
 const getEditionDate = (url: string) => {
-    const match = url.match(/\/(\d{6})\/(\d{2})\//);
+    const match = url.match(/\/(\d{4})(\d{2})\/(\d{2})\//);
     if (!match) {
         throw new Error('Unable to determine the current People’s Daily edition date');
     }
-    return match[1] + match[2];
+    return `${match[1]}年${match[2]}月${match[3]}日`;
 };
 
 const getPages = async () => {
@@ -118,7 +118,7 @@ async function handler(ctx) {
     }
 
     const editionDate = getEditionDate(pages[0].url);
-    const pubDate = parseDate(editionDate, 'YYYYMMDD');
+    const pubDate = parseDate(editionDate, 'YYYY年MM月DD日');
     const targetPages = selectedPage ? [selectedPage] : pages;
     const articleLists = await Promise.all(targetPages.map((page) => getArticles(page, pubDate)));
     const articles = articleLists.flat().slice(0, limit);
