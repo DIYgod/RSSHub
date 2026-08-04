@@ -91,3 +91,43 @@ export interface SquareUserProfileResponse {
     data: SquareUserProfile | null;
     success?: boolean;
 }
+
+export interface CopyTradingOrder {
+    symbol: string;
+    baseAsset: string;
+    quoteAsset: string;
+    side: 'BUY' | 'SELL';
+    type: string;
+    positionSide: 'LONG' | 'SHORT' | 'BOTH';
+    executedQty: number;
+    avgPrice: number;
+    totalPnl: number;
+    orderUpdateTime: number;
+    orderTime: number;
+}
+
+export interface CopyTradingOrderHistoryResponse {
+    code: string;
+    message?: string | null;
+    data: {
+        indexValue: string;
+        total: number;
+        list: CopyTradingOrder[];
+    } | null;
+    success?: boolean;
+}
+
+export interface CopyTradingDetail {
+    nickname: string;
+    description?: string | null;
+    avatarUrl?: string | null;
+    pgcUsername?: string | null;
+    futuresType: string;
+}
+
+export interface CopyTradingDetailResponse {
+    code: string;
+    message?: string | null;
+    data: CopyTradingDetail | null;
+    success?: boolean;
+}

@@ -105,7 +105,7 @@ const getPostTitle = (post: SquarePost, language: string) => {
 };
 
 const parseRouteOptions = (routeParams?: string) => {
-    const parsed = querystring.parse(routeParams);
+    const parsed = querystring.parse(routeParams ?? '');
     const rawFilter = String(parsed.filter || 'all').toLowerCase();
     const filterType = FILTER_MAP[rawFilter];
 
@@ -143,7 +143,7 @@ const fetchUserPosts = async (squareUid: string, username: string, filterType: S
     postsUrl.searchParams.set('timeOffset', String(Date.now()));
     postsUrl.searchParams.set('filterType', filterType);
 
-    const response = await ofetch<SquarePostsResponse>(postsUrl.toString(), {
+    const response = await ofetch<SquarePostsResponse>(postsUrl.href, {
         headers: buildHeaders(username, language),
     });
 
@@ -207,7 +207,7 @@ async function handler(ctx) {
     const username = ctx.req.param('username');
     const { filterType, language } = parseRouteOptions(ctx.req.param('routeParams'));
 
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '20'));
     const pageSize = Number.isNaN(limit) || limit <= 0 ? 20 : limit;
 
     const profile: SquareUserProfile = await fetchUserProfile(username, language);

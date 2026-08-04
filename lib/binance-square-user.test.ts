@@ -93,13 +93,13 @@ describe('/binance/square/user/:username', () => {
 
         const { route } = await import('@/routes/binance/square-user');
         const ctx = createContext('cz');
-        const result = await route.handler(ctx as any);
+        const result = (await route.handler(ctx as any)) as any;
 
         expect(result.title).toBe('CZ (@CZ) — Binance Square');
         expect(result.link).toBe('https://www.binance.com/en/square/profile/CZ');
         expect(result.item).toHaveLength(2);
-        expect(result.item?.[0]?.title).toBe('Hello Square');
-        expect(result.item?.[1]?.title).toBe("CZ's post");
+        expect(result.item[0].title).toBe('Hello Square');
+        expect(result.item[1].title).toBe("CZ's post");
         expect(ofetchMock).toHaveBeenCalledTimes(2);
         expect(ofetchMock.mock.calls[1]?.[0]).toContain('filterType=ALL');
     });
@@ -187,7 +187,7 @@ describe('/binance/square/user/:username', () => {
             });
 
         const { route } = await import('@/routes/binance/square-user');
-        const result = await route.handler(createContext('cz', undefined, '3') as any);
+        const result = (await route.handler(createContext('cz', undefined, '3') as any)) as any;
 
         expect(result.item).toHaveLength(3);
     });
@@ -210,7 +210,7 @@ describe('/binance/square/user/:username', () => {
             });
 
         const { route } = await import('@/routes/binance/square-user');
-        const result = await route.handler(createContext('cz', 'lang=zh-CN') as any);
+        const result = (await route.handler(createContext('cz', 'lang=zh-CN') as any)) as any;
 
         expect(result.link).toBe('https://www.binance.com/zh-CN/square/profile/CZ');
         const postsHeaders = ofetchMock.mock.calls[1]?.[1]?.headers;
@@ -249,11 +249,11 @@ describe('/binance/square/user/:username', () => {
             });
 
         const { route } = await import('@/routes/binance/square-user');
-        const result = await route.handler(createContext('cz', 'lang=zh-CN') as any);
+        const result = (await route.handler(createContext('cz', 'lang=zh-CN') as any)) as any;
 
-        expect(result.item?.[0]?.title).toBe('中文正文');
-        expect(result.item?.[0]?.description).toContain('中文正文');
-        expect(result.item?.[0]?.description).not.toContain('English body');
+        expect(result.item[0].title).toBe('中文正文');
+        expect(result.item[0].description).toContain('中文正文');
+        expect(result.item[0].description).not.toContain('English body');
     });
 
     it('supports combined filter and language routeParams', async () => {
@@ -298,7 +298,7 @@ describe('/binance/square/user/:username', () => {
             });
 
         const { route } = await import('@/routes/binance/square-user');
-        const result = await route.handler(createContext('cz', 'lang=zh') as any);
+        const result = (await route.handler(createContext('cz', 'lang=zh') as any)) as any;
 
         expect(result.link).toBe('https://www.binance.com/zh-CN/square/profile/CZ');
         expect(ofetchMock.mock.calls[1]?.[1]?.headers?.lang).toBe('zh-CN');
