@@ -26,6 +26,9 @@ patchedDependencies:
   rss-parser@3.13.0:
     hash: afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d
     path: patches/rss-parser@3.13.0.patch
+  teleproto@1.228.5:
+    hash: baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a
+    path: patches/teleproto@1.228.5.patch
 
 importers:
 
@@ -234,7 +237,7 @@ importers:
         version: 0.8.0
       teleproto:
         specifier: 1.228.5
-        version: 1.228.5
+        version: 1.228.5(patch_hash=baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a)
       title:
         specifier: 4.0.1
         version: 4.0.1
@@ -3568,7 +3571,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.52:
@@ -11329,7 +11332,7 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  teleproto@1.228.5:
+  teleproto@1.228.5(patch_hash=baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a):
     dependencies:
       big-integer: 1.6.52
       mime: 3.0.0
