@@ -80,7 +80,7 @@ jobs:
 
             - name: Review PR with rules
               if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
-              uses: anthropics/claude-code-action@v1
+              uses: anthropics/claude-code-action@v1.0.183
               env:
                   GH_TOKEN: ${{ github.token }}
                   PR_NUMBER: ${{ steps.source-run-info.outputs.number || inputs.pr_number }}
