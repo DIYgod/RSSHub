@@ -12,7 +12,6 @@
 diygod
 henryqw
 hyoban
--ishowman impersonate as KwToPA in #22207. 72864e06b8a18d7cbef8f78d23dee3c069f8aa23
 neverbehave
 pseudoyu
 tonyrl
