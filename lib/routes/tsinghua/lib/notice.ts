@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
@@ -27,42 +27,41 @@ export const route: Route = {
     handler: async () => {
         const baseUrl = 'https://lib.tsinghua.edu.cn';
         const link = `${baseUrl}/tzgg.htm`;
-        
+
         const response = await ofetch(link);
         const $ = load(response);
 
-        // 提取列表页信息
-        let items = $('ul.notice-list li').toArray().map((item) => {
-            const $item = $(item);
-            const a = $item.find('.notice-list-tt a');
-            const title = a.text().trim();
-            const href = a.attr('href');
-            const dateStr = $item.find('.notice-date').text().trim();
-            const category = $item.find('.notice-label').text().trim();
-            
-            return {
-                title: `[${category}] ${title}`,
-                link: new URL(href, link).href,
-                pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
-                category: category,
-            };
-        });
+        // Extract list page items
+        let items: DataItem[] = $('ul.notice-list li')
+            .toArray()
+            .filter((item) => $(item).find('.notice-list-tt a').attr('href'))
+            .map((item) => {
+                const $item = $(item);
+                const a = $item.find('.notice-list-tt a');
+                const title = a.text().trim();
+                const href = a.attr('href') as string;
+                const dateStr = $item.find('.notice-date').text().trim();
+                const category = $item.find('.notice-label').text().trim();
 
-        // 异步获取每个通知的正文内容，并加入 RSSHub 内置缓存机制
-        items = await Promise.all(
+                return {
+                    title,
+                    link: new URL(href, link).href,
+                    pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
+                    category,
+                };
+            });
+
+        // Fetch article body with cache
+        items = (await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const itemResponse = await ofetch(item.link);
-                        const $$ = load(itemResponse);
-                        item.description = $$('.v_news_content').html() || '无正文内容';
-                    } catch {
-                        item.description = '无法获取正文内容';
-                    }
-                    return item;
+                cache.tryGet(item.link as string, async () => {
+                    const itemResponse = await ofetch(item.link as string);
+                    const $$ = load(itemResponse);
+                    item.description = $$('.v_news_content').html() || undefined;
+                    return item as DataItem;
                 })
             )
-        );
+        )) as DataItem[];
 
         return {
             title: '清华大学图书馆 - 通知公告',
