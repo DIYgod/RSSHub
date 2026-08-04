@@ -21,11 +21,11 @@ function extractSection($: CheerioAPI, sectionName: string): string[] {
     return ol
         .find('> li')
         .toArray()
-        .map((liEl) =>
-            $(liEl as any)
-                .text()
-                .trim()
-                .replaceAll(/\s+/g, ' ')
+        .map(
+            (liEl) =>
+                $(liEl as any)
+                    .html()
+                    ?.trim() ?? ''
         )
         .filter(Boolean);
 }
@@ -41,7 +41,7 @@ async function parseArticle(path: string): Promise<DataItem> {
             return '';
         }
 
-        return `<h3>${sectionName}</h3><p>${sectionItems.join('</p><p>')}</p>`;
+        return `<h3>${sectionName}</h3>${sectionItems.join('')}`;
     })
         .filter(Boolean)
         .join('');
@@ -68,7 +68,7 @@ export const route: Route = {
         const paths: string[] = $('a[href^="/docs/20"]')
             .toArray()
             .map((el) => $(el as any).attr('href') || '')
-            .filter((href, index, array) => ARTICLE_PATH_PATTERN.test(href) && array.indexOf(href) === index)
+            .filter((href) => ARTICLE_PATH_PATTERN.test(href))
             .toSorted((a, b) => b.localeCompare(a))
             .slice(0, ARTICLE_LIMIT);
 
