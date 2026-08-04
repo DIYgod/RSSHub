@@ -1,0 +1,74 @@
+import { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
+
+export const route: Route = {
+    path: '/lib/notice',
+    categories: ['university'],
+    example: '/tsinghua/lib/notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg.htm'],
+        },
+    ],
+    name: '图书馆通知公告',
+    maintainers: ['Aquarius-Situla'],
+    handler: async () => {
+        const baseUrl = 'https://lib.tsinghua.edu.cn';
+        const link = `${baseUrl}/tzgg.htm`;
+        
+        const response = await ofetch(link);
+        const $ = load(response);
+
+        // 提取列表页信息
+        let items = $('ul.notice-list li').toArray().map((item) => {
+            const $item = $(item);
+            const a = $item.find('.notice-list-tt a');
+            const title = a.text().trim();
+            const href = a.attr('href');
+            const dateStr = $item.find('.notice-date').text().trim();
+            const category = $item.find('.notice-label').text().trim();
+            
+            return {
+                title: `[${category}] ${title}`,
+                link: new URL(href, link).href,
+                pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
+                category: category,
+            };
+        });
+
+        // 异步获取每个通知的正文内容，并加入 RSSHub 内置缓存机制
+        items = await Promise.all(
+            items.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    try {
+                        const itemResponse = await ofetch(item.link);
+                        const $$ = load(itemResponse);
+                        item.description = $$('.v_news_content').html() || '无正文内容';
+                    } catch {
+                        item.description = '无法获取正文内容';
+                    }
+                    return item;
+                })
+            )
+        );
+
+        return {
+            title: '清华大学图书馆 - 通知公告',
+            link,
+            description: '清华大学图书馆 - 通知公告',
+            item: items,
+        };
+    },
+};
