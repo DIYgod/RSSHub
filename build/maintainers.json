@@ -6106,7 +6106,7 @@
   "/penguin-random-house/the-read-down": [
     "StevenRCE0"
   ],
-  "/people/liuyan/:id?/:state?": [
+  "/people/liuyan/:id/:state?": [
     "nczitzk",
     "pseudoyu"
   ],

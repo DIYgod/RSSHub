@@ -7655,7 +7655,7 @@ export default {
           "ladeng07"
         ],
         "url": "aqicn.org",
-        "descriptions": "\n|   参数   | 污染成分 |\n| -------- | -------- |\n|   pm25   |  PM2.5   |\n|   pm10   |  PM10    |\n|   o3     |  O3      |\n|   no2    |  NO2     |\n|   so2    |  SO2     |\n|   co     |  CO      |\n\n举例: [https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25,pm10)\n\n1. 显示单个污染成分，例如「pm25」, [https://rsshub.app/aqicn/beijing/pm25](https://rsshub.app/aqicn/beijing/pm25)\n2. 逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25,pm10)\n3. 城市子站 ID 获取方法：右键显示网页源代码，搜索 \"idx\" （带双冒号），后面的 ID 就是子站的 ID，如你给的链接 ID 是 4258，RSS 地址就是 [https://rsshub.app/aqicn/4258](https://rsshub.app/aqicn/4258)\n",
+        "description": "| 参数 | 污染成分 |\n| ---- | -------- |\n| pm25 | PM2.5    |\n| pm10 | PM10     |\n| o3   | O3       |\n| no2  | NO2      |\n| so2  | SO2      |\n| co   | CO       |\n\n举例: <https://rsshub.app/aqicn/beijing/pm25,pm10>\n\n1. 显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>\n2. 逗号分隔显示多个污染成分，例如「pm25,pm10」，<https://rsshub.app/aqicn/beijing/pm25,pm10>\n3. 城市子站 ID 获取方法：右键显示网页源代码，搜索 \"idx\" （带双冒号），后面的 ID 就是子站的 ID，如你给的链接 ID 是 4258，RSS 地址就是 <https://rsshub.app/aqicn/4258>",
         "location": "aqi.ts",
         "module": () => import('@/routes/aqicn/aqi.ts')
       }
@@ -24740,7 +24740,7 @@ export default {
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false,
-          "nfsw": true
+          "nsfw": true
         },
         "radar": [
           {
@@ -38627,8 +38627,6 @@ export default {
         "example": "/bupt/jwc/tzgg",
         "parameters": {
           "type": {
-            "type": "string",
-            "optional": false,
             "description": "信息类型，可选值：tzgg（通知公告），xwzx（新闻资讯）"
           }
         },
@@ -58479,7 +58477,7 @@ export default {
         "parameters": {
           "type": "通知类型，留空则获取所有分类"
         },
-        "feature": {
+        "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
@@ -89347,8 +89345,8 @@ export default {
   },
   "people": {
     "routes": {
-      "/liuyan/:id?/:state?": {
-        "path": "/liuyan/:id?/:state?",
+      "/liuyan/:id/:state?": {
+        "path": "/liuyan/:id/:state?",
         "categories": [
           "traditional-media"
         ],
@@ -124622,7 +124620,9 @@ export default {
         ],
         "radar": [
           {
-            "source": "gzw.cq.gov.cn/*category",
+            "source": [
+              "gzw.cq.gov.cn/*category"
+            ],
             "target": "/gzw/*category"
           }
         ],
@@ -142378,6 +142378,7 @@ export default {
     "routes": {
       "/:id/:params?": {
         "path": "/:id/:params?",
+        "example": "/test/1",
         "name": "Test",
         "maintainers": [
           "DIYgod",
@@ -143111,11 +143112,13 @@ export default {
           "supportPodcast": false,
           "supportScihub": false
         },
-        "radar": {
-          "source": [
-            "www.tmtpost.com"
-          ]
-        },
+        "radar": [
+          {
+            "source": [
+              "www.tmtpost.com"
+            ]
+          }
+        ],
         "name": "快报",
         "maintainers": [
           "defp"
