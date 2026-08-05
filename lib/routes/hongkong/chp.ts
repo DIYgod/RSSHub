@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -99,7 +100,7 @@ async function handler(ctx) {
             link,
             pubDate: parseDate(item.PublishDate),
             description: item[`Content_${language}`] ?? '',
-            title: item[`Title_${language}`]?.replace(/<.*>/, '') ?? '',
+            title: sanitizeHtml(item[`Title_${language}`] ?? '', { allowedTags: [], allowedAttributes: {} }),
         };
     });
 
