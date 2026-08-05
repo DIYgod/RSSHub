@@ -44,6 +44,10 @@ export const route: Route = {
 | 通知公告 | 学生活动 | 教师风采 | 新闻动态 |
 | -------- | -------- | -------- | -------- |
 | tzgg     | xstd     | jsfc     | xwdt     |
+
+:::tip
+该网站仅对中国大陆境内 IP 开放访问。建议将 RSSHub 部署在中国境内服务器，或通过 [gost](https://github.com/go-gost/gost) 等代理工具转发请求。
+:::
 `,
 };
 
