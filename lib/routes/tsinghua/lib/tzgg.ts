@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     /* Determine the target URL based on whether a specific category is requested */
     const { category } = ctx.req.param();
-    const host = category ? `https://lib.tsinghua.edu.cn/tzgg/${category}.htm` : `https://lib.tsinghua.edu.cn/tzgg.htm`;
+    const host = category ? `https://lib.tsinghua.edu.cn/tzgg/${category}.htm` : 'https://lib.tsinghua.edu.cn/tzgg.htm';
     const response = await ofetch(host);
     const $ = load(response);
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
             const title = $item.find('a').text().trim();
             const time = $item.find('.notice-date').text().trim();
             const a = $item.find('a').attr('href');
-            
+
             const itemCategory = category ? feedTitle : $item.find('.notice-label').text().trim();
             const displayTitle = category ? title : `[${itemCategory}] ${title}`;
 
