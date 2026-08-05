@@ -6,10 +6,16 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+/*
+ * Dictionary of supported categories.
+ * The official website contains additional sections (e.g., recruitment, scientific research) not yet included here.
+ * Future maintainers can easily support them by adding their URL prefix (e.g., 'xwdt' for 'xwdt.htm') and title to this map.
+ */
 const categoryMap = {
     tzgg: '通知公告',
     xstd: '学生活动',
     jsfc: '教师风采',
+    xwdt: '新闻动态',
 };
 
 export const route: Route = {
@@ -34,9 +40,9 @@ export const route: Route = {
     maintainers: ['Aquarius-Situla'],
     handler,
     description: `
-| 通知公告 | 学生活动 | 教师风采 |
-| -------- | -------- | -------- |
-| tzgg     | xstd     | jsfc     |
+| 通知公告 | 学生活动 | 教师风采 | 新闻动态 |
+| -------- | -------- | -------- | -------- |
+| tzgg     | xstd     | jsfc     | xwdt     |
 `,
 };
 
