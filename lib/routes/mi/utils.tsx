@@ -164,6 +164,16 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
                         <td>{goods.price} 元</td>
                     </tr>
                 ))}
+                {detail.relationBatchedInfo &&
+                    detail.relationBatchedInfo.relationBatchedList
+                        .flatMap((relation) => relation.goodsInfo)
+                        .map((goods) => (
+                            <tr>
+                                <td>{goods.name}</td>
+                                <td>{goods.marketPrice} 元</td>
+                                <td>{goods.price} 元</td>
+                            </tr>
+                        ))}
             </tbody>
         </table>
     </>

@@ -61,6 +61,9 @@ export interface NewProductDetailData {
         goodsList: NewProductGoods[];
     };
     product: NewProductDetail;
+    relationBatchedInfo?: {
+        relationBatchedList: NewProductRelationBatched[];
+    };
 }
 
 export interface NewProductDetail {
@@ -72,4 +75,8 @@ export interface NewProductGoods {
     marketPrice: string;
     name: string;
     price: string;
+}
+
+export interface NewProductRelationBatched {
+    goodsInfo: NewProductGoods[];
 }
