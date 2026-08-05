@@ -81,7 +81,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
                 }
 
                 if (typeof location === 'string' && location) {
-                    if (location.startsWith('http://mp.weixin.qq.com') || location.startsWith('https://mp.weixin.qq.com')) {
+                    if (location.startsWith('http://mp.weixin.qq.com/') || location.startsWith('https://mp.weixin.qq.com/')) {
                         realLink = location;
                     } else {
                         try {
@@ -94,7 +94,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
                                 ignoreResponseError: true,
                             });
                             const intermediateLocation = intermediateResponse.headers?.get('location');
-                            if (intermediateLocation && (intermediateLocation.startsWith('http://mp.weixin.qq.com') || intermediateLocation.startsWith('https://mp.weixin.qq.com'))) {
+                            if (intermediateLocation && (intermediateLocation.startsWith('http://mp.weixin.qq.com/') || intermediateLocation.startsWith('https://mp.weixin.qq.com/'))) {
                                 realLink = intermediateLocation;
                             } else {
                                 // logger.warn(`Could not resolve final WeChat link for title "${title}" (wechatId: ${wechatId}) after intermediate redirect`);
@@ -116,7 +116,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             }
         }
 
-        const isWeChatLink = realLink.startsWith('http://mp.weixin.qq.com') || realLink.startsWith('https://mp.weixin.qq.com');
+        const isWeChatLink = realLink.startsWith('http://mp.weixin.qq.com/') || realLink.startsWith('https://mp.weixin.qq.com/');
         const author = $li.find('span.all-time-y2').text().trim();
 
         return {

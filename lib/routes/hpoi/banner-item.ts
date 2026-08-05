@@ -42,7 +42,7 @@ async function handler() {
             .map(async (_item) => {
                 const $item = $(_item);
                 const link = new URL($item.find('a').attr('href') ?? '', 'https://www.hpoi.net').href;
-                if (!link.startsWith('https://www.hpoi.net')) {
+                if (!link.startsWith('https://www.hpoi.net/')) {
                     return;
                 }
                 return await cache.tryGet(link, async () => {

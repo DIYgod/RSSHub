@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -219,8 +221,8 @@ function processListsAndLines(html: string): string {
 }
 
 function stripComments(html: string): string {
-    // Remove HTML comments
-    return html.replaceAll(/<!--[\s\S]*?-->/g, '');
+    // Remove HTML comments and unsafe tags
+    return sanitizeHtml(html);
 }
 
 // Wiki markup to HTML converter with proper list handling
