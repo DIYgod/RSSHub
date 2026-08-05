@@ -49,11 +49,11 @@ async function handler(ctx) {
         .filter((item) => $(item).find('a').attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const title = $item.find('a').text().trim();
-            const time = $item.find('.notice-date').text().trim();
+            const title = $item.find('a').text();
+            const time = $item.find('.notice-date').text();
             const a = $item.find('a').attr('href');
 
-            const itemCategory = category ? feedTitle : $item.find('.notice-label').text().trim();
+            const itemCategory = category ? feedTitle : $item.find('.notice-label').text();
 
             const fullUrl = new URL(a!, host).href;
 
