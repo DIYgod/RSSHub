@@ -9,11 +9,20 @@ import type { CopyTradingDetail, CopyTradingDetailResponse, CopyTradingOrder, Co
 
 const BASE_URL = 'https://www.binance.com';
 
+// Short labels for title/category
 const SIDE_MAP: Record<string, string> = {
-    BUY_LONG: 'Open Long',
-    SELL_LONG: 'Close Long',
-    BUY_SHORT: 'Open Short',
-    SELL_SHORT: 'Close Short',
+    BUY_LONG: '开多',
+    SELL_LONG: '平多',
+    SELL_SHORT: '开空',
+    BUY_SHORT: '平空',
+};
+
+// Full action phrases for description sentences
+const ACTION_MAP: Record<string, string> = {
+    BUY_LONG: '买入开多',
+    SELL_LONG: '卖出平多',
+    SELL_SHORT: '卖出开空',
+    BUY_SHORT: '买入平空',
 };
 
 const buildHeaders = (portfolioId: string) => ({
@@ -29,25 +38,17 @@ const getActionLabel = (order: CopyTradingOrder) => SIDE_MAP[`${order.side}_${or
 const buildOrderTitle = (order: CopyTradingOrder) => `${getActionLabel(order)} ${order.symbol} @ ${formatNumber(order.avgPrice)}`;
 
 const buildOrderDescription = (order: CopyTradingOrder) => {
-    const rows = [
-        ['Symbol', order.symbol],
-        ['Side', order.side],
-        ['Position', order.positionSide],
-        ['Type', order.type],
-        ['Avg Price', `${formatNumber(order.avgPrice)} ${order.quoteAsset}`],
-        ['Executed Qty', `${formatNumber(order.executedQty)} ${order.baseAsset}`],
-        ['Total Value', `${formatNumber(order.avgPrice * order.executedQty)} ${order.quoteAsset}`],
-    ]
-        .map(([label, value]) => `<tr><td>${label}</td><td>${value}</td></tr>`)
-        .join('');
+    const action = ACTION_MAP[`${order.side}_${order.positionSide}`] ?? order.side;
+    const totalValue = formatNumber(order.avgPrice * order.executedQty);
 
-    let pnlRow = '';
+    let desc = `以均价为<strong>${formatNumber(order.avgPrice)}${order.quoteAsset}</strong> ${action}<strong>${order.symbol}永续合约</strong> ，成交数量为 <strong>${formatNumber(order.executedQty)}${order.baseAsset}</strong>，总价值为 <strong>${totalValue}${order.quoteAsset}</strong>`;
+
     if (order.side === 'SELL' && order.totalPnl !== 0) {
         const pnlColor = order.totalPnl >= 0 ? '#2EBD85' : '#F6465D';
-        pnlRow = `<tr><td>Realized PnL</td><td style="color:${pnlColor}">${formatNumber(order.totalPnl)} ${order.quoteAsset}</td></tr>`;
+        desc += ` ，已实现盈亏为<strong style="color:${pnlColor}">${formatNumber(order.totalPnl)}</strong>${order.quoteAsset}`;
     }
 
-    return `<table><tbody>${rows}${pnlRow}</tbody></table>`;
+    return `<p>${desc} 。</p>`;
 };
 
 const fetchDetail = (portfolioId: string) =>

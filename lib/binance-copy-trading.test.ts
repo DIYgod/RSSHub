@@ -109,15 +109,15 @@ describe('/binance/copy-trading/lead/:portfolioId', () => {
         expect(result.link).toBe('https://www.binance.com/zh-CN/copy-trading/lead-details/5075281354358777856');
         expect(result.item).toHaveLength(2);
 
-        expect(result.item[0].title).toBe('Open Long BTCUSDT @ 63,153.50');
-        expect(result.item[0].category).toEqual(['Open Long']);
+        expect(result.item[0].title).toBe('开多 BTCUSDT @ 63,153.50');
+        expect(result.item[0].category).toEqual(['开多']);
         expect(result.item[0].description).toContain('BTCUSDT');
-        expect(result.item[0].description).not.toContain('Realized PnL');
+        expect(result.item[0].description).not.toContain('已实现盈亏');
         expect(result.item[0].pubDate).toBeInstanceOf(Date);
 
-        expect(result.item[1].title).toBe('Close Long BTCUSDT @ 62,430.00');
-        expect(result.item[1].category).toEqual(['Close Long']);
-        expect(result.item[1].description).toContain('Realized PnL');
+        expect(result.item[1].title).toBe('平多 BTCUSDT @ 62,430.00');
+        expect(result.item[1].category).toEqual(['平多']);
+        expect(result.item[1].description).toContain('已实现盈亏');
         expect(result.item[1].description).toContain('-13,589.40');
     });
 
@@ -169,10 +169,69 @@ describe('/binance/copy-trading/lead/:portfolioId', () => {
         const { route } = await import('@/routes/binance/copy-trading');
         const result = (await route.handler(createContext('123') as any)) as any;
 
-        expect(result.item[0].description).not.toContain('Realized PnL');
-        expect(result.item[1].description).toContain('Realized PnL');
+        expect(result.item[0].description).not.toContain('已实现盈亏');
+        expect(result.item[1].description).toContain('已实现盈亏');
         expect(result.item[1].description).toContain('500.00');
         expect(result.item[1].description).toContain('#2EBD85');
+    });
+
+    it('correctly maps SHORT position sides (SELL+SHORT=开空, BUY+SHORT=平空)', async () => {
+        tryGetMock.mockImplementation((_key, fetcher) => fetcher());
+        ofetchMock
+            .mockResolvedValueOnce({
+                code: '000000',
+                success: true,
+                data: { nickname: 'Trader', futuresType: 'UM' },
+            })
+            .mockResolvedValueOnce({
+                code: '000000',
+                success: true,
+                data: {
+                    indexValue: '1',
+                    total: 2,
+                    list: [
+                        {
+                            symbol: 'SNDKUSDT',
+                            baseAsset: 'SNDK',
+                            quoteAsset: 'USDT',
+                            side: 'SELL',
+                            type: 'MARKET',
+                            positionSide: 'SHORT',
+                            executedQty: 3.85,
+                            avgPrice: 1389.62,
+                            totalPnl: 0,
+                            orderTime: 1_700_000_000_000,
+                            orderUpdateTime: 1_700_000_000_000,
+                        },
+                        {
+                            symbol: 'SNDKUSDT',
+                            baseAsset: 'SNDK',
+                            quoteAsset: 'USDT',
+                            side: 'BUY',
+                            type: 'MARKET',
+                            positionSide: 'SHORT',
+                            executedQty: 3.85,
+                            avgPrice: 1389.62,
+                            totalPnl: 100,
+                            orderTime: 1_700_000_001_000,
+                            orderUpdateTime: 1_700_000_001_000,
+                        },
+                    ],
+                },
+            });
+
+        const { route } = await import('@/routes/binance/copy-trading');
+        const result = (await route.handler(createContext('123') as any)) as any;
+
+        // SELL + SHORT = 开空 (open short)
+        expect(result.item[0].title).toBe('开空 SNDKUSDT @ 1,389.62');
+        expect(result.item[0].category).toEqual(['开空']);
+        expect(result.item[0].description).toContain('卖出开空');
+
+        // BUY + SHORT = 平空 (close short)
+        expect(result.item[1].title).toBe('平空 SNDKUSDT @ 1,389.62');
+        expect(result.item[1].category).toEqual(['平空']);
+        expect(result.item[1].description).toContain('买入平空');
     });
 
     it('respects limit query parameter', async () => {
