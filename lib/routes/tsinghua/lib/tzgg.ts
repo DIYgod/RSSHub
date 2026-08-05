@@ -29,13 +29,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    /* Determine the target URL based on whether a specific category is requested */
     const { category } = ctx.req.param();
     const host = category ? `https://lib.tsinghua.edu.cn/tzgg/${category}.htm` : `https://lib.tsinghua.edu.cn/tzgg.htm`;
     const response = await ofetch(host);
     const $ = load(response);
 
+    /* Extract the feed title, either the specific category name or the global title */
     const feedTitle = category ? $('.tags .on').text() : '通知公告';
 
+    /* Parse the list of notices and extract metadata for each item */
     const list = $('ul.notice-list li')
         .toArray()
         .filter((item) => $(item).find('a').attr('href'))
@@ -58,6 +61,7 @@ async function handler(ctx) {
             };
         });
 
+    /* Fetch full article content for each notice using RSSHub's cache mechanism */
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
