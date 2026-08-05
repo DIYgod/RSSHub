@@ -3,12 +3,13 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/lib/tzgg/:category',
+    path: '/lib/tzgg/:category?',
     categories: ['university'],
-    example: '/tsinghua/lib/tzgg/qtkx',
-    parameters: { category: '分类，可在对应分类页 URL 中找到' },
+    example: '/tsinghua/lib/tzgg',
+    parameters: { category: '分类，可在对应分类页 URL 中找到，留空则获取全局通知公告' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -19,36 +20,41 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['lib.tsinghua.edu.cn/tzgg/:category'],
+            source: ['lib.tsinghua.edu.cn/tzgg/:category', 'lib.tsinghua.edu.cn/tzgg.htm'],
         },
     ],
     name: '图书馆通知公告',
-    maintainers: ['linsenwang'],
+    maintainers: ['linsenwang', 'Aquarius-Situla'],
     handler,
 };
 
 async function handler(ctx) {
     const { category } = ctx.req.param();
-    const host = `https://lib.tsinghua.edu.cn/tzgg/${category}.htm`;
+    const host = category ? `https://lib.tsinghua.edu.cn/tzgg/${category}.htm` : `https://lib.tsinghua.edu.cn/tzgg.htm`;
     const response = await ofetch(host);
     const $ = load(response);
 
-    const feedTitle = $('.tags .on').text();
+    const feedTitle = category ? $('.tags .on').text() : '通知公告';
 
     const list = $('ul.notice-list li')
         .toArray()
+        .filter((item) => $(item).find('a').attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const title = $item.find('a').text();
-            const time = $item.find('.notice-date').text();
+            const title = $item.find('a').text().trim();
+            const time = $item.find('.notice-date').text().trim();
             const a = $item.find('a').attr('href');
+            
+            const itemCategory = category ? feedTitle : $item.find('.notice-label').text().trim();
+            const displayTitle = category ? title : `[${itemCategory}] ${title}`;
 
             const fullUrl = new URL(a!, host).href;
 
             return {
-                title,
+                title: displayTitle,
                 link: fullUrl,
-                pubDate: time,
+                pubDate: parseDate(time, 'YYYY-MM-DD'),
+                category: itemCategory,
             };
         });
 
@@ -58,7 +64,7 @@ async function handler(ctx) {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                item.description = $('.v_news_content').html();
+                item.description = $('.v_news_content').html() || undefined;
 
                 return item;
             })
