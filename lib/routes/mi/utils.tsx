@@ -145,11 +145,11 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
     <>
         <img src={listItem.img} />
         <br />
-        {detail.product.sellPointList.map((point, index) => (
-            <div>
-                {index + 1}. {point}
-            </div>
-        ))}
+        <ol>
+            {detail.product.sellPointList.map((point) => (
+                <li>{point}</li>
+            ))}
+        </ol>
         <table>
             <tbody>
                 <tr>
