@@ -4,11 +4,12 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/lib/tzgg/:category?',
     categories: ['university'],
-    example: '/tsinghua/lib/tzgg',
+    example: '/tsinghua/lib/tzgg/qtkx',
     parameters: { category: '分类，可在对应分类页 URL 中找到，留空则获取全局通知公告' },
     features: {
         requireConfig: false,
@@ -49,14 +50,13 @@ async function handler(ctx) {
             const a = $item.find('a').attr('href');
 
             const itemCategory = category ? feedTitle : $item.find('.notice-label').text().trim();
-            const displayTitle = category ? title : `[${itemCategory}] ${title}`;
 
             const fullUrl = new URL(a!, host).href;
 
             return {
-                title: displayTitle,
+                title,
                 link: fullUrl,
-                pubDate: parseDate(time, 'YYYY-MM-DD'),
+                pubDate: timezone(parseDate(time, 'YYYY-MM-DD'), 8),
                 category: itemCategory,
             };
         });
