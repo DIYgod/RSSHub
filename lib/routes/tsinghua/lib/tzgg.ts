@@ -8,6 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/lib/tzgg/:category?',
+    url: 'lib.tsinghua.edu.cn',
     categories: ['university'],
     example: '/tsinghua/lib/tzgg/qtkx',
     parameters: { category: '分类，可在对应分类页 URL 中找到，留空则获取全局通知公告' },
@@ -38,6 +39,9 @@ async function handler(ctx) {
 
     /* Extract the feed title, either the specific category name or the global title */
     const feedTitle = category ? $('.tags .on').text() : '通知公告';
+
+    /* Extract the logo image URL to be used as the feed icon */
+    const image = new URL($('div.logo a img').attr('src') || 'images/logo.png', 'https://lib.tsinghua.edu.cn').href;
 
     /* Parse the list of notices and extract metadata for each item */
     const list = $('ul.notice-list li')
@@ -79,6 +83,7 @@ async function handler(ctx) {
         allowEmpty: true,
         title: '图书馆通知公告 - ' + feedTitle,
         link: host,
+        image,
         item: items,
     };
 }
