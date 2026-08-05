@@ -46,7 +46,7 @@ async function handler() {
     const items: DataItem[] = list.map((item) => {
         const detail = details.get(item.product_id);
         if (!detail) {
-            throw new Error(`未找到商品 ${item.product_id} 的详情`);
+            throw new Error(`Details not found for product ${item.product_id}`);
         }
         return getDataItem(item, detail);
     });
