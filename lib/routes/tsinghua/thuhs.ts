@@ -46,7 +46,7 @@ export const route: Route = {
 | tzgg     | xstd     | jsfc     | xwdt     |
 
 :::tip
-该网站仅对中国大陆境内 IP 开放访问。建议将 RSSHub 部署在中国境内服务器，或通过 [gost](https://github.com/go-gost/gost) 等代理工具转发请求。
+该网站会屏蔽云服务器/数据中心的 IP（如 GitHub Actions 所使用的 IP 段），但普通家庭或 VPS 网络一般可正常访问。若部署在云函数或 CI 环境中遇到超时，可尝试通过 [gost](https://github.com/go-gost/gost) 等代理工具转发请求。
 :::
 `,
 };
