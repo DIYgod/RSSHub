@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -11,7 +12,7 @@ import timezone from '@/utils/timezone';
  * The official website contains additional sections (e.g., recruitment, scientific research) not yet included here.
  * Future maintainers can easily support them by adding their URL prefix (e.g., 'xwdt' for 'xwdt.htm') and title to this map.
  */
-const categoryMap = {
+const categoryMap: Record<string, string> = {
     tzgg: '通知公告',
     xstd: '学生活动',
     jsfc: '教师风采',
@@ -46,7 +47,7 @@ export const route: Route = {
 `,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     /* Determine the target URL based on the provided category */
     const category = ctx.req.param('category') || 'tzgg';
     const host = 'https://www.qhfz.edu.cn';
@@ -63,7 +64,7 @@ async function handler(ctx) {
     }
 
     /* Extract metadata (title, link, date) for each article */
-    const items = list.toArray().map((item) => {
+    const items = list.toArray().map((item): DataItem & { link: string } => {
         const $item = $(item);
         const $a = $item.find('a').first();
         
