@@ -25,6 +25,7 @@ jobs:
               env:
                   GH_TOKEN: ${{ github.token }}
                   ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue_number }}
+                  CLAUDE_CODE_SUBPROCESS_ENV_SCRUB: 0
               with:
                   claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
                   github_token: ${{ secrets.GITHUB_TOKEN }}
