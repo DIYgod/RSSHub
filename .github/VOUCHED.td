@@ -7,7 +7,7 @@
 #   - Optional platform prefix: platform:username (e.g., github:user).
 #   - Denounce with minus prefix: -username or -platform:username.
 #   - Optional details after a space following the handle.
--an-lee impersonate as enpitsulin and DIYgod in #22205. 3a07e45a99c5300f47dadb2e91b40334626759d5.
+-an-lee impersonate as enpitsulin and DIYgod in #22205. 3a07e45a99c5300f47dadb2e91b40334626759d5. Repeated offenses in #22929. b19ede356a535b36db10cbba3e8798045dc1a12e.
 -betterandbetterii impersonate as dvorak0, goestav, Kjasn, Loongphy, TonyRL, ttttmr and xbot. https://github.com/DIYgod/RSSHub/commit/9e6f84df79bc9efcfabb0ca0768d7fded6775a1a.
 diygod
 henryqw
