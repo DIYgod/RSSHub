@@ -34,7 +34,7 @@ jobs:
                   claude_args: |
                       --model ${{ vars.OPENCODE_MODEL }}
                       ${{ vars.CLAUDE_EFFORT && format('--effort {0}', vars.CLAUDE_EFFORT) || '' }}
-                      --allowedTools "Bash(gh issue:*)"
+                      --allowedTools "Bash(gh issue:*),Bash(gh search:*)"
                       --disallowedTools "WebFetch,WebSearch"
                   prompt: |
                       A new issue has been created:
