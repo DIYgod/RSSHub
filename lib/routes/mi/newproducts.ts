@@ -1,5 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 
 import type { NewProductDetailData, NewProductItem } from './types';
 import utils from './utils';
@@ -35,7 +36,7 @@ const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData) =>
         description: utils.renderNewProduct(listItem, detail),
         link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
         image: listItem.img,
-        pubDate: new Date(listItem.start_time * 1000),
+        pubDate: parseDate(listItem.start_time, 'X'),
         language: 'zh-CN',
     }) as DataItem;
 
