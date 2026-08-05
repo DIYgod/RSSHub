@@ -150,6 +150,7 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
                 <li>{point}</li>
             ))}
         </ol>
+        <br />
         <table>
             <tbody>
                 <tr>
