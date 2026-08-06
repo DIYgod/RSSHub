@@ -55,7 +55,7 @@ async function handler(ctx: Context) {
     /* Determine the target URL based on the provided category */
     const category = ctx.req.param('category') || 'tzgg';
     const host = 'https://www.qhfz.edu.cn';
-    const targetUrl = \`\${host}/\${category}.htm\`;
+    const targetUrl = `${host}/${category}.htm`;
 
     const response = await ofetch(targetUrl);
     const $ = load(response);
@@ -113,7 +113,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: \`清华附中 - \${feedTitle}\`,
+        title: `清华附中 - ${feedTitle}`,
         link: targetUrl,
         item: out as DataItem[],
     };
