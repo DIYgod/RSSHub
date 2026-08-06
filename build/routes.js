@@ -106040,7 +106040,7 @@ export default {
     },
     "apiRoutes": {},
     "name": "清华大学",
-    "url": "tsinghua.edu.cn",
+    "url": "www.tsinghua.edu.cn",
     "categories": [
       "university"
     ],
