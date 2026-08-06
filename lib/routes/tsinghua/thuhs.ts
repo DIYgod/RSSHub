@@ -34,7 +34,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['qhfz.edu.cn/:category.htm'],
+            source: ['www.qhfz.edu.cn/:category.htm'],
         },
     ],
     name: '清华大学附属中学',
@@ -61,32 +61,18 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     /* Locate the list of articles on the specific category page */
-    let list = $('li:has(a p.bt)');
-    // If the layout differs slightly on other pages, fallback to targeting any a with a date sibling.
-    if (list.length === 0) {
-        list = $('li:has(a)');
-    }
+    const list = $('.list ul li');
 
     /* Extract metadata (title, link, date) for each article */
     const items = list.toArray().map((item): DataItem & { link: string } => {
         const $item = $(item);
-        const $a = $item.find('a').first();
-
-        let title = $item.find('p.bt').text().trim();
-        if (!title) {
-            title = $a.attr('title') || $a.text().trim();
-        }
-
-        let time = $item.find('p.sj').text().trim();
-        if (!time) {
-            // fallback if date class differs
-            time = $item.find('.sj').text().trim() || $item.find('.date').text().trim();
-        }
-
+        const $a = $item.find('a');
+        const title = $a.attr('title') || $a.text();
+        const time = $item.find('.sj').text();
         const link = $a.attr('href');
 
         return {
-            title,
+            title: title.trim(),
             link: link ? new URL(link, targetUrl).href : '',
             pubDate: time ? timezone(parseDate(time, 'YYYY-MM-DD'), 8) : undefined,
         };
@@ -98,15 +84,9 @@ async function handler(ctx: Context) {
     const out = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const response = await ofetch(item.link);
-                    const $ = load(response);
-
-                    const content = $('.v_news_content').html() || $('.content').html() || $('.Article_Content').html() || '';
-                    item.description = content || undefined;
-                } catch {
-                    item.description = undefined;
-                }
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                item.description = $('.v_news_content').html() || '';
                 return item;
             })
         )
