@@ -40859,9 +40859,10 @@
         "title": "图书馆通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/tzgg/:category"
+          "/tzgg/:category",
+          "/tzgg.htm"
         ],
-        "target": "/tsinghua/lib/tzgg/:category"
+        "target": "/tsinghua/lib/tzgg/:category?"
       },
       {
         "title": "图书馆资源动态",

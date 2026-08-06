@@ -105919,14 +105919,15 @@ export default {
   },
   "tsinghua": {
     "routes": {
-      "/lib/tzgg/:category": {
-        "path": "/lib/tzgg/:category",
+      "/lib/tzgg/:category?": {
+        "path": "/lib/tzgg/:category?",
+        "url": "lib.tsinghua.edu.cn",
         "categories": [
           "university"
         ],
         "example": "/tsinghua/lib/tzgg/qtkx",
         "parameters": {
-          "category": "分类，可在对应分类页 URL 中找到"
+          "category": "分类，可在对应分类页 URL 中找到，留空则获取全局通知公告"
         },
         "features": {
           "requireConfig": false,
@@ -105939,13 +105940,15 @@ export default {
         "radar": [
           {
             "source": [
-              "lib.tsinghua.edu.cn/tzgg/:category"
+              "lib.tsinghua.edu.cn/tzgg/:category",
+              "lib.tsinghua.edu.cn/tzgg.htm"
             ]
           }
         ],
         "name": "图书馆通知公告",
         "maintainers": [
-          "linsenwang"
+          "linsenwang",
+          "Aquarius-Situla"
         ],
         "location": "lib/tzgg.ts",
         "module": () => import('@/routes/tsinghua/lib/tzgg.ts')

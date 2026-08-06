@@ -7449,8 +7449,9 @@
   "/tsdm39/bd/:type?": [
     "equt"
   ],
-  "/tsinghua/lib/tzgg/:category": [
-    "linsenwang"
+  "/tsinghua/lib/tzgg/:category?": [
+    "linsenwang",
+    "Aquarius-Situla"
   ],
   "/tsinghua/lib/zydt/:category?": [
     "nczitzk"
