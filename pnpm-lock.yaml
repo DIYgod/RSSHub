@@ -56,8 +56,8 @@ importers:
         specifier: 1.5.1
         version: 1.5.1(hono@4.12.34)(zod@4.4.3)
       '@jocmp/mercury-parser':
-        specifier: 3.0.9
-        version: 3.0.9
+        specifier: 3.1.0
+        version: 3.1.0
       '@notionhq/client':
         specifier: 5.23.3
         version: 5.23.3
@@ -1393,8 +1393,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jocmp/mercury-parser@3.0.9':
-    resolution: {integrity: sha512-DoGbAarmvEzGBh+CThPD+cKFiXBugH0M//v8HM8EczqITyLSdijRgTyS8pnWszB9wINeAn1EuBeuIpL/HFXTPA==}
+  '@jocmp/mercury-parser@3.1.0':
+    resolution: {integrity: sha512-ide0l75g2HwEbC6dNW/D+jNZX7/ISgzQ/QJuIenLzQNR7am/VuwS1vsYDDb+88EkhqoLgcbe4VegunDQIm3bvg==}
     engines: {node: '>=22'}
     hasBin: true
     bundledDependencies:
@@ -3439,6 +3439,7 @@ packages:
 
   crypto-js@4.2.0:
     resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    deprecated: Active development of CryptoJS has been discontinued. This library is no longer maintained.
 
   css-select@5.2.2:
     resolution: {integrity: sha512-TizTzUddG/xYLA3NXodFM0fSbNizXjOKhqiQQwvhlspadZokn1KDy0NZFS0wuEubIYAV5/c1/lAr0TaaFXEXzw==}
@@ -5199,8 +5200,8 @@ packages:
     resolution: {integrity: sha512-DTPx3RWSSnWyzLxQnlH0rJP+EW5ekl16ZU4/psbIhA0e53kJfdgaN5vKM+xP7yJtXVu+nfdVFmlgFDEKAe4Pyw==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postman-request@2.88.1-postman.48:
-    resolution: {integrity: sha512-E32FGh8ig2KDvzo4Byi7Ibr+wK2gNKPSqXoNsvjdCHgDBxSK4sCUwv+aa3zOBUwfiibPImHMy0WdlDSSCTqTuw==}
+  postman-request@2.88.1-postman.49:
+    resolution: {integrity: sha512-Vcjtjyy1KQQ7u08PQg6i1Yd6GyNhyToGriudVruouXwLvAenyouHZaABYfJ2niJF3ajpMsvfHjyIYNei1zdekw==}
     engines: {node: '>= 16'}
 
   prelude-ls@1.2.1:
@@ -7032,14 +7033,14 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
-  '@jocmp/mercury-parser@3.0.9':
+  '@jocmp/mercury-parser@3.1.0':
     dependencies:
       '@babel/runtime-corejs2': 7.29.7
       cheerio: 1.2.0
       dayjs: 1.11.21
       difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       iconv-lite: 0.7.2
-      postman-request: 2.88.1-postman.48
+      postman-request: 2.88.1-postman.49
       string-direction: 0.1.2
       turndown: 7.2.4
       wuzzy: 0.1.8
@@ -10801,7 +10802,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postman-request@2.88.1-postman.48:
+  postman-request@2.88.1-postman.49:
     dependencies:
       '@postman/form-data': 3.1.1
       '@postman/tough-cookie': 4.1.3-postman.1
