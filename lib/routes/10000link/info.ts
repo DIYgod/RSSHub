@@ -127,7 +127,7 @@ export const route: Route = {
     path: '/info/:category?/:id?',
     name: '新闻',
     url: 'info.10000link.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['kt286', 'nczitzk'],
     handler,
     example: '/10000link/info/newslists/My01',
     parameters: {

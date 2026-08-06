@@ -151,7 +151,7 @@ export const route: Route = {
     path: '/:category{.+}?',
     name: '资讯',
     url: '199it.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['salviox', 'nczitzk'],
     handler,
     example: '/199it/newly',
     parameters: {
