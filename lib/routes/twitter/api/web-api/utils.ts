@@ -296,24 +296,17 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     return gridEntries || moduleItems || entries || [];
 };
 
-const getLegacyUser = (tweet: any) => tweet.core?.user_result?.result?.legacy || tweet.core?.user_results?.result?.legacy;
-
-const getCoreUser = (tweet: any) => tweet.core?.user_result?.result?.core || tweet.core?.user_results?.result?.core;
-
 const hydrateLegacyUser = (legacy: any, tweet: any) => {
-    legacy.user = getLegacyUser(tweet);
-
-    const coreUser = getCoreUser(tweet);
-    if (!legacy.user || !coreUser) {
+    const userResult = tweet.core?.user_results?.result;
+    if (!userResult) {
         return;
     }
 
-    if (coreUser.name) {
-        legacy.user.name = coreUser.name;
-    }
-    if (coreUser.screen_name) {
-        legacy.user.screen_name = coreUser.screen_name;
-    }
+    legacy.user = {
+        name: userResult.core?.name,
+        screen_name: userResult.core?.screen_name,
+        profile_image_url_https: userResult.avatar?.image_url,
+    };
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
