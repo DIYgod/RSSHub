@@ -71,7 +71,7 @@ async function handler(ctx: Context) {
     const items = list.toArray().map((item): DataItem & { link: string } => {
         const $item = $(item);
         const $a = $item.find('a').first();
-        
+
         let title = $item.find('p.bt').text().trim();
         if (!title) {
             title = $a.attr('title') || $a.text().trim();
@@ -101,7 +101,7 @@ async function handler(ctx: Context) {
                 try {
                     const response = await ofetch(item.link);
                     const $ = load(response);
-                    
+
                     const content = $('.v_news_content').html() || $('.content').html() || $('.Article_Content').html() || '';
                     item.description = content || undefined;
                 } catch {
