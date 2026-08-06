@@ -20,8 +20,8 @@ const json = (data: Data) => {
             url: item.link,
             title: item.title,
             // content_html and content_text are each optional strings — but one or both must be present
-            content_html: (item.content && item.content.html) || item.description || item.title,
-            content_text: item.content?.text ?? undefined,
+            content_html: item.description,
+            content_text: item.content?.text || (item.description ? undefined : item.title),
             summary: item.summary,
             image: item.image || item.itunes_item_image,
             banner_image: item.banner,

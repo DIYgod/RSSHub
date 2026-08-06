@@ -86,6 +86,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         const handleItem = (item: DataItem) => {
             item.title &&= entities.decodeXML(item.title + '');
+            item.description ||= item.content?.html;
 
             // handle pubDate
             if (item.pubDate) {
