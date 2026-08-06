@@ -61,7 +61,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     /* Locate the list of articles on the specific category page */
-    const list = $('.list ul li');
+    const list = $('.list ul li, .list_tt ul li');
 
     /* Extract metadata (title, link, date) for each article */
     const items = list.toArray().map((item): DataItem & { link: string } => {
