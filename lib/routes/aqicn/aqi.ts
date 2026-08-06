@@ -16,7 +16,7 @@ export const route: Route = {
         },
     ],
     name: '实时 AQI',
-    maintainers: ['ladeng07'],
+    maintainers: ['xapool', 'ladeng07'],
     handler,
     url: 'aqicn.org',
     description: `| 参数 | 污染成分 |
