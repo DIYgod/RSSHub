@@ -37,7 +37,7 @@ export const route: Route = {
             source: ['www.qhfz.edu.cn/:category.htm'],
         },
     ],
-    name: '清华大学附属中学',
+    name: '附属中学',
     maintainers: ['Aquarius-Situla'],
     handler,
     description: `
