@@ -84,6 +84,9 @@ async function handler(ctx: Context) {
     const out = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
+                if (new URL(item.link).hostname !== 'www.qhfz.edu.cn') {
+                    return item;
+                }
                 const response = await ofetch(item.link);
                 const $ = load(response);
                 item.description = $('.v_news_content').html() || '';
