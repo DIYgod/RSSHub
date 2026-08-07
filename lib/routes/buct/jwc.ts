@@ -34,13 +34,11 @@ async function handler() {
     const list = $('div.list02 ul > li')
         .not('#wp_paging_w66 li')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                pubDate: $(item).find('span').text(),
-                title: $(item).find('a').attr('title')!,
-                link: `${rootUrl}${$(item).find('a').attr('href')}`,
-            })
-        );
+        .map((item): DataItem => ({
+            pubDate: $(item).find('span').text(),
+            title: $(item).find('a').attr('title')!,
+            link: `${rootUrl}${$(item).find('a').attr('href')}`,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

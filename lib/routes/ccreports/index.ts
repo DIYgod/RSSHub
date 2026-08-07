@@ -38,16 +38,14 @@ async function handler() {
     const list = $('div.index-four-content > div.article-box')
         .find('div.new-child')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('p.new-title').text(),
-                link: new URL($(item).find('a').attr('href')!, rootUrl).href,
-                author: $(item)
-                    .find('p.new-desc')
-                    .text()
-                    .match(/作者：(.*?)\s/)![1],
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('p.new-title').text(),
+            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
+            author: $(item)
+                .find('p.new-desc')
+                .text()
+                .match(/作者：(.*?)\s/)![1],
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

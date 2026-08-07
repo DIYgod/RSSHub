@@ -58,12 +58,10 @@ async function handler(ctx) {
     const list = $('a.link-to-article')
         .toArray()
         .filter((item) => $(item).attr('href')!.startsWith('/'))
-        .map(
-            (item): DataItem => ({
-                link: rootUrl + $(item).attr('href'),
-                title: '',
-            })
-        );
+        .map((item): DataItem => ({
+            link: rootUrl + $(item).attr('href'),
+            title: '',
+        }));
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {

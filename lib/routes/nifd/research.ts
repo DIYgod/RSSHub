@@ -49,14 +49,12 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.qr-main-item')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('h2').text(),
-                link: rootUrl + $(item).find('a').attr('href'),
-                author: $(item).find('p > span:nth-child(2)').text(),
-                pubDate: parseDate($(item).find('p > span:nth-child(1)').text(), 'YYYY-MM-DD'),
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('h2').text(),
+            link: rootUrl + $(item).find('a').attr('href'),
+            author: $(item).find('p > span:nth-child(2)').text(),
+            pubDate: parseDate($(item).find('p > span:nth-child(1)').text(), 'YYYY-MM-DD'),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

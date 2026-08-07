@@ -29,12 +29,10 @@ async function handler(ctx) {
 
     const list = $('article h3 a')
         .toArray()
-        .map(
-            (e): DataItem => ({
-                link: $(e).attr('href'),
-                title: $(e).text(),
-            })
-        );
+        .map((e): DataItem => ({
+            link: $(e).attr('href'),
+            title: $(e).text(),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

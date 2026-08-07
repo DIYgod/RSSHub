@@ -34,12 +34,10 @@ async function handler() {
 
     const list = $('article.section-article-container.row')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('h2.subtitle').text(),
-                link: $(item).find('a.row.d-flex').prop('href'),
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('h2.subtitle').text(),
+            link: $(item).find('a.row.d-flex').prop('href'),
+        }));
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {

@@ -29,12 +29,10 @@ async function handler(ctx) {
 
     const list = $('.article-card')
         .toArray()
-        .map(
-            (e): DataItem => ({
-                link: $(e).attr('href'),
-                title: $(e).find('h2').text(),
-            })
-        )
+        .map((e): DataItem => ({
+            link: $(e).attr('href'),
+            title: $(e).find('h2').text(),
+        }))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : Infinity);
 
     const items = await Promise.all(

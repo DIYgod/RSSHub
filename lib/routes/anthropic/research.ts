@@ -70,13 +70,11 @@ async function handler() {
     const publicationSections = sections.filter((section) => section?.title === 'Publications');
     const posts = publicationSections
         .flatMap((section) => section?.posts ?? [])
-        .map(
-            (post): DataItem => ({
-                title: post.title,
-                link: `https://www.anthropic.com/research/${post.slug.current}`,
-                pubDate: parseDate(post.publishedOn),
-            })
-        );
+        .map((post): DataItem => ({
+            title: post.title,
+            link: `https://www.anthropic.com/research/${post.slug.current}`,
+            pubDate: parseDate(post.publishedOn),
+        }));
 
     const items = await pMap(
         posts,

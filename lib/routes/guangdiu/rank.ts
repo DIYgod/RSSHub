@@ -38,12 +38,10 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.hourrankitem')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('a.hourranktitle').text(),
-                link: new URL($(item).find('a.hourranktitle').attr('href')!, host).href,
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('a.hourranktitle').text(),
+            link: new URL($(item).find('a.hourranktitle').attr('href')!, host).href,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

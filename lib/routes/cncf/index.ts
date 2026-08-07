@@ -37,13 +37,11 @@ async function handler(ctx) {
     const title = $('h1.is-style-page-title').text();
     const list = $('div.post-archive__item')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('span.post-archive__title').text().trim(),
-                link: $(item).find('span.post-archive__title > a').attr('href'),
-                pubDate: parseDate($(item).find('span.post-archive__item_date').text().split('|', 1)[0]),
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('span.post-archive__title').text().trim(),
+            link: $(item).find('span.post-archive__title > a').attr('href'),
+            pubDate: parseDate($(item).find('span.post-archive__item_date').text().split('|', 1)[0]),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

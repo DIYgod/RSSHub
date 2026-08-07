@@ -34,13 +34,11 @@ async function handler() {
     const $ = load(response.data);
     const lists = $('div.pagenews04 div ul li')
         .toArray()
-        .map(
-            (el): DataItem => ({
-                title: $('a', el).text(),
-                link: $('a', el).attr('href'),
-                pubDate: timezone(parseDate($('span[class=canedit]', el).text()), 8),
-            })
-        );
+        .map((el): DataItem => ({
+            title: $('a', el).text(),
+            link: $('a', el).attr('href'),
+            pubDate: timezone(parseDate($('span[class=canedit]', el).text()), 8),
+        }));
 
     const items = await Promise.all(
         lists.map((item) =>

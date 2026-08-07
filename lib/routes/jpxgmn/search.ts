@@ -28,13 +28,11 @@ async function handler(ctx) {
     const $ = load(response._data);
     const items = $('div.list div.list div.node p')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('b').text(),
-                link: new URL($(item).find('a').attr('href')!, baseUrl).href,
-                pubDate: parseDate($(item).next().next().next().find('span').first().text()),
-            })
-        )
+        .map((item): DataItem => ({
+            title: $(item).find('b').text(),
+            link: new URL($(item).find('a').attr('href')!, baseUrl).href,
+            pubDate: parseDate($(item).next().next().next().find('span').first().text()),
+        }))
         .filter((item) => item.title.length !== 0);
 
     return {

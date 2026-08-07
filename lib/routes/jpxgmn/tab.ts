@@ -42,13 +42,11 @@ async function handler(ctx) {
     }
     const items = $('div.related_posts ul > li')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('a span').text(),
-                link: new URL($(item).find('a').attr('href')!, baseUrl).href,
-                pubDate: parseDate($(item).find('footer span').first().text()),
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('a span').text(),
+            link: new URL($(item).find('a').attr('href')!, baseUrl).href,
+            pubDate: parseDate($(item).find('footer span').first().text()),
+        }));
     return {
         title: `极品性感美女 - ${feedTitle}`,
         link: response.url,

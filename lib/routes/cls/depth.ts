@@ -65,16 +65,14 @@ async function handler(ctx) {
         query: getSearchParams(),
     });
 
-    let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map(
-        (item): DataItem => ({
-            title: item.title || item.brief,
-            link: `${rootUrl}/detail/${item.id}`,
-            pubDate: parseDate(item.ctime, 'X'),
-            author: item.source,
-            category: item.article_tag?.map((tag) => tag.name),
-            image: item.image,
-        })
-    );
+    let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map((item): DataItem => ({
+        title: item.title || item.brief,
+        link: `${rootUrl}/detail/${item.id}`,
+        pubDate: parseDate(item.ctime, 'X'),
+        author: item.source,
+        category: item.article_tag?.map((tag) => tag.name),
+        image: item.image,
+    }));
 
     items = await Promise.all(
         items.map((item) =>

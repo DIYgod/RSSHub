@@ -44,12 +44,10 @@ async function handler(ctx) {
     const title = $('div.left > nav').text().split('/').slice(1).join('');
     const list = $('div.item')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('div.title').text(),
-                link: new URL($(item).find('a').attr('href')!, host).href,
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('div.title').text(),
+            link: new URL($(item).find('a').attr('href')!, host).href,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

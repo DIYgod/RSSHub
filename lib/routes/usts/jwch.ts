@@ -38,12 +38,10 @@ async function handler(ctx) {
     const title = $('div.mainWrap.cleafix > div > div.right.fr > div.local.fl > h3').text();
     const list = $('div.list > ul > li')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('a').text(),
-                link: new URL($(item).find('a').attr('href')!, rootURL).href,
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('a').text(),
+            link: new URL($(item).find('a').attr('href')!, rootURL).href,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
