@@ -8,9 +8,8 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 /*
- * Dictionary of supported categories.
- * The official website contains additional sections (e.g., recruitment, scientific research) not yet included here.
- * Future maintainers can easily support them by adding their URL prefix (e.g., 'xwdt' for 'xwdt.htm') and title to this map.
+ * Dictionary of supported text-based categories.
+ * Other sections (such as video news) are intentionally excluded as they require complex media parsing.
  */
 const categoryMap: Record<string, string> = {
     tzgg: '通知公告',
