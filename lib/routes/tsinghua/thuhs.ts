@@ -92,9 +92,14 @@ async function handler(ctx: Context) {
         )
     );
 
+    const icon = new URL('images/logo.png', host).href;
+
     return {
         title: `清华附中 - ${feedTitle}`,
         link: targetUrl,
         item: out as DataItem[],
+        image: icon,
+        icon,
+        logo: icon,
     };
 }
