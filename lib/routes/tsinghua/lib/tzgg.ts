@@ -69,6 +69,9 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
+                if (new URL(item.link).hostname !== 'lib.tsinghua.edu.cn') {
+                    return item;
+                }
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
