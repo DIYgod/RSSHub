@@ -118,7 +118,7 @@ jobs:
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
             - name: Attest (ordinary version)
-              uses: actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1
+              uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
               with:
                   subject-name: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -173,7 +173,7 @@ jobs:
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
             - name: Attest (Chromium-bundled version)
-              uses: actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1
+              uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
               with:
                   subject-name: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
