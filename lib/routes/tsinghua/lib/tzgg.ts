@@ -12,6 +12,11 @@ export const route: Route = {
     categories: ['university'],
     example: '/tsinghua/lib/tzgg/qtkx',
     parameters: { category: '分类，可在对应分类页 URL 中找到，留空则获取全局通知公告' },
+    description: `
+| 全部 | 开馆通知 | 施工维修 | 服务通知 | 违规通报 | 清图快讯 | 馆际通知 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 留空 | kgtz     | sgwx     | fwtz     | wgtb     | qtkx     | gjtz     |
+`,
     features: {
         requireConfig: false,
         requirePuppeteer: false,
