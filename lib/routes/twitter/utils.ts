@@ -407,13 +407,14 @@ const ProcessFeed = (ctx, { data = [] as any[] }, params = {} as Record<string, 
             originalItem.user?.screen_name && (originalItem.id_str || originalItem.conversation_id_str)
                 ? `https://x.com/${originalItem.user?.screen_name}/status/${originalItem.id_str || originalItem.conversation_id_str}`
                 : `https://x.com/${item.user?.screen_name}/status/${item.id_str || item.conversation_id_str}`;
+        // For retweets, item is the retweeted status, so author is the original tweet author
         return {
             title,
             author: [
                 {
-                    name: originalItem.user?.name,
-                    url: `https://x.com/${originalItem.user?.screen_name}`,
-                    avatar: originalItem.user?.profile_image_url_https,
+                    name: item.user?.name,
+                    url: `https://x.com/${item.user?.screen_name}`,
+                    avatar: item.user?.profile_image_url_https,
                 },
             ],
             description,
