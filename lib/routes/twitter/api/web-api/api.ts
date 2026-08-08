@@ -53,8 +53,8 @@ const cacheTryGet = async (_id, params, operationName, func) => {
 };
 
 const getUserTweets = (id: string, params?: Record<string, any>) =>
-    cacheTryGet(id, params, 'getUserTweets', async (id, params = {}) =>
-        gatherLegacyFromData(
+    cacheTryGet(id, params, 'getUserTweets', async (id, params = {}) => {
+        const tweets = gatherLegacyFromData(
             await paginationTweets('UserTweets', id, {
                 ...params,
                 count: 20,
@@ -62,9 +62,13 @@ const getUserTweets = (id: string, params?: Record<string, any>) =>
                 withQuickPromoteEligibilityTweetFields: true,
                 withVoice: true,
                 withV2Timeline: true,
-            })
-        )
-    );
+            }),
+            ['profile-conversation-'],
+            id
+        );
+        // TODO: Keep only root posts; drop replies and self-thread continuations from profile-conversation modules
+        return tweets.filter((t) => !t.in_reply_to_status_id_str);
+    });
 
 const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) =>
     cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params = {}) =>

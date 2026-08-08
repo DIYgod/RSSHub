@@ -188,7 +188,11 @@ function gatherLegacyFromData(entries, filterNested?, userId?) {
     return tweets;
 }
 
-const getUserTweetsByID = async (id, params = {}) => gatherLegacyFromData(await timelineTweets(id, params));
+const getUserTweetsByID = async (id, params = {}) => {
+    // TODO: Keep only root posts; drop replies and self-thread continuations from profile-conversation modules
+    const tweets = gatherLegacyFromData(await timelineTweets(id, params), ['profile-conversation-'], id);
+    return tweets.filter((t) => !t.in_reply_to_status_id_str);
+};
 // TODO: show the whole conversation instead of just the reply tweet
 const getUserTweetsAndRepliesByID = async (id, params = {}) => gatherLegacyFromData(await timelineTweetsAndReplies(id, params), ['profile-conversation-'], id);
 const getUserMediaByID = async (id, params = {}) => gatherLegacyFromData(await timelineMedia(id, params));
@@ -275,11 +279,7 @@ const getUserTweets = async (id, params = {}) => {
     }
     const idSet = new Set();
     tweets = tweets
-        .filter(
-            (tweet) =>
-                !tweet.in_reply_to_user_id_str || // exclude replies
-                tweet.in_reply_to_user_id_str === rest_id // but include replies to self (threads)
-        )
+        .filter((tweet) => !tweet.in_reply_to_status_id_str) // exclude replies and self-thread continuations
         .map((tweet) => {
             const id_str = tweet.id_str || tweet.conversation_id_str;
             return !idSet.has(id_str) && idSet.add(id_str) && tweet;
