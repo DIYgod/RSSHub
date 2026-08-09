@@ -69,11 +69,27 @@ const fakeDirectories: Record<string, Record<string, unknown>> = {
             },
         },
     },
+    coLocated: {
+        '/route.test.ts': {
+            route: {
+                path: '/test-only',
+                name: 'TestOnly',
+                handler: () => ({ title: 'test-only', link: 'https://example.com', item: [], allowEmpty: true }),
+            },
+        },
+        '/route.spec.ts': {
+            route: {
+                path: '/spec-only',
+                name: 'SpecOnly',
+                handler: () => ({ title: 'spec-only', link: 'https://example.com', item: [], allowEmpty: true }),
+            },
+        },
+    },
 };
 
-const mockImplementation = ({ targetDirectoryPath }: { targetDirectoryPath: string }) => {
+const mockImplementation = ({ targetDirectoryPath, importPattern = /.*/ }: { targetDirectoryPath: string; importPattern?: RegExp }) => {
     const name = targetDirectoryPath.split(/[/\\]/).findLast(Boolean) as string;
-    return Promise.resolve(fakeDirectories[name]);
+    return Promise.resolve(Object.fromEntries(Object.entries(fakeDirectories[name]).filter(([modulePath]) => importPattern.test(modulePath))));
 };
 
 // The registry lists real directories at startup; module contents come from the mocked importer
@@ -123,6 +139,20 @@ describe('createDevRegistry', () => {
         const body = await response.json();
         expect(body.title).toBe('flat-single');
         expect(directoryImportMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not register co-located Vitest modules as routes', async () => {
+        const { app } = buildApp();
+        const testResponse = await app.request('/coLocated/test-only');
+        const specResponse = await app.request('/coLocated/spec-only');
+
+        expect(testResponse.status).toBe(404);
+        expect(specResponse.status).toBe(404);
+        expect(directoryImportMock).toHaveBeenCalledWith(
+            expect.objectContaining({
+                importPattern: expect.any(RegExp),
+            })
+        );
     });
 
     it('imports each top directory at most once', async () => {

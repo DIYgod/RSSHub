@@ -57,7 +57,7 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
     const loadTopDirectory = async (name: string): Promise<Hono> => {
         const modules = (await directoryImport({
             targetDirectoryPath: path.join(routesDirectory, name),
-            importPattern: /\.tsx?$/,
+            importPattern: /^(?!.*\.(?:test|spec)\.tsx?$).*\.tsx?$/,
         })) as ModulesType;
 
         // directoryImport keys are relative to the imported directory; restore the lib/routes-relative form
