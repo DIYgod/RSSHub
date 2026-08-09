@@ -83,20 +83,17 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                try {
-                    const detailResponse = await ofetch(item.link!);
-                    const $detail = load(detailResponse);
+                const detailResponse = await ofetch(item.link!);
+                const $detail = load(detailResponse);
 
-                    item.author = $detail('.list-infor')
+                return {
+                    ...item,
+                    author: $detail('.list-infor')
                         .text()
                         .match(/作者：([^】]+)/)?.[1]
-                        ?.trim();
-                    item.description = $detail('.v_news_content').html();
-                } catch {
-                    // keep list data (title/date/link) when the detail page fails; fall back to empty content
-                }
-
-                return item;
+                        ?.trim(),
+                    description: $detail('.v_news_content').html(),
+                };
             })
         )
     );
