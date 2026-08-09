@@ -27,7 +27,26 @@ describe('JSON view', () => {
                     banner: 'https://example.com/banner.jpg',
                     pubDate: '2024-01-01T00:00:00Z',
                     updated: '2024-01-02T00:00:00Z',
-                    author: 'Item Author',
+                    author: [
+                        {
+                            name: 'Author One',
+                        },
+                        {
+                            name: 'Author Two',
+                            avatar: 'https://example.com/author-two/avatar.jpg',
+                        },
+                        {
+                            name: 'Author Three',
+                            email: 'author-three@example.com',
+                            avatar: 'https://example.com/author-three/avatar.jpg',
+                        },
+                        {
+                            name: 'Author Four',
+                            url: 'https://example.com/author-four',
+                            email: 'author-four@example.com',
+                            avatar: 'https://example.com/author-four/avatar.jpg',
+                        },
+                    ],
                     category: ['Tech', 'AI'],
                     enclosure_url: 'https://example.com/audio.mp3',
                     enclosure_type: 'audio/mpeg',
@@ -35,6 +54,13 @@ describe('JSON view', () => {
                     enclosure_length: 123,
                     itunes_duration: 321,
                     _extra: { foo: 'bar' },
+                },
+                {
+                    title: 'Item Two',
+                    link: 'https://example.com/two',
+                    pubDate: '2024-01-02T00:00:00Z',
+                    author: 'Author Five',
+                    category: 'Software',
                 },
             ],
         });
@@ -47,7 +73,7 @@ describe('JSON view', () => {
         expect(feed.feed_url).toBe('https://example.com/feed.json');
         expect(feed.description).toBe('JSON Description - Powered by RSSHub');
         expect(feed.authors).toEqual([{ name: 'Feed Author' }]);
-        expect(feed.items).toHaveLength(1);
+        expect(feed.items).toHaveLength(2);
         expect(feed.items[0]).toMatchObject({
             id: 'guid-1',
             url: 'https://example.com/one',
@@ -59,7 +85,25 @@ describe('JSON view', () => {
             banner_image: 'https://example.com/banner.jpg',
             date_published: '2024-01-01T00:00:00Z',
             date_modified: '2024-01-02T00:00:00Z',
-            authors: [{ name: 'Item Author' }],
+            authors: [
+                {
+                    name: 'Author One',
+                },
+                {
+                    name: 'Author Two',
+                    avatar: 'https://example.com/author-two/avatar.jpg',
+                },
+                {
+                    name: 'Author Three',
+                    url: 'mailto:author-three@example.com',
+                    avatar: 'https://example.com/author-three/avatar.jpg',
+                },
+                {
+                    name: 'Author Four',
+                    url: 'https://example.com/author-four',
+                    avatar: 'https://example.com/author-four/avatar.jpg',
+                },
+            ],
             tags: ['Tech', 'AI'],
             attachments: [
                 {
@@ -70,6 +114,15 @@ describe('JSON view', () => {
                     duration_in_seconds: 321,
                 },
             ],
+        });
+        expect(feed.items[1]).toMatchObject({
+            id: 'https://example.com/two',
+            url: 'https://example.com/two',
+            title: 'Item Two',
+            content_text: 'Item Two',
+            date_published: '2024-01-02T00:00:00Z',
+            authors: [{ name: 'Author Five' }],
+            tags: ['Software'],
         });
         expect(feed.items[0]._extra).toEqual({ foo: 'bar' });
     });
