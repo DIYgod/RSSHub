@@ -158,23 +158,13 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
                     <th>原价</th>
                     <th>现价</th>
                 </tr>
-                {detail.goodsInfo.goodsList.map((goods) => (
+                {[...(detail.goodsInfo.goodsList ?? []), ...(detail.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => (
                     <tr>
                         <td>{goods.name}</td>
                         <td>{goods.marketPrice} 元</td>
                         <td>{goods.price} 元</td>
                     </tr>
                 ))}
-                {detail.relationBatchedInfo &&
-                    detail.relationBatchedInfo.relationBatchedList
-                        .flatMap((relation) => relation.goodsInfo)
-                        .map((goods) => (
-                            <tr>
-                                <td>{goods.name}</td>
-                                <td>{goods.marketPrice} 元</td>
-                                <td>{goods.price} 元</td>
-                            </tr>
-                        ))}
             </tbody>
         </table>
     </>
