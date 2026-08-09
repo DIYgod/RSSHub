@@ -173,7 +173,7 @@ export const route: Route = {
     path: '/:category{.+}?',
     name: '分类',
     url: 'www.duozhi.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['WenryXu', 'nczitzk'],
     handler,
     example: '/duozhi/industry',
     parameters: {

@@ -18,7 +18,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    maintainers: ['1200522928'],
+    maintainers: ['korokor0', '1200522928'],
     radar: [
         {
             source: ['jwb.dgut.edu.cn/tzgg/'],
