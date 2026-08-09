@@ -46,6 +46,12 @@ describe('RSS view', () => {
                             description: 'Episode Two',
                             category: ['News', 'Updates'],
                         },
+                        {
+                            title: 'Episode Three',
+                            link: 'https://example.com/three',
+                            description: 'Episode Three',
+                            author: [{ name: 'Alice' }, { name: 'Bob' }],
+                        },
                     ],
                 }}
             />
@@ -63,5 +69,7 @@ describe('RSS view', () => {
         expect(html).toContain('<enclosure url="https://example.com/audio.mp3"');
         expect(html).toContain('<category>Podcast</category>');
         expect(html).toContain('<category>News</category>');
+        expect(html).toContain('<author>Host</author>');
+        expect(html).toContain('<author>Alice, Bob</author>');
     });
 });
