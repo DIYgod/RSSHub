@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.ahstu.edu.cn';
@@ -33,7 +33,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ahstu.edu.cn/index/:type'],
+            source: ['www.ahstu.edu.cn/index/:type.htm'],
             target: '/:type',
         },
     ],
@@ -59,10 +59,10 @@ async function handler(ctx) {
     }
 
     const listUrl = `${baseUrl}${types[type].url}`;
-    const { data: listResponse } = await got(listUrl);
+    const listResponse = await ofetch(listUrl);
     const $ = load(listResponse);
 
-    // 人物风采是图片画廊结构（无日期），其他栏目为文本列表结构
+    // rwfc is an image gallery layout without dates; other columns use a text list layout
     const isGallery = types[type].gallery === true;
     const listSelector = isGallery ? 'a.img-ul-tt' : 'a.rigthConBox-conList';
 
@@ -84,7 +84,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 try {
-                    const { data: detailResponse } = await got(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $detail = load(detailResponse);
 
                     item.author = $detail('.list-infor')
@@ -93,7 +93,7 @@ async function handler(ctx) {
                         ?.trim();
                     item.description = $detail('.v_news_content').html();
                 } catch {
-                    // 详情页抓取失败时保留列表数据（标题/日期/链接），正文降级为空
+                    // keep list data (title/date/link) when the detail page fails; fall back to empty content
                 }
 
                 return item;
