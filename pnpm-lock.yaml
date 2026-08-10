@@ -59,8 +59,8 @@ importers:
         specifier: 3.1.0
         version: 3.1.0
       '@notionhq/client':
-        specifier: 5.23.3
-        version: 5.23.3
+        specifier: 5.24.0
+        version: 5.24.0
       '@opentelemetry/api':
         specifier: 1.9.1
         version: 1.9.1
@@ -1481,8 +1481,8 @@ packages:
     resolution: {integrity: sha512-y3SvzjuY1ygnzWA4Krwx/WaJAsTMP11DN+e21A8Fa8PW1oDtVB5NSRW7LWurAiS2oKRkuCgcjTYMkBuBkcPCRg==}
     engines: {node: '>=12.4.0'}
 
-  '@notionhq/client@5.23.3':
-    resolution: {integrity: sha512-Uk0ycO+u6+iueoE/eK9Aa/DGWd2tZ9ymvGF/MXcfxXXL+AS2JYWm1ols19rEk5qOdZ0l2KYc6zThx0iXQ3QhpQ==}
+  '@notionhq/client@5.24.0':
+    resolution: {integrity: sha512-fd71hjK6QZYggwWdaBeLu4ajBQ4HTK0R6bj7v9GMFhilgsdMRJ5HDHQtKbc8/y6E5XXLYgNpDz78Q+BdXHa1ug==}
     engines: {node: '>=18'}
 
   '@octokit/auth-token@6.0.0':
@@ -4891,8 +4891,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@3.3.17:
-    resolution: {integrity: sha512-xQLf0A3HOMlgHq0n247/LRuAOYmB7dXJ/DvAxGvsSBij45XtBSmQycu+F8ODbHwns/XyFZagyL1+J0Offw1E0g==}
+  nanoid@3.3.18:
+    resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -7132,7 +7132,7 @@ snapshots:
 
   '@nolyfill/side-channel@1.0.44': {}
 
-  '@notionhq/client@5.23.3': {}
+  '@notionhq/client@5.24.0': {}
 
   '@octokit/auth-token@6.0.0': {}
 
@@ -10436,7 +10436,7 @@ snapshots:
 
   nanoid@3.3.16: {}
 
-  nanoid@3.3.17: {}
+  nanoid@3.3.18: {}
 
   nanoid@5.1.16: {}
 
@@ -10816,7 +10816,7 @@ snapshots:
 
   postcss@8.5.26:
     dependencies:
-      nanoid: 3.3.17
+      nanoid: 3.3.18
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
