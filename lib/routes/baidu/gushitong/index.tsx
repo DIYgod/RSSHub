@@ -13,7 +13,7 @@ export const route: Route = {
     path: '/gushitong/index/:market?',
     categories: ['finance'],
     view: ViewType.Notifications,
-    example: '/baidu/gushitong/index/asia',
+    example: '/baidu/gushitong/index',
     parameters: {
         market: {
             description: '市场分类，默认为亚洲市场，即上证指数、深圳成指、恒生指数、富时中国A50、日经225指数和韩国综合指数',
@@ -25,7 +25,6 @@ export const route: Route = {
                 { label: '债券', value: 'bond' },
                 { label: '其他', value: 'other' },
             ],
-            default: 'asia',
         },
     },
     features: {
@@ -61,8 +60,6 @@ async function handler(ctx) {
                 市场：{e.market.toUpperCase()}
                 <br />
                 代码：{e.code}
-                <br />
-                名称：{e.name}
                 <br />
                 收盘价：{e.lastPrice}
                 <br />
