@@ -18797,7 +18797,7 @@ export default {
         "maintainers": [
           "nczitzk"
         ],
-        "description": "| id           | 分类 |\n| ------------ | ---- |\n| global       | 最新 |\n| shares       | 股市 |\n| bonds        | 债市 |\n| commodities  | 商品 |\n| forex        | 外汇 |\n| finance      | 金融 |\n| enterprise   | 公司 |\n| asset-manage | 资管 |\n| tmt          | 科技 |\n| ai           | 硬AI |\n| estate       | 地产 |\n| car          | 汽车 |\n| medicine     | 医药 |",
+        "description": "| id           | 分类  |\n| ------------ | ----- |\n| global       | 最新  |\n| shares       | 股市  |\n| bonds        | 债市  |\n| commodities  | 商品  |\n| forex        | 外汇  |\n| finance      | 金融  |\n| enterprise   | 公司  |\n| asset-manage | 资管  |\n| tmt          | 科技  |\n| ai           | 硬 AI |\n| estate       | 地产  |\n| car          | 汽车  |\n| medicine     | 医药  |",
         "location": "news.ts",
         "module": () => import('@/routes/wallstreetcn/news.ts')
       },
@@ -29471,6 +29471,47 @@ export default {
     "apiRoutes": {},
     "name": "安徽建筑大学",
     "url": "news.ahjzu.edu.cn",
+    "lang": "zh-CN"
+  },
+  "ahstu": {
+    "routes": {
+      "/:type?": {
+        "path": "/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/ahstu/akyw",
+        "parameters": {
+          "type": "栏目类型，见下表，默认为 `akyw`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ahstu.edu.cn/index/:type.htm"
+            ],
+            "target": "/:type"
+          }
+        ],
+        "name": "官网通知与新闻",
+        "maintainers": [
+          "JizzCruiy"
+        ],
+        "description": "| 栏目 | type |\n| ---- | ---- |\n| 安科要闻 | akyw |\n| 通知公告 | tzgg |\n| 学术安科 | xsak |\n| 校园动态 | xydt |\n| 媒体聚焦 | mtak |\n| 人物风采 | rwfc |\n| 视觉校园 | sjxy |",
+        "location": "index.ts",
+        "module": () => import('@/routes/ahstu/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "安徽科技工程大学",
+    "url": "ahstu.edu.cn",
     "lang": "zh-CN"
   },
   "ai-bot": {

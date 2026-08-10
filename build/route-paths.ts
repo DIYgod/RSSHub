@@ -138,6 +138,7 @@ export type RoutePath =
   | `/agora0/pen0`
   | `/agri/:category{.+}?`
   | `/ahjzu/news`
+  | `/ahstu/:type?`
   | `/ai-bot/daily-ai-news`
   | `/aiaa/journal/:journalID`
   | `/aibase/daily`

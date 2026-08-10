@@ -9802,6 +9802,19 @@
       }
     ]
   },
+  "ahstu.edu.cn": {
+    "_name": "安徽科技工程大学",
+    "www": [
+      {
+        "title": "官网通知与新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/:type.htm"
+        ],
+        "target": "/ahstu/:type"
+      }
+    ]
+  },
   "ai-bot.cn": {
     "_name": "AI工具集",
     ".": [
