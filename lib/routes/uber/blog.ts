@@ -9,7 +9,7 @@ const rootUrl = 'https://www.uber.com';
 const listPageUrl = `${rootUrl}/us/en/blog/engineering/`;
 const articleFeedStateIdPrefix = '__LOCAL_REDUX_STATE_Newsroom_Article Feed Store_';
 const contentSelector = 'div[data-testid="content"].rich-lfc-content';
-const articleDatePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/;
+const articleDatePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?Z$/;
 const requestOptions = {
     headers: {
         accept: 'text/html',
@@ -51,6 +51,7 @@ export const route: Route = {
 type Article = {
     categoryIDs: Array<number | string>;
     fullURL: string;
+    ogTitle?: string;
     publishedAt: string;
     title: string;
 };
@@ -126,6 +127,7 @@ async function handler() {
                 (article) =>
                     typeof article?.fullURL !== 'string' ||
                     typeof article?.title !== 'string' ||
+                    (article?.ogTitle !== undefined && typeof article.ogTitle !== 'string') ||
                     typeof article?.publishedAt !== 'string' ||
                     !Array.isArray(article?.categoryIDs) ||
                     article.categoryIDs.some((id) => typeof id !== 'string' && typeof id !== 'number')
@@ -158,7 +160,7 @@ async function handler() {
                 }
 
                 return {
-                    title: article.title,
+                    title: article.ogTitle || article.title,
                     link,
                     description,
                     pubDate: parseArticleDate(article.publishedAt),
