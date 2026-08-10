@@ -38,9 +38,11 @@ export const route: Route = {
 | bonds        | 债市 |
 | commodities  | 商品 |
 | forex        | 外汇 |
+| finance      | 金融 |
 | enterprise   | 公司 |
 | asset-manage | 资管 |
 | tmt          | 科技 |
+| ai           | 硬AI |
 | estate       | 地产 |
 | car          | 汽车 |
 | medicine     | 医药 |`,
