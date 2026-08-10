@@ -369,8 +369,8 @@ importers:
         specifier: 4.1.10
         version: 4.1.10(vitest@4.1.10)
       discord-api-types:
-        specifier: 0.38.52
-        version: 0.38.52
+        specifier: 0.38.53
+        version: 0.38.53
       domhandler:
         specifier: 6.0.1
         version: 6.0.1
@@ -3587,8 +3587,8 @@ packages:
     resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
-  discord-api-types@0.38.52:
-    resolution: {integrity: sha512-uwe9EKfbjsmgWc2fdFjvDbj+dQqx3lp7wqDCmIha0jInuU+xeQjkCK9tMMn+p7RXfdVQORCInq4cD3U2ymDmyg==}
+  discord-api-types@0.38.53:
+    resolution: {integrity: sha512-HL1zz/UuZ+bbJjA/X8Kbxx9gk8v9rJAbTeWRNYKmIdjwJ7EovjlHgoJTxcLpATfNJ+AonOtMdy3Y5MVIJAAd/A==}
 
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
@@ -8814,7 +8814,7 @@ snapshots:
     dependencies:
       heap: 0.2.7
 
-  discord-api-types@0.38.52: {}
+  discord-api-types@0.38.53: {}
 
   dom-serializer@2.0.0:
     dependencies:
