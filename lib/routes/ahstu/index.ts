@@ -40,8 +40,8 @@ export const route: Route = {
     name: '官网通知与新闻',
     maintainers: ['JizzCruiy'],
     handler,
-    description: `| 栏目 | type |
-| ---- | ---- |
+    description: `| 栏目     | type |
+| -------- | ---- |
 | 安科要闻 | akyw |
 | 通知公告 | tzgg |
 | 学术安科 | xsak |
