@@ -1919,6 +1919,7 @@ export type RoutePath =
   | `/mhlw/monthly-labour-survey`
   | `/mi/crowdfunding`
   | `/mi/golden`
+  | `/mi/newproducts`
   | `/microsoft/edge/addon/:crxid`
   | `/microsoft/mcr/product/*`
   | `/mihoyo/bbs/follow-list/:uid`
