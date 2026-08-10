@@ -1,6 +1,6 @@
 import { Innertube } from 'youtubei.js';
 
-import type { Data } from '@/types';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 
@@ -26,6 +26,77 @@ const getInnertube = () => {
     return innertubePromise;
 };
 
+const getVideoId = (video: any) => ('video_id' in video ? video.video_id : 'content_id' in video ? video.content_id : video.id);
+const getVideoTitle = (video: any) => ('metadata' in video ? video.metadata?.title?.text : video.title?.text);
+const getVideoImage = (video: any) => ('content_image' in video ? video.content_image?.image?.[0]?.url : 'best_thumbnail' in video ? video.best_thumbnail?.url : video.thumbnails?.[0]?.url);
+const getVideoPublished = (video: any) => {
+    if ('published' in video && video.published?.text) {
+        return video.published.text;
+    }
+    const texts = (video.metadata?.metadata?.metadata_rows ?? []).flatMap((row: any) => (row.metadata_parts ?? []).map((part: any) => part.text?.text)).filter(Boolean);
+    return texts.find((t: string) => /\d+\s+\w+\s+ago/i.test(t)) ?? texts.find((t: string) => /\b(?:today|yesterday|now)\b/i.test(t));
+};
+const parseDurationText = (text: string) => {
+    if (!text || !/^\d+:\d{2}(?::\d{2})?$/.test(text)) {
+        return;
+    }
+    return text
+        .split(':')
+        .map(Number)
+        .reduce((acc, part) => acc * 60 + part, 0);
+};
+const getVideoDuration = (video: any) => {
+    if (video.duration && 'seconds' in video.duration) {
+        return video.duration.seconds;
+    }
+    const badgeText = (video.content_image?.overlays ?? [])
+        .flatMap((overlay: any) => overlay.badges ?? [])
+        .map((badge: any) => badge.text)
+        .find(Boolean);
+    return parseDurationText(badgeText);
+};
+const getVideoAuthor = (video: any) => {
+    if ('content_id' in video) {
+        return;
+    }
+    const author = video.author;
+    if (typeof author === 'string') {
+        return author;
+    }
+    if (Array.isArray(author)) {
+        return author.map((a: any) => ({ name: a.name, url: a.url, avatar: a.thumbnails?.[0]?.url }));
+    }
+    if (author) {
+        return author.name === 'N/A' ? undefined : author.name;
+    }
+    return;
+};
+
+const mapVideoToItem = (video: any, { embed, isJsonFeed, videoSubtitles }: { embed: boolean; isJsonFeed: boolean; videoSubtitles: Record<string, NonNullable<DataItem['attachments']>> }): DataItem => {
+    const videoId = getVideoId(video);
+    const img = getVideoImage(video);
+    const description = 'description_snippet' in video ? utils.renderDescription(embed, videoId, img, utils.formatDescription(video.description_snippet?.toHTML())) : utils.renderDescription(embed, videoId, img, '');
+    const srtAttachments = isJsonFeed ? videoSubtitles[videoId] || [] : [];
+    const published = getVideoPublished(video);
+
+    return {
+        title: getVideoTitle(video) || `YouTube Video ${videoId}`,
+        description,
+        link: `https://www.youtube.com/watch?v=${videoId}`,
+        author: getVideoAuthor(video),
+        image: img,
+        pubDate: published ? parseRelativeDate(published) : undefined,
+        attachments: [
+            {
+                url: getVideoUrl(videoId),
+                mime_type: 'text/html',
+                duration_in_seconds: getVideoDuration(video),
+            },
+            ...srtAttachments,
+        ],
+    };
+};
+
 export const getChannelIdByUsername = (username: string) =>
     cache.tryGet(`youtube:getChannelIdByUsername:${username}`, async () => {
         const innertube = await getInnertube();
@@ -42,7 +113,7 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const videos = await channel.getVideos();
-    const videoSubtitles = isJsonFeed ? await getSrtAttachmentBatch(videos.videos.filter((video) => 'video_id' in video).map((video) => video.video_id)) : {};
+    const videoSubtitles = isJsonFeed ? await getSrtAttachmentBatch(videos.videos.filter((video) => 'video_id' in video || 'content_id' in video).map((video) => getVideoId(video))) : {};
 
     return {
         title: `${channel.metadata.title || channelId} - YouTube`,
@@ -50,31 +121,7 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
         image: channel.metadata.avatar?.[0].url,
         description: channel.metadata.description,
 
-        item: await Promise.all(
-            videos.videos
-                .filter((video) => 'video_id' in video)
-                .map((video) => {
-                    const srtAttachments = isJsonFeed ? videoSubtitles[video.video_id] || [] : [];
-                    const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : 'thumbnails' in video ? video.thumbnails?.[0]?.url : undefined;
-
-                    return {
-                        title: video.title.text || `YouTube Video ${video.video_id}`,
-                        description: 'description_snippet' in video ? utils.renderDescription(embed, video.video_id, img, utils.formatDescription(video.description_snippet?.toHTML())) : null,
-                        link: `https://www.youtube.com/watch?v=${video.video_id}`,
-                        author: typeof video.author === 'string' ? video.author : video.author.name === 'N/A' ? undefined : video.author.name,
-                        image: img,
-                        pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
-                        attachments: [
-                            {
-                                url: getVideoUrl(video.video_id),
-                                mime_type: 'text/html',
-                                duration_in_seconds: video.duration && 'seconds' in video.duration ? video.duration.seconds : undefined,
-                            },
-                            ...srtAttachments,
-                        ],
-                    };
-                })
-        ),
+        item: videos.videos.filter((video) => 'video_id' in video || 'content_id' in video).map((video) => mapVideoToItem(video, { embed, isJsonFeed, videoSubtitles })),
     };
 };
 
@@ -89,35 +136,6 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
         image: playlist.info.thumbnails?.[0].url,
         description: playlist.info.description || `${playlist.info.title} by ${playlist.info.author.name}`,
 
-        item: videos
-            .filter((video) => 'id' in video)
-            .map((video) => {
-                const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : video.thumbnails?.[0]?.url;
-
-                return {
-                    title: video.title.text || `YouTube Video ${video.id}`,
-                    description: utils.renderDescription(embed, video.id, img, ''),
-                    link: `https://www.youtube.com/watch?v=${video.id}`,
-                    pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
-                    author:
-                        'author' in video
-                            ? [
-                                  {
-                                      name: video.author.name,
-                                      url: video.author.url,
-                                      avatar: video.author.thumbnails?.[0]?.url,
-                                  },
-                              ]
-                            : undefined,
-                    image: img,
-                    attachments: [
-                        {
-                            url: getVideoUrl(video.id),
-                            mime_type: 'text/html',
-                            duration_in_seconds: 'duration' in video && video.duration && 'seconds' in video.duration ? video.duration.seconds : undefined,
-                        },
-                    ],
-                };
-            }),
+        item: videos.filter((video) => 'id' in video || 'video_id' in video || 'content_id' in video).map((video) => mapVideoToItem(video, { embed, isJsonFeed: false, videoSubtitles: {} })),
     };
 };
