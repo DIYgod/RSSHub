@@ -12284,14 +12284,14 @@
   },
   "baidu.com": {
     "_name": "百度",
-    "gushitong": [
+    "finance": [
       {
         "title": "首页指数",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/"
         ],
-        "target": "/baidu/gushitong/index"
+        "target": "/baidu/gushitong/index/:market?"
       }
     ],
     "tieba": [

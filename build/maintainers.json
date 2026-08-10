@@ -2364,8 +2364,9 @@
   "/bad/:path{.+}?": [
     "nczitzk"
   ],
-  "/baidu/gushitong/index": [
-    "CaoMeiYouRen"
+  "/baidu/gushitong/index/:market?": [
+    "CaoMeiYouRen",
+    "hutianyu2006"
   ],
   "/baidu/tieba/forum/good/:kw/:cid?/:sortBy?": [
     "u3u",

@@ -257,7 +257,7 @@ export type RoutePath =
   | `/baai/hub/events`
   | `/backlinko/blog`
   | `/bad/:path{.+}?`
-  | `/baidu/gushitong/index`
+  | `/baidu/gushitong/index/:market?`
   | `/baidu/search/:keyword`
   | `/baidu/tieba/forum/:kw/:sortBy?`
   | `/baidu/tieba/forum/good/:kw/:cid?/:sortBy?`

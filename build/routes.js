@@ -34419,14 +34419,44 @@ export default {
   },
   "baidu": {
     "routes": {
-      "/gushitong/index": {
-        "path": "/gushitong/index",
+      "/gushitong/index/:market?": {
+        "path": "/gushitong/index/:market?",
         "categories": [
           "finance"
         ],
         "view": 5,
         "example": "/baidu/gushitong/index",
-        "parameters": {},
+        "parameters": {
+          "market": {
+            "description": "市场分类，默认为亚洲市场，即上证指数、深圳成指、恒生指数、富时中国A50、日经225指数和韩国综合指数",
+            "options": [
+              {
+                "label": "亚洲",
+                "value": "asia"
+              },
+              {
+                "label": "美洲",
+                "value": "america"
+              },
+              {
+                "label": "欧非",
+                "value": "europeafrica"
+              },
+              {
+                "label": "外汇",
+                "value": "foreign"
+              },
+              {
+                "label": "债券",
+                "value": "bond"
+              },
+              {
+                "label": "其他",
+                "value": "other"
+              }
+            ]
+          }
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -34438,15 +34468,16 @@ export default {
         "radar": [
           {
             "source": [
-              "gushitong.baidu.com/"
+              "finance.baidu.com/"
             ]
           }
         ],
         "name": "首页指数",
         "maintainers": [
-          "CaoMeiYouRen"
+          "CaoMeiYouRen",
+          "hutianyu2006"
         ],
-        "url": "gushitong.baidu.com/",
+        "url": "finance.baidu.com/",
         "location": "gushitong/index.tsx",
         "module": () => import('@/routes/baidu/gushitong/index.tsx')
       },
@@ -105993,7 +106024,7 @@ export default {
         "parameters": {
           "category": "分类，可在对应分类页 URL 中找到，留空则获取全局通知公告"
         },
-        "description": "\n| 全部 | 开馆通知 | 施工维修 | 服务通知 | 违规通报 | 清图快讯 | 馆际通知 |\n| ---- | -------- | -------- | -------- | -------- | -------- | -------- |\n| 留空 | kgtz     | sgwx     | fwtz     | wgtb     | qtkx     | gjtz     |\n",
+        "description": "| 全部 | 开馆通知 | 施工维修 | 服务通知 | 违规通报 | 清图快讯 | 馆际通知 |\n| ---- | -------- | -------- | -------- | -------- | -------- | -------- |\n| 留空 | kgtz     | sgwx     | fwtz     | wgtb     | qtkx     | gjtz     |",
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
