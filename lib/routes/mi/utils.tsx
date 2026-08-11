@@ -151,6 +151,8 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
     <>
         <img src={listItem.img} />
         <br />
+        {detail.product.name}
+        <br />
         <ol>
             {detail.product.sellPointList.map((point) => (
                 <li>{point}</li>
@@ -160,6 +162,7 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
         <table>
             <thead>
                 <tr>
+                    <th>图片</th>
                     <th>规格</th>
                     <th>原价</th>
                     <th>现价</th>
@@ -168,6 +171,9 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
             <tbody>
                 {[...(detail.goodsInfo.goodsList ?? []), ...(detail.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => (
                     <tr>
+                        <td>
+                            <img src={goods.imgUrl} width={48} height="auto" />
+                        </td>
                         <td>{goods.name}</td>
                         <td>{goods.marketPrice} 元</td>
                         <td>{goods.price} 元</td>

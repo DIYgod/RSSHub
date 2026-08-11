@@ -68,11 +68,13 @@ export interface NewProductDetailData {
 }
 
 export interface NewProductDetail {
+    name: string;
     productId: number;
     sellPointList: string[];
 }
 
 export interface NewProductGoods {
+    imgUrl: string;
     marketPrice: string;
     name: string;
     price: string;
