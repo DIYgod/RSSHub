@@ -69,25 +69,20 @@ export const getNewProductList = async (): Promise<Map<number, NewProductItem>> 
         method: 'POST',
     });
     const map = new Map<number, NewProductItem>();
-    for (const group of response.data.date_list) {
-        for (const item of group.product_list) {
+    const setIfNeeded = (items: NewProductItem[]) => {
+        for (const item of items) {
             if (!map.has(item.product_id)) {
                 map.set(item.product_id, item);
             }
         }
+    };
+    for (const group of response.data.date_list) {
+        setIfNeeded(group.product_list);
     }
     for (const group of response.data.history_date_list) {
-        for (const item of group.product_list) {
-            if (!map.has(item.product_id)) {
-                map.set(item.product_id, item);
-            }
-        }
+        setIfNeeded(group.product_list);
     }
-    for (const item of response.data.new_list) {
-        if (!map.has(item.product_id)) {
-            map.set(item.product_id, item);
-        }
-    }
+    setIfNeeded(response.data.new_list);
     return map;
 };
 
