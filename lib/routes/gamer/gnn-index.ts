@@ -58,31 +58,31 @@ async function handler(ctx) {
     const category = rawCategory ? String(rawCategory).toLowerCase() : '';
     let categoryName = '';
 
-    const categoryTable: Record<string | number, string> = {
-        1: 'PC',
-        3: 'TV 掌機',
-        4: '手機遊戲',
-        5: '動漫畫',
-        9: '主題報導',
-        11: '活動展覽',
-        13: '電競',
-        ns: 'Switch',
-        ps5: 'PS5',
-        ps4: 'PS4',
-        xbone: 'XboxOne',
-        xbsx: 'XboxSX',
-        pc: 'PC 單機',
-        olg: 'PC 線上',
-        ios: 'iOS',
-        android: 'Android',
-        web: 'Web',
-        comic: '漫畫',
-        anime: '動畫',
-    };
+    const categoryTable = new Map<string, string>([
+        ['1', 'PC'],
+        ['3', 'TV 掌機'],
+        ['4', '手機遊戲'],
+        ['5', '動漫畫'],
+        ['9', '主題報導'],
+        ['11', '活動展覽'],
+        ['13', '電競'],
+        ['ns', 'Switch'],
+        ['ps5', 'PS5'],
+        ['ps4', 'PS4'],
+        ['xbone', 'XboxOne'],
+        ['xbsx', 'XboxSX'],
+        ['pc', 'PC 單機'],
+        ['olg', 'PC 線上'],
+        ['ios', 'iOS'],
+        ['android', 'Android'],
+        ['web', 'Web'],
+        ['comic', '漫畫'],
+        ['anime', '動畫'],
+    ]);
 
     let targetUrl = 'https://gnn.gamer.com.tw/';
-    if (category && categoryTable[category]) {
-        categoryName = '-' + categoryTable[category];
+    if (category && categoryTable.has(category)) {
+        categoryName = '-' + categoryTable.get(category);
         targetUrl = `https://gnn.gamer.com.tw/index.php?k=${category}`;
     }
 
@@ -97,7 +97,7 @@ async function handler(ctx) {
 
     const htmlContent = typeof response.data === 'string' ? response.data : String(response.body || '');
     const $ = load(htmlContent);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 10;
 
     const list = $('.GN-lbox2B h1 a, .GN-lbox2D a, a.GN-lbox2D, .GN-lbox2E a')
         .toArray()
@@ -159,7 +159,7 @@ async function handler(ctx) {
                         },
                     });
 
-                    let component: string = '';
+                    let component = '';
                     const pageHtml = typeof res.data === 'string' ? res.data : String(res.body || '');
                     const _$ = load(pageHtml);
 
@@ -179,9 +179,9 @@ async function handler(ctx) {
                     component = _$('div.GN-lbox3B').html() ?? _$('div.text-paragraph').html() ?? '';
 
                     if (dateStr) {
-                        try {
-                            item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
-                        } catch {
+                        const parsed = parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss');
+                        if (parsed) {
+                            item.pubDate = timezone(parsed, 8);
                         }
                     }
 
