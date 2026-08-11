@@ -39,11 +39,9 @@ export const route: Route = {
     name: '附属中学',
     maintainers: ['Aquarius-Situla'],
     handler,
-    description: `
-| 通知公告 | 学生活动 | 教师风采 | 新闻动态 |
+    description: `| 通知公告 | 学生活动 | 教师风采 | 新闻动态 |
 | -------- | -------- | -------- | -------- |
-| tzgg     | xstd     | jsfc     | xwdt     |
-`,
+| tzgg     | xstd     | jsfc     | xwdt     |`,
 };
 
 async function handler(ctx: Context) {
@@ -59,19 +57,22 @@ async function handler(ctx: Context) {
     const list = $('.list ul li, .list_tt ul li');
 
     /* Extract metadata (title, link, date) for each article */
-    const items = list.toArray().map((item): DataItem & { link: string } => {
-        const $item = $(item);
-        const $a = $item.find('a');
-        const title = $a.attr('title') || $a.text();
-        const time = $item.find('.sj').text();
-        const link = $a.attr('href');
+    const items = list
+        .toArray()
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const $a = $item.find('a');
+            const title = $a.attr('title') || $a.text();
+            const time = $item.find('.sj').text();
+            const link = $a.attr('href');
 
-        return {
-            title: title.trim(),
-            link: link ? new URL(link, targetUrl).href : '',
-            pubDate: time ? timezone(parseDate(time, 'YYYY-MM-DD'), 8) : undefined,
-        };
-    }).filter((item) => item.link); // Filter out empty links
+            return {
+                title: title.trim(),
+                link: link ? new URL(link, targetUrl).href : '',
+                pubDate: time ? timezone(parseDate(time, 'YYYY-MM-DD'), 8) : undefined,
+            };
+        })
+        .filter((item) => item.link); // Filter out empty links
 
     const feedTitle = categoryMap[category] || '通知公告';
 
