@@ -117,12 +117,14 @@ async function handler(ctx) {
                 const exerciseEl = $detail('a[href*="wordwall.net"]').first();
                 if (exerciseEl.length) {
                     const exHref = exerciseEl.attr('href');
-                    const exText = exerciseEl.text().trim() || 'Online cvičení';
-                    exerciseHtml = `<p><strong>Online cvičení:</strong> <a href="${exHref}">${exText}</a></p>`;
+                    exerciseHtml = `<p><strong>Online cvičení:</strong> <a href="${exHref}" target="_blank" rel="noopener noreferrer">Otevřít online cvičení (Wordwall)</a></p>`;
                 }
 
-                // 4. Worksheet link
+                // 4. Worksheet link & enclosure attachment
                 let worksheetHtml = '';
+                let enclosure_url: string | undefined;
+                let enclosure_type: string | undefined;
+
                 const worksheetEl = $detail('a[href*="uploads"], a[href$=".docx"], a[href$=".pdf"]').filter((_, el) => {
                     const h = $detail(el).attr('href') || '';
                     return h.includes('PL_') || h.endsWith('.docx') || h.endsWith('.pdf');
@@ -130,11 +132,19 @@ async function handler(ctx) {
 
                 if (worksheetEl.length) {
                     const wsHref = worksheetEl.attr('href');
-                    const wsText = worksheetEl.text().trim() || 'Pracovní list';
-                    worksheetHtml = `<p><strong>Pracovní list:</strong> <a href="${wsHref}">${wsText}</a></p>`;
+                    if (wsHref) {
+                        enclosure_url = wsHref;
+                        if (wsHref.endsWith('.pdf')) {
+                            enclosure_type = 'application/pdf';
+                        } else if (wsHref.endsWith('.docx')) {
+                            enclosure_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                        }
+                        const fileExt = wsHref.endsWith('.pdf') ? 'PDF' : wsHref.endsWith('.docx') ? 'DOCX' : 'soubor';
+                        worksheetHtml = `<p><strong>Pracovní list:</strong> <a href="${wsHref}" target="_blank" rel="noopener noreferrer">Stáhnout pracovní list (${fileExt})</a></p>`;
+                    }
                 }
 
-                const description = [videoHtml, transcriptHtml, exerciseHtml, worksheetHtml].filter(Boolean).join('<br>');
+                const description = [videoHtml, transcriptHtml, exerciseHtml, worksheetHtml].filter(Boolean).join('');
 
                 const detailDateStr = $detail('.sigle-meta__date').text().trim();
                 const pubDate = detailDateStr ? parseDate(detailDateStr, 'D. M. YYYY') : item.pubDate;
@@ -144,6 +154,8 @@ async function handler(ctx) {
                     link: item.link,
                     pubDate,
                     description,
+                    enclosure_url,
+                    enclosure_type,
                 };
             })
         )
