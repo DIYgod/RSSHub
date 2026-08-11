@@ -1,3 +1,5 @@
+/** @jsxImportSource hono/jsx */
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 interface DescriptionData {
@@ -27,9 +29,7 @@ const CzechStepByStepDescription = ({ videoId, paragraphs, exerciseHref, workshe
                 <p>
                     <strong>Text zprávy:</strong>
                 </p>
-                {paragraphs.map((p, index) => (
-                    <p key={index} dangerouslySetInnerHTML={{ __html: p }} />
-                ))}
+                {paragraphs.map((p) => raw(`<p>${p}</p>`))}
             </>
         )}
 

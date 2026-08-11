@@ -71,14 +71,15 @@ async function handler(ctx): Promise<Data> {
 
                 // 1. Video ID
                 let videoId: string | undefined;
-                const iframeSrc = $detail('.entry-content iframe[src*="youtube.com"], .entry-content iframe[src*="youtu.be"]').attr('src');
+                const iframeSrc = $detail('.entry-text iframe[src*="youtube.com"], .entry-text iframe[src*="youtu.be"]').attr('src');
                 if (iframeSrc) {
                     const match = iframeSrc.match(/(?:embed\/|v=)([^?&]+)/);
                     if (match) {
                         videoId = match[1];
                     }
-                } else {
-                    const ytLink = $detail('.entry-content a[href*="youtube.com"], .entry-content a[href*="youtu.be"]').attr('href');
+                }
+                if (!videoId) {
+                    const ytLink = $detail('.entry-text a[href*="youtube.com"], .entry-text a[href*="youtu.be"]').attr('href');
                     if (ytLink) {
                         const match = ytLink.match(/(?:v=|youtu\.be\/)([^?&]+)/);
                         if (match) {
@@ -91,7 +92,7 @@ async function handler(ctx): Promise<Data> {
                 const paragraphs: string[] = [];
                 let isTranscript = false;
 
-                $detail('.entry-content p').each((_, p) => {
+                $detail('.entry-text p').each((_, p) => {
                     const txt = $detail(p).text().trim();
                     if (txt.includes('Text zprávy:')) {
                         isTranscript = true;
@@ -114,7 +115,7 @@ async function handler(ctx): Promise<Data> {
                 });
 
                 // 3. Online exercise link
-                const exerciseEl = $detail('.entry-content a[href*="wordwall.net"]').first();
+                const exerciseEl = $detail('.entry-text a[href*="wordwall.net"]').first();
                 const exerciseHref = exerciseEl.attr('href');
 
                 // 4. Worksheet link & enclosure
@@ -123,7 +124,7 @@ async function handler(ctx): Promise<Data> {
                 let enclosureUrl: string | undefined;
                 let enclosureType: string | undefined;
 
-                const worksheetEl = $detail('.entry-content a[href*="uploads"]').first();
+                const worksheetEl = $detail('.entry-text a[href*="uploads"]').first();
                 const wsHref = worksheetEl.attr('href');
                 if (wsHref && (wsHref.includes('PL_') || wsHref.endsWith('.docx') || wsHref.endsWith('.pdf'))) {
                     worksheetHref = wsHref;
