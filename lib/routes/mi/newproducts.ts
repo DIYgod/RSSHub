@@ -40,10 +40,10 @@ const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData) =>
     }) as DataItem;
 
 async function handler() {
-    const productMap = await utils.getNewProductList();
-    const details = await getDetails(productMap);
+    const list = await utils.getNewProductList();
+    const details = await getDetails(list);
 
-    const items: DataItem[] = productMap
+    const items: DataItem[] = list
         .values()
         .toArray()
         .toSorted((a, b) => b.start_time - a.start_time)
