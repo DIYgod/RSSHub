@@ -58,14 +58,14 @@ async function handler(ctx) {
     const category = rawCategory ? String(rawCategory).toLowerCase() : '';
     let categoryName = '';
 
-    const categoryTable: Record<string | number, string> = {
-        1: 'PC',
-        3: 'TV 掌機',
-        4: '手機遊戲',
-        5: '動漫畫',
-        9: '主題報導',
-        11: '活動展覽',
-        13: '電競',
+    const categoryTable: Record<string, string> = {
+        '1': 'PC',
+        '3': 'TV 掌機',
+        '4': '手機遊戲',
+        '5': '動漫畫',
+        '9': '主題報導',
+        '11': '活動展覽',
+        '13': '電競',
         ns: 'Switch',
         ps5: 'PS5',
         ps4: 'PS4',
@@ -81,7 +81,8 @@ async function handler(ctx) {
     };
 
     let targetUrl = 'https://gnn.gamer.com.tw/';
-    if (category && categoryTable[category]) {
+    // 修正點 1: 使用 Object.hasOwn 檢查物件 key 避免 ESLint 警告
+    if (category && Object.hasOwn(categoryTable, category)) {
         categoryName = '-' + categoryTable[category];
         targetUrl = `https://gnn.gamer.com.tw/index.php?k=${category}`;
     }
@@ -97,7 +98,10 @@ async function handler(ctx) {
 
     const htmlContent = typeof response.data === 'string' ? response.data : String(response.body || '');
     const $ = load(htmlContent);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    
+    // 修正點 2: 使用 Math.trunc(Number(...)) 代替 Number.parseInt()
+    const limitQuery = ctx.req.query('limit');
+    const limit = limitQuery ? Math.trunc(Number(limitQuery)) : 10;
 
     const list = $('.GN-lbox2B h1 a, .GN-lbox2D a, a.GN-lbox2D, .GN-lbox2E a')
         .toArray()
@@ -141,7 +145,7 @@ async function handler(ctx) {
                 {
                     title: '暫無新文章或版塊更新中',
                     link: targetUrl,
-                    description: '未能抓取到文章，请检查原站链接。',
+                    description: '未能抓取到文章，請檢查原站鏈接。',
                 },
             ],
         };
@@ -150,48 +154,62 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         async (item) => {
-            try {
-                item.description = await cache.tryGet(item.link!, async () => {
-                    const res = await got.get(item.link!, {
-                        headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                            Referer: targetUrl,
-                        },
-                    });
+            const cacheKey = item.link!;
 
-                    let component: string = '';
-                    const pageHtml = typeof res.data === 'string' ? res.data : String(res.body || '');
-                    const _$ = load(pageHtml);
+            const articleData = await cache.tryGet(cacheKey, async () => {
+                const res = await got.get(item.link!, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                        Referer: targetUrl,
+                    },
+                });
 
-                    let pubInfo: string[] = [];
-                    let dateStr: string | undefined;
+                const pageHtml = typeof res.data === 'string' ? res.data : String(res.body || '');
+                const _$ = load(pageHtml);
 
-                    if (_$('span.GN-lbox3C').length > 0) {
-                        pubInfo = _$('span.GN-lbox3C').text().split('）');
-                        item.author = pubInfo[0]?.replace('（', '').replace(' 報導', '').trim();
-                        dateStr = pubInfo[1]?.trim();
-                    } else if (_$('span.GN-lbox3CA').length > 0) {
-                        pubInfo = _$('span.GN-lbox3CA').text().split('）');
-                        item.author = pubInfo[0]?.replace('（', '').replace(' 報導', '').trim();
-                        dateStr = pubInfo[1]?.replace('原文出處', '').trim();
-                    }
+                let author: string | undefined;
+                let pubDate: Date | string | undefined;
 
-                    component = _$('div.GN-lbox3B').html() ?? _$('div.text-paragraph').html() ?? '';
+                const $pubInfo = _$('span.GN-lbox3C, span.GN-lbox3CA').first();
+                if ($pubInfo.length > 0) {
+                    const pubInfoText = $pubInfo.text();
+                    const pubInfoParts = pubInfoText.split('）');
+                    author = pubInfoParts[0]?.replace('（', '').replace(' 報導', '').trim();
+                    const dateStr = pubInfoParts[1]?.replace('原文出處', '').trim();
 
                     if (dateStr) {
                         try {
-                            item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
+                            pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
                         } catch {
+                            // 忽略日期解析錯誤
                         }
                     }
+                }
 
-                    component = component.replaceAll(/\b(data-src)\b/g, 'src');
-                    return component || item.title;
+                const $content = _$('div.GN-lbox3B, div.text-paragraph').first();
+
+                $content.find('img').each((_, el) => {
+                    const $img = _$(el);
+                    const dataSrc = $img.attr('data-src');
+                    if (dataSrc) {
+                        $img.attr('src', dataSrc);
+                        $img.removeAttr('data-src');
+                    }
                 });
-            } catch {
-                item.description = item.title;
-            }
-            return item;
+
+                const description = $content.html()?.trim() || item.title;
+
+                return {
+                    description,
+                    author,
+                    pubDate,
+                };
+            });
+
+            return {
+                ...item,
+                ...articleData,
+            };
         },
         { concurrency: 2 }
     );
