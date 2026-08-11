@@ -1,8 +1,9 @@
+import * as cheerio from 'cheerio';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/kratke-ceske-zpravy',
@@ -38,7 +39,7 @@ async function handler(ctx) {
     const response = await ofetch(targetUrl);
     const $ = cheerio.load(response);
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const list = $('.news-item-info')
         .slice(0, limit)
