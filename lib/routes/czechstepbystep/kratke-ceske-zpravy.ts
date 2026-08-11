@@ -5,6 +5,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+import { renderDescription } from './templates/description';
+
 export const route: Route = {
     path: '/kratke-ceske-zpravy',
     categories: ['study'],
@@ -26,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: 'Krátké české zprávy',
-    maintainers: ['DIYgod'],
+    maintainers: ['cmp0xff'],
     handler,
     url: 'www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy',
     description: 'Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.',
@@ -67,29 +69,29 @@ async function handler(ctx): Promise<Data> {
                 const html = await ofetch(item.link);
                 const $detail = cheerio.load(html);
 
-                // 1. Video iframe / link
-                let videoHtml = '';
-                const iframeSrc = $detail('iframe[src*="youtube.com"], iframe[src*="youtu.be"]').attr('src');
+                // 1. Video ID
+                let videoId: string | undefined;
+                const iframeSrc = $detail('.entry-content iframe[src*="youtube.com"], .entry-content iframe[src*="youtu.be"]').attr('src');
                 if (iframeSrc) {
                     const match = iframeSrc.match(/(?:embed\/|v=)([^?&]+)/);
                     if (match) {
-                        videoHtml = `<p><iframe src="https://www.youtube-nocookie.com/embed/${match[1]}" width="560" height="315" frameborder="0" allowfullscreen></iframe></p>`;
+                        videoId = match[1];
                     }
                 } else {
-                    const ytLink = $detail('a[href*="youtube.com"], a[href*="youtu.be"]').attr('href');
+                    const ytLink = $detail('.entry-content a[href*="youtube.com"], .entry-content a[href*="youtu.be"]').attr('href');
                     if (ytLink) {
                         const match = ytLink.match(/(?:v=|youtu\.be\/)([^?&]+)/);
                         if (match) {
-                            videoHtml = `<p><iframe src="https://www.youtube-nocookie.com/embed/${match[1]}" width="560" height="315" frameborder="0" allowfullscreen></iframe></p>`;
+                            videoId = match[1];
                         }
                     }
                 }
 
-                // 2. Full transcript text
+                // 2. Full transcript paragraphs
                 const paragraphs: string[] = [];
                 let isTranscript = false;
 
-                $detail('.entry-content p, article p, .post-content p, main p').each((_, p) => {
+                $detail('.entry-content p').each((_, p) => {
                     const txt = $detail(p).text().trim();
                     if (txt.includes('Text zprávy:')) {
                         isTranscript = true;
@@ -106,46 +108,44 @@ async function handler(ctx): Promise<Data> {
                             return;
                         }
                         if (txt) {
-                            paragraphs.push(`<p>${$detail(p).html()?.trim() || txt}</p>`);
+                            paragraphs.push($detail(p).html()?.trim() || txt);
                         }
                     }
                 });
 
-                const transcriptHtml = paragraphs.length > 0 ? `<p><strong>Text zprávy:</strong></p>${paragraphs.join('')}` : '';
+                // 3. Online exercise link
+                const exerciseEl = $detail('.entry-content a[href*="wordwall.net"]').first();
+                const exerciseHref = exerciseEl.attr('href');
 
-                // 3. Online exercises link
-                let exerciseHtml = '';
-                const exerciseEl = $detail('a[href*="wordwall.net"]').first();
-                if (exerciseEl.length) {
-                    const exHref = exerciseEl.attr('href');
-                    exerciseHtml = `<p><strong>Online cvičení:</strong> <a href="${exHref}" target="_blank" rel="noopener noreferrer">Otevřít online cvičení (Wordwall)</a></p>`;
-                }
+                // 4. Worksheet link & enclosure
+                let worksheetHref: string | undefined;
+                let worksheetExt: string | undefined;
+                let enclosureUrl: string | undefined;
+                let enclosureType: string | undefined;
 
-                // 4. Worksheet link & enclosure attachment
-                let worksheetHtml = '';
-                let enclosure_url: string | undefined;
-                let enclosure_type: string | undefined;
-
-                const worksheetEl = $detail('a[href*="uploads"], a[href$=".docx"], a[href$=".pdf"]').filter((_, el) => {
-                    const h = $detail(el).attr('href') || '';
-                    return h.includes('PL_') || h.endsWith('.docx') || h.endsWith('.pdf');
-                }).first();
-
-                if (worksheetEl.length) {
-                    const wsHref = worksheetEl.attr('href');
-                    if (wsHref) {
-                        enclosure_url = wsHref;
-                        if (wsHref.endsWith('.pdf')) {
-                            enclosure_type = 'application/pdf';
-                        } else if (wsHref.endsWith('.docx')) {
-                            enclosure_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-                        }
-                        const fileExt = wsHref.endsWith('.pdf') ? 'PDF' : wsHref.endsWith('.docx') ? 'DOCX' : 'soubor';
-                        worksheetHtml = `<p><strong>Pracovní list:</strong> <a href="${wsHref}" target="_blank" rel="noopener noreferrer">Stáhnout pracovní list (${fileExt})</a></p>`;
+                const worksheetEl = $detail('.entry-content a[href*="uploads"]').first();
+                const wsHref = worksheetEl.attr('href');
+                if (wsHref && (wsHref.includes('PL_') || wsHref.endsWith('.docx') || wsHref.endsWith('.pdf'))) {
+                    worksheetHref = wsHref;
+                    enclosureUrl = wsHref;
+                    if (wsHref.endsWith('.pdf')) {
+                        enclosureType = 'application/pdf';
+                        worksheetExt = 'PDF';
+                    } else if (wsHref.endsWith('.docx')) {
+                        enclosureType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                        worksheetExt = 'DOCX';
+                    } else {
+                        worksheetExt = 'soubor';
                     }
                 }
 
-                const description = [videoHtml, transcriptHtml, exerciseHtml, worksheetHtml].filter(Boolean).join('');
+                const description = renderDescription({
+                    videoId,
+                    paragraphs,
+                    exerciseHref,
+                    worksheetHref,
+                    worksheetExt,
+                });
 
                 const detailDateStr = $detail('.sigle-meta__date').text().trim();
                 const pubDate = detailDateStr ? parseDate(detailDateStr, 'D. M. YYYY') : item.pubDate;
@@ -155,8 +155,8 @@ async function handler(ctx): Promise<Data> {
                     link: item.link,
                     pubDate,
                     description,
-                    enclosure_url,
-                    enclosure_type,
+                    enclosure_url: enclosureUrl,
+                    enclosure_type: enclosureType,
                 };
             })
         )
