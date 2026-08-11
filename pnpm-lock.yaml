@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  htmlparser2: ^8.0.2
   difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
   es-set-tostringtag: npm:@nolyfill/es-set-tostringtag@^1
   google-play-scraper>got: ^14.6.4
@@ -4324,8 +4325,13 @@ packages:
     resolution: {integrity: sha512-2OH59Gtprdczel+7Rxgpz9hGVJREaf8Lt1H4kZwWHpEn70VQKRuMNGsb2eDbwaTzrYzb0hheiOG1P7Dim0B4dQ==}
     engines: {node: '>=20.19.0'}
 
-  htmlparser2@10.1.0:
-    resolution: {integrity: sha512-VTZkM9GWRAtEpveh7MSF6SjjrpNVNNVJfFup7xTY3UpFtm67foy9HDVXneLtFVt4pMz5kZtgNcvCniNFb1hlEQ==}
+ htmlparser2@8.0.2:
+    resolution: {integrity: sha512-gykcUpJtcipARzpZxEmFMmaE241y92gH4hvK22C394A4621p-f9J7136f32e652c0032e352219438012e848}
+    dependencies:
+        domelementtype: 2.3.0
+        domhandler: 5.0.3
+        domutils: 3.1.0
+        entities: 4.5.0
 
   htmlparser2@12.0.0:
     resolution: {integrity: sha512-Tz7u1i95/g2x2jz81+x0FBVhBhY5aRTvD3tXXdFaljuNdzDLJ8UGNRrTcj2cgQvAg3iW/h77Fz15nLW0L0CrZw==}
