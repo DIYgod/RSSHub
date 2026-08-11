@@ -24,9 +24,8 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: NewProductItem[]): Promise<Map<number, NewProductDetailData>> => {
-    const result: Array<Promise<NewProductDetailData>> = list.map((item) => utils.getNewProductItem(item));
-    const details = await Promise.all(result);
+const getDetails = async (list: Map<number, NewProductItem>): Promise<Map<number, NewProductDetailData>> => {
+    const details = await Promise.all(list.values().map((item) => utils.getNewProductItem(item)));
     return new Map(details.map((detail) => [detail.product.productId, detail]));
 };
 
@@ -41,22 +40,25 @@ const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData) =>
     }) as DataItem;
 
 async function handler() {
-    const list = await utils.getNewProductList();
-    const details = await getDetails(list);
+    const productMap = await utils.getNewProductList();
+    const details = await getDetails(productMap);
 
-    const items: DataItem[] = list.map((item) => {
-        const detail = details.get(item.product_id);
-        if (!detail) {
-            throw new Error(`Details not found for product ${item.product_id}`);
-        }
-        return getDataItem(item, detail);
-    });
+    const items: DataItem[] = productMap
+        .values()
+        .toArray()
+        .toSorted((a, b) => b.start_time - a.start_time)
+        .map((item) => {
+            const detail = details.get(item.product_id);
+            if (!detail) {
+                throw new Error(`Details not found for product ${item.product_id}`);
+            }
+            return getDataItem(item, detail);
+        });
 
     return {
         title: '小米上新',
         link: 'https://m.mi.com/',
         item: items,
-        allowEmpty: true,
         image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
         language: 'zh-CN',
     } as Data;
