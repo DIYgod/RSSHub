@@ -80,7 +80,7 @@ async function handler(ctx: Context) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const hostname = new URL(item.link).hostname;
-                if (!hostname.endsWith('.qhfz.edu.cn') && hostname !== 'qhfz.edu.cn') {
+                if (hostname !== 'www.qhfz.edu.cn') {
                     return item;
                 }
                 const response = await ofetch(item.link);
