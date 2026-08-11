@@ -97,7 +97,7 @@ async function handler(ctx) {
 
     const htmlContent = typeof response.data === 'string' ? response.data : String(response.body || '');
     const $ = load(htmlContent);
-    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 10;
+    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 50;
 
     const list = $('.GN-lbox2B h1 a, .GN-lbox2D a, a.GN-lbox2D, .GN-lbox2E a')
         .toArray()
