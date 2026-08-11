@@ -39,10 +39,10 @@ const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): Da
 });
 
 async function handler(): Promise<Data> {
-    const productMap = await utils.getNewProductList();
-    const details = await getDetails(productMap);
+    const list = await utils.getNewProductList();
+    const details = await getDetails(list);
 
-    const items: DataItem[] = productMap
+    const items: DataItem[] = list
         .values()
         .toArray()
         .toSorted((a, b) => b.start_time - a.start_time)
