@@ -41,6 +41,7 @@ export interface CrowdfundingDetailSupportList {
 }
 
 export interface NewProductListData {
+    date_list: NewProductDateGroup[];
     history_date_list: NewProductDateGroup[];
     new_list: NewProductItem[];
 }

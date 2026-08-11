@@ -60,18 +60,27 @@ export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<Crowdfundin
     });
 
 /**
- * Fetch the list of new products, merging `history_date_list` (primary) with `new_list` (supplement).
+ * Fetch the list of new products, merging `date_list` (primary) with `history_date_list` (supplement) and `new_list` (supplement).
  *
- * @returns {Promise<NewProductItem[]>} The merged new product list, sorted by start time in descending order.
+ * @returns {Promise<Map<number, NewProductItem>>} The merged new product map keyed by product ID.
  */
-export const getNewProductList = async (): Promise<NewProductItem[]> => {
+export const getNewProductList = async (): Promise<Map<number, NewProductItem>> => {
     const response = await ofetch<DataResponse<NewProductListData>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
     });
     const map = new Map<number, NewProductItem>();
+    for (const group of response.data.date_list) {
+        for (const item of group.product_list) {
+            if (!map.has(item.product_id)) {
+                map.set(item.product_id, item);
+            }
+        }
+    }
     for (const group of response.data.history_date_list) {
         for (const item of group.product_list) {
-            map.set(item.product_id, item);
+            if (!map.has(item.product_id)) {
+                map.set(item.product_id, item);
+            }
         }
     }
     for (const item of response.data.new_list) {
@@ -79,10 +88,7 @@ export const getNewProductList = async (): Promise<NewProductItem[]> => {
             map.set(item.product_id, item);
         }
     }
-    return map
-        .values()
-        .toArray()
-        .toSorted((a, b) => b.start_time - a.start_time);
+    return map;
 };
 
 /**
