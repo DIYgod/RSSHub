@@ -58,64 +58,45 @@ async function handler(ctx) {
     const category = rawCategory ? String(rawCategory).toLowerCase() : '';
     let categoryName = '';
 
-    const categoryTable = new Map<string, string>([
-        ['1', 'PC'],
-        ['3', 'TV 掌機'],
-        ['4', '手機遊戲'],
-        ['5', '動漫畫'],
-        ['9', '主題報導'],
-        ['11', '活動展覽'],
-        ['13', '電競'],
-        ['ns', 'Switch'],
-        ['ps5', 'PS5'],
-        ['ps4', 'PS4'],
-        ['xbone', 'XboxOne'],
-        ['xbsx', 'XboxSX'],
-        ['pc', 'PC 單機'],
-        ['olg', 'PC 線上'],
-        ['ios', 'iOS'],
-        ['android', 'Android'],
-        ['web', 'Web'],
-        ['comic', '漫畫'],
-        ['anime', '動畫'],
-    ]);
+    const categoryTable: Record<string | number, string> = {
+        1: 'PC',
+        3: 'TV 掌機',
+        4: '手機遊戲',
+        5: '動漫畫',
+        9: '主題報導',
+        11: '活動展覽',
+        13: '電競',
+        ns: 'Switch',
+        ps5: 'PS5',
+        ps4: 'PS4',
+        xbone: 'XboxOne',
+        xbsx: 'XboxSX',
+        pc: 'PC 單機',
+        olg: 'PC 線上',
+        ios: 'iOS',
+        android: 'Android',
+        web: 'Web',
+        comic: '漫畫',
+        anime: '動畫',
+    };
 
     let targetUrl = 'https://gnn.gamer.com.tw/';
-    if (category && categoryTable.has(category)) {
-        categoryName = '-' + categoryTable.get(category);
+    if (category && categoryTable[category]) {
+        categoryName = '-' + categoryTable[category];
         targetUrl = `https://gnn.gamer.com.tw/index.php?k=${category}`;
     }
 
-    let responseData = '';
-    try {
-        const response = await got({
-            method: 'get',
-            url: targetUrl,
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                Referer: 'https://gnn.gamer.com.tw/',
-            },
-            timeout: {
-                request: 8000,
-            },
-        });
-        responseData = typeof response.data === 'string' ? response.data : String(response.body || '');
-    } catch {
-        // 网络超时降级，不让 Serverless 直接 Crash
-        return {
-            title: '巴哈姆特-GNN新聞' + categoryName,
-            link: targetUrl,
-            item: [
-                {
-                    title: '巴哈姆特伺服器回應逾時，請稍後重試',
-                    link: targetUrl,
-                    description: '存取原站超時，已取消本次請求。',
-                },
-            ],
-        };
-    }
+    const response = await got({
+        method: 'get',
+        url: targetUrl,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Referer: 'https://gnn.gamer.com.tw/',
+        },
+    });
 
-    const $ = load(responseData);
+    const htmlContent = typeof response.data === 'string' ? response.data : String(response.body || '');
+    const $ = load(htmlContent);
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 50) : 50;
 
     const list = $('.GN-lbox2B h1 a, .GN-lbox2D a, a.GN-lbox2D, .GN-lbox2E a')
@@ -160,7 +141,7 @@ async function handler(ctx) {
                 {
                     title: '暫無新文章或版塊更新中',
                     link: targetUrl,
-                    description: '未能抓取到文章，請檢查原站連結。',
+                    description: '未能抓取到文章，请检查原站链接。',
                 },
             ],
         };
@@ -176,12 +157,9 @@ async function handler(ctx) {
                             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                             Referer: targetUrl,
                         },
-                        timeout: {
-                            request: 5000,
-                        },
                     });
 
-                    let component = '';
+                    let component: string = '';
                     const pageHtml = typeof res.data === 'string' ? res.data : String(res.body || '');
                     const _$ = load(pageHtml);
 
@@ -201,13 +179,13 @@ async function handler(ctx) {
                     component = _$('div.GN-lbox3B').html() ?? _$('div.text-paragraph').html() ?? '';
 
                     if (dateStr) {
-                        const parsed = parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss');
-                        if (parsed) {
-                            item.pubDate = timezone(parsed, 8);
+                        try {
+                            item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
+                        } catch {
                         }
                     }
 
-                    component = component.replaceAll('data-src', 'src');
+                    component = component.replaceAll(/\b(data-src)\b/g, 'src');
                     return component || item.title;
                 });
             } catch {
