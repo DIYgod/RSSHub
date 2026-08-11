@@ -40921,6 +40921,19 @@
       }
     ]
   },
+  "qhfz.edu.cn": {
+    "_name": "清华大学",
+    "www": [
+      {
+        "title": "附属中学",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category.htm"
+        ],
+        "target": "/tsinghua/thuhs/:category?"
+      }
+    ]
+  },
   "ttv.com.tw": {
     "_name": "台視新聞網",
     "news": [

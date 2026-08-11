@@ -106135,6 +106135,38 @@
         "url": "www.tsinghua.edu.cn/news.htm",
         "location": "news.ts",
         "module": "() => import('@/routes/tsinghua/news.ts')"
+      },
+      "/thuhs/:category?": {
+        "path": "/thuhs/:category?",
+        "categories": [
+          "university"
+        ],
+        "example": "/tsinghua/thuhs/tzgg",
+        "parameters": {
+          "category": "分类，见下表，留空则默认获取通知公告"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.qhfz.edu.cn/:category.htm"
+            ]
+          }
+        ],
+        "name": "附属中学",
+        "maintainers": [
+          "Aquarius-Situla"
+        ],
+        "description": "\n| 通知公告 | 学生活动 | 教师风采 | 新闻动态 |\n| -------- | -------- | -------- | -------- |\n| tzgg     | xstd     | jsfc     | xwdt     |\n",
+        "location": "thuhs.ts",
+        "module": "() => import('@/routes/tsinghua/thuhs.ts')"
       }
     },
     "apiRoutes": {},

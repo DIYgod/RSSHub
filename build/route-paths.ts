@@ -2947,6 +2947,7 @@ export type RoutePath =
   | `/tsinghua/lib/tzgg/:category?`
   | `/tsinghua/lib/zydt/:category?`
   | `/tsinghua/news/:category?`
+  | `/tsinghua/thuhs/:category?`
   | `/ttv/:category?`
   | `/tumblr/posts/:blog`
   | `/tumblr/tagged/:tag`

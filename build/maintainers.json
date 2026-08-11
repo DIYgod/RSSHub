@@ -7466,6 +7466,9 @@
   "/tsinghua/news/:category?": [
     "TonyRL"
   ],
+  "/tsinghua/thuhs/:category?": [
+    "Aquarius-Situla"
+  ],
   "/ttv/:category?": [
     "dzx-dzx"
   ],
