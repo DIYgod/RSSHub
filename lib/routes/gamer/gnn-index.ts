@@ -12,7 +12,7 @@ export const route: Route = {
     path: '/gnn/:category?',
     categories: ['anime'],
     view: ViewType.Articles,
-    example: '/gamer/gnn/1',
+    example: '/gamer/gnn/ps5',
     parameters: {
         category: {
             description: '版塊',
@@ -54,10 +54,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category');
-    let url: string;
+    const category = ctx.req.param('category')?.toLowerCase();
     let categoryName = '';
-    const categoryTable = {
+
+    const categoryTable: Record<string, string> = {
         1: 'PC',
         3: 'TV 掌機',
         4: '手機遊戲',
@@ -78,96 +78,111 @@ async function handler(ctx) {
         comic: '漫畫',
         anime: '動畫',
     };
-    const mainCategory = ['1', '3', '4', '5', '9', '11', '13'];
-    if (!category || !Object.keys(categoryTable).includes(category)) {
-        url = 'https://gnn.gamer.com.tw/';
-    } else {
+
+    let targetUrl = 'https://gnn.gamer.com.tw/';
+    if (category && Object.hasOwn(categoryTable, category)) {
         categoryName = '-' + categoryTable[category];
-        url = mainCategory.includes(category) ? `https://gnn.gamer.com.tw/index.php?k=${category}` : `https://acg.gamer.com.tw/news.php?p=${category}`;
+        targetUrl = `https://acg.gamer.com.tw/news.php?p=${category}`;
     }
 
     const response = await got({
         method: 'get',
-        url,
+        url: targetUrl,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Referer: 'https://acg.gamer.com.tw/',
+        },
     });
-    const data = response.data;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
-    const $ = load(data);
 
-    const list = $('div.BH-lbox.GN-lbox2')
-        .children()
-        .not('p,a,img,span')
-        // <div data-news-id="291265" id="291265"></div>
-        .not('[data-news-id]')
-        .slice(0, limit)
+    const $ = load(response.data);
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+
+    const list = $('a')
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem | null => {
             const $item = $(item);
-            // a label with div / a label without div
-            const aLabelNode = $item.find('h1').length === 0 ? $item.find('a') : $item.find('h1').find('a');
-            const tag = $item.find('div.platform-tag_list').text();
+            const titleText = $item.text().trim();
+            let link = $item.attr('href');
+
+            if (!titleText || !link || titleText.length < 4) {
+                return null;
+            }
+
+            if (link.startsWith('//')) {
+                link = 'https:' + link;
+            } else if (link.startsWith('/')) {
+                link = new URL(link, targetUrl).href;
+            }
+
+            if (!link.includes('detail.php')) {
+                return null;
+            }
 
             return {
-                title: '[' + tag + ']' + aLabelNode.text(),
-                link: aLabelNode.attr('href')!.replace('//', 'https://'),
+                title: titleText,
+                link,
             };
-        });
+        })
+        .filter((item, index, self) => {
+            if (!item) {
+                return false;
+            }
+            return index === self.findIndex((t) => t?.link === item.link);
+        })
+        .slice(0, limit) as DataItem[];
 
     const items = await pMap(
         list,
         async (item) => {
             item.description = await cache.tryGet(item.link!, async () => {
-                const response = await got.get(item.link);
-                let component: string;
-                const urlReg = /window\.lazySizesConfig/g;
+                const res = await got.get(item.link!, {
+                    headers: { 'User-Agent': 'Mozilla/5.0' },
+                });
 
-                let pubInfo;
-                let dateStr;
-                if (response.body.search(urlReg) >= 0) {
-                    const $ = load(response.data);
-                    if ($('span.GN-lbox3C').length > 0) {
-                        // official publish 1
-                        pubInfo = $('span.GN-lbox3C').text().split('）');
-                        item.author = pubInfo[0].replace('（', '').replace(' 報導', '');
-                        dateStr = pubInfo[1].trim();
+                const _$ = load(res.data);
+                let component = '';
+                let pubInfo: string[];
+                let dateStr: string | undefined;
+
+                if (res.data.includes('window.lazySizesConfig')) {
+                    if (_$('span.GN-lbox3C').length > 0) {
+                        pubInfo = _$('span.GN-lbox3C').text().split('）');
+                        item.author = pubInfo[0]?.replace('（', '').replace(' 報導', '').trim();
+                        dateStr = pubInfo[1]?.trim();
                     } else {
-                        // official publish 2
-                        pubInfo = $('span.GN-lbox3CA').text().split('）');
-                        item.author = pubInfo[0].replace('（', '').replace(' 報導', '');
-                        dateStr = pubInfo[1].replace('原文出處', '').trim();
+                        pubInfo = _$('span.GN-lbox3CA').text().split('）');
+                        item.author = pubInfo[0]?.replace('（', '').replace(' 報導', '').trim();
+                        dateStr = pubInfo[1]?.replace('原文出處', '').trim();
                     }
-                    component = $('div.GN-lbox3B').html() ?? '';
+                    component = _$('div.GN-lbox3B').html() ?? '';
+                } else if (_$('div.MSG-list8C').length > 0) {
+                    pubInfo = _$('span.ST1').text().split('│');
+                    item.author = pubInfo[0]?.replace('作者：', '').trim();
+                    dateStr = pubInfo[_$('span.ST1').find('a').length > 0 ? 2 : 1]?.trim();
+                    component = _$('div.MSG-list8C').html() ?? '';
                 } else {
-                    // url redirect
-                    const _response = await got.get(item.link);
-                    const _$ = load(_response.data);
-
-                    if (_$('div.MSG-list8C').length > 0) {
-                        // personal publish 1
-                        pubInfo = _$('span.ST1').text().split('│');
-                        item.author = pubInfo[0].replace('作者：', '');
-                        dateStr = pubInfo[_$('span.ST1').find('a').length > 0 ? 2 : 1];
-                        component = _$('div.MSG-list8C').html() ?? '';
-                    } else {
-                        // personal publish 2
-                        pubInfo = _$('div.article-intro').text().replaceAll('\n', '').split('|');
-                        item.author = pubInfo[0];
-                        dateStr = pubInfo[1];
-                        component = _$('div.text-paragraph').html() ?? '';
-                    }
+                    pubInfo = _$('div.article-intro').text().replaceAll('\n', '').split('|');
+                    item.author = pubInfo[0]?.trim();
+                    dateStr = pubInfo[1]?.trim();
+                    component = _$('div.text-paragraph').html() ?? '';
                 }
-                item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
-                component = component.replaceAll(/\b(data-src)\b/g, 'src');
+
+                if (dateStr) {
+                    item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), 8);
+                }
+
+                // 替换图片懒加载属性
+                component = component.replaceAll(/\bdata-src\b/g, 'src');
                 return component;
             });
             return item;
         },
-        { concurrency: 5 }
+        { concurrency: 2 }
     );
 
     return {
         title: '巴哈姆特-GNN新聞' + categoryName,
-        link: url,
+        link: targetUrl,
         item: items,
     };
 }
