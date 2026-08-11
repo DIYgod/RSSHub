@@ -81,7 +81,6 @@ async function handler(ctx) {
     };
 
     let targetUrl = 'https://gnn.gamer.com.tw/';
-    // 修正點 1: 使用 Object.hasOwn 檢查物件 key 避免 ESLint 警告
     if (category && Object.hasOwn(categoryTable, category)) {
         categoryName = '-' + categoryTable[category];
         targetUrl = `https://gnn.gamer.com.tw/index.php?k=${category}`;
@@ -98,8 +97,7 @@ async function handler(ctx) {
 
     const htmlContent = typeof response.data === 'string' ? response.data : String(response.body || '');
     const $ = load(htmlContent);
-    
-    // 修正點 2: 使用 Math.trunc(Number(...)) 代替 Number.parseInt()
+
     const limitQuery = ctx.req.query('limit');
     const limit = limitQuery ? Math.trunc(Number(limitQuery)) : 10;
 
