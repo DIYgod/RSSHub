@@ -166,7 +166,7 @@
         "@types/jsrsasign": "10.5.15",
         "@types/mailparser": "3.4.6",
         "@types/module-alias": "2.0.4",
-        "@types/node": "26.1.2",
+        "@types/node": "26.2.0",
         "@types/sanitize-html": "2.16.1",
         "@typescript-eslint/eslint-plugin": "8.66.0",
         "@typescript-eslint/parser": "8.66.0",
