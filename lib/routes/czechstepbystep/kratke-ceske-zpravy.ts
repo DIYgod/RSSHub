@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -32,7 +32,7 @@ export const route: Route = {
     description: 'Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://www.czechstepbystep.cz';
     const targetUrl = `${baseUrl}/kategorie/kratke-ceske-zpravy`;
 
