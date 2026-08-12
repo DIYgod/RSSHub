@@ -34,9 +34,6 @@ async function handler() {
     const res = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(res.data);
     const list = $('.article-list').find('li');
@@ -48,11 +45,11 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').text(),
-                    pubDate: parseDate(item.find('.clock').text()),
-                    link: item.find('a').attr('href'),
+                    title: $item.find('a').text(),
+                    pubDate: parseDate($item.find('.clock').text()),
+                    link: $item.find('a').attr('href'),
                 };
             }),
     };

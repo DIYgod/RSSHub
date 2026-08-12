@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, getBoards, renderDesc } from './utils';
@@ -33,8 +32,9 @@ async function handler(ctx) {
         board = boardInfo.id;
     }
 
-    const { data: response } = await got.post(`${baseUrl}/article/get_new_articles`, {
-        json: {
+    const response = await ofetch(`${baseUrl}/article/get_new_articles`, {
+        method: 'POST',
+        body: {
             boardId: board,
             isCollege: false,
             page: 0,
@@ -44,17 +44,14 @@ async function handler(ctx) {
 
     const result = JSON.parse(decodeURIComponent(response.result));
 
-    const items = await Promise.all(
-        result.map((item) =>
-            cache.tryGet(`meteor:${item.id}`, () => ({
-                title: item.title,
-                description: renderDesc(item.content),
-                link: `${baseUrl}/article/${item.shortId}`,
-                author: item.authorAlias,
-                pubDate: parseDate(item.createdAt),
-            }))
-        )
-    );
+    const items = result.map((item) => ({
+        title: item.title,
+        description: renderDesc(item.content),
+        link: `${baseUrl}/article/${item.shortId}`,
+        author: item.authorAlias,
+        pubDate: parseDate(item.createdAt),
+        category: item.tagNameList,
+    }));
 
     return {
         title: `${board === 'all' ? '全部看板' : boardInfo.title} | Meteor 學生社群`,

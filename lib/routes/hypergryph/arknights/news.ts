@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -76,7 +76,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { group = 'ALL' } = ctx.req.param();
 
-    const initialData: Promise<InitialData> = await cache.tryGet(
+    const initialData: InitialData = await cache.tryGet(
         'hypergryph:arknights:news',
         async () => {
             const response = await ofetch('https://ak.hypergryph.com/news');
@@ -102,7 +102,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const description = $('div > div > div > div > div > div > div:nth-child(4)');
-                item.description = description.length ? description.html() : item.description;
+                item.description = (description.length ? description.html() : item.description) ?? '';
 
                 return item;
             })
@@ -113,6 +113,6 @@ async function handler(ctx) {
         title: '《明日方舟》游戏公告与新闻',
         link: 'https://ak.hypergryph.com/news',
         item: items,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
     };
 }

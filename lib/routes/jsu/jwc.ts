@@ -51,8 +51,8 @@ async function handler(ctx) {
     const list = $('a.c135042').toArray();
     const out = await Promise.all(
         list.map((item) => {
-            item = $(item);
-            const link = new URL(item.attr('href'), baseUrl).href;
+            const $item = $(item);
+            const link = new URL($item.attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const description = await getPageItemAndDate(
                     '#vsb_content',

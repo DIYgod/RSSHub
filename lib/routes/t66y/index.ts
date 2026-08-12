@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -71,7 +71,7 @@ async function handler(ctx) {
     const list = $('#ajaxtable > tbody:nth-child(2) .tr3')
         .not('.tr2.tac')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const element = $(item);
 
             const tal = element.find('.tal');
@@ -93,7 +93,7 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
 
                 item.description = parseContent(response);

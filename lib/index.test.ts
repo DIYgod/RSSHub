@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-const serve = vi.fn(() => ({ close: vi.fn() }));
+const serve = vi.fn<(...args: any[]) => any>(() => ({ close: vi.fn() }));
 const logger = {
     info: vi.fn(),
     warn: vi.fn(),

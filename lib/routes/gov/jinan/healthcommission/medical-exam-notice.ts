@@ -53,16 +53,16 @@ async function handler() {
         link: `${baseUrl}/col/col14418/index.html`,
         item: list.toArray().map((item) => {
             // 获取每个item对应的html字符串
-            item = $(item).text();
+            const $item = $(item).text();
 
             // 解析上一步中的html
-            const html = load(item);
+            const html = load($item);
 
             const title = html('td[width="620"] a').attr('title');
             const link = html('td[width="620"] a').attr('href');
             const date = timezone(parseDate(html('td[width="100"]').text()), 8);
             return {
-                title,
+                title: title!,
                 description: title,
                 pubDate: date,
                 link,

@@ -24,9 +24,9 @@ const handler: Route['handler'] = async () => {
                     const $ = load(data);
 
                     return {
-                        title: $('h1').first().text().trim(),
+                        title: $('h1').text(),
                         link,
-                        description: $('div.prose').html() ?? '',
+                        description: $('div.prose').html(),
                         pubDate: parseDate(
                             $('p[data-version="v1"]')
                                 .first()
@@ -41,7 +41,7 @@ const handler: Route['handler'] = async () => {
     return {
         title: 'Next.js Blog',
         link: 'https://nextjs.org/blog',
-        language: 'en-US',
+        language: 'en-us',
         item,
     };
 };

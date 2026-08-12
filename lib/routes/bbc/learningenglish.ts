@@ -78,7 +78,7 @@ async function handler(ctx: Context) {
 
                 const $content = load(detailResponse);
 
-                item.description = $content('.widget-richtext').html() ?? undefined;
+                item.description = $content('.widget-richtext').html();
                 return item;
             });
         })

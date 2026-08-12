@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,13 +44,13 @@ async function handler(ctx) {
     let items = $('.p2j_list_con .clearfix li a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 40)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: timezone(parseDate(item.next().text(), '[YYYY-MM-DD HH:mm]'), 8),
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: timezone(parseDate($item.next().text(), '[YYYY-MM-DD HH:mm]'), 8),
             };
         });
 

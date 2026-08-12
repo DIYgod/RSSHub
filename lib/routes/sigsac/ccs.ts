@@ -39,7 +39,7 @@ async function handler() {
         })
         .filter(Boolean);
 
-    const responses = await Promise.allSettled(urlList.map((url) => ofetch(url)));
+    const responses = await Promise.allSettled(urlList.map((url) => ofetch(url!)));
 
     const items = responses.flatMap((response, i) => {
         if (response.status !== 'fulfilled') {
@@ -50,26 +50,26 @@ async function handler() {
         const paperSection = $('div.papers-item')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const title = item.find('b').text().trim();
+                const $item = $(item);
+                const title = $item.find('b').text().trim();
                 return {
                     title,
-                    author: item.find('p').text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
+                    author: $item.find('p').text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
                     link: `${link}#${title}`,
-                    pubDate: parseDate(link.match(/CCS(\d{4})/)[1], 'YYYY'),
+                    pubDate: parseDate(link!.match(/CCS(\d{4})/)![1], 'YYYY'),
                 };
             });
         const paperTable = $('tbody tr')
             .toArray()
             .slice(1) // skip table header
             .map((item) => {
-                item = $(item);
-                const title = item.find('td').eq(0).text().trim();
+                const $item = $(item);
+                const title = $item.find('td').eq(0).text().trim();
                 return {
                     title,
-                    author: item.find('td').eq(1).text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
+                    author: $item.find('td').eq(1).text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
                     link: `${link}#${title}`,
-                    pubDate: parseDate(link.match(/CCS(\d{4})/)[1], 'YYYY'),
+                    pubDate: parseDate(link!.match(/CCS(\d{4})/)![1], 'YYYY'),
                 };
             });
         return paperSection.length ? paperSection : paperTable;

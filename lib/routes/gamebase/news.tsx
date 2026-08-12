@@ -5,7 +5,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -111,7 +111,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: updated ? timezone(parseDate(updated), 8) : undefined,
-                    language,
+                    language: language as Language,
                 };
 
                 return processedItem;
@@ -127,7 +127,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:title"]').attr('content')?.split(/\|/).pop()?.trim(),
-        language,
+        language: language as Language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

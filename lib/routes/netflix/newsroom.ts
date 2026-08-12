@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -151,7 +151,7 @@ const render = (node) => {
         }
 
         case 'embedded-asset-block': {
-            const file = Object.values(node.data?.file)[0];
+            const file = Object.values<any>(node.data?.file)[0];
             if (!file || !file.url) {
                 return '';
             }
@@ -171,13 +171,13 @@ const render = (node) => {
             let innerHTML = '';
             if (node.data.display === 'carousel') {
                 for (const img of node.data.images) {
-                    const file = Object.values(img.file)[0];
+                    const file = Object.values<any>(img.file)[0];
                     const url = file.url.startsWith('//') ? 'https:' + file.url : file.url;
 
                     innerHTML += renderImage({
                         url,
-                        alt: Object.values(img.title)[0],
-                        caption: img.description ? Object.values(img.description)[0] : '',
+                        alt: Object.values(img.title)[0] as string,
+                        caption: img.description ? (Object.values(img.description)[0] as string) : '',
                     });
                 }
             }
@@ -222,18 +222,18 @@ async function handler(ctx) {
         },
     });
 
-    const list = [...response.entities.region.regionArticles, ...response.entities.global.globalArticles].map((i) => ({
+    const list = [...response.entities.region.regionArticles, ...response.entities.global.globalArticles].map((i): DataItem & { slug: string } => ({
         title: i.title,
         link: `${baseUrl}/${region}/news/${i.slug}`,
         pubDate: parseDate(i.rawPublishedDate),
         category: [...new Set([...i.categories.map((category) => category.label), ...i.locations.map((location) => location.label)])],
-        image: i.heroImage?.url ? `https:${i.heroImage.url.replace('?w=2560', '')}` : null,
+        image: i.heroImage?.url ? `https:${i.heroImage.url.replace('?w=2560', '')}` : undefined,
         slug: i.slug,
     }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await ofetch('https://about.netflix.com/api/data/entity', {
                     query: {
                         language: region,

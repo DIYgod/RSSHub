@@ -16,7 +16,7 @@ const index = (link) => {
     if (link.startsWith('https://jwc.wh.sdu.edu.cn/')) {
         return jwc(link);
     }
-    return {};
+    return Promise.resolve({});
 };
 // TODO: missing route export
 export default index;

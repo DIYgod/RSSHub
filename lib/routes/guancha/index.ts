@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -76,9 +76,11 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
     const rootUrl = 'https://www.guancha.cn';
 
-    let newsList = [],
-        redianList = [],
-        gundongList = [];
+    type ListItem = DataItem & { link: string };
+
+    let newsList: ListItem[] = [],
+        redianList: ListItem[] = [],
+        gundongList: ListItem[] = [];
 
     // 'review', 'story' and 'fengwen' come from homepage.
 
@@ -99,13 +101,13 @@ async function handler(ctx) {
 
                 .filter((item) => $(item).attr('href') !== 'https://user.guancha.cn')
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
 
-                    const link = item.attr('href');
+                    const link = $item.attr('href');
 
                     return {
-                        title: item.text(),
-                        link: `${link.indexOf('http') === 0 ? '' : rootUrl}${link.replace(/\.shtml/, '_s.shtml')}`,
+                        title: $item.text(),
+                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!.replace(/\.shtml/, '_s.shtml')}`,
                     };
                 });
 

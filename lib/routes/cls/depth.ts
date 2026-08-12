@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -65,7 +65,7 @@ async function handler(ctx) {
         query: getSearchParams(),
     });
 
-    let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map((item) => ({
+    let items = [...response.data.top_article, ...response.data.depth_list].slice(0, limit).map((item): DataItem => ({
         title: item.title || item.brief,
         link: `${rootUrl}/detail/${item.id}`,
         pubDate: parseDate(item.ctime, 'X'),
@@ -76,8 +76,8 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
 
                 const content = load(detailResponse);
 

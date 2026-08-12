@@ -1,5 +1,6 @@
 import path from 'node:path';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
@@ -23,7 +24,7 @@ export const getNews = async (category) => {
     const resultItem = await Promise.all(
         list.map(({ title, url, focus_date, image }) =>
             cache.tryGet(`cctv-news: ${url}`, async () => {
-                const item = {
+                const item: DataItem = {
                     title,
                     link: url,
                     pubDate: timezone(parseDate(focus_date), 8),

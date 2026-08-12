@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Kindle Software Updates',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 
@@ -46,7 +46,7 @@ async function handler() {
                 website: `${url}?nodeId=${nodeIdValue}`,
                 description: $(item)
                     .find('.a-column.a-span8')
-                    .html()
+                    .html()!
                     .replaceAll(/[\t\n]/g, ''),
             };
             return data;

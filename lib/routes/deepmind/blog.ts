@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -34,7 +34,7 @@ async function handler() {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
@@ -49,11 +49,11 @@ async function handler() {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         description: feed.description,
         image: 'https://assets-global.website-files.com/621d30e84caf0be3291dbf1c/621d336835a91420c6a8dcf2_webclip.png',
         link: `${feed.link}/blog`,
-        item: items,
-        language: 'en',
+        item: items as DataItem[],
+        language: 'en' as Language,
     };
 }

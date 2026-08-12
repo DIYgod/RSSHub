@@ -36,7 +36,6 @@ async function handler(ctx) {
     const path = `/news/weekly/${category}`;
     const url = `${baseURL}${path}`;
     const { data: res } = await got(url);
-    // @ts-ignore
     const $ = load(res);
 
     const title = $('head title').text();

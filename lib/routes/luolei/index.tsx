@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -36,13 +36,13 @@ const renderDescription = ({ images, videos }: { images?: DescriptionImage[]; vi
 
 const unblurImages = ($: CheerioAPI) => {
     $('img[data-original-src]').each((_, el) => {
-        el = $(el);
+        const $el = $(el);
 
-        el.replaceWith(
+        $el.replaceWith(
             renderDescription({
                 images: [
                     {
-                        src: el.prop('data-original-src'),
+                        src: $el.prop('data-original-src'),
                     },
                 ],
             })
@@ -64,8 +64,8 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang');
     const themeEl = $('link[rel="modulepreload"]')
         .toArray()
-        .findLast((l) => /theme\..*\.js$/.test($(l).prop('href')));
-    const themeUrl = themeEl ? new URL($(themeEl).prop('href'), rootUrl).href : undefined;
+        .findLast((l) => /theme\..*\.js$/.test($(l).prop('href')!));
+    const themeUrl = themeEl ? new URL($(themeEl).prop('href')!, rootUrl).href : undefined;
 
     const { data: themeResponse } = await got(themeUrl);
 
@@ -99,7 +99,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
@@ -132,7 +132,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('img.logo').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').first().text(),
@@ -142,7 +142,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:title"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

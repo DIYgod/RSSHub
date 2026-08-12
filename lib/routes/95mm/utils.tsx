@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -19,21 +20,21 @@ const ProcessItems = async (ctx, title, currentUrl) => {
 
     let items = $('div.list-body')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                guid: a.attr('href').replace('95mm.vip', '95mm.org'),
+                guid: a.attr('href')!.replace('95mm.vip', '95mm.org'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

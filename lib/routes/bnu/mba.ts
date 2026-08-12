@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,23 +21,23 @@ export const handler = async (ctx) => {
     let items = $('ul.concrcc li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a.listlj');
+            const a = $item.find('a.listlj');
             const title = a.text();
 
             return {
                 title,
-                pubDate: parseDate(item.find('div.crq').text()),
-                link: new URL(a.prop('href'), currentUrl).href,
-                language,
+                pubDate: parseDate($item.find('div.crq').text()),
+                link: new URL(a.prop('href')!, currentUrl).href,
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -48,14 +48,14 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('div.connewstis-time').text().split(/：/).pop());
+                item.pubDate = parseDate($$('div.connewstis-time').text().split(/：/).pop()!);
                 item.content = {
                     html: description,
                     text: $$('div.concrczw').text(),
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 

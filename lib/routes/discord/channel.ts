@@ -1,3 +1,5 @@
+import type { APITextChannel } from 'discord-api-types/v10';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
@@ -43,12 +45,12 @@ async function handler(ctx) {
 
     const channelInfo = await getChannel(channelId, authorization);
     const messagesRaw = await getChannelMessages(channelId, authorization, ctx.req.query('limit') ?? 100);
-    const { name: channelName, topic: channelTopic, guild_id: guildId } = channelInfo;
+    const { name: channelName, topic: channelTopic, guild_id: guildId } = channelInfo as APITextChannel;
 
     const guildInfo = await getGuild(guildId, authorization);
     const { name: guildName, icon: guidIcon } = guildInfo;
 
-    const messages = messagesRaw.map((message) => ({
+    const messages = messagesRaw.map((message): DataItem => ({
         title: message.content.split('\n', 1)[0],
         description: renderDescription({ message, guildInfo }),
         author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
@@ -63,7 +65,7 @@ async function handler(ctx) {
         description: channelTopic,
         link: `${baseUrl}/channels/${guildId}/${channelId}`,
         image: `https://cdn.discordapp.com/icons/${guildId}/${guidIcon}.webp`,
-        item: messages as unknown as DataItem[],
+        item: messages,
         allowEmpty: true,
     };
 }

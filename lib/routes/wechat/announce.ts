@@ -35,7 +35,7 @@ async function handler() {
     });
 
     const $ = load(htmlString);
-    const announceList = [];
+    const announceList: any[] = [];
 
     $('.mp_news_list > .mp_news_item').each((_, el) => {
         const $item = $(el);

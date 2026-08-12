@@ -67,7 +67,7 @@ const getData = async ({ site = 'www', channel }) => {
                 const response = await got.get(`${item.link}?full=y&archive`);
 
                 const $ = load(response.data);
-                const results = [];
+                const results: any[] = [];
                 for (let i = 0; i < $('div.story-container').length; i++) {
                     results.push(ProcessFeed(i, $, item.link));
                 }

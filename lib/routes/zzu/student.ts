@@ -47,12 +47,12 @@ async function handler(ctx) {
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a').first();
-            const link = new URL($link.attr('href'), typeDict[type][1]).href;
+            const link = new URL($link.attr('href')!, typeDict[type][1]).href;
             const title = $link.find('span').text().trim();
 
             // 获取发布时间 (格式: yyyy年mm月dd日)
             const pubDateText = $element.find('em').text().trim();
-            let pubDate = null;
+            let pubDate: string | null = null;
 
             if (pubDateText) {
                 const match = pubDateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);

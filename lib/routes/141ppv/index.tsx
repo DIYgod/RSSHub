@@ -2,13 +2,13 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
+    example: '/141ppv/popular/30',
     name: '通用',
     maintainers: ['cgkings', 'nczitzk'],
     parameters: { type: '类型，可查看下表的类型说明', keyword: '关键词，可查看下表的关键词说明' },
@@ -65,39 +65,34 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    if (getSubPath(ctx) === '/') {
-        ctx.set('redirect', `/141ppv${$('.overview').first().attr('href')}`);
-        return;
-    }
-
     const items = $('.columns')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const id = item.find('.title a').text();
-            const size = item.find('.title span').text();
-            const pubDate = item.find('.subtitle a').attr('href').split('/date/').pop();
-            const description = item.find('.has-text-grey-dark').text();
-            const actresses = item
+            const id = $item.find('.title a').text();
+            const size = $item.find('.title span').text();
+            const pubDate = $item.find('.subtitle a').attr('href')!.split('/date/').pop();
+            const description = $item.find('.has-text-grey-dark').text();
+            const actresses = $item
                 .find('.panel-block')
                 .toArray()
                 .map((a) => $(a).text().trim());
-            const tags = item
+            const tags = $item
                 .find('.tag')
                 .toArray()
                 .map((t) => $(t).text().trim());
-            const magnet = item.find('a[title="Magnet torrent"]').attr('href');
-            const link = item.find('a[title="Download .torrent"]').attr('href');
-            const onErrorAttr = item.find('.image').attr('onerror');
+            const magnet = $item.find('a[title="Magnet torrent"]').attr('href');
+            const link = $item.find('a[title="Download .torrent"]').attr('href');
+            const onErrorAttr = $item.find('.image').attr('onerror');
             const backupImageRegex = /this\.src='(.*?)'/;
-            const match = backupImageRegex.exec(onErrorAttr);
-            const image = match ? match[1] : item.find('.image').attr('src');
+            const match = backupImageRegex.exec(onErrorAttr!);
+            const image = match ? match[1] : $item.find('.image').attr('src');
 
             return {
                 title: `${id} ${size}`,
-                pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
-                link: new URL(item.find('a').first().attr('href'), rootUrl).href,
+                pubDate: parseDate(pubDate!, 'YYYY/MM/DD'),
+                link: new URL($item.find('a').first().attr('href')!, rootUrl).href,
                 description: renderToString(
                     <>
                         {image ? <img src={image} /> : null}

@@ -4,7 +4,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/awsblogs/:locale?',
-    name: 'Unknown',
+    categories: ['blog'],
+    example: '/amazon/awsblogs',
+    parameters: {
+        locale: 'Blog posts in a specified language, only the following options are supported. Default `zh_CN`',
+    },
+    description: `| zh\\_CN  | en\\_US  | fr\\_FR | de\\_DE | ja\\_JP   | ko\\_KR | pt\\_BR     | es\\_ES  | ru\\_RU  | id\\_ID     | tr\\_TR  |
+| ------- | ------- | ------ | ------ | -------- | ------ | ---------- | ------- | ------- | ---------- | ------- |
+| Chinese | English | French | German | Japanese | Korean | Portuguese | Spanish | Russian | Indonesian | Turkish |`,
+    name: 'AWS Blogs',
     maintainers: ['HankChow'],
     handler,
 };

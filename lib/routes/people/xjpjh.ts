@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://jhsjk.people.cn';
 
@@ -21,70 +23,61 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['people.com.cn/'],
-            target: '/:site?/:category?',
+            source: ['jhsjk.people.cn/'],
+            target: '/xjpjh',
         },
     ],
     name: '习近平系列重要讲话',
-    maintainers: [],
+    maintainers: ['LogicJake'],
     handler,
-    url: 'people.com.cn/',
+    url: 'jhsjk.people.cn',
 };
 
 async function handler(ctx) {
-    let keyword = ctx.req.param('keyword') || 'all';
-    let year = ctx.req.param('year') || 0;
-
-    let title = '习近平系列重要讲话';
-    title = title + '-' + keyword;
-    if (keyword === 'all') {
-        keyword = '';
-    }
-    if (year === 0) {
-        title += '-all';
-    } else {
-        title = title + '-' + year;
-        year -= 1811;
+    const requestedKeyword = ctx.req.param('keyword');
+    const requestedYear = ctx.req.param('year');
+    if (requestedYear && requestedYear !== 'all' && !/^\d{4}$/.test(requestedYear)) {
+        throw new InvalidParameterError(`Invalid year '${requestedYear}'`);
     }
 
-    const link = `http://jhsjk.people.cn/result?keywords=${keyword}&year=${year}`;
+    const keyword = requestedKeyword && requestedKeyword !== 'all' ? requestedKeyword : '';
+    const year = requestedYear && requestedYear !== 'all' ? requestedYear : '0';
+    const requestedLimit = Number(ctx.req.query('limit') ?? 10);
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 10) : 10;
+    const title = `习近平系列重要讲话-${keyword || 'all'}-${year === '0' ? 'all' : year}`;
+    const resultUrl = new URL('/result', host);
+    resultUrl.searchParams.set('keywords', keyword);
+    resultUrl.searchParams.set('year', year);
+    const link = resultUrl.href;
     const response = await got.get(link);
 
     const $ = load(response.data);
 
-    const list = $('ul.list_14.p1_2.clearfix li')
-        .slice(0, 10)
+    const list = $('#news_list > li > a[href]')
+        .slice(0, limit)
         .toArray()
         .map((element) => {
-            const info = {
-                title: $(element).find('a').text(),
-                link: $(element).find('a').attr('href'),
+            const item = $(element);
+            return {
+                title: item.text(),
+                link: new URL(item.attr('href')!, host).href,
             };
-            return info;
         });
 
     const out = await Promise.all(
-        list.map(async (info) => {
-            const title = info.title;
-            const itemUrl = new URL(info.link, host).href;
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await got.get(item.link);
+                const $ = load(response.data);
+                const publishedDate = response.data.match(/发布时间：(\d{4}-\d{2}-\d{2})/)?.[1];
 
-            const cacheIn = await cache.get(itemUrl);
-            if (cacheIn) {
-                return JSON.parse(cacheIn);
-            }
-
-            const response = await got.get(itemUrl);
-            const $ = load(response.data);
-            const description = $('div.d2txt_con.clearfix').html().trim();
-
-            const single = {
-                title,
-                link: itemUrl,
-                description,
-            };
-            cache.set(itemUrl, JSON.stringify(single));
-            return single;
-        })
+                return {
+                    ...item,
+                    description: $('div.d2txt_con.clearfix').html(),
+                    ...(publishedDate && { pubDate: parseDate(publishedDate) }),
+                };
+            })
+        )
     );
 
     return {

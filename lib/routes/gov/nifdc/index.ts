@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,22 +42,22 @@ async function handler(ctx) {
     let items = $('div.list ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const link = a.prop('href');
 
             return {
                 title: a.prop('title') || a.text(),
-                link: link.startsWith('http') ? link : new URL(link, currentUrl).href,
-                pubDate: parseDate(item.find('span').text().replaceAll(/\(|\)/g, '')),
+                link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
+                pubDate: parseDate($item.find('span').text().replaceAll(/\(|\)/g, '')),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link);
 
@@ -85,15 +85,15 @@ async function handler(ctx) {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), currentUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), currentUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, currentUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, currentUrl).href;
 
     return {
         item: items,
         title: $('title').text().replace(/----/, ' - '),
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

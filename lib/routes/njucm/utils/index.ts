@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -11,17 +12,17 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
 
     const list = $(listSelector)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find(titleSelector).attr('title'),
-                link: host + item.find(titleSelector).attr('href'),
+                title: $item.find(titleSelector).attr('title')!,
+                link: host + $item.find(titleSelector).attr('href'),
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 if (response.redirectUrls.length) {
                     item.link = response.redirectUrls[0];
@@ -29,11 +30,7 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
                 } else {
                     const $ = load(response.data);
                     item.title = $(contentSelector.title).text();
-                    item.description = $(contentSelector.content)
-                        .html()
-                        .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
-                        .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
-                        .trim();
+                    item.description = $(contentSelector.content).html()!.trim();
                     item.pubDate = timezone(parseDate($(contentSelector.date).text()), 8);
                 }
                 return item;

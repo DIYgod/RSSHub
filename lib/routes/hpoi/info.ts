@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -90,7 +91,7 @@ async function handler(ctx) {
             const typeName = leftNode.find('.type-name').first().text().trim();
             const imgUrl = leftNode.find('img').first().attr('src');
             const rightNode = $item('.home-info-content');
-            const infoType = rightNode.find('.user-name').contents()[0].data.trim();
+            const infoType: any = (rightNode.find('.user-name').contents()[0] as Text).data.trim();
             const infoTitle = rightNode.find('.user-content').text();
             const infoTime = rightNode.find('.type-time').text();
             return {

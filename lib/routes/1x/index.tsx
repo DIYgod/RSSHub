@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const handler = async (ctx) => {
@@ -27,11 +27,11 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('span.photos-feed-data-title').first().text() || 'Untitled';
-            const image = item.find('img').prop('src');
-            const author = item.find('span.photos-feed-data-name').first().text();
+            const title = $item.find('span.photos-feed-data-title').first().text() || 'Untitled';
+            const image = $item.find('img').prop('src');
+            const author = $item.find('span.photos-feed-data-name').first().text();
 
             const text = `${title} by ${author}`;
 
@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
                 </>
             );
 
-            const id = item.find('img[id]').prop('id').split(/-/).pop();
+            const id = $item.find('img[id]').prop('id').split(/-/).pop();
             const guid = `1x-${id}`;
 
             return {
@@ -62,14 +62,14 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
             };
         });
 
-    const image = new URL($('img.themedlogo').prop('src'), rootUrl).href;
+    const image = new URL($('img.themedlogo').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

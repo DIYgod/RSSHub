@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const cookieJar = new CookieJar();
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const issue = $2('.content__container').find('h1').text().trim();
     const list = $2('.article-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { authors: string; doi: string; abstract: string; issue: string; img: string } => {
             const title = $2(item).find('.title-link').text();
             const link = `${host}${$2(item).find('.title-link').attr('href')}`;
             const authors = $2(item).find('.authors').find('.inlineblock').text();

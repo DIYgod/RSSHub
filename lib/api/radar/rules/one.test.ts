@@ -1,4 +1,4 @@
-import type { Next } from 'hono';
+import type { Context, Next } from 'hono';
 import { describe, expect, it, vi } from 'vitest';
 
 import { handler } from '@/api/radar/rules/one';
@@ -14,7 +14,7 @@ describe('api/radar/rules/one', () => {
             json: vi.fn((value) => value),
         };
 
-        const result = await handler(ctx as any, noopNext);
+        const result = await handler(ctx as unknown as Context, noopNext);
 
         expect(ctx.req.valid).toHaveBeenCalledWith('param');
         expect(ctx.json).toHaveBeenCalledWith(undefined);

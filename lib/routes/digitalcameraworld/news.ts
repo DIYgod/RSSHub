@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 
@@ -40,17 +40,16 @@ async function handler() {
     const items = $('item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            let description = item.find(String.raw`dc\:content`).text();
-            description = $('<div>').html(description);
-            description.find('.vanilla-image-block').removeAttr('style');
-            description.find('.fancy-box').remove();
+            const $item = $(item);
+            const $description = $('<div>').html($item.find(String.raw`dc\:content`).text());
+            $description.find('.vanilla-image-block').removeAttr('style');
+            $description.find('.fancy-box').remove();
 
             return {
-                title: item.find('title').text(),
-                pubDate: parseDate(item.find('pubDate').text()),
-                link: item.find('link').text(),
-                description: description.html(),
+                title: $item.find('title').text(),
+                pubDate: parseDate($item.find('pubDate').text()),
+                link: $item.find('link').text(),
+                description: $description.html(),
             };
         });
 

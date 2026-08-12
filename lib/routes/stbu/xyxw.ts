@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,9 +41,9 @@ async function handler() {
     const $ = load(gbk2utf8(response));
     const list = $('.style_2 .Simple_title')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
@@ -52,7 +52,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     responseType: 'buffer',
                 });

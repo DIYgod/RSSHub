@@ -104,7 +104,7 @@ const handler = async (ctx) => {
                     }
                 });
 
-                const content = $content.html() || '';
+                const content = $content.html();
                 // 提取作者/编辑等信息，并去除"发布时间"和日期
                 const metaTexts = $$('.show01 p i')
                     .toArray()

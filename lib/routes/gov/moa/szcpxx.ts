@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,16 +21,16 @@ export const handler = async (ctx) => {
     let items = $('div.ztst_list_contBox_inner ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const a = item.find('a.content');
+            const a = $item.find('a.content');
 
             return {
-                title: a.prop('title'),
-                pubDate: parseDate(item.find('div.pubTime').text().split(/：/).pop(), 'YYYY.MM.DD'),
-                link: new URL(a.prop('href'), currentUrl).href,
-                language,
+                title: a.prop('title') ?? '',
+                pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop()!, 'YYYY.MM.DD'),
+                link: new URL(a.prop('href')!, currentUrl).href,
+                language: language as Language,
             };
         });
 
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.gsj_htmlcon_bot, div.TRS_Editor').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
     );
 
     const title = `${$('title').text()} - ${$('li.now').text()}`;
-    const image = new URL($('img.leftLogo').prop('src'), currentUrl).href;
+    const image = new URL($('img.leftLogo').prop('src')!, currentUrl).href;
 
     return {
         title,
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: '中华人民共和国农业农村部',
-        language,
+        language: language as Language,
     };
 };
 

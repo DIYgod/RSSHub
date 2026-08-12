@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -47,7 +47,7 @@ async function handler(ctx) {
                       }
                     : null;
             })
-            .filter(Boolean),
+            .filter(Boolean) as DataItem[],
         allowEmpty: true,
     };
 }

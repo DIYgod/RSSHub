@@ -222,12 +222,12 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.contents().first().text(),
-                link: new URL(item.prop('href'), currentUrl).href,
-                pubDate: parseDate(item.parent().find('span').text()),
+                title: $item.contents().first().text(),
+                link: new URL($item.prop('href')!, currentUrl).href,
+                pubDate: parseDate($item.parent().find('span').text()),
             };
         });
 

@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
+            cache.tryGet(info.link!, async () => {
                 const response = await got(info.link);
                 const $ = load(response.data);
                 const newsbody = $('div.newsbody').html();

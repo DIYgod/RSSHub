@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,11 +43,11 @@ async function handler() {
     const icon = new URL('/images/sfbgw_favicon.ico', rootUrl).href;
     const indexes = $('ul.newsMsgList_zzy li')
         .toArray()
-        .map((li) => {
+        .map((li): DataItem => {
             const a = $(li).find('a');
             const pubDate = $(li).find('div.rightData').text();
             const href = a.prop('href');
-            const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
+            const link = href!.startsWith('http') ? href : new URL(href!, currentUrl).href;
             return {
                 title: a.text(),
                 link,

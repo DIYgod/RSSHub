@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -46,7 +46,7 @@ async function handler(ctx) {
         .map((c) => c.split(';', 1)[0])
         .join('; ');
 
-    await ofetch(authorizeResponse.headers.get('location'), {
+    await ofetch(authorizeResponse.headers.get('location')!, {
         headers: {
             cookie: authorizeCookie,
         },
@@ -71,10 +71,10 @@ async function handler(ctx) {
     const issue = $2('h2.app-journal-latest-issue__heading').text();
     const list = $2('ol.u-list-reset > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { doi: string; issue: string; img?: string; authors: string; abstract?: string } => {
             const title = $(item).find('h3.app-card-open__heading').find('a').text().trim();
             const link = $(item).find('h3.app-card-open__heading').find('a').attr('href');
-            const doi = link.replace('https://link.springer.com/article/', '');
+            const doi = link!.replace('https://link.springer.com/article/', '');
             const img = $(item).find('img').attr('src');
             const authors = $(item)
                 .find('li')
@@ -83,7 +83,7 @@ async function handler(ctx) {
                 .join('; ');
             return {
                 title,
-                link: link.startsWith('http') ? link : `${host}${link}`,
+                link: link!.startsWith('http') ? link : `${host}${link}`,
                 doi,
                 issue,
                 img,
@@ -129,8 +129,8 @@ async function handler(ctx) {
         );
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response3 = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const response3 = await ofetch(item.link!, {
                     headers: {
                         cookie: authorizeCookie,
                     },

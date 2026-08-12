@@ -68,12 +68,11 @@ async function handler(ctx) {
                 imgHtml.removeAttr('zoomfile');
                 imgHtml.removeAttr('file');
                 imgHtml.removeAttr('onmouseover');
-                imgHtml.removeAttr('onclick');
             }
             contentHtml.find('div.aimg_tip').remove();
             return {
                 title: `${title} #${floor}`,
-                link: new URL(floorUrl, `${host}/2b/`).href,
+                link: new URL(floorUrl!, `${host}/2b/`).href,
                 description: contentHtml.html(),
                 author: each.find('.authi .xw1').text(),
                 pubDate: timezone(parseDate(each.find('.authi em').text()), 8),

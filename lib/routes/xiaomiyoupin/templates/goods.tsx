@@ -26,7 +26,7 @@ const GoodsFigure = (goods: Goods) => {
             {goods.videos_url ? (
                 <video
                     controls
-                    playsinline="true"
+                    playsinline
                     webkit-playsinline="true"
                     x5-playsinline="true"
                     x5-video-player-type="h5"

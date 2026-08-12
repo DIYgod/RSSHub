@@ -23,7 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('div.contRight ul.list li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('a');
 
@@ -51,11 +51,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.newshead h2, div.title h3').text();
-                    const description: string = $$('div.news div.content').html() ?? '';
+                    const description = $$('div.news div.content').html();
 
                     const metaStr: string = $$('div.newshead p span, div.title p span').text();
                     const pubDateStr: string | undefined = metaStr?.match(/(\d{4}-\d{2}-\d{2})/)?.[1];

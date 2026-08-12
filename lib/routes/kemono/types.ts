@@ -7,6 +7,7 @@ interface KemonoPost {
     user: string;
     file?: any;
     attachments?: any[];
+    embed?: any;
 }
 
 interface KemonoFile {
@@ -19,6 +20,7 @@ interface DiscordMessage {
     id: string;
     content: string;
     published: string;
+    embeds?: any[];
     author: {
         username: string;
         discriminator: string;

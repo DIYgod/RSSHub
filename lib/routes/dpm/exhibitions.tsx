@@ -76,7 +76,7 @@ export const route: Route = {
             const title = $item.find('a.aa').attr('title') || '';
 
             // Filter out 结束 or 暂闭 status exhibition
-            const status = $item.find('.label').text().trim();
+            const status = $item.find('.label').text();
             if (status.includes('结束') || status.includes('暂闭')) {
                 return null;
             }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -36,7 +36,7 @@ export const handler = async (ctx) => {
             link: new URL(`prod-api/portal/article/${item.articleId}`, rootUrl).href,
             guid,
             id: guid,
-            language,
+            language: language as Language,
         };
     });
 
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('header img').last().prop('src'), rootUrl).href;
+    const image = new URL($('header img').last().prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text()}${$('div.tit').text() ? ` - ${$('div.tit').text()}` : ''}`,
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('header h1').text(),
-        language,
+        language: language as Language,
     };
 };
 
@@ -114,9 +114,9 @@ export const route: Route = {
         {
             source: ['www.jgjcndrc.org.cn/list'],
             target: (_, url) => {
-                url = new URL(url);
-                const columnId = url.searchParams.get('clmId');
-                const subColumnId = url.searchParams.get('sclmId');
+                const { searchParams } = new URL(url);
+                const columnId = searchParams.get('clmId');
+                const subColumnId = searchParams.get('sclmId');
 
                 return `/jgjcndrc${columnId ? `/${columnId}${subColumnId ? `/${subColumnId}` : ''}` : ''}`;
             },

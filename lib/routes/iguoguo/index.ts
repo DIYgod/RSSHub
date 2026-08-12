@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -84,7 +84,7 @@ async function handler(ctx: Context) {
             media: cover && {
                 content: {
                     url: cover,
-                    type: `image/${mime[cover.split('.').pop()]}`,
+                    type: `image/${mime[cover.split('.').pop()!]}`,
                 },
             },
         };
@@ -93,7 +93,7 @@ async function handler(ctx: Context) {
         title: '爱果果',
         link: currentUrl,
         description: '爱果果iguoguo是一个优秀酷站、h5、UI素材资源的发布分享平台，是设计师的灵感聚合地和素材下载源。',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

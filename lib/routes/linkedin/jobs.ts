@@ -100,7 +100,7 @@ async function handler(ctx) {
     const expLevelsParam = parseParamsToSearchParams(ctx.req.param('exp_levels'), EXP_LEVELS);
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
 
-    let url = new URL(JOB_SEARCH_PATH, BASE_URL);
+    const url = new URL(JOB_SEARCH_PATH, BASE_URL);
 
     // keep for backward compatibility
     url.searchParams.append(KEYWORDS_QUERY_KEY, ctx.req.param('keywords') || '');
@@ -113,10 +113,10 @@ async function handler(ctx) {
             url.searchParams.append(key, value);
         }
     }
-    url = url.toString();
+    const searchUrl = url.href;
 
     // Parse job search page
-    const response = await ofetch(url);
+    const response = await ofetch(searchUrl);
     const jobs = parseJobSearch(response);
 
     const jobTypes = parseParamsToString(ctx.req.param('job_types'), JOB_TYPES);
@@ -125,7 +125,7 @@ async function handler(ctx) {
 
     return {
         title: feedTitle,
-        link: url,
+        link: searchUrl,
         description: 'This feed gets LinkedIn job posts',
         item: jobs.map((job) => {
             const title = `${job.company} is hiring ${job.title}`;
@@ -134,7 +134,7 @@ async function handler(ctx) {
             return {
                 title, // item title
                 description, // job description
-                pubDate: parseDate(job.pubDate), // data publish date
+                pubDate: job.pubDate ? parseDate(job.pubDate) : undefined, // data publish date
                 link: job.link, // job source link
             };
         }),

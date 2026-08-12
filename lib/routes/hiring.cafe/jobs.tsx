@@ -137,7 +137,7 @@ const transformJobItem = (item: JobResult) => {
 
 async function handler(ctx: Context) {
     const searchParams = validateSearchParams({
-        keywords: ctx.req.param('keywords'),
+        keywords: ctx.req.param('keywords')!,
     });
 
     const response = await fetchJobs(searchParams);

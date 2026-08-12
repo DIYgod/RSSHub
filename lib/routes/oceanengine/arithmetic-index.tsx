@@ -3,10 +3,11 @@ import { createDecipheriv } from 'node:crypto';
 import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { routePath } from 'hono/route';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -75,7 +76,6 @@ const searchLinkNames = ['今日热榜', '百度', '谷歌', '知乎', '微博',
 const createContent = (keyword, queryList, queryListText) =>
     renderToString(
         <OceanengineContent
-            keyword={keyword}
             queryListText={queryListText}
             queries={queryList.map((query) => ({
                 links: searchLinkUrls(encodeURIComponent(query)).map((url, index) => `<a href="${url}" rel="noopener noreferrer" target="_blank">${searchLinkNames[index]}</a>`),
@@ -85,13 +85,23 @@ const createContent = (keyword, queryList, queryListText) =>
     );
 
 export const route: Route = {
-    path: '/index/:keyword/:channel?',
-    name: 'Unknown',
+    path: '/index/:keyword',
+    categories: ['other'],
+    example: '/oceanengine/index/教材',
+    parameters: {
+        keyword: '热点关键词',
+    },
+    description: '爬取巨量算数近 6 个月的抖音指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。',
+    features: {
+        requirePuppeteer: true,
+        antiCrawler: true,
+    },
+    name: '抖音指数波峰',
     maintainers: ['Jkker'],
     handler,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const now = dayjs();
     const start_date = now.subtract(DEFAULT_FETCH_DURATION_MONTH, 'month').format('YYYYMMDD');
     const end_date = now.format('YYYYMMDD');
@@ -99,12 +109,10 @@ async function handler(ctx) {
     if (!keyword) {
         throw new InvalidParameterError('Invalid keyword');
     }
-    if (ctx.req.param('channel') && !['douyin', 'toutiao'].includes(ctx.req.param('channel'))) {
-        throw new InvalidParameterError('Invalid channel。 Only support `douyin` or `toutiao`');
-    }
+    const isToutiao = routePath(ctx) === '/oceanengine/index/:keyword/toutiao';
 
-    const channel = ctx.req.param('channel') === 'toutiao' ? 'toutiao' : 'aweme'; // default channel is `douyin`
-    const channelName = ctx.req.param('channel') === 'toutiao' ? '头条' : '抖音';
+    const channel = isToutiao ? 'toutiao' : 'aweme';
+    const channelName = isToutiao ? '头条' : '抖音';
 
     const link = `https://trendinsight.oceanengine.com/arithmetic-index/analysis?keyword=${keyword}&appName=${channel}`;
 
@@ -154,7 +162,7 @@ async function handler(ctx) {
         title: `${keyword} - ${channelName}指数波峰`,
         link,
         description: `巨量算数 - ${channelName}算数指数 | 关键词: ${keyword}`,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item,
     };
 }

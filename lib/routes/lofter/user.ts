@@ -40,7 +40,7 @@ async function handler(ctx) {
             blogdomain: rootUrl,
             checkpwd: '1',
             following: '0',
-            limit,
+            limit: String(limit),
             method: 'getPostLists',
             needgetpoststat: '1',
             offset: '0',

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -59,13 +59,9 @@ async function handler(ctx) {
             subtitle = '学部新闻';
             path = 'xwzx/xyxw.htm';
     }
-    let response = null;
+    let response: any = null;
     try {
-        response = await got(cic_base_url + path, {
-            headers: {
-                Referer: cic_base_url,
-            },
-        });
+        response = await got(cic_base_url + path);
     } catch {
         // ignore error handler
         // console.log(e);
@@ -88,7 +84,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.wenzi_list_ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $('a', item).attr('href');
             const type = pageType(href);
             return {
@@ -103,7 +99,7 @@ async function handler(ctx) {
             switch (item.type) {
                 case 'tju-cic':
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         try {
                             const detailResponse = await got(item.link);
                             const content = load(detailResponse.data);

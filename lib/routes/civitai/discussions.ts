@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -66,7 +66,7 @@ async function handler(ctx) {
                   }
                 : null
         )
-        .filter(Boolean);
+        .filter(Boolean) as DataItem[];
 
     return {
         title: `Civitai model ${params.modelId} discussions`,

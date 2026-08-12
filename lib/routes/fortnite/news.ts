@@ -79,13 +79,15 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, () => ({
-                title: item.title,
-                link: `${rootUrl}/${path}/${item.slug}?lang=${language}`,
-                pubDate: parseDate(item.date),
-                author: item.author,
-                description: item.content, // includes <img /> & full text
-            }))
+            cache.tryGet(item.link, () =>
+                Promise.resolve({
+                    title: item.title,
+                    link: `${rootUrl}/${path}/${item.slug}?lang=${language}`,
+                    pubDate: parseDate(item.date),
+                    author: item.author,
+                    description: item.content, // includes <img /> & full text
+                })
+            )
         )
     );
 

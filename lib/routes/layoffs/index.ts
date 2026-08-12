@@ -43,6 +43,8 @@ const getMappings = function (obj) {
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/layoffs',
     radar: [
         {
             source: ['layoffs.fyi/'],
@@ -97,7 +99,7 @@ async function handler() {
             AIRTABLE_HOST +
             $('script')
                 .text()
-                .match(/urlWithParams: "(.*?)"/)[1]
+                .match(/urlWithParams: "(.*?)"/)![1]
                 .replaceAll(String.raw`\u002F`, '/');
 
         // Cache it again

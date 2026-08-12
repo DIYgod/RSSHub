@@ -138,6 +138,7 @@ async function handler(ctx) {
         };
     } catch (error) {
         logger.error(error);
+        return null;
     }
 }
 

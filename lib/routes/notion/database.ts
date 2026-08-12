@@ -71,7 +71,7 @@ async function handler(ctx) {
 
     try {
         // Query database basic info
-        const database = await notion.databases.retrieve({ database_id: databaseId });
+        const database = (await notion.databases.retrieve({ database_id: databaseId })) as any;
         const title = database.title[0]?.plain_text;
         const description = database.description[0]?.plain_text;
         const link = database.url;
@@ -79,7 +79,7 @@ async function handler(ctx) {
 
         // List pages under the database
         const databaseQuery = parseCustomQuery(ctx.req.query('query'));
-        const { results } = await notion.databases.query({
+        const { results } = await (notion.databases as any).query({
             database_id: databaseId,
             ...databaseQuery,
         });
@@ -92,10 +92,10 @@ async function handler(ctx) {
 
         // Query page content
         const n2m = new NotionToMarkdown({ notionClient: notion });
-        const pageList = results.filter((item) => Object.values(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
+        const pageList = results.filter((item) => Object.values<any>(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
         const items = await Promise.all(
             pageList.map(async (page) => {
-                const titleProperty = Object.values(page.properties).find((property) => property.id === 'title');
+                const titleProperty = Object.values<any>(page.properties).find((property) => property.id === 'title');
                 const pageTitle = titleProperty.title[0].plain_text;
                 const pageLink = page.url;
                 const pageLastEditedTime = page.last_edited_time;
@@ -164,16 +164,18 @@ async function handler(ctx) {
         logger.error(error);
 
         if (isNotionClientError(error)) {
-            if (error.statusCode === APIErrorCode.ObjectNotFound) {
+            const { statusCode } = error as any;
+            if (statusCode === APIErrorCode.ObjectNotFound) {
                 throw new InvalidParameterError('The database is not exist');
             }
-            if (error.statusCode === APIErrorCode.Unauthorized) {
+            if (statusCode === APIErrorCode.Unauthorized) {
                 throw new ConfigNotFoundError('Please check the config of NOTION_TOKEN');
             }
-            ctx.throw(error.statusCode, 'Notion API Error');
+            ctx.throw(statusCode, 'Notion API Error');
         } else {
             ctx.throw(error);
         }
+        return null;
     }
 }
 

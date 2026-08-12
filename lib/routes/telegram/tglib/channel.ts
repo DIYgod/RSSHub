@@ -1,9 +1,9 @@
 /* eslint-disable no-await-in-loop */
 import type { Context } from 'hono';
-import { Api } from 'telegram';
-import { HTMLParser } from 'telegram/extensions/html.js';
-import { returnBigInt } from 'telegram/Helpers.js';
-import { getDisplayName } from 'telegram/Utils.js';
+import { Api } from 'teleproto';
+import { HTMLParser } from 'teleproto/extensions/html.js';
+import { returnBigInt } from 'teleproto/Helpers.js';
+import { getDisplayName } from 'teleproto/Utils.js';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -22,10 +22,11 @@ export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     }
     const txt = `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
         <div><ul>${m.poll.answers
+            .filter((a) => a instanceof Api.PollAnswer)
             .map((a) => {
                 let answerTxt = a.text.text;
                 const result = results.results?.find((r) => r.option.buffer === a.option.buffer);
-                if (result && results.totalVoters) {
+                if (result?.voters !== undefined && results.totalVoters) {
                     answerTxt = `<strong>${Math.round((result.voters / results.totalVoters) * 100)}%</strong>: ${answerTxt}`;
                 }
                 return `<li>${answerTxt}</li>`;
@@ -141,7 +142,7 @@ export default async function handler(ctx: Context) {
 
     let peerCache = await cache.get(`telegram:inputEntity:${username}`);
     if (!peerCache) {
-        const p = await client.getInputEntity(username);
+        const p = await client.getInputEntity(username!);
         peerCache = JSON.stringify(p.toJSON());
         await cache.set(`telegram:inputEntity:${username}`, peerCache);
     }
@@ -175,7 +176,7 @@ export default async function handler(ctx: Context) {
             }
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username, message.id);
+            const src = getMessageMediaUrl(ctx.req.url, username!, message.id);
             attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
@@ -208,7 +209,6 @@ export default async function handler(ctx: Context) {
 
     return {
         title: getDisplayName(entity),
-        language: null,
         link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',

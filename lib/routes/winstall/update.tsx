@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -72,7 +72,7 @@ async function handler(ctx) {
         description: app.desc,
         link: `${baseUrl}/apps/${appId}`,
         image: `https://api.winstall.app/icons/next/${appId}.webp`,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

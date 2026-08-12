@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
@@ -67,11 +67,17 @@ async function handler(ctx) {
     const results = await Promise.all(
         filteredItemsByCategory.map((item) =>
             cache.tryGet(`18comic:search:${item.id}`, async () => {
-                const result = { title: item.name, link: `${rootUrl}/album/${item.id}`, guid: `18comic:/album/${item.id}`, updated: parseDate(item.update_at) };
+                const result: DataItem = {
+                    title: item.name,
+                    link: `${rootUrl}/album/${item.id}`,
+                    guid: `18comic:/album/${item.id}`,
+                    updated: parseDate(item.update_at),
+                };
                 const apiUrl = `${getApiUrl()}/album?id=${item.id}`;
                 const apiResult = await processApiItems(apiUrl);
                 result.pubDate = new Date(apiResult.addtime * 1000);
-                result.category = apiResult.tags.map((tag) => tag);
+                const tags = apiResult.tags.map((tag) => tag);
+                result.category = tags;
                 result.author = apiResult.author.map((a) => a).join(', ');
                 result.description = renderDescription({
                     introduction: apiResult.description,
@@ -83,7 +89,7 @@ async function handler(ctx) {
                         // `https://cdn-msp3.${domain}/media/photos/${item.id}/00003.webp`,
                     ],
                     cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
-                    category: result.category,
+                    category: tags,
                 });
                 return result;
             })

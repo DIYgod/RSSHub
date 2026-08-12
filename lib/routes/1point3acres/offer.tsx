@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '录取结果',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'offer.1point3acres.com/',
     description: `::: tip 三个 id 获取方式

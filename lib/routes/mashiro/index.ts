@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,13 +29,13 @@ export const route: Route = {
         const links = $('.archives-group article')
             .toArray()
             .slice(0, 10)
-            .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
+            .map((item): DataItem => {
+                const $item = $(item);
+                const a = $item.find('a').first();
 
                 const title = a.find('.article-title').text();
                 const link = `${baseUrl}${a.attr('href')}`;
-                const pubDate = parseDate(a.find('time').attr('datetime'));
+                const pubDate = parseDate(a.find('time').attr('datetime')!);
 
                 return {
                     title,
@@ -46,10 +46,10 @@ export const route: Route = {
 
         const items = await Promise.all(
             links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
-                    item.description = $('.article-content').first().html();
+                    item.description = $('.article-content').html();
                     return item;
                 })
             )

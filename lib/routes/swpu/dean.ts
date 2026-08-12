@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -85,7 +85,7 @@ async function handler(ctx): Promise<Data> {
         title: `西南石油大学教务处 ${title}`,
         link: url,
         description: `西南石油大学教务处 ${title}`,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: out,
     };
 }

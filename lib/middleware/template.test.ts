@@ -1,3 +1,4 @@
+import type { Context } from 'hono';
 import { describe, expect, it, vi } from 'vitest';
 
 import { config } from '@/config';
@@ -19,16 +20,16 @@ const createCtx = (query: Record<string, string | undefined>, data: any, extra: 
         redirect: vi.fn((url: string, status: number) => ({ url, status })),
         header: vi.fn(),
         res: { headers: new Headers() },
-    };
+    } as unknown as Context & { json: ReturnType<typeof vi.fn>; html: ReturnType<typeof vi.fn>; render: ReturnType<typeof vi.fn>; body: ReturnType<typeof vi.fn>; redirect: ReturnType<typeof vi.fn>; header: ReturnType<typeof vi.fn> };
 };
 
 describe('template middleware', () => {
     it('returns debug json when requested', async () => {
         const originalDebug = config.debugInfo;
-        config.debugInfo = true;
+        config.debugInfo = 'true';
 
         const ctx = createCtx({ format: 'debug.json' }, { item: [] }, { json: { ok: true } });
-        const result = await template(ctx as any, async () => {});
+        const result = await template(ctx, async () => {});
 
         expect(result).toEqual({ ok: true });
         expect(ctx.json).toHaveBeenCalled();
@@ -38,7 +39,7 @@ describe('template middleware', () => {
 
     it('returns api data without rendering', async () => {
         const ctx = createCtx({}, null, { apiData: { ok: true } });
-        const result = await template(ctx as any, async () => {});
+        const result = await template(ctx, async () => {});
 
         expect(result).toEqual({ ok: true });
         expect(ctx.json).toHaveBeenCalledWith({ ok: true });
@@ -46,10 +47,10 @@ describe('template middleware', () => {
 
     it('renders debug html snippet when requested', async () => {
         const originalDebug = config.debugInfo;
-        config.debugInfo = true;
+        config.debugInfo = 'true';
 
         const ctx = createCtx({ format: '0.debug.html' }, { item: [{ description: 'Hello' }] });
-        const result = await template(ctx as any, async () => {});
+        const result = await template(ctx, async () => {});
 
         expect(result).toBe('Hello');
         expect(ctx.html).toHaveBeenCalled();
@@ -72,7 +73,7 @@ describe('template middleware', () => {
             ],
         };
         const ctx = createCtx({ format: 'rss' }, data);
-        await template(ctx as any, async () => {});
+        await template(ctx, async () => {});
 
         expect(data.item[0].title).toBe('ABC...');
         expect(data.item[0].author).toBe('Alice, Bob');
@@ -93,7 +94,7 @@ describe('template middleware', () => {
             ],
         };
         const ctx = createCtx({ format: 'json' }, data);
-        await template(ctx as any, async () => {});
+        await template(ctx, async () => {});
 
         expect(data.item[0].pubDate).toBe('');
         expect(data.item[0].updated).toBe('');
@@ -101,7 +102,7 @@ describe('template middleware', () => {
 
     it('returns redirect response when redirect is set', async () => {
         const ctx = createCtx({}, { item: [] }, { redirect: 'https://example.com' });
-        const result = await template(ctx as any, async () => {});
+        const result = await template(ctx, async () => {});
 
         expect(result).toEqual({ url: 'https://example.com', status: 301 });
         expect(ctx.redirect).toHaveBeenCalledWith('https://example.com', 301);
@@ -118,7 +119,7 @@ describe('template middleware', () => {
             ],
         };
         const ctx = createCtx({ format: 'rss3' }, data);
-        const result = await template(ctx as any, async () => {});
+        const result = await template(ctx, async () => {});
 
         expect(ctx.json).toHaveBeenCalled();
         expect(result).toHaveProperty('data');
@@ -135,7 +136,7 @@ describe('template middleware', () => {
             ],
         };
         const ctx = createCtx({ format: 'atom' }, data);
-        await template(ctx as any, async () => {});
+        await template(ctx, async () => {});
 
         expect(ctx.render).toHaveBeenCalled();
     });

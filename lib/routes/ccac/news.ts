@@ -45,7 +45,7 @@ async function handler(ctx) {
     await page.goto(BASE, {
         waitUntil: 'domcontentloaded',
     });
-    const articles = await page.evaluate(() => window.articles);
+    const articles = await page.evaluate(() => (window as any).articles);
     await context.close();
 
     const list = utils

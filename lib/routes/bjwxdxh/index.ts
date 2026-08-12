@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,18 +40,18 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div#newsquery > ul > li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('div.title > a').text(),
-                link: new URL(item.find('div.title > a').attr('href'), baseUrl).href,
+                title: $item.find('div.title > a').text(),
+                link: new URL($item.find('div.title > a').attr('href')!, baseUrl).href,
                 // pubDate: parseDate(item.find('div.time').text(), 'YYYY-MM-DD'),
             };
         });
 
     await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
@@ -60,9 +60,9 @@ async function handler(ctx) {
                 const info = content('div.info')
                     .text()
                     .match(/作者：(\S*)\s+发布于：(\S*\s+.*?)\s/);
-                item.author = info[1];
-                item.pubDate = timezone(parseDate(info[2], 'YYYY-MM-DD HH:mm:ss'), 8);
-                item.description = content('div#con').html().trim().replaceAll('\n', '');
+                item.author = info![1];
+                item.pubDate = timezone(parseDate(info![2], 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.description = content('div#con').html()!.replaceAll('\n', '');
                 return item;
             })
         )

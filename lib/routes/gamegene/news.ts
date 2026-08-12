@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,13 +38,13 @@ async function handler() {
     const $ = load(response);
     const list = $('div.mr245')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const aEle = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const aEle = $item.find('a').first();
             const href = aEle.attr('href');
             const title = aEle.find('h3').first().text();
-            const author = item.find('a.namenode').text();
-            const category = item.find('span.r').text();
+            const author = $item.find('a.namenode').text();
+            const category = $item.find('span.r').text();
             return {
                 title,
                 link: href,
@@ -54,7 +54,7 @@ async function handler() {
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got({
                     method: 'get',
                     url: item.link,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -84,6 +84,6 @@ async function handler(ctx) {
         title: '五大唱片 - 新货上架',
         link: url,
         item: items,
-        language: 'zh-tw',
+        language: 'zh-TW' as Language,
     };
 }

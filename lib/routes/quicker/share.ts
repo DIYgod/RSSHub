@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -52,18 +52,18 @@ async function handler(ctx) {
     let items = $('table tbody tr')
         .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item).find('td a').first();
+        .map((item): DataItem => {
+            const $item = $(item).find('td a').first();
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -74,7 +74,7 @@ async function handler(ctx) {
                 content('section').last().remove();
                 content('#app').children().slice(0, 2).remove();
 
-                const pubDate = content('.text-secondary a').not('.text-secondary').first().text()?.trim().replaceAll(/\s*/g, '') || content('div.note-text').find('span').eq(3).text();
+                const pubDate = content('.text-secondary a').not('.text-secondary').first().text()?.replaceAll(/\s*/g, '') || content('div.note-text').find('span').eq(3).text();
 
                 item.author = content('.user-link').first().text();
                 item.description = content('div[data-info="动作信息"]').html() ?? content('#app').html() ?? content('.row').eq(1).html();

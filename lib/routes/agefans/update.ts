@@ -39,20 +39,20 @@ async function handler() {
 
     const list = $('.video_item')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const link = item.find('a').attr('href').replace('http://', 'https://');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const link = $item.find('a').attr('href')!.replace('http://', 'https://');
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
-                guid: `${link}#${item.find('.video_item--info').text()}`,
+                guid: `${link}#${$item.find('.video_item--info').text()}`,
             };
         });
 
     const items: DataItem[] = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

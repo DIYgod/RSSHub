@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '频道、专栏、用户',
-    maintainers: [],
+    maintainers: ['bigfei'],
     handler,
     description: `| type    | 说明 |
 | ------- | ---- |

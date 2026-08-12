@@ -29,39 +29,39 @@ const cleanUpHTML = (data) => {
     $('div.neirong-shouquan').remove();
     $('em.vote__bar, div.vote__btn, div.vote__time').remove();
     $('p img').each((_, e) => {
-        e = $(e);
-        if ((e.prop('src') ?? e.prop('_src')) !== undefined) {
-            e.parent().replaceWith(
+        const $e = $(e);
+        if (($e.prop('src') ?? $e.prop('_src')) !== undefined) {
+            $e.parent().replaceWith(
                 renderDescription({
                     image: {
-                        src: (e.prop('src') ?? e.prop('_src')).split(/\?/, 1)[0],
-                        width: e.prop('data-w'),
-                        height: e.prop('data-h'),
+                        src: ($e.prop('src') ?? $e.prop('_src')).split(/\?/, 1)[0],
+                        width: $e.prop('data-w'),
+                        height: $e.prop('data-h'),
                     },
                 })
             );
         }
     });
     $('p, span').each((_, e) => {
-        e = $(e);
-        if (e.contents().length === 1 && /^\s*$/.test(e.text())) {
-            e.remove();
+        const $e = $(e);
+        if ($e.contents().length === 1 && /^\s*$/.test($e.text())) {
+            $e.remove();
         } else {
-            e.removeClass();
-            e.removeAttr('data-check-id label class');
+            $e.removeClass();
+            $e.removeAttr('data-check-id label class');
         }
     });
     $('.text-big-title').each((_, e) => {
         e.tagName = 'h3';
-        e = $(e);
-        e.removeClass();
-        e.removeAttr('class');
+        const $e = $(e);
+        $e.removeClass();
+        $e.removeAttr('class');
     });
     $('.text-sm-title').each((_, e) => {
         e.tagName = 'h4';
-        e = $(e);
-        e.removeClass();
-        e.removeAttr('class');
+        const $e = $(e);
+        $e.removeClass();
+        $e.removeAttr('class');
     });
 
     return $.html();

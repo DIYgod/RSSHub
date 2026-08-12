@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,18 +45,18 @@ async function handler() {
 
     const list = $('ul li a b')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.parent().attr('href'),
+                title: $item.text(),
+                link: $item.parent().attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     headers: {
                         cookie,
@@ -67,7 +67,7 @@ async function handler() {
                 content('h1, .intro').remove();
 
                 item.description = content('.news').html();
-                item.pubDate = timezone(parseDate(content('meta[property="og:release_date"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate(content('meta[property="og:release_date"]').attr('content')!), 8);
 
                 return item;
             })

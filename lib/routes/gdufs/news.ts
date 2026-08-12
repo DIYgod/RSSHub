@@ -53,7 +53,7 @@ async function handler() {
                 try {
                     const articleRes = await got(fullLink);
                     const $$ = load(articleRes.body);
-                    const description = $$('.v_news_content').html()?.trim() || '';
+                    const description = $$('.v_news_content').html()?.trim();
 
                     let author = '';
                     const authorSpans = $$('.nav01 h6 .ll span');

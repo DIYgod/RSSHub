@@ -37,7 +37,7 @@ async function handler(ctx) {
     const title = $('head title').text();
 
     const injectionScript = $('head script:contains("window._feInjection")').text();
-    const jsonRaw = injectionScript.match(/window\._feInjection = JSON\.parse\(decodeURIComponent\("(.*?)"\)\);/)[1];
+    const jsonRaw = injectionScript.match(/window\._feInjection = JSON\.parse\(decodeURIComponent\("(.*?)"\)\);/)![1];
     const jsonDecode = JSON.parse(decodeURIComponent(jsonRaw));
 
     const mdRaw = jsonDecode.currentData.post.content;

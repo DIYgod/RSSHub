@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,13 +8,15 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/guanhai',
     radar: [
         {
             source: ['guanhai.com.cn/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '首页',
     maintainers: ['TonyRL'],
     handler,
     url: 'guanhai.com.cn/',
@@ -26,31 +28,31 @@ async function handler() {
 
     const recommand = $('.img-box ul > a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: item.attr('href'),
+                title: $item.attr('title')!,
+                link: $item.attr('href'),
             };
         });
 
     const list = [
         ...$('.pic-summary .title')
             .toArray()
-            .map((item) => {
-                item = $(item);
+            .map((item): DataItem => {
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    link: item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                    title: $item.find('a').attr('title')!,
+                    link: $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8),
                 };
             }),
         ...recommand,
-    ].filter((item) => item.link.startsWith('http'));
+    ].filter((item) => item.link!.startsWith('http'));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.author = $('.source').text();

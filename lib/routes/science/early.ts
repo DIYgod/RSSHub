@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import playwright from '@/utils/playwright';
 
@@ -55,7 +55,7 @@ async function handler(ctx) {
         description: $('.body02').text().trim(),
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageUrl,
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

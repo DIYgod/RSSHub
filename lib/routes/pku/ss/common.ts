@@ -13,12 +13,12 @@ const getSingleRecord = async (url) => {
     const list = $('#info-list-ul').find('li');
 
     return list.toArray().map((item) => {
-        item = $(item);
-        const date = item.find('.time').text();
+        const $item = $(item);
+        const date = $item.find('.time').text();
         return {
-            title: item.find('a').attr('title'),
+            title: $item.find('a').attr('title'),
             pubDate: parseDate(date),
-            link: baseUrl + item.find('a').attr('href'),
+            link: baseUrl + $item.find('a').attr('href'),
         };
     });
 };

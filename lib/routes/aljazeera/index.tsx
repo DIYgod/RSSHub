@@ -35,14 +35,45 @@ const renderDescription = (image, description) =>
     );
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
+    path: '/:language?/:category{.+}?',
+    categories: ['traditional-media'],
+    example: '/aljazeera/english/news',
+    parameters: {
+        language: 'Language, see below, arabic by default, as Arabic',
+        category: 'Category, can be found in URL, homepage by default',
+    },
+    description: `Language
+
+| Arabic | Chinese | English |
+| ------ | ------- | ------- |
+| arabic | chinese | english |
+
+::: tip
+If you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is \`english\` and whose path is \`economy\`, you can get the route as [\`/aljazeera/english/economy\`](https://rsshub.app/aljazeera/english/economy)
+
+If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.net/news/political) with language \`chinese\` and path \`news/political\`, you can get the route as [\`/aljazeera/chinese/news/political\`](https://rsshub.app/aljazeera/chinese/news/political)
+:::`,
+    radar: [
+        {
+            source: ['www.aljazeera.com/:category', 'www.aljazeera.com/'],
+            target: '/english/:category',
+        },
+        {
+            source: ['www.aljazeera.net/:category', 'www.aljazeera.net/'],
+            target: '/arabic/:category',
+        },
+        {
+            source: ['chinese.aljazeera.net/:category', 'chinese.aljazeera.net/'],
+            target: '/chinese/:category',
+        },
+    ],
+    name: 'News',
     maintainers: ['nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
-    const params = getSubPath(ctx) === '/' ? ['arabic'] : getSubPath(ctx).replace(/^\//, '').split('/');
+export async function handler(ctx) {
+    const params = getSubPath(ctx).split('/').filter(Boolean);
 
     if (!Object.hasOwn(languages, params[0])) {
         params.unshift('arabic');
@@ -64,10 +95,10 @@ async function handler(ctx) {
         : $('.u-clickable-card__link')
               .toArray()
               .map((item) => {
-                  item = $(item);
+                  const $item = $(item);
 
                   return {
-                      link: `${rootUrl}${item.attr('href')}`,
+                      link: `${rootUrl}${$item.attr('href')}`,
                   };
               });
 

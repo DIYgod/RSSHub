@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,7 +51,7 @@ async function handler(ctx) {
     const list = $(categoryMap[category].selector)
         .find('a')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).text(),
             link: baseUrl + $(item).attr('href'),
         }));
@@ -83,7 +84,7 @@ async function handler(ctx) {
                             return $('#view').html();
                         })
                     );
-                    content.append(pages);
+                    content.append(pages as unknown as string);
                 }
 
                 // remove unwanted elements
@@ -96,7 +97,7 @@ async function handler(ctx) {
                 // Taken from /caixin/blog.js
                 content
                     .find('#view > p')
-                    .filter((_, e) => e.children[0]?.data === String.fromCodePoint(160))
+                    .filter((_, e) => (e.children[0] as Text | undefined)?.data === String.fromCodePoint(160))
                     .remove();
 
                 // fix lazyload image
@@ -123,7 +124,7 @@ async function handler(ctx) {
         title: `電腦領域 HKEPC${categoryMap[category].feedSuffix}`,
         link: `https://www.hkepc.com/${category}`,
         description: '電腦領域 HKEPC Hardware - 全港 No.1 PC網站',
-        language: 'zh-hk',
+        language: 'zh-HK' as Language,
         item: items,
     };
 }

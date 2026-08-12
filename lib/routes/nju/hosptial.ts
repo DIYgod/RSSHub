@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -39,8 +40,8 @@ async function handler() {
 
             const data = response.data;
             const $ = load(data);
-            let script = $('div .wrapper').find('script');
-            script = script['1'].children[0].data;
+            const scripts = $('div .wrapper').find('script');
+            const script = (scripts['1'].children[0] as Text).data;
 
             const start = script.indexOf('[');
             const end = script.lastIndexOf(']');

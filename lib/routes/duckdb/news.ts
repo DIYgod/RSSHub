@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,13 +33,13 @@ async function handler() {
         // 使用“toArray()”方法将选择的所有 DOM 元素以数组的形式返回。
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('h3').text().trim(),
-                link: `https://duckdb.org${item.find('a.blocklink').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.date').text(), 'YYYY-MM-DD'), 0),
-                author: item.find('.author').text().trim(),
+                title: $item.find('h3').text().trim(),
+                link: `https://duckdb.org${$item.find('a.blocklink').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.date').text(), 'YYYY-MM-DD'), 0),
+                author: $item.find('.author').text().trim(),
             };
         });
 

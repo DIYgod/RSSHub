@@ -42,16 +42,16 @@ async function handler(ctx) {
     const { data: response } = await got.get(jrnlUrl);
     const $ = load(response);
     const jrnlName = $('meta[property="og:title"]')
-        .attr('content')
-        .match(/(?:[^=]*=)?\s*([^>]+)/)[1];
+        .attr('content')!
+        .match(/(?:[^=]*=)?\s*([^>]+)/)![1];
     const publication = $('.al-article-item-wrap.al-normal');
 
     const list = publication.toArray().map((item) => {
         const title = $(item).find('.item-title a:first').text();
         const link = $(item).find('.item-title a:first').attr('href');
         const doilink = $(item).find('.citation-label a').attr('href');
-        const doi = doilink && doilink.match(/10\.\d+\/\S+/)[0];
-        const id = $(item).find('h5[data-resource-id-access]').data('resource-id-access');
+        const doi = doilink && doilink.match(/10\.\d+\/\S+/)![0];
+        const id = $(item).find('h5[data-resource-id-access]').data('resource-id-access') as string;
         const authors = $(item)
             .find('.al-authors-list')
             .find('a')

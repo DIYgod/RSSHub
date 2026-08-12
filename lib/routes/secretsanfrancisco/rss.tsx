@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'Category',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 

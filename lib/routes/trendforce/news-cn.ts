@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,14 +29,14 @@ async function handler() {
 
     const list = $('.list-items .list-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('h3 a.title-link');
             return {
-                title: a.find('strong').text().trim(),
+                title: a.find('strong').text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 description: $item.find('p').text()?.trim(),
-                pubDate: parseDate($item.find('h4').text().trim()),
+                pubDate: parseDate($item.find('h4').text()),
             };
         });
 
@@ -54,8 +54,8 @@ async function handler() {
                     .parent()
                     .find('a')
                     .toArray()
-                    .map((a) => $(a).text().trim());
-                item.author = tagRow.find('.fa-user').parent().find('a').text().trim();
+                    .map((a) => $(a).text());
+                item.author = tagRow.find('.fa-user').parent().find('a').text();
 
                 pressCenter.find('h1, .tag-row, .press-choose-post, hr').remove();
 
@@ -67,10 +67,10 @@ async function handler() {
     );
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         description: $('meta[name="description"]').attr('content'),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         image: `${baseUrl}${$('link[rel="apple-touch-icon-precomposed"][sizes="152x152"]').attr('href')}`,
         item: items,
     };

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -47,10 +47,10 @@ async function handler() {
         .toArray()
         .filter((e) => $(e).find('h4.media-heading i').length === 0)
         .map((item) => {
-            const info = {
+            const info: DataItem = {
                 title: $(item).find('h4.media-heading').text().trim(),
                 author: $(item).find('.text-500').text(),
-                link: new URL($(item).attr('href'), host).href,
+                link: new URL($(item).attr('href')!, host).href,
                 pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
             };
             return info;
@@ -58,8 +58,8 @@ async function handler() {
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                const titleSlug = info.link.split('/', 5)[4];
+            cache.tryGet(info.link!, async () => {
+                const titleSlug = info.link!.split('/', 5)[4];
 
                 const questionContent = await ofetch(gqlEndpoint, {
                     method: 'POST',
@@ -98,7 +98,7 @@ async function handler() {
                 const solution = md.render(officialSolution.data.question.solution.content);
 
                 info.description = (questionContent.data.question.content?.trim() ?? '') + solution;
-                info.pubDate = parseDate(info.pubDate);
+                info.pubDate = parseDate(info.pubDate as string);
 
                 return info;
             })

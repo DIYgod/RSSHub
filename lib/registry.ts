@@ -38,17 +38,19 @@ let namespaces: NamespacesType = {};
 let devRegistry: DevRegistry | undefined;
 
 if (config.isPackage) {
+    // @ts-ignore build artifact of pnpm build:routes
     namespaces = (await import('../assets/build/routes.js')).default;
 } else {
     switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
         case 'production':
+            // @ts-ignore build artifact of pnpm build:routes
             namespaces = (await import('../assets/build/routes.js')).default;
             break;
         case 'test':
-            // @ts-expect-error
+            // @ts-expect-error TS2322 the JSON module's inferred literal type is narrower than NamespacesType
             namespaces = await import('../assets/build/routes.json');
             if (namespaces.default) {
-                // @ts-ignore
+                // @ts-expect-error TS2322 the JSON module's default export does not satisfy NamespacesType
                 namespaces = namespaces.default;
             }
             break;

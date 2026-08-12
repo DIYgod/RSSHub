@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -200,7 +200,7 @@ async function handler(ctx: Context) {
     return {
         title: 'FC Bayern München - News',
         link: `${baseUrl}/${language}/news`,
-        language,
+        language: language as Language,
         image: `${baseUrl}/favicon.ico`,
         item: items,
     };

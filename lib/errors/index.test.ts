@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
@@ -147,9 +148,9 @@ describe('error handler honeybadger', () => {
             header: vi.fn(),
             json: (payload: unknown) => payload,
             html: (payload: unknown) => payload,
-        };
+        } as unknown as Context;
 
-        errorHandler(new Error('boom'), ctx as any);
+        errorHandler(new Error('boom'), ctx);
 
         expect(notify).toHaveBeenCalledWith(expect.any(Error), {
             context: { name: 'test' },
@@ -205,9 +206,9 @@ describe('error handler sentry', () => {
             header: vi.fn(),
             json: (payload: unknown) => payload,
             html: (payload: unknown) => payload,
-        };
+        } as unknown as Context;
 
-        errorHandler(new Error('boom'), ctx as any);
+        errorHandler(new Error('boom'), ctx);
 
         expect(setTag).toHaveBeenCalledWith('name', 'test');
         expect(captureException).toHaveBeenCalled();

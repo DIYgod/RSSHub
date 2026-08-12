@@ -73,11 +73,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const content = $('.news-list li');
     const items = content.toArray().map((elem) => {
-        elem = $(elem);
+        const $elem = $(elem);
         return {
-            link: new URL(elem.find('a').attr('href'), host).href,
-            title: elem.find('h3').text().trim(),
-            pubDate: timezone(parseDate(elem.find('.time').text(), 'YYYY-MM-DD'), -8),
+            link: new URL($elem.find('a').attr('href')!, host).href,
+            title: $elem.find('h3').text().trim(),
+            pubDate: timezone(parseDate($elem.find('.time').text(), 'YYYY-MM-DD'), -8),
         };
     });
 

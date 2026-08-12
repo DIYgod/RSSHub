@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { renderVideoMedia } from './video-media';
 
-type LedeMedia = {
+export type LedeMedia = {
     kind?: string;
     src?: string;
     description?: string;

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,13 +55,13 @@ async function handler(ctx) {
     const data = $('.main_conRCb ul li')
         .slice(0, 16)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const pubDate = item.children('span').text();
-            const title = item.find('a em').text();
-            const link = item
+        .map((item): DataItem => {
+            const $item = $(item);
+            const pubDate = $item.children('span').text();
+            const title = $item.find('a em').text();
+            const link = $item
                 .children('a')
-                .attr('href')
+                .attr('href')!
                 .replaceAll('../', () => rootMeta.url);
             return {
                 pubDate: parseDate(pubDate),
@@ -74,16 +74,16 @@ async function handler(ctx) {
         title: `${category.title}-${rootMeta.title}`,
         link: rootMeta.url + category.url,
         description: `${category.title}-${rootMeta.title}`,
-        language: 'zh_CN',
+        language: 'zh-CN' as Language,
         item: await Promise.all(
             data.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const response = await got({
                         method: 'get',
                         url: item.link,
                     });
                     const $ = load(response.body);
-                    item.author = /作者：(\S*)\s{4}/.exec($('p', '.main_contit').text())[1];
+                    item.author = /作者：(\S*)\s{4}/.exec($('p', '.main_contit').text())![1];
                     item.description = $('#vsb_content').html();
                     return item;
                 })

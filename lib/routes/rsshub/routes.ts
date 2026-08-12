@@ -1,7 +1,7 @@
 import markdownit from 'markdown-it';
 
 import type { NamespacesType } from '@/registry';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -63,7 +63,7 @@ async function handler(ctx) {
         title: isEnglish ? 'RSSHub has new routes' : 'RSSHub 有新路由啦',
         link: 'https://docs.rsshub.app',
         description: isEnglish ? 'Everything is RSSible' : '万物皆可 RSS',
-        language: isEnglish ? 'en-us' : 'zh-cn',
+        language: (isEnglish ? 'en-us' : 'zh-CN') as Language,
         item: items,
     };
 }

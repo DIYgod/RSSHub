@@ -38,7 +38,7 @@ async function handler(ctx) {
     const links = $('span.item_title > a')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
-        .map((link) => `${host}${$(link).attr('href').replace(/#.*$/, '')}`);
+        .map((link) => `${host}${$(link).attr('href')!.replace(/#.*$/, '')}`);
 
     const items = await Promise.all(
         links.map((link) =>

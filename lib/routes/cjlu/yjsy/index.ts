@@ -13,22 +13,6 @@ const titleMap = new Map([
     ['yjstz', '中量大研究生院 —— 研究生通知'],
     ['jstz', '中量大研究生院 —— 教师通知'],
 ]);
-const headers = {
-    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-    'Cache-Control': 'max-age=0',
-    Connection: 'keep-alive',
-    Referer: 'https://yjsy.cjlu.edu.cn',
-    'Sec-Fetch-Dest': 'document',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'same-origin',
-    'Sec-Fetch-User': '?1',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0',
-    'sec-ch-ua': '"Microsoft Edge";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-};
 
 const allowedResourceTypes = new Set(['document', 'script']);
 
@@ -88,7 +72,6 @@ async function handler(ctx) {
 
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
-            await page.setExtraHTTPHeaders(headers);
             await page.route('**/*', (route) => {
                 const request = route.request();
                 allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
@@ -136,7 +119,6 @@ async function handler(ctx) {
                 const res = await ofetch(item.link, {
                     responseType: 'text',
                     headers: {
-                        ...headers,
                         Cookie: cookieString,
                         Referer: url,
                     },
@@ -153,7 +135,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: titleMap.get(cate),
+        title: titleMap.get(cate)!,
         link: `https://yjsy.cjlu.edu.cn/index/${cate}.htm`,
         item: items,
     };

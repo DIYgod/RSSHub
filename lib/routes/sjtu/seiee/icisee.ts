@@ -38,19 +38,19 @@ async function handler(ctx) {
     const list = $('.djdt li')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.tit').text().trim(),
-                link: item.find('a').attr('href'),
-                pubDate: timezone(parseDate(item.find('.time').text().trim())),
+                title: $item.find('.tit').text().trim(),
+                link: $item.find('a').attr('href'),
+                pubDate: timezone(parseDate($item.find('.time').text().trim())),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch.raw(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch.raw(item.link!);
                 if (new URL(detailResponse.url).hostname !== 'mp.weixin.qq.com') {
                     return { ...item, description: $(detailResponse._data).find('.xwxq').html() };
                 }

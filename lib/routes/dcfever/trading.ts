@@ -34,11 +34,11 @@ async function handler(ctx) {
     const list = $('.item_grid_wrap div a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.lazyloadx').attr('alt'),
-                link: new URL(item.attr('href'), link.href).href,
-                author: item.find('.trade_info div span').eq(1).text(),
+                title: $item.find('.lazyloadx').attr('alt'),
+                link: new URL($item.attr('href')!, link.href).href,
+                author: $item.find('.trade_info div span').eq(1).text(),
             };
         });
 

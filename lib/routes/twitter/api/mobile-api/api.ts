@@ -39,7 +39,7 @@ const twitterGot = async (url, params) => {
     };
 
     const response = await ofetch.raw(requestData.url, {
-        headers: oauth.toHeader(oauth.authorize(requestData, token)),
+        headers: oauth.toHeader(oauth.authorize(requestData, token)) as unknown as Record<string, string>,
     });
     if (response.status === 401) {
         cache.globalCache.set(token.cacheKey, '');
@@ -129,8 +129,8 @@ const listTweets = (listId, params = {}) =>
     );
 
 function gatherLegacyFromData(entries, filterNested?, userId?) {
-    const tweets = [];
-    const filteredEntries = [];
+    const tweets: any[] = [];
+    const filteredEntries: any[] = [];
     for (const entry of entries) {
         const entryId = entry.entryId;
         if (entryId) {
@@ -197,7 +197,7 @@ const getUserTweetByStatus = async (id, params = {}) => gatherLegacyFromData(awa
 const getListById = async (id, params = {}) => gatherLegacyFromData(await listTweets(id, params));
 
 const excludeRetweet = function (tweets) {
-    const excluded = [];
+    const excluded: any[] = [];
     for (const t of tweets) {
         if (t.retweeted_status) {
             continue;
@@ -252,12 +252,13 @@ const _getUserTweets = (id, params = {}) => cacheTryGet(id, params, getUserTweet
 //    a. if one replies a lot (e.g. elonmusk), there is sometimes no tweets left after filtering, caching may help
 // 2. getUserMedia return LATEST media tweets, which is a good plus
 const getUserTweets = async (id, params = {}) => {
-    let tweets = [];
+    let tweets: any[] = [];
     const rest_id = await getUserID(id);
     await Promise.all(
         [_getUserTweets, getUserTweetsAndReplies, getUserMedia].map(async (func) => {
             try {
-                tweets.push(...(await func(id, params)));
+                const result = await func(id, params);
+                tweets.push(...(result as any[]));
             } catch (error) {
                 logger.warn(`Failed to get tweets for ${id} with ${func.name}: ${error}`);
             }

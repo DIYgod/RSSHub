@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -56,7 +56,7 @@ const handler = async (ctx) => {
         itunes_category: podcastInfo.itunesCategories.join(', '),
         itunes_explicit: podcastInfo.explicit,
         image: podcastInfo.cover,
-        language: podcastInfo.language,
+        language: podcastInfo.language as Language,
         link: podcastInfo.url,
         item: items,
     };

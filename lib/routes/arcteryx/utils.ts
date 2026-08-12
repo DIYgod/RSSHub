@@ -1,7 +1,7 @@
 function generateRssData(item, index, arr, country) {
     const attributeSet = new Set(['name', 'image', 'short_description', 'slug', `price_${country}`, `discount_price_${country}`]);
     const attributes = item.attribute;
-    const data = {};
+    const data = {} as Record<string, any>;
 
     for (const attribute of attributes) {
         const key = attribute.name;

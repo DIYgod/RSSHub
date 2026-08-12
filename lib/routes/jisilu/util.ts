@@ -57,7 +57,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.aw-mod-head h1').text();
@@ -68,7 +68,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
 
                     const isAnswer: boolean = item.link ? /answer_id/.test(item.link) : false;
 
-                    const description: string = (isAnswer ? $$('div.markitup-box').last() : $$('div.markitup-box').first()).html() ?? '';
+                    const description = (isAnswer ? $$('div.markitup-box').last() : $$('div.markitup-box').first()).html();
 
                     const metaStr: string = $$(isAnswer ? 'div.aw-dynamic-topic-meta' : 'div.aw-question-detail-meta')
                         .find('span.aw-text-color-999')
@@ -97,7 +97,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                         author,
                         content: {
                             html: description,
-                            text: $$('div.aw-question-detail-txt').first().text(),
+                            text: $$('div.aw-question-detail-txt').text(),
                         },
                         updated: updatedStr ? timezone(parseDate(updatedStr), 8) : item.updated,
                     };

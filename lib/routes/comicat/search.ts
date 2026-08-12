@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,10 +37,10 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#listTable tbody > tr')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('td:nth-child(3)').text().trim(),
             link: `${baseUrl}/${$(item).find('td:nth-child(3) a').attr('href')}`,
-            category: $(item).find('td:nth-child(2)').text().trim(),
+            category: $(item).find('td:nth-child(2)').text(),
             author: $(item).find('td:nth-child(8)').text().trim(),
         }));
 
@@ -51,7 +51,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 item.pubDate = parseDate($('div.main > div.slayout > div > div.c1 > div:nth-child(1) > div > p:nth-child(4)').text().split('发布时间: ', 2)[1]);
-                const marginLink = `magnet:?xt=urn:btih:${$('#text_hash_id').text().split('，特征码：', 2)[1]}`.trim();
+                const marginLink = `magnet:?xt=urn:btih:${$('#text_hash_id').text().split('，特征码：', 2)[1]}`;
                 item.enclosure_url = marginLink;
                 item.enclosure_type = 'application/x-bittorrent';
                 item.description = $('#btm > div.main > div.slayout > div > div.c2 > div:nth-child(1) > div.intro').html();

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -32,14 +32,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'jiaowu' } = ctx.req.param();
-    const response = await got.get(nwafuMap.get(type)[0]);
+    const response = await got.get(nwafuMap.get(type)![0]);
     const $ = load(response.data);
-    const list = $(nwafuMap.get(type)[1])
+    const list = $(nwafuMap.get(type)![1])
         .toArray()
-        .map((ele) => {
-            const itemTitle = $(ele).find(nwafuMap.get(type)[2]).text();
+        .map((ele): DataItem => {
+            const itemTitle = $(ele).find(nwafuMap.get(type)![2]).text();
             const itemPubDate = parseDate($(ele).find('span').text(), 'YYYY/MM/DD');
-            const itemLink = new URL($(ele).find(nwafuMap.get(type)[2]).attr('href'), nwafuMap.get(type)[0]).href;
+            const itemLink = new URL($(ele).find(nwafuMap.get(type)![2]).attr('href')!, nwafuMap.get(type)![0]).href;
             return {
                 title: itemTitle,
                 pubDate: itemPubDate,
@@ -49,22 +49,22 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (nwafuMap.get('forbiddenList').includes(new URL(item.link).hostname)) {
+            cache.tryGet(item.link!, async () => {
+                if (nwafuMap.get('forbiddenList')!.includes(new URL(item.link!).hostname)) {
                     return item;
                 }
                 const detailResponse = await got.get(item.link);
                 const $ = load(detailResponse.data);
-                item.description = $(nwafuMap.get(type)[3]).html();
+                item.description = $(nwafuMap.get(type)![3]).html();
                 return item;
             })
         )
     );
 
     return {
-        title: nwafuMap.get(type)[4],
-        link: nwafuMap.get(type)[0],
-        description: nwafuMap.get(type)[4],
+        title: nwafuMap.get(type)![4],
+        link: nwafuMap.get(type)![0],
+        description: nwafuMap.get(type)![4],
         item: out,
     };
 }

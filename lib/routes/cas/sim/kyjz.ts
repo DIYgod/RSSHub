@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,17 +40,18 @@ async function handler() {
     const list = $('.list-news li')
         .toArray()
         .filter((e) => !$(e).attr('style'))
-        .map((e) => {
-            e = $(e);
+        .map((e): DataItem => {
+            const $e = $(e);
             return {
-                link: new URL(e.find('a').attr('href'), link).href,
-                pubDate: e.find('span').text().replace('[', '').replace(']', ''),
+                link: new URL($e.find('a').attr('href')!, link).href,
+                pubDate: $e.find('span').text().replace('[', '').replace(']', ''),
+                title: '',
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
@@ -58,9 +59,9 @@ async function handler() {
                 const reg = /文章来源：(.*?)\|/;
 
                 item.title = $('p.wztitle').text().trim();
-                item.author = reg.exec(author)[1].toString().trim();
+                item.author = reg.exec(author)![1].toString().trim();
                 item.description = $('.TRS_Editor').html();
-                item.pubDate = parseDate(item.pubDate);
+                item.pubDate = parseDate(item.pubDate!);
                 return item;
             })
         )

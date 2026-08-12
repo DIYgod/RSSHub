@@ -31,16 +31,16 @@ async function parseArticle($) {
     const data = $('#wp_news_w6').find('li').toArray();
 
     const items = data.map((item) => {
-        item = $(item);
-        const oriLink = item.find('a').attr('href');
+        const $item = $(item);
+        const oriLink = $item.find('a').attr('href');
         let linkRes = oriLink;
         if (!oriLink.startsWith('http')) {
-            linkRes = commLink + item.find('a').attr('href');
+            linkRes = commLink + $item.find('a').attr('href');
         }
-        const pubDate = parseDate(item.find('.news_meta').text(), 'YYYY-MM-DD');
+        const pubDate = parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD');
 
         return {
-            title: item.find('a').attr('title'),
+            title: $item.find('a').attr('title'),
             pubDate,
             link: linkRes,
         };

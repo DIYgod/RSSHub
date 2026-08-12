@@ -6,6 +6,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { getToken, sign } from './utils';
 
@@ -53,7 +54,7 @@ async function getFullcontent(item, cookie = '') {
     return {
         title: item.title,
         link: item.url,
-        pubDate: parseDate(item.pubdate, 8),
+        pubDate: timezone(parseDate(item.pubdate), 8),
         description: fullContent || item.abstract, // Return item.abstract if fullContent is null
     };
 }

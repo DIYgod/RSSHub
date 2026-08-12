@@ -41,12 +41,12 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
                 return {
                     title: a.text(),
                     link: a.attr('href'),
-                    pubDate: parseDate(item.find('td').eq(3).text(), 'YYYY/MM/DD'),
+                    pubDate: parseDate($item.find('td').eq(3).text(), 'YYYY/MM/DD'),
                 };
             }),
     };

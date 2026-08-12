@@ -121,7 +121,7 @@ const handler = async (ctx: Context) => {
                     image: item.image,
                     alt: item.imageAlt,
                     content,
-                    pdf: pdfDetails.prop('outerHTML'),
+                    pdf: pdfDetails.prop('outerHTML') ?? undefined,
                 });
 
                 return item;

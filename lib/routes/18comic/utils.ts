@@ -3,6 +3,7 @@ import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
@@ -99,13 +100,13 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
     let items = $('.video-title')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { guid: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text().trim(),
-                link: `${rootUrl}${item.prev().find('a').attr('href')}`,
-                guid: `18comic:${item.prev().find('a').attr('href')}`,
+                title: $item.text().trim(),
+                link: `${rootUrl}${$item.prev().find('a').attr('href')}`,
+                guid: `18comic:${$item.prev().find('a').attr('href')}`,
             };
         });
 
@@ -116,8 +117,8 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
 
                 const content = load(detailResponse.data);
 
-                item.pubDate = parseDate(content('div[itemprop="datePublished"]').first().attr('content'));
-                item.updated = parseDate(content('div[itemprop="datePublished"]').last().attr('content'));
+                item.pubDate = parseDate(content('div[itemprop="datePublished"]').first().attr('content')!);
+                item.updated = parseDate(content('div[itemprop="datePublished"]').last().attr('content')!);
                 item.category = content('span[data-type="tags"]')
                     .first()
                     .find('a')
@@ -133,7 +134,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
                     introduction: content('#intro-block .p-t-5').text(),
                     images: content('.img_zoom_img img')
                         .toArray()
-                        .map((image) => content(image).attr('data-original')),
+                        .map((image) => content(image).attr('data-original')!),
                     cover: content('.thumb-overlay img').first().attr('src'),
                     category: item.category,
                 });

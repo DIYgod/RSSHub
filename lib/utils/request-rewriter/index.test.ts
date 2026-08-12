@@ -1,8 +1,10 @@
 // oxlint-disable unicorn-js/no-global-object-property-assignment
 import { once } from 'node:events';
+import type { OutgoingHttpHeaders } from 'node:http';
 import http from 'node:http';
 import https from 'node:https';
 
+import type { Response as UndiciResponse } from 'undici';
 import undici from 'undici';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -45,7 +47,7 @@ const createJsonResponse = () =>
                 'content-type': 'application/json',
             },
         }
-    );
+    ) as unknown as UndiciResponse;
 
 describe('request-rewriter', () => {
     afterAll(() => {
@@ -91,7 +93,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
         expect(headers.get('user-agent')).toMatch(/Chrome/);
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
@@ -138,7 +140,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
         expect(headers.get('user-agent')).toMatch(/Chrome/);
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
@@ -191,7 +193,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
         expect(headers.get('user-agent')).toBe(userAgent);
     });
 
@@ -208,7 +210,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
         expect(headers.get('user-agent')).toBeDefined();
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
@@ -232,15 +234,16 @@ describe('request-rewriter', () => {
 
         // headers
         const options = httpSpy.mock.lastCall?.[1];
-        const headers = options?.headers;
+        const headers = options?.headers as OutgoingHttpHeaders | undefined;
         expect(headers?.['user-agent']).toMatch(/Chrome/);
         expect(headers?.accept).toBeDefined();
         expect(headers?.referer).toBe('http://rsshub.test');
 
         // proxy
-        const agentUri = options?.agent?.proxy?.href;
+        const agent = options?.agent as any;
+        const agentUri = agent?.proxy?.href;
         expect(agentUri).toBe(process.env.PROXY_URI);
-        expect(options?.agent?.proxyHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
+        expect(agent?.proxyHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
 
         // url regex not match
         {

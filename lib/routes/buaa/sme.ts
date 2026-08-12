@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,7 +58,7 @@ async function handler(ctx) {
         // 源文章
         item: await getItems(list),
         // 语言
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
     };
 }
 

@@ -63,21 +63,21 @@ async function handler(ctx) {
     const items = $('#public-listing .map-tile-wrapper')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             const imageUrl = new URL(
-                item
+                $item
                     .find('.map-wrapper')
-                    .attr('style')
-                    .match(/url\('(.*)'\);/)[1]
+                    .attr('style')!
+                    .match(/url\('(.*)'\);/)![1]
             ).href;
 
-            const title = item.find('.title').text();
+            const title = $item.find('.title').text();
             return {
                 title,
                 description: renderToString(<img src={imageUrl.split('?', 1)[0]} alt={title.trim()} />),
-                link: item.find('.title').attr('href'),
-                author: item.find('.author').text().trim().replace(/^by/, ''),
-                category: item.find('.fw-bold').text(),
+                link: $item.find('.title').attr('href'),
+                author: $item.find('.author').text().trim().replace(/^by/, ''),
+                category: $item.find('.fw-bold').text(),
             };
         });
 

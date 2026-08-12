@@ -1,7 +1,7 @@
 // oxlint-disable no-undef unicorn-js/no-this-outside-of-class unicorn-js/no-return-array-push
 // oxlint-disable unicorn/prefer-spread
 // oxlint-disable unicorn/prefer-math-trunc
-// @ts-nocheck
+// @ts-nocheck cryptographic
 
 // Credits:
 // https://github.com/NearHuiwen/TiktokDouyinCrawler/blob/main/utils/a_bogus.js

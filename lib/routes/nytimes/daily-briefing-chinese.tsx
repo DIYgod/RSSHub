@@ -43,8 +43,8 @@ async function handler() {
 
     const listData = JSON.parse(response.data.match(/"initialState":(.*),"config"/)[1]);
 
-    let items = [];
-    for (const [key, item] of Object.entries(listData)) {
+    let items: any[] = [];
+    for (const [key, item] of Object.entries<any>(listData)) {
         if (key.startsWith('Article:') && item.url) {
             items.push({
                 link: item.url,
@@ -80,7 +80,7 @@ async function handler() {
                 });
 
                 item.title = content('meta[property="og:title"]').attr('content');
-                item.author = content('meta[name="byl"]').attr('content').replace(/By /, '');
+                item.author = content('meta[name="byl"]').attr('content')!.replace(/By /, '');
                 item.description = content('section[name="articleBody"]').html();
 
                 return item;

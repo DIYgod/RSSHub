@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -153,14 +153,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('div.row')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const version: string | undefined = $el.find('div.cell1').text();
             const pubDateStr: string | undefined = $el.find('div.cell2').text();
 
             const title: string = version;
-            const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
+            const description = $el.find('ul.cell3').html();
 
             const linkUrl: string = targetUrl;
             const guid = `bandisoft-${id}-${language}-${version}`;
@@ -179,7 +179,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     text: description,
                 },
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: lang,
+                language: lang as Language,
             };
 
             return processedItem;
@@ -193,7 +193,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img#logo_light').attr('src'),
         author,
-        language: lang,
+        language: lang as Language,
         id: targetUrl,
     };
 };

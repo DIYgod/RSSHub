@@ -1,7 +1,6 @@
 import type { Context } from 'hono';
 import type { Genre, NovelTypeParam, Order, SearchParams } from 'narou';
 import { GenreNotation, NarouNovelFetch, R18Site, SearchBuilder, SearchBuilderR18 } from 'narou';
-import type { Join } from 'narou/util/type';
 import queryString from 'query-string';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -10,6 +9,8 @@ import type { Data, Route } from '@/types';
 import { renderDescription } from './templates/description';
 import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
+
+type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
 export const route: Route = {
     path: '/search/:sub/:query',

@@ -43,7 +43,7 @@ async function handler(ctx) {
     // 获取每条的链接
     const links = $('.clist a')
         .toArray()
-        .map((item) => new URL($(item).attr('href'), baseurl).href);
+        .map((item) => new URL($(item).attr('href')!, baseurl).href);
     // 获取标题、日期、内容
     const items = await Promise.all(
         links.map((link) =>
@@ -54,7 +54,7 @@ async function handler(ctx) {
                 const title = $('title').text().replace('_中国人大网', '');
                 const time = $('script:contains("fbrq")')
                     .text()
-                    .match(/fbrq = "(.*?)"/)[1];
+                    .match(/fbrq = "(.*?)"/)![1];
                 const description = $('#Zoom').html();
 
                 return {

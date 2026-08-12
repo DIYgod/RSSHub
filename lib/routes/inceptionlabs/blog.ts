@@ -51,7 +51,7 @@ async function handler() {
             const title = $el
                 .find('h6.framer-text')
                 .toArray()
-                .map((h6) => $(h6).text().trim())
+                .map((h6) => $(h6).text())
                 .find((text) => text && text !== 'Read story');
 
             if (!title) {
@@ -69,11 +69,11 @@ async function handler() {
             const dateBlocks = $el
                 .find('[data-framer-name="Date"] p.framer-text')
                 .toArray()
-                .map((p) => $(p).text().trim());
+                .map((p) => $(p).text());
 
             // Category: featured cards use data-framer-name="Category"; standard cards use dateBlocks[0]
             const categoryEl = $el.find('[data-framer-name="Category"]');
-            const category = categoryEl.length > 0 ? categoryEl.first().text().trim() : (dateBlocks[0] ?? '');
+            const category = categoryEl.length > 0 ? categoryEl.first().text() : (dateBlocks[0] ?? '');
 
             // Date: featured cards have a single Date block (the date itself); standard cards have it at index 1
             const pubDate = dateBlocks.length >= 2 ? dateBlocks[1] : (dateBlocks[0] ?? '');
@@ -94,10 +94,10 @@ async function handler() {
                 const $post = load(postHtml);
 
                 // Full article content
-                const contentHtml = $post('[data-framer-name="Content"]').first().html() ?? '';
+                const contentHtml = $post('[data-framer-name="Content"]').first().html();
 
                 // Author name from the first [data-framer-name="Author"] RichTextContainer
-                const author = $post('[data-framer-name="Author"] p.framer-text').first().text().trim();
+                const author = $post('[data-framer-name="Author"] p.framer-text').first().text();
 
                 return {
                     ...post,

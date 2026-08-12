@@ -30,15 +30,9 @@ async function processItem({ link: articleLink, date }) {
             .map((tag) => $(tag).find('a').text());
         const article = $('main > article');
         const title = article.find('h1').text();
-        article.find('img').each((_, element) => {
-            const img = $(element);
-            const src = img.attr('src');
-            if (src?.startsWith('/')) {
-                img.attr('src', `${rootUrl}${src}`);
-            }
-        });
         const image = article.find('img').attr('src');
-        const description = article.clone().find('h1, script').remove().end().html();
+        article.find('h1').remove();
+        const description = article.html();
 
         return {
             title,

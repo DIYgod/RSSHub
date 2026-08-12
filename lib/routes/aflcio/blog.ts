@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -22,12 +22,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('article.article')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('header.container h1 a').first();
 
             const title: string = $aEl.text();
-            const description: string | undefined = $el.find('div.section').html() ?? '';
+            const description = $el.find('div.section').html();
             const pubDateStr: string | undefined = $el.find('div.date-timeline time').attr('datetime');
             const linkUrl: string | undefined = $aEl.attr('href');
             const authorEls: Element[] = $el.find('div.date-timeline a.user').toArray();
@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -70,11 +70,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('header.article-header h1').text();
-                    const description: string | undefined = $$('div.section-article-body').html() ?? '';
+                    const description = $$('div.section-article-body').html();
                     const pubDateStr: string | undefined = $$('time').attr('datetime');
                     const authorEls: Element[] = $$('div.byline a[property="schema:name"]').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         image,
                         banner: image,
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     return {
@@ -123,7 +123,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img.main-logo').attr('src') ? new URL($('img.main-logo').attr('src') as string, baseUrl).href : undefined,
         author: title.split(/\|/).pop(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

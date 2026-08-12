@@ -22,12 +22,12 @@ export async function handler(ctx) {
     const items = $('.news_list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const href = item.find('a').attr('href');
+            const $item = $(item);
+            const href = $item.find('a').attr('href');
             return {
-                title: item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link: href,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 

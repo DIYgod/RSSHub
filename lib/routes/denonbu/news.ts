@@ -178,6 +178,7 @@ async function handler(ctx: Context): Promise<Data> {
             description: body,
             pubDate: timezone(parseDate(post_date), 9),
             category: category.map((x) => x.name),
+            link: link ?? undefined,
         };
 
         if (media?.[0]) {
@@ -186,9 +187,6 @@ async function handler(ctx: Context): Promise<Data> {
             if (typeof imageUrl === 'string') {
                 result.image = imageUrl;
             }
-        }
-        if (link) {
-            result.link = link;
         }
 
         return result;

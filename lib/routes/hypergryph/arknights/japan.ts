@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -73,7 +73,7 @@ async function handler(ctx: Context) {
         title: 'アークナイツ',
         link: 'https://www.arknights.jp/news',
         description: 'アークナイツ ニュース',
-        language: 'ja',
+        language: 'ja' as Language,
         item: newsList,
     };
 }

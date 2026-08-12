@@ -79,11 +79,11 @@ const parseList = ($, limit) =>
     $('.caption')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h3').text(),
-                link: item.find('h3 a').attr('href'),
-                pubDate: parseDate(item.find('time').text()),
+                title: $item.find('h3').text(),
+                link: $item.find('h3 a').attr('href'),
+                pubDate: parseDate($item.find('time').text()),
             };
         })
         .slice(0, limit);
@@ -116,10 +116,10 @@ const parseItems = (list, context: BrowserContext) =>
                 });
 
                 item.title = $('head title').text();
-                item.category = $('meta[name=keywords]').attr('content').split(',');
+                item.category = $('meta[name=keywords]').attr('content')!.split(',');
                 item.pubDate = parseDate(meta.datePublished);
                 item.author = Array.isArray(meta.author) ? meta.author : meta.author.name;
-                item.description = $('.article__head .container').html() + $('.article__content').html();
+                item.description = $('.article__head .container').html()! + $('.article__content').html()!;
 
                 return item;
             })

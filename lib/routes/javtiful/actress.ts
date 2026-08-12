@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { parseItems } from './utils';
@@ -37,6 +37,6 @@ async function handler(ctx): Promise<Data> {
         allowEmpty: true,
         item: items,
         image: $('.content-section-title img').attr('src'),
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

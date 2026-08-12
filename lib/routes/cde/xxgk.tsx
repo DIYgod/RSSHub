@@ -76,7 +76,7 @@ async function handler(ctx) {
         form: xxgkMap.xxgk[category].form,
         headers: {
             referer: xxgkMap.xxgk[category].url,
-            cookie: await utils.getCookie(ctx),
+            cookie: await utils.getCookie(),
         },
     });
 

@@ -42,13 +42,13 @@ const fetchDesc = (list, context) =>
     );
 
 const getItem = (item, $) => {
-    item = $(item);
+    const $item = $(item);
     return {
-        title: item.find('.article-title a').attr('title'),
-        link: `${baseUrl}${item.find('.article-title a').attr('href')}`,
-        doi: item.find('.article-title a').attr('href').replace('/doi/', ''),
-        pubDate: parseDate(item.find('.card-meta__item time').text()),
-        author: item
+        title: $item.find('.article-title a').attr('title'),
+        link: `${baseUrl}${$item.find('.article-title a').attr('href')}`,
+        doi: $item.find('.article-title a').attr('href').replace('/doi/', ''),
+        pubDate: parseDate($item.find('.card-meta__item time').text()),
+        author: $item
             .find('.card-meta ul[title="list of authors"] li')
             .toArray()
             .map((author) => $(author).text())

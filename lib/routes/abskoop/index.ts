@@ -7,6 +7,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['multimedia'],
+    example: '/abskoop',
     radar: [
         {
             source: ['ahhhhfs.com/'],

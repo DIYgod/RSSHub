@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -127,7 +127,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: pubDate ? parseDate(pubDate) : undefined,
-            language,
+            language: language as Language,
             description,
             content: {
                 html: description,
@@ -144,7 +144,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author: $('title').text().split(/\|/).pop()?.trim(),
-        language,
+        language: language as Language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

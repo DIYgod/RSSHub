@@ -28,9 +28,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el = $(el);
             const $link = $el.find('a').first();
 
-            const title = $link.find('p').first().text().trim();
-            const description = $link.find('p').eq(1).text().trim();
-            const pubDate = parseDate($el.find('time').first().text().trim());
+            const title = $link.find('p').first().text();
+            const description = $link.find('p').eq(1).text();
+            const pubDate = parseDate($el.find('time').first().text());
 
             const href = $link.attr('href');
             const link = href ? new URL(href, baseUrl).href : undefined;

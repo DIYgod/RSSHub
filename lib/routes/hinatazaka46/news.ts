@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: 'Hinatazaka46 News 日向坂 46 新闻',
-    maintainers: ['crispgm', 'akashigakki'],
+    maintainers: ['crispgm', 'AkashiGakki'],
     handler,
     url: 'hinatazaka46.com/s/official/news/list',
 };
@@ -43,13 +43,13 @@ async function handler(ctx) {
     let items = $('.p-news__list .p-news__item a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('.c-news__text').text(),
-                link: `${rootUrl}${item.attr('href').split('?', 1)[0]}`,
-                pubDate: parseDate(item.find('.c-news__date').text()),
+                title: $item.find('.c-news__text').text(),
+                link: `${rootUrl}${$item.attr('href')!.split('?', 1)[0]}`,
+                pubDate: parseDate($item.find('.c-news__date').text()),
             };
         });
 

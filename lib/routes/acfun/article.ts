@@ -133,7 +133,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const articleInfo = $('.main script')
                     .text()
-                    .match(/window.articleInfo = (.*);\n\s*window.likeDomain/)[1];
+                    .match(/window.articleInfo = (.*);\n\s*window.likeDomain/)![1];
                 const data = JSON.parse(articleInfo);
 
                 item.description = data.parts[0].content;

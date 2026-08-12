@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -74,25 +74,25 @@ async function handler(ctx) {
     const list = $('#list > div.fl > ul > li > div > h2 > a')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got({ method: 'get', url: item.link });
                 const content = load(res.data);
                 const post = content('#paragraph');
                 post.find('img[data-original]').each((_, ele) => {
-                    ele = $(ele);
-                    ele.attr('src', ele.attr('data-original'));
-                    ele.removeAttr('class');
-                    ele.removeAttr('data-original');
+                    const $ele = $(ele);
+                    $ele.attr('src', $ele.attr('data-original'));
+                    $ele.removeAttr('class');
+                    $ele.removeAttr('data-original');
                 });
                 item.description = post.html();
                 item.pubDate = new Date(content('#pubtime_baidu').text() + ' GMT+8').toUTCString();

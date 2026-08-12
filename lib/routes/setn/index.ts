@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -98,11 +98,11 @@ async function handler(ctx) {
         .find('.newsItems, .st-news, .all_three_list, div.title-word')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').last();
-            const link = a.attr('href').replaceAll(/(\?|&)utm_campaign=.*/g, '');
+            const a = $item.find('a').last();
+            const link = a.attr('href')!.replaceAll(/(\?|&)utm_campaign=.*/g, '');
 
             return {
                 title: a.text(),
@@ -112,7 +112,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -120,7 +120,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                let head: Record<string, unknown>;
+                let head: Record<string, any>;
                 try {
                     head = JSON.parse(content('script[type="application/ld+json"]').first().text());
                 } catch {
@@ -131,8 +131,8 @@ async function handler(ctx) {
 
                 item.title = content('h1').text();
                 item.author = head?.author?.name || content('meta[name="author"]').attr('content');
-                item.category = [content('meta[property="article:section"]').attr('content'), ...content('meta[name="news_keywords"]').attr('content').split(',')];
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
+                item.category = [content('meta[property="article:section"]').attr('content')!, ...content('meta[name="news_keywords"]').attr('content')!.split(',')];
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
                 item.description = content('article, .content-p').html();
 
                 return item;

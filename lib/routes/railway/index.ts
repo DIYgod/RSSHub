@@ -68,6 +68,6 @@ export const fetchArticleDetails = async (url: string) => {
     const $article = $('article > section ');
 
     return {
-        content: $article.html() ?? undefined,
+        content: $article.html(),
     };
 };

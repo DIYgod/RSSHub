@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -39,21 +39,21 @@ export const handler = async (ctx) => {
     let items = $('ul.nowrapli li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('a').prop('title'),
-                pubDate: parseDate(item.find('span.time').text()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
-                language,
+                title: $item.find('a').prop('title')!,
+                pubDate: parseDate($item.find('span.time').text()),
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.endsWith('.html')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.endsWith('.html')) {
                     item.enclosure_url = item.link;
                     item.enclosure_type = item.link ? `application/${item.link.split(/\./).pop()}` : undefined;
                     item.enclosure_title = item.title;
@@ -90,7 +90,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 const enclosureUrl = $$('div.pdf-content a, div.xgfj a').first().prop('href');
 
@@ -114,7 +114,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 

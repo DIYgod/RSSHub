@@ -4,13 +4,15 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/grubstreet',
     radar: [
         {
             source: ['grubstreet.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Posts',
     maintainers: ['loganrockmore'],
     handler,
     url: 'grubstreet.com/',

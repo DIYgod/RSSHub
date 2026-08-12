@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,22 +21,22 @@ export const handler = async (ctx) => {
     let items = $('div.page_right ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('span.list_time').text(), 'YYYY/MM/DD'),
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'),
+                link: new URL(a.prop('href')!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.includes('ccfa.org.cn')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.includes('ccfa.org.cn')) {
                     return item;
                 }
 
@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
                               .toArray()
                               .find((a) => $$(a).prop('href')?.includes('downFiles.do'));
 
-                item.enclosure_url = attachmentEl ? new URL($$(attachmentEl).prop('href'), rootUrl) : undefined;
+                item.enclosure_url = attachmentEl ? new URL($$(attachmentEl).prop('href')!, rootUrl).href : undefined;
                 item.enclosure_title = attachmentEl ? $$(attachmentEl).text() : undefined;
 
                 return item;
@@ -87,7 +87,7 @@ export const handler = async (ctx) => {
     );
 
     const description = $('li.page_tit').contents().last().text().split(/>/).pop();
-    const image = new URL($('div.logo img').prop('src'), currentUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, currentUrl).href;
     const author = $('title').text();
 
     return {
@@ -152,8 +152,7 @@ export const route: Route = {
                 'www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp',
             ],
             target: (_, url) => {
-                url = new URL(url);
-                const type = url.searchParams.get('type');
+                const type = new URL(url).searchParams.get('type');
 
                 return type ? `/${type}` : '';
             },

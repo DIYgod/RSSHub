@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -133,7 +133,7 @@ async function handler(ctx) {
         title,
         link,
         description,
-        language: 'ja-jp',
+        language: 'ja' as Language,
         item,
     };
 }

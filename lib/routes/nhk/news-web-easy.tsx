@@ -51,11 +51,11 @@ async function handler(ctx) {
         .map((c) => c.split(';', 1)[0])
         .join('; ');
 
-    const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location'), {
+    const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location')!, {
         redirect: 'manual',
     });
 
-    const idpResponse = await ofetch.raw(authorizeResponse.headers.get('location'), {
+    const idpResponse = await ofetch.raw(authorizeResponse.headers.get('location')!, {
         headers: {
             cookie: buildAuthorizeCookie,
         },
@@ -71,9 +71,9 @@ async function handler(ctx) {
             cookie: buildAuthorizeCookie + '; ' + idpCookie,
         },
     });
-    const dates = data[0];
+    const dates: Record<string, any[]> = data[0];
 
-    let items = Object.values(dates).flatMap((articles) =>
+    let items: any[] = Object.values(dates).flatMap((articles) =>
         articles.map((article) => ({
             title: article.title,
             description: renderToString(

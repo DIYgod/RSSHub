@@ -44,11 +44,11 @@ async function handler() {
 
             // only read first page
             return list.map((index, item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    link: 'https://webplus.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('span').last().text(), 'YYYY-MM-DD'), 8),
+                    title: $item.find('a').attr('title')!,
+                    link: 'https://webplus.nju.edu.cn' + $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('span').last().text(), 'YYYY-MM-DD'), 8),
                     category: category_dict[0],
                 };
             });

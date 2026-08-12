@@ -44,7 +44,7 @@ async function handler(ctx) {
         const $ = load(response.data);
         program = $('script:contains("Paging")')
             .text()
-            .match(/var name = '(.+)';/)[1];
+            .match(/var name = '(.+)';/)![1];
         pageData = {
             category: $('.crumb a')
                 .toArray()

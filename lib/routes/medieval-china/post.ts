@@ -8,13 +8,15 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
+    categories: ['reading'],
+    example: '/medieval-china',
     radar: [
         {
             source: ['medieval-china.club/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '首页',
     maintainers: ['artefaritaKuniklo'],
     handler,
     url: 'medieval-china.club/',
@@ -27,7 +29,7 @@ async function handler(ctx) {
     const posts = JSON.parse(
         $('script:contains("window.localPosts")')
             .text()
-            .match(/window\.localPosts = JSON\.parse\('(.*)'\);/)[1]
+            .match(/window\.localPosts = JSON\.parse\('(.*)'\);/)![1]
     )
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
         .map((item) => ({

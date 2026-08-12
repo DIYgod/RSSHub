@@ -112,7 +112,7 @@ async function handler(ctx) {
             const postTitle = article.title;
             const postTime = new Date(article.publish_time * 1000).toUTCString();
 
-            return cache.tryGet(postUrl, async () => {
+            return cache.tryGet<any>(postUrl, async () => {
                 const detailResponse = await got.get(postUrl, { headers });
                 const $ = load(detailResponse.body);
 

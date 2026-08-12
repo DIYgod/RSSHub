@@ -1,3 +1,4 @@
+// @ts-nocheck https://github.com/golang/go/blob/master/lib/wasm/wasm_exec.js
 // oxlint-disable unicorn/prefer-math-trunc
 // oxlint-disable unicorn-js/no-this-outside-of-class
 // oxlint-disable unicorn-js/no-array-from-fill
@@ -598,7 +599,7 @@
 
             const argc = this.argv.length;
 
-            const argvPtrs = [];
+            const argvPtrs: number[] = [];
             for (const arg of this.argv) {
                 argvPtrs.push(strPtr(arg));
             }

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ async function handler() {
 
     const list = $('a[class^="note"]')
         .toArray()
-        .map((element) => {
+        .map((element): DataItem => {
             const $e = $(element);
             return {
                 title: $e.find('h2, h3').text().trim(),
@@ -40,8 +40,8 @@ async function handler() {
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.pubDate = parseDate($('d-article p').first().text().trim());

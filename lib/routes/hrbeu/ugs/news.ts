@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -132,21 +132,17 @@ async function handler(ctx) {
     const author = ctx.req.param('author') || 'gztz';
     const category = ctx.req.param('category') || 'all';
     const link = baseUrl + authorMap[author][category] + '/list.htm';
-    const response = await got(link, {
-        headers: {
-            Referer: baseUrl,
-        },
-    });
+    const response = await got(link);
     const $ = load(response.data);
 
     const list = $('.wp_article_list_table .border9')
         .toArray()
-        .map((e) => {
-            e = $(e);
+        .map((e): DataItem & { link: string } => {
+            const $e = $(e);
             return {
-                title: e.find('a').attr('title'),
-                link: new URL(e.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(e.find('.date').text()),
+                title: $e.find('a').attr('title')!,
+                link: new URL($e.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($e.find('.date').text()),
             };
         });
 
@@ -157,7 +153,7 @@ async function handler(ctx) {
                     const response = await got(item.link);
                     const $ = load(response.data);
 
-                    item.description = $('.wp_articlecontent').html().trim();
+                    item.description = $('.wp_articlecontent').html();
                 } else {
                     item.description = '此链接为文件，请点击下载';
                 }

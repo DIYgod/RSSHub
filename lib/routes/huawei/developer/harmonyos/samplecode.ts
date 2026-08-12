@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -43,7 +43,7 @@ async function handler() {
             classifyId: '',
             classifyIdList: [],
             keywords: '',
-            language: 'zh',
+            language: 'zh' as Language,
             pageIndex: 1,
             pageSize: 100,
         }),
@@ -64,7 +64,7 @@ async function handler() {
         title: 'HarmonyOS 示例代码 - 华为开发者联盟',
         link: 'https://developer.huawei.com/consumer/cn/samples/',
         description: '华为鸿蒙系统示例代码更新',
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

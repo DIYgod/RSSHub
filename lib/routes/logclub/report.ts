@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: ['/lc_report/:id?', '/report/:id?'],
+    path: '/lc_report/:id?',
     categories: ['new-media'],
     example: '/logclub/lc_report',
     parameters: { id: '报告 id，见下表，默认为罗戈研究出品' },
@@ -21,6 +21,27 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report',
+        },
+        {
+            title: '报告 - 罗戈研究出品',
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report/Report',
+        },
+        {
+            title: '报告 - 物流报告',
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report/IndustryReport',
+        },
+        {
+            title: '报告 - 绿色双碳报告',
+            source: ['logclub.com/lc_report'],
+            target: '/lc_report/GreenDualCarbonReport',
+        },
+    ],
     name: '报告',
     maintainers: ['nczitzk'],
     handler,
@@ -66,12 +87,12 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 content('img').each((_, el) => {
-                    el = content(el);
-                    el.replaceWith(
+                    const $el = content(el);
+                    $el.replaceWith(
                         renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                                alt: el.prop('title'),
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
                             },
                         })
                     );
@@ -79,7 +100,7 @@ async function handler(ctx) {
 
                 item.title = content('h1').first().text();
                 item.description += renderDescription({
-                    description: content('div.article-cont').html(),
+                    description: content('div.article-cont').html() ?? undefined,
                 });
                 item.author = content('div.lc-infos a')
                     .toArray()
@@ -104,7 +125,7 @@ async function handler(ctx) {
     const $ = load(currentResponse);
 
     const title = $('div.this_nav').text().trim();
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
 
     return {
@@ -112,8 +133,8 @@ async function handler(ctx) {
         title: `${$('title').text()}${title}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
-        image: new URL($('div.logo_img img').prop('src'), rootUrl).href,
+        language: 'zh' as Language,
+        image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),

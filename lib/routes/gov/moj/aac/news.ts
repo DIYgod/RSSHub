@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,13 +37,13 @@ async function handler(ctx) {
     $('.num').remove();
     const list = $('.list ul li a')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const isDownload = /檔案下載/.test(item.attr('title'));
-            const title = isDownload ? item.text().trim() : item.attr('title');
+        .map((item): DataItem & { isDownload?: boolean; link: string } => {
+            const $item = $(item);
+            const isDownload = /檔案下載/.test($item.attr('title')!);
+            const title = isDownload ? $item.text().trim() : $item.attr('title');
             return {
-                title,
-                link: new URL(item.attr('href'), baseUrl).href,
+                title: title!,
+                link: new URL($item.attr('href')!, baseUrl).href,
                 isDownload,
             };
         });
@@ -55,9 +55,9 @@ async function handler(ctx) {
                     const response = await got(item.link);
                     const $ = load(response.data);
 
-                    item.pubDate = timezone(parseDate($('.info time').attr('datetime'), 'YYYY-MM-DD HH:mm:ss'), 8);
+                    item.pubDate = timezone(parseDate($('.info time').attr('datetime')!, 'YYYY-MM-DD HH:mm:ss'), 8);
                     $('.info, button').remove();
-                    item.description = $('.cp').html() + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '') + ($('.file_download').length ? $('.file_download').html() : '');
+                    item.description = $('.cp').html()! + ($('.lightbox_slider').length ? $('.lightbox_slider').html() : '')! + ($('.file_download').length ? $('.file_download').html() : '');
                 }
                 delete item.isDownload;
                 return item;
@@ -69,6 +69,6 @@ async function handler(ctx) {
         title: $('head title').text(),
         link: url,
         item: items,
-        language: 'zh-TW',
+        language: 'zh-TW' as Language,
     };
 }

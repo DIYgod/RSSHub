@@ -57,7 +57,7 @@ async function handler(ctx) {
     const topicId = Number(ctx.req.param('id'));
     const { type = 'all' } = ctx.req.param();
 
-    const forumMeta = await getForumMeta(topicId);
+    const forumMeta = (await getForumMeta(topicId)) as Record<string, any>;
     const topicMeta = forumMeta.dataList.find((data) => data.topicId === topicId);
     const threads = (await getThreads(topicId, type)).data.dataList.map((data) => ({
         title: data.title,

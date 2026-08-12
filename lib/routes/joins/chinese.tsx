@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,21 +24,21 @@ export const handler = async (ctx) => {
     let items = $('section.article-list-content div.table-row')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('strong').text(),
-                pubDate: timezone(parseDate(item.find('div.list-dated').text().split(/\|/).pop()), 8),
-                link: new URL(item.find('a.links').prop('href'), rootUrl).href,
-                author: item.find('div.list-dated').text().split(/\|/, 1)[0],
-                language,
+                title: $item.find('strong').text(),
+                pubDate: timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()!), 8),
+                link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
+                author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -79,14 +79,14 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
         )
     );
 
-    const image = new URL($('div.user-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.user-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${$(`a[data-code="${category}"]`)?.text() || $('ul#user-menu a').first().text()} - ${$('title').text()}`,
@@ -96,7 +96,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

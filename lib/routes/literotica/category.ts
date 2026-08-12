@@ -1,18 +1,23 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category',
+    categories: ['reading'],
+    example: '/literotica/category/anal-sex-stories',
+    parameters: {
+        category: 'Category, can be found in URL',
+    },
     radar: [
         {
             source: ['literotica.com/c/:category', 'literotica.com/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Category',
     maintainers: ['nczitzk'],
     handler,
     features: {
@@ -35,22 +40,22 @@ async function handler(ctx) {
 
     const list = $('.b-slb-item')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('h3 a');
+            const a = $item.find('h3 a');
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                author: item.find('.b-user-info-name').text(),
-                pubDate: parseDate(item.find('.b-slib-date').text(), 'MM/DD/YY'),
+                author: $item.find('.b-user-info-name').text(),
+                pubDate: parseDate($item.find('.b-slib-date').text(), 'MM/DD/YY'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

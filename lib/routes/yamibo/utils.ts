@@ -1,4 +1,5 @@
-import type { Cheerio, Element } from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import type { Element } from 'domhandler';
 import { JSDOM } from 'jsdom';
 
 import { config } from '@/config';

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,12 +24,12 @@ export const handler = async (ctx) => {
     let items = $('section.box-content div.card a.card-title')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item).parent();
+        .map((item): DataItem => {
+            const $item = $(item).parent();
 
-            const title = item.find('a.card-title').text();
+            const title = $item.find('a.card-title').text();
 
-            const src = item.find('a.card-image img').prop('data-src');
+            const src = $item.find('a.card-image img').prop('data-src');
             const image = src?.startsWith('//') ? `https:${src}` : src;
 
             const description = renderDescription({
@@ -42,9 +42,9 @@ export const handler = async (ctx) => {
                       ]
                     : undefined,
             });
-            const pubDate = item.find('div.card-info span.item').last().text();
+            const pubDate = $item.find('div.card-info span.item').last().text();
 
-            const href = item.find('a.card-title').prop('href');
+            const href = $item.find('a.card-title').prop('href');
 
             return {
                 title,
@@ -53,22 +53,22 @@ export const handler = async (ctx) => {
                 link: href?.startsWith('//') ? `https:${href}` : href,
                 category: [
                     ...new Set([
-                        ...item
+                        ...$item
                             .find('span.tag-title')
                             .toArray()
                             .map((c) => $(c).text()),
-                        item.find('div.card-info span.item').first().text(),
+                        $item.find('div.card-info span.item').first().text(),
                     ]),
                 ].filter(Boolean),
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -76,18 +76,18 @@ export const handler = async (ctx) => {
                 $$('i.p-status').remove();
 
                 $$('div.image-text-content p img.lazy').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    const src = el.prop('data-src');
+                    const src = $el.prop('data-src');
                     const image = src?.startsWith('//') ? `https:${src}` : src;
 
-                    el.parent().replaceWith(
+                    $el.parent().replaceWith(
                         renderDescription({
                             images: image
                                 ? [
                                       {
                                           src: image,
-                                          alt: el.prop('title') ?? '',
+                                          alt: $el.prop('title') ?? '',
                                       },
                                   ]
                                 : undefined,
@@ -104,13 +104,13 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()), 8);
+                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()!), 8);
                 item.author = $$('a.push-username').contents().first().text();
                 item.content = {
                     html: description,
                     text: $$('div.image-text-content').first().text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -118,7 +118,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('a.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('a.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${title} | ${$('div.actived').text()}`,
@@ -128,7 +128,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

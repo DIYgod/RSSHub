@@ -286,7 +286,7 @@ async function getFullNote(link, displayLivePhoto) {
             pubDate,
             updated,
         };
-    })) as Promise<{ title: string; description: string; pubDate: Date; updated: Date }>;
+    })) as { title: string; description: string; pubDate: Date; updated: Date };
     return data;
 }
 

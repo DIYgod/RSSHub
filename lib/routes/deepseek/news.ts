@@ -42,7 +42,7 @@ const createDataItem = (item: Element, $: CheerioAPI): Promise<DataItem> => {
     return cache.tryGet(pageURL, async () => {
         const $article = await fetchPageContent(pageURL);
         const { title, content } = extractArticleInfo($article, pageURL);
-        const pubDate = parseDateString(dateString);
+        const pubDate = parseDateString(dateString!);
 
         return {
             title,

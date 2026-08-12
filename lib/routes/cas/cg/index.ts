@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,18 +47,18 @@ async function handler(ctx) {
         .not('.gl_line')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
-                link: `${rootUrl}/cg/${caty}${a.attr('href').replace('.', '')}`,
+                link: `${rootUrl}/cg/${caty}${a.attr('href')!.replace('.', '')}`,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -66,7 +66,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.TRS_Editor').html();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
 
                 return item;
             })

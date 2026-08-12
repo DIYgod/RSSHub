@@ -25,9 +25,6 @@ async function handler() {
     const response = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: url,
-        },
         headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
     const $ = load(response.data);
@@ -39,7 +36,7 @@ async function handler() {
         const href = item.find('a:first-child').attr('href');
         const title = item.find('.entry-title a').text();
         const description = item.find('.entry-content p').text();
-        const date = parseDate(item.find('.meta-date a time').attr('datetime'));
+        const date = parseDate(item.find('.meta-date a time').attr('datetime')!);
 
         return {
             title: String(title),

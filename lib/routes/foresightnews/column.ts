@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 
 import { apiRootUrl, icon, image, processItems, rootUrl } from './util';
 
@@ -9,7 +9,7 @@ export const route: Route = {
     parameters: { id: '专栏 id, 可在对应专栏页 URL 中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -44,7 +44,7 @@ async function handler(ctx) {
         title: `Foresight News - ${column}`,
         link: currentUrl,
         description: `${column} - Foresight News`,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image,
         icon,
         logo: icon,

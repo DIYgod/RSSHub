@@ -7,8 +7,8 @@ export const loadArticle = async (link) => {
     const resp = await got(link);
     const article = load(resp.body);
 
-    const title = article('h1.entry-title').text().trim();
-    const description = article('.entry-content').html() ?? '';
+    const title = article('h1.entry-title').text();
+    const description = article('.entry-content').html();
     const pubDate = parseDate(article('time')[0].attribs.datetime);
 
     return {

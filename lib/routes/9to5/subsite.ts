@@ -7,9 +7,20 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/:subsite/:tag?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['new-media'],
+    example: '/9to5/mac/aapl',
+    parameters: {
+        subsite: 'Subsite name',
+        tag: 'Tag name inside the url of the tag page',
+    },
+    name: 'Sub-site',
+    maintainers: ['HenryQW'],
     handler,
+    description: `Supported sub-sites：
+
+| 9To5Mac | 9To5Google | 9To5Toys |
+| ------- | ---------- | -------- |
+| Mac     | Google     | Toys     |`,
 };
 
 async function handler(ctx) {
@@ -53,7 +64,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.splice(0, limit).map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
@@ -61,7 +72,7 @@ async function handler(ctx) {
                 const description = utils.ProcessFeed(response.data);
 
                 const single = {
-                    title: item.title,
+                    title: item.title!,
                     description,
                     pubDate: item.pubDate,
                     link: item.link,

@@ -70,8 +70,8 @@ async function handler(ctx) {
     // get detail info from each item
     const out = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
+            cache.tryGet(item.link!, async (): Promise<any> => {
+                const response = await ofetch(item.link!, {
                     headers: getHeaders(),
                 });
                 const $ = load(response);
@@ -97,6 +97,6 @@ async function handler(ctx) {
     return {
         title,
         link,
-        item: filteredOut,
+        item: filteredOut as DataItem[],
     };
 }

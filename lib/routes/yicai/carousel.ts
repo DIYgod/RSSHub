@@ -36,7 +36,7 @@ async function handler() {
         fetchFullArticles(
             $('#breaknews a')
                 .toArray()
-                .map((e) => ({ link: new URL($(e).attr('href'), rootUrl).href, title: $(e).text() }))
+                .map((e) => ({ link: new URL($(e).attr('href')!, rootUrl).href, title: $(e).text() }))
         )
     );
 

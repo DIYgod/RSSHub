@@ -24,16 +24,14 @@ export const route: Route = {
             title: `マイリスト ${mylist.name}‐ニコニコ動画`,
             link: `https://www.nicovideo.jp/user/${mylist.owner.id}/mylist/${mylist.id}`,
             language: 'ja',
-            item: mylist.items.map(
-                (item): DataItem => ({
-                    title: item.video.title,
-                    link: `https://www.nicovideo.jp/watch/${item.video.id}`,
-                    pubDate: parseDate(item.addedAt),
-                    author: [{ name: item.video.owner.name, avatar: item.video.owner.iconUrl, url: `https://www.nicovideo.jp/user/${item.video.owner.id}` }],
-                    description: renderVideo(item.video, false),
-                    image: item.video.thumbnail.nHdUrl ?? item.video.thumbnail.largeUrl ?? item.video.thumbnail.middleUrl ?? undefined,
-                })
-            ),
+            item: mylist.items.map((item): DataItem => ({
+                title: item.video.title,
+                link: `https://www.nicovideo.jp/watch/${item.video.id}`,
+                pubDate: parseDate(item.addedAt),
+                author: [{ name: item.video.owner.name, avatar: item.video.owner.iconUrl, url: `https://www.nicovideo.jp/user/${item.video.owner.id}` }],
+                description: renderVideo(item.video, false),
+                image: item.video.thumbnail.nHdUrl ?? item.video.thumbnail.largeUrl ?? item.video.thumbnail.middleUrl ?? undefined,
+            })),
         };
     },
 };

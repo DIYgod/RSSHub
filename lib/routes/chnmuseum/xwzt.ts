@@ -31,12 +31,12 @@ export const route: Route = {
         const items = $('ul.xly_list_ts li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a.titles').first();
+                const $item = $(item);
+                const a = $item.find('a.titles').first();
 
                 return {
                     title: a.attr('title') || a.text(),
-                    link: new URL(a.attr('href'), 'https://www.chnmuseum.cn').href,
+                    link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn').href,
                 };
             });
 

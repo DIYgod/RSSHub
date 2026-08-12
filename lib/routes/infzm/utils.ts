@@ -14,7 +14,7 @@ export async function fetchArticles(data) {
 
             return cache.tryGet(link, async () => {
                 const cookie = config.infzm.cookie;
-                const response = await got.get<string>({
+                const response = await got.get({
                     method: 'get',
                     url: link,
                     headers: {
@@ -25,7 +25,7 @@ export async function fetchArticles(data) {
                 const $ = load(response.data);
                 return {
                     title: subject,
-                    description: $('div.nfzm-content__content').html() ?? '',
+                    description: $('div.nfzm-content__content').html(),
                     pubDate: timezone(publish_time, 8).toUTCString(),
                     link,
                     author,

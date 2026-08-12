@@ -54,19 +54,19 @@ async function handler(ctx) {
     const list = $('.script-list').find('article');
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link: currentUrl,
         description: $('meta[name=description]').attr('content'),
         item: list?.toArray().map((item) => {
-            item = $(item);
-            const h2 = item.find('h2');
+            const $item = $(item);
+            const h2 = $item.find('h2');
             return {
                 title: h2.find('a').text(),
                 description: h2.find('.description').text(),
-                link: new URL(h2.find('a').attr('href'), 'https://greasyfork.org').href,
-                pubDate: parseDate(item.find('.script-list-created-date relative-time').attr('datetime')),
-                updated: parseDate(item.find('.script-list-updated-date relative-time').attr('datetime')),
-                author: item
+                link: new URL(h2.find('a').attr('href')!, 'https://greasyfork.org').href,
+                pubDate: parseDate($item.find('.script-list-created-date relative-time').attr('datetime')!),
+                updated: parseDate($item.find('.script-list-updated-date relative-time').attr('datetime')!),
+                author: $item
                     .find('.script-list-author a')
                     .toArray()
                     .map((a) => $(a).text())

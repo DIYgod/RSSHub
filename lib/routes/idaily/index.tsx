@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -74,7 +74,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: title.split(/\s/, 1)[0],

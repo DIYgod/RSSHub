@@ -4,6 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/drive/:selName',
@@ -47,7 +48,7 @@ export async function handler(ctx) {
                 title: `${item.DriverName} ${item.Version}`,
                 link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
                 description: renderToString(<DriveDescription driveName={item.DriverName} driveCode={item.DriverCode} driveVersion={item.Version} downloadFileName={item.FileName} downloadFilePath={item.FilePath} />),
-                pubDate: parseDate(item.CreateTime, 8),
+                pubDate: timezone(parseDate(item.CreateTime), 8),
             }) as DataItem
     );
 

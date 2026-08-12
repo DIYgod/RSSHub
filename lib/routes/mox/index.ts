@@ -80,32 +80,31 @@ async function handler(ctx) {
 
     if (cookie) {
         items = await Promise.all(
-            items.map(
-                (item) =>
-                    cache.tryGet(item.guid!, async () => {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                            headers: {
-                                cookie,
-                            },
-                        });
+            items.map((item) =>
+                cache.tryGet(item.guid!, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            cookie,
+                        },
+                    });
 
-                        const content = load(detailResponse.data);
+                    const content = load(detailResponse.data);
 
-                        item.author = content('.author .text_bglight font a')
-                            .toArray()
-                            .map((i) => $(i).text())
-                            .filter(Boolean)
-                            .join('、');
+                    item.author = content('.author .text_bglight font a')
+                        .toArray()
+                        .map((i) => $(i).text())
+                        .filter(Boolean)
+                        .join('、');
 
-                        const infoBlock = content('.author .text_bglight').toArray();
+                    const infoBlock = content('.author .text_bglight').toArray();
 
-                        const desc = detailResponse.data?.match(/document\.getElementById\("div_desc_content"\)\.innerHTML = "(.*?)";/s)?.[1] ?? '';
-                        item.description = `<img src="${content('.img_book').attr('src')}"><br>${infoBlock.map((i) => $(i).html()).join('<br>')}<br>${desc}`;
+                    const desc = detailResponse.data?.match(/document\.getElementById\("div_desc_content"\)\.innerHTML = "(.*?)";/s)?.[1] ?? '';
+                    item.description = `<img src="${content('.img_book').attr('src')}"><br>${infoBlock.map((i) => $(i).html()).join('<br>')}<br>${desc}`;
 
-                        return item;
-                    }) as unknown as DataItem
+                    return item;
+                })
             )
         );
     }

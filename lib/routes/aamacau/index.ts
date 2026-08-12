@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '话题',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     url: 'aamacau.com/',
     description: `| 即時報道     | 每週專題    | 藝文爛鬼樓 | 論盡紙本 | 新聞事件 | 特別企劃 |
@@ -56,18 +56,18 @@ async function handler(ctx) {
 
     const list = $('post-title a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -79,7 +79,7 @@ async function handler(ctx) {
 
                 item.description = content('#contentleft').html();
                 item.author = content('meta[itemprop="author"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
 
                 return item;
             })

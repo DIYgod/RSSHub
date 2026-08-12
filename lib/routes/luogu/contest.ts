@@ -29,6 +29,16 @@ const typeMap = {
     // },
 };
 
+interface Contest {
+    id: number;
+    name: string;
+    host: { name: string };
+    rated: boolean;
+    startTime: number;
+    ruleType: keyof typeof typeMap.ruleType;
+    visibilityType: keyof typeof typeMap.visibilityType;
+}
+
 export const route: Route = {
     path: '/contest',
     categories: ['programming'],
@@ -62,12 +72,14 @@ async function handler() {
         decodeURIComponent(
             $('script')
                 .text()
-                .match(/decodeURIComponent\("(.*)"\)/)[1]
+                .match(/decodeURIComponent\("(.*)"\)/)![1]
         )
     );
 
+    const contests: Contest[] = data.currentData.contests.result;
+
     const result = await pMap(
-        data.currentData.contests.result,
+        contests,
         (item) =>
             cache.tryGet(`${baseUrl}/contest/${item.id}`, async () => {
                 const { data: response } = await got(`${baseUrl}/contest/${item.id}`);
@@ -76,7 +88,7 @@ async function handler() {
                     decodeURIComponent(
                         $('script')
                             .text()
-                            .match(/decodeURIComponent\("(.*)"\)/)[1]
+                            .match(/decodeURIComponent\("(.*)"\)/)![1]
                     )
                 );
 
@@ -86,7 +98,7 @@ async function handler() {
                     link: `${baseUrl}/contest/${item.id}`,
                     author: item.host.name,
                     pubDate: parseDate(item.startTime, 'X'),
-                    category: [item.rated ? 'Rated' : null, typeMap.ruleType[item.ruleType], typeMap.visibilityType[item.visibilityType]].filter(Boolean),
+                    category: [item.rated ? 'Rated' : null, typeMap.ruleType[item.ruleType], typeMap.visibilityType[item.visibilityType]].filter(Boolean) as string[],
                 };
             }),
         { concurrency: 4 }

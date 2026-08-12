@@ -42,7 +42,7 @@ export const getWafTokenId = () =>
             const payload = $('script')
                 .text()
                 .match(/atob\('(.*?)'\)\),/)?.[1];
-            const response = solveWafChallenge(payload);
+            const response = solveWafChallenge(payload!);
 
             const tokenIdResponse = await ofetch.raw(rootUrl, {
                 headers: {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -48,23 +48,23 @@ async function handler(ctx) {
 
     let items = $('.aw-question-content')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('h4 a');
-            const pubDate = item.find('span.text-color-999').not('.pull-right').first().text().split('•').pop().trim();
+            const a = $item.find('h4 a');
+            const pubDate = $item.find('span.text-color-999').not('.pull-right').first().text().split('•').pop()!.trim();
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                author: item.find('.aw-user-name').text(),
+                author: $item.find('.aw-user-name').text(),
                 pubDate: timezone(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

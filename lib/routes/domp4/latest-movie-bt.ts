@@ -11,11 +11,11 @@ function getItemList($) {
     const list = $('#vod .list-group-item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                publishDate: item.find('b').text(),
-                link: `https://www.xlmp4.com${item.find('a').attr('href')}`, // fixed domain for guid
+                title: $item.find('a').text(),
+                publishDate: $item.find('b').text(),
+                link: `https://www.xlmp4.com${$item.find('a').attr('href')}`, // fixed domain for guid
             };
         })
         .filter((item) => !item.title.includes('话') && !item.title.includes('集') && !item.title.includes('更新至'));

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -9,22 +9,26 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '*',
+    path: '/',
+    categories: ['traditional-media'],
+    example: '/sinchew',
     radar: [
         {
             source: ['sinchew.com.my/'],
-            target: '',
+            target: '/',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '首页',
+    maintainers: ['nczitzk'],
     handler,
     url: 'sinchew.com.my/',
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
+    const subPath = getSubPath(ctx);
+
     const rootUrl = 'https://www.sinchew.com.my';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/' ? '' : getSubPath(ctx)}`;
+    const currentUrl = `${rootUrl}${subPath === '/' ? '' : subPath}`;
 
     const response = await got({
         method: 'get',
@@ -36,21 +40,21 @@ async function handler(ctx) {
     let items = $('.title .internalLink')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.attr('data-title'),
-                link: link.startsWith('http') ? link : `${rootUrl}${link}`,
-                pubDate: timezone(parseDate(item.text()), 8),
+                title: $item.attr('data-title')!,
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
+                pubDate: timezone(parseDate($item.text()), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -72,7 +76,7 @@ async function handler(ctx) {
                 });
 
                 item.description = content('.article-page-content').html();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), 8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
 
                 return item;
             })

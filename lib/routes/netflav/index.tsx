@@ -7,13 +7,15 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['multimedia'],
+    example: '/netflav',
     radar: [
         {
             source: ['netflav.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Index',
     maintainers: ['TonyRL'],
     handler,
     url: 'netflav.com/',
@@ -39,7 +41,7 @@ async function handler() {
         link: `https://netflav.com/video?id=${item.videoId}`,
         pubDate: parseDate(item.sourceDate),
         author: [...new Set(item.actors.map((a) => a.replace(/^(\w{2}:)/, '')))].join(', '),
-        category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))],
+        category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))] as string[],
     }));
 
     return {

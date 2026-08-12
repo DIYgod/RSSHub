@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const queryString = Object.entries(ctx.req.query())
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`)
         .join('&');
 
     const currentUrl = new URL(`${params && params.endsWith('.htm') ? params : `${params}.htm`}${queryString ? `?${queryString}` : ''}`, rootUrl).href;
@@ -27,24 +27,24 @@ export const handler = async (ctx) => {
     let items = $('li.media.thread.tap:not(li.hidden-sm)')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const subjectEl = item.find('div.subject').children('a').first();
+            const subjectEl = $item.find('div.subject').children('a').first();
 
             return {
                 title: subjectEl.text(),
-                pubDate: timezone(parseDate(item.find('span.date').text()), 8),
-                link: new URL(subjectEl.prop('href'), rootUrl).href,
+                pubDate: timezone(parseDate($item.find('span.date').text()), 8),
+                link: new URL(subjectEl.prop('href')!, rootUrl).href,
                 category: [
-                    item.find('a.text-secondary').text().replaceAll('[]', ''),
-                    ...item
+                    $item.find('a.text-secondary').text().replaceAll('[]', ''),
+                    ...$item
                         .find('a.badge')
                         .toArray()
                         .map((c) => $(c).text()),
                 ].filter(Boolean),
-                author: item.find('a.username').text(),
-                language,
+                author: $item.find('a.username').text(),
+                language: language as Language,
             };
         });
 
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
 
                 if (title) {
                     const description = $$('div.message.break-all').html();
-                    const image = new URL($$('img').first().prop('src'), rootUrl).href;
+                    const image = new URL($$('img').first().prop('src')!, rootUrl).href;
 
                     item.title = title;
                     item.description = description;
@@ -73,14 +73,14 @@ export const handler = async (ctx) => {
                     };
                     item.image = image;
                     item.banner = image;
-                    item.language = language;
+                    item.language = language as Language;
 
                     const torrents = $$('ul.attachlist li a');
 
                     if (torrents.length > 0) {
                         const torrent = torrents.first();
 
-                        item.enclosure_url = new URL(torrent.prop('href'), rootUrl).href;
+                        item.enclosure_url = new URL(torrent.prop('href')!, rootUrl).href;
                         item.enclosure_type = 'application/x-bittorrent';
                         item.enclosure_title = torrent.text();
                     }
@@ -92,7 +92,7 @@ export const handler = async (ctx) => {
     );
 
     const author = 'BT 之家 1LOU 站';
-    const image = new URL($('img.logo-2').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo-2').prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text().split(/-/, 1)[0]} - ${author}`,
@@ -102,7 +102,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language,
+        language: language as Language,
     };
 };
 
@@ -138,9 +138,9 @@ export const route: Route = {
         {
             source: ['1lou.me/:params'],
             target: (_, url) => {
-                url = new URL(url);
+                const parsedUrl = new URL(url);
 
-                return `/1lou${url.href.replace(rootUrl, '')}`;
+                return `/1lou${parsedUrl.href.replace(rootUrl, '')}`;
             },
         },
     ],

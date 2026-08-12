@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-const fetchMock = vi.fn(() => Promise.resolve(new Response('ok')));
+const fetchMock = vi.fn<(...args: any[]) => Promise<Response>>(() => Promise.resolve(new Response('ok')));
 
 // The module captures the global fetch at import time, so stub before importing
 const loadWrappedFetch = async () => {

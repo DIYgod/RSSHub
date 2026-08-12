@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: 'Nogizaka46 Blog 乃木坂 46 博客',
-    maintainers: ['Kasper4649', 'akashigakki'],
+    maintainers: ['Kasper4649', 'AkashiGakki'],
     handler,
     url: 'blog.nogizaka46.com/s/n46/diary/MEMBER',
     description: `Member ID

@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 
 const FEED_TITLE = 'Immobilien - BWSG' as const;
@@ -13,7 +12,8 @@ const BASE_URL = `${SITE_URL}/immobilien/immobilie-suchen/`;
 export const route: Route = {
     name: 'Angebote',
     example: '/bwsg/_vermarktungsart=miete&_objektart=wohnung&_zimmer=2,3&_wohnflaeche=45,70&_plz=1210,1220',
-    path: '*',
+    path: '/:path{.+}?',
+    parameters: { path: 'Query parameters of the search, without the leading `?`, see the description below' },
     maintainers: ['sk22'],
     categories: ['other'],
     description: `Copy the query parameters for your <https://www.bwsg.at/immobilien/immobilie-suchen>
@@ -28,7 +28,7 @@ RSS feed might not get all items.
 :::`,
 
     async handler(ctx) {
-        let params = getSubPath(ctx).slice(1);
+        let params = ctx.req.param('path') ?? '';
         if (params.startsWith('&')) {
             params = params.slice(1);
         }
@@ -43,7 +43,7 @@ RSS feed might not get all items.
                 const $el = $(el);
                 const link = el.attribs.href;
                 const image = $el.find('.res_immobiliensuche__immobilien__item__thumb > img').attr('src');
-                const title = $el.find('.res_immobiliensuche__immobilien__item__content__title').text().trim();
+                const title = $el.find('.res_immobiliensuche__immobilien__item__content__title').text();
                 const location = $el.find('.res_immobiliensuche__immobilien__item__content__meta__location').text().trim();
                 const price = $el.find('.res_immobiliensuche__immobilien__item__content__meta__preis').text().trim();
                 const metadata = $el.find('.res_immobiliensuche__immobilien__item__content__meta__row_1').text().trim();

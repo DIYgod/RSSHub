@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import iconv from 'iconv-lite';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -60,7 +60,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? timezone(parseDate(updated), 8) : undefined,
-            language,
+            language: language as Language,
         };
 
         return processedItem;
@@ -118,7 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         image,
                         banner: image,
                         updated: updated ? timezone(parseDate(updated), 8) : undefined,
-                        language,
+                        language: language as Language,
                     };
 
                     return {
@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: `https:${$('a.logo img').attr('src')}`,
         author: $('meta[name="author"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

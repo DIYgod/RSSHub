@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,18 +40,18 @@ async function handler(ctx) {
     let items = $('div[class^="flex justify-center"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('h2').text(),
-                link: rootUrl + item.find('a').attr('href'),
-                pubDate: parseDate(item.find('span[class^=date]').text()),
+                title: $item.find('h2').text(),
+                link: rootUrl + $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('span[class^=date]').text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
@@ -76,7 +76,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: rootUrl + '/blog',
         description: $('meta[name="description"]').attr('content'),
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 

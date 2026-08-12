@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -38,18 +38,18 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.hourrankitem')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             title: $(item).find('a.hourranktitle').text(),
-            link: new URL($(item).find('a.hourranktitle').attr('href'), host).href,
+            link: new URL($(item).find('a.hourranktitle').attr('href')!, host).href,
         }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = $('#dabstract').html() + $('a.dgotobutton').html('前往购买');
+                item.description = $('#dabstract').html()! + $('a.dgotobutton').html('前往购买');
                 item.pubDate = parseRelativeDate($('div.hourranktime').text());
 
                 return item;

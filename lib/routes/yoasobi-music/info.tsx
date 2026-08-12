@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'News & Biography',
-    maintainers: [],
+    maintainers: ['Kiotlin'],
     handler,
     url: 'www.yoasobi-music.jp/',
 };

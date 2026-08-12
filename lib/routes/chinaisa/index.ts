@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -188,20 +188,20 @@ async function handler(ctx) {
     let items = $('ul.list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.prop('title') ?? item.text(),
-                link: new URL(`gxportal/xfgl/portal/${item.prop('href')}`, rootUrl).href,
-                guid: item.prop('href').match(/articleId=(\w+)/)[1],
-                pubDate: parseDate(item.parent().find('span.times').text().replaceAll('[]', '')),
+                title: $item.prop('title') ?? $item.text(),
+                link: new URL(`gxportal/xfgl/portal/${$item.prop('href')}`, rootUrl).href,
+                guid: $item.prop('href')!.match(/articleId=(\w+)/)![1],
+                pubDate: parseDate($item.parent().find('span.times').text().replaceAll('[]', '')),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(apiArticleUrl, {
                     method: 'POST',
                     headers: {
@@ -236,14 +236,14 @@ async function handler(ctx) {
 
     $ = load(currentResponse);
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${$('title').text()} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'cn',
+        language: 'zh-CN' as Language,
         image: new URL('img/logo.jpg', rootUrl).href,
         icon,
         logo: icon,

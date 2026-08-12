@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
             };
         });
 
@@ -68,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('h1.newstit').text();
@@ -131,7 +131,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         },
                         image: item.image,
                         banner: item.image,
-                        language,
+                        language: language as Language,
                         _extra: {
                             links: extraLinks.length > 0 ? extraLinks : undefined,
                         },
@@ -152,7 +152,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: feedImage,
         author: title.split(/_/).pop(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

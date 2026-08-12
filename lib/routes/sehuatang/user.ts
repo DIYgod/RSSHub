@@ -2,7 +2,7 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -55,10 +55,10 @@ async function handler(ctx) {
     const list = $('#delform tr:not(.th)')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('th>a').first();
-            const category = item.find('.xg1').first().text();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('th>a').first();
+            const category = $item.find('.xg1').first().text();
             return {
                 title: `[${category}] ${a.text()}`,
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
@@ -70,7 +70,7 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
+            cache.tryGet(info.link!, async () => {
                 const response = await got(info.link, {
                     headers: {
                         Cookie: config.sehuatang.cookie,
@@ -113,7 +113,7 @@ async function handler(ctx) {
                 const datetimeString = `${datestampString} ${timestampString}`;
                 const timestamp = new Date(datetimeString).getTime();
 
-                info.pubDate = $('.authi em span').length > 0 ? parseDate($('.authi em span').attr('title')) : parseDate(timestamp);
+                info.pubDate = $('.authi em span').length > 0 ? parseDate($('.authi em span').attr('title')!) : parseDate(timestamp);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
@@ -121,7 +121,7 @@ async function handler(ctx) {
 
                 const hasEnclosureUrl = isMag || torrent !== undefined;
                 if (hasEnclosureUrl) {
-                    const enclosureUrl = isMag ? magnet : new URL(torrent, baseUrl).href;
+                    const enclosureUrl = isMag ? magnet : new URL(torrent!, baseUrl).href;
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }

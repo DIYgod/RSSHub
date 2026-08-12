@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
+import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
-import type { JSX } from 'hono/jsx/jsx-runtime';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -99,7 +99,7 @@ const renderDescription = ({ result }: ReutersContent): string => {
                 }
 
                 if (element.type === 'header') {
-                    const HeaderTag = `h${element.level ?? 1}` as keyof JSX.IntrinsicElements;
+                    const HeaderTag = `h${element.level ?? 1}` as unknown as FC;
                     return <HeaderTag key={`header-${index}`}>{element.content ? raw(element.content) : null}</HeaderTag>;
                 }
 
@@ -197,7 +197,6 @@ async function handler(ctx) {
     const browserHeaders = {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
-        Referer: 'https://www.reuters.com/',
     };
 
     try {
@@ -366,5 +365,6 @@ async function handler(ctx) {
                 item: items.slice(0, limit),
             };
         }
+        return null;
     }
 }

@@ -279,11 +279,7 @@ function isRouteFile(filePath: string): boolean {
 async function main() {
     const started = performance.now();
     const args = process.argv.slice(2);
-    const files: string[] =
-        args.length > 0
-            ? args.map((f) => path.resolve(f)).filter((f) => isRouteFile(f))
-            : // @ts-ignore ts(2550)
-              await Array.fromAsync(walk(routesDir));
+    const files: string[] = args.length > 0 ? args.map((f) => path.resolve(f)).filter((f) => isRouteFile(f)) : await Array.fromAsync(walk(routesDir));
 
     await Promise.all(files.map((f) => processFile(f)));
 

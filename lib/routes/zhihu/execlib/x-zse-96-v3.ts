@@ -15,8 +15,8 @@ function Q(e, t) {
     return ((4_294_967_295 & e) << t) | (e >>> (32 - t));
 }
 function G(e) {
-    const t = Array.from({ length: 4 });
-    const n = Array.from({ length: 4 });
+    const t = Array.from({ length: 4 }) as number[];
+    const n = Array.from({ length: 4 }) as number[];
     (i(e, t, 0), (n[0] = h.zb[255 & t[0]]), (n[1] = h.zb[255 & t[1]]), (n[2] = h.zb[255 & t[2]]), (n[3] = h.zb[255 & t[3]]));
     const r = B(n, 0);
     return r ^ Q(r, 2) ^ Q(r, 10) ^ Q(r, 18) ^ Q(r, 24);
@@ -34,8 +34,8 @@ const __g = {
         return n;
     },
     r(e) {
-        const t = Array.from({ length: 16 });
-        const n = Array.from({ length: 36 });
+        const t = Array.from({ length: 16 }) as number[];
+        const n = Array.from({ length: 36 }) as number[];
         ((n[0] = B(e, 0)), (n[1] = B(e, 4)), (n[2] = B(e, 8)), (n[3] = B(e, 12)));
         for (let r = 0; r < 32; r++) {
             const o = G(n[r + 1] ^ n[r + 2] ^ n[r + 3] ^ h.zk[r]);
@@ -73,7 +73,7 @@ const encode = (param) => {
 };
 
 const preProcess = (md5Str) => {
-    const md5CharCodeAtArr = [];
+    const md5CharCodeAtArr: any[] = [];
     for (let i = 0; i < md5Str.length; i++) {
         md5CharCodeAtArr.push(md5Str.charCodeAt(i));
     }
@@ -86,7 +86,7 @@ const preProcess = (md5Str) => {
 
     const md5CharCodeAtFrontArr = md5CharCodeAtArr.slice(0, 16);
     const fixArr = [48, 53, 57, 48, 53, 51, 102, 55, 100, 49, 53, 101, 48, 49, 100, 55];
-    const new_md5_charCodeAt_arr = [];
+    const new_md5_charCodeAt_arr: number[] = [];
     for (const [i, element] of md5CharCodeAtFrontArr.entries()) {
         new_md5_charCodeAt_arr.push(element ^ fixArr[i] ^ 42);
     }

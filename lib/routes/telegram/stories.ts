@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import type { Context } from 'hono';
-import { Api } from 'telegram';
+import { Api } from 'teleproto';
 
 import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';

@@ -32,7 +32,7 @@ const parseDyArticle = (item) =>
             }
             const url = new URL(i.attribs.src);
             if (url.host === 'nimg.ws.126.net') {
-                i.attribs.src = url.searchParams.get('url');
+                i.attribs.src = url.searchParams.get('url') ?? '';
             }
         });
 

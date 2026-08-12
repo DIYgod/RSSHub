@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -115,7 +115,7 @@ async function handler(ctx: Context) {
         title: $('head title').text(),
         link,
         image: $('meta[name="og:image"]').attr('content'),
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,11 +64,11 @@ async function handler(ctx) {
     const matches = response.data.match(/images\/(\d{4}-\d{2}\/\d{2})\/\d{2}\/\d+_brief/);
     const link = `${rootUrl}/hnrb_epaper/html/${matches[1]}`;
 
-    let items = $('tbody')
+    const urls = $('tbody')
         .eq(1)
         .find('a')
         .toArray()
-        .map((a) => `${link}/${$(a).attr('href').replace(/\.\//, '')}`)
+        .map((a) => `${link}/${$(a).attr('href')!.replace(/\.\//, '')}`)
         .filter((a) => a.endsWith('div=-1'));
 
     if (!id) {
@@ -76,7 +76,7 @@ async function handler(ctx) {
             $('#pageLink')
                 .slice(1)
                 .toArray()
-                .map((p) => `${link}/${$(p).attr('href').replace(/\.\//, '')}`)
+                .map((p) => `${link}/${$(p).attr('href')!.replace(/\.\//, '')}`)
                 .map(async (p) => {
                     const pageResponse = await got({
                         method: 'get',
@@ -85,20 +85,20 @@ async function handler(ctx) {
 
                     const page = load(pageResponse.data);
 
-                    items.push(
+                    urls.push(
                         ...page('tbody')
                             .eq(1)
                             .find('a')
                             .toArray()
-                            .map((a) => `${link}/${page(a).attr('href').replace(/\.\//, '')}`)
+                            .map((a) => `${link}/${page(a).attr('href')!.replace(/\.\//, '')}`)
                             .filter((a) => a.endsWith('div=-1'))
                     );
                 })
         );
     }
 
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        urls.map((item) =>
             cache.tryGet(item, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -120,6 +120,6 @@ async function handler(ctx) {
     return {
         title: `湖南日报${id ? ` - ${$('strong').first().parent().text()}` : ''}`,
         link: currentUrl,
-        item: items,
+        item: items as DataItem[],
     };
 }

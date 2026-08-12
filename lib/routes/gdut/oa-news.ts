@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -50,7 +51,7 @@ export const route: Route = {
     parameters: {
         type: '通知类型，留空则获取所有分类',
     },
-    feature: {
+    features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
@@ -108,7 +109,7 @@ async function handler(ctx) {
     }
 
     // 构造文章数组
-    const articles = resp.data.data.map((item) => ({
+    const articles: Array<DataItem & { link: string }> = resp.data.data.map((item): DataItem & { link: string } => ({
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
@@ -121,7 +122,7 @@ async function handler(ctx) {
         articles,
         async (data) => {
             const link = data.link;
-            data.description = await cache.tryGet(link, async () => {
+            data.description = (await cache.tryGet(link, async () => {
                 // 获取数据
                 const response = await got(link, {
                     cookieJar,
@@ -131,11 +132,11 @@ async function handler(ctx) {
                 const node = $('#content');
                 // 清理样式
                 node.find('*')
-                    .filter((_, el) => el.type === 'comment' || el.tagName === 'meta' || el.tagName === 'style')
+                    .filter((_, el) => el.tagName === 'meta' || el.tagName === 'style')
                     .remove();
                 node.find('*')
                     .contents()
-                    .filter((_, el) => el.type === 'comment' || el.tagName === 'meta' || el.tagName === 'style')
+                    .filter((_, el) => el.type === 'comment' || (el as Element).tagName === 'meta' || (el as Element).tagName === 'style')
                     .remove();
                 node.find('*').each((_, el) => {
                     if (el.attribs.style !== undefined) {
@@ -196,8 +197,8 @@ async function handler(ctx) {
                     }
                 });
 
-                return node.html();
-            });
+                return node.html() ?? '';
+            })) as string;
             return data;
         },
         { concurrency: 2 }

@@ -14,8 +14,19 @@ function generateExhibitionItem(result) {
 
 export const route: Route = {
     path: '/exhibitions/:state?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['travel'],
+    example: '/metmuseum/exhibitions',
+    parameters: { state: '展览进行的状态：`current` 对应展览当前正在进行，`past` 对应过去的展览，`upcoming` 对应即将举办的展览，默认为 `current`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Exhibitions',
+    maintainers: ['chazeon'],
     handler,
 };
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got';
@@ -48,19 +48,19 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#wp_news_w6 ul li.news')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const pubDate = item.find('span.news_meta');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
+            const pubDate = $item.find('span.news_meta');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(pubDate.text()),
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

@@ -93,8 +93,8 @@ const handler: Route['handler'] = async (ctx) => {
                 const dataTime = Number(timeEl.attr('data-time') || 0);
                 const pubDate = timeEl.attr('datetime') || (dataTime ? new Date(dataTime * 1000).toUTCString() : undefined);
 
-                // 正文容器（clone 后处理）
-                const $body = $el.find('.message-body .bbWrapper, .message-content .bbWrapper, .bbWrapper').first().clone();
+                // 正文容器（就地处理）
+                const $body = $el.find('.message-body .bbWrapper, .message-content .bbWrapper, .bbWrapper');
 
                 // 去掉引用块（回复别人的引用）
                 $body.find('.bbCodeBlock--quote, blockquote.bbCodeBlock').remove();
@@ -115,16 +115,15 @@ const handler: Route['handler'] = async (ctx) => {
                 const hasImage = imgs.length > 0;
 
                 // 文字 HTML：移除图片再取 HTML
-                const $textOnly = $body.clone();
-                $textOnly.find('img, picture').remove();
-                const textHtml = ($textOnly.html() || '').trim();
+                $body.find('img, picture').remove();
+                const textHtml = ($body.html() || '').trim();
 
                 // 标题：作者 + 楼层号（若能取到）
                 const floor = $el.find('.message-attribution-opposite a').last().text().trim();
                 const title = author ? `${author}${floor ? ' - ' + floor : ''}` : floor || 'New post';
 
                 // 描述：Source 链接 + 文字 + 图片
-                const imagesHtml = hasImage ? imgs.map((u) => `<p><img src="${u}" referrerpolicy="no-referrer" /></p>`).join('') : '';
+                const imagesHtml = hasImage ? imgs.map((u) => `<p><img src="${u}" /></p>`).join('') : '';
                 const description = `
                     <p><a href="${link}">🔗 Source post</a></p>
                     ${textHtml}${imagesHtml}
@@ -158,7 +157,6 @@ const handler: Route['handler'] = async (ctx) => {
     // 5) 标题取“最新页”的 <h1>
     const title =
         load(htmlList.at(-1) ?? '')('h1')
-            .first()
             .text()
             .trim() || `ResetEra Thread ${id}`;
 

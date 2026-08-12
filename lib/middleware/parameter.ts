@@ -86,6 +86,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         const handleItem = (item: DataItem) => {
             item.title &&= entities.decodeXML(item.title + '');
+            item.description ||= item.content?.html;
 
             // handle pubDate
             if (item.pubDate) {
@@ -201,7 +202,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title || '';
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = item.category || [];
+                const category = (item.category as string[] | undefined) || [];
                 const isFilter =
                     regex instanceof RE2JS
                         ? regex.matcher(title).find() || regex.matcher(description).find() || regex.matcher(author).find() || category.some((c) => regex.matcher(c).find())
@@ -217,7 +218,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title || '';
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = item.category || [];
+                const category = (item.category as string[] | undefined) || [];
                 let isFilter = true;
 
                 if (ctx.req.query('filter_title')) {
@@ -246,7 +247,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title;
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = item.category || [];
+                const category = (item.category as string[] | undefined) || [];
                 let isFilter = true;
 
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_title')) {

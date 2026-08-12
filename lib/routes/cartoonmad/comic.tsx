@@ -81,12 +81,12 @@ async function handler(ctx) {
         .find('a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${baseUrl}${item.attr('href')}`,
-                chapter: item.text().match(/\d+/)[0],
-                pages: item.next('font').text().match(/\d+/)[0],
+                title: $item.text(),
+                link: `${baseUrl}${$item.attr('href')}`,
+                chapter: $item.text().match(/\d+/)![0],
+                pages: $item.next('font').text().match(/\d+/)![0],
             };
         })
         .toReversed();

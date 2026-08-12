@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,12 +30,12 @@ async function handler() {
 
     const list = $('.listNews li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const a = element.find('a');
 
             const link = a.attr('href')?.replace('http://', 'https://') || '';
-            const title = a.text() || '';
+            const title = a.text();
 
             const timeSpan = element.find('span');
             const dateText = timeSpan.text().slice(1, timeSpan.text().length - 1);
@@ -59,7 +59,7 @@ async function handler() {
 
                 const $ = load(decoder.decode(response.data));
 
-                item.description = $('.art_contextBox').html() || '';
+                item.description = $('.art_contextBox').html();
 
                 return item;
             })

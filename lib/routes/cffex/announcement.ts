@@ -41,10 +41,10 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
     const $ = load(response);
     const list = $('div.notice_list li')
         .toArray()
-        .map((item) => {
-            item = $(item); // (Element) -> LoadedCheerio
-            const titleEle = $(item).find('a').first();
-            const dateEle = $(item).find('a').eq(1);
+        .map((item): DataItem => {
+            const $item = $(item); // (Element) -> LoadedCheerio
+            const titleEle = $($item).find('a').first();
+            const dateEle = $($item).find('a').eq(1);
 
             return {
                 title: titleEle.text().trim(),
@@ -57,8 +57,8 @@ async function handler(): Promise<{ title: string; link: string; item: DataItem[
     const items = await Promise.all(
         // (Promise|null) -> Promise|null
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 item.description = $('div.jysggnr div.nan p').eq(1)?.html();
                 return item;

@@ -89,22 +89,22 @@ async function handler(ctx) {
     const items = $('.activity-wrapper')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: `${item.find('.activity-label').text().split(' • ', 1)[0]}: ${item.find('.stamp-anchor').text()}`,
-                link: `${rootUrl}${item.find('.stamp-anchor .tbx-tooltip').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.activity-time span').attr('title')), 0),
-                author: item.find('.user-anchor').text(),
+                title: `${$item.find('.activity-label').text().split(' • ', 1)[0]}: ${$item.find('.stamp-anchor').text()}`,
+                link: `${rootUrl}${$item.find('.stamp-anchor .tbx-tooltip').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.activity-time span').attr('title')!), 0),
+                author: $item.find('.user-anchor').text(),
                 description: renderDescription(
-                    item.find('.changelog').text(),
-                    item
+                    $item.find('.changelog').text(),
+                    $item
                         .find('.picture-icon')
                         .toArray()
                         .map((image) =>
                             $(image)
-                                .html()
-                                .match(/url\((.*)\)/)[1]
+                                .html()!
+                                .match(/url\((.*)\)/)![1]
                                 .replace(/\/thumbnails/, '')
                         )
                 ),

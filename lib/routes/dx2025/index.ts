@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -60,17 +60,17 @@ async function handler(ctx) {
     const list = $('.entry-title a')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -79,7 +79,7 @@ async function handler(ctx) {
 
                 item.author = content('.entry-author-name').text();
                 item.description = content('.bpp-post-content, .entry-content').html();
-                item.pubDate = new Date(content('.entry-date').attr('datetime')).toUTCString();
+                item.pubDate = new Date(content('.entry-date').attr('datetime')!).toUTCString();
 
                 return item;
             })

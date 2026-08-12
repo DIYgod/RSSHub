@@ -41,7 +41,7 @@ async function handler(ctx) {
         language: ctx.req.param('lang'),
         item: info.map((e) => ({
             title: e.title,
-            author: e.author.name,
+            author: e.author.name ?? undefined,
             description: `<img src="${e.headImage}"/> ${utils.renderAuthor(e.author)}`,
             pubDate: parseDate(new Date().toISOString()), // No Time for now
             link: e.detailPage,

@@ -52,7 +52,7 @@ function processNews(page) {
         .toArray()
         .map((item) => {
             const title = $(item).find('a>h5').text().trim();
-            const content = $(item).find('a>div').html() ?? '';
+            const content = $(item).find('a>div').html();
             const link = $(item).find('div>p>a').attr('href') || '';
             return {
                 title,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -19,7 +19,7 @@ const handler = async (ctx) => {
 
     const list = $('.title a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const meta = $item.parent().next();
             return {
@@ -42,8 +42,8 @@ const handler = async (ctx) => {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const $ = load(detailResponse);
 
                 item.author = $('a[itemprop="author"]').eq(0).text();

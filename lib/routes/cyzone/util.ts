@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -20,14 +21,14 @@ const getInfo = (url) =>
         const $ = load(response);
 
         const avatar = $('img.avatar')?.prop('src')?.split('?', 1)[0] ?? undefined;
-        const icon = new URL($('link[rel="icon"]')?.prop('href'), rootUrl).href;
-        const image = new URL($('div.logo img')?.prop('src'), rootUrl).href;
+        const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+        const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
         return {
             title: $('title').text(),
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-cn',
+            language: 'zh-CN' as Language,
             image: avatar || image,
             icon,
             logo: icon,
@@ -90,7 +91,7 @@ const processItems = async (apiUrl, limit, ...params) => {
 
                 content('img').each((_, el) => {
                     if (content(el).prop('src')) {
-                        content(el).prop('src', content(el).prop('src').split('?', 1)[0]);
+                        content(el).prop('src', content(el).prop('src')!.split('?', 1)[0]);
                     } else {
                         content(el).remove();
                     }

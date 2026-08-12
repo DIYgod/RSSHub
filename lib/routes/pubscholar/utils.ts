@@ -12,7 +12,7 @@ export const uuidv4 = () => crypto.randomUUID();
 
 const generateNonce = (length: number): string => {
     if (!length) {
-        return null;
+        return null!;
     }
 
     let nonce = '';

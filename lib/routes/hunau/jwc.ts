@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '教务处',
-    maintainers: [],
+    maintainers: ['lcandy2'],
     handler,
     url: 'xky.hunau.edu.cn/',
     description: `| 分类 | 通知公告 | 教务动态 | 其他教务通知... |
@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    await getContent(ctx, {
+    return await getContent(ctx, {
         baseHost: 'https://jwc.hunau.edu.cn',
         baseCategory: 'tzgg', // 默认：通知公告
         baseTitle: '湖南农业大学教务处',

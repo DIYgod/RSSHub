@@ -67,8 +67,7 @@ export const route: Route = {
                 const href = a.attr('href') ?? '';
                 const link = new URL(href, `${baseUrl}/cn/`).href;
                 const title = a.find('.text h3').text();
-                const rawImgSrc = a.find('.img img').attr('src') ?? '';
-                const imgUrl = new URL(rawImgSrc, baseUrl).href ?? '';
+                const imgUrl = a.find('.img img').attr('src') ?? '';
                 const location = a
                     .find('p')
                     .first()

@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -85,14 +85,14 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), currentUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, currentUrl).href;
 
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('span.rainbow-text').first().text(),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle: $('title').text(),

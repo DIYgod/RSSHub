@@ -13,6 +13,11 @@ type Get = typeof http.get | typeof https.get | typeof http.request | typeof htt
 
 interface ExtendedRequestOptions extends http.RequestOptions {
     headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
+    // legacy `url.parse()` shaped options, still accepted by node:http
+    href?: string;
+    search?: string;
+    query?: string | Record<string, any>;
+    headers?: http.OutgoingHttpHeaders;
 }
 
 const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
@@ -23,7 +28,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         if (typeof args[0] === 'string' || args[0] instanceof URL) {
             url = new URL(args[0]);
             if (typeof args[1] === 'object') {
-                options = args[1];
+                options = args[1] as ExtendedRequestOptions;
                 callback = args[2];
             } else if (typeof args[1] === 'function') {
                 options = {};
@@ -93,6 +98,6 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         const { headerGeneratorOptions, ...cleanOptions } = options;
 
         return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;
-    };
+    } as unknown as typeof origin;
 
 export default getWrappedGet;

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -33,14 +33,14 @@ async function handler(ctx) {
     const list = $('div.recent-replies-mod ul.comment-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const p = item.find('p');
+            const $item = $(item);
+            const p = $item.find('p');
             const match = p
                 .find('a')
-                .attr('href')
+                .attr('href')!
                 .match(/%2Fnote%2F(.*?)%2F%23(.*?)&type=note/);
-            const nid = match[1];
-            const cid = match[2];
+            const nid = match![1];
+            const cid = match![2];
             p.remove();
             return {
                 link: `https://www.douban.com/note/${nid}/#${cid}`,
@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, (async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -72,13 +72,13 @@ async function handler(ctx) {
                         comments.push(...c.replies);
                     }
                 }
-            })
+            }) as () => Promise<Record<string, any>>)
         )
     );
 
     return {
         title: $('title').text() + ' - 最新回应',
         link: currentUrl,
-        item: items,
+        item: items as DataItem[],
     };
 }

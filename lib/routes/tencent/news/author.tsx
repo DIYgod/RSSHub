@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Comment } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
@@ -68,7 +69,7 @@ async function handler(ctx): Promise<Data> {
                 const data = JSON.parse(
                     $('script:contains("window.DATA")')
                         .text()
-                        .match(/window\.DATA = (\{.+\});/)[1]
+                        .match(/window\.DATA = (\{.+\});/)![1]
                 );
                 const $data = load(data.originContent?.text || '', null, false);
                 if ($data) {
@@ -77,7 +78,7 @@ async function handler(ctx): Promise<Data> {
                         .contents()
                         .filter((_, elem) => elem.type === 'comment')
                         .replaceWith((_, elem) => {
-                            const attribute = elem.data.trim();
+                            const attribute = (elem as Comment).data.trim();
                             const imageData = attribute?.startsWith('IMG') ? data.originAttribute[attribute] : undefined;
 
                             return renderToString(imageData ? <img src={imageData.imgurl0} style={imageData.style} /> : null);

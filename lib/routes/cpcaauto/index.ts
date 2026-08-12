@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,13 +22,13 @@ export const handler = async (ctx) => {
     let items = $('div.list_d ul li.q')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('a').text(),
-                pubDate: parseDate(item.find('span').text().trim()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
+                title: $item.find('a').text(),
+                pubDate: parseDate($item.find('span').text().trim()),
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
 
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.view span').first().text().split(/：/).pop()), 8);
+                item.pubDate = timezone(parseDate($$('div.view span').first().text().split(/：/).pop()!), 8);
                 item.content = {
                     html: description,
                     text: $$('div.text').text(),
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="keywords"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 
@@ -133,9 +133,9 @@ export const route: Route = {
         {
             source: ['cpcaauto.com/news.php'],
             target: (_, url) => {
-                url = new URL(url);
-                const types = url.searchParams.get('types');
-                const id = url.searchParams.get('id');
+                const { searchParams } = new URL(url);
+                const types = searchParams.get('types');
+                const id = searchParams.get('id');
 
                 return types ? `/${types}${id ? `/${id}` : ''}` : '';
             },

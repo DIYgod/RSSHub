@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -17,28 +17,28 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.list ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('span.time').text()),
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.find('span.time').text()),
+                link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.includes(domain)) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.includes(domain)) {
                     return item;
                 }
 
@@ -74,7 +74,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('meta[name="keywords"]').prop('content')?.replaceAll(',', ' - ') ?? $('title').text();
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title,

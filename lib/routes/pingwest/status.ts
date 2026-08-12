@@ -35,9 +35,6 @@ async function handler() {
         searchParams: {
             page: 1,
         },
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(response.data.data.list);
     const items = $('section.item')
@@ -52,12 +49,12 @@ async function handler() {
             let description = rightNode.text();
             const imgUrl = $item('.news-img img');
             if (imgUrl.length) {
-                imgUrl.attr('src', imgUrl.attr('src').split('?x-', 1)[0]);
+                imgUrl.attr('src', imgUrl.attr('src')!.split('?x-', 1)[0]);
                 description += `<br>${imgUrl.parent().html()}`;
             }
             return {
                 title: title || tag,
-                link: link.startsWith('http') ? link : `https:${link}`,
+                link: link!.startsWith('http') ? link : `https:${link}`,
                 description,
                 pubDate: parseDate(timestamp, 'X'),
                 category: tag,

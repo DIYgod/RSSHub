@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -81,7 +81,7 @@ async function handler(ctx) {
                     const topList = $('.tab-pane')
                         .toArray()
                         .map((item) => ({
-                            title: $(item).attr('id')?.toUpperCase(),
+                            title: $(item).attr('id')?.toUpperCase() as string,
                             content: $(item).find('ul').toString(),
                         }));
 
@@ -137,7 +137,7 @@ async function handler(ctx) {
                 });
             })
         )
-    ).filter((item) => Object.keys(item).length > 0);
+    ).filter((item) => Object.keys(item).length > 0) as DataItem[];
 
     return {
         title: `Daily Torrents Statistics in ${country} - iknownwhatyoudownload`,

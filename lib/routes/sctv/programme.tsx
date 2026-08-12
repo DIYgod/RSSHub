@@ -93,7 +93,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = [];
+    let items: any[] = [];
 
     const array = response.data.data.programmeArray.slice(0, limit).map((list) => ({
         guid: list.id,
@@ -102,7 +102,7 @@ async function handler(ctx) {
 
     await Promise.all(
         array.map((list) =>
-            cache.tryGet(list.link, async () => {
+            cache.tryGet(list.link, (async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: list.link,
@@ -127,7 +127,7 @@ async function handler(ctx) {
                 }
 
                 items = [...items, ...(currentFullItems.length === 0 ? currentItems : currentFullItems)];
-            })
+            }) as unknown as () => Promise<Record<string, any>>)
         )
     );
 

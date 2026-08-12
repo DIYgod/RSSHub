@@ -23,9 +23,9 @@ async function handler() {
     const items = $('#repo > ul > li > a')
         .toArray()
         .map((item) => {
-            const name = $(item).find('h2 span').first();
+            const name = $(item).find('h2 span');
             const link = $(item).attr('href');
-            const description = $(item).find('div p.break-words').first();
+            const description = $(item).find('div p.break-words');
             const pubDate = $(item).find('span:contains("Updated")').first();
 
             return {

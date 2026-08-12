@@ -20,7 +20,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
         {data.item?.map((item) => (
             <entry>
                 <title>{item.title}</title>
-                <content type="html">{item.description}</content>
+                {item.description ? <content type="html">{item.description}</content> : item.content?.text ? <content type="text">{item.content.text}</content> : <content src={item.link} type="text/html" />}
                 <link href={item.link} />
                 <id>{item.guid || item.link || item.title}</id>
                 {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}

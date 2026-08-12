@@ -31,9 +31,7 @@ export const route: Route = {
 
 async function handler() {
     const link = 'http://www.szse.cn/disclosure/notice/company/index.html';
-    const response = await got.get(link, {
-        Referer: host,
-    });
+    const response = await got.get(link);
     const $ = load(response.data);
     // 正则表达式匹配Script标签的url和title变量
     function getData(jscontent, option) {
@@ -58,11 +56,11 @@ async function handler() {
     const list = $('.article-list .newslist li')
         .toArray()
         .map((element) => {
-            element = $(element);
+            const $element = $(element);
             const info = {
-                title: getData(element.find('script').text(), 'title'),
-                link: new URL(getData(element.find('script').text(), 'url'), link).href,
-                date: element.find('span.time').text().trim(), // trim移除多余的空格
+                title: getData($element.find('script').text(), 'title'),
+                link: new URL(getData($element.find('script').text(), 'url'), link).href,
+                date: $element.find('span.time').text().trim(), // trim移除多余的空格
             };
             return info;
         });
@@ -75,9 +73,7 @@ async function handler() {
             if (cacheIn) {
                 return JSON.parse(cacheIn);
             }
-            const response = await got.get(itemUrl, {
-                Referer: host,
-            });
+            const response = await got.get(itemUrl);
             const $ = load(response.data);
             const description = $('#desContent').html();
             const single = {

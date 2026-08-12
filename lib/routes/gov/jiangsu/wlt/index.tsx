@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,14 +48,13 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.tg_tb1')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const i = $(item);
             const id = i.prop('onclick').match(/openDetail\('(\d+)'\)/)?.[1] || '';
             return {
                 title: i.text(),
                 link: id ? `${baseUrl}/detail.do?iid=${id}` : '',
                 description: '',
-                pubDate: '',
             };
         })
         .filter((e) => e.link);

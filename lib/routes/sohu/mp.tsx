@@ -61,7 +61,7 @@ function fetchArticle(item) {
 
         $('.original-title, .lookall-box').remove();
         item.author ||= $('span[data-role="original-link"] a').text();
-        item.pubDate = timezone(parseDate($('meta[itemprop="dateUpdate"]').attr('content')), 8);
+        item.pubDate = timezone(parseDate($('meta[itemprop="dateUpdate"]').attr('content')!), 8);
 
         if (/window\.sohu_mp\.article_video/.test($('script').text())) {
             const videoSrc = $('script')
@@ -140,10 +140,10 @@ async function handler(ctx) {
     const blockRenderData = JSON.parse(
         $('script:contains("column_2_text")')
             .text()
-            .match(/(\{.*\})/)?.[1]
+            .match(/(\{.*\})/)![1]
     );
-    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
-    const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))].param.data.list[0];
+    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))!];
+    const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))!].param.data.list[0];
 
     const globalConst = JSON.parse(
         $('script:contains("globalConst")')

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,18 +44,18 @@ async function handler(ctx) {
 
     let items = $('.c1017')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}/${item.attr('href')}`,
+                title: $item.text(),
+                link: `${rootUrl}/${$item.attr('href')}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -63,7 +63,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.description = renderToString(<XjtuStdDescription description={content('#vsb_newscontent').html()} attachments={content('#vsb_newscontent').parent().next().next().next().html()} />);
+                item.description = renderToString(<XjtuStdDescription description={content('#vsb_newscontent').html() ?? undefined} attachments={content('#vsb_newscontent').parent().next().next().next().html() ?? undefined} />);
                 item.pubDate = timezone(parseDate(content('#vsb_newscontent').parent().prev().prev().text().split('&nbsp', 1)[0], 'YYYY年MM月DD日 HH:mm'), 8);
 
                 return item;

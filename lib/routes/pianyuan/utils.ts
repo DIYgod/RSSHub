@@ -23,9 +23,9 @@ const ProcessFeed = async (list, cache) => {
                 const size = content('#main-container > div > div.col-sm-10.col-md-8.col-lg-8 > div > ul > li:nth-child(2)').text();
                 let length;
                 if (size.includes('MB')) {
-                    length = size.replace('MB', '') * 1024;
+                    length = Number(size.replace('MB', '')) * 1024;
                 } else if (size.includes('GB')) {
-                    length = size.replace('GB', '') * 1024 * 1024;
+                    length = Number(size.replace('GB', '')) * 1024 * 1024;
                 }
                 // const description ='';
 

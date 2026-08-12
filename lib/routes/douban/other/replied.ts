@@ -33,17 +33,17 @@ async function handler(ctx) {
     const list = $('div.recent-replied-mod ul.comment-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const p = item.find('p');
+            const $item = $(item);
+            const p = $item.find('p');
             const nid = p
                 .find('a')
-                .attr('href')
-                .match(/%2Fnote%2F(.*?)%2F&type=note/)[1];
+                .attr('href')!
+                .match(/%2Fnote%2F(.*?)%2F&type=note/)![1];
             const title = p.find('a').text();
             p.remove();
 
             return {
-                title: `${item.find('a.lnk-people').text()} - ${title}`,
+                title: `${$item.find('a.lnk-people').text()} - ${title}`,
                 link: `https://www.douban.com/note/${nid}`,
             };
         });

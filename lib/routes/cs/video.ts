@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -74,19 +74,19 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const image = selected.image;
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${title} | ${selected.title}`,
         link: currentUrl,
         description: $('meta[name="Description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,
         subtitle: $('meta[name="Keywords"]').prop('content'),
-        author: title.split('-').pop().trim(),
+        author: title.split('-').pop()!.trim(),
         allowEmpty: true,
     };
 }

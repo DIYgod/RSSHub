@@ -36,10 +36,10 @@ async function handler(ctx) {
     const items = $('div.text-card-foreground')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').eq(2);
-            const description = item.find('.leading-relaxed');
-            const author = item.find('.truncate');
+            const $item = $(item);
+            const a = $item.find('a').eq(2);
+            const description = $item.find('.leading-relaxed');
+            const author = $item.find('.truncate');
             return {
                 title: a.text(),
                 link: a.attr('href'),

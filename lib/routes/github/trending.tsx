@@ -125,7 +125,7 @@ async function handler(ctx) {
         },
     });
 
-    const repos = Object.values(repoData.data).map((repo) => {
+    const repos = Object.values<any>(repoData.data).map((repo) => {
         const found = trendingRepos.find((r) => `${r.owner}/${r.name}` === repo.nameWithOwner);
         return { ...found, ...repo };
     });

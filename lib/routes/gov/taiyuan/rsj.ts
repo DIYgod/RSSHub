@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -48,7 +48,7 @@ async function handler(ctx) {
         throw new Error(response.statusMessage);
     }
 
-    const $ = load(response.data, { decodeEntities: false });
+    const $ = load(response.data, { decodeEntities: false } as CheerioOptions);
     const title = $('.tit').find('a:eq(2)').text();
     const list = $('.RightSide_con ul li')
         .toArray()
@@ -56,7 +56,7 @@ async function handler(ctx) {
             const link = $(item).find('a');
             const date = $(item).find('span.fr');
             return {
-                title: link.attr('title'),
+                title: link.attr('title')!,
                 link: link.attr('href'),
                 pubDate: timezone(parseDate(date.text(), 'YYYY-MM-DD'), 8),
             };

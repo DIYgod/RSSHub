@@ -78,7 +78,7 @@ async function handler(ctx): Promise<Data> {
         const $ = load(post.content.rendered);
 
         // remove unnecessary title
-        $('h1').first().remove();
+        $('h1').remove();
         $('h2').first().remove();
 
         let thumbnail = '';

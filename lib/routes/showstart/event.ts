@@ -31,8 +31,8 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const cityCode = Number.parseInt(ctx.req.param('cityCode')).toString();
-    const showStyle = Number.parseInt(ctx.req.param('showStyle')).toString();
+    const cityCode = Number.parseInt(ctx.req.param('cityCode')!).toString();
+    const showStyle = Number.parseInt(ctx.req.param('showStyle')!).toString();
     const items = await fetchActivityList({
         cityCode,
         showStyle,

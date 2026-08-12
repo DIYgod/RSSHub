@@ -21,7 +21,7 @@ export const route: Route = {
         },
     ],
     name: '作者',
-    maintainers: ['nczitzk'],
+    maintainers: ['xyqfer', 'nczitzk'],
     handler,
 };
 

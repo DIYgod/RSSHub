@@ -45,7 +45,7 @@ async function handler(ctx: Context): Promise<Data> {
                     const $ = load(response);
 
                     item.title = $('.m3page_t').text().trim() || $('head title').text();
-                    item.description = $('.m3pageEdit').html() ?? '';
+                    item.description = $('.m3pageEdit').html();
 
                     return item;
                 })

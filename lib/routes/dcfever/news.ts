@@ -35,10 +35,10 @@ async function handler(ctx) {
     const list = $('.col-md-left .title a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: new URL(item.attr('href'), link.href).href,
+                title: $item.text(),
+                link: new URL($item.attr('href')!, link.href).href,
             };
         });
 

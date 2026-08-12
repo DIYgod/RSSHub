@@ -51,10 +51,10 @@ async function handler(ctx) {
         link: currentUrl,
         item: await Promise.all(
             list.map(async (item) => {
-                item = $(item);
+                const $item = $(item);
 
-                const link = new URL(item.find('dt a').attr('href'), rootUrl).href;
-                const pubDate = parseDate(item.find('dd').eq(0).text(), 'YYYY-MM-DD');
+                const link = new URL($item.find('dt a').attr('href')!, rootUrl).href;
+                const pubDate = parseDate($item.find('dd').eq(0).text(), 'YYYY-MM-DD');
 
                 const cacheIn = await cache.tryGet(link, async () => {
                     const detailResponse = await got({
@@ -64,7 +64,7 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     return {
-                        title: item.find('dt a').text(),
+                        title: $item.find('dt a').text(),
                         description: content('div.Tr_Detail').html(),
                         link,
                         pubDate: timezone(pubDate, 8),

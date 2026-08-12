@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,14 +46,14 @@ async function handler() {
                 if (path) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
-                    description = $('#article_dnull').html() ? $('#article_dnull').html().trim() : itemTitle;
+                    description = $('#article_dnull').html() ? $('#article_dnull').html()!.trim() : itemTitle;
                     if ($('.news-time').text()) {
                         itemDate = $('.news-time').text();
                     }
                 } else {
                     description = itemTitle;
                 }
-                const result = {
+                const result: DataItem = {
                     title: itemTitle,
                     link: itemUrl,
                     description,

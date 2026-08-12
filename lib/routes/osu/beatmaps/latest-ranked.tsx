@@ -312,7 +312,7 @@ async function handler(ctx): Promise<Data> {
                     </li>
                 </ul>
                 <h3>Difficulties</h3>
-                <table border="1">
+                <table border={1}>
                     <thead>
                         <tr>
                             <th>Version</th>

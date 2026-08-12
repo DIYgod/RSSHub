@@ -48,8 +48,8 @@ async function handler(ctx) {
         $('div.grid-item')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const href = item.find('a').attr('href');
+                const $item = $(item);
+                const href = $item.find('a').attr('href');
                 const articleLink = `${rootUrl}${href}`;
                 return cache.tryGet(articleLink, async () => {
                     const response = await got(articleLink, {
@@ -61,13 +61,13 @@ async function handler(ctx) {
                     const time = timezone(
                         parseDate(
                             $('div.editor')
-                                .html()
+                                .html()!
                                 .split(/(\s{2,})/, 3)[2]
                         ),
                         8
                     );
                     return {
-                        title: item.find('p').text(),
+                        title: $item.find('p').text(),
                         description: fullText,
                         link: articleLink,
                         pubDate: time,

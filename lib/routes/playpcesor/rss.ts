@@ -37,7 +37,7 @@ async function handler() {
                 title,
                 description,
                 link,
-                pubDate: parseDate(dateraw, 'YYYY-MM-DDTHH:mm:ss+08:00'),
+                pubDate: parseDate(dateraw!, 'YYYY-MM-DDTHH:mm:ss+08:00'),
             };
         });
 

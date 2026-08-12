@@ -38,7 +38,7 @@ async function handler(ctx) {
     const bittorrent = routeParams.get('bittorrent') || false;
     const embed_thumb = routeParams.get('embed_thumb') || false;
     const inline_set = ctx.req.param('order') === 'posted' ? 'fs_p' : 'fs_f';
-    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb);
+    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent as unknown as boolean, embed_thumb as unknown as boolean);
 
     return EhAPI.from_ex
         ? {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,12 +24,12 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('h3.card__title a');
+            const a = $item.find('h3.card__title a');
 
             const title = a.prop('title') || a.text().trim();
-            const image = item.find('img.card__image').prop('src');
+            const image = $item.find('img.card__image').prop('src');
             const description = renderDescription({
                 images: image
                     ? [
@@ -39,22 +39,22 @@ export const handler = async (ctx) => {
                           },
                       ]
                     : undefined,
-                intro: item.find('p.card__excerpt').text(),
+                intro: $item.find('p.card__excerpt').text(),
             });
-            const link = new URL(a.prop('href'), rootUrl).href;
-            const guid = `infoq-${item.prop('data-path').replace(/^\//, '')}`;
-            const length = item.find('div.card__length').text() || undefined;
+            const link = new URL(a.prop('href')!, rootUrl).href;
+            const guid = `infoq-${$item.prop('data-path').replace(/^\//, '')}`;
+            const length = $item.find('div.card__length').text() || undefined;
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.card__date span').text().trim()),
+                pubDate: parseDate($item.find('span.card__date span').text().trim()),
                 link,
-                category: item
+                category: $item
                     .find('div.card__topics')
                     .toArray()
                     .map((c) => $(c).text().trim()),
-                author: item
+                author: $item
                     .find('div.card__authors a')
                     .toArray()
                     .map((a) => $(a).text().trim())
@@ -63,11 +63,11 @@ export const handler = async (ctx) => {
                 id: guid,
                 content: {
                     html: description,
-                    text: item.find('p.card__excerpt').text(),
+                    text: $item.find('p.card__excerpt').text(),
                 },
                 image,
                 banner: image,
-                language,
+                language: language as Language,
                 enclosure_url: length ? link : undefined,
                 enclosure_type: length ? 'video/mp4' : undefined,
                 enclosure_title: title,
@@ -129,7 +129,7 @@ export const handler = async (ctx) => {
                               },
                           ]
                         : undefined,
-                    description: $$('article.article').html(),
+                    description: $$('article.article').html() ?? undefined,
                 });
 
                 item.description = description;
@@ -139,7 +139,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
+                item.language = language as Language;
                 item.enclosure_url = videoSrc;
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
                 item.enclosure_title = title;
@@ -161,7 +161,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

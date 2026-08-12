@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import parser from '@/utils/rss-parser';
 
@@ -46,5 +46,5 @@ async function handler(ctx) {
     return {
         ...res,
         item: items,
-    };
+    } as unknown as Data;
 }

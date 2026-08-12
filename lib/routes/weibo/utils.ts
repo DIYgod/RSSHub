@@ -17,7 +17,7 @@ class RenewWeiboCookiesError extends Error {
     }
 }
 
-const getDescriptionRenderParams = (routeParams, params = {}) => ({
+const getDescriptionRenderParams = (routeParams, params = {} as Record<string, any>) => ({
     showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
     showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
 });
@@ -159,7 +159,7 @@ const weiboUtils = {
             .replaceAll(/<[^<]*>/g, '')
             .replaceAll('\n', ' ')
             .trim(),
-    formatExtended: (ctx, status, uid, params = {}, picsPrefixes = []) => {
+    formatExtended: (ctx, status, uid?, params = {} as Record<string, any>, picsPrefixes: string[] = []) => {
         // `uid = undefined` to explicitly mark it as optional, avoiding IDEs prompting warnings
 
         // undefined and strings like "1" is also safely parsed, so no if branch is needed
@@ -333,7 +333,7 @@ const weiboUtils = {
                 };
             }
             // 插入转发的微博
-            const retweetedParams = Object.assign({}, params);
+            const retweetedParams = Object.assign({} as Record<string, any>, params);
             retweetedParams.showAuthorInDesc = true;
             retweetedParams.showAuthorAvatarInDesc = false;
             retweetedParams.showAtBeforeAuthor = true;
@@ -513,22 +513,22 @@ const weiboUtils = {
                 // 正文处理，加入一些在微博文章页的 CSS 中定义的不可或缺的样式
                 const $ = load(content);
                 $('p').each((_, elem) => {
-                    elem = $(elem);
-                    let style = elem.attr('style') || '';
+                    const $elem = $(elem);
+                    let style = $elem.attr('style') || '';
                     style = 'margin: 0;padding: 0;border: 0;' + style;
-                    elem.attr('style', style);
+                    $elem.attr('style', style);
                 });
                 $('.image').each((_, elem) => {
-                    elem = $(elem);
-                    let style = elem.attr('style') || '';
+                    const $elem = $(elem);
+                    let style = $elem.attr('style') || '';
                     style = 'display: table;text-align: center;margin-left: auto;margin-right: auto;clear: both;min-width: 50px;' + style;
-                    elem.attr('style', style);
+                    $elem.attr('style', style);
                 });
                 $('img').each((_, elem) => {
-                    elem = $(elem);
-                    let style = elem.attr('style') || '';
+                    const $elem = $(elem);
+                    let style = $elem.attr('style') || '';
                     style = 'display: block;max-width: 100%;margin-left: auto;margin-right: auto;min-width: 50px;' + style;
-                    elem.attr('style', style);
+                    $elem.attr('style', style);
                 });
                 const contentHtml = $.html();
                 html += `<div style="line-height: 1.59;text-align: justify;font-size: 1.0625rem;color: #333;">${contentHtml}</div>`; // 正文

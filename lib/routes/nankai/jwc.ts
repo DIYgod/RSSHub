@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,15 +37,15 @@ export const route: Route = {
         // 解析列表页面中的所有通知项
         const list = $('.page-con-list-news .item')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 const $link = $item.find('.t a');
                 const $dateDay = $item.find('.d .d-d');
                 const $dateMonth = $item.find('.d .d-m');
 
                 // 构建完整的日期
-                const day = $dateDay.text().trim(); // 格式：04
-                const monthYear = $dateMonth.text().trim(); // 格式：2025/06
+                const day = $dateDay.text(); // 格式：04
+                const monthYear = $dateMonth.text(); // 格式：2025/06
                 const fullDate = `${monthYear}/${day}`; // 2025/06/04
 
                 let linkStr = $link.attr('href');
@@ -55,7 +55,7 @@ export const route: Route = {
                 }
 
                 return {
-                    title: $link.text().trim(),
+                    title: $link.text(),
                     link: linkStr,
                     pubDate: timezone(parseDate(fullDate, 'YYYY/MM/DD'), 8),
                 };
@@ -65,7 +65,7 @@ export const route: Route = {
         // 获取每个通知的详细内容
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     try {
                         const { data: response } = await got(item.link);
                         const $ = load(response);
@@ -80,19 +80,6 @@ export const route: Route = {
                         // 获取文章内容
                         const content = $('.page-news-con .wp_articlecontent');
                         if (content.length > 0) {
-                            // 处理PDF链接，转换为绝对链接
-                            content.find('a').each((i, el) => {
-                                const $el = $(el);
-                                const href = $el.attr('href');
-                                if (href && !href.startsWith('http')) {
-                                    if (href.startsWith('/')) {
-                                        $el.attr('href', `${baseUrl}${href}`);
-                                    } else {
-                                        $el.attr('href', `${baseUrl}/${href}`);
-                                    }
-                                }
-                            });
-
                             // 处理PDF播放器div，提取PDF链接
                             content.find('.wp_pdf_player').each((i, el) => {
                                 const $el = $(el);

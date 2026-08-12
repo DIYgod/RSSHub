@@ -25,7 +25,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Latest Magazine',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     description: 'For instance, when doing search at <https://magazinelib.com> and you get url `https://magazinelib.com/?s=new+yorker`, the query is `new+yorker`',
 };
@@ -51,19 +51,20 @@ async function handler(ctx) {
     }
 
     const items = response.data.map((obj) => {
+        const $ = load(obj.content.rendered);
+        const content = $('.vk-att');
+        content.find('img[src="https://magazinelib.com/wp-includes/images/media/default.png"]').remove();
+        const contentHtml = content.html();
+        const imgUrl = obj._embedded['wp:featuredmedia'][0].source_url;
         const data = {
             date: obj.date_gmt,
             link: obj.link,
             featuredMediaLink: obj._links['wp:featuredmedia'][0].href,
             title: obj.title.rendered,
+            content: contentHtml,
+            description: contentHtml + renderImage(imgUrl),
+            categories: obj._embedded['wp:term'][0].map((item) => item.name),
         };
-        const $ = load(obj.content.rendered);
-        const content = $('.vk-att');
-        content.find('img[src="https://magazinelib.com/wp-includes/images/media/default.png"]').remove();
-        data.content = content.html();
-        const imgUrl = obj._embedded['wp:featuredmedia'][0].source_url;
-        data.description = data.content + renderImage(imgUrl);
-        data.categories = obj._embedded['wp:term'][0].map((item) => item.name);
         return data;
     });
 

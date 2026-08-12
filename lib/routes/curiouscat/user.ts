@@ -9,12 +9,15 @@ const fetchAPIByUser = async (user) => {
 
 export const route: Route = {
     path: '/user/:id',
+    categories: ['social-media'],
+    example: '/curiouscat/user/username',
+    parameters: { id: 'username that is in the URL' },
     radar: [
         {
             source: ['curiouscat.live/:id'],
         },
     ],
-    name: 'Unknown',
+    name: 'User',
     maintainers: ['lucasew'],
     handler,
 };

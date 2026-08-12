@@ -25,8 +25,22 @@ const cateTitleMap = {
 
 export const route: Route = {
     path: '/:category?',
-    name: 'Unknown',
+    categories: ['reading'],
+    example: '/wenku8/lastupdate',
+    parameters: { category: '首页分类，见下表，默认为今日更新' },
+    features: {
+        requireConfig: [
+            {
+                name: 'WENKU8_COOKIE',
+                description: '登陆轻小说文库后的 cookie',
+            },
+        ],
+    },
+    name: '首页分类',
     maintainers: ['Fatpandac'],
+    description: `|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 |  轻小说列表 |
+| :--------: | :------: | :------: | :--------: | :--------: | :---------: |
+| lastupdate | fullflag | postdate |    anime   |  allvisit  | articlelist |`,
     handler,
 };
 
@@ -50,7 +64,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).find('b > a').text(),
             link: $(item).find('b > a').attr('href'),
-            description: $(item).find('img').html() + $(item).find('div:nth-child(2)').remove('b').end().html(),
+            description: $(item).find('img').html()! + $(item).find('div:nth-child(2)').remove('b').end().html()!,
         }));
 
     return {

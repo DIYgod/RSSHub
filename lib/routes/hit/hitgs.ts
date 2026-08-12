@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('li.news, div.tbt17')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('div.news_title, span.div.news_title, div.bttb2').text();
@@ -46,7 +46,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     text: description,
                 },
                 updated: parseDate(upDatedStr),
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -59,12 +59,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.arti_title').text() + $$('h2.arti_title').text();
                 const description: string | undefined = renderDescription({
-                    description: $$('div.wp_articlecontent').html(),
+                    description: $$('div.wp_articlecontent').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('span.arti_update').text().split(/：/).pop()?.trim();
                 const upDatedStr: string | undefined = pubDateStr;
@@ -78,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
+                    language: language as Language,
                 };
 
                 const $enclosureEl: Cheerio<Element> = $$('a[sudyfile-attr]')
@@ -122,7 +122,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('div.foot-logo img').attr('src'),
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

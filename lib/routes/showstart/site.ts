@@ -34,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const siteId = Number.parseInt(ctx.req.param('siteId')).toString();
+    const siteId = Number.parseInt(ctx.req.param('siteId')!).toString();
     const [activityList, siteInfo] = await Promise.all([fetchActivityList({ siteId }), fetchSiteInfo({ siteId })]);
     return {
         title: `${TITLE} - ${siteInfo.name}`,

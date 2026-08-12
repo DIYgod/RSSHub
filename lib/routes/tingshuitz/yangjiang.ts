@@ -41,7 +41,7 @@ async function handler() {
         item: list.toArray().map((el) => {
             const item = $(el);
 
-            const id = item.find('a').attr('href').slice(17, -1);
+            const id = item.find('a').attr('href')!.slice(17, -1);
             return {
                 title: item.find('span').text().trim(),
                 description: item.find('span').text().trim(),

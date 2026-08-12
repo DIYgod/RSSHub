@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -71,7 +71,7 @@ async function handler(ctx) {
         const onclickValue = $('.button').first().attr('onclick');
         const targetUrl = onclickValue?.match(/window\.open\('([^']+)'/)?.[1];
 
-        return { url: new URL(targetUrl, 'https://2048.info').href };
+        return { url: new URL(targetUrl!, 'https://2048.info').href };
     });
     // 获取重定向后的url
     const redirectResponse = await ofetch.raw(domainInfo.url);
@@ -109,13 +109,13 @@ async function handler(ctx) {
         .last()
         .nextAll('.tr3')
         .toArray()
-        .map((item) => {
-            item = $(item).find('a.subject');
+        .map((item): DataItem & { link: string; guid: string } => {
+            const $item = $(item).find('a.subject');
 
             return {
-                title: item.text(),
-                link: `${currentHost}/${item.attr('href')}`,
-                guid: `${rootUrl}/2048/${item.attr('href')}`,
+                title: $item.text(),
+                link: `${currentHost}/${$item.attr('href')}`,
+                guid: `${rootUrl}/2048/${$item.attr('href')}`,
             };
         })
         .filter((item) => !item.link.includes('undefined'));
@@ -143,7 +143,7 @@ async function handler(ctx) {
                 });
 
                 item.author = content('.fl.black').first().text();
-                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')), 8);
+                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')!), 8);
 
                 const readTpc = content('#read_tpc').first();
                 const copyLink = content('#copytext')?.first()?.text();

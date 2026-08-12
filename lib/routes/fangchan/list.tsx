@@ -4,7 +4,7 @@ import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             description,
             pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
             link: linkUrl,
-            id: categories,
+            id: categories as unknown as string,
             content: {
                 html: description,
                 text: item.zhaiyao ?? description,
@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated, 'X') : undefined,
-            language,
+            language: language as Language,
         };
 
         return processedItem;
@@ -67,7 +67,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.summary-text h').text();
@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/)?.[1];
                     const idEls: Element[] = $$('a.news-column, div.label span').toArray();
-                    const categories: string[] = [...new Set([...(item.id as string[]), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
+                    const categories: string[] = [...new Set([...(item.id as unknown as string[]), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
                     const authors: DataItem['author'] = $$('span.news-date')
                         .text()
                         ?.split(/\d{4}-\d{2}-\d{2}/, 1)?.[0]
@@ -91,14 +91,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         title,
                         description,
                         pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                        id: categories,
+                        id: categories as unknown as string,
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     const extraLinkEls: Element[] = $$('ul.xgxw-ul li a').toArray();
@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author,
-        language,
+        language: language as Language,
     };
 };
 

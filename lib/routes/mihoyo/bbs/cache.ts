@@ -12,7 +12,7 @@ const getUserFullInfo = (ctx, uid) => {
     return cache.tryGet(key, async () => {
         const query = new URLSearchParams({
             uid,
-            gids: 2,
+            gids: '2',
         }).toString();
         const url = `https://bbs-api.miyoushe.com/user/wapi/getUserFullInfo?${query}`;
         const response = await got({

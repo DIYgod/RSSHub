@@ -11,7 +11,7 @@ import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
-import login from './login';
+// import login from './login';
 
 let authTokenIndex = 0;
 
@@ -68,9 +68,9 @@ const getAuth = async (retry: number) => {
     await cache.set(`${lockPrefix}${token}`, '1', 20);
     return {
         token,
-        username: config.twitter.username?.[index],
-        password: config.twitter.password?.[index],
-        authenticationSecret: config.twitter.authenticationSecret?.[index],
+        // username: config.twitter.username?.[index],
+        // password: config.twitter.password?.[index],
+        // authenticationSecret: config.twitter.authenticationSecret?.[index],
     };
 };
 
@@ -90,13 +90,13 @@ export const twitterGot = async (
     const requestUrl = `${url}?${queryString.stringify(params)}`;
 
     let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth?.token);
-    if (!cookie && auth) {
-        cookie = await login({
-            username: auth.username,
-            password: auth.password,
-            authenticationSecret: auth.authenticationSecret,
-        });
-    }
+    // if (!cookie && auth) {
+    //     cookie = await login({
+    //         username: auth.username,
+    //         password: auth.password,
+    //         authenticationSecret: auth.authenticationSecret,
+    //     });
+    // }
     let dispatchers:
         | {
               jar: CookieJar;
@@ -197,35 +197,35 @@ export const twitterGot = async (
             logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
         } else if (response.status === 403 || response.status === 401) {
-            const newCookie = await login({
-                username: auth.username,
-                password: auth.password,
-                authenticationSecret: auth.authenticationSecret,
-            });
-            if (newCookie) {
-                logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
-                await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
-                await cache.set(`${lockPrefix}${auth.token}`, '', 1);
-            } else {
-                const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
-                if (tokenIndex !== undefined && tokenIndex !== -1) {
-                    config.twitter.authToken?.splice(tokenIndex, 1);
-                }
-                if (auth.username) {
-                    const usernameIndex = config.twitter.username?.indexOf(auth.username);
-                    if (usernameIndex !== undefined && usernameIndex !== -1) {
-                        config.twitter.username?.splice(usernameIndex, 1);
-                    }
-                }
-                if (auth.password) {
-                    const passwordIndex = config.twitter.password?.indexOf(auth.password);
-                    if (passwordIndex !== undefined && passwordIndex !== -1) {
-                        config.twitter.password?.splice(passwordIndex, 1);
-                    }
-                }
-                logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
-                await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
+            // const newCookie = await login({
+            //     username: auth.username,
+            //     password: auth.password,
+            //     authenticationSecret: auth.authenticationSecret,
+            // });
+            // if (newCookie) {
+            //     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
+            //     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
+            //     await cache.set(`${lockPrefix}${auth.token}`, '', 1);
+            // } else {
+            const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
+            if (tokenIndex !== undefined && tokenIndex !== -1) {
+                config.twitter.authToken?.splice(tokenIndex, 1);
             }
+            // if (auth.username) {
+            //     const usernameIndex = config.twitter.username?.indexOf(auth.username);
+            //     if (usernameIndex !== undefined && usernameIndex !== -1) {
+            //         config.twitter.username?.splice(usernameIndex, 1);
+            //     }
+            // }
+            // if (auth.password) {
+            //     const passwordIndex = config.twitter.password?.indexOf(auth.password);
+            //     if (passwordIndex !== undefined && passwordIndex !== -1) {
+            //         config.twitter.password?.splice(passwordIndex, 1);
+            //     }
+            // }
+            logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
+            await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
+            // }
         } else {
             logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
@@ -296,24 +296,17 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     return gridEntries || moduleItems || entries || [];
 };
 
-const getLegacyUser = (tweet: any) => tweet.core?.user_result?.result?.legacy || tweet.core?.user_results?.result?.legacy;
-
-const getCoreUser = (tweet: any) => tweet.core?.user_result?.result?.core || tweet.core?.user_results?.result?.core;
-
 const hydrateLegacyUser = (legacy: any, tweet: any) => {
-    legacy.user = getLegacyUser(tweet);
-
-    const coreUser = getCoreUser(tweet);
-    if (!legacy.user || !coreUser) {
+    const userResult = tweet.core?.user_results?.result;
+    if (!userResult) {
         return;
     }
 
-    if (coreUser.name) {
-        legacy.user.name = coreUser.name;
-    }
-    if (coreUser.screen_name) {
-        legacy.user.screen_name = coreUser.screen_name;
-    }
+    legacy.user = {
+        name: userResult.core?.name,
+        screen_name: userResult.core?.screen_name,
+        profile_image_url_https: userResult.avatar?.image_url,
+    };
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {

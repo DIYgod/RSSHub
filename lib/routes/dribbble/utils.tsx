@@ -31,37 +31,37 @@ async function loadContent(link) {
             object.find('span.cropped-indicator, button').remove();
 
             object.find('video').each((_, video) => {
-                video = $(video);
+                const $video = $(video);
 
-                if (!video.attr('src') && video.data('src')) {
-                    video.attr('src', video.data('src'));
-                    video.removeAttr('data-src');
-                    video.removeAttr('data-video-small');
-                    video.removeAttr('data-video-medium');
-                    video.removeAttr('data-video-large');
+                if (!$video.attr('src') && $video.data('src')) {
+                    $video.attr('src', $video.data('src') as string);
+                    $video.removeAttr('data-src');
+                    $video.removeAttr('data-video-small');
+                    $video.removeAttr('data-video-medium');
+                    $video.removeAttr('data-video-large');
                 }
             });
             object.find('img').each((_, img) => {
-                img = $(img);
+                const $img = $(img);
 
-                if (img.data('animated-url')) {
-                    img.attr('src', img.data('animated-url'));
-                    img.removeAttr('data-animated-url');
-                    img.removeAttr('srcset');
+                if ($img.data('animated-url')) {
+                    $img.attr('src', $img.data('animated-url') as string);
+                    $img.removeAttr('data-animated-url');
+                    $img.removeAttr('srcset');
                 }
 
-                if (!img.attr('src') && img.data('src')) {
-                    img.attr('src', img.data('src').split('?', 1)[0]);
-                    img.removeAttr('data-src');
+                if (!$img.attr('src') && $img.data('src')) {
+                    $img.attr('src', ($img.data('src') as string).split('?', 1)[0]);
+                    $img.removeAttr('data-src');
                 }
 
-                img.attr('src', img.attr('src').split('?', 1)[0]);
-                img.removeAttr('srcset');
-                img.removeAttr('data-srcset');
+                $img.attr('src', $img.attr('src')!.split('?', 1)[0]);
+                $img.removeAttr('srcset');
+                $img.removeAttr('data-srcset');
             });
             object.find('a').each((_, a) => {
-                a = $(a);
-                a.removeAttr('data-pswp-srcset');
+                const $a = $(a);
+                $a.removeAttr('data-pswp-srcset');
             });
 
             return object.html();
@@ -74,7 +74,7 @@ async function loadContent(link) {
     const description = renderShotDescription({
         shotMedia,
         shotData,
-        descriptionHtml: shotDescription.length ? shotDescription.html() : undefined,
+        descriptionHtml: shotDescription.length ? (shotDescription.html() ?? undefined) : undefined,
     });
 
     // Get the text content of the element with class 'shot-date' and convert it to a UTC string representation of a date

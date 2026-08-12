@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { sync_detail as get_sec_page_data } from './get-sec-page-data';
@@ -128,17 +127,13 @@ async function handler(ctx) {
                     </>
                 );
                 const title = `${video_name} - ${authors}`;
-                const realData = await cache.tryGet(oreno3d_link, () => {
-                    const result = {
-                        title,
-                        author: authors,
-                        link: oreno3d_link,
-                        category: tags.split(' '),
-                        description,
-                    };
-                    return result;
-                });
-                return realData;
+                return {
+                    title,
+                    author: authors,
+                    link: oreno3d_link,
+                    category: tags.split(' '),
+                    description,
+                };
             })
         );
         return { items, title };
@@ -156,7 +151,7 @@ async function handler(ctx) {
     if ($(maxPageSelector)) {
         const pageLink = new URLSearchParams($(maxPageSelector).attr('href'));
         const actualNum = pageLink.get('page'); // 获取最大页数
-        if (Number.parseInt(pagelimit) >= Number.parseInt(actualNum)) {
+        if (Number.parseInt(pagelimit) >= Number.parseInt(actualNum ?? '')) {
             pagelimit = actualNum;
         }
     } else {
@@ -166,7 +161,7 @@ async function handler(ctx) {
     const responseList = [response];
     // 将第一页的数据加入数组
     // 创建不含第一页链接的数组
-    const Links = [];
+    const Links: string[] = [];
     for (let i = 1; i < pagelimit; i++) {
         Links.push(`${userUrl}&page=${i + 1}`);
     }
@@ -178,7 +173,7 @@ async function handler(ctx) {
         })
     );
     // 由数组索引获取初步分析数据
-    const tempData = [];
+    const tempData: any[] = [];
     await Promise.all(
         responseList.map(async (response) => {
             const result = await getData(response);
@@ -186,7 +181,7 @@ async function handler(ctx) {
         })
     );
     // 拼接多页面item
-    let realItem = [];
+    let realItem: any[] = [];
     for (const data of tempData) {
         realItem = [...realItem, ...data.items];
     }

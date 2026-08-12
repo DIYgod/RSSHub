@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import rssParser from '@/utils/rss-parser';
@@ -19,13 +19,13 @@ const parseAuthorNewsList = async (slug) => {
     const $ = load(resp.html);
     const articles = $('article.story-list-story');
     return articles.toArray().map((item) => {
-        item = $(item);
-        const headline = item.find('a.story-list-story__info__headline-link');
+        const $item = $(item);
+        const headline = $item.find('a.story-list-story__info__headline-link');
         return {
             title: headline.text(),
-            pubDate: item.attr('data-updated-at'),
-            guid: `bloomberg:${item.attr('data-id')}`,
-            link: new URL(headline.attr('href'), baseURL).href,
+            pubDate: $item.attr('data-updated-at'),
+            guid: `bloomberg:${$item.attr('data-id')}`,
+            link: new URL(headline.attr('href')!, baseURL).href,
         };
     });
 };
@@ -59,7 +59,7 @@ async function handler(ctx) {
     const { id, slug, source } = ctx.req.param();
     const link = `https://www.bloomberg.com/authors/${id}/${slug}`;
 
-    let list = [];
+    let list: any[] = [];
     if (!source || source === 'api') {
         list = await parseAuthorNewsList(`${id}/${slug}`);
     }
@@ -74,7 +74,7 @@ async function handler(ctx) {
     return {
         title: `Bloomberg - ${authorName}`,
         link,
-        language: 'en-us',
+        language: 'en-us' as Language,
         item,
     };
 }

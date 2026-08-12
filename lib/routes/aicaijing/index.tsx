@@ -2,18 +2,27 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:category?/:id?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/latest',
+    categories: ['finance'],
+    example: '/aicaijing/latest',
+    radar: [
+        {
+            source: ['www.aicaijing.com/'],
+            target: '/latest',
+        },
+    ],
+    name: '最新文章',
+    maintainers: ['nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
-    const category = ctx.req.param('category') ?? 'latest';
+export async function handler(ctx) {
+    const category = getSubPath(ctx).split('/', 2)[1];
     const id = ctx.req.param('id') ?? 14;
 
     const titles = {

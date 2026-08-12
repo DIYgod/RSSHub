@@ -58,7 +58,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $(query)
+    let items: any[] = $(query)
         .toArray()
         .map((a) => `${currentUrl}/${$(a).attr('href')}`);
 

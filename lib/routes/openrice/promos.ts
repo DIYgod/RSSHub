@@ -39,13 +39,13 @@ async function handler(ctx) {
     const response = await ofetch(baseUrl + urlPath, {});
     const $ = load(response);
 
-    const title = $('title').text() ?? "Openrice - What's Hot";
+    const title = $('title').text();
     const description = $('meta[name="description"]').attr('content') ?? "What's Hot from Openrice";
 
     const data = $('.article-listing-content-cell-wrapper');
     const resultList = data.toArray().map((item) => {
         const $item = $(item);
-        const title = $item.find('.title-name').text() ?? '';
+        const title = $item.find('.title-name').text();
         const link = $item.find('a.sr1-listing-content-cell').attr('href') ?? '';
         const coverImg =
             $item
@@ -53,7 +53,7 @@ async function handler(ctx) {
                 .attr('style')
                 ?.match(/url\(['"]?(.*?)['"]?\)/)?.[1] ?? null;
         const description = renderDescription({
-            description: $item.find('.article-details .desc').text() ?? '',
+            description: $item.find('.article-details .desc').text(),
             image: coverImg,
         });
         return {

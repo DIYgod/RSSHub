@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,21 +25,21 @@ export const handler = async (ctx) => {
     let items = $('div.new_list_c')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('h6 a').text(),
-                pubDate: timezone(parseDate(item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
-                link: new URL(item.find('h6 a').prop('href'), rootUrl).href,
-                author: item.find('div.new_list_author').text().trim(),
-                language,
+                title: $item.find('h6 a').text(),
+                pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
+                link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
+                author: $item.find('div.new_list_author').text().trim(),
+                language: language as Language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -57,14 +57,14 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('.text').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
         )
     );
 
-    const image = new URL($('div.top2-1 a img').prop('src'), rootUrl).href;
+    const image = new URL($('div.top2-1 a img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -74,7 +74,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('p.top1-1-1 a').first().text(),
-        language,
+        language: language as Language,
     };
 };
 
@@ -102,8 +102,7 @@ export const route: Route = {
         {
             source: ['c114.com.cn/news/roll.asp'],
             target: (_, url) => {
-                url = new URL(url);
-                const original = url.searchParams.get('o');
+                const original = new URL(url).searchParams.get('o');
 
                 return `/roll${original ? `/${original}` : ''}`;
             },

@@ -1,6 +1,8 @@
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -52,18 +54,18 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.toArray().map(async (item) => {
-            item = $(item);
+            let $item = $(item);
 
             if (searchQuery) {
                 // 删除关键字高亮 <mark class="highlight">
-                const highlightMarks = item.find('mark.highlight').toArray();
+                const highlightMarks = $item.find('mark.highlight').toArray();
                 if (highlightMarks) {
-                    for (let mark of highlightMarks) {
-                        mark = $(mark);
-                        const markInnerHtml = mark.html();
-                        mark.replaceWith(markInnerHtml);
+                    for (const mark of highlightMarks) {
+                        const $mark = $(mark);
+                        const markInnerHtml = $mark.html();
+                        $mark.replaceWith(markInnerHtml as string);
                     }
-                    item = $(item.html()); // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
+                    $item = $($item.html() as string) as Cheerio<Element>; // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
                 }
             }
 
@@ -95,7 +97,7 @@ async function handler(ctx) {
             let author = '';
             let titleElemIs3thA = false;
 
-            const brNode = item.find('.tgme_widget_message_text > br:nth-of-type(1)').get(0); // 获取第一个换行
+            const brNode = $item.find('.tgme_widget_message_text > br:nth-of-type(1)').get(0); // 获取第一个换行
             const authorNode = brNode && brNode.prev; // brNode 不为 undefined 时获取它的前一个节点
             const authorNodePrev = authorNode && authorNode.prev; // authorNode 不为 undefined 时获取它的前一个节点
             if (authorNode && authorNode.type === 'text') {
@@ -129,7 +131,7 @@ async function handler(ctx) {
 
             // 如果启用了 efb-patch-middleware 且 hashtag (部分)合法，第三个 a 元素会是文章链接，否则是第二个
             const titleElemNth = titleElemIs3thA ? 3 : 2;
-            const titleElem = item.find(`.tgme_widget_message_text > a:nth-of-type(${titleElemNth})`);
+            const titleElem = $item.find(`.tgme_widget_message_text > a:nth-of-type(${titleElemNth})`);
 
             if (titleElem.length === 0) {
                 // 获取不到标题 a 元素，这可能是公众号发的服务消息，丢弃它
@@ -148,7 +150,7 @@ async function handler(ctx) {
                 title = author + ': ' + title; // 给标题里加上获取到的作者
             }
 
-            const pubDate = new Date(item.find('.tgme_widget_message_date time').attr('datetime')).toUTCString();
+            const pubDate = new Date($item.find('.tgme_widget_message_date time').attr('datetime')!).toUTCString();
 
             /*
              * Since 2024/4/20, t.me/s/ mistakenly have every '&' in **hyperlinks** replaced by '&amp;'.
@@ -157,7 +159,7 @@ async function handler(ctx) {
              * Considering that this is almost certain to happen, let's break guid consistency now by using
              * normalized URL from wechat-mp as guid to avoid similar issues in the future.
              */
-            const single = {
+            const single: DataItem = {
                 title,
                 pubDate,
                 link,
@@ -168,7 +170,7 @@ async function handler(ctx) {
                 try {
                     return await finishArticleItem(single);
                 } catch {
-                    single.description = item.find('.tgme_widget_message_text').html();
+                    single.description = $item.find('.tgme_widget_message_text').html();
                 }
             }
             return single;

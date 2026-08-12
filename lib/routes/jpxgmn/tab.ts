@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -42,9 +42,9 @@ async function handler(ctx) {
     }
     const items = $('div.related_posts ul > li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             title: $(item).find('a span').text(),
-            link: new URL($(item).find('a').attr('href'), baseUrl).href,
+            link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             pubDate: parseDate($(item).find('footer span').first().text()),
         }));
     return {
@@ -52,7 +52,7 @@ async function handler(ctx) {
         link: response.url,
         item: await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     item.description = await getArticleDesc(item.link);
                     return item;
                 })

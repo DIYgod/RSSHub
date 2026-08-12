@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -51,16 +51,16 @@ async function handler(ctx) {
     const list = $('.main_conRCb a')
         .slice(0, 20)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const link = item
-                .attr('href')
+        .map((item): DataItem => {
+            const $item = $(item);
+            const link = $item
+                .attr('href')!
                 .replace(/^\.\./, () => rootUrl)
                 .replace(/^(info)/, () => rootUrl + 'info');
             return {
-                title: item.find('em').text(),
+                title: $item.find('em').text(),
                 link,
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
 
@@ -74,8 +74,8 @@ async function handler(ctx) {
         // 遍历此前获取的数据
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    if (!item.link.match('zhixing.xaut.edu.cn') && !item.link.match('xinwen.xaut.edu.cn')) {
+                cache.tryGet(item.link!, async () => {
+                    if (!item.link!.includes('zhixing.xaut.edu.cn') && !item.link!.includes('xinwen.xaut.edu.cn')) {
                         const res = await got({
                             method: 'get',
                             url: item.link,

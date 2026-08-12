@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -102,10 +102,10 @@ async function handler(ctx) {
                 items: $('.datalist tr')
                     .toArray()
                     .slice(1)
-                    .map((item) => {
-                        item = $(item);
-                        const title = item.find('td').eq(1).text();
-                        const pubDate = item.find('td').eq(2).text();
+                    .map((item): DataItem => {
+                        const $item = $(item);
+                        const title = $item.find('td').eq(1).text();
+                        const pubDate = $item.find('td').eq(2).text();
                         return {
                             title,
                             pubDate,
@@ -121,7 +121,7 @@ async function handler(ctx) {
 
     const items = data.items.map((item) => {
         item.description = renderDescription(item.title, item.pubDate);
-        item.pubDate = parseDate(item.pubDate, 'YYYY-MM-DD');
+        item.pubDate = parseDate(item.pubDate!, 'YYYY-MM-DD');
         return item;
     });
 

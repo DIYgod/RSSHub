@@ -41,7 +41,7 @@ const parseArticle = (item) =>
         const metaPublishTime = $('meta[property="article:published_time"]');
         const htmlPubDate = $('#pub_date, .date');
         const htmlDate = htmlPubDate.length ? timezone(parseDate(htmlPubDate.text(), ['YYYY年MM月DD日 HH:mm', 'YYYY年MM月DD日HH:mm']), 8) : null;
-        const metaDate = metaPublishTime.length ? parseDate(metaPublishTime.attr('content')) : htmlDate; // 2023-05-08T08:39:31+08:00
+        const metaDate = metaPublishTime.length ? parseDate(metaPublishTime.attr('content')!) : htmlDate; // 2023-05-08T08:39:31+08:00
         item.pubDate ??= metaDate;
         item.author = $('meta[property="article:author"]').attr('content');
 
@@ -49,7 +49,7 @@ const parseArticle = (item) =>
             const slideData = JSON.parse(
                 $('script')
                     .text()
-                    .match(/var slide_data = (\{.*?\})\s/)[1]
+                    .match(/var slide_data = (\{.*?\})\s/)![1]
             );
             item.description = renderToString(
                 <>
@@ -61,7 +61,7 @@ const parseArticle = (item) =>
         } else if (item.link.startsWith('https://video.sina.com.cn/')) {
             const videoId = $('script')
                 .text()
-                .match(/video_id:'?(.*?)'?,/)[1];
+                .match(/video_id:'?(.*?)'?,/)![1];
 
             const { data: videoResponse } = await got('https://api.ivideo.sina.com.cn/public/video/play', {
                 searchParams: {
@@ -100,13 +100,13 @@ const parseArticle = (item) =>
             item.pubDate = parseDate(videoData.create_time, 'X');
         } else if (item.link.startsWith('https://news.sina.com.cn/') || item.link.startsWith('https://mil.news.sina.com.cn/')) {
             item.description = $('#article').html();
-            item.category = $('meta[name="keywords"]').attr('content').split(',');
+            item.category = $('meta[name="keywords"]').attr('content')!.split(',');
         } else {
             // https://ent.sina.com.cn
             // https://finance.sina.com.cn
             // https://sports.sina.com.cn
             item.description = $('#artibody').html();
-            item.category = $('#keywords').data('wbkey')?.split(',');
+            item.category = ($('#keywords').data('wbkey') as string | undefined)?.split(',');
         }
 
         return item;

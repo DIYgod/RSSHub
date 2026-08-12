@@ -42,7 +42,7 @@ const renderDescription = (pg, description, itunes_duration, info) =>
             </div>
             {info ? (
                 <div>
-                    <audio src={`https://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3`} controls="controls"></audio>
+                    <audio src={`https://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3`} controls></audio>
                     <p>时长: {itunes_duration}</p>
                     <p>
                         <a href={`https://music.163.com/program/${pg.id}`}>查看节目</a>
@@ -57,9 +57,6 @@ const ProcessFeed = (id, limit, offset) =>
         `163:music:djradio:${id}:${limit}:${offset}`,
         async () =>
             await got.post('https://music.163.com/api/dj/program/byradio', {
-                headers: {
-                    Referer: 'https://music.163.com/',
-                },
                 form: {
                     radioId: id,
                     limit,

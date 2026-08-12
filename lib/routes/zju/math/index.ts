@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -35,13 +36,13 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<NewsItem[]>
         .toArray()
         .map((item): NewsItem | null => {
             const element = $(item);
-            const link = element.find('a[href]').first().attr('href');
+            const link = element.find('a[href]').attr('href');
             const titleNode = element.find('.title');
             // if the title node contains an image with src "/_images/news/icon/unopen.gif",
             // it indicates that the news item is only accessible from the intranet
             const intranetOnly = titleNode.find('img[src="/_images/news/icon/unopen.gif"]').length > 0;
-            const title = titleNode.text().trim() || element.find('a[href]').first().attr('title');
-            const dateText = `${element.find('.date .y').text().trim()}-${element.find('.date .d').text().trim()}`;
+            const title = titleNode.text() || element.find('a[href]').attr('title');
+            const dateText = `${element.find('.date .y').text()}-${element.find('.date .d').text()}`;
 
             // If the title or link is missing, we skip this item as it is likely not a valid news entry.
             if (!(title && link)) {
@@ -82,13 +83,8 @@ async function enrichNewsItemWithDetails(item: NewsItem, refererUrl: string): Pr
             const infoText = $('.item_info').text();
             const [, author, pubDate] = infoText.match(/来源：([\s\S]*?)发布时间：(\d{4}-\d{2}-\d{2})/) ?? [];
 
-            if (description) {
-                dataItem.description = description;
-            }
-
-            if (author) {
-                dataItem.author = author;
-            }
+            dataItem.description = description;
+            dataItem.author = author;
 
             if (pubDate) {
                 dataItem.pubDate = timezone(parseDate(pubDate), 8);
@@ -123,7 +119,7 @@ export const route: Route = {
     url: 'www.math.zju.edu.cn',
 };
 
-async function handler(ctx: { req: { param: (arg0: string) => string } }) {
+async function handler(ctx: Context) {
     const type = Math.trunc(Number(ctx.req.param('type')));
     const categoryInfo = categoryMap.get(type);
 

@@ -129,7 +129,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     return (
         <Layout>
             <div
-                className="pointer-events-none absolute w-full min-h-screen"
+                className="pointer-events-none absolute w-full min-h-screen dark:invert"
                 style={{
                     backgroundImage: `url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMicgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyBmaWxsPSdub25lJyBzdHJva2U9J3JnYigxNSAyMyA0MiAvIDAuMDQpJz48cGF0aCBkPSdNMCAuNUgzMS41VjMyJy8+PC9zdmc+')`,
                     maskImage: 'linear-gradient(transparent, black, transparent)',

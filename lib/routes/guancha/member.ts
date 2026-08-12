@@ -68,7 +68,7 @@ async function handler(ctx) {
 
                 for (const i of item.items) {
                     const newPubDate = new Date(i.publish_time);
-                    pubDate = Math.max(pubDate, newPubDate);
+                    pubDate = new Date(Math.max(+pubDate, +newPubDate));
                     description += `<a href="${rootUrl}/zaixianke/content.html?id=${i.id}">${i.title}</a><br>`;
                 }
 
@@ -84,7 +84,7 @@ async function handler(ctx) {
 
         default:
             items = response.data.data[category].map((item) => {
-                let timeArray = item.media_time && item.media_time.trim().split(/\D+/, 3);
+                let timeArray = item.media_time && item.media_time.split(/\D+/, 3);
                 timeArray &&= timeArray.filter((item) => item !== '');
                 let itunes_duration;
                 if (timeArray) {

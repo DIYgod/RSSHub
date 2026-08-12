@@ -61,10 +61,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const OutName = map.get(type).name;
-    const OutId = map.get(type).channelid;
+    const OutName = map.get(type)!.name;
+    const OutId = map.get(type)!.channelid;
 
-    let item = [];
+    let item: any[] = [];
 
     if (type === 'all') {
         const results = await Promise.all(

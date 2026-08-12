@@ -47,15 +47,15 @@ async function handler() {
 function process($) {
     const container = $('#pages > div.grid > .relative');
     const items = container.toArray().map((el) => {
-        el = $(el);
-        const title = el.find('h3');
+        const $el = $(el);
+        const title = $el.find('h3');
         return {
             title: title.text().trim(),
             link: baseUrl + title.parent().attr('href'),
-            description: el.find('.leading-relaxed').prop('outerHTML') + el.find('.post-content').prop('outerHTML'),
-            pubDate: el.find('time').attr('datetime'),
-            author: el.find('h4').text().trim(),
-            itunes_item_image: el.find('img').attr('src'),
+            description: $el.find('.leading-relaxed').prop('outerHTML') + $el.find('.post-content').prop('outerHTML'),
+            pubDate: $el.find('time').attr('datetime'),
+            author: $el.find('h4').text().trim(),
+            itunes_item_image: $el.find('img').attr('src'),
         };
     });
     return items;

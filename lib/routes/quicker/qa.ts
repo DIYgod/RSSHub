@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -60,18 +60,18 @@ async function handler(ctx) {
     let items = $('a.question-title')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -84,8 +84,7 @@ async function handler(ctx) {
                 const pubDate = content('.info-text')
                     .first()
                     .text()
-                    .replace(/创建于 /, '')
-                    .trim();
+                    .replace(/创建于 /, '');
 
                 item.description = content('.topic-body').html();
                 item.author = content('.user-link').first().text();

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('div.event-item')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('a.summary').text();
@@ -48,11 +48,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                description: $el.html(),
+                description: $el.html() ?? undefined,
             });
             const pubDateStr: string | undefined = $el.find('footer.when-where label').first().text();
             const linkUrl: string | undefined = $el.find('a.summary').attr('href');
-            const categoryEl: Element = $el.find('footer.when-where label').last();
+            const categoryEl: Cheerio<Element> = $el.find('footer.when-where label').last();
             const categories: string[] = [categoryEl.text()];
             const authorEls: Element[] = $el.find('div.sponsor').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {
@@ -78,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('h1').text();
@@ -106,7 +106,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                   },
                               ]
                             : undefined,
-                        description: $$('div.event-detail').html(),
+                        description: $$('div.event-detail').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('span.box-fl')
                         .filter((_, el) => $$(el).text().includes('时间'))
@@ -142,7 +142,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         image,
                         banner: image,
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     const extraLinkEls: Element[] = $$('div.aside-list ul li').toArray();
@@ -182,7 +182,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

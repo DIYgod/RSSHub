@@ -61,9 +61,9 @@ async function handler(ctx) {
         title: `${username} 的 bilibili 合集 ${data.meta.name}`,
         link,
         description: `${username} 的 bilibili 合集`,
-        image: face,
-        logo: face,
-        icon: face,
+        image: face ?? undefined,
+        logo: face ?? undefined,
+        icon: face ?? undefined,
         item: data.archives.map((item) => ({
             title: item.title,
             description: utils.renderUGCDescription(embed, item.pic, '', item.aid, undefined, item.bvid),

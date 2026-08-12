@@ -10,13 +10,13 @@ const parseList = ($) =>
     $('.article-panel')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('h4 a');
+            const $item = $(item);
+            const a = $item.find('h4 a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), baseUrl).href,
-                upvotes: item.find('.number-first').text(),
-                comments: item.find('.number-last').text(),
+                upvotes: $item.find('.number-first').text(),
+                comments: $item.find('.number-last').text(),
             };
         });
 

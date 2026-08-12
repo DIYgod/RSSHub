@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 // journals form AAAS publishing group
 //
 // science:        Science
@@ -57,24 +57,24 @@ async function handler() {
         .not('.partner-journals')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const name = item.find('.row h2').first().text().trim();
-            const volume = item
+            const $item = $(item);
+            const name = $item.find('.row h2').first().text().trim();
+            const volume = $item
                 .find('.row li')
                 .eq(0)
                 .text()
                 .trim()
-                .match(/Volume (\d+)/)[1];
-            const issue = item
+                .match(/Volume (\d+)/)![1];
+            const issue = $item
                 .find('.row li')
                 .eq(1)
                 .text()
                 .trim()
-                .match(/Issue (\d+)/)[1];
-            const date = item.find('.row li').eq(2).text().trim();
-            const coverUrl = `${baseUrl}${item.find('.cover-image__popup-moving-cover').attr('data-cover-src')}`;
+                .match(/Issue (\d+)/)![1];
+            const date = $item.find('.row li').eq(2).text().trim();
+            const coverUrl = `${baseUrl}${$item.find('.cover-image__popup-moving-cover').attr('data-cover-src')}`;
             const content = $('.cover-image__popup-view__caption-wrapper').html();
-            const link = $('.browse-journals__item__links a').eq(0).attr('href').replace('/current', '');
+            const link = $('.browse-journals__item__links a').eq(0).attr('href')!.replace('/current', '');
 
             return {
                 title: `${name} | Volume ${volume} Issue ${issue}`,
@@ -89,7 +89,7 @@ async function handler() {
         description: $('meta[property="og:description"]').attr('content'),
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageURL,
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

@@ -121,7 +121,7 @@ const getWbiVerifyString = () => {
         //     62, 11, 36, 20, 34, 44, 52,
         // ];
         const array = JSON.parse(jsResponse.match(/\[(?:\d+,){63}\d+\]/));
-        const o = [];
+        const o: any[] = [];
         for (const t of array) {
             if (r.charAt(t)) {
                 o.push(r.charAt(t));
@@ -328,7 +328,7 @@ const getAidFromBvid = async (bvid) => {
         if (response.data && response.data.data && response.data.data.aid) {
             aid = response.data.data.aid;
         }
-        cache.set(key, aid);
+        cache.set(key, aid ?? '');
     }
     return aid;
 };
@@ -355,7 +355,7 @@ const getArticleDataFromCvid = async (cvid, uid) => {
             const newFormatData = JSON.parse(
                 $('script:contains("window.__INITIAL_STATE__")')
                     .text()
-                    .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*?)?;\(/)[1]
+                    .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*?)?;\(/)![1]
             );
 
             if (newFormatData?.readInfo?.opus?.content?.paragraphs) {

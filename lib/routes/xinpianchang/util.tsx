@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,7 +44,7 @@ const getData = (url) =>
                 title: $('span.bg-clip-text').text() || `${author}·${$('meta[property="og:title"]').prop('content').split('-', 1)[0]}`,
                 link: url,
                 description: $('meta[property="og:description"]').prop('content'),
-                language: $('html').prop('lang'),
+                language: $('html').prop('lang') as Language,
                 image: $('meta[property="og:image"]').prop('content'),
                 icon,
                 logo: icon,

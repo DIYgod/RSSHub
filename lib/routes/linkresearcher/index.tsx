@@ -128,7 +128,7 @@ async function handler(ctx: Context): Promise<Data> {
                 }
 
                 return dataItem;
-            }) as unknown as DataItem;
+            });
         })
     );
 

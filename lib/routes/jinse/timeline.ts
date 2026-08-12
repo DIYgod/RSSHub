@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -75,7 +75,7 @@ async function handler(ctx) {
 
         // Reason: API returns mixed domains (jinse.com, m.jinse.com.cn, jinse.com.cn),
         // normalize all to www.jinse.com.cn since old domains are dead
-        const link = item.jump_url.replace(/\/\/(www\.|m\.)?jinse\.com(?!\.cn)/, '//www.jinse.com.cn').replace('//m.jinse.com.cn', '//www.jinse.com.cn');
+        const link = item.jump_url.replace(/\/\/(www\.|m\.)?jinse\.com(\.cn)?/, '//www.jinse.com.cn');
 
         return {
             title: item.title,
@@ -113,7 +113,7 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.description += renderDescription({
-                    description: content('section.js-article-content').html() || content('div.js-article').html(),
+                    description: (content('section.js-article-content').html() || content('div.js-article').html()) ?? undefined,
                 });
                 item.category = content('section.js-article-tag_state_1 a span')
                     .toArray()
@@ -130,14 +130,14 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

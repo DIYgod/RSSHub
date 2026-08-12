@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,18 +21,18 @@ export const handler = async (ctx) => {
     let items = $('ul.notice-list li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('div.notice-list-tt a').text(),
-                pubDate: parseDate(item.find('div.notice-date').text(), 'YYYY/MM/DD'),
-                link: new URL(item.find('div.notice-list-tt a').prop('href'), rootUrl).href,
-                category: item
+                title: $item.find('div.notice-list-tt a').text(),
+                pubDate: parseDate($item.find('div.notice-date').text(), 'YYYY/MM/DD'),
+                link: new URL($item.find('div.notice-list-tt a').prop('href')!, rootUrl).href,
+                category: $item
                     .find('div.notice-label')
                     .toArray()
                     .map((c) => $(c).text()),
-                language,
+                language: language as Language,
             };
         });
 
@@ -52,7 +52,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.v_news_content').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
@@ -60,7 +60,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo a img').prop('href'), rootUrl).href;
+    const image = new URL($('div.logo a img').prop('href')!, rootUrl).href;
 
     return {
         title,
@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language,
+        language: language as Language,
     };
 };
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -18,15 +18,15 @@ const get_from_link = async (link) => {
     const $ = load(response);
     const articleList = $('div#wp_news_w2 table[width="100%"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = $(item).find('div[style="white-space:nowrap"]').first();
             // deal with article_link
             let articleLink = a.attr('href');
-            if (!articleLink.startsWith('http')) {
+            if (!articleLink!.startsWith('http')) {
                 articleLink = `${baseUrl}${articleLink}`;
             }
-            articleLink = articleLink.replace(/^https:\/\/(\w+)-ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://$1.ecust.edu.cn').replace(/^https:\/\/ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://ecust.edu.cn');
+            articleLink = articleLink!.replace(/^https:\/\/(\w+)-ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://$1.ecust.edu.cn').replace(/^https:\/\/ecust-edu-cn-s\.sslvpn\.ecust\.edu\.cn:8118/, 'https://ecust.edu.cn');
             return {
                 title: a.text(),
                 link: articleLink,
@@ -76,7 +76,7 @@ async function handler(ctx) {
                         content(el).removeAttr(attr);
                     }
                 });
-                const description = content('div.wp_articlecontent').first().html();
+                const description = content('div.wp_articlecontent').html();
                 // merge same objects, replace two times instead of replace recursively
                 description && (item.description = description.replaceAll(/<\/(p|span|strong)>\s*<\1>/g, '').replaceAll(/<\/(p|span|strong)>\s*<\1>/g, ''));
                 return item;

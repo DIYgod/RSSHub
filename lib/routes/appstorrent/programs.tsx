@@ -5,7 +5,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import type { Options } from '@/utils/got';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -23,7 +22,7 @@ async function handler(ctx?: Context): Promise<Data> {
     const limit = ctx?.req.query('limit') ? Number.parseInt(ctx?.req.query('limit') ?? '20') : 20;
     const baseUrl = 'https://appstorrent.ru';
     const currentUrl = `${baseUrl}/programs/`;
-    const gotOptions: Options = {
+    const gotOptions: Parameters<typeof got>[1] = {
         http2: true,
     };
 

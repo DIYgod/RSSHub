@@ -16,7 +16,7 @@ const parseArticle = (item) => {
             const $ = load(resp.data);
             desc = $('article.fmt').html();
         } catch (error) {
-            if (error.response.status === 403) {
+            if ((error as { response: { status: number } }).response.status === 403) {
                 // skip it
             } else {
                 throw error;

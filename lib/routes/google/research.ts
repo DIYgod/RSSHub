@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -23,9 +23,9 @@ export const route: Route = {
         const $ = load(response);
         const list = $('div.js-configurable-list .blog-posts-grid__cards .glue-grid__col')
             .toArray()
-            .map((eleItem) => {
+            .map((eleItem): DataItem => {
                 const item = $(eleItem);
-                const a = item.find('a').first();
+                const a = item.find('a');
                 return {
                     title: a.find('.headline-5').text(),
                     link: `${baseUrl}${a.attr('href')}`,
@@ -40,8 +40,8 @@ export const route: Route = {
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
                     item.description = $('.blog-detail-wrapper.js-gt-blog-detail-wrapper').html();
                     return item;

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,12 +46,12 @@ async function handler(ctx) {
                 description: $('meta[name=ColumnDescription]').attr('content'),
                 items: $('.list ul li')
                     .toArray()
-                    .map((item) => {
-                        item = $(item);
+                    .map((item): DataItem & { link: string } => {
+                        const $item = $(item);
                         return {
-                            title: item.find('a').text().trim(),
-                            link: new URL(item.find('a').attr('href'), baseUrl).href,
-                            pubDate: parseDate(item.find('span').text(), 'YYYY-MM-DD'),
+                            title: $item.find('a').text().trim(),
+                            link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                            pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
                         };
                     }),
             };
@@ -67,7 +67,7 @@ async function handler(ctx) {
                     const { data: html } = await got(item.link);
                     const $ = load(html);
                     item.description = $('.text').html();
-                    item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')), 8);
+                    item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8);
                     return item;
                 });
             }

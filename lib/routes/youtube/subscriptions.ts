@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import utils from './utils';
+import { formatDescription, getChannelWithId, getPlaylistItems, getSubscriptions, getThumbnail, renderYoutube } from './utils';
 
 export const route: Route = {
     path: '/subscriptions/:embed?',
@@ -51,11 +51,11 @@ async function handler(ctx) {
     }
     const embed = !ctx.req.param('embed');
 
-    const channelIds = (await utils.getSubscriptions('snippet', cache)).data.items.map((item) => item.snippet.resourceId.channelId);
+    const channelIds = (await getSubscriptions('snippet', cache)).data.items.map((item) => item.snippet.resourceId.channelId);
 
-    const playlistIds = await pMap(channelIds, async (channelId) => (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items?.[0].contentDetails.relatedPlaylists.uploads, { concurrency: 30 });
+    const playlistIds = await pMap(channelIds, async (channelId) => (await getChannelWithId(channelId, 'contentDetails', cache)).data.items?.[0].contentDetails.relatedPlaylists.uploads, { concurrency: 30 });
 
-    let items = await pMap(playlistIds.filter(Boolean), async (playlistId) => (await utils.getPlaylistItems(playlistId, 'snippet', cache))?.data.items, { concurrency: 30 });
+    let items = await pMap(playlistIds.filter(Boolean), async (playlistId) => (await getPlaylistItems(playlistId, 'snippet', cache))?.data.items, { concurrency: 30 });
 
     items = items.flat();
 
@@ -64,10 +64,10 @@ async function handler(ctx) {
         .map((item) => {
             const snippet = item.snippet;
             const videoId = snippet.resourceId.videoId;
-            const img = utils.getThumbnail(snippet.thumbnails);
+            const img = getThumbnail(snippet.thumbnails);
             return {
                 title: snippet.title,
-                description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
+                description: renderYoutube(embed, videoId, img, formatDescription(snippet.description)),
                 pubDate: parseDate(snippet.publishedAt),
                 link: `https://www.youtube.com/watch?v=${videoId}`,
                 author: snippet.videoOwnerChannelTitle,

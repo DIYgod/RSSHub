@@ -53,14 +53,14 @@ async function handler(ctx) {
                 const description = $('#divArtBody').html();
                 const title = $('#h_title').text();
                 const pubDate = timezone(parseDate($('#pubtime_baidu').text().split('• ', 2)[1], 'YYYY-MM-DD HH:mm:ss'), 8);
-                const author = $('.bljjxue').text().match(/\S+/)[0];
+                const author = $('.bljjxue').text().match(/\S+/)![0];
                 return {
                     title,
                     link: item,
                     description,
                     pubDate,
                     author,
-                    category: $('meta[name="Keywords"]').attr('content').split(','),
+                    category: $('meta[name="Keywords"]').attr('content')!.split(','),
                 };
             })
         )

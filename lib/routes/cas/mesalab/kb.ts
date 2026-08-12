@@ -51,7 +51,7 @@ async function handler() {
                     title,
                     author: $('.user_name').text(),
                     pubDate: timezone(parseDate($('.link_postdate').text().replaceAll(/\s+/g, ' ')), 8),
-                    description: $('#article_content').html() + ($('.attachment').length ? $('.attachment').html() : ''),
+                    description: $('#article_content').html()! + ($('.attachment').length ? $('.attachment').html() : '')!,
                     link,
                     category: $('.category .category_r span').first().text(),
                 };

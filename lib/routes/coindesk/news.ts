@@ -33,7 +33,7 @@ async function handler(): Promise<Data> {
     const rssUrl = 'https://feeds.feedburner.com/Coindesk';
     const feed = await parser.parseURL(rssUrl);
 
-    const items = await Promise.all(feed.items.map((item) => cache.tryGet(item.link, () => parseItem(item))));
+    const items = await Promise.all(feed.items.map((item) => cache.tryGet(item.link!, () => parseItem(item))));
 
     // Filter out null items
     const validItems = items.filter((item): item is DataItem => item !== null);

@@ -1,3 +1,4 @@
+import type { Context } from 'hono';
 import Parser from 'rss-parser';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -190,7 +191,7 @@ describe('cache', () => {
 });
 
 describe('cache middleware error handling', () => {
-    const setSpy = vi.fn(() => null);
+    const setSpy = vi.fn<(...args: any[]) => null>(() => null);
     const getSpy = vi.fn(() => null);
 
     afterAll(() => {
@@ -231,10 +232,10 @@ describe('cache middleware error handling', () => {
             header: vi.fn(),
             set: vi.fn(),
             get: vi.fn(),
-        };
+        } as unknown as Context;
 
         await expect(
-            cacheMiddleware(ctx as any, () => {
+            cacheMiddleware(ctx, () => {
                 throw new Error('boom');
             })
         ).rejects.toThrow('boom');

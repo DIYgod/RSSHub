@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 import { apiRootUrl, processItems, rootUrl } from './util';
@@ -54,14 +54,14 @@ async function handler(ctx) {
     const author = $('meta[name="application-name"]').prop('content');
     const subtitle = $('meta[property="og:title"]').prop('content');
     const image = 'https://readhub.cn/icons/icon-192x192.png';
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl);
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${route.name}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

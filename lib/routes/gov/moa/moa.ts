@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -87,7 +87,7 @@ async function dealChannel(suburl, selectors) {
 
     const pageInfos = $(listSelector)
         .toArray()
-        .map((e) => {
+        .map((e): DataItem & { pageType: string; link: string } => {
             const element = $(e);
             const titleElement = element.find(titleSelector);
 
@@ -166,7 +166,7 @@ async function dealNormalPage(link, item) {
     const exactTime = $(metaElements[0]).text();
     const dateMatch = /\d{4}-\d{2}-\d{2}/.exec(exactTime);
     const timeMatch = /\d{2}:\d{2}/.exec(exactTime);
-    item.pubDate = parseRelativeDate(`${dateMatch[0]} ${timeMatch[0]}`);
+    item.pubDate = parseRelativeDate(`${dateMatch![0]} ${timeMatch![0]}`);
 
     item.description = $('.arc_body').html();
 
@@ -184,7 +184,7 @@ async function dealGovpublicPage(link, item) {
     const body = $('.gsj_htmlcon_bot');
     const [, year, month, date] = $('.pubtime')
         .text()
-        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/);
+        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/)!;
     const [, author] = $('.pubtime.source')
         ?.text()
         ?.match(/：(.+)/) ?? [null, ''];

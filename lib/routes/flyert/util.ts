@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -18,10 +19,10 @@ const parseArticleList = ($: CheerioAPI, limit: number) =>
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('div.wzbt').text().trim();
-            const image = item.find('div.wzpic img').prop('src');
+            const title = $item.find('div.wzbt').text().trim();
+            const image = $item.find('div.wzpic img').prop('src');
             const description = renderDescription({
                 images: image
                     ? [
@@ -31,20 +32,20 @@ const parseArticleList = ($: CheerioAPI, limit: number) =>
                           },
                       ]
                     : undefined,
-                description: item.find('div.wznr').html(),
+                description: $item.find('div.wznr').html() ?? undefined,
             });
-            const pubDate = item.find('div.subcat span.y').contents()?.eq(2)?.text().trim() ?? undefined;
-            const link = new URL(item.find('div.wzbt a').prop('href'), rootUrl).href;
+            const pubDate = $item.find('div.subcat span.y').contents()?.eq(2)?.text().trim() ?? undefined;
+            const link = new URL($item.find('div.wzbt a').prop('href')!, rootUrl).href;
 
             return {
                 title,
                 description,
                 pubDate: pubDate ? parseDate(pubDate) : undefined,
                 link,
-                author: item.find('div.subcat span.y a').first().text(),
+                author: $item.find('div.subcat span.y a').text(),
                 content: {
                     html: description,
-                    text: item.find('div.wznr').text(),
+                    text: $item.find('div.wznr').text(),
                 },
                 image,
                 banner: image,
@@ -61,41 +62,41 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
     $('div.comiis_postlist')
         .toArray()
         .filter((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            return item
+            return $item
                 .find('span.comiis_common a[data-track]')
                 .toArray()
                 .some((a) => {
-                    a = $(a);
+                    const $a = $(a);
 
-                    const dataTrack = a.attr('data-track') || '';
+                    const dataTrack = $a.attr('data-track') || '';
                     return dataTrack.endsWith('文章');
                 });
         })
         .slice(0, limit)
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             const aEl = $(
-                item
+                $item
                     .find('span.comiis_common a[data-track]')
                     .toArray()
                     .find((a) => {
-                        a = $(a);
+                        const $a = $(a);
 
-                        const dataTrack = a.attr('data-track') || '';
+                        const dataTrack = $a.attr('data-track') || '';
                         return dataTrack.endsWith('文章');
                     })
             );
 
-            const pubDate = item.find('span.author_b span').prop('title') || undefined;
+            const pubDate = $item.find('span.author_b span').prop('title') || undefined;
 
             return {
                 title: aEl.text().trim(),
                 pubDate: pubDate ? parseDate(pubDate) : undefined,
-                link: new URL(aEl.prop('href'), rootUrl).href,
-                author: item.find('a.author_t').text().trim(),
+                link: new URL(aEl.prop('href')!, rootUrl).href,
+                author: $item.find('a.author_t').text().trim(),
             };
         });
 
@@ -109,7 +110,7 @@ const parseArticle = ($$: CheerioAPI, item) => {
     const title = $$('h1.ph').text().trim();
     const description = renderDescription({
         intro: $$('div.s').text() || undefined,
-        description: $$('div#artMain').html(),
+        description: $$('div#artMain').html() ?? undefined,
     });
     const pubDate =
         $$('p.xg1')
@@ -142,16 +143,16 @@ const parseArticle = ($$: CheerioAPI, item) => {
  */
 const parsePost = ($$: CheerioAPI, item) => {
     $$('img.zoom').each((_, el) => {
-        el = $$(el);
+        const $el = $$(el);
 
-        el.replaceWith(
+        $el.replaceWith(
             renderDescription({
                 images:
-                    el.prop('zoomfile') || el.prop('file')
+                    $el.prop('zoomfile') || $el.prop('file')
                         ? [
                               {
-                                  src: el.prop('zoomfile') || el.prop('file'),
-                                  alt: el.prop('alt') || el.prop('title'),
+                                  src: $el.prop('zoomfile') || $el.prop('file'),
+                                  alt: $el.prop('alt') || $el.prop('title'),
                               },
                           ]
                         : undefined,
@@ -162,7 +163,7 @@ const parsePost = ($$: CheerioAPI, item) => {
     $$('i.pstatus').remove();
     $$('div.tip').remove();
 
-    const title = $$('span#thread_subject').text().trim();
+    const title = $$('span#thread_subject').text();
     const description = $$('div.post_message').first().html();
     const pubDate = $$('span[title]').first().prop('title');
 
@@ -172,7 +173,7 @@ const parsePost = ($$: CheerioAPI, item) => {
     item.title = title;
     item.description = description;
     item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
-    item.author = $$('a.kmxi2').first().text();
+    item.author = $$('a.kmxi2').text();
     item.guid = guid;
     item.id = guid;
     item.content = {

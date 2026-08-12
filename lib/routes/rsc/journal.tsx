@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -68,24 +68,24 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const authors = item.find('div.article__authors').text().trim();
-            const doi = item.find('div.text--small span a').text().split(/org\//).pop();
+            const authors = $item.find('div.article__authors').text().trim();
+            const doi = $item.find('div.text--small span a').text().split(/org\//).pop();
 
-            const isOpenAccess = !!item.find('span.capsule__context img.ver-t').prop('alt');
-            const isManuscript = !!item.find('span.capsule__context span').text();
+            const isOpenAccess = !!$item.find('span.capsule__context img.ver-t').prop('alt');
+            const isManuscript = !!$item.find('span.capsule__context span').text();
 
-            const enclosureUrl = new URL(item.find('div.capsule__action--buttons a').prop('href').split('?').pop(), rootUrl).href;
+            const enclosureUrl = new URL($item.find('div.capsule__action--buttons a').prop('href')!.split('?').pop()!, rootUrl).href;
 
             return {
-                title: item.find('h3.capsule__title').text(),
-                link: new URL(item.find('a.capsule__action').prop('href'), rootUrl).href,
-                description: item.find('div.capsule__column-wrapper').html(),
+                title: $item.find('h3.capsule__title').text(),
+                link: new URL($item.find('a.capsule__action').prop('href')!, rootUrl).href,
+                description: $item.find('div.capsule__column-wrapper').html(),
                 author: authors,
-                category: [item.find('span.capsule__context').text().trim(), ...authors.split(/,\s|and\s/), isOpenAccess || isManuscript],
+                category: [$item.find('span.capsule__context').text().trim(), ...authors.split(/,\s|and\s/), isOpenAccess || isManuscript] as string[],
                 guid: `rsc-${doi}`,
-                pubDate: timezone(parseDate(item.find('div.text--small span.block').text().split(/on\s/).pop(), 'DD MMM YYYY'), 1),
+                pubDate: timezone(parseDate($item.find('div.text--small span.block').text().split(/on\s/).pop()!, 'DD MMM YYYY'), 1),
                 enclosure_url: enclosureUrl,
                 enclosure_type: enclosureUrl ? 'application/pdf' : undefined,
                 doi,
@@ -120,15 +120,15 @@ async function handler(ctx) {
 
     $ = load(detailResponse);
 
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: $('meta[name="citation_title"]').prop('content'),
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'en',
-        image: new URL($('div.page-head__cell--image span img').prop('src'), rootUrl).href,
+        language: 'en' as Language,
+        image: new URL($('div.page-head__cell--image span img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('title').text(),

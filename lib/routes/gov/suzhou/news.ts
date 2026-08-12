@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -150,12 +150,12 @@ async function handler(ctx) {
         items = $('ul.infolist li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
                 return {
-                    title: a.attr('title'),
-                    link: new URL(a.attr('href'), rootUrl).href,
-                    pubDate: timezone(parseDate(item.find('.time').text(), 'YYYY-MM-DD'), 8),
+                    title: a.attr('title')!,
+                    link: new URL(a.attr('href')!, rootUrl).href,
+                    pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
                 };
             });
     }

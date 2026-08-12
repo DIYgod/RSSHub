@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 import iconv from 'iconv-lite';
 
 import cache from '@/utils/cache';
@@ -42,7 +42,7 @@ export default {
                     const convert_data = iconv.decode(original_data.data, 'gbk');
                     const description = load(convert_data, {
                         decodeEntities: false,
-                    })('body > table > tbody > tr > td.oblog_t_2 > div > table > tbody > tr:nth-child(2) > td');
+                    } as CheerioOptions)('body > table > tbody > tr > td.oblog_t_2 > div > table > tbody > tr:nth-child(2) > td');
                     const pubInfo = description.find('span span.oblog_text').text().split('发布于');
                     description.find('table, .adsbygoogle').remove();
 

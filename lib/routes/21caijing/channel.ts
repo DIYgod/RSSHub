@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -110,7 +110,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: updated ? parseDate(updated, 'X') : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -124,7 +124,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     $$('div.rela-box').remove();
@@ -135,7 +135,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('div.author-infos span')
                         .text()
                         .match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2})/)?.[1];
-                    const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? item.category ?? [];
+                    const categories: DataItem['category'] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? item.category ?? [];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     const processedItem: DataItem = {
@@ -148,7 +148,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language,
+                        language: language as Language,
                     };
 
                     return {
@@ -169,7 +169,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

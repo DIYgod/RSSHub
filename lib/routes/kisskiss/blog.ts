@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -44,7 +44,7 @@ async function handler(ctx) {
         .map((item) => {
             const title = $(item);
             const body = title.next('div.blog_frame_middle');
-            const i = {
+            const i: DataItem = {
                 title: title.find('tbody tr td').text(),
                 link: title.find('tbody tr td a').attr('href'),
                 pubDate: timezone(
@@ -52,7 +52,7 @@ async function handler(ctx) {
                         body
                             .find('div.blog_data div.data_r')
                             .text()
-                            .match(/\d+年\d+月\d+日 \(\d+:\d+\)/)[0],
+                            .match(/\d+年\d+月\d+日 \(\d+:\d+\)/)![0],
                         'YYYY年M月D日 (HH:mm)'
                     ),
                     9
@@ -71,6 +71,6 @@ async function handler(ctx) {
         title: 'KISS ブログ',
         link: url,
         item: items,
-        language: 'ja',
+        language: 'ja' as Language,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,7 @@ async function handler() {
 
     const list = $('.newspost')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { category: string[]; link: string } => {
             const $item = $(item);
             const a = $item.find('h1 a');
             const date = $item.find('time').attr('datetime');
@@ -80,7 +80,7 @@ async function handler() {
     return {
         title: 'TechPowerUp',
         link: baseUrl,
-        language: 'en',
+        language: 'en' as Language,
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
     };

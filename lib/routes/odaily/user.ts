@@ -64,7 +64,7 @@ async function handler(ctx) {
                     content(el).attr(
                         'src',
                         content(el)
-                            .attr('src')
+                            .attr('src')!
                             .replaceAll(String.raw`\"`, '')
                     );
                 });

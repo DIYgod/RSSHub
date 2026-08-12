@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,7 +52,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.maincontent > ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $(item).find('a').attr('href');
             const type = pageType(href);
             return {
@@ -69,14 +69,14 @@ async function handler() {
                 case 'wechat-mp':
                     return finishArticleItem(item);
                 case 'pku-news':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.pageArticle > div.col.lf').html();
                         return item;
                     });
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.article').html();

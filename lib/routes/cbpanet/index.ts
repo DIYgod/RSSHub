@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,21 +22,21 @@ export const handler = async (ctx) => {
     let items = $('div.divmore ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('div.zxcont1 a');
+            const a = $item.find('div.zxcont1 a');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('div.zxtime1').text(), 'YY/MM/DD'),
-                link: new URL(a.prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('div.zxtime1').text(), 'YY/MM/DD'),
+                link: new URL(a.prop('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div#logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div#logo img').prop('src')!, rootUrl).href;
 
     return {
         title,
@@ -74,7 +74,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/, 1)[0],
-        language,
+        language: language as Language,
     };
 };
 
@@ -158,9 +158,9 @@ export const route: Route = {
         {
             source: ['www.cbpanet.com/dzp_news.aspx'],
             target: (_, url) => {
-                url = new URL(url);
-                const bigId = url.searchParams.get('bigid');
-                const smallId = url.searchParams.get('smallid');
+                const { searchParams } = new URL(url);
+                const bigId = searchParams.get('bigid');
+                const smallId = searchParams.get('smallid');
 
                 return `/dzp_news${bigId ? `/${bigId}${smallId ? `/${smallId}` : ''}` : ''}`;
             },
