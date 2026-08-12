@@ -163,20 +163,3 @@ export const callApi = async function callApi<T>({ googleApi, youtubeiApi, param
     }
     return await youtubeiApi(params);
 };
-
-export default {
-    getPlaylistItems,
-    getPlaylist,
-    getChannelWithId,
-    getChannelWithUsername,
-    getVideos,
-    getThumbnail,
-    formatDescription,
-    renderDescription: renderYoutube,
-    getSubscriptions,
-    getSubscriptionsRecusive,
-    isYouTubeChannelId,
-    getLive,
-    getVideoUrl,
-    getPlaylistWithShortsFilter,
-};

@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import utils from './utils';
+import { formatDescription, getChannelWithUsername, getLive, getThumbnail, renderYoutube } from './utils';
 
 export const route: Route = {
     path: '/live/:username/:embed?',
@@ -50,12 +50,12 @@ async function handler(ctx) {
     channelName = $('meta[itemprop="name"]').attr('content');
 
     if (!channelId) {
-        const channelInfo = (await utils.getChannelWithUsername(username, 'snippet', cache)).data.items[0];
+        const channelInfo = (await getChannelWithUsername(username, 'snippet', cache)).data.items[0];
         channelId = channelInfo.id;
         channelName = channelInfo.snippet.title;
     }
 
-    const data = (await utils.getLive(channelId, cache)).data.items;
+    const data = (await getLive(channelId, cache)).data.items;
 
     return {
         title: `${channelName || username}'s Live Status`,
@@ -64,10 +64,10 @@ async function handler(ctx) {
         item: data.map((item) => {
             const snippet = item.snippet;
             const liveVideoId = item.id.videoId;
-            const img = utils.getThumbnail(snippet.thumbnails);
+            const img = getThumbnail(snippet.thumbnails);
             return {
                 title: snippet.title,
-                description: utils.renderDescription(embed, liveVideoId, img, utils.formatDescription(snippet.description)),
+                description: renderYoutube(embed, liveVideoId, img, formatDescription(snippet.description)),
                 pubDate: parseDate(snippet.publishedAt),
                 guid: liveVideoId,
                 link: `https://www.youtube.com/watch?v=${liveVideoId}`,

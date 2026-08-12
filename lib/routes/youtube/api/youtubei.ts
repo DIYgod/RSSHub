@@ -4,7 +4,7 @@ import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-import utils, { getVideoUrl } from '../utils';
+import { getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
 let innertubePromise: Promise<Innertube> | undefined;
@@ -44,7 +44,7 @@ const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem =
 
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
-        description: utils.renderDescription(embed, videoId, img, ''),
+        description: renderYoutube(embed, videoId, img, ''),
         link: `https://www.youtube.com/watch?v=${videoId}`,
         author: metadataRows.length > 1 ? metadataRows[0].metadata_parts?.[0]?.text?.text : undefined,
         image: img,
