@@ -106164,7 +106164,7 @@
         "maintainers": [
           "Aquarius-Situla"
         ],
-        "description": "\n| 通知公告 | 学生活动 | 教师风采 | 新闻动态 |\n| -------- | -------- | -------- | -------- |\n| tzgg     | xstd     | jsfc     | xwdt     |\n",
+        "description": "| 通知公告 | 学生活动 | 教师风采 | 新闻动态 |\n| -------- | -------- | -------- | -------- |\n| tzgg     | xstd     | jsfc     | xwdt     |",
         "location": "thuhs.ts",
         "module": "() => import('@/routes/tsinghua/thuhs.ts')"
       }
