@@ -64,7 +64,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 10;
 
     const list = $('a')
         .toArray()
@@ -102,7 +102,7 @@ async function handler(ctx) {
         async (item) => {
             const cacheResult = await cache.tryGet(item.link!, async () => {
                 const res = await got.get(item.link!, {
-                    headers: { 
+                    headers: {
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                         'Referer': targetUrl,
                     },
@@ -113,6 +113,7 @@ async function handler(ctx) {
                 let author = '';
                 let $content;
 
+                // 判斷網頁佈局版本
                 if (_$('span.GN-lbox3C').length > 0) {
                     const pubInfo = _$('span.GN-lbox3C').text().split('）');
                     author = pubInfo[0]?.replace('（', '').replace(' 報導', '').trim();
@@ -135,6 +136,7 @@ async function handler(ctx) {
                     $content = _$('div.text-paragraph');
                 }
 
+                // 處理巴哈姆特圖片 Lazyload 問題
                 $content.find('img').each((_, img) => {
                     const $img = _$(img);
                     const dataSrc = $img.attr('data-src') || $img.attr('data-original');
