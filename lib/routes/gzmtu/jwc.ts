@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -15,7 +15,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const link = 'https://jwc.gzmtu.edu.cn/';
     const response = await ofetch(link);
     const $ = load(response);
@@ -50,6 +50,6 @@ async function handler() {
         description: '广州航海学院教务处教务通知、教务动态、教务简报 RSS by SkYe231',
         link,
         item: items,
-        language: 'zh-cn',
+        language: 'zh-CN',
     };
 }

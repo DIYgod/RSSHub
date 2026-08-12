@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -38,7 +38,7 @@ export const route: Route = {
     url: 'www.cuit.edu.cn',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { category = 'zhxw' } = ctx.req.param();
     const link = `${baseUrl}/index/${category.replace(/\.htm$/, '')}.htm`;
 
@@ -54,12 +54,12 @@ async function handler(ctx: Context) {
                 link: new URL($item.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.author = $('.conttime span')
@@ -76,7 +76,7 @@ async function handler(ctx: Context) {
     return {
         title: $('head title').text(),
         link,
-        language: 'zh-cn',
+        language: 'zh-CN',
         item: items,
     };
 }

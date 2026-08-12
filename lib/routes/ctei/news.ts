@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,16 +37,16 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: `${currentUrl}${$item.attr('href')!.replace(/\./, '')}`,
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.TRS_Editor').html();
-                item.pubDate = parseDate(item.link.match(/\/t(\d{8})_\d+\.htm/)![1], 'YYYYMMDD');
+                item.pubDate = parseDate(item.link!.match(/\/t(\d{8})_\d+\.htm/)![1], 'YYYYMMDD');
 
                 return item;
             })

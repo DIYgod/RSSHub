@@ -39,7 +39,7 @@ async function handler(): Promise<Data> {
                     const detail = await ofetch(item.link!);
                     const $ = load(detail);
 
-                    item.description = $('.wp_articlecontent').html() ?? $('.v_news_content').html() ?? '';
+                    item.description = $('.wp_articlecontent').html() ?? $('.v_news_content').html();
                 } catch {
                     // intranet
                 }

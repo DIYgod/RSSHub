@@ -13,7 +13,7 @@ export const route: Route = {
     },
     name: '分类',
     maintainers: ['CorrectRoadH'],
-    handler: (ctx: Context) => fetchVideos(ctx, 'tag', ctx.req.param('name')),
+    handler: (ctx: Context) => fetchVideos(ctx, 'tag', ctx.req.param('name')!),
     features: {
         nsfw: true,
     },

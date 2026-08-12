@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -8,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const rootUrl = 'https://www.asahi.com';
 
-export async function buildFeed(ctx: Context, currentUrl: string) {
+export const buildFeed = async (ctx: Context, currentUrl: string) => {
     const limit = Number(ctx.req.query('limit')) || 6;
 
     const response = await ofetch(currentUrl);
@@ -51,13 +52,13 @@ export async function buildFeed(ctx: Context, currentUrl: string) {
         list = [...links].slice(0, limit).map((link) => ({ link }));
     }
 
-    const items = await Promise.all(
+    const items = (await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
 
-                content('.notPrint, script, svg').remove();
+                content('.notPrint, svg').remove();
 
                 const pubDate = content('meta[name="pubdate"]').attr('content');
 
@@ -69,7 +70,7 @@ export async function buildFeed(ctx: Context, currentUrl: string) {
                 };
             })
         )
-    );
+    )) as DataItem[];
 
     return {
         title: $('title').text(),
@@ -77,4 +78,4 @@ export async function buildFeed(ctx: Context, currentUrl: string) {
         item: items,
         description: '朝日新聞社のニュースサイト、朝日新聞デジタルの社会ニュースについてのページです',
     };
-}
+};

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -61,12 +61,12 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, url).href,
                 pubDate: timezone(parseDate(dateText), 8),
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         links.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!, {
                     headers: {
                         Cookie: cookieString,
                     },

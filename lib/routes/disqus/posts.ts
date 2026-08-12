@@ -30,17 +30,13 @@ async function handler(ctx: Context) {
     }
     const { forum } = ctx.req.param();
 
-    const headers = {
-        Referer: 'https://disqus.com/',
-    };
-
-    const response = await ofetch(`https://disqus.com/api/3.0/forums/listPosts.json?api_key=${config.disqus.api_key}&forum=${forum}`, { headers });
+    const response = await ofetch(`https://disqus.com/api/3.0/forums/listPosts.json?api_key=${config.disqus.api_key}&forum=${forum}`);
 
     const data = response.response;
 
     const threadsQuery = [...new Set(data.map((item) => item.thread))].map((thread) => `&thread=${thread}`).join('');
 
-    const responseThreads = await ofetch(`https://disqus.com/api/3.0/forums/listThreads.json?api_key=${config.disqus.api_key}&forum=${forum}${threadsQuery}`, { headers });
+    const responseThreads = await ofetch(`https://disqus.com/api/3.0/forums/listThreads.json?api_key=${config.disqus.api_key}&forum=${forum}${threadsQuery}`);
 
     const threads = responseThreads.response;
 

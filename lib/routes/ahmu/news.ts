@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,12 +37,12 @@ async function handler() {
                 author: '安徽医科大学研究生学院',
                 pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
             };
-        });
+        }) as DataItem[];
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 item.description = $('.wp_articlecontent').html();
                 return item;

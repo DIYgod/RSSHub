@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
@@ -23,10 +23,10 @@ export const route: Route = {
 async function handler() {
     const feed = await parser.parseURL('https://www.engadget.com/rss.xml');
 
-    const items = await Promise.all(
+    const items = (await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 const article = $('article');
                 article.find('ul.breadcrumbs, .title-gallery, .subtitle, .byline-container').remove();
@@ -43,10 +43,10 @@ async function handler() {
                 };
             })
         )
-    );
+    )) as DataItem[];
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         language: feed.language,

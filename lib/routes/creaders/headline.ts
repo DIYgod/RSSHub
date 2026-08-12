@@ -19,7 +19,7 @@ export const route: Route = {
 async function handler() {
     const currentUrl = 'https://news.creaders.net/headline/';
 
-    const response = await ofetch<ArrayBuffer>(currentUrl, { responseType: 'arrayBuffer' });
+    const response = await ofetch(currentUrl, { responseType: 'arrayBuffer' });
 
     const $ = load(iconv.decode(Buffer.from(response), 'gbk'));
     const list = $('ul.newslist li')
@@ -39,7 +39,7 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const res = await ofetch<ArrayBuffer>(item.link!, { responseType: 'arrayBuffer' });
+                const res = await ofetch(item.link!, { responseType: 'arrayBuffer' });
                 const content = load(iconv.decode(Buffer.from(res), 'gbk'));
 
                 item.description = content('#newsContent').html();

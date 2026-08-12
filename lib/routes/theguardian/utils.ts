@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 
@@ -35,11 +36,11 @@ const processFeed = (data: string) => {
     return content.html();
 };
 
-export async function getFeed(cfg: { link: string; title: string; rss: string }) {
+export const getFeed = async (cfg: { link: string; title: string; rss: string }): Promise<Data> => {
     const feed = await parser.parseURL(cfg.rss);
     const items = await Promise.all(
         feed.items.slice(0, 10).map(async (item) => {
-            const response = await ofetch(item.link);
+            const response = await ofetch(item.link!);
             const description = processFeed(response);
 
             return {
@@ -47,7 +48,7 @@ export async function getFeed(cfg: { link: string; title: string; rss: string })
                 description: description ?? item.content,
                 pubDate: item.pubDate,
                 link: item.link,
-                category: item.categories?.map((c) => c._),
+                category: item.categories?.map((c) => (c as unknown as { _: string })._),
             };
         })
     );
@@ -56,6 +57,6 @@ export async function getFeed(cfg: { link: string; title: string; rss: string })
         title: `The Guardian - ${cfg.title}`,
         link: cfg.link,
         description: `The Guardian - ${cfg.title}`,
-        item: items,
+        item: items as DataItem[],
     };
-}
+};

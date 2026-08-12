@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 
 import { cnuFetch, parseContent } from './utils';
@@ -70,6 +70,6 @@ async function handler(ctx: Context) {
     return {
         title: `CNU视觉联盟 - ${types[type]}`,
         link: url,
-        item: out.filter(Boolean),
+        item: out.filter(Boolean) as DataItem[],
     };
 }

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -46,7 +46,7 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
+    const items = (await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 if (item.link.includes('content.jsp')) {
@@ -60,7 +60,7 @@ async function handler(ctx: Context) {
                 };
             })
         )
-    );
+    )) as DataItem[];
 
     return {
         title: `福州大学教务处${$('h4').text().trim()}`,

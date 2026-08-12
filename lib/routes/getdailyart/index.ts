@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import MarkdownIt from 'markdown-it';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -46,7 +46,7 @@ async function handler(ctx: Context) {
     return {
         title: 'DailyArt',
         link: 'https://www.getdailyart.com/',
-        language,
+        language: language as Language,
         item: [daily, ...archival.data].slice(0, limit).map(
             (artwork: Artwork): DataItem => ({
                 title: artwork.name,

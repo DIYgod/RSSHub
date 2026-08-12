@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                 guid: link,
                 description: title,
             };
-        });
+        }) as Array<DataItem & { link: string }>;
 
     const result = await Promise.all(
         list.map((item) =>

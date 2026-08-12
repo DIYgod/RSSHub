@@ -11,7 +11,7 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.caict.ac.cn';
 
-async function fetchChallenged(link: string, waitSelector: string) {
+const fetchChallenged = async (link: string, waitSelector: string) => {
     const context = await playwright();
     try {
         const page = await context.newPage();
@@ -31,9 +31,9 @@ async function fetchChallenged(link: string, waitSelector: string) {
     } finally {
         await context.close();
     }
-}
+};
 
-export default async function getFeed(path: string, itemSelector: string, getDescription?: ($: CheerioAPI) => string | null | undefined): Promise<Data> {
+export const getFeed = async (path: string, itemSelector: string, getDescription?: ($: CheerioAPI) => string | null | undefined): Promise<Data> => {
     const link = `${baseUrl}/${path}/`;
     const { html, cookie } = await fetchChallenged(link, itemSelector);
 
@@ -46,7 +46,7 @@ export default async function getFeed(path: string, itemSelector: string, getDes
             return {
                 title: a.text().trim().replace(/^-\s*/, ''),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: timezone(parseDate($item.next().find('span.kxyj_text').text().trim()), 8),
+                pubDate: timezone(parseDate($item.next().find('span.kxyj_text').text()), 8),
             };
         }) as DataItem[];
 
@@ -71,4 +71,4 @@ export default async function getFeed(path: string, itemSelector: string, getDes
         link,
         item: items as DataItem[],
     };
-}
+};

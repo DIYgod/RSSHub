@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
                 description: $(e).find('.post-body').html(),
                 link,
                 author: '王五四',
-                pubDate: parseDate(pubDates.get(link)),
+                pubDate: parseDate(pubDates.get(link!)!),
             };
         });
 

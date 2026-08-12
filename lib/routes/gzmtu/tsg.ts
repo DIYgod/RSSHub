@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -21,7 +21,7 @@ export const route: Route = {
     url: 'lib.gzmtu.edu.cn/index/txgg.htm',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const link = 'https://lib.gzmtu.edu.cn/index/txgg.htm';
     const response = await ofetch(link);
     const $ = load(response);
@@ -36,12 +36,12 @@ async function handler() {
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('.list_time').text(), 'YYYY年MM月DD日'), 8),
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.description = $('div[id^=vsb_content]').html();
@@ -54,6 +54,6 @@ async function handler() {
         title: '广州航海学院图书馆（档案馆）通讯公告',
         link,
         item: items,
-        language: 'zh-cn',
+        language: 'zh-CN',
     };
 }

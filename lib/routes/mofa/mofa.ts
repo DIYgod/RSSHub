@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -45,7 +45,7 @@ async function handler() {
                     pubDate: matches ? timezone(parseDate(`${Number.parseInt(matches[2]) + (eraOffset[matches[1]] ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`), 9) : undefined,
                     link: $('meta[property="og:url"]').attr('content'),
                     description: title3.html() + '<br/>' + $('div#maincontents').html(),
-                };
+                } as DataItem;
             })
         )
     );

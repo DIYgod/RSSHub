@@ -26,14 +26,12 @@ async function handler() {
         query: { path: ['news', 'press-releases'] },
     });
 
-    const list = Object.values(response.pageProps.componentProps)[0]
-        .articles.flat()
-        .map((article) => ({
-            title: article.title.data.value.trim(),
-            link: `${rootUrl}${article.url.path}`,
-            pubDate: parseDate(article.articleDate.data.value),
-            path: article.url.path,
-        }));
+    const list = (Object.values(response.pageProps.componentProps)[0] as { articles: any[] }).articles.flat().map((article) => ({
+        title: article.title.data.value.trim(),
+        link: `${rootUrl}${article.url.path}`,
+        pubDate: parseDate(article.articleDate.data.value),
+        path: article.url.path,
+    }));
 
     const items = await Promise.all(
         list.map((item) =>

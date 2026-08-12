@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -29,11 +29,7 @@ async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const { info, urlType } = map[type] ?? map[2];
 
-    const response = await ofetch(`${host}${urlType}/`, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch(`${host}${urlType}/`);
 
     const $ = load(response);
 
@@ -52,6 +48,6 @@ async function handler(ctx: Context) {
                     pubDate: $item.find('.time').text(),
                     link: host + $item.find('a').attr('href')!.slice(1),
                 };
-            }),
+            }) as DataItem[],
     };
 }

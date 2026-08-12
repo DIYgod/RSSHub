@@ -105,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         language: language as Language,
                     };
 
-                    const $enclosureEl: Cheerio<Element> = $$('iframe#playerFrame, audio').first();
+                    const $enclosureEl: Cheerio<Element> = $$('iframe#playerFrame, audio');
                     const enclosureUrl: string | undefined = $enclosureEl.attr('src');
 
                     if (enclosureUrl) {

@@ -9,7 +9,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -56,7 +56,7 @@ async function handler(ctx: Context) {
                 description: $item.find('.zy').text(),
                 pubDate: timezone(parseDate(sj.length ? `${sj.find('span').text()}-${sj.find('p').text()}` : $item.find('span').text()), 8),
             };
-        });
+        }) as DataItem[];
 
     return {
         title: `桂林航天工业学院 - ${$('.ej_main h2').text().trim()}`,

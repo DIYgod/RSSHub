@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -38,18 +38,18 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: `${currentUrl.replace('/index.htm', '')}/${$item.attr('href')}`,
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
                 const info = content('.articleAuthor').text().split('|');
 
                 item.author = info[0].replace('来源：', '');
                 item.description = content('.gp-article').html();
-                item.pubDate = timezone(parseDate(info.at(-1).replace('发布时间：', '')), 8);
+                item.pubDate = timezone(parseDate(info.at(-1)!.replace('发布时间：', '')), 8);
 
                 return item;
             })

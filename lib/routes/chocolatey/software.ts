@@ -31,7 +31,7 @@ async function handler(ctx: Context) {
                 const $tds = $(row).find('td');
                 const $version = $tds.filter('.version');
                 const href = $version.find('a').attr('href');
-                const time = $tds.eq(3).text().trim();
+                const time = $tds.eq(3).text();
 
                 return {
                     title: $version.text().trim(),

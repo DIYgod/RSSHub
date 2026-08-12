@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -44,12 +44,12 @@ async function handler() {
                 pubDate: timezone(parseDate($item.find('.date-info').text()), 8),
             };
         })
-        .slice(0, 1);
+        .slice(0, 1) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.editor-content').html();

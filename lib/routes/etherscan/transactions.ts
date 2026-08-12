@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     if (!config.etherscan.apikey) {
         throw new ConfigNotFoundError('Etherscan RSS is disabled due to the lack of ETHERSCAN_API_KEY');
     }

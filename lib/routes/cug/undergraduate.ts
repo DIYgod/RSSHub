@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -25,8 +25,8 @@ async function handler() {
         list.toArray().map((element) => {
             const $element = $(element);
             const link = new URL($element.find('.xblist-title a').attr('href')!, baseUrl).href;
-            const item = {
-                title: $element.find('.xblist-title h2').text().trim(),
+            const item: DataItem = {
+                title: $element.find('.xblist-title h2').text(),
                 link,
                 pubDate: timezone(parseDate(`${$element.find('.xblist-date p').text()}-${$element.find('.xblist-date h2').text()}`, 'YYYY-MM-DD'), 8),
             };

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -86,12 +86,12 @@ async function handler(ctx: Context) {
                 pubDate: date ? timezone(parseDate(date, 'YYYY-M-D'), 8) : undefined,
             };
         })
-        .filter((item) => item.pubDate);
+        .filter((item) => item.pubDate) as DataItem[];
 
     const result = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await context.request.get(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await context.request.get(item.link!);
                 const detail = await response.text();
                 const $ = load(detail);
                 $('.v_news_content style').remove();

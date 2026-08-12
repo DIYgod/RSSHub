@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -40,7 +40,6 @@ async function handler(ctx: Context) {
     const response = await fetchWithAntiBot(currentUrl);
     const $ = load(response);
 
-    // ydxw/zcwj/gzdt/mtbd use .rsb_jfjf_cont2, tpxw uses .rsb_jfjf_cont88
     const list = $("div[class^='rsb_jfjf_cont'] ul li")
         .slice(0, 15)
         .toArray()
@@ -52,13 +51,13 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, currentUrl).href.replace(/^http:(?=\/\/www\.mohrss\.gov\.cn\/)/, 'https:'),
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            item.link.startsWith(`${rootUrl}/`)
-                ? cache.tryGet(item.link, async () => {
-                      const detailResponse = await fetchWithAntiBot(item.link);
+            item.link!.startsWith(`${rootUrl}/`)
+                ? cache.tryGet(item.link!, async () => {
+                      const detailResponse = await fetchWithAntiBot(item.link!);
                       const content = load(detailResponse);
 
                       item.description = content('#insMainConTxt').html() || content('.TRS_Editor').html() || content('.art_p').html();

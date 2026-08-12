@@ -11,7 +11,7 @@ const picBaseUrl = 'https://imgoss.cnu.cc/';
 const cookieKey = 'cnu:acw_sc__v2';
 
 export const cnuFetch = async (url: string): Promise<string> => {
-    const get = (cookie?: string | null) => ofetch<string>(url, { responseType: 'text', headers: cookie ? { cookie: `acw_sc__v2=${cookie}` } : {} });
+    const get = (cookie?: string | null) => ofetch(url, { responseType: 'text', headers: cookie ? { cookie: `acw_sc__v2=${cookie}` } : {} });
 
     const cachedCookie = await cache.get(cookieKey);
     const response = await get(cachedCookie);
@@ -39,6 +39,6 @@ export const parseContent = (htmlString: string) => {
     return {
         author: author.text().trim(),
         description: content.html(),
-        pubDate: timezone(parseDate(time.text().trim()), 8),
+        pubDate: timezone(parseDate(time.text()), 8),
     };
 };

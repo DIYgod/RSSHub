@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.cnca.gov.cn';
 
-export default async function getFeed(path: string, description: string): Promise<Data> {
+export const getFeed = async (path: string, description: string): Promise<Data> => {
     const link = `${baseUrl}/${path}/index.html`;
     const response = await ofetch(link);
 
@@ -57,4 +57,4 @@ export default async function getFeed(path: string, description: string): Promis
         description,
         item: items as DataItem[],
     };
-}
+};

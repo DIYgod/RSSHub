@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import iconv from 'iconv-lite';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -62,7 +62,7 @@ export const route: Route = {
 | lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |`,
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { type = 'lxtz' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? 10);
     const link = baseUrl + typeMap[type as keyof typeof typeMap].url;
@@ -96,7 +96,7 @@ async function handler(ctx: Context) {
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const response = await ofetch<ArrayBuffer>(item.link!, { responseType: 'arrayBuffer', headers });
+                const response = await ofetch(item.link!, { responseType: 'arrayBuffer', headers });
                 const $ = load(iconv.decode(Buffer.from(response), 'gbk'));
                 item.description = $('.contents').html();
                 return item;

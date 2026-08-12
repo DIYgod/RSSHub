@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -25,7 +25,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl);
     const $ = load(response);
     const cells = $('.cmp-mosaic-grid__cell');
-    const articles = cells.length
+    const articles: DataItem[] = cells.length
         ? cells.toArray().map((ele) => {
               const $ele = $(ele);
               return {
@@ -45,8 +45,8 @@ async function handler(ctx: Context) {
 
     const item = await Promise.all(
         articles.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const s = load(detailResponse);
 
                 item.description = s('.cmp-text').html();

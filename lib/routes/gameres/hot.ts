@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import getFeed, { rootUrl } from './utils';
+import { getFeed, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/hot',

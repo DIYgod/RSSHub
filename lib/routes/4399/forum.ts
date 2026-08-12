@@ -52,7 +52,7 @@ async function handler(ctx: Context) {
         .map((item) => {
             const $item = $(item).parent();
             return {
-                title: $item.find('div.title').text() + '    ---------------最后回复->' + $item.find('.rtime span').text().trim() + ':' + $item.find('.rtime a').text().trim(),
+                title: $item.find('div.title').text() + '    ---------------最后回复->' + $item.find('.rtime span').text() + ':' + $item.find('.rtime a').text().trim(),
                 link: baseUrl + $item.find('.thread_link').attr('href'),
                 author: $item.find('.author').text(),
             };

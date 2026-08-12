@@ -35,7 +35,7 @@ async function handler() {
                 const $ = load(response);
 
                 return {
-                    title: $('article header h1').text().trim(),
+                    title: $('article header h1').text(),
                     link: itemUrl,
                     author: '99% Invisible',
                     description: $('article .page-content').html(),

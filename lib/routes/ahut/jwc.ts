@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,15 +29,15 @@ async function handler() {
                 link: new URL(a.attr('href')!, 'https://jwc.ahut.edu.cn/').href,
                 pubDate: timezone(parseDate(a.closest('tr').find('.timestyle16974').text().trim(), 'YYYY/MM/DD'), 8),
             };
-        });
+        }) as DataItem[];
 
     const out = await Promise.all(
         list.map((item) => {
-            if (!new URL(item.link).hostname.endsWith('.ahut.edu.cn')) {
+            if (!new URL(item.link!).hostname.endsWith('.ahut.edu.cn')) {
                 return item;
             }
-            return cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            return cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const $ = load(detailResponse);
 
                 return {

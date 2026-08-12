@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 
-import getFeed, { rootUrl } from './utils';
+import { getFeed, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/list/:id',

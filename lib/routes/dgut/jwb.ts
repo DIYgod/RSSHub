@@ -45,7 +45,7 @@ async function handler(ctx) {
             const $li = $(item);
             const $a = $li.find('a.con');
             return {
-                title: $a.find('.tit').text().trim(),
+                title: $a.find('.tit').text(),
                 pubDate: parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`),
                 link: `${baseurl}${$a.attr('href')}`,
             };

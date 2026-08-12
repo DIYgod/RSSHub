@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -50,12 +50,12 @@ async function handler() {
                 link: new URL($item.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('i').text()), 8),
             };
-        });
+        }) as DataItem[];
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await context.request.get(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await context.request.get(item.link!);
                 const detail = await response.text();
                 const $ = load(detail);
                 $('.v_news_content style').remove();

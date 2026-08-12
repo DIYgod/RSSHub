@@ -26,17 +26,18 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $('table.list tr');
 
-    // the page lists at most 50 new books
+    // get how many new-books. amount in this page is 50
     let count = Number.parseInt(ctx.req.param('count') ?? '');
     if (Number.isNaN(count) || count < 1) {
-        count = 10;
+        count = 10; // default count of new-book list
     } else if (count > 50) {
         count = 50;
     }
 
+    // parse book urls
     const detailUrls: string[] = [];
     for (let i = 1; i < count + 1; ++i) {
-        // i = 1: the first tr is the table header
+        // i = 1: first tr is table title, ignore
         detailUrls.push(baseUrl + $(list[i]).find('a').attr('href'));
     }
 
@@ -45,14 +46,12 @@ async function handler(ctx: Context) {
     const item = cards.map((card) => {
         const $detail = load(card);
         const link = $detail('meta[property="og:url"]').attr('content')!;
-        const linkDir = link.replaceAll(/\/[^/]*$/g, '/');
 
         let author = '';
         let title = '';
         let titleSub = '';
         for (const element of $detail('table[summary="タイトルデータ"] > tbody > tr').toArray()) {
-            // the cell text is entity-escaped in the source, decode before matching
-            const tmp = decodeXML($detail(element).html()!);
+            const tmp = decodeXML($detail(element).html()!); // should convert from escaped to unicode
             if (tmp.includes('作品名：')) {
                 title = $detail(element).find('td:nth-child(2)').text();
             }
@@ -69,12 +68,9 @@ async function handler(ctx: Context) {
 
         const pubDateRaw = $detail('table[summary="底本データ"] > tbody > tr:nth-child(3) > td:nth-child(2)').text();
         const pubDateNum = pubDateRaw.replaceAll(/（.*）|日/g, '').replaceAll(/[年月]/g, '-');
-        const fullTextRelativeLink = $detail('table.download > tbody > tr:nth-child(3) > td:nth-child(3) > a').attr('href');
-        const fullTextLink = linkDir + fullTextRelativeLink;
+        const fullTextLink = $detail('table.download > tbody > tr:nth-child(3) > td:nth-child(3) > a').attr('href');
         const fullTextLinkHtml = `<a href="${fullTextLink}">いますぐXHTML版で読む</a><br>`;
-        const summury = $detail('table[summary="作品データ"]')
-            .html()!
-            .replaceAll('href="', () => `href="${linkDir}`);
+        const summury = $detail('table[summary="作品データ"]').html()!;
 
         return {
             title,

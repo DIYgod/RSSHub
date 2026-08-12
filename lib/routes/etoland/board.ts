@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { solveWafChallenge } from '@/routes/juejin/utils';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -82,7 +82,7 @@ const extractArticleList = ($: CheerioAPI) => {
     throw new Error('Failed to locate articleList in the page payload');
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { bo_table } = ctx.req.param();
     const link = `${baseUrl}/b/${bo_table}/list`;
 

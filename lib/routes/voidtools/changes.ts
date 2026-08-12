@@ -17,7 +17,6 @@ async function handler() {
     const response = await ofetch(rootUrl, { responseType: 'text' });
 
     const items = response
-        // Changes.txt switched to CRLF line endings
         .replaceAll('\r\n', '\n')
         .replaceAll(/\t\n\n|\t\n/g, '\n\n')
         .split('\n\n')

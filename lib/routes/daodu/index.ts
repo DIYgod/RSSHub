@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: new URL($item.attr('href')!.split('%3F', 1)[0], rootUrl).href,
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>

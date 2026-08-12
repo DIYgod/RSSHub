@@ -42,7 +42,7 @@ const config = {
 };
 
 const getDate = (o: Cheerio<any>) => {
-    const match = /(\d{4}\.\d+\.\d+)/.exec(o.text().trim());
+    const match = /(\d{4}\.\d+\.\d+)/.exec(o.text());
     const date = match ? match[1] : o.attr('datetime');
     return timezone(parseDate(date!), 9);
 };

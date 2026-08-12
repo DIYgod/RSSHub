@@ -36,7 +36,7 @@ async function handler() {
                     .match(/(\d{4}-\d{2})-\d{2}/);
 
                 if (!targetDate) {
-                    return null;
+                    return '';
                 }
 
                 return {

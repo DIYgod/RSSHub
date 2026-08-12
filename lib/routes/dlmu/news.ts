@@ -35,11 +35,7 @@ const map = {
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const link = Object.hasOwn(map, type) ? `${baseUrl}${map[type]}` : `${baseUrl}/hdyw.htm`;
-    const response = await ofetch(link, {
-        headers: {
-            Referer: baseUrl,
-        },
-    });
+    const response = await ofetch(link);
 
     const $ = load(response);
 

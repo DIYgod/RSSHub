@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -40,12 +40,12 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
             };
-        });
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
 
                 const data = detailResponse
                     .replaceAll('[img]https://www.discuss.com.hk/images/common/back.gif[/img]', '')
@@ -63,8 +63,8 @@ async function handler(ctx: Context) {
 
                 item.author = cite.eq(0).text();
                 item.description = content('.archiver_post').html();
-                item.link = `${rootUrl}/viewthread.php?tid=${item.link.match(/tid-(\d+)\.html/)![1]}`;
-                item.pubDate = timezone(parseDate(firstAuthorParent.text().trim(), 'YYYY-M-D hh:mm A'), 8);
+                item.link = `${rootUrl}/viewthread.php?tid=${item.link!.match(/tid-(\d+)\.html/)![1]}`;
+                item.pubDate = timezone(parseDate(firstAuthorParent.text(), 'YYYY-M-D hh:mm A'), 8);
 
                 return item;
             })
