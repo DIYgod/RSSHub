@@ -9,22 +9,43 @@ import { renderToString } from 'hono/jsx/dom/server';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import type { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, CrowdfundingList, DataResponse, NewProductDetailData, NewProductItem, NewProductListData } from './types';
+import type { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, DataResponse, NewProductDetailData, NewProductItem, NewProductListData } from './types';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
 dayjs.extend(utc);
 
 /**
- * Fetch the list of crowdfunding projects.
+ * Fetch the list of crowdfunding projects, merging the current projects (primary) with the history projects (supplement).
  *
- * @returns {Promise<CrowdfundingList[]>} The crowdfunding project list.
+ * @returns {Promise<Map<number, CrowdfundingItem>>} The merged crowdfunding project map keyed by project ID.
  */
-export const getCrowdfundingList = async (): Promise<CrowdfundingList[]> => {
-    const response = await ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
-        method: 'POST',
-    });
-    return response.data.list;
+export const getCrowdfundingList = async (): Promise<Map<number, CrowdfundingItem>> => {
+    // oxlint-disable-next-line unicorn/consistent-function-scoping
+    const fetch = (query?: Record<string, number>) =>
+        ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
+            headers: {
+                referer: 'https://m.mi.com/crowdfunding/home',
+            },
+            method: 'POST',
+            query,
+        });
+    const [response, historyResponse] = await Promise.all([fetch(), fetch({ status: 1 })]);
+    const map = new Map<number, CrowdfundingItem>();
+    const setIfNeeded = (items: CrowdfundingItem[]) => {
+        for (const item of items) {
+            if (!map.has(item.project_id)) {
+                map.set(item.project_id, item);
+            }
+        }
+    };
+    for (const group of response.data.list) {
+        setIfNeeded(group.items);
+    }
+    for (const group of historyResponse.data.list) {
+        setIfNeeded(group.items);
+    }
+    return map;
 };
 
 /**
@@ -44,18 +65,6 @@ export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<Crowdfundin
                 project_id: item.project_id,
             },
         });
-        // Suggested retail price.
-        if (response.data.crowd_funding_info.product_market_price === undefined) {
-            response.data.crowd_funding_info.product_market_price = item.product_market_price;
-        }
-        // Crowdfunding starts.
-        if (response.data.crowd_funding_info.start_time_desc === undefined) {
-            response.data.crowd_funding_info.start_time_desc = formatDate(response.data.crowd_funding_info.start_time);
-        }
-        // Crowdfunding ends.
-        if (response.data.crowd_funding_info.end_time_desc === undefined) {
-            response.data.crowd_funding_info.end_time_desc = formatDate(response.data.crowd_funding_info.end_time);
-        }
         return response.data.crowd_funding_info;
     }) as Promise<CrowdfundingDetailInfo>;
 
@@ -101,29 +110,35 @@ export const getNewProductItem = (item: NewProductItem): Promise<NewProductDetai
         return response.data;
     }) as Promise<NewProductDetailData>;
 
-const CrowdfundingDescription = ({ item }: { item: CrowdfundingDetailInfo }) => (
+const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingItem; detail: CrowdfundingDetailInfo }) => (
     <>
-        <img src={item.big_image} />
+        <img src={detail.big_image} />
         <br />
-        {item.project_name}
+        {detail.project_name}
         <br />
-        {item.project_desc}
+        {detail.project_desc}
         <br />
-        众筹价：{item.price} 元，建议零售价：{item.product_market_price} 元
+        众筹价：{detail.price} 元，建议零售价：{listItem.product_market_price} 元
         <br />
-        众筹开始：{item.start_time_desc}，众筹结束：{item.end_time_desc}
+        众筹开始：{formatDate(detail.start_time)}，众筹结束：{formatDate(detail.end_time)}
         <br />
-        物流：{item.send_info}
+        物流：{detail.send_info}
         <br />
         <table>
-            <tbody>
+            <thead>
                 <tr>
+                    <th>图片</th>
                     <th>档位</th>
                     <th>价格</th>
                     <th>描述</th>
                 </tr>
-                {item.support_list.map((support, index) => (
-                    <tr key={`${support.name}-${index}`}>
+            </thead>
+            <tbody>
+                {detail.support_list.map((support) => (
+                    <tr>
+                        <td>
+                            <img src={support.goods_list[0]?.goods_image} width={48} height="auto" />
+                        </td>
                         <td>{support.name}</td>
                         <td>{support.price} 元</td>
                         <td>{support.support_desc}</td>
@@ -137,10 +152,11 @@ const CrowdfundingDescription = ({ item }: { item: CrowdfundingDetailInfo }) => 
 /**
  * Render the crowdfunding item description.
  *
- * @param {CrowdfundingDetailInfo} item - Crowdfunding item details.
+ * @param {CrowdfundingItem} listItem - Crowdfunding item list item.
+ * @param {CrowdfundingDetailInfo} detail - Crowdfunding item details.
  * @returns {string} Rendered description HTML.
  */
-export const renderCrowdfunding = (item: CrowdfundingDetailInfo): string => renderToString(<CrowdfundingDescription item={item} />);
+export const renderCrowdfunding = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): string => renderToString(<CrowdfundingDescription listItem={listItem} detail={detail} />);
 
 const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem; detail: NewProductDetailData }) => (
     <>
