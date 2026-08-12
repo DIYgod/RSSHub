@@ -114,8 +114,6 @@ const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingI
     <>
         <img src={detail.big_image} />
         <br />
-        {detail.project_name}
-        <br />
         {detail.project_desc}
         <br />
         众筹价：{detail.price} 元，建议零售价：{listItem.product_market_price} 元
@@ -161,8 +159,6 @@ export const renderCrowdfunding = (listItem: CrowdfundingItem, detail: Crowdfund
 const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem; detail: NewProductDetailData }) => (
     <>
         <img src={listItem.img} />
-        <br />
-        {detail.product.name}
         <br />
         <ol>
             {detail.product.sellPointList.map((point) => (
