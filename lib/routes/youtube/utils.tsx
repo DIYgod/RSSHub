@@ -64,7 +64,7 @@ export const getVideos = (id, part, cache) =>
     });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
 export const formatDescription = (description) => description?.replaceAll(/\r\n|\r|\n/g, '<br>');
-export const renderDescription = (embed, videoId, img, description) =>
+export const renderYoutube = (embed, videoId, img, description) =>
     renderToString(
         <>
             {embed ? (
@@ -172,7 +172,7 @@ export default {
     getVideos,
     getThumbnail,
     formatDescription,
-    renderDescription,
+    renderDescription: renderYoutube,
     getSubscriptions,
     getSubscriptionsRecusive,
     isYouTubeChannelId,
