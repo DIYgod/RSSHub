@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '专题内文章更新',
-    maintainers: ['SunShinenny'],
+    maintainers: ['sunshinenny'],
     handler,
 };
 
