@@ -67,7 +67,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
 
     const list = $('a')
         .toArray()
