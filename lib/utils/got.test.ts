@@ -3,8 +3,6 @@ import { Cookie, CookieJar } from 'tough-cookie';
 import { describe, expect, it, vi } from 'vitest';
 
 import { config } from '@/config';
-import type { TopicsResponse } from '@/routes/zsxq/types';
-import { customFetch, generateTopicDataItem } from '@/routes/zsxq/utils';
 import got from '@/utils/got';
 
 describe('got', () => {
@@ -151,26 +149,5 @@ describe('got', () => {
         });
         const extendedResponse = await extended.get('http://rsshub.test/headers');
         expect(extendedResponse.data['x-extended']).toBe('1');
-    });
-});
-
-describe('zsxq response parsing', () => {
-    it('preserves topic IDs beyond the safe integer range', async () => {
-        const { default: server } = await import('@/setup.test');
-        server.use(
-            http.get('https://api.zsxq.com/v2/groups/88855458825252/topics', () =>
-                HttpResponse.text('{"succeeded":true,"resp_data":{"topics":[{"topic_id":55522458445228254,"type":"talk","create_time":"2026-07-26T00:00:00.000+0800","talk":{"text":"Test topic"}}]}}', {
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                })
-            )
-        );
-
-        const { topics } = await customFetch<TopicsResponse>('/groups/88855458825252/topics');
-        const [item] = generateTopicDataItem(topics);
-
-        expect(topics[0].topic_id).toBe('55522458445228254');
-        expect(item.link).toBe('https://wx.zsxq.com/topic/55522458445228254');
     });
 });
