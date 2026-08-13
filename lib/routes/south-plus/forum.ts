@@ -62,16 +62,16 @@ async function handler(ctx) {
             const author = $row.find('a.bl[href*="action-show-uid"]').text().trim();
 
             // Thread post date in column 2 (div.f10.gray2)
-            const postDateText = $row.find('div.f10.gray2').first().text().trim();
+            const postDateText = $row.find('div.f10.gray2').text().trim();
 
             // Last post date in column 4 (a.f10)
-            const lastPostDateText = $row.find('td.tal.y-style a.f10').last().text().trim();
+            const lastPostDateText = $row.find('td.tal.y-style a.f10').text().trim();
 
             // Use last post date as pubDate for RSS sorting
             const pubDate = parseDate(lastPostDateText) || parseDate(postDateText);
 
             // Thread category tag (e.g. [自购], [公告]) in column 1
-            const category = $row.find('a.s8').first().text().trim();
+            const category = $row.find('a.s8').text().trim();
 
             return {
                 title,
