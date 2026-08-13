@@ -161,12 +161,12 @@
         "@types/fs-extra": "11.0.4",
         "@types/html-to-text": "9.0.4",
         "@types/js-beautify": "1.14.3",
-        "@types/jsdom": "28.0.3",
+        "@types/jsdom": "30.0.0",
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.15",
         "@types/mailparser": "3.4.6",
         "@types/module-alias": "2.0.4",
-        "@types/node": "26.1.2",
+        "@types/node": "26.2.0",
         "@types/sanitize-html": "2.16.1",
         "@typescript-eslint/eslint-plugin": "8.66.0",
         "@typescript-eslint/parser": "8.66.0",
@@ -176,7 +176,7 @@
         "domhandler": "6.0.1",
         "eslint": "10.8.1",
         "eslint-nibble": "9.1.1",
-        "eslint-plugin-n": "18.2.2",
+        "eslint-plugin-n": "18.3.0",
         "eslint-plugin-regexp": "3.1.1",
         "eslint-plugin-simple-import-sort": "14.0.0",
         "eslint-plugin-unicorn": "72.0.0",
@@ -206,7 +206,7 @@
         "unrun": "0.3.1",
         "vite-tsconfig-paths": "7.0.0-alpha.1",
         "vitest": "4.1.10",
-        "wrangler": "4.119.0",
+        "wrangler": "4.120.0",
         "yaml-eslint-parser": "2.1.0"
     },
     "lint-staged": {
@@ -248,7 +248,7 @@
             "workerd",
             "wrangler"
         ],
-      "overrides": {
+        "overrides": {
             "htmlparser2": "^8.0.2",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
             "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
