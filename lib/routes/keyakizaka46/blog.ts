@@ -28,7 +28,7 @@ async function handler() {
                 const $item = $(item);
                 return {
                     title: $item.find('p.ttl').text().trim(),
-                    link: $item.find('a').first().attr('href'),
+                    link: $item.find('a').attr('href'),
                     pubDate: $item.find('div.box-blog time').text(),
                     author: $item.find('p.ttl').next().text().trim(),
                     description: `<img src="${$item.find('img.js-replaceImage').attr('src')}">`,

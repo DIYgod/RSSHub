@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -21,7 +21,7 @@ export const route: Route = {
     url: 'www.grandwaylaw.com/guofengshijiao/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://www.grandwaylaw.com';
     const link = `${baseUrl}/guofengshijiao/`;
 
@@ -30,7 +30,7 @@ async function handler() {
 
     const list = $('ul.hmNews li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             const date = a.find('span');
             const pubDate = timezone(parseDate(date.text(), 'YYYY.MM.DD'), 8);
@@ -56,7 +56,7 @@ async function handler() {
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang'),
+        language: 'zh',
         item: out,
     };
 }

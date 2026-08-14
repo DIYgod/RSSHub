@@ -21,7 +21,11 @@ async function handler() {
     const res = await ofetch(`${oriUrl}/TemResolve/?TemPresolveId=32&classid=30&ObjI=0&publicvar=1&charset=UTF-8`, {
         responseType: 'text',
     });
-    const $ = load(JSON.parse(res.match(/document\.write\((".*")\);/s)[1].replaceAll(/[\r\n\t]/g, ' ')));
+    const match = res.match(/document\.write\((".*")\);/s);
+    if (!match) {
+        throw new Error('Unable to extract the article list from the template response');
+    }
+    const $ = load(JSON.parse(match[1].replaceAll(/[\r\n\t]/g, ' ')));
     const list = $('li').toArray();
 
     const out = await Promise.all(

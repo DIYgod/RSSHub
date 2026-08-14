@@ -38,7 +38,7 @@ async function handler() {
     const cookies = new Map();
     const headers = generateHeaders();
     const fetchPage = async () => {
-        const response = await ofetch.raw<string>(link, {
+        const response = await ofetch.raw<string, 'text'>(link, {
             headers: {
                 ...headers,
                 cookie: [...cookies].map(([name, value]) => `${name}=${value}`).join('; '),
@@ -84,11 +84,16 @@ async function handler() {
             .map((item) => {
                 const $item = $(item);
                 const a = $item.find('dt a[title]');
+                const title = a.attr('title');
+                if (!title) {
+                    return;
+                }
                 return {
-                    title: a.attr('title'),
+                    title,
                     link: new URL(a.attr('href')!, baseSite).href,
                     description: $item.find('dd:not(.m)').text().trim(),
                 };
-            }),
+            })
+            .filter((item) => item !== undefined),
     };
 }

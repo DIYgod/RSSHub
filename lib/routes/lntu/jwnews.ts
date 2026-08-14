@@ -28,7 +28,7 @@ async function handler() {
                 const $article = load(result);
 
                 $article('img, div, span, p, table, td, tr').removeAttr('style');
-                $article('style, script').remove();
+                $article('style').remove();
 
                 return {
                     title: $article('title').text().split('-', 1)[0],

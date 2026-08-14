@@ -22,11 +22,16 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const title = $item.attr('title');
+            if (title === undefined) {
+                return;
+            }
             return {
-                title: $item.attr('title'),
+                title,
                 link: $item.attr('href'),
             };
-        });
+        })
+        .filter((item) => item !== undefined);
 
     return {
         title: '出海 ~ 资讯',

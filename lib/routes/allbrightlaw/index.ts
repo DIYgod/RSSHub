@@ -25,7 +25,7 @@ async function handler() {
     const out = await Promise.all(
         list.map((item) => {
             const $item = $(item);
-            const title = $item.find('.news_txt h2').html();
+            const title = $item.find('.news_txt h2').html() ?? '';
             const subUrl = $item.find('a').attr('href');
             const itemUrl = oriUrl + subUrl;
             const pubDate = timezone(parseDate(`${$item.find('.news_data span').text()}-${$item.find('.news_data p').text()}`), 8);

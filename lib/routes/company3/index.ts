@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -28,7 +28,7 @@ export const route: Route = {
     url: 'www.company3.com',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { category = 'commercials' } = ctx.req.param();
     const baseUrl = 'https://www.company3.com';
     const link = `${baseUrl}/video-categories/${category}/`;
@@ -39,7 +39,7 @@ async function handler(ctx: Context) {
     const list = $('div.preview.video div.details a')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('h4.title').text(),

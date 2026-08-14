@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -13,7 +13,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const link = 'https://hentaimama.io/recent-episodes/';
     const response = await ofetch(link);
 
@@ -30,7 +30,7 @@ async function handler() {
                 const date = $item.find('.data span').text();
 
                 return {
-                    title: $item.find('img').attr('alt'),
+                    title: $item.find('img').attr('alt') ?? '',
                     description: `<img src="${$item.find('img').attr('data-src')}">`,
                     pubDate: parseDate(date),
                     guid: date,

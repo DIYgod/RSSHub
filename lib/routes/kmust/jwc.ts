@@ -42,7 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const list = $('table.normalfont tr a[target="_blank"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 link: new URL($item.attr('href')!, pageUrl).href,

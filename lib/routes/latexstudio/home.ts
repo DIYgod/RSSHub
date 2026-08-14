@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -25,7 +25,7 @@ async function handler() {
         .find('h3.article-title')
         .toArray()
         .slice(0, 20)
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             return {
                 title: a.text(),

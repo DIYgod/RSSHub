@@ -55,7 +55,7 @@ async function handler(ctx: Context) {
                 const a = $item.find('dt a').not('.tn-from-app');
                 return {
                     title: a.text(),
-                    description: `<img src="${$item.find('.tn-image img').attr('src').split('?', 1)[0]}"> ${$item.find('dd a').text()}`,
+                    description: `<img src="${$item.find('.tn-image img').attr('src')?.split('?', 1)[0]}"> ${$item.find('dd a').text()}`,
                     link: new URL(a.attr('href')!, baseUrl).href,
                 };
             }),

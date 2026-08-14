@@ -51,7 +51,7 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.text().trim(),
+                title: $item.text(),
                 link: baseUrl + $item.attr('href')!.slice(0, $item.attr('href')!.lastIndexOf('/')),
             };
         });

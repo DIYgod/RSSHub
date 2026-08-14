@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -33,10 +34,10 @@ async function handler(ctx: Context) {
         .toArray()
         .toReversed()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10)
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.text().trim(),
+                title: $item.text(),
                 link: new URL($item.attr('href')!, baseUrl).href,
             };
         });
@@ -44,11 +45,11 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+                const response = await ofetch(item.link, { headerGeneratorOptions: PRESETS.MODERN_ANDROID });
                 const $ = load(response);
-                item.description = $('div#cp_img img')
+                item.description = $('.comicpage img')
                     .toArray()
-                    .map((ele) => `<img src="${$(ele).attr('data-original')}" referrerpolicy="no-referrer">`)
+                    .map((ele) => `<img src="${$(ele).attr('data-original')}">`)
                     .join('');
                 return item;
             })

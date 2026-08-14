@@ -23,7 +23,7 @@ async function handler() {
     const out = await Promise.all(
         list.map((item) => {
             const $item = $(item);
-            const title = $item.find('a').html();
+            const title = $item.find('a').html() ?? '';
             const subUrl = $item.find('a').attr('href');
             const itemUrl = oriUrl + subUrl;
 

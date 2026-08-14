@@ -18,11 +18,7 @@ async function handler(ctx: Context) {
     const { conditions = '' } = ctx.req.param();
     const pageUrl = 'http://www.itslaw.com/';
 
-    const data = await ofetch(`https://www.itslaw.com/api/judgements?sortType=2&category=CASE&startIndex=0&countPerPage=20&conditions=${encodeURIComponent(conditions)}`, {
-        headers: {
-            Referer: 'https://www.itslaw.com',
-        },
-    });
+    const data = await ofetch(`https://www.itslaw.com/api/judgements?sortType=2&category=CASE&startIndex=0&countPerPage=20&conditions=${encodeURIComponent(conditions)}`);
 
     const items = data.data.searchResult.judgements.map((item) => {
         const initialization = `{"category":"CASE","id":"${item.id}","anchor":null,"detailKeyWords":[""]}`;

@@ -23,15 +23,20 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const href = $item.find('a').attr('href');
+            if (!href) {
+                return null;
+            }
             const title = $item.find('.gpArticleTitle').text().trim();
 
             return {
                 title,
                 description: title,
                 pubDate: timezone(parseDate($item.find('.gpArticleDate').text()), 8),
-                link: new URL($item.find('a').attr('href'), link).href,
+                link: new URL(href, link).href,
             };
-        });
+        })
+        .filter((item) => item !== null);
 
     return {
         title: '湖南科技大学教务处通知',

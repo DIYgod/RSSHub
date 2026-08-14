@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -40,7 +40,7 @@ async function handler(ctx: Context) {
     const list = new Map(data.map((item) => [item.id, item]))
         .values()
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: item.title,
             pubDate: timezone(parseDate(item.time), 8),
             link: `${baseUrl}/news/?para=${item.index}_${item.id}`,

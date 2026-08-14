@@ -50,7 +50,7 @@ export const handler = async (ctx) => {
                     renderDescription({
                         description: $$('div.edit_con_original').html() ?? undefined,
                     });
-                const image = $$('img.raw-image').first().prop('src');
+                const image = $$('img.raw-image').prop('src');
 
                 item.title = title;
                 item.description = description;

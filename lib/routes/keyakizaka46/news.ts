@@ -30,9 +30,9 @@ async function handler() {
             .map((item) => {
                 const $item = $(item);
                 return {
-                    title: $item.find('div.text a').first().text(),
+                    title: $item.find('div.text a').text(),
                     link: $item.find('div.text a').attr('href'),
-                    pubDate: $item.find('div.date').first().text(),
+                    pubDate: $item.find('div.date').text(),
                 };
             }),
     };

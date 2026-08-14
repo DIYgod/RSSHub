@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
     const list = $('.xmc_bpt tbody .forum_list')
         .slice(1, 10)
         .toArray()
-        .map((element) => {
+        .map((element): DataItem & { link: string } => {
             const $item = $(element);
             return {
                 author: $item.find('.by cite a').text(),

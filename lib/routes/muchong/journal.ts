@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -31,7 +31,7 @@ async function handler(ctx: Context) {
     const list = $('.jname a, .journal_list a')
         .slice(0, 15)
         .toArray()
-        .map((element) => {
+        .map((element): DataItem & { link: string } => {
             const $item = $(element);
             const link = $item.attr('href')!;
             return {

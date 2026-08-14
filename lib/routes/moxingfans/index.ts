@@ -37,7 +37,11 @@ async function handler() {
             .toArray()
             .map((item) => {
                 const $a = $(item).find('header > h2 > a');
-                const link = new URL($a.attr('href'), baseUrl).href;
+                const href = $a.attr('href');
+                if (!href) {
+                    return;
+                }
+                const link = new URL(href, baseUrl).href;
                 const title = $a.text();
 
                 return cache.tryGet(link, async () => {
@@ -56,6 +60,7 @@ async function handler() {
                     };
                 });
             })
+            .filter((v) => v !== undefined)
     );
 
     return {

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -10,7 +10,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://ocw.mit.edu';
     const link = `${baseUrl}/course-lists/most-popular-courses/`;
 
@@ -21,7 +21,7 @@ async function handler() {
         return {
             title: `${course.primary_course_number} ${course.course_title}`,
             link: `${baseUrl}/${course.url_path}/`,
-            description: `<img src="${baseUrl}${course.course_image_metadata.file}" alt="${course.course_image_metadata.image_metadata['image-alt']}"><br>${course.course_description_html}`,
+            description: `<img src="${course.course_image_metadata.file}" alt="${course.course_image_metadata.image_metadata['image-alt']}"><br>${course.course_description_html}`,
             author: course.instructors?.map((instructor) => ({ name: instructor.title })),
             category: [...new Set([...course.learning_resource_types, ...course.level, ...course.topics.flat()])],
         };

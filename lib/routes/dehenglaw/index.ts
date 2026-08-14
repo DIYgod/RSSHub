@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
                 title,
                 description,
                 pubDate: parseDate($item.find('span').text(), 'YYYY/M/D'),
-                link: $item.find('a').first().prop('href'),
+                link: $item.find('a').prop('href'),
             };
         });
 

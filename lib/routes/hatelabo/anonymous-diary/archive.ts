@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -16,9 +16,9 @@ export const route: Route = {
 
 const baseURL = 'https://anond.hatelabo.jp';
 
-async function handler() {
+async function handler(): Promise<Data> {
     const archiveIndex = await ofetch(`${baseURL}/archive`);
-    const latestURL = new URL(load(archiveIndex)('.archives a').first().attr('href')!, baseURL).href;
+    const latestURL = new URL(load(archiveIndex)('.archives a').attr('href')!, baseURL).href;
     const response = await ofetch(latestURL);
 
     const $ = load(response);
@@ -36,7 +36,7 @@ async function handler() {
 
                 return {
                     title: a.text(),
-                    description: $item.find('blockquote p').first().text(),
+                    description: $item.find('blockquote p').text(),
                     link: new URL(href, baseURL).href,
                     pubDate: timezone(parseDate(href.replace('/', ''), 'YYYYMMDDHHmmss'), 9),
                 };

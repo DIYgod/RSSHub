@@ -28,7 +28,7 @@ async function handler() {
                 link: rootUrl,
                 title: $item.find('h2').text(),
                 description: $item.next().html(),
-                pubDate: parseDate($item.find('p').eq(0).text().replace('Release date - ', '')),
+                pubDate: parseDate($item.find('p').text().replace('Release date - ', '')),
             };
         });
 
