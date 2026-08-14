@@ -152,7 +152,7 @@ export const route: Route = {
     path: '/article',
     name: '网站翻译',
     url: 'www.ltaaa.cn',
-    maintainers: ['nczitzk'],
+    maintainers: ['sgqy', 'nczitzk'],
     handler,
     example: '/ltaaa/article',
     parameters: undefined,
