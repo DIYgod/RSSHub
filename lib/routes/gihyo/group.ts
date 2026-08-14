@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: 'Series',
-    maintainers: ['masakichi'],
+    maintainers: ['yuanji-dev'],
     handler,
 };
 
