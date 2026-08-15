@@ -124,8 +124,8 @@ const getSafeId = (host: string, context: BrowserContext) =>
 async function handler(ctx) {
     const domain = ctx.req.query('domain') ?? 'www.sehuatang.net';
     const host = `https://${domain}/`;
-    const { subforumid = '103', type } = ctx.req.param();
-    const subforumId = Object.hasOwn(forumIdMaps, subforumid) ? forumIdMaps[subforumid] : subforumid;
+    const { subforumid: subforumName = 'gqzwzm', type } = ctx.req.param();
+    const subforumId = Object.hasOwn(forumIdMaps, subforumName) ? forumIdMaps[subforumName] : subforumName;
     const typeFilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumId}${typeFilter}`;
 
@@ -135,7 +135,7 @@ async function handler(ctx) {
         const safeId = await getSafeId(host, context);
         logger.debug(`[sehuatang] handler safeId=${JSON.stringify(safeId)}`);
 
-        const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0';
+        const userAgent = config.trueUA;
         // Let the browser manage cookies (including Cloudflare challenge cookies) via the shared context.
         if (safeId) {
             await addCookies(context, `_safe=${safeId}`, new URL(host).host);
