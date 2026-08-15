@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '教务处通知公告',
-    maintainers: ['vicguo0724'],
+    maintainers: ['zhongweili', 'vicguo0724'],
     description: '南开大学教务处通知公告',
     url: 'jwc.nankai.edu.cn',
     handler: async () => {
