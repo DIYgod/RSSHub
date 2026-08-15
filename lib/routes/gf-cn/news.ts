@@ -52,7 +52,7 @@ async function handler(ctx) {
         guid: item.Id,
         title: item.Title,
         link: `${rootUrl}/NewsInfo?id=${item.Id}`,
-        pubDate: timezone(parseDate(item.Date), +8),
+        pubDate: timezone(parseDate(item.Date), 8),
     }));
 
     items = await Promise.all(

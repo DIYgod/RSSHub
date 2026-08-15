@@ -65,7 +65,7 @@ async function handler(ctx) {
     const host = `https://github.com/${user}/${repo}/pulls`;
     const url = `https://api.github.com/repos/${user}/${repo}/issues`; // every PR is also an issue
 
-    const headers = { Accept: 'application/vnd.github.v3+json' };
+    const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
     if (config.github && config.github.access_token) {
         headers.Authorization = `token ${config.github.access_token}`;
     }

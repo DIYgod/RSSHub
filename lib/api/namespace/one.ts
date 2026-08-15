@@ -1,7 +1,7 @@
 import type { RouteHandler } from '@hono/zod-openapi';
 import { createRoute, z } from '@hono/zod-openapi';
 
-import { namespaces } from '@/registry';
+import { ensureAllLoaded, namespaces } from '@/registry';
 
 const pathParam = (name: string, example: string) =>
     z.string().openapi({
@@ -46,7 +46,8 @@ const routeNested = createRoute({
     },
 });
 
-const handler: RouteHandler<typeof route> = (ctx) => {
+const handler: RouteHandler<typeof route> = async (ctx) => {
+    await ensureAllLoaded();
     const { namespace, sub } = ctx.req.valid('param') as { namespace: string; sub?: string };
     return ctx.json(namespaces[[namespace, sub].filter(Boolean).join('/')]);
 };

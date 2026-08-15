@@ -19,7 +19,7 @@ export const route: Route = {
     },
     categories: ['bbs'],
     handler: async (ctx): Promise<Data> => {
-        const team = NBA_TEAMS_ID_MAP[ctx.req.param('team')];
+        const team = NBA_TEAMS_ID_MAP[ctx.req.param('team')!];
         const teamId = team?.teamId;
         if (!teamId) {
             throw new Error('Invalid team name');
@@ -30,7 +30,7 @@ export const route: Route = {
             title: item.title,
             guid: item.tid,
             link: `https://m.hupu.com/bbs/${item.tid}`,
-            pubDate: timezone(parseDate(item.publishTime), +8),
+            pubDate: timezone(parseDate(item.publishTime), 8),
         }));
 
         items = await Promise.all(items.map((item) => getEntryDetails(item)));

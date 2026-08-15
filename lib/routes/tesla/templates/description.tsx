@@ -20,6 +20,7 @@ type Merchant = {
 };
 
 type DataPayload = {
+    title?: string;
     images?: string[];
     categories?: string[];
     description?: string;

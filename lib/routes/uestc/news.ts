@@ -59,11 +59,11 @@ async function handler(ctx) {
     const out = $(items)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const newsTitle = item.find('a').text().trim();
-            const newsLink = baseUrl + item.find('a').attr('href');
-            const newsDate = parseDate(item.find('div.date-box-sm').text().replace(dateRegex, '$1-$2-$3'));
-            const newsDescription = item.find('div.content').text().trim().replace('&nbsp;', '');
+            const $item = $(item);
+            const newsTitle = $item.find('a').text().trim();
+            const newsLink = baseUrl + $item.find('a').attr('href');
+            const newsDate = parseDate($item.find('div.date-box-sm').text().replace(dateRegex, '$1-$2-$3'));
+            const newsDescription = $item.find('div.content').text().trim().replace('&nbsp;', '');
 
             return {
                 title: newsTitle,

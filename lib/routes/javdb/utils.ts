@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
@@ -18,23 +19,23 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const { page, destroy, context } = await getPlaywrightPage('about:blank');
-    if (config.javdb.session) {
-        await page.context().addCookies([
-            {
-                name: '_jdb_session',
-                value: config.javdb.session,
-                domain,
-                path: '/',
-            },
-        ]);
-    }
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' ? route.continue() : route.abort();
-    });
-    await page.goto(url.href, {
-        waitUntil: 'domcontentloaded',
+    const { page, destroy, context } = await getPlaywrightPage(url.href, {
+        onBeforeLoad: async (page) => {
+            if (config.javdb.session) {
+                await page.context().addCookies([
+                    {
+                        name: '_jdb_session',
+                        value: config.javdb.session,
+                        domain,
+                        path: '/',
+                    },
+                ]);
+            }
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
+            });
+        },
     });
     const response = await page.content();
     await page.close();
@@ -46,7 +47,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     let items = $('div.item')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const element = $(item);
             return {
                 title: element.find('.video-title').text(),
@@ -57,14 +58,14 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
+                await page.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
                 });
                 const detailResponse = await page.content();
@@ -87,7 +88,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                     .toArray()
                     .map((v) => content(v).text());
                 item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
-                item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
+                item.description = content('.cover-container, .column-video-cover').html()! + content('.movie-panel-info').html()! + content('#magnets-content').html() + content('.preview-images').html();
 
                 await page.close();
 

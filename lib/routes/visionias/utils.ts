@@ -40,7 +40,7 @@ export async function extractNews(item, selector) {
                     .map((tag) => $$(tag).text());
                 const description = renderDescription({
                     heading: title,
-                    articleContent: htmlContent,
+                    articleContent: htmlContent ?? undefined,
                 });
                 return {
                     title: `${title} | ${heading}`,
@@ -58,7 +58,7 @@ export async function extractNews(item, selector) {
             const htmlContent = extractArticle(mainGroup.html());
             const description = renderDescription({
                 heading,
-                articleContent: htmlContent,
+                articleContent: htmlContent ?? undefined,
             });
             return {
                 title: item.title,
@@ -76,7 +76,7 @@ export async function extractNews(item, selector) {
             const htmlContent = extractArticle(mainDiv.html(), 'div.ck-content');
             const description = renderDescriptionSub({
                 heading: title,
-                articleContent: htmlContent,
+                articleContent: htmlContent ?? undefined,
             });
             return { description };
         });
@@ -99,7 +99,7 @@ export async function extractNews(item, selector) {
 function extractArticle(articleDiv, selectorString: string = 'div.ck-content') {
     const $ = load(articleDiv, null, false);
     const articleDiv$ = $(articleDiv);
-    const articleContent = articleDiv$.find(String(selectorString));
+    const articleContent = articleDiv$.find(selectorString);
     articleContent.find('figure').each((_, element) => {
         $(element).css('width', '');
     });

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,13 +29,16 @@ async function handler(ctx) {
 
     const list = $('.article-card')
         .toArray()
-        .map((e) => ({ link: $(e).attr('href'), title: $(e).find('h2').text() }))
+        .map((e): DataItem => ({
+            link: $(e).attr('href'),
+            title: $(e).find('h2').text(),
+        }))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : Infinity);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const html = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const html = await ofetch(item.link!);
                 const content = load(html);
                 const ldjson = JSON.parse(content('[type="application/ld+json"]:not([data-schema])').text());
 
@@ -44,8 +47,8 @@ async function handler(ctx) {
 
                 item.author = content("[name='author']")
                     .toArray()
-                    .map((e) => ({ name: $(e).attr('content') }));
-                item.category = content('.collection .tab').text().trim() || null;
+                    .map((e) => ({ name: $(e).attr('content')! }));
+                item.category = content('.collection .tab').text().trim() || undefined;
 
                 item.description = content('.body').html();
 

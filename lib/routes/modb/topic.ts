@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -36,7 +36,7 @@ async function handler(ctx) {
         },
     });
     const list = response.list.map((item) => {
-        let doc = {};
+        let doc: { title?: DataItem['title']; createdByName?: string; tags?: string[] } = {};
         let baseLink = {};
         switch (item.type) {
             case 0:
@@ -54,7 +54,7 @@ async function handler(ctx) {
         return {
             title: doc.title,
             link: `${baseLink}/${item.rid}`,
-            pubDate: timezone(parseDate(item.createdTime), +8),
+            pubDate: timezone(parseDate(item.createdTime), 8),
             author: doc.createdByName,
             category: doc.tags,
         };

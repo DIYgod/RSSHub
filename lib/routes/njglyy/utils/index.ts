@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -11,17 +12,17 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
 
     const list = $(listSelector)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find(titleSelector).text(),
-                link: host + item.find(itemSelector).attr('href'),
+                title: $item.find(titleSelector).text(),
+                link: host + $item.find(itemSelector).attr('href'),
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 if (response.redirectUrls.length) {
                     item.link = response.redirectUrls[0];
@@ -30,14 +31,14 @@ async function getNoticeList(ctx, url, host, listSelector, itemSelector, titleSe
                     const $ = load(response.data);
                     item.title = $(contentSelector.title).text();
                     item.description = $(contentSelector.content)
-                        .html()
+                        .html()!
                         .replaceAll('src="/', () => `src="${new URL('.', host).href}`)
                         .replaceAll('href="/', () => `href="${new URL('.', host).href}`)
                         .trim();
                     const preDate = $(contentSelector.date)
                         .text()
-                        .match(/(\d{4}-\d{2}-\d{2})/)[1];
-                    item.pubDate = timezone(parseDate(preDate, 'YYYY-MM-DD'), +8);
+                        .match(/(\d{4}-\d{2}-\d{2})/)![1];
+                    item.pubDate = timezone(parseDate(preDate, 'YYYY-MM-DD'), 8);
                 }
                 return item;
             })

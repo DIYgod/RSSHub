@@ -69,7 +69,7 @@ export interface SFWNovelDetail {
             }>;
             writable: boolean;
         };
-        seriesNavData: null | {
+        seriesNavData: {
             seriesType: string;
             seriesId: number;
             title: string;
@@ -78,14 +78,14 @@ export interface SFWNovelDetail {
             isWatched: boolean;
             isNotifying: boolean;
             order: number;
-            next: null | {
+            next: {
                 title: string;
                 order: number;
                 id: string;
                 available: boolean;
-            };
+            } | null;
             prev: null;
-        };
+        } | null;
         descriptionBoothId: null;
         descriptionYoutubeId: null;
         comicPromotion: null;
@@ -97,7 +97,7 @@ export interface SFWNovelDetail {
         imageResponseData: any[];
         imageResponseCount: number;
         userNovels: {
-            [key: string]: null | {
+            [key: string]: {
                 id: string;
                 title: string;
                 genre: string;
@@ -129,7 +129,7 @@ export interface SFWNovelDetail {
                 seriesId?: string;
                 seriesTitle?: string;
                 isUnlisted: boolean;
-            };
+            } | null;
         };
         hasGlossary: boolean;
         zoneConfig: {
@@ -191,14 +191,14 @@ export interface SFWNovelDetail {
                 };
             };
             zengoWorkData: {
-                nextWork: null | {
+                nextWork: {
                     id: string;
                     title: string;
-                };
-                prevWork: null | {
+                } | null;
+                prevWork: {
                     id: string;
                     title: string;
-                };
+                } | null;
             };
         };
     };
@@ -236,17 +236,17 @@ export interface NSFWNovelDetail {
             };
         };
     };
-    seriesNavigation: null | {
+    seriesNavigation: {
         nextNovel: null;
-        prevNovel: null | {
+        prevNovel: {
             id: number;
             viewable: boolean;
             contentOrder: string;
             title: string;
             coverUrl: string;
             viewableMessage: null;
-        };
-    };
+        } | null;
+    } | null;
     glossaryItems: string[];
     replaceableItemIds: string[];
     aiType: number;

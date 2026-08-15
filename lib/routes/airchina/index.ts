@@ -57,7 +57,7 @@ async function handler() {
             item.description = await cache.tryGet(detailLink, async () => {
                 const result = await got(detailLink);
                 const $ = load(result.data);
-                return $('.serviceMsg').html();
+                return $('.serviceMsg').html() ?? '';
             });
         })
     );

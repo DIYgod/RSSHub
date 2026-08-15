@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -74,24 +74,24 @@ async function handler(ctx) {
     let items = $('a[onclick^="queryDetail"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { tzid?: string } => {
+            const $item = $(item);
 
-            const matches = item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
+            const matches = $item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: detailUrl,
-                category: matches[1],
-                guid: `zjks-${matches[1]}-${matches[2]}`,
-                pubDate: parseDate(item.parent().next().text()),
-                tzid: matches[2],
+                category: matches![1],
+                guid: `zjks-${matches![1]}-${matches![2]}`,
+                pubDate: parseDate($item.parent().next().text()),
+                tzid: matches![2],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 const { data: detailResponse } = await got.post(detailUrl, {
                     form: {
                         mkxh: item.category,

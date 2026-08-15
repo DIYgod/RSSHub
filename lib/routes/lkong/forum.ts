@@ -8,12 +8,18 @@ import { renderContent } from './templates/content';
 
 export const route: Route = {
     path: '/forum/:id?/:digest?',
+    categories: ['bbs'],
+    example: '/lkong/forum/60',
+    parameters: {
+        id: '分区 id, 可在分区的URL里找到',
+        digest: '默认获取全部主题，任意值则只获取精华主题',
+    },
     radar: [
         {
             source: ['lkong.com/forum/:id', 'lkong.com/'],
         },
     ],
-    name: 'Unknown',
+    name: '分区',
     maintainers: ['nczitzk', 'ma6254'],
     handler,
 };

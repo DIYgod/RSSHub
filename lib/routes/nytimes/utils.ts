@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
@@ -25,7 +26,7 @@ const PuppeterGetter = async (ctx, context, link) => {
         await page.goto(link, {
             waitUntil: 'domcontentloaded',
         });
-        const response = await page.evaluate(() => document.querySelector('body').innerHTML);
+        const response = await page.evaluate(() => document.querySelector('body')!.getHTML());
         return response;
     });
     return result;
@@ -35,7 +36,7 @@ const ProcessFeed = (data, hasEnVersion = false) => {
     const $ = load(data);
 
     let content;
-    const result = {};
+    const result: Pick<DataItem, 'description' | 'title' | 'author' | 'pubDate'> = { title: '' };
 
     // 处理 www.nytimes.com
     if (hasEnVersion) {

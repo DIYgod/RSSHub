@@ -1,6 +1,6 @@
 import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
 // import playwright from '@/utils/playwright';
@@ -66,7 +66,7 @@ async function fetchPage() {
 
     return {
         title: 'Deal Street Asia',
-        language: 'en',
+        language: 'en' as Language,
         item: list,
         link: 'https://dealstreetasia.com/',
     };

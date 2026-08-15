@@ -20,12 +20,12 @@ async function handler() {
     const list = $('a[data-rn-inview-track-value]')
         .toArray()
         .map((e) => {
-            e = $(e);
-            const data = e.data('rn-track-value');
+            const $e = $(e);
+            const data = $e.data('rn-track-value') as { title: string; kiji_id_raw: string };
             const title = data.title;
             const link = `${url}/article/${data.kiji_id_raw}/`;
 
-            const parent = e.parent();
+            const parent = $e.parent();
             const img = parent.find('img[class^=image_]');
             const imgSrc = img.attr('src');
             const imgAlt = img.attr('alt');

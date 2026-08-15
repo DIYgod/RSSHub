@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,17 +41,18 @@ async function handler(ctx) {
     let items = $('.TOCLineItemBoldText')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
-            item = $(item).parent();
+        .map((item): DataItem => {
+            const $item = $(item).parent();
 
             return {
-                link: `${rootUrl}${item.attr('href')}`,
+                title: '',
+                link: `${rootUrl}${$item.attr('href')}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);
@@ -60,10 +61,10 @@ async function handler(ctx) {
                 content('#divNotSignedSection, #rightRail').remove();
 
                 item.description = content('.panel-body').html();
-                item.title = content('meta[name="dc.Title"]').attr('content');
+                item.title = content('meta[name="dc.Title"]').attr('content')!;
                 item.author = content('meta[name="dc.Creator"]').attr('content');
                 item.doi = content('meta[name="dc.Identifier"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="dc.Date"]').attr('content')!);
 
                 return item;
             })

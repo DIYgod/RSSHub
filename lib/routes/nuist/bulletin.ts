@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -80,7 +80,7 @@ async function handler(ctx) {
             const item = $(element);
 
             // 从内部找 a 标签
-            const a = item.find('.btt a').first();
+            const a = item.find('.btt a');
             const href = a.attr('href');
 
             if (!href) {
@@ -115,6 +115,6 @@ async function handler(ctx) {
     return {
         title: `${baseTitle} - ${info.title}`,
         link,
-        item: list,
+        item: list as DataItem[],
     };
 }

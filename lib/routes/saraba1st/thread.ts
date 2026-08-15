@@ -59,22 +59,23 @@ async function handler(ctx) {
             const contentHtml = $(each.find('td.t_f'));
             const imgsHtml = contentHtml.find('img');
             for (const element of imgsHtml) {
-                if (element.attribs.src === staticUrl.href) {
-                    element.attribs.src = element.attribs.file;
-                    const imgHtml = $(element);
-                    imgHtml.removeAttr('zoomfile');
-                    imgHtml.removeAttr('file');
-                    imgHtml.removeAttr('onmouseover');
-                    imgHtml.removeAttr('onclick');
+                if (element.attribs.src !== staticUrl.href) {
+                    continue;
                 }
+
+                element.attribs.src = element.attribs.file;
+                const imgHtml = $(element);
+                imgHtml.removeAttr('zoomfile');
+                imgHtml.removeAttr('file');
+                imgHtml.removeAttr('onmouseover');
             }
             contentHtml.find('div.aimg_tip').remove();
             return {
                 title: `${title} #${floor}`,
-                link: new URL(floorUrl, `${host}/2b/`).href,
+                link: new URL(floorUrl!, `${host}/2b/`).href,
                 description: contentHtml.html(),
                 author: each.find('.authi .xw1').text(),
-                pubDate: timezone(parseDate(each.find('.authi em').text()), +8),
+                pubDate: timezone(parseDate(each.find('.authi em').text()), 8),
             };
         });
 

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,16 +48,16 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#div_md > table > tbody > tr > td:nth-child(1) > a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.prop('innerText').replaceAll(/\s/g, ''),
-                link: item.attr('href'),
+                title: $item.prop('innerText')!.replaceAll(/\s/g, ''),
+                link: $item.attr('href'),
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: baseUrl + item.link,

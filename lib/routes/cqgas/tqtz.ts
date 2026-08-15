@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -36,13 +36,13 @@ async function handler() {
     const contentUrl = (id) => `http://www.cqgas.cn/portal/article/content?contentId=${id}`;
     const list = $('ul.news_list > li')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('a').first();
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const title = $item.find('a').first();
             return {
                 title: title.text(),
                 link: contentUrl(title.attr('contentid')),
-                pubDate: parseDate(item.find('span.right.txt_black2').text()),
+                pubDate: parseDate($item.find('span.right.txt_black2').text()),
             };
         });
 

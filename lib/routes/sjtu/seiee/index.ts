@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -59,19 +59,19 @@ async function handler(ctx) {
 
     const list = $(catID ? 'li' : '.u10 li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('.name').text().trim(),
-                link: item.find('a').attr('href'),
+                title: $item.find('.name').text().trim(),
+                link: $item.find('a').attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.nr').html();
@@ -80,9 +80,9 @@ async function handler(ctx) {
                         content('.jj')
                             .text()
                             .trim()
-                            .match(/日期：([\d-]+) /)[1]
+                            .match(/日期：([\d-]+) /)![1]
                     ),
-                    +8
+                    8
                 );
 
                 return item;

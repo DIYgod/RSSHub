@@ -14,7 +14,7 @@ const regex = /(?<key>[A-Z_]+)=(?<value>.*?(?=; max-age)|[\dA-Fa-f]+)/g;
 
 const parseCookie = async (body) => {
     let m;
-    const cookies = [];
+    const cookies: Cookie[] = [];
     while ((m = regex.exec(body)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regex.lastIndex) {
@@ -36,11 +36,11 @@ const parseNewsList = async (url, selector, ctx) => {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').first().text().trim(),
-                link: new URL(item.find('a').first().attr('href'), url).href,
-                pubDate: parseDate(item.find('.more').text(), 'YYYY-MM-DD'),
+                title: $item.find('a').first().text().trim(),
+                link: new URL($item.find('a').first().attr('href')!, url).href,
+                pubDate: parseDate($item.find('.more').text(), 'YYYY-MM-DD'),
             };
         });
     const title = $('.other_Location')
@@ -74,13 +74,13 @@ const parseArticle = async (item) => {
         const $ = load(data);
         const title = $('.daty, .source-box').text().trim();
         item.author = title.match(/来源：(.*)发布时间/s)?.[1].trim() ?? owner;
-        item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), +8);
+        item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), 8);
 
         // Change the img src from relative to absolute for a better compatibility
         $('.content, .bom-box')
             .find('img')
             .each((_, el) => {
-                $(el).attr('src', new URL($(el).attr('src'), item.link).href);
+                $(el).attr('src', new URL($(el).attr('src')!, item.link).href);
                 // oldsrc is causing freshrss imageproxy not to work correctly
                 $(el).removeAttr('oldsrc').removeAttr('alt');
             });

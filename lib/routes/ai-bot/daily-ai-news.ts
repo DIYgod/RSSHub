@@ -1,12 +1,10 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-type CheerioInstance = ReturnType<typeof load>;
-type CheerioSelection = ReturnType<CheerioInstance>;
 
 interface DateContext {
     currentYear: number;
@@ -36,7 +34,7 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
     return timezone(parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`), 8);
 }
 
-function processNewsList($: CheerioInstance, $newsList: CheerioSelection, ctx: DateContext): DataItem[] {
+function processNewsList($: CheerioAPI, $newsList: Cheerio<Element>, ctx: DateContext): DataItem[] {
     let currentPubDate: Date | undefined;
 
     return $newsList
@@ -46,7 +44,7 @@ function processNewsList($: CheerioInstance, $newsList: CheerioSelection, ctx: D
             const $child = $(child);
 
             if ($child.hasClass('news-date')) {
-                currentPubDate = parseDateString($child.text().trim(), ctx);
+                currentPubDate = parseDateString($child.text(), ctx);
                 return [];
             }
 
@@ -54,7 +52,7 @@ function processNewsList($: CheerioInstance, $newsList: CheerioSelection, ctx: D
                 const $link = $child.find('h2 a');
                 const title = $link.text().trim();
                 const link = $link.attr('href');
-                const description = $child.find('p.text-muted').html() || '';
+                const description = $child.find('p.text-muted').html();
 
                 if (!link) {
                     return [];

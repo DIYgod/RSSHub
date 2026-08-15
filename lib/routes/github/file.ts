@@ -32,7 +32,7 @@ async function handler(ctx) {
 
     const fileUrl = `https://github.com/${user}/${repo}/commits/${branch}/${filepath}`;
 
-    const headers = {};
+    const headers = {} as Record<string, any>;
     if (config.github && config.github.access_token) {
         headers.Authorization = `token ${config.github.access_token}`;
     }
@@ -44,7 +44,7 @@ async function handler(ctx) {
         headers,
     });
     const list = res.data;
-    const count = [];
+    const count: number[] = [];
     for (let i = 0; i < Math.min(list.length, 10); i++) {
         count.push(i);
     }

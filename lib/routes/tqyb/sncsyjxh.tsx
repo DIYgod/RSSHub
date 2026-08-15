@@ -37,7 +37,7 @@ async function handler() {
     const response = await got.get(sncsyjxhJsUrl);
     const resData = JSON.parse(String(response.data.match(/Alarm = (.*?);/)[1]));
 
-    const data = [];
+    const data: any[] = [];
     for (const i in resData) {
         for (const j in resData[i]) {
             data.push(resData[i][j]);
@@ -56,8 +56,8 @@ async function handler() {
                 <text>发布时间：{item.datetime}</text>
             </>
         ),
-        pubDate: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), +8),
-        guid: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), +8) + item.cname + item.sigtypename,
+        pubDate: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), 8),
+        guid: timezone(parseDate(item.datetime, 'YYYY年MM月DD日 HH:mm'), 8) + item.cname + item.sigtypename,
     }));
 
     return {

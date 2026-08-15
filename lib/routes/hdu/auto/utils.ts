@@ -35,7 +35,7 @@ export const fetchAutoNews = async (path: string, title: string): Promise<Data> 
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $detail = load(data);
                 const description = $detail('.wp_articlecontent').html();

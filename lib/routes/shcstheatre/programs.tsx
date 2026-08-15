@@ -131,7 +131,7 @@ async function handler() {
 
     const items = await Promise.all(
         $('#datarow .program-name a').map((_, elem) => {
-            const link = new URL($(elem).attr('href'), url);
+            const link = new URL($(elem).attr('href')!, url);
             return cache.tryGet(link.href, async () => {
                 const id = link.searchParams.get('id');
                 const res2 = await got.post('https://www.shcstheatre.com/webapi.ashx?op=GettblprogramCache', {
@@ -143,7 +143,7 @@ async function handler() {
                     title: data.SCS_WEB_BRIEFNAME,
                     link: link.href,
                     description: renderDescription(data),
-                    pubDate: timezone(parseDate(data.SJ_DATE_PC), +8),
+                    pubDate: timezone(parseDate(data.SJ_DATE_PC), 8),
                 };
             });
         })

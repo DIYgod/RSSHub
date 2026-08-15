@@ -52,7 +52,7 @@ async function handler(ctx) {
             const aLabel = $(item).find('a[href]');
             const href = aLabel.attr('href');
             if (href) {
-                const link = currentUrl + aLabel.attr('href').replaceAll('..', '');
+                const link = currentUrl + aLabel.attr('href')!.replaceAll('..', '');
                 return {
                     title: aLabel.contents().first().text(),
                     link,
@@ -61,9 +61,9 @@ async function handler(ctx) {
             }
             return null;
         })
-        .filter(Boolean);
+        .filter(Boolean) as Array<{ title: string; link: string; pubDate: Date }>;
 
-    items = await Promise.all(
+    items = (await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 if (!item.link.endsWith('.html') && !item.link.endsWith('.shtml')) {
@@ -74,8 +74,8 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 const description = content('#content').html();
-                const author = content('td.td_lable:contains("所属机构")').next('td').text().trim();
-                const category = content('td.td_lable:contains("主题分类")').next('td').text().trim();
+                const author = content('td.td_lable:contains("所属机构")').next('td').text();
+                const category = content('td.td_lable:contains("主题分类")').next('td').text();
 
                 return {
                     ...item,
@@ -85,7 +85,7 @@ async function handler(ctx) {
                 };
             })
         )
-    );
+    )) as typeof items;
 
     return {
         item: items,

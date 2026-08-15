@@ -44,10 +44,10 @@ async function handler() {
             const titleText = titleDom.text();
             const path = titleDom.last().attr('href');
             let itemUrl = '';
-            if (path.startsWith('http')) {
-                itemUrl = path;
-            } else if (path.startsWith('..')) {
-                itemUrl = path.replaceAll('..', () => host);
+            if (path!.startsWith('http')) {
+                itemUrl = path!;
+            } else if (path!.startsWith('..')) {
+                itemUrl = path!.replaceAll('..', () => host);
             } else {
                 itemUrl = host + path;
             }
@@ -56,7 +56,7 @@ async function handler() {
                 const result = await got(itemUrl);
                 const $ = load(result.data);
                 if ($('.article') && $('.article').html()) {
-                    description = $('.article').html().trim();
+                    description = $('.article').html()!.trim();
                 }
                 return {
                     title: titleText,

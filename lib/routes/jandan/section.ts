@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/:category/:type?',
     example: '/jandan/top',
     name: 'Section',
-    maintainers: ['nczitzk', 'pseudoyu'],
+    maintainers: ['kobemtl', 'Xuanwo', 'xyqfer', '9uanhuo', 'nczitzk', 'pseudoyu'],
     parameters: {
         category: {
             description: '板块',
@@ -26,6 +26,10 @@ export const route: Route = {
                 {
                     label: '随手拍',
                     value: 'ooxx',
+                },
+                {
+                    label: '女装',
+                    value: 'beauty',
                 },
                 {
                     label: '无聊图',
@@ -82,37 +86,22 @@ async function handler(ctx): Promise<{
     category = category.replace(/#.*$/, '');
 
     const type = ctx.req.param('type') ?? '4hr';
-    const rootUrl = 'http://i.jandan.net';
+    const rootUrl = 'https://i.jandan.net';
     const currentUrl = `${rootUrl}/${category}`;
 
-    let result: { title: string; items: DataItem[] };
+    let result: { title: string; items: DataItem[]; link?: string };
 
-    try {
-        if (category === 'top') {
-            result = await handleTopSection(rootUrl, type);
-        } else if (category === 'bbs') {
-            result = await handleForumSection(rootUrl);
-        } else {
-            result = await handleCommentSection(rootUrl, category);
-        }
-    } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        result = {
-            title: `煎蛋 - ${category}`,
-            items: [
-                {
-                    title: `抓取出错: ${category}`,
-                    description: `抓取 ${category} 分区时出现错误: ${errorMessage}`,
-                    link: currentUrl,
-                    pubDate: new Date(),
-                },
-            ],
-        };
+    if (category === 'top') {
+        result = await handleTopSection(rootUrl, type);
+    } else if (category === 'bbs') {
+        result = await handleForumSection(rootUrl);
+    } else {
+        result = await handleCommentSection(rootUrl, category);
     }
 
     return {
         title: result.title,
-        link: currentUrl,
+        link: result.link ?? currentUrl,
         item: result.items,
     };
 }

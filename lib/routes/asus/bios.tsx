@@ -104,13 +104,15 @@ async function handler(ctx) {
     const language = ctx.req.param('lang') ?? 'en';
     const productInfo = await getProductInfo(model, language);
     const biosAPI =
-        language === 'zh' ? `https://www.asus.com.cn/support/api/product.asmx/GetPDBIOS?website=cn&model=${model}&sitelang=cn` : `https://www.asus.com/support/api/product.asmx/GetPDBIOS?website=global&model=${model}&sitelang=en`;
+        language === 'zh'
+            ? `https://www.asus.com.cn/support/webapi/ProductV2/GetPDBIOS?website=cn&pdid=${productInfo.productID}`
+            : `https://www.asus.com/support/webapi/ProductV2/GetPDBIOS?website=global&pdid=${productInfo.productID}`;
 
     const response = await ofetch(biosAPI);
     const biosList = response.Result.Obj[0].Files;
 
     const items = biosList.map((item) => ({
-        title: item.Title,
+        title: item.Title || `${productInfo.title} BIOS ${item.Version}`,
         description: renderToString(
             language === 'zh' ? (
                 <>
@@ -119,7 +121,7 @@ async function handler(ctx) {
                     <p>版本: {item.Version}</p>
                     <p>大小: {item.FileSize}</p>
                     <p>
-                        下载链接: <a href={item.DownloadUrl.China}>中国下载</a> | <a href={item.DownloadUrl.Global}>全球下载</a>
+                        下载链接: <a href={`https://dlcdnets.asus.com.cn${item.DownloadUrl.China}`}>中国下载</a> | <a href={`https://dlcdnets.asus.com${item.DownloadUrl.Global}`}>全球下载</a>
                     </p>
                 </>
             ) : (
@@ -135,7 +137,7 @@ async function handler(ctx) {
                         <b>Size:</b> {item.FileSize}
                     </p>
                     <p>
-                        <b>Download:</b> <a href={item.DownloadUrl.Global}>{item.DownloadUrl.Global.split('/').pop().split('?', 1)[0]}</a>
+                        <b>Download:</b> <a href={`https://dlcdnets.asus.com${item.DownloadUrl.Global}`}>{item.DownloadUrl.Global.split('/').pop().split('?', 1)[0]}</a>
                     </p>
                 </>
             )

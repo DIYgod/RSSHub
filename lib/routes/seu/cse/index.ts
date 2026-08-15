@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -51,25 +51,25 @@ async function handler(ctx) {
 
     const list = $('.news_list .news')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('.news_title a');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('.news_title a');
             return {
-                title: a.attr('title'),
-                link: new URL(a.attr('href'), host).href,
-                pubDate: parseDate(e.find('.news_meta').text()),
+                title: a.attr('title')!,
+                link: new URL(a.attr('href')!, host).href,
+                pubDate: parseDate($e.find('.news_meta').text()),
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 let response;
                 try {
                     response = await got(item.link);
                 } catch (error) {
                     // intranet
-                    if (error.response.url.startsWith('https://newids.seu.edu.cn/')) {
+                    if ((error as { response: { url: string } }).response.url.startsWith('https://newids.seu.edu.cn/')) {
                         return item;
                     }
                     throw error;

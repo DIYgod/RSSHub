@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
@@ -83,7 +83,7 @@ async function handler(ctx) {
         title,
         link,
         description,
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         itunes_author: '机核 GCORES',
         image: `https://www.gcores.com/${image}`,
         item,

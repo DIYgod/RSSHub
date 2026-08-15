@@ -9,7 +9,13 @@ import supportedList from './supported-list';
 
 export const route: Route = {
     path: '/:country/:city?',
-    name: 'Unknown',
+    categories: ['government'],
+    example: '/embassy/us/chicago',
+    parameters: {
+        country: '国家短代码, 见支持国家列表',
+        city: '城市, 对应国家列表下的`领事馆城市列表`，不填则为大使馆',
+    },
+    name: '使领馆重要通知',
     maintainers: ['HenryQW'],
     handler,
 };
@@ -34,12 +40,12 @@ async function handler(ctx) {
     const res = await got(link);
     const $ = load(res.data);
 
-    const list = [];
+    const list: any[] = [];
 
     $(config.list)
         .slice(0, 10)
         .each((i, e) => {
-            const temp = new URL($(e).attr('href'), link);
+            const temp = new URL($(e).attr('href')!, link);
             if (temp.hostname === hostname) {
                 list.push(temp);
             }

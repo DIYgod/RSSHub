@@ -55,7 +55,7 @@ async function handler() {
                     </p>
                 </>
             ),
-            pubDate: timezone(parseDate(item.createdOn, 'YYYY-MM-DD HH:mm:ss'), +8),
+            pubDate: timezone(parseDate(item.createdOn, 'YYYY-MM-DD HH:mm:ss'), 8),
             link: 'https://szgk.sz-water.com.cn/wechat_web/Water_stop.html',
             guid: `${item.position}${item.stopStartTime}`,
         })),

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -72,6 +72,6 @@ async function handler() {
     return {
         title: '精真估 > 资讯',
         link: `${baseUrl}/#/index/boot`,
-        item: items,
+        item: items as unknown as DataItem[],
     };
 }

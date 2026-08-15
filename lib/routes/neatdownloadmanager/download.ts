@@ -43,8 +43,8 @@ async function handler(ctx) {
     const items = $('.p1')
         .toArray()
         .filter((item) => {
-            item = $(item);
-            const isMacOS = item.text().startsWith('dmg');
+            const $item = $(item);
+            const isMacOS = $item.text().startsWith('dmg');
 
             if (os !== '') {
                 return os === 'macos' ? isMacOS : !isMacOS;
@@ -53,14 +53,14 @@ async function handler(ctx) {
             return true;
         })
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const text = item.text();
-            const version = text.match(/\(ver (.*?)\)/)[1];
+            const text = $item.text();
+            const version = text.match(/\(ver (.*?)\)/)![1];
 
             return {
                 title: `[${text.startsWith('dmg') ? 'macOS' : 'Windows'}] ${text}`,
-                link: `${rootUrl}${item.prev().find('a').attr('href')}#${version}`,
+                link: `${rootUrl}${$item.prev().find('a').attr('href')}#${version}`,
             };
         });
 

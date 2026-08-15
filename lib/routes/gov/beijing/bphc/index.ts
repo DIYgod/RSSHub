@@ -51,7 +51,7 @@ async function handler(ctx) {
                     author: description.match(/来源：(.*?)</)?.[1].trim() ?? item.operator,
                     link: `${rootUrl}${obj.link}${item.id}`,
                     description,
-                    pubDate: timezone(parseDate(item.createTime), +8),
+                    pubDate: timezone(parseDate(item.createTime), 8),
                 };
                 return single;
             });

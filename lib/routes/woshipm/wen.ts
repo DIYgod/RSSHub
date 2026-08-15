@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -36,12 +36,12 @@ async function handler() {
     const $ = load(response.data);
     const postList = $('.article-list-item')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('.went-head-text').text(),
-                link: `${baseUrl}${item.find('.went-head').attr('href')}`,
-                pubDate: parseRelativeDate(item.find('.list-text').text().split('|', 2)[1]),
+                title: $item.find('.went-head-text').text(),
+                link: `${baseUrl}${$item.find('.went-head').attr('href')}`,
+                pubDate: parseRelativeDate($item.find('.list-text').text().split('|', 2)[1]),
             };
         });
 

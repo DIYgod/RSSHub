@@ -38,16 +38,16 @@ async function parseArticle(type, $) {
     }
 
     const items = data.map((item) => {
-        item = $(item);
-        const oriLink = item.find('a').attr('href');
+        const $item = $(item);
+        const oriLink = $item.find('a').attr('href');
         let linkRes = oriLink;
         if (!oriLink.startsWith('http')) {
-            linkRes = commLink + item.find('a').attr('href');
+            linkRes = commLink + $item.find('a').attr('href');
         }
-        const pubDate = parseDate(item.find('i').text(), 'YYYY-MM-DD');
+        const pubDate = parseDate($item.find('i').text(), 'YYYY-MM-DD');
 
         return {
-            title: item.find('p').text(),
+            title: $item.find('p').text(),
             pubDate,
             link: linkRes,
         };

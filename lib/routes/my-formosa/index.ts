@@ -21,50 +21,47 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['my-formosa.com/'],
+            source: ['m.my-formosa.com.tw/'],
         },
     ],
-    name: '首页',
+    name: '首頁',
     maintainers: ['dzx-dzx'],
     handler,
-    url: 'my-formosa.com',
+    url: 'm.my-formosa.com.tw',
 };
 
-async function fetch(url) {
-    const raw = await ofetch(url, { responseType: 'arrayBuffer' });
-    const decoder = new TextDecoder('big5');
-    return decoder.decode(raw);
-}
-
 async function handler() {
-    const rootUrl = 'http://www.my-formosa.com/';
+    const rootUrl = 'https://m.my-formosa.com.tw';
 
-    const res = await fetch(rootUrl);
-
+    const res = await ofetch(rootUrl);
     const $ = load(res);
 
     const items = await Promise.all(
-        $('#featured-news h3 a')
+        $('ul.local-list li .cont h1 a')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
 
-                const title = item.text();
-                const link = new URL(item.attr('href'), rootUrl).href;
+                const title = $item.text();
+                const link = new URL($item.attr('href')!, rootUrl).href;
 
                 return cache.tryGet(link, async () => {
-                    const res = await fetch(link);
+                    const res = await ofetch(link);
                     const $ = load(res);
 
-                    const isTV = new URL(link).pathname.startsWith('/TV');
+                    const pubDate = $('.news_header .info')
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
+                    const media = $.html($('.news_header > img, .news_header > .media'));
+                    const summary = $.html($('.product > h2'));
 
                     return {
                         title,
                         link,
-                        author: $('.page-header~#featured-news h4').text(),
-                        category: $("meta[name='keywords']").attr('content').split(',').filter(Boolean),
-                        pubDate: timezone(parseDate((isTV ? $('.icon-calendar')[0].next.data : $('.date').text()).trim()), +8),
-                        description: (isTV ? $('.post-item').html() : $('.body').html()).replaceAll(/\/News.*?\.jpg/g, (match) => `http://my-formosa.com${match}`),
+                        author: $('.cont h1 a').text(),
+                        category: [$('.story_header button').text()],
+                        pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                        description: media + summary + ($('.body').html() ?? ''),
                     };
                 });
             })

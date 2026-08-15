@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -64,17 +64,18 @@ async function handler(ctx) {
 
     let items = $('h4.title a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                link: `${rootUrl}${item.attr('href').split('&', 1)[0]}`,
+                title: '',
+                link: `${rootUrl}${$item.attr('href')!.split('&', 1)[0]}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -85,16 +86,16 @@ async function handler(ctx) {
                 item.doi = content('meta[name="citation_doi"]').attr('content');
 
                 item.guid = item.doi;
-                item.title = content('meta[name="citation_title"]').attr('content');
+                item.title = content('meta[name="citation_title"]').attr('content')!;
                 item.author = content('.author')
                     .toArray()
                     .map((a) => content(a).text().trim())
                     .join(', ');
-                item.pubDate = parseDate(content('meta[name="citation_publication_date"]').attr('content'), 'YYYY/MM');
+                item.pubDate = parseDate(content('meta[name="citation_publication_date"]').attr('content')!, 'YYYY/MM');
                 item.description = renderToString(
                     <AeawebDescription
                         description={content('meta[name="twitter:description"]')
-                            .attr('content')
+                            .attr('content')!
                             .replace(/\(\w+ \d+\)( - )?/, '')}
                     />
                 );
@@ -109,7 +110,7 @@ async function handler(ctx) {
         description,
         link: currentUrl,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }
 

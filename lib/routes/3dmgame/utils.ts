@@ -1,19 +1,20 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const parseArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const { data: response } = await got(item.link);
         const $ = load(response);
 
         if (item.link.startsWith('https://dl.3dmgame.com/')) {
             const lis = $('.patchtop .lis');
-            const [, category, pubDate, author] = lis.text().match(/补丁类型：([^\n]*)\n.*整理时间：([^\n]*)\n.*补丁制作：([^\n]*)\n/s);
+            const [, category, pubDate, author] = lis.text().match(/补丁类型：([^\n]*)\n.*整理时间：([^\n]*)\n.*补丁制作：([^\n]*)\n/s)!;
 
-            item.description = lis.html() + $('.L_title').html() + $('.GmL_1').html();
+            item.description = lis.html()! + $('.L_title').html()! + $('.GmL_1').html();
             item.category = category;
             item.pubDate = timezone(parseDate(pubDate), 8);
             item.author = author;

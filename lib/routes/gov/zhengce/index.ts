@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,28 +47,28 @@ export async function handler(ctx) {
 
     let items = $('h4 a, div.subtitle a[title]')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.prop('href');
+            const link = $item.prop('href');
 
             return {
-                title: item.text(),
-                link: link.startsWith('http') ? link : new URL(link, currentUrl).href,
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items
-            .filter((item) => /https?:\/\/www\.gov\.cn\/zhengce.*content_\d+\.htm/.test(item.link))
+            .filter((item) => /https?:\/\/www\.gov\.cn\/zhengce.*content_\d+\.htm/.test(item.link!))
             .slice(0, limit)
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { data: detailResponse } = await got(item.link);
 
                     const content = load(detailResponse);
 
-                    const processElementText = (el) => content(el).text().split(/：/).pop().trim() || content(el).next().text().trim();
+                    const processElementText = (el) => content(el).text().split(/：/).pop()!.trim() || content(el).next().text().trim();
 
                     const author = content('meta[name="author"]').prop('content');
 
@@ -99,16 +99,16 @@ export async function handler(ctx) {
                     item.author = [agency, source, author].filter(Boolean).join('/');
                     item.category = [...new Set([subject, column, ...keywords].filter(Boolean))];
                     item.guid = `gov-zhengce-${manuscriptId}`;
-                    item.pubDate = timezone(parseDate(content('meta[name="firstpublishedtime"]').prop('content'), 'YYYY-MM-DD-HH:mm:ss'), +8);
-                    item.updated = timezone(parseDate(content('meta[name="lastmodifiedtime"]').prop('content'), 'YYYY-MM-DD-HH:mm:ss'), +8);
+                    item.pubDate = timezone(parseDate(content('meta[name="firstpublishedtime"]').prop('content'), 'YYYY-MM-DD-HH:mm:ss'), 8);
+                    item.updated = timezone(parseDate(content('meta[name="lastmodifiedtime"]').prop('content'), 'YYYY-MM-DD-HH:mm:ss'), 8);
 
                     return item;
                 })
             )
     );
 
-    const image = new URL($('img.wordlogo').prop('src'), rootUrl).href;
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const image = new URL($('img.wordlogo').prop('src')!, rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="lanmu"]').prop('content');
     const author = $('div.header_logo a[aria-label]').prop('aria-label');
 
@@ -117,7 +117,7 @@ export async function handler(ctx) {
         title: author && subtitle ? `${author} - ${subtitle}` : $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         image,
         icon,
         logo: icon,

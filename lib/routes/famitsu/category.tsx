@@ -1,9 +1,9 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -35,7 +35,7 @@ function getBuildId() {
         'famitsu:buildId',
         async () => {
             const data = await ofetch(baseUrl);
-            const $ = cheerio.load(data);
+            const $ = load(data);
             const nextData = JSON.parse($('#__NEXT_DATA__').text());
             return nextData.buildId;
         },
@@ -110,7 +110,7 @@ async function handler(ctx) {
 
     const list = (data.pageProps.categoryArticleDataForPc as CategoryArticle[])
         .filter((item) => !item.advertiserName)
-        .map((item) => {
+        .map((item): DataItem & { link: string; publicationDate: string | undefined; articleId: string } => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');
             return {
                 title: item.title,
@@ -149,7 +149,7 @@ async function handler(ctx) {
         image: 'https://www.famitsu.com/img/1812/favicons/apple-touch-icon.png',
         link: url,
         item: items,
-        language: 'ja',
+        language: 'ja' as Language,
     };
 }
 

@@ -22,7 +22,7 @@ export const handler = async (ctx) => {
         data: { results: apiTagProcs },
     } = await ofetch(apiTagProcUrl, {
         query: {
-            ...(id ? { tag: id } : {}),
+            ...(id && { tag: id }),
             page: 1,
             pagesize: 20,
             f: filter,
@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
 
     const items = processItems(apiTagProcs?.slice(0, limit) ?? []);
 
-    const image = new URL($('img.logo').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo').prop('src')!, rootUrl).href;
 
     const author = $('title').text().split(/_/).pop();
 

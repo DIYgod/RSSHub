@@ -39,7 +39,7 @@ async function handler(ctx) {
         },
     });
 
-    let item = [];
+    let item: any[] = [];
     const name = data.live_info.nickname;
     if (data.live_info.live_status === 1) {
         item = [

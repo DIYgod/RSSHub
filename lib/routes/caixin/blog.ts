@@ -23,7 +23,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '用户博客',
-    maintainers: [],
+    maintainers: ['Maecenas'],
     handler,
     description: '通过提取文章全文，以提供比官方源更佳的阅读体验.',
 };
@@ -43,10 +43,10 @@ async function handler(ctx) {
             .slice('window.user = '.length + 1)
             .split(';', 1)[0]
             .replaceAll(/\s/g, '');
-        const authorId = user.match(/id:"(\d+)"/)[1];
-        const authorName = user.match(/name:"(.*?)"/)[1];
-        const avatar = user.match(/avatar:"(.*?)"/)[1];
-        const introduce = user.match(/introduce:"(.*?)"/)[1];
+        const authorId = user.match(/id:"(\d+)"/)![1];
+        const authorName = user.match(/name:"(.*?)"/)![1];
+        const avatar = user.match(/avatar:"(.*?)"/)![1];
+        const introduce = user.match(/introduce:"(.*?)"/)![1];
 
         const {
             data: { data },

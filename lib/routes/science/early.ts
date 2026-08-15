@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import playwright from '@/utils/playwright';
 
@@ -48,7 +47,7 @@ async function handler(ctx) {
         .map((item) => getItem(item, $));
 
     const context = await playwright();
-    const items = await fetchDesc(list, context, cache.tryGet);
+    const items = await fetchDesc(list, context);
     await context.close();
 
     return {
@@ -56,7 +55,7 @@ async function handler(ctx) {
         description: $('.body02').text().trim(),
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageUrl,
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

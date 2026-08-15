@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const links = [];
+    const links: string[] = [];
 
     function pushLinks(index, item) {
         const link = item.attribs.href;
@@ -82,6 +82,6 @@ async function handler(ctx) {
     return {
         title: $('title').text(),
         link: url,
-        item: out.filter((x) => x.title),
+        item: out.filter((x: any) => x.title) as DataItem[],
     };
 }

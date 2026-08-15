@@ -1,9 +1,7 @@
-import { config } from '@/config';
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, getNextBuildId } from './utils';
+import { baseUrl, fetchJson, getNextBuildId } from './utils';
 
 export const route: Route = {
     path: '/user/:handle/upload',
@@ -26,14 +24,7 @@ async function handler(ctx) {
     const { handle } = ctx.req.param();
 
     const nextBuildId = await getNextBuildId();
-    const response = await ofetch(`${baseUrl}/_next/data/${nextBuildId}/en/${handle}/upload.json`, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-        query: {
-            handle,
-        },
-    });
+    const response = await fetchJson(`${baseUrl}/_next/data/${nextBuildId}/en/${handle}/upload.json`, { handle });
     const { userInfo, designs } = response.pageProps;
 
     const items = designs.map((d) => ({

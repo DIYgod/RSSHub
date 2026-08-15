@@ -31,7 +31,7 @@ export const route: Route = {
     maintainers: ['HChenZi'],
     handler: async (ctx) => {
         const baseUrl = 'http://www.sara.org.cn';
-        const type = ctx.req.param('type');
+        const type = ctx.req.param('type')!;
 
         const url = `${baseUrl}/news/${type}.htm`;
         const response = await ofetch(url);
@@ -60,7 +60,7 @@ async function getFeedItem(item) {
         const $ = load(response);
         return {
             description: $('.text').html(),
-            language: 'zh-cn',
+            language: 'zh-CN',
             ...item,
         };
     });

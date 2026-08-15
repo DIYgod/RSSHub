@@ -37,11 +37,11 @@ async function handler() {
     const items = $('h2')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${currentUrl}#${item.text()}`,
-                description: item
+                title: $item.text(),
+                link: `${currentUrl}#${$item.text()}`,
+                description: $item
                     .nextUntil('h2')
                     .toArray()
                     .map((item) => $(item).html())

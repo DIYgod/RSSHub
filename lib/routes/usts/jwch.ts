@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +22,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '教务处',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     description: `| 类型 | 教务动态 | 公告在线 | 选课通知 |
 | ---- | -------- | -------- | -------- |
@@ -38,19 +38,19 @@ async function handler(ctx) {
     const title = $('div.mainWrap.cleafix > div > div.right.fr > div.local.fl > h3').text();
     const list = $('div.list > ul > li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href'), rootURL).href,
+            link: new URL($(item).find('a').attr('href')!, rootURL).href,
         }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                let author = null;
-                let pubDate = null;
+                let author: string | null = null;
+                let pubDate: string | null = null;
                 for (const item of content('div.content-title.fl > i').text().split('  ')) {
                     if (item.includes('作者：')) {
                         author = item.split('：', 2)[1];
@@ -61,8 +61,8 @@ async function handler(ctx) {
                 }
 
                 item.description = content('div#vsb_content').html();
-                item.author = author;
-                item.pubDate = timezone(parseDate(pubDate), +8);
+                item.author = author ?? undefined;
+                item.pubDate = timezone(parseDate(pubDate!), 8);
 
                 return item;
             })

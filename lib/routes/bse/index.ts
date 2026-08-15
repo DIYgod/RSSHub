@@ -194,7 +194,7 @@ async function handler(ctx) {
                 category: item.tags,
                 description: item.text,
                 link: `${rootUrl}${item.htmlUrl}`,
-                pubDate: timezone(parseDate(item.publishDate), +8),
+                pubDate: timezone(parseDate(item.publishDate), 8),
             }));
             break;
 

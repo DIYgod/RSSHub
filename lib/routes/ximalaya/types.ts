@@ -48,6 +48,7 @@ interface Track {
     intro: string;
     labelList: string[];
     isTrailer: number;
+    desc?: string;
 }
 
 export interface TrackInfoResponse {
@@ -65,6 +66,12 @@ export interface TrackInfoResponse {
 export interface RichIntro {
     ret: number;
     richIntro: string;
+}
+
+export interface MobileTrack {
+    play_path_64: string | null;
+    play_path_32: string | null;
+    play_path: string | null;
 }
 
 interface SubscriptInfo {

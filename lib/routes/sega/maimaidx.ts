@@ -1,6 +1,8 @@
-import * as cheerio from 'cheerio';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,8 +25,8 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://info-maimai.sega.jp/';
 
-    const parseContent = (htmlString: string, image: cheerio.Cheerio<cheerio.Element>) => {
-        const $ = cheerio.load(htmlString);
+    const parseContent = (htmlString: string, image: Cheerio<Element>) => {
+        const $ = load(htmlString);
         const content = $('.maiMd');
         content.prepend(image);
         content.find('.hrLine').replaceWith('<hr/>');
@@ -32,7 +34,7 @@ async function handler() {
     };
 
     const response = await got(baseUrl);
-    const $ = cheerio.load(response.data);
+    const $ = load(response.data);
     const list = $('.maiPager-content .newsBox');
 
     const item = await Promise.all(
@@ -59,7 +61,7 @@ async function handler() {
     return {
         title: 'maimai DX - Japanese Ver. News',
         link: baseUrl,
-        language: 'ja',
+        language: 'ja' as Language,
         item,
     };
 }

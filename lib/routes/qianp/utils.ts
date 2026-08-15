@@ -1,7 +1,8 @@
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const getTokenAndSecret = (tryGet) =>
-    tryGet('qianp:token', async () => {
+const getTokenAndSecret = () =>
+    cache.tryGet('qianp:token', async () => {
         const response = await got('https://qianp.com/news/recommend/');
         const token = response.headers['set-cookie']
             .find((cookie) => cookie.startsWith('token='))

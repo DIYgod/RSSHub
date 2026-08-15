@@ -18,9 +18,9 @@ interface CatalogItem {
 
 interface ArticleListResponse {
     code: string;
-    data: null | {
+    data: {
         catalogs: CatalogItem[];
-    };
+    } | null;
 }
 
 const TYPE_CATALOG_ID_MAP: Record<string, number> = {

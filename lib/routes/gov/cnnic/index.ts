@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,15 +44,15 @@ async function handler(ctx) {
     let items = $('.p_news-box li')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 12)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const link = item.find('a');
+            const link = $item.find('a');
 
             return {
                 title: link.text(),
-                link: new URL(link.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.contents().last().text().trim()),
+                link: new URL(link.attr('href')!, currentUrl).href,
+                pubDate: parseDate($item.contents().last().text().trim()),
             };
         });
 
@@ -67,7 +67,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.content-text .inner-text').html();
-                item.pubDate = timezone(parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm'), +8);
+                item.pubDate = timezone(parseDate(content('.from-date .time').text(), 'YYYY年MM月DD日HH:mm'), 8);
 
                 return item;
             })

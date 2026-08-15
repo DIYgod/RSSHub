@@ -50,7 +50,7 @@ async function handler(ctx) {
     let url = host;
     if (category.length > 0) {
         url = `${host}/news/${category}`;
-        subtitle = `${subtitle} - ${category}`;
+        subtitle += ` - ${category}`;
     }
     const response = await got({
         method: 'get',
@@ -59,8 +59,8 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const contents = $('script:contains("window.__STATE__")').text();
-    const data = JSON.parse(contents.match(/\{.*\}/)[0]).data;
-    const filteredKeys = Object.entries(data)
+    const data = JSON.parse(contents.match(/\{.*\}/)![0]).data;
+    const filteredKeys = Object.entries<any>(data)
         .filter(([key, value]) => {
             if (!key.startsWith('article')) {
                 return false;

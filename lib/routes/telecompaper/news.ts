@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -102,19 +102,19 @@ async function handler(ctx) {
     const list = $('table.details_rows tbody tr')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: new Date(item.find('span.source').text().replace('Published ', '').split(' CET | ', 1)[0] + ' GMT+1').toUTCString(),
+                pubDate: new Date($item.find('span.source').text().replace('Published ', '').split(' CET | ', 1)[0] + ' GMT+1').toUTCString(),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

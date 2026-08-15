@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -39,10 +39,14 @@ async function handler(ctx) {
 
     const list = $('li[id^="line"] a')
         .toArray()
-        .map((elem) => ({
+        .map((elem): DataItem & { link: string } => ({
             link: new URL(elem.attribs.href, pageUrl).href,
             title: $(elem).text(),
-            pubDate: parseDate($(elem.next?.next).text().trim()),
+            pubDate: parseDate(
+                $(elem.next?.next ?? undefined)
+                    .text()
+                    .trim()
+            ),
         }));
 
     const items = await Promise.all(

@@ -176,9 +176,9 @@ If you subscribe to [Updates in English](https://www.counter-strike.net/news/upd
         {
             source: ['www.counter-strike.net/news/:category'],
             target: (params, url) => {
-                url = new URL(url);
+                const parsedUrl = new URL(url);
                 const category = params.category;
-                const language = url.searchParams.get('l');
+                const language = parsedUrl.searchParams.get('l');
 
                 return `/news${category ? `/${category}${language ? `/${language}` : ''}` : ''}`;
             },

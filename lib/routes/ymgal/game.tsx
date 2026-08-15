@@ -47,13 +47,13 @@ async function handler() {
     const items =
         list &&
         list.map((item) => {
-            item = $(item);
-            const itemPicUrl = item.find('.lazy').first().attr('data-original');
-            const tags = item.find('.tag-info-list').children();
+            const $item = $(item);
+            const itemPicUrl = $item.find('.lazy').first().attr('data-original');
+            const tags = $item.find('.tag-info-list').children();
             const taginfo = tags.toArray().map((elem) => $(elem).text());
             return {
-                title: item.attr('title'),
-                link: `${host}${item.attr('href')}`,
+                title: $item.attr('title')!,
+                link: `${host}${$item.attr('href')}`,
                 description: renderDescription(itemPicUrl, taginfo),
             };
         });

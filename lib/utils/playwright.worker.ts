@@ -36,13 +36,11 @@ const scheduleClose = (browser: Browser) => {
 /**
  * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
-const outPlaywright = async () => {
+export default async function outPlaywright() {
     const { browser, context } = await launchBrowser();
     scheduleClose(browser);
     return context;
-};
-
-export default outPlaywright;
+}
 
 /**
  * @returns Playwright page

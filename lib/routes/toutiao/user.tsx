@@ -9,7 +9,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { generate_a_bogus } from './a-bogus';
-import type { Feed } from './types';
+import type { Feed, UserInfoCell32, UserInfoCell49 } from './types';
 
 const renderVideo = (url, poster) =>
     renderToString(
@@ -66,18 +66,19 @@ async function handler(ctx) {
             case 0:
             case 49: {
                 const video = item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0];
+                const user = item.user as UserInfoCell49 | undefined;
                 return {
                     title: item.title,
                     description: renderVideo(item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0], item.video.origin_cover.url_list[0]),
                     link: `https://www.toutiao.com/video/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),
-                    author: item.user?.info.name ?? item.source,
+                    author: user?.info.name ?? item.source,
                     enclosure_url: video?.play_url_list[0],
                     enclosure_type: video?.play_url_list[0] ? 'video/mp4' : undefined,
                     user: {
-                        name: item.user?.info.name,
-                        avatar: item.user?.info.avatar_url,
-                        description: item.user?.info.desc,
+                        name: user?.info.name,
+                        avatar: user?.info.avatar_url,
+                        description: user?.info.desc,
                     },
                 };
             }
@@ -85,18 +86,19 @@ async function handler(ctx) {
             // text w/o title
             case 32: {
                 const enclosure = item.large_image_list?.pop();
+                const user = item.user as UserInfoCell32 | undefined;
                 return {
                     title: item.content?.split('\n', 1)[0],
                     description: item.rich_content,
                     link: `https://www.toutiao.com/w/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),
-                    author: item.user?.name,
+                    author: user?.name,
                     enclosure_url: enclosure?.url,
                     enclosure_type: enclosure?.url ? `image/${new URL(enclosure.url).pathname.split('.').pop()}` : undefined,
                     user: {
-                        name: item.user?.name,
-                        avatar: item.user?.avatar_url,
-                        description: item.user?.desc,
+                        name: user?.name,
+                        avatar: user?.avatar_url,
+                        description: user?.desc,
                     },
                 };
             }

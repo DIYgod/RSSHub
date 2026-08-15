@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,20 +40,20 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = (category ? $('.module-items a') : $('.bdl[data-target="1"]').eq(1).find('a')).toArray().map((item) => {
-        item = $(item);
+    let items = (category ? $('.module-items a') : $('.bdl[data-target="1"]').eq(1).find('a')).toArray().map((item): DataItem => {
+        const $item = $(item);
 
-        const link = item.attr('href');
+        const link = $item.attr('href');
 
         return {
-            title: item.attr('title'),
-            link: `${link.startsWith('http') ? '' : rootUrl}${item.attr('href')}`,
+            title: $item.attr('title')!,
+            link: `${link!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
         };
     });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -62,7 +62,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#Zoom, .mian-cont, .ewb-article-info, #UCAP-CONTENT').html();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8);
                 item.category = content('meta[name="Keywords"]').attr('content')?.split(' ');
 
                 return item;

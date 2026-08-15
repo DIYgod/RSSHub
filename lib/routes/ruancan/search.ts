@@ -1,12 +1,12 @@
 import type { Route } from '@/types';
 
-import fetchFeed from './utils';
+import { fetchFeed } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword?',
     categories: ['new-media'],
     example: '/ruancan/search/Windows',
-    parameters: { keyword: '关键字，默认为空' },
+    parameters: { keyword: '关键字' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '搜索',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     url: 'ruancan.com/',
 };

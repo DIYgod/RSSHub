@@ -1,6 +1,6 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,11 +29,11 @@ async function handler() {
             page: 1,
         },
     });
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('.grid__column')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.news-teaser__title').text(),
@@ -45,9 +45,9 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
+                const $ = load(response);
 
                 const content = $('.newsentry');
 
@@ -58,7 +58,7 @@ async function handler() {
 
                 content.find('.newsentry__date, .newsentry__title, .lazyimage-placeholder, .newsentry__tags, .newsentry__share, .newsentry__comments, .newsentry__write-comment').remove();
 
-                item.description = content.html();
+                item.description = content.html() ?? '';
 
                 return item;
             })

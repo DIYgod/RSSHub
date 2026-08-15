@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -14,7 +14,7 @@ import { renderDescription } from './templates/description';
  *
  * @returns {Array} - An array of objects containing the key-value pairs.
  */
-const parseTree = (tree, result = []) => {
+const parseTree = (tree, result: Array<{ key: any; value: any }> = []) => {
     for (const obj of tree) {
         const { key, value, children } = obj;
         result.push({ key, value });
@@ -217,7 +217,7 @@ async function handler(ctx) {
 
                 item.title = content('div.title h1').text();
                 item.description += renderDescription({
-                    description: content('div.text').html(),
+                    description: content('div.text').html() ?? undefined,
                 });
                 item.author = content('div.source')
                     .text()
@@ -247,7 +247,7 @@ async function handler(ctx) {
         title: `${author}${categories.length === 0 ? '' : ` - ${categories.join(' - ')}`}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

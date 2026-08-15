@@ -29,7 +29,7 @@ export const route: Route = {
 async function handler(ctx) {
     const gistId = ctx.req.param('gistId');
 
-    const headers = { Accept: 'application/vnd.github.v3+json' };
+    const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
     if (config.github && config.github.access_token) {
         headers.Authorization = `Bearer ${config.github.access_token}`;
     }
@@ -50,7 +50,7 @@ async function handler(ctx) {
 
     return {
         allowEmpty: true,
-        title: `${response.owner.login} / ${Object.values(response.files)[0].filename}`,
+        title: `${response.owner.login} / ${Object.values<any>(response.files)[0].filename}`,
         description: response.description,
         image: response.owner.avatar_url,
         link: `${response.html_url}/revisions`,

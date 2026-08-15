@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     };
     if (query) {
         for (const pair of query.split('&')) {
-            const [key, value] = pair.split('=');
+            const [key, value] = pair.split('=', 2);
             if (key) {
                 queries[key] = value;
             }
@@ -82,13 +82,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             let processedItem: DataItem = {
                 title,
-                pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                 link: new URL(linkUrl, baseUrl).href,
                 category: categories,
                 guid,
                 id: guid,
-                updated: updated ? timezone(parseDate(updated), +8) : undefined,
-                language,
+                updated: updated ? timezone(parseDate(updated), 8) : undefined,
+                language: language as Language,
             };
 
             const enclosureUrl: string | undefined = new URL(`download${item.attachPath}`, staticBaseUrl).href;
@@ -117,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('a.navbar-brand img').attr('src'),
         author: $('meta[name="author"]').attr('content'),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

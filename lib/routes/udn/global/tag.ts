@@ -46,7 +46,7 @@ async function handler(ctx) {
     let items = response.data.lists.map((item) => ({
         title: item.title,
         author: item.author?.title,
-        pubDate: timezone(parseDate(item.time?.dateTime), +8),
+        pubDate: timezone(parseDate(item.time?.dateTime), 8),
         link: item.url,
         category: item.hash?.map((h) => h.title),
     }));

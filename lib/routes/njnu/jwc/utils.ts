@@ -12,7 +12,7 @@ async function loadContent(link) {
     const $ = load(response.data);
     const dateStr = $('span+ span').text();
     // 解析日期
-    const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD', 'zh-cn'), +8);
+    const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD', 'zh-cn'), 8);
     // 提取内容
     const description = $('form > div').html();
 
@@ -31,7 +31,7 @@ const ProcessFeed = (list, caches) => {
 
             const $title = $('a');
             // 还原相对链接为绝对链接
-            const itemUrl = new URL($title.attr('href'), host);
+            const itemUrl = new URL($title.attr('href')!, host);
 
             // 列表上提取到的信息
             const single = {

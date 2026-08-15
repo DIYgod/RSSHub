@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,19 +42,19 @@ async function handler(ctx) {
     const newsItem = $('.magazine-model-content-new li')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('.magazine-text-title a').text().trim(),
-                link: new URL(item.find('.magazine-model-btn a').first().attr('href'), utils.host).href,
+                title: $item.find('.magazine-text-title a').text().trim(),
+                link: new URL($item.find('.magazine-model-btn a').first().attr('href')!, utils.host).href,
                 pubDate: timezone(
                     parseDate(
-                        item
+                        $item
                             .find('.magazine-text-atten')
                             .text()
-                            .match(/\d{4}-\d{2}-\d{2}/)[0],
-                        8
-                    )
+                            .match(/\d{4}-\d{2}-\d{2}/)![0]
+                    ),
+                    8
                 ),
             };
         });

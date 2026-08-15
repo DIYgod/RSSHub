@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,8 +9,11 @@ const baseUrl = 'http://www.dyyy.xjtu.edu.cn';
 
 export const route: Route = {
     path: '/dyyy/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/xjtu/dyyy/index/xsxx',
+    parameters: { path: '栏目路径，支持多级，不包括末尾的`.htm`' },
+    name: '第一附属医院新闻',
+    maintainers: ['TonyRL'],
     handler,
 };
 
@@ -22,24 +25,24 @@ async function handler(ctx) {
 
     const items = $('.list_right_con div li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), response.url).href,
-                pubDate: parseDate(item.find('.data').text()),
+                title: $item.find('a').attr('title')!,
+                link: new URL($item.find('a').attr('href')!, response.url).href,
+                pubDate: parseDate($item.find('.data').text()),
             };
         });
 
     await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 item.author = $('.content_source')
                     .text()
-                    .match(/责任编辑：(.*)\(点击/)[1];
+                    .match(/责任编辑：(.*)\(点击/)![1];
                 item.description = $('.content_con').html();
                 return item;
             })

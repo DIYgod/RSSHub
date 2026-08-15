@@ -34,7 +34,7 @@ const handler = async (ctx) => {
                     const authors = $(item).find('.entryAuthor.all').text();
                     const img = $(item).find('img').attr('src');
                     const link = $(item).find('.ref.nowrap').attr('href');
-                    const doi = link.replace('/doi/full/', '');
+                    const doi = link!.replace('/doi/full/', '');
                     const description = renderDesc(title, authors, doi, img);
                     return {
                         title,
@@ -61,4 +61,5 @@ const handler = async (ctx) => {
         allowEmpty: true,
     };
 };
+// TODO: missing route export
 export default handler;

@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -172,7 +173,7 @@ export async function postsToItems(posts: GhostPost[]) {
 
             // For paid articles with truncated content, scrape full text if cookie available
             if (!post.access && memberCookie) {
-                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire)) as string | null;
+                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie) as Promise<string>, config.cache.contentExpire)) as string | null;
                 if (fullHtml) {
                     description = cleanGhostHtml(fullHtml);
                 }
@@ -303,7 +304,7 @@ export const processFeed = async (model: string, ctx: Context) => {
         title: `端傳媒 - ${displayName}`,
         link: listLink,
         icon: 'https://theinitium.com/favicon.ico',
-        language: language === 'zh-hans' ? 'zh-CN' : 'zh-TW',
+        language: (language === 'zh-hans' ? 'zh-CN' : 'zh-TW') as Language,
         item: items,
     };
 };

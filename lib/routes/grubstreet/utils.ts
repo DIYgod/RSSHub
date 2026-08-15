@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -44,16 +45,13 @@ function ProcessFeed(list, caches) {
                     }
                 }
 
-                const single = {
+                const single: DataItem = {
                     title: item.plaintextPrimaryHeadline,
                     link: itemUrl,
                     guid: itemUrl,
                     pubDate: item.date,
+                    author: bylineString,
                 };
-
-                if (bylineString) {
-                    single.author = bylineString;
-                }
 
                 const { description } = await loadContent(itemUrl);
                 single.description = description;

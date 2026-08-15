@@ -71,10 +71,9 @@ async function handler(ctx) {
 
                 const infoDiv = content('div.art-tit.cont-tit');
                 const dateText = infoDiv.find('p span:nth-child(1)').text().replace('发布时间：', '');
-                const pubDate = timezone(parseDate(dateText), +8);
+                const pubDate = timezone(parseDate(dateText), 8);
 
                 const description = content('div.art-body.wow.fadeInUp')
-                    .clone() // 创建副本防止修改原始内容
                     .find('ul li') // 定位到附件列表项
                     .each((_, el) => {
                         const $li = $(el);

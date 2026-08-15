@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -31,25 +31,25 @@ export const route: Route = {
         const response = await ofetch('https://www.chnmuseum.cn/zx/xingnew/');
         const $ = load(response);
 
-        const list = $('ul.cj_xushuliebao_list li')
+        const list = $('ul.xly_list_ts li')
             .toArray()
-            .map((item) => {
-                item = $(item);
-                const a = item.find('a');
-                const dateText = item.find('span.date').text();
+            .map((item): DataItem => {
+                const $item = $(item);
+                const a = $item.find('a.titles');
+                const dateText = $item.find('.times span.sp').text();
 
                 return {
                     title: a.attr('title') || a.text(),
-                    link: new URL(a.attr('href'), 'https://www.chnmuseum.cn/zx/xingnew/').href,
-                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), +8),
+                    link: new URL(a.attr('href')!, 'https://www.chnmuseum.cn/zx/xingnew/').href,
+                    pubDate: timezone(parseDate(dateText, 'YYYY/MM/DD'), 8),
                     // description: a.attr('title') || a.text(),
                 };
             });
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
 
                     // 选择类名为“comment-body”的第一个元素

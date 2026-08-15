@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -33,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             link: linkUrl,
             category: categories,
             updated: updated ? parseDate(updated, 'X') : undefined,
-            language,
+            language: language as Language,
         };
 
         return processedItem;
@@ -46,7 +46,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author: $('title').text(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

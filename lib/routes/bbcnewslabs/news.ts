@@ -40,12 +40,12 @@ async function handler() {
     const items = $('a[href^="/news/20"]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h3[class^="thumbnail-module--thumbnailTitle--"]').text(),
-                description: item.find('span[class^="thumbnail-module--thumbnailDescription--"]').text(),
-                pubDate: parseDate(item.find('span[class^="thumbnail-module--thumbnailType--"]').text()),
-                link: rootUrl + item.attr('href'),
+                title: $item.find('h3[class^="thumbnail-module--thumbnailTitle--"]').text(),
+                description: $item.find('span[class^="thumbnail-module--thumbnailDescription--"]').text(),
+                pubDate: parseDate($item.find('span[class^="thumbnail-module--thumbnailType--"]').text()),
+                link: rootUrl + $item.attr('href'),
             };
         });
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -34,7 +34,7 @@ async function handler(ctx) {
         .find('li')
         .find('a')
         .toArray()
-        .filter((item) => $(item).attr('href').startsWith('/novel/'))
+        .filter((item) => $(item).attr('href')!.startsWith('/novel/'))
         .map((item) => ({
             title: $(item).text(),
             author,
@@ -47,7 +47,7 @@ async function handler(ctx) {
         title: `哩哔轻小说 - ${title}`,
         link: `https://www.linovelib.com/novel/${ctx.req.param('id')}/catalog`,
         description: title,
-        language: 'zh',
+        language: 'zh' as Language,
         item: items,
     };
 }

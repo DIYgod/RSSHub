@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,24 +38,24 @@ async function handler(ctx) {
 
     const list = $('.article-list a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: `${baseUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.time').text(), 'YYYY.MM.DD'),
+                title: $item.attr('title')!,
+                link: `${baseUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.time').text(), 'YYYY.MM.DD'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.description = $('.article-main').html();
                 item.author = $('.info')
                     .text()
-                    .match(/作者：(.*?)来源/)[1]
+                    .match(/作者：(.*?)来源/)![1]
                     .trim();
                 return item;
             })

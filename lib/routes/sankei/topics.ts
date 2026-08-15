@@ -48,7 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const detail = await got(link);
                 const $ = load(detail.body);
                 $('.inline-gptAd, .figure_image_sizer').remove();
-                const articleHTML = $('div.article-body').html() || '';
+                const articleHTML = $('div.article-body').html();
 
                 return {
                     title,

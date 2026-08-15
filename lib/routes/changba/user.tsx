@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -49,7 +49,7 @@ async function handler(ctx) {
         list.map((item) => {
             const $ = load(item);
             const link = $('a').attr('href');
-            return cache.tryGet(link, async () => {
+            return cache.tryGet<any>(link!, async () => {
                 const result = await got({
                     method: 'get',
                     url: link,
@@ -76,7 +76,7 @@ async function handler(ctx) {
                 }
                 const mp3 = `https://upscuw.changba.com/${workid}.mp3`;
                 const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
-                const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(', 2)[1];
+                const itunes_item_image = $('div.work-cover').attr('style')!.replace(')', '').split('url(', 2)[1];
                 return {
                     title: $('.work-title').text(),
                     description,
@@ -96,7 +96,7 @@ async function handler(ctx) {
         title: author + ' - 唱吧',
         link: url,
         description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
-        item: items,
+        item: items as DataItem[],
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',

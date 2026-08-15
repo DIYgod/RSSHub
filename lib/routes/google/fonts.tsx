@@ -85,11 +85,11 @@ const renderDescription = (item): string =>
             <br />
             <text>Last modified: {item.lastModified}</text>
             <br />
-            <Strong>File:</Strong>
+            <strong>File:</strong>
             <br />
             {Object.entries(item.files ?? {}).map(([key, value]) => (
                 <>
-                    <a href={value}>{key}</a>&nbsp;&nbsp;
+                    <a href={value as string}>{key}</a>&nbsp;&nbsp;
                 </>
             ))}
         </>

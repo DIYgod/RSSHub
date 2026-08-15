@@ -55,6 +55,9 @@ const createDispatcherForProxy = (uri: string, proxyObj: Record<string, any>): P
             },
         });
     }
+    if (uri.startsWith('socks')) {
+        return new ProxyAgent({ uri });
+    }
     return null;
 };
 
@@ -69,7 +72,7 @@ if (proxyIsPAC) {
     const currentProxy = multiProxy.getNextProxy();
     if (currentProxy) {
         proxyUri = currentProxy.uri;
-        proxyUrlHandler = currentProxy.urlHandler;
+        proxyUrlHandler = currentProxy.urlHandler ?? null;
     }
     logger.info(`Multi-proxy initialized with ${config.proxyUris.length} proxies`);
 } else {

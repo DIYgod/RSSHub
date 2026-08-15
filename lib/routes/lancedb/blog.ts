@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const description = $el.find('p.post-description').text().trim();
             const meta = $el.find('.post-meta').text().trim().replaceAll(/\s+/g, ' ');
-            const [cat, author, dateStr] = meta.split(' / ');
+            const [cat, author, dateStr] = meta.split(' / ', 3);
             const pubDate = dateStr ? parseDate(dateStr) : undefined;
 
             return {

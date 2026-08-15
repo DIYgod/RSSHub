@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -28,9 +28,9 @@ async function handler(ctx) {
     const $ = load(response._data);
     const items = $('div.list div.list div.node p')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             title: $(item).find('b').text(),
-            link: new URL($(item).find('a').attr('href'), baseUrl).href,
+            link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             pubDate: parseDate($(item).next().next().next().find('span').first().text()),
         }))
         .filter((item) => item.title.length !== 0);
@@ -40,7 +40,7 @@ async function handler(ctx) {
         link: response.url,
         item: await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     item.description = await getArticleDesc(item.link);
                     return item;
                 })

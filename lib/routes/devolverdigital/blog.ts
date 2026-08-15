@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -32,7 +32,7 @@ async function handler() {
 
     return {
         title: 'DevolverDigital Blog',
-        language: 'en-us',
+        language: 'en-us' as Language,
         link: 'https://www.devolverdigital.com/blog',
         item: items,
     };

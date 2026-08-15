@@ -31,7 +31,7 @@ async function handler(ctx) {
     const { tagId, lang = 'en' } = ctx.req.param();
     const { limit = 20 } = ctx.req.query();
 
-    const buildId = await getBuildId(cache.tryGet);
+    const buildId = await getBuildId();
     const tagInfo = await cache.tryGet(`followin:tag:${tagId}:${lang}`, async () => {
         const { data: response } = await got(`${baseUrl}/_next/data/${buildId}/${lang}/tag/${tagId}.json`);
         const { queries } = response.pageProps.dehydratedState;
@@ -39,7 +39,7 @@ async function handler(ctx) {
         return tagInfo;
     });
 
-    const gToken = await getGToken(cache.tryGet);
+    const gToken = await getGToken();
     const bParam = getBParam(lang);
     const { data: tagResponse } = await got.post(`${apiUrl}/feed/list/tag`, {
         headers: {
@@ -57,7 +57,7 @@ async function handler(ctx) {
     }
 
     const list = parseList(tagResponse.data.list.slice(0, limit), lang, buildId);
-    const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseItem(item)));
 
     return {
         title: `${tagInfo.name} - Followin`,

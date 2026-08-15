@@ -45,7 +45,7 @@ async function handler() {
     const list = response.data.datas.datas.map((item) => ({
         title: item['1'].value,
         link: item.url.startsWith('http') ? item.url : `${baseUrl}/engine2/d/${item.id}/${item.engineInstanceId}/0`,
-        pubDate: timezone(parseDate(item['6'].value), +8),
+        pubDate: timezone(parseDate(item['6'].value), 8),
     }));
 
     const items = await Promise.all(

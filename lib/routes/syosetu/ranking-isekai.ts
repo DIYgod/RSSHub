@@ -1,6 +1,5 @@
 import type { SearchParams } from 'narou';
 import { BigGenre, NarouNovelFetch, SearchBuilder } from 'narou';
-import type { Join } from 'narou/util/type';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem } from '@/types';
@@ -8,8 +7,10 @@ import type { Data, DataItem } from '@/types';
 import { renderDescription } from './templates/description';
 import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, periodToPointField, RankingPeriod } from './types/ranking';
 
+type Join<T extends string | number> = `${T}-${T}` | `${T}`;
+
 export function parseIsekaiRankingType(type: string): { period: RankingPeriod; category: IsekaiCategory; novelType: NovelType } {
-    const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_');
+    const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_', 3);
 
     const period = periodStr as RankingPeriod;
     const category = categoryStr as IsekaiCategory;
@@ -44,7 +45,7 @@ function getIsekaiSearchParams(period, category, novelType, limit): SearchParams
             searchParams.biggenre = BigGenre.Fantasy;
             break;
         case IsekaiCategory.OTHER:
-            searchParams.biggenre = `${BigGenre.Bungei}-${BigGenre.Sf}-${BigGenre.Sonota}` as Join<BigGenre>;
+            searchParams.biggenre = `${BigGenre.Bungei}-${BigGenre.Sf}-${BigGenre.Sonota}` as unknown as Join<BigGenre>;
             break;
         default:
             throw new InvalidParameterError(`Invalid Isekai category: ${category}`);
@@ -78,7 +79,7 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
             link: `https://ncode.syosetu.com/${String(novel.ncode).toLowerCase()}`,
             description: renderDescription({ novel }),
             author: novel.writer,
-            category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
+            category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
         }));
 
     return {

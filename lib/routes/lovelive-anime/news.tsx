@@ -82,7 +82,7 @@ async function handler(ctx) {
         description: renderDescription({
             imglink: 'https://www.lovelive-anime.jp' + item.thumbnail,
         }),
-        pubDate: timezone(parseDate(item.dspdate), +9),
+        pubDate: timezone(parseDate(item.dspdate), 9),
         category: item.categories.subcategory.map((category) => category.name),
     }));
 

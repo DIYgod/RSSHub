@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -60,15 +60,15 @@ async function handler(ctx) {
     // Otherwise, if only a specific TV show or movie ID is provided,
     // add that item alone to the "to be processed" array.
 
-    let items = isCategory
-        ? await getItems(cache.tryGet, currentUrl, id, 'div.rowMod', 'ul.slides li a')
+    let items: any[] = isCategory
+        ? await getItems(currentUrl, id, 'div.rowMod', 'ul.slides li a')
         : [
               {
                   link: currentUrl,
               },
           ];
 
-    items = await Promise.all(items.slice(0, limit).map((item) => getItemInfo(cache.tryGet, item.link)));
+    items = await Promise.all(items.slice(0, limit).map((item) => getItemInfo(item.link)));
 
     // If the link of the entry is "#",
     // it indicates that there are currently no relevant resources available for that specific item.
@@ -86,7 +86,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('img.logo-img').prop('src'),
         icon,
         logo: icon,

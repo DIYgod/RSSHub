@@ -224,7 +224,7 @@ async function handler(ctx: Context) {
 
     const uid = ctx.req.param('uid');
     const embed = !ctx.req.param('embed');
-    const data = await getVideoList(uid);
+    const data = await getVideoList(uid!);
     const videos = data.list?.vlist ?? [];
 
     let name = videos[0]?.author || uid;
@@ -233,7 +233,7 @@ async function handler(ctx: Context) {
     try {
         const usernameAndFace = await cache.getUsernameAndFaceFromUID(uid);
         name = usernameAndFace[0] || name;
-        face = usernameAndFace[1];
+        face = usernameAndFace[1] ?? undefined;
     } catch (error) {
         logger.warn(`[bilibili/video] failed to fetch user profile: ${error}`);
     }
@@ -250,7 +250,7 @@ async function handler(ctx: Context) {
                 const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                 return {
                     title: item.title,
-                    description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
+                    description: utils.renderUGCDescription(embed, item.pic, item.description, String(item.aid), undefined, item.bvid),
                     pubDate: new Date(item.created * 1000).toUTCString(),
                     link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                     author: name,

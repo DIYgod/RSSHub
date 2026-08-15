@@ -45,10 +45,10 @@ async function handler(ctx) {
                         ? await cache.tryGet(art_url, async () => {
                               const { data: res } = await got(art_url);
                               const content = load(res);
-                              return content('#js-article').html();
+                              return content('#js-article').html() ?? '';
                           })
                         : item.desc,
-                pubDate: timezone(parseDate(item.date), +8),
+                pubDate: timezone(parseDate(item.date), 8),
                 link: art_url,
                 author: item.author.nickname,
             };

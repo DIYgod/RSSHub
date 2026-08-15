@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -78,18 +78,18 @@ async function handler(ctx) {
         .find('a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 80)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.attr('href'), currentUrl).href,
+                title: $item.text(),
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -100,7 +100,7 @@ async function handler(ctx) {
                 content('#qw').remove();
 
                 item.description = content('.cont-b, content').html();
-                item.pubDate = timezone(parseDate(content('.time').text() || content('.today').text().split()[0], ['YYYY-MM-DD HH:mm', 'YYYY年MM月DD日']), +8);
+                item.pubDate = timezone(parseDate(content('.time').text() || content('.today').text(), ['YYYY-MM-DD HH:mm', 'YYYY年MM月DD日']), 8);
 
                 return item;
             })

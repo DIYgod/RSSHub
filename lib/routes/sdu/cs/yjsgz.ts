@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,20 +48,20 @@ async function handler(ctx) {
 
     let item = $('.ss li')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('a');
             return {
                 title: a.text().trim(),
-                link: a.attr('href').startsWith('info/') ? host + a.attr('href') : a.attr('href'),
-                pubDate: parseDate(e.find('span').text().trim(), 'YYYY-MM-DD'),
+                link: a.attr('href')!.startsWith('info/') ? host + a.attr('href') : a.attr('href'),
+                pubDate: parseDate($e.find('span').text().trim(), 'YYYY-MM-DD'),
             };
         });
 
     item = await Promise.all(
         item.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const hostname = new URL(item.link).hostname;
+            cache.tryGet(item.link!, async () => {
+                const hostname = new URL(item.link!).hostname;
                 if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
                 }

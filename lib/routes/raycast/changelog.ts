@@ -17,8 +17,8 @@ const handler: Route['handler'] = async () => {
                 const $ = load(item);
 
                 const version = $('span[id]').attr('id');
-                const html = $('div.markdown').html() ?? '';
-                const date = $('span[class^=ChangelogEntry_changelogDate]').text().trim();
+                const html = $('div.markdown').html();
+                const date = $('span[class^=ChangelogEntry_changelogDate]').text();
 
                 return {
                     title: `Version ${version}`,
@@ -32,7 +32,7 @@ const handler: Route['handler'] = async () => {
     return {
         title: 'Raycast Changelog',
         link: 'https://www.raycast.com/changelog',
-        language: 'en-US',
+        language: 'en-us',
         item,
     };
 };

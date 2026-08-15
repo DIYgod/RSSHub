@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,46 +22,46 @@ export const handler = async (ctx) => {
     let items = $('ul.article li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             const title = a.contents().last().text();
-            const pubDate = item
+            const pubDate = $item
                 .find('p span')
                 .text()
                 .match(/(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
 
-            item.find('p span').remove();
+            $item.find('p span').remove();
 
             const description = renderDescription({
-                intro: item.find('p').text(),
+                intro: $item.find('p').text(),
             });
 
             return {
                 title,
                 description,
-                pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
-                    text: item.find('p').text(),
+                    text: $item.find('p').text(),
                 },
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
                 const title = $$('h1').text();
                 const description = renderDescription({
-                    intro: $$('div.summary').html(),
-                    description: $$('div.detail').html(),
+                    intro: $$('div.summary').html() ?? undefined,
+                    description: $$('div.detail').html() ?? undefined,
                 });
                 const pubDate = $$('div.author')
                     .text()
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate;
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate;
                 item.author = $$('div.author a').text();
                 item.content = {
                     html: description,
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title,
@@ -121,8 +121,8 @@ export const route: Route = {
         {
             source: ['www.eshukan.com/academic/index.aspx'],
             target: (_, url) => {
-                url = new URL(url);
-                const id = url.searchParams.get('id');
+                const { searchParams } = new URL(url);
+                const id = searchParams.get('id');
 
                 return `/academic${id ? `/${id}` : ''}`;
             },

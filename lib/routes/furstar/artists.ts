@@ -46,8 +46,8 @@ async function handler(ctx) {
         description: 'Furstar 所有画家列表',
         language: ctx.req.param('lang'),
         item: artists.map((e) => ({
-            title: e.name,
-            author: e.name,
+            title: e.name!,
+            author: e.name ?? undefined,
             description: `<img src="${e.avatar}"/><a href="${base}/${e.link}">${e.name}</a>`,
             pubDate: parseDate(new Date().toISOString()), // No Time for now
             link: `${base}/${e.link}`,

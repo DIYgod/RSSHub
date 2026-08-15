@@ -23,11 +23,7 @@ const isValidHeader = (headers: Record<string, string>, browser: string): boolea
         }
     }
 
-    if (browser === 'safari' && userAgent.includes('Applebot')) {
-        return false;
-    }
-
-    return true;
+    return !(browser === 'safari' && userAgent.includes('Applebot'));
 };
 
 /**

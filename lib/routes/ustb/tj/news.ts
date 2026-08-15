@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -27,7 +28,7 @@ function getNews(data) {
         .toArray()
         .map((elem) => ({
             link: baseUrl + elem.attribs.href,
-            title: elem.children[0].data,
+            title: (elem.children[0] as Text).data,
             pubDate: timezone(parseDate(elem.attribs.href.split('/', 4)[3].split('.', 1)[0].slice(0, 14), 'YYYYMMDDHHmmss'), 8),
         }));
 }
@@ -62,7 +63,7 @@ async function handler(ctx) {
     const responseData = {
         title: '北京科技大学天津学院新闻动态',
         link: baseUrl,
-        item: null,
+        item: undefined as any[] | undefined,
     };
 
     if (type === 'all') {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,14 +21,14 @@ export const handler = async (ctx) => {
     let items = $('ul.newsList li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('t1').text(),
-                pubDate: parseDate(item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD']),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
-                language,
+                title: $item.find('t1').text(),
+                pubDate: parseDate($item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD']),
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
+                language: language as Language,
             };
         });
 
@@ -50,14 +50,14 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.details_con').text(),
                 };
-                item.language = language;
+                item.language = language as Language;
 
                 return item;
             })
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text()} - ${$('div.tab a.current').text()}`,
@@ -67,7 +67,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="keywords"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

@@ -39,8 +39,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const suffix = map.get(type).suffix;
-    const getDescription = Boolean(ctx.req.param('getDescription')) || false;
+    const suffix = map.get(type)!.suffix;
+    const getDescription = Boolean(ctx.req.param('getDescription'));
     const link = new URL(suffix, host).href;
     const cookie = await getCookie(host);
     const gotConfig = {
@@ -67,7 +67,7 @@ async function handler(ctx) {
         list.map(async (info) => {
             const title = info.title || 'tzgg';
             const date = info.date;
-            const itemUrl = new URL(info.link, host).href;
+            const itemUrl = new URL(info.link!, host).href;
             let description = title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
 
             if (getDescription) {
@@ -79,6 +79,7 @@ async function handler(ctx) {
                         const $ = load(response.data);
                         return $('.wp_articlecontent').html() + '<br><hr /><a href="' + itemUrl + '" target="_blank">查看原文</a>';
                     }
+                    return '';
                 });
             }
 
@@ -92,7 +93,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link,
         description: '南京航空航天大学研究生院RSS',
         item: out,

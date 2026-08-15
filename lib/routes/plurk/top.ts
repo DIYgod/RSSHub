@@ -1,7 +1,6 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { baseUrl, getPlurk } from './utils';
@@ -48,7 +47,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await Promise.all(apiResponse.stats.map((item) => item[1]).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, item.owner.display_name, cache.tryGet)));
+    const items = await Promise.all(apiResponse.stats.map((item) => item[1]).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, item.owner.display_name)));
 
     return {
         title: 'Top Plurk - Plurk',

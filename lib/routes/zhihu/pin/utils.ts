@@ -54,7 +54,7 @@ const generateData = (data) =>
             const t = target.origin_pin;
             const origin_link = `<a href="https://www.zhihu.com/pin/${t.id}">转发原文</a>：`;
             const origin_description = generateDescription(t, `<a href="https://www.zhihu.com${t.author.url}">${t.author.name}</a>：`);
-            description = `${description} ${origin_link} ${origin_description}`;
+            description += ` ${origin_link} ${origin_description}`;
         }
         return {
             title,

@@ -31,7 +31,6 @@ async function getCookie() {
         const set_cookie = indexResponse.headers['set-cookie'];
         if (set_cookie) {
             for (const e of set_cookie) {
-                // eslint-disable-next-line unicorn/prefer-switch
                 switch (0) {
                     case e.indexOf('WWWID'):
                         wwwid = e.split(';', 1)[0];
@@ -60,12 +59,12 @@ async function getCookie() {
             }
         }
 
-        cache.set(wwwid_key, wwwid, 600);
-        cache.set(csrf_key, csrf, 600);
-        cache.set(globacsrftoken_key, globacsrftoken, 600);
-        cache.set(dasddocTitl_key, dasddocTitl, 600);
-        cache.set(dasddocReferrer_key, dasddocReferrer, 600);
-        cache.set(dasddocHref_key, dasddocHref, 600);
+        cache.set(wwwid_key, wwwid ?? '', 600);
+        cache.set(csrf_key, csrf ?? '', 600);
+        cache.set(globacsrftoken_key, globacsrftoken ?? '', 600);
+        cache.set(dasddocTitl_key, dasddocTitl ?? '', 600);
+        cache.set(dasddocReferrer_key, dasddocReferrer ?? '', 600);
+        cache.set(dasddocHref_key, dasddocHref ?? '', 600);
         // We have acquired new cookie. It may due to cache timeout.
         // Force update counter and don't wait it finished.
         shouldUpdateCookie(true);
@@ -131,25 +130,25 @@ function getCompanyList() {
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, 0);
+        cache.set(query_count, 0 as unknown as string);
     } else {
-        const count = cache.get(query_count);
+        const count = cache.get(query_count) as unknown as number | null;
         if (count) {
             if (count > max_query_count) {
-                cache.set(query_count, 0);
+                cache.set(query_count, 0 as unknown as string);
                 clearCookie();
             } else {
-                cache.set(query_count, count + 1);
+                cache.set(query_count, (count + 1) as unknown as string);
             }
         } else {
-            cache.set(query_count, 1);
+            cache.set(query_count, 1 as unknown as string);
         }
     }
 }
 
 function clearCookie() {
-    cache.set(wwwid_key, null);
-    cache.set(csrf_key, null);
+    cache.set(wwwid_key, null as unknown as string);
+    cache.set(csrf_key, null as unknown as string);
 }
 
 export default {
@@ -219,9 +218,9 @@ export default {
 
     getQuery: async (number, id, phone) => {
         const query_key = `kuaidi100-query-${number}-${id}`;
-        let query = await cache.get(query_key);
+        let query: any = await cache.get(query_key);
         // 组装日期与单号 日期为提前两个月
-        const timestamp = Number.parseInt(Date.now() / 1000);
+        const timestamp = Number.parseInt(String(Date.now() / 1000));
         const lastTowMonth = Date.now() - 60 * 60 * 24 * 60 * 1000;
         const dateString = new Date(lastTowMonth).toLocaleDateString('ZH').split('/').join('');
         const queryMeta = encodeURIComponent(
@@ -257,12 +256,12 @@ export default {
                 if (query.ischeck === '0') {
                     // Not yet complete, don't cache for now.
                     // To avoid frquent link test when add source, add 180s cache
-                    cache.set(query_key, query, 180);
+                    cache.set(query_key, query ?? '', 180);
                 } else {
-                    cache.set(query_key, query); // Finished, cache id
+                    cache.set(query_key, query ?? ''); // Finished, cache id
                 }
             } else {
-                cache.set(query_key, query); // Error, cache as well
+                cache.set(query_key, query ?? ''); // Error, cache as well
                 throw new Error(`[${query.status}]信息有误，请重新检查后订阅：${query.message}`);
             }
         }

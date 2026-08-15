@@ -45,23 +45,23 @@ async function handler(ctx) {
     const newsitem = $('.newsitem')
         .toArray()
         .map((element) => {
-            element = $(element);
-            const a = element.find('h3 a');
-            const span = element.find('.space-right-m30');
+            const $element = $(element);
+            const a = $element.find('h3 a');
+            const span = $element.find('.space-right-m30');
             const author = span.text().replace('来源：', '').trim();
 
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), utils.host).href,
+                link: new URL(a.attr('href')!, utils.host).href,
                 description: renderToString(
                     <>
-                        {element.find('img').attr('src') ? (
+                        {$element.find('img').attr('src') ? (
                             <>
-                                <img src={element.find('img').attr('src').split('?', 1)[0]} />
+                                <img src={$element.find('img').attr('src')!.split('?', 1)[0]} />
                                 <br />
                             </>
                         ) : null}
-                        {element.find('.thsis-div a').text().trim() ? <p>{element.find('.thsis-div a').text().trim()}</p> : null}
+                        {$element.find('.thsis-div a').text().trim() ? <p>{$element.find('.thsis-div a').text().trim()}</p> : null}
                     </>
                 ),
                 author,
@@ -82,7 +82,7 @@ async function handler(ctx) {
                 const description = $('.newscontent');
                 description.find('.detitemtit, .detposttiau').remove();
 
-                item.description = description.html();
+                item.description = description.html() ?? '';
 
                 return item;
             })

@@ -25,7 +25,7 @@ async function handler(ctx) {
     const queries: Record<string, string> = {};
     if (query) {
         for (const pair of query.split('&')) {
-            const [key, value] = pair.split('=');
+            const [key, value] = pair.split('=', 2);
             if (key) {
                 queries[key] = value;
             }

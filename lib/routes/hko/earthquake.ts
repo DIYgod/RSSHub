@@ -34,17 +34,17 @@ async function handler() {
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
         .map((item) => {
-            item = $(item);
-            const degree = item.find('Mag').text();
-            const city = item.find('City').text();
-            const citystring = item.find('citystring').text();
-            const hktDate = item.find('HKTDate').text();
-            const hktTime = item.find('HKTTime').text();
-            const latAndLon = '經緯:[' + item.find('Lat').text() + ',' + item.find('Lon').text() + ']';
+            const $item = $(item);
+            const degree = $item.find('Mag').text();
+            const city = $item.find('City').text();
+            const citystring = $item.find('citystring').text();
+            const hktDate = $item.find('HKTDate').text();
+            const hktTime = $item.find('HKTTime').text();
+            const latAndLon = '經緯:[' + $item.find('Lat').text() + ',' + $item.find('Lon').text() + ']';
             return {
                 title: `[震級:${degree}] [地點:${city}]`,
                 description: `${citystring}, ${latAndLon}`,
-                pubDate: timezone(parseDate(hktDate + hktTime, 'YYYYMMDDHHmm'), +8),
+                pubDate: timezone(parseDate(hktDate + hktTime, 'YYYYMMDDHHmm'), 8),
             };
         });
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,7 +45,7 @@ export const route: Route = {
         const list = $('#wp_news_w49 table tr')
             .slice(1) // 跳过表头
             .toArray()
-            .map((tr) => {
+            .map((tr): DataItem | null => {
                 const $tr = $(tr);
                 const cells = $tr.find('td');
 
@@ -73,7 +73,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: timezone(parseDate(dateStr), +8),
+                    pubDate: timezone(parseDate(dateStr), 8),
                     author: publisher,
                 };
             })
@@ -83,7 +83,7 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) =>
                 item
-                    ? cache.tryGet(item.link, async () => {
+                    ? cache.tryGet(item.link!, async () => {
                           try {
                               const { data: response } = await got(item.link);
                               const $ = load(response);
@@ -91,7 +91,7 @@ export const route: Route = {
                               // 优化内容选择器逻辑，避免重复选择
                               let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
 
-                              description = description || item.title;
+                              description ||= item.title;
                               item.description = description;
                           } catch {
                               // 如果获取详细内容失败，返回基本信息
@@ -109,7 +109,7 @@ export const route: Route = {
             // 源链接
             link: `${baseUrl}/${type}/list.htm`,
             // 源文章
-            item: items,
+            item: items as DataItem[],
         };
     },
 };

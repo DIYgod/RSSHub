@@ -10,14 +10,23 @@ import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/journal/:id',
+    categories: ['journal'],
+    example: '/acs/journal/jacsat',
+    parameters: { id: 'Journal id, can be found in URL' },
+    features: {
+        supportScihub: true,
+    },
     radar: [
         {
             source: ['pubs.acs.org/journal/:id', 'pubs.acs.org/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Journal',
     maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+See [Browse Content](https://pubs.acs.org)
+:::`,
 };
 
 async function handler(ctx) {
@@ -42,33 +51,33 @@ async function handler(ctx) {
             });
             await page.waitForSelector('.toc');
 
-            const html = await page.evaluate(() => document.documentElement.innerHTML);
+            const html = await page.evaluate(() => document.documentElement.getHTML());
             await page.close();
 
             const $ = load(html);
 
-            title = $('meta[property="og:title"]').attr('content');
+            title = $('meta[property="og:title"]').attr('content')!;
 
             return $('.issue-item')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
 
-                    const a = item.find('.issue-item_title a');
-                    const doi = item.find('input[name="doi"]').attr('value');
+                    const a = $item.find('.issue-item_title a');
+                    const doi = $item.find('input[name="doi"]').attr('value');
 
                     return {
                         doi,
                         guid: doi,
                         title: a.text(),
                         link: `${rootUrl}${a.attr('href')}`,
-                        pubDate: parseDate(item.find('.pub-date-value').text(), 'MMMM D, YYYY'),
-                        author: item
+                        pubDate: parseDate($item.find('.pub-date-value').text(), 'MMMM D, YYYY'),
+                        author: $item
                             .find('.issue-item_loa li')
                             .toArray()
                             .map((a) => $(a).text())
                             .join(', '),
-                        description: renderDescription(item.find('.issue-item_img').html(), item.find('.hlFld-Abstract').html()),
+                        description: renderDescription($item.find('.issue-item_img').html(), $item.find('.hlFld-Abstract').html()),
                     };
                 });
         },

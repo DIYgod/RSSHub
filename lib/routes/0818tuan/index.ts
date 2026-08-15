@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,25 +37,25 @@ async function handler(ctx) {
 
     const list = $(listId === '3' ? '.col-xs-12 .thumbnail > a' : '.col-md-8 .list-group > a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: item.attr('href').startsWith('http') ? item.attr('href') : `${baseUrl}${item.attr('href')}`,
+                title: $item.attr('title')!,
+                link: $item.attr('href')!.startsWith('http') ? $item.attr('href') : `${baseUrl}${$item.attr('href')}`,
             };
         })
-        .filter((i) => !i.link.includes('m.0818tuan.com/tb1111.php'));
+        .filter((i) => !i.link!.includes('m.0818tuan.com/tb1111.php') && !i.link!.includes('www.0818tuan.com/pdd/zudui.php'));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 $('.pageLink, .alert, p[style="margin:15px;"]').remove();
 
                 item.description = $('.post-content').html();
-                item.pubDate = timezone(parseDate($('.panel-body > .text-center').text().replace('时间:', ''), 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate($('.panel-body > .text-center').text().replace('时间:', ''), 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 return item;
             })

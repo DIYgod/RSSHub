@@ -38,11 +38,11 @@ async function handler(ctx) {
     const list = $('.mainRightBox .announcements-title a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.text().trim(),
-                link: baseUrl + item.attr('href').trim(),
+                title: $item.text().trim(),
+                link: baseUrl + $item.attr('href')!.trim(),
             };
         });
 
@@ -53,7 +53,7 @@ async function handler(ctx) {
 
             const data = {
                 title: item.title,
-                description: $('.mainRightBox div:last').html().trim(),
+                description: $('.mainRightBox div:last').html()!.trim(),
                 pubDate: parseDate($('.mainRightBox .gxsj span:first').text() + ' +0800', 'YYYY/M/D H:m:s ZZ'),
                 link: item.link,
                 author: $('.mainRightBox .gxsj span:last').text(),

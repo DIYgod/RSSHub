@@ -67,7 +67,7 @@ async function handler() {
     const list = $('li.clearfix')
         .toArray()
         .map((item) => ({
-            title: $(item).find('span.news_tit.news_tit_s').find('a').attr('title'),
+            title: $(item).find('span.news_tit.news_tit_s').find('a').attr('title')!,
             description: '点击标题，登录查看招聘详情',
             link: $(item).find('span.news_tit.news_tit_s').find('a').attr('href'),
         }));

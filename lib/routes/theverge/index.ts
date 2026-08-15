@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
@@ -9,7 +9,7 @@ import { renderHeader } from './templates/header';
 
 const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
 
-const shouldKeep = (b: any) => !excludeTypes.has(b.__typename.trim());
+const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 
 export const route: Route = {
     path: '/:hub?',
@@ -101,8 +101,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
 
                 const $ = load(response);
 
@@ -148,9 +148,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items,
+        item: items as DataItem[],
     };
 }

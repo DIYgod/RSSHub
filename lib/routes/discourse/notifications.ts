@@ -24,7 +24,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Notifications',
-    maintainers: [],
+    maintainers: ['dzx-dzx'],
     handler,
     description: `::: warning
 If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter to your query to avoid sending too many request.
@@ -32,7 +32,7 @@ If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter t
 };
 
 async function handler(ctx) {
-    const { link, key } = getConfig(ctx);
+    const { link, key } = getConfig(ctx) as unknown as { link: string; key: string };
 
     const response = await ofetch(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } });
     let items = response.notifications.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map((e) => ({

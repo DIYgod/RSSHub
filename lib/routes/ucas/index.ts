@@ -62,12 +62,12 @@ async function handler(ctx) {
 
                 const descDeadline = pageContent('#col1_content > div.content_head > div.top').html();
                 const descContent = pageContent('#col1_content > div.entry').html();
-                const desc = descDeadline + descContent;
+                const desc = descDeadline! + descContent!;
                 return desc;
             });
 
             return {
-                title,
+                title: title!,
                 link,
                 pubDate,
                 description: desc,

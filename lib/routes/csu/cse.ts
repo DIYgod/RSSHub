@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,13 +46,16 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((item) => {
             const $ = load(item);
-            const address = new URL($('a').attr('href'), url).href;
+            const address = new URL($('a').attr('href')!, url).href;
             const title = $('a').text();
             const pubDate = $('span').text();
             return cache.tryGet(address, async () => {
-                const single = await fetch(address);
-                single.title = title;
-                single.pubDate = parseDate(pubDate, 'YYYY/MM/DD');
+                const fetched = await fetch(address);
+                const single: DataItem = {
+                    ...fetched,
+                    title,
+                    pubDate: parseDate(pubDate, 'YYYY/MM/DD'),
+                };
                 return single;
             });
         })

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,7 +52,7 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $('a[title]', elem).text().trim(),
-            pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), +8),
+            pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), 8),
             link: joinUrl('https://www.swpu.edu.cn/dxy/', $('a[title]', elem).attr('href')),
         }));
 
@@ -70,10 +70,12 @@ async function handler(ctx): Promise<Data> {
                         item.author = '电气信息学院';
                         item.description = $('.v_news_content').html()!;
                         for (const elem of $('.v_news_content p')) {
-                            if ($(elem).css('text-align') === 'right') {
-                                item.author = $(elem).text();
-                                break;
+                            if ($(elem).css('text-align') !== 'right') {
+                                continue;
                             }
+
+                            item.author = $(elem).text();
+                            break;
                         }
                     }
                     return item;
@@ -85,7 +87,7 @@ async function handler(ctx): Promise<Data> {
         title: `西南石油大学电气信息学院 ${title}`,
         link: url,
         description: `西南石油大学电气信息学院 ${title}`,
-        language: 'zh-CN',
+        language: 'zh-CN' as Language,
         item: out,
     };
 }

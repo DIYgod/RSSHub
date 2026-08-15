@@ -46,9 +46,9 @@ async function handler(ctx) {
                 title: $(ReportIDname).text(),
                 link: itemUrl,
                 guid: itemUrl,
-                pubDate: timezone(parseDate(time), +8),
+                pubDate: timezone(parseDate(time), 8),
             };
-            const other = await loadContent(String(itemUrl));
+            const other = await loadContent(itemUrl);
             return { ...single, ...other };
         })
     );

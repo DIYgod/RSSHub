@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,29 +42,29 @@ async function handler(ctx) {
     const $api = load(apiResponse);
     const list = $('.element')
         .toArray()
-        .map((item) => {
-            item = $api(item);
-            const a = item.find('.title a');
+        .map((item): DataItem => {
+            const $item = $api(item);
+            const a = $item.find('.title a');
             return {
                 title: a.text().trim(),
                 link: a.attr('href'),
-                author: item.find('.author-name').text(),
+                author: $item.find('.author-name').text(),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 $('.position-relative, .articleblock-container, .article-ad, .comments-shares').remove();
-                item.description = $('.sub-title').prop('outerHTML') + $('div.article-picture').html() + $('div[itemprop="articleBody"]').html();
-                item.pubDate = parseDate($('meta[itemprop="datePublished"]').attr('content'));
-                item.updated = parseDate($('meta[itemprop="dateModified"]').attr('content'));
+                item.description = $('.sub-title').prop('outerHTML')! + $('div.article-picture').html()! + $('div[itemprop="articleBody"]').html();
+                item.pubDate = parseDate($('meta[itemprop="datePublished"]').attr('content')!);
+                item.updated = parseDate($('meta[itemprop="dateModified"]').attr('content')!);
                 item.category = $('meta[property="article:tag"]')
                     .toArray()
-                    .map((item) => $(item).attr('content'));
+                    .map((item) => $(item).attr('content')!);
 
                 return item;
             })
@@ -77,7 +77,7 @@ async function handler(ctx) {
         image: $('meta[property="og:image"]').attr('content'),
         logo: $('link[rel="apple-touch-icon"]').attr('href'),
         icon: $('link[rel="icon"]').attr('href'),
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

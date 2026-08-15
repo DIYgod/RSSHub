@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -39,17 +39,17 @@ async function handler() {
     const list = $('ul.list.whlist li')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), 'http://www.chinatax.gov.cn').href,
+                link: new URL(a.attr('href')!, 'http://www.chinatax.gov.cn').href,
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const res = await got({ method: 'get', url: item.link });
                     const content = load(res.data);
@@ -57,8 +57,8 @@ async function handler() {
                     item.description = content('#fontzoom').html();
                     return item;
                 } catch (error) {
-                    if (error.name === 'HTTPError' || error.name === 'FetchError') {
-                        item.description = error.message;
+                    if ((error as Error).name === 'HTTPError' || (error as Error).name === 'FetchError') {
+                        item.description = (error as Error).message;
                         return item;
                     }
                     throw error;

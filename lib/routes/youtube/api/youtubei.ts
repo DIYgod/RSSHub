@@ -1,10 +1,10 @@
-import { Innertube } from 'youtubei.js';
+import { Innertube, YTNodes } from 'youtubei.js';
 
-import type { Data } from '@/types';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-import utils, { getVideoUrl } from '../utils';
+import { getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
 let innertubePromise: Promise<Innertube> | undefined;
@@ -26,6 +26,39 @@ const getInnertube = () => {
     return innertubePromise;
 };
 
+const isLockupVideo = (video: unknown): video is YTNodes.LockupView => video instanceof YTNodes.LockupView;
+
+const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem => {
+    const videoId = video.content_id;
+    const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
+    const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+    const metadataRows = video.metadata?.metadata?.metadata_rows ?? [];
+    const publishedText = metadataRows
+        .flatMap((row) => row.metadata_parts ?? [])
+        .map((part) => part.text?.text)
+        .findLast((text) => text?.endsWith('ago'));
+    const durationText = thumbnail?.overlays
+        ?.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView))
+        .flatMap((overlay) => overlay.badges ?? [])
+        .find((badge) => /^\d+(?::\d+)+$/.test(badge.text))?.text;
+
+    return {
+        title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
+        description: renderYoutube(embed, videoId, img, ''),
+        link: `https://www.youtube.com/watch?v=${videoId}`,
+        author: metadataRows.length > 1 ? metadataRows[0].metadata_parts?.[0]?.text?.text : undefined,
+        image: img,
+        pubDate: publishedText ? parseRelativeDate(publishedText) : undefined,
+        attachments: [
+            {
+                url: getVideoUrl(videoId),
+                mime_type: 'text/html',
+                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part), 0) : undefined,
+            },
+        ],
+    };
+};
+
 export const getChannelIdByUsername = (username: string) =>
     cache.tryGet(`youtube:getChannelIdByUsername:${username}`, async () => {
         const innertube = await getInnertube();
@@ -42,7 +75,8 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const videos = await channel.getVideos();
-    const videoSubtitles = isJsonFeed ? await getSrtAttachmentBatch(videos.videos.filter((video) => 'video_id' in video).map((video) => video.video_id)) : {};
+    const lockupVideos = videos.videos.filter((video) => isLockupVideo(video));
+    const videoSubtitles = isJsonFeed ? await getSrtAttachmentBatch(lockupVideos.map((video) => video.content_id)) : {};
 
     return {
         title: `${channel.metadata.title || channelId} - YouTube`,
@@ -50,31 +84,11 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
         image: channel.metadata.avatar?.[0].url,
         description: channel.metadata.description,
 
-        item: await Promise.all(
-            videos.videos
-                .filter((video) => 'video_id' in video)
-                .map((video) => {
-                    const srtAttachments = isJsonFeed ? videoSubtitles[video.video_id] || [] : [];
-                    const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : 'thumbnails' in video ? video.thumbnails?.[0]?.url : undefined;
-
-                    return {
-                        title: video.title.text || `YouTube Video ${video.video_id}`,
-                        description: 'description_snippet' in video ? utils.renderDescription(embed, video.video_id, img, utils.formatDescription(video.description_snippet?.toHTML())) : null,
-                        link: `https://www.youtube.com/watch?v=${video.video_id}`,
-                        author: typeof video.author === 'string' ? video.author : video.author.name === 'N/A' ? undefined : video.author.name,
-                        image: img,
-                        pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
-                        attachments: [
-                            {
-                                url: getVideoUrl(video.video_id),
-                                mime_type: 'text/html',
-                                duration_in_seconds: video.duration && 'seconds' in video.duration ? video.duration.seconds : undefined,
-                            },
-                            ...srtAttachments,
-                        ],
-                    };
-                })
-        ),
+        item: lockupVideos.map((video) => {
+            const item = lockupViewToItem(video, embed);
+            item.attachments?.push(...(isJsonFeed ? videoSubtitles[video.content_id] || [] : []));
+            return item;
+        }),
     };
 };
 
@@ -89,35 +103,6 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
         image: playlist.info.thumbnails?.[0].url,
         description: playlist.info.description || `${playlist.info.title} by ${playlist.info.author.name}`,
 
-        item: videos
-            .filter((video) => 'id' in video)
-            .map((video) => {
-                const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : video.thumbnails?.[0]?.url;
-
-                return {
-                    title: video.title.text || `YouTube Video ${video.id}`,
-                    description: utils.renderDescription(embed, video.id, img, ''),
-                    link: `https://www.youtube.com/watch?v=${video.id}`,
-                    pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
-                    author:
-                        'author' in video
-                            ? [
-                                  {
-                                      name: video.author.name,
-                                      url: video.author.url,
-                                      avatar: video.author.thumbnails?.[0]?.url,
-                                  },
-                              ]
-                            : undefined,
-                    image: img,
-                    attachments: [
-                        {
-                            url: getVideoUrl(video.id),
-                            mime_type: 'text/html',
-                            duration_in_seconds: 'duration' in video && video.duration && 'seconds' in video.duration ? video.duration.seconds : undefined,
-                        },
-                    ],
-                };
-            }),
+        item: videos.filter((video) => isLockupVideo(video)).map((video) => lockupViewToItem(video, embed)),
     };
 };

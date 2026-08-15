@@ -35,10 +35,10 @@ async function handler() {
     const list = $('.contents .news_wrap')
         .toArray()
         .map((item) => {
-            const title = $(item).find('.news_title').text().trim();
+            const title = $(item).find('.news_title').text();
             const link = new URL($(item).find('a').attr('href')!, baseUrl).href;
-            const date = $(item).find('time').text().trim();
-            const pubDate = timezone(parseDate(date), +9);
+            const date = $(item).find('time').text();
+            const pubDate = timezone(parseDate(date), 9);
             return {
                 title,
                 link,

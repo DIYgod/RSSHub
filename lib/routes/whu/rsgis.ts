@@ -1,5 +1,6 @@
-import type { AnyNode, Cheerio } from 'cheerio';
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
@@ -103,8 +104,8 @@ function checkExternal(link: string): boolean {
  * @param element
  * @returns A list of RSS meta node.
  */
-function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
-    const linkElement = element.find('a').first();
+function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
+    const linkElement = element.find('a');
     const title = linkElement.text();
     const href = linkElement.attr('href');
     if (href === undefined) {
@@ -112,11 +113,11 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     }
     const external = checkExternal(href);
     const link = external ? href : new URL(href, currentUrl).href;
-    const pubDate = element.find('div.date1').first().text();
+    const pubDate = element.find('div.date1').text();
     return {
         title,
         link,
-        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), +8),
+        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8),
         description: title,
         external,
     };
@@ -131,8 +132,8 @@ async function getDetail(item: Post): Promise<DataItem | any> {
               } else {
                   const response = await ofetch(link);
                   const $ = load(response);
-                  const title = $('div.content div.content_title h1').first().text();
-                  const content = $('div.content div.v_news_content').first().html();
+                  const title = $('div.content div.content_title h1').text();
+                  const content = $('div.content div.v_news_content').html();
                   item.title = title;
                   item.description = content || '';
               }
@@ -188,7 +189,7 @@ async function handlePostList(type: string, sub: string): Promise<DataItem[]> {
     const category = categoryMap[type];
     if (sub === 'all') {
         const subMap = category.sub;
-        urlList = Object.values(subMap).map((value) => {
+        urlList = Object.values<{ path: string }>(subMap).map((value) => {
             const subtype = value;
             return {
                 url: `${baseUrl}/${category.path}/${subtype.path}.htm`,

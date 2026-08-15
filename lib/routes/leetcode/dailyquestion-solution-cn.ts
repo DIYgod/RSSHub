@@ -12,13 +12,15 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/dailyquestion/solution/cn',
+    categories: ['programming'],
+    example: '/leetcode/dailyquestion/solution/cn',
     radar: [
         {
             source: ['leetcode.cn/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '每日一题题解',
+    maintainers: ['woaidouya123'],
     handler,
     url: 'leetcode.cn/',
 };
@@ -198,13 +200,13 @@ async function handler() {
                 title: `每日一题-${question.translatedTitle}${diffEmoji}`,
                 link: questionUrl,
                 description: question.translatedContent,
-                pubDate: timezone(parseDate(data.todayRecord[0].date), +8),
+                pubDate: timezone(parseDate(data.todayRecord[0].date), 8),
             },
             ...articleContent.map((art, i) => ({
                 title: art.title,
                 link: `${questionUrl}/solution/${art.slug}`,
                 description: md.render(handleText(art.content)),
-                pubDate: timezone(parseDate(articles[i].node.createdAt), +8),
+                pubDate: timezone(parseDate(articles[i].node.createdAt), 8),
                 author: art.author.username,
             })),
         ],

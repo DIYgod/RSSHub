@@ -38,7 +38,7 @@ async function handler() {
         title: `${item.title} ${item.volume}`,
         description: `<img src="${item.cover}">`,
         link: `${rootUrl}/animeVideo.php?sn=${item.videoSn}`,
-        pubDate: timezone(parseDate(`${item.upTime} ${item.upTimeHours}`, 'MM/DD HH:mm'), +8),
+        pubDate: timezone(parseDate(`${item.upTime} ${item.upTimeHours}`, 'MM/DD HH:mm'), 8),
     }));
 
     return {

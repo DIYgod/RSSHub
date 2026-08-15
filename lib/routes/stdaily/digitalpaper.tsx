@@ -99,7 +99,7 @@ async function handler() {
                                             {articleVo.content ? raw(articleVo.content) : null}
                                         </>
                                     ),
-                                    pubDate: timezone(parseDate(articleVo.periodTime), +8),
+                                    pubDate: timezone(parseDate(articleVo.periodTime), 8),
                                     author: articleVo.author,
                                     link: `https://epaper.stdaily.com/statics/technology-site/index.html#/home?isDetail=1&currentNewsId=${article.id}&currentVersionName=${articleVo.editionName}&currentVersion=${Number(section.editionCode)}&timeValue=${articleVo.periodTime}`,
                                 } as DataItem;

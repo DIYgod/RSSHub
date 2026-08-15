@@ -17,7 +17,7 @@ const extractDates = (durationStr: string) => {
         return { startDate, endDate };
     }
 
-    const parts = durationStr.split(/[-—~]+/).map((p) => p.trim()); // currently ——and- is used, add — or ~ for redundency
+    const parts = durationStr.split(/[-—~]+/); // currently ——and- is used, add — or ~ for redundency
     const startStr = parts[0];
     const endStr = parts[1];
 
@@ -94,8 +94,8 @@ export const route: Route = {
 
                 return {
                     title: listTitle,
-                    itemLink: link,
-                    imgUrl: `${baseUrl}${imgUrlRaw}`,
+                    itemLink: `${baseUrl}${link}`,
+                    imgUrl: imgUrlRaw,
                 };
             });
 
@@ -111,7 +111,7 @@ export const route: Route = {
                     });
                     const content = load(detailResponse.data);
 
-                    const pubDateRaw = content('.article .info .infowrap img.icon_time').next('span').text().replaceAll('时间：', '').trim();
+                    const pubDateRaw = content('.article .info .infowrap img.icon_time').next('span').text().replaceAll('时间：', '');
                     const pubDate = parseDate(pubDateRaw);
 
                     // Default path: return as news, no detail information for return
@@ -129,27 +129,20 @@ export const route: Route = {
                     }
 
                     // Special path to return detail exhibition information
-                    let rawText = content('.content.f16').text() || ''; // get descption text from detail page
+                    let rawText = content('.content.f16').text(); // get descption text from detail page
 
                     rawText = rawText.replaceAll(/\s+/g, '');
 
                     const texts = rawText.split(/(?=展览名称：|展览时间：|时间：|展览地点：|展出地点：|地点：)/);
 
                     // use fullDration to extract startDate and endDate, if fullDuration is not exist, return empty data
-                    const fullDuration = texts
-                        .find((text) => text.includes('时间：'))
-                        ?.replaceAll(/(?:展览)?时间：/g, '')
-                        ?.trim();
+                    const fullDuration = texts.find((text) => text.includes('时间：'))?.replaceAll(/(?:展览)?时间：/g, '');
 
                     if (!fullDuration) {
                         return {} as Record<string, any>;
                     }
 
-                    let location =
-                        texts
-                            .find((text) => text.includes('地点：'))
-                            ?.replaceAll(/(?:展(?:览|出))?地点：/g, '')
-                            ?.trim() || '';
+                    let location = texts.find((text) => text.includes('地点：'))?.replaceAll(/(?:展(?:览|出))?地点：/g, '') || '';
 
                     const locMatch = location.match(/^.*?展厅/) || [''];
 
@@ -170,7 +163,7 @@ export const route: Route = {
                         }
                     }
 
-                    const { startDate, endDate } = extractDates(fullDuration || '');
+                    const { startDate, endDate } = extractDates(fullDuration);
                     const { imgUrl, itemLink } = item;
 
                     const description = renderToString(
@@ -189,11 +182,9 @@ export const route: Route = {
                                 <b>闭展：</b>
                                 {endDate ?? '未定/常设'}
                             </p>
-                            {fullDuration && (
-                                <p>
-                                    <small>原始展期：{fullDuration}</small>
-                                </p>
-                            )}
+                            <p>
+                                <small>原始展期：{fullDuration}</small>
+                            </p>
                         </div>
                     );
 

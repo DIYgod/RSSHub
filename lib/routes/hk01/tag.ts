@@ -1,18 +1,20 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiRootUrl, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/tag/:id?',
+    categories: ['new-media'],
+    example: '/hk01/tag/2787',
+    parameters: { id: '标签 id, 可在 URL 中找到' },
     radar: [
         {
             source: ['hk01.com/tag/:id', 'hk01.com/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '标签',
+    maintainers: ['hoilc', 'Fatpandac', 'nczitzk'],
     handler,
 };
 
@@ -27,7 +29,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const items = await ProcessItems(response.data.items, ctx.req.query('limit'), cache.tryGet);
+    const items = await ProcessItems(response.data.items, ctx.req.query('limit'));
 
     return {
         title: `${id} | 香港01`,

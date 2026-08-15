@@ -58,7 +58,7 @@ async function handler(ctx) {
                     ) : null}
                 </>
             ),
-            pubDate: timezone(parseDate(item.publishtime), +8),
+            pubDate: timezone(parseDate(item.publishtime), 8),
             link: item.shareUrl,
             colName: item.colName,
             author: item.arthorName,

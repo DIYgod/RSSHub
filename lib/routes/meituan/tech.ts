@@ -37,12 +37,12 @@ async function handler() {
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 const content = $('div.content').html();
                 return {
-                    title: item.title,
+                    title: item.title!,
                     link: item.link,
                     pubDate: item.pubDate,
                     author: item.creator,
@@ -53,7 +53,7 @@ async function handler() {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: rootUrl,
         description: feed.description,
         language: feed.language,

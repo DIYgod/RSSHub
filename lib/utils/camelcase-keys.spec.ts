@@ -76,7 +76,7 @@ describe('test camelcase keys', () => {
             },
             null,
             undefined,
-            +0,
+            0,
             -0,
             Infinity,
             {
@@ -90,7 +90,7 @@ describe('test camelcase keys', () => {
             },
             null,
             undefined,
-            +0,
+            0,
             -0,
             Infinity,
             {

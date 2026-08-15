@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -65,16 +65,16 @@ async function handler(ctx) {
     const items = $('item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('title').text().trim(),
-                link: item.find('link').text().trim(),
-                author: item
+                title: $item.find('title').text().trim(),
+                link: $item.find('link').text().trim(),
+                author: $item
                     .find(String.raw`dc\:creator`)
                     .text()
                     .trim(),
-                pubDate: parseDate(item.find('pubDate').text().trim()),
-                description: item
+                pubDate: parseDate($item.find('pubDate').text().trim()),
+                description: $item
                     .find(String.raw`content\:encoded`)
                     .text()
                     .trim(),
@@ -84,14 +84,14 @@ async function handler(ctx) {
     // The RSS feed is implemented by a keyword search on the science.org end
     // so the description field of the feed looks like this:
     const name_re = /Keyword search result for Blog Series: (?<blog_name>[^-]+) --/;
-    const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re).groups;
+    const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re)!.groups!;
 
     return {
         title: `Science Blogs: ${blog_name}`,
         description: `A Science.org blog called ${blog_name}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: `${baseUrl}/blogs/${name}`,
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

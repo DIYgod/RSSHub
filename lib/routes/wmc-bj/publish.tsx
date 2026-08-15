@@ -1,16 +1,26 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/publish/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['other'],
+    example: '/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html',
+    parameters: {
+        category: 'Category, can be found in URL, `CRA-Reanalysis/2m-Temperature/6-hour/index.html` by default',
+    },
+    name: 'Publish',
+    maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+\`category\` is the text after \`publish/\` in the URL.
+
+eg. The URL for [Monitoring\\_CMA-RA\\_2m-Temperature\\_6-hour](http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html) is <http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html>. The \`category\` for route can be represented as [\`/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html\`](https://rsshub.app/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html).
+:::`,
 };
 
 async function handler(ctx) {
@@ -40,13 +50,13 @@ async function handler(ctx) {
             description: renderToString(
                 img.prop('src') ? (
                     <figure>
-                        <img src={img.prop('src').replace(/\/medium\//, '/')} />
+                        <img src={img.prop('src')!.replace(/\/medium\//, '/')} />
                     </figure>
                 ) : null
             ),
             category: categories,
             guid: `${currentUrl}#${datetime}`,
-            pubDate: timezone(parseDate(/^[A-Z]{3}/i.test(datetime) ? datetime.replace(/^\w+/, '') : datetime, ['DD MMM HH:mm', 'MM/DD HH:mm']), +0),
+            pubDate: timezone(parseDate(/^[A-Z]{3}/i.test(datetime) ? datetime.replace(/^\w+/, '') : datetime, ['DD MMM HH:mm', 'MM/DD HH:mm']), 0),
         },
     ];
 
@@ -57,7 +67,7 @@ async function handler(ctx) {
         item: items,
         title,
         link: currentUrl,
-        language: 'en',
+        language: 'en' as Language,
         image,
         icon,
         logo: icon,

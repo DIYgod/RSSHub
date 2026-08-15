@@ -32,11 +32,11 @@ async function handler() {
         const author = post.author_name.trim();
         let pubDate;
         if (post.text?.post_date_gmt) {
-            pubDate = timezone(parseDate(post.text.post_date_gmt), +1);
+            pubDate = timezone(parseDate(post.text.post_date_gmt), 1);
         } else if (post.text?.post_date) {
-            pubDate = timezone(parseDate(post.text.post_date), +4);
+            pubDate = timezone(parseDate(post.text.post_date), 4);
         } else if (post.date) {
-            pubDate = timezone(parseDate(post.date, 'DD.MM.YYYY HH:mm'), +4);
+            pubDate = timezone(parseDate(post.date, 'DD.MM.YYYY HH:mm'), 4);
         }
         const imageSrc = post.image || post.image_mobile;
         const views = post.views;
@@ -47,17 +47,15 @@ async function handler() {
             pubDate,
             description,
             category: ['news', 'crypto', 'finance'],
-            ...(imageSrc
-                ? {
-                      media: {
-                          thumbnail: {
-                              url: imageSrc,
-                              width: 250,
-                              height: 250,
-                          },
-                      },
-                  }
-                : {}),
+            ...(imageSrc && {
+                media: {
+                    thumbnail: {
+                        url: imageSrc,
+                        width: 250,
+                        height: 250,
+                    },
+                },
+            }),
             extra: {
                 views,
             },

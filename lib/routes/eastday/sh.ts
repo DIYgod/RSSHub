@@ -45,7 +45,7 @@ async function handler() {
             const entity = {
                 title: item.title,
                 description: item.abstracts,
-                pubDate: timezone(parseDate(item.time), +8),
+                pubDate: timezone(parseDate(item.time), 8),
                 link,
             };
 
@@ -58,7 +58,7 @@ async function handler() {
                     });
                     // 解析html内容
                     const $ = load(article.body);
-                    return $('.article_wrapper .mainLayer .content').html() || $('.contentBox .article .detail').html();
+                    return $('.article_wrapper .mainLayer .content').html() || $('.contentBox .article .detail').html() || '';
                 });
             } catch (error) {
                 logger.error(error);

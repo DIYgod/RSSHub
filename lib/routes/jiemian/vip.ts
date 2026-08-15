@@ -1,9 +1,13 @@
-import type { Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { handler } from './common';
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { feedMeta, fetchArticle, parseCardList } from './common';
 
 export const route: Route = {
-    path: '/pro/lists/12',
+    path: '/pro/lists/:id',
     parameters: { id: '分类 id，见下表，可在对应分类页 URL 中找到' },
     name: 'VIP',
     example: '/jiemian/pro/lists/12',
@@ -17,3 +21,35 @@ export const route: Route = {
 | ----------------------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- |
 | 16                                                    | 17                                                      | 18                                                    | 1                                                    | 19                                                      |`,
 };
+
+async function handler(ctx: Context): Promise<Data> {
+    const { id } = ctx.req.param();
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+
+    const currentUrl = `https://www.jiemian.com/pro/lists/${id}.html`;
+    const [pageResponse, listResponse] = await Promise.all([
+        ofetch(currentUrl),
+        ofetch<string>('https://a.jiemian.com/index.php', {
+            query: {
+                m: 'newLists',
+                a: 'loadMore',
+                tid: id,
+                page: 1,
+                tpl: 'sub-card',
+                cid: '',
+                repeat: '',
+                list_type: 'pay',
+            },
+        }),
+    ]);
+
+    const { html } = JSON.parse(listResponse.slice(listResponse.indexOf('(') + 1, listResponse.lastIndexOf(')')));
+    const list = parseCardList(html);
+
+    const items = await Promise.all(list.slice(0, limit).map((item) => fetchArticle(item)));
+
+    return {
+        item: items,
+        ...feedMeta(load(pageResponse), currentUrl),
+    };
+}

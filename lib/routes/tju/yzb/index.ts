@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -67,12 +67,9 @@ async function handler(ctx) {
             subtitle = '校级公告';
             path = 'xwzx/zxxx/';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(yzb_base_url + path, {
-            headers: {
-                Referer: yzb_base_url,
-            },
             responseType: 'buffer',
         });
     } catch {
@@ -98,13 +95,13 @@ async function handler(ctx) {
     const list = $('td.table_left_right > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr')
         .slice(1, -1)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $('td > a', item).attr('href');
             const type = pageType(href);
             return {
                 title: $('td > a', item).text(),
                 link: type === 'in-site' ? yzb_base_url + path + href : href,
-                pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), 8),
                 type,
             };
         });
@@ -114,7 +111,7 @@ async function handler(ctx) {
             switch (item.type) {
                 case 'tju-yzb':
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(item.link!, async () => {
                         try {
                             const detailResponse = await got(item.link, { responseType: 'buffer' });
                             const content = load(iconv.decode(detailResponse.data, 'gbk'));

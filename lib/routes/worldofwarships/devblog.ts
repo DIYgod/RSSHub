@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,15 +40,16 @@ async function handler() {
     const list = $('article')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const time = item.find('div').first().find('time').first();
-            const tag = item.find('div').first().find('ul').first().find('li').first();
-            const title = item.find('h2').first().find('a').first();
-            const content = item.find('h2').first().next();
+            const $item = $(item);
+            const time = $item.find('div').first().find('time').first();
+            const tag = $item.find('div').first().find('ul').first().find('li').first();
+            const title = $item.find('h2').first().find('a').first();
+            const content = $item.find('h2').first().next();
+            const timestamp = Number(time.attr('data-timestamp')) * 1000;
             return {
-                title: title.attr('title'),
+                title: title.attr('title')!,
                 link: title.attr('href'),
-                pubDate: timezone(parseDate(time.attr('data-timestamp') * 1000), 0),
+                pubDate: timezone(parseDate(timestamp), 0),
                 category: tag.text(),
                 author: 'Wargaming',
                 description: content.html(),
@@ -57,7 +58,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 item.description = $('.article__content').first().html();
@@ -71,7 +72,7 @@ async function handler() {
         link: url,
         item: items,
         image: 'https:' + face.attr('href'),
-        language: 'en',
+        language: 'en' as Language,
         author: 'Wargaming',
     };
 }

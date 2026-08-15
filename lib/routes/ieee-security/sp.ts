@@ -29,18 +29,18 @@ async function handler() {
     const responses = await Promise.allSettled(urlList.map((url) => ofetch(url)));
 
     const items = responses.flatMap((response, i) => {
-        const $ = load(response.value);
+        const $ = load((response as PromiseFulfilledResult<any>).value);
         return $('div.panel-body > div.list-group-item')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const title = item.find('b').text().trim();
+                const $item = $(item);
+                const title = $item.find('b').text().trim();
                 const link = urlList[i];
                 return {
                     title,
-                    author: item.html().trim().split('<br>', 2)[1].trim(),
+                    author: $item.html()!.trim().split('<br>', 2)[1].trim(),
                     link: `${link}#${title}`,
-                    pubDate: parseDate(link.match(/SP(\d{4})/)[1], 'YYYY'),
+                    pubDate: parseDate(link.match(/SP(\d{4})/)![1], 'YYYY'),
                 };
             });
     });

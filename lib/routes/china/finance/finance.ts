@@ -60,9 +60,9 @@ async function handler(ctx) {
     const detailsUrls = $('.item-con-inner')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                link: item.find('.tit>a').attr('href'),
+                link: $item.find('.tit>a').attr('href'),
             };
         })
         .filter((item) => item.link !== void 0)
@@ -70,14 +70,14 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         detailsUrls.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailsResponse = await got(item.link);
                 const $d = load(detailsResponse.data);
                 return {
                     title: $d('.article_title').text(),
                     link: item.link,
                     description: $d('#js_article_content').html(),
-                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), +8),
+                    pubDate: timezone(parseDate($d('.article_info>span.time').text()), 8),
                     author: $d(' div.article_info > span.source').text(),
                     category: listCategory,
                 };

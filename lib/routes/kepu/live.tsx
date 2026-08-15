@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,8 +52,8 @@ async function handler(ctx) {
         description: item.desc,
         author: item.company,
         guid: item.id,
-        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), +8),
-        updated: timezone(parseDate(item.live_end_time ?? item.end_time), +8),
+        pubDate: timezone(parseDate(item.live_start_time ?? item.start_time), 8),
+        updated: timezone(parseDate(item.live_end_time ?? item.end_time), 8),
         itunes_item_image: new URL(item.cover, apiRootUrl).href,
         comments: item.display_comment ?? 0,
     }));
@@ -110,7 +110,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: '科学直播(live.kepu.net.cn)',
-        language: 'zh',
+        language: 'zh' as Language,
         icon,
         logo: icon,
         subtitle,

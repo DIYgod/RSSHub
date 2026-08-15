@@ -37,16 +37,16 @@ async function handler(ctx) {
     const items = $('.n_newslist li');
     const out = await Promise.all(
         items.map(async (index, item) => {
-            item = $(item);
-            const anchor = item.find('a');
+            const $item = $(item);
+            const anchor = $item.find('a');
             const title = anchor.attr('title');
             const href = anchor.attr('href');
-            const link = href.startsWith('http') ? href : baseUrl + href;
-            const { description, author, exactDate } = await cache.tryGet(link, () => extractor(link));
-            const span = item.find('span');
+            const link = href!.startsWith('http') ? href : baseUrl + href;
+            const { description, author, exactDate } = await cache.tryGet<Record<string, any>>(link!, () => extractor(link));
+            const span = $item.find('span');
             const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD');
             return {
-                title,
+                title: title!,
                 link,
                 description,
                 pubDate,

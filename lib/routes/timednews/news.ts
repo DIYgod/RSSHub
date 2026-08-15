@@ -1,6 +1,6 @@
-import { load } from 'cheerio';
+import { type CheerioOptions, load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -89,7 +89,7 @@ async function handler(ctx) {
 
     const list = $('#content li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const c = load(e);
             return {
                 title: c('a').text().trim(),
@@ -99,13 +99,13 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
-                const c = load(detailResponse.data, { decodeEntities: false });
+                const c = load(detailResponse.data, { decodeEntities: false } as CheerioOptions);
                 c('.event .twitter').remove();
                 item.pubDate = parseDate(c('.datetime #publishdate').text(), 'YYYY-MM-DD');
                 item.author = c('.datetime #author').text();

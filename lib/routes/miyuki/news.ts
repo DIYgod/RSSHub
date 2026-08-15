@@ -44,7 +44,7 @@ async function handler() {
                     return {
                         title,
                         link,
-                        pubDate: timezone(parseDate($item.find('p span').first().text()), +9),
+                        pubDate: timezone(parseDate($item.find('p span').first().text()), 9),
                         category: [category],
                         description: await getDescription(link),
                     } as DataItem;
@@ -90,7 +90,7 @@ function normalizePhotoLists($, content) {
         const items = list
             .children('li')
             .toArray()
-            .flatMap((item) => {
+            .map((item) => {
                 const photoItem = $(item);
                 photoItem.find('img.for_sp').remove();
                 photoItem.find('img').each((__, image) => {
@@ -101,13 +101,13 @@ function normalizePhotoLists($, content) {
                         return;
                     }
 
-                    img.attr('src', new URL(src, ORIGIN).href);
                     img.removeAttr('class');
                 });
 
                 const html = photoItem.html();
-                return hasMeaningfulHtml(html) ? [`<div>${html!.trim()}</div>`] : [];
-            });
+                return hasMeaningfulHtml(html) ? `<div>${html!.trim()}</div>` : undefined;
+            })
+            .filter(Boolean);
 
         list.replaceWith(items.join('<br /><br />'));
     });

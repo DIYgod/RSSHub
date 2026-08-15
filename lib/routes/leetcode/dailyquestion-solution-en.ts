@@ -13,13 +13,15 @@ const md = MarkdownIt({
 });
 export const route: Route = {
     path: '/dailyquestion/solution/en',
+    categories: ['programming'],
+    example: '/leetcode/dailyquestion/solution/en',
     radar: [
         {
             source: ['leetcode.com/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Daily Question Solution',
+    maintainers: ['woaidouya123'],
     handler,
     url: 'leetcode.com/',
 };
@@ -226,13 +228,13 @@ async function handler() {
                 title: `DailyQuestion-${question.title}${diffEmoji}`,
                 link: questionUrl,
                 description: question.content,
-                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), +8),
+                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), 8),
             },
             {
                 title: `Solution-${question.title}`,
                 link: `${questionUrl}solution/`,
                 description: md.render(article.content),
-                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), +8),
+                pubDate: timezone(parseDate(data.activeDailyCodingChallengeQuestion.date), 8),
                 author: 'leetcode',
             },
         ],

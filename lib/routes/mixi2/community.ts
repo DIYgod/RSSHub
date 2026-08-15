@@ -14,10 +14,10 @@ const handler = async (ctx: Context) => {
 
     const [communityInfo, postsData] = await Promise.all([
         client.getCommunity({
-            communityId,
+            communityId: communityId!,
         }),
         client.getCommunityTimeline({
-            communityId,
+            communityId: communityId!,
             limit,
             mediaOnly,
         }),

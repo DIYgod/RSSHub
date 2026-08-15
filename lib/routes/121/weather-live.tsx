@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -70,7 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: updated ? parseDate(updated) : undefined,
-                language,
+                language: language as Language,
             };
 
             return processedItem;
@@ -86,7 +86,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img').first().attr('src') ? new URL($('img').first().attr('src') as string, baseUrl).href : undefined,
         author: $('div#webnameDiv').text(),
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

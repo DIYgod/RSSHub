@@ -50,12 +50,12 @@ async function handler(ctx) {
     const detailUrls = $('.data-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.data-list-time').text(), 'YYYY-MM-DD'),
+                link: new URL(a.attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('.data-list-time').text(), 'YYYY-MM-DD'),
             };
         });
 

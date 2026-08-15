@@ -1,7 +1,7 @@
 import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import undici, { Client, ProxyAgent } from 'undici';
+import undici, { ProxyAgent } from 'undici';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -11,7 +11,7 @@ import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
-import login from './login';
+// import login from './login';
 
 let authTokenIndex = 0;
 
@@ -25,9 +25,8 @@ const token2Cookie = async (token) => {
     try {
         const agent = proxy.proxyUri
             ? new ProxyAgent({
-                  factory: (origin, opts) => new Client(origin as string, opts).compose(HttpCookieAgentCookie({ jar })),
                   uri: proxy.proxyUri,
-              })
+              }).compose(HttpCookieAgentCookie({ jar }))
             : new CookieAgent({ cookies: { jar } });
         if (token) {
             await ofetch('https://x.com', {
@@ -69,9 +68,9 @@ const getAuth = async (retry: number) => {
     await cache.set(`${lockPrefix}${token}`, '1', 20);
     return {
         token,
-        username: config.twitter.username?.[index],
-        password: config.twitter.password?.[index],
-        authenticationSecret: config.twitter.authenticationSecret?.[index],
+        // username: config.twitter.username?.[index],
+        // password: config.twitter.password?.[index],
+        // authenticationSecret: config.twitter.authenticationSecret?.[index],
     };
 };
 
@@ -91,19 +90,19 @@ export const twitterGot = async (
     const requestUrl = `${url}?${queryString.stringify(params)}`;
 
     let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth?.token);
-    if (!cookie && auth) {
-        cookie = await login({
-            username: auth.username,
-            password: auth.password,
-            authenticationSecret: auth.authenticationSecret,
-        });
-    }
+    // if (!cookie && auth) {
+    //     cookie = await login({
+    //         username: auth.username,
+    //         password: auth.password,
+    //         authenticationSecret: auth.authenticationSecret,
+    //     });
+    // }
     let dispatchers:
-        | undefined
         | {
               jar: CookieJar;
               agent: CookieAgent | ProxyAgent;
-          };
+          }
+        | undefined;
     if (cookie) {
         logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
         if (typeof cookie === 'string') {
@@ -112,9 +111,8 @@ export const twitterGot = async (
         const jar = CookieJar.deserializeSync(cookie as any);
         const agent = proxy.proxyUri
             ? new ProxyAgent({
-                  factory: (origin, opts) => new Client(origin as string, opts).compose(HttpCookieAgentCookie({ jar })),
                   uri: proxy.proxyUri,
-              })
+              }).compose(HttpCookieAgentCookie({ jar }))
             : new CookieAgent({ cookies: { jar } });
         if (proxy.proxyUri) {
             logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
@@ -199,35 +197,35 @@ export const twitterGot = async (
             logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
         } else if (response.status === 403 || response.status === 401) {
-            const newCookie = await login({
-                username: auth.username,
-                password: auth.password,
-                authenticationSecret: auth.authenticationSecret,
-            });
-            if (newCookie) {
-                logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
-                await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
-                await cache.set(`${lockPrefix}${auth.token}`, '', 1);
-            } else {
-                const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
-                if (tokenIndex !== undefined && tokenIndex !== -1) {
-                    config.twitter.authToken?.splice(tokenIndex, 1);
-                }
-                if (auth.username) {
-                    const usernameIndex = config.twitter.username?.indexOf(auth.username);
-                    if (usernameIndex !== undefined && usernameIndex !== -1) {
-                        config.twitter.username?.splice(usernameIndex, 1);
-                    }
-                }
-                if (auth.password) {
-                    const passwordIndex = config.twitter.password?.indexOf(auth.password);
-                    if (passwordIndex !== undefined && passwordIndex !== -1) {
-                        config.twitter.password?.splice(passwordIndex, 1);
-                    }
-                }
-                logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
-                await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
+            // const newCookie = await login({
+            //     username: auth.username,
+            //     password: auth.password,
+            //     authenticationSecret: auth.authenticationSecret,
+            // });
+            // if (newCookie) {
+            //     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
+            //     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
+            //     await cache.set(`${lockPrefix}${auth.token}`, '', 1);
+            // } else {
+            const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
+            if (tokenIndex !== undefined && tokenIndex !== -1) {
+                config.twitter.authToken?.splice(tokenIndex, 1);
             }
+            // if (auth.username) {
+            //     const usernameIndex = config.twitter.username?.indexOf(auth.username);
+            //     if (usernameIndex !== undefined && usernameIndex !== -1) {
+            //         config.twitter.username?.splice(usernameIndex, 1);
+            //     }
+            // }
+            // if (auth.password) {
+            //     const passwordIndex = config.twitter.password?.indexOf(auth.password);
+            //     if (passwordIndex !== undefined && passwordIndex !== -1) {
+            //         config.twitter.password?.splice(passwordIndex, 1);
+            //     }
+            // }
+            logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
+            await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
+            // }
         } else {
             logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
@@ -298,24 +296,17 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     return gridEntries || moduleItems || entries || [];
 };
 
-const getLegacyUser = (tweet: any) => tweet.core?.user_result?.result?.legacy || tweet.core?.user_results?.result?.legacy;
-
-const getCoreUser = (tweet: any) => tweet.core?.user_result?.result?.core || tweet.core?.user_results?.result?.core;
-
 const hydrateLegacyUser = (legacy: any, tweet: any) => {
-    legacy.user = getLegacyUser(tweet);
-
-    const coreUser = getCoreUser(tweet);
-    if (!legacy.user || !coreUser) {
+    const userResult = tweet.core?.user_results?.result;
+    if (!userResult) {
         return;
     }
 
-    if (coreUser.name) {
-        legacy.user.name = coreUser.name;
-    }
-    if (coreUser.screen_name) {
-        legacy.user.screen_name = coreUser.screen_name;
-    }
+    legacy.user = {
+        name: userResult.core?.name,
+        screen_name: userResult.core?.screen_name,
+        profile_image_url_https: userResult.avatar?.image_url,
+    };
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
@@ -324,9 +315,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     for (const entry of entries) {
         const entryId = entry.entryId;
         if (entryId) {
-            if (entryId.startsWith('tweet-')) {
-                filteredEntries.push(entry);
-            } else if (entryId.startsWith('profile-grid-0-tweet-')) {
+            if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
                 filteredEntries.push(entry);
             }
             if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
@@ -335,64 +324,66 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         }
     }
     for (const entry of filteredEntries) {
-        if (entry.entryId) {
-            const content = entry.content || entry.item;
-            let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
-            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
-            if (tweet?.__typename === 'TweetPreviewDisplay') {
-                const preview = tweet.tweet;
-                if (preview?.rest_id) {
-                    const userResult = preview.core?.user_results?.result;
-                    const fakeLegacy: any = {
-                        id_str: preview.rest_id,
-                        full_text: `[Subscribers Only] ${preview.text ?? ''}`,
-                        created_at: preview.created_at ?? '',
-                        entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
-                        user_id_str: userResult?.rest_id ?? '',
-                        favorite_count: preview.favorite_count ?? 0,
-                        reply_count: preview.reply_count ?? 0,
-                        retweet_count: preview.retweet_count ?? 0,
-                    };
-                    hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
-                    if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
-                        tweets.push(fakeLegacy);
-                    }
+        if (!entry.entryId) {
+            continue;
+        }
+
+        const content = entry.content || entry.item;
+        let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+        // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
+        if (tweet?.__typename === 'TweetPreviewDisplay') {
+            const preview = tweet.tweet;
+            if (preview?.rest_id) {
+                const userResult = preview.core?.user_results?.result;
+                const fakeLegacy: any = {
+                    id_str: preview.rest_id,
+                    full_text: `[Subscribers Only] ${preview.text ?? ''}`,
+                    created_at: preview.created_at ?? '',
+                    entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
+                    user_id_str: userResult?.rest_id ?? '',
+                    favorite_count: preview.favorite_count ?? 0,
+                    reply_count: preview.reply_count ?? 0,
+                    retweet_count: preview.retweet_count ?? 0,
+                };
+                hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
+                if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
+                    tweets.push(fakeLegacy);
                 }
-                continue;
             }
-            if (tweet && tweet.tweet) {
-                tweet = tweet.tweet;
-            }
-            if (tweet) {
-                const retweet = tweet.legacy?.retweeted_status_result?.result;
-                for (const t of [tweet, retweet]) {
-                    if (!t?.legacy) {
-                        continue;
-                    }
-                    hydrateLegacyUser(t.legacy, t);
-                    t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
-                    const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
-                    if (quote?.legacy) {
-                        t.legacy.quoted_status = quote.legacy;
-                        hydrateLegacyUser(t.legacy.quoted_status, quote);
-                    }
-                    if (t.note_tweet) {
-                        const tmp = t.note_tweet.note_tweet_results.result;
-                        t.legacy.entities.hashtags = tmp.entity_set.hashtags;
-                        t.legacy.entities.symbols = tmp.entity_set.symbols;
-                        t.legacy.entities.urls = tmp.entity_set.urls;
-                        t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
-                        t.legacy.full_text = tmp.text;
-                    }
+            continue;
+        }
+        if (tweet && tweet.tweet) {
+            tweet = tweet.tweet;
+        }
+        if (tweet) {
+            const retweet = tweet.legacy?.retweeted_status_result?.result;
+            for (const t of [tweet, retweet]) {
+                if (!t?.legacy) {
+                    continue;
                 }
-                const legacy = tweet.legacy;
-                if (legacy) {
-                    if (retweet) {
-                        legacy.retweeted_status = retweet.legacy;
-                    }
-                    if (userId === undefined || legacy.user_id_str === userId + '') {
-                        tweets.push(legacy);
-                    }
+                hydrateLegacyUser(t.legacy, t);
+                t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
+                const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
+                if (quote?.legacy) {
+                    t.legacy.quoted_status = quote.legacy;
+                    hydrateLegacyUser(t.legacy.quoted_status, quote);
+                }
+                if (t.note_tweet) {
+                    const tmp = t.note_tweet.note_tweet_results.result;
+                    t.legacy.entities.hashtags = tmp.entity_set.hashtags;
+                    t.legacy.entities.symbols = tmp.entity_set.symbols;
+                    t.legacy.entities.urls = tmp.entity_set.urls;
+                    t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
+                    t.legacy.full_text = tmp.text;
+                }
+            }
+            const legacy = tweet.legacy;
+            if (legacy) {
+                if (retweet) {
+                    legacy.retweeted_status = retweet.legacy;
+                }
+                if (userId === undefined || legacy.user_id_str === userId + '') {
+                    tweets.push(legacy);
                 }
             }
         }

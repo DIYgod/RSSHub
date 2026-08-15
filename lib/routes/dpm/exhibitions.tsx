@@ -76,7 +76,7 @@ export const route: Route = {
             const title = $item.find('a.aa').attr('title') || '';
 
             // Filter out 结束 or 暂闭 status exhibition
-            const status = $item.find('.label').text().trim();
+            const status = $item.find('.label').text();
             if (status.includes('结束') || status.includes('暂闭')) {
                 return null;
             }
@@ -126,7 +126,7 @@ export const route: Route = {
                     fullDuration = '未定/常设';
                 }
 
-                const cleanDuration = fullDuration.replaceAll('.', '-').replaceAll('/', '-');
+                const cleanDuration = fullDuration.replaceAll(/[./]/g, '-');
 
                 // use YYYY-MM-DD for date format
                 const dateMatches = cleanDuration.match(/\d{4}-\d{2}-\d{2}/g);

@@ -25,5 +25,5 @@ export const route: Route = {
 };
 
 function handler(ctx) {
-    ctx.set('redirect', '/nbd/332');
+    return ctx.set('redirect', '/nbd/332');
 }

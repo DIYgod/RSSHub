@@ -2,25 +2,28 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:category?',
+    path: '/',
+    categories: ['multimedia'],
+    example: '/xyzrank',
     radar: [
         {
             source: ['xyzrank.com/'],
-            target: '',
+            target: '/',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '热门节目',
+    maintainers: ['nczitzk'],
     handler,
     url: 'xyzrank.com/',
 };
 
-async function handler(ctx) {
-    const category = ctx.req.param('category') ?? '';
+export async function handler(ctx) {
+    const category = getSubPath(ctx).slice(1);
 
     const rootUrl = 'https://xyzrank.com';
     const currentUrl = `${rootUrl}/#/${category}`;
@@ -32,36 +35,25 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    response = await got({
-        method: 'get',
-        url: response.data.match(/<script type="module" crossorigin src="(.*?)"><\/script>/)[1],
-    });
-
-    const matches = response.data.match(/pI="(.*?)",gI="(.*?)",mI="(.*?)",_I="(.*?)";var/);
-
     const categories = {
         '': {
-            url: matches[3],
+            url: `${rootUrl}/api/episodes`,
             title: '热门节目',
-            id: 'hot-episodes',
             type: 'episodes',
         },
         'hot-podcasts': {
-            url: matches[1],
+            url: `${rootUrl}/api/podcasts`,
             title: '热门播客',
-            id: 'full',
             type: 'podcasts',
         },
         'hot-episodes-new': {
-            url: matches[4],
+            url: `${rootUrl}/api/new-episodes`,
             title: '新锐节目',
-            id: 'hot-episodes-new',
             type: 'episodes',
         },
         'new-podcasts': {
-            url: matches[2],
+            url: `${rootUrl}/api/new-podcasts`,
             title: '新锐播客',
-            id: 'new-podcasts',
             type: 'podcasts',
         },
     };
@@ -73,7 +65,7 @@ async function handler(ctx) {
 
     const type = categories[category].type;
 
-    const items = response.data.data[type].slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 250).map((item, index) => ({
+    const items = response.data.items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 250).map((item, index) => ({
         title: `#${index + 1} ${item.title ?? item.name}`,
         category: [item.primaryGenreName],
         author: item.authorsText,

@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiSearchRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, generateSignature, processItems, rootUrl, siteTitle } from './util';
@@ -48,7 +47,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await processItems(response.data.datalist, limit, cache.tryGet);
+    const items = await processItems(response.data.datalist, limit);
 
     const data = buildFeedMetadata({
         title: `搜索结果-${keyword}`,

@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: '分类',
-    maintainers: [],
+    maintainers: ['gl0zzy'],
     handler,
     description: `| 微软应用 | 安卓应用 | 教程资源 | 其他资源 |
 | -------- | -------- | -------- | -------- |
@@ -43,32 +43,32 @@ async function handler(ctx) {
     const lists = $('div.c-box > div > div.c-zx-list > ul > li');
     const reg = /日期：(.*?(?:\s\(.*?\))?)\s/;
     const list = lists.toArray().map((item) => {
-        item = $(item).find('div');
-        let date = reg.exec(item.find('div.r > p.other').text())[1];
+        const $item = $(item).find('div');
+        let date: string | Date = reg.exec($item.find('div.r > p.other').text())![1];
         if (date.includes('周') || date.includes('月')) {
-            date = /\((.*?)\)/.exec(date)[1];
+            date = /\((.*?)\)/.exec(date)![1];
             date = parseDate(date, 'MM-DD');
         } else if (date.includes('年')) {
-            date = /\((.*?)\)/.exec(date)[1];
+            date = /\((.*?)\)/.exec(date)![1];
             date = parseDate(date, 'YYYY-MM-DD');
         } else {
             date = parseRelativeDate(date);
         }
         return {
-            title: item.find('div.r > p.r-top > span > a').text(),
-            pubDate: timezone(date, +8),
-            description: item.find('div.r > p.desc').text(),
-            link: item.find('div.r > p.r-top > span > a').attr('href'),
+            title: $item.find('div.r > p.r-top > span > a').text(),
+            pubDate: timezone(date, 8),
+            description: $item.find('div.r > p.desc').text(),
+            link: $item.find('div.r > p.r-top > span > a').attr('href'),
         };
     });
     const items =
         fulltext === 'y'
             ? await Promise.all(
                   list.map((item) =>
-                      cache.tryGet(item.link, async () => {
+                      cache.tryGet(item.link!, async () => {
                           const detailResponse = await got.get(item.link);
                           const content = load(detailResponse.data);
-                          item.description = content('div.intro-box').html();
+                          item.description = content('div.intro-box').html() ?? '';
                           return item;
                       })
                   )

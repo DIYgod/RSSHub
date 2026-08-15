@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -45,7 +45,7 @@ async function handler() {
         description: 'Explore unusual options, options flow, dark pools, short activity, and stock activity on unusualwhales.com. Unusual whales has a full news service available!',
         link: 'https://unusualwhales.com/news-feed',
         image: 'https://unusualwhales.com/android-icon-192x192.png',
-        language: 'en-US',
+        language: 'en-us' as Language,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,9 +27,9 @@ export const route: Route = {
         const $ = load(response.data);
         const links = $('ul.news_list > li')
             .toArray()
-            .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.news_meta').text()), +8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).href,
+            .map((el): DataItem & { link: string } => ({
+                pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
+                link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
         const items = await Promise.all(
@@ -39,15 +39,7 @@ export const route: Route = {
                         const { data } = await got(item.link);
                         const $ = load(data);
                         const $read = $('div.wp_articlecontent');
-                        $read.find('img[src], a[href]').each((i, el) => {
-                            const $el = $(el);
-                            const attr = el.tagName === 'img' ? 'src' : 'href';
-                            const val = $el.attr(attr);
-                            if (val) {
-                                $el.attr(attr, new URL(val, baseUrl).href);
-                            }
-                        });
-                        item.description = $read.html()?.trim();
+                        item.description = $read.html();
                         return item;
                     }
                     // file to download

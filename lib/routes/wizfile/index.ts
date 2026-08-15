@@ -46,7 +46,7 @@ async function handler() {
                 $(item)
                     .find('span')
                     .text()
-                    .match(/\((.*?)\)/)[1]
+                    .match(/\((.*?)\)/)![1]
             );
 
             const description = $(item).next().html();

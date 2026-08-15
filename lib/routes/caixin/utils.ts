@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
 
 import got from '@/utils/got';
 
@@ -35,7 +36,7 @@ const parseBlogArticle = async (item) => {
         .find('p')
         // Non-breaking space U+00A0, `&nbsp;` in html
         // element.children[0].data === $(element, article).text()
-        .filter((_, element) => element.children[0].data === String.fromCodePoint(160))
+        .filter((_, element) => (element.children[0] as Text).data === String.fromCodePoint(160))
         .remove();
 
     item.description = article.html();

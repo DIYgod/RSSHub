@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,7 +40,7 @@ async function handler() {
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.map(async (item) => {
-            const { description, author, category } = await cache.tryGet(item.link, async () => {
+            const { description, author, category } = await cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     headers: {
                         referer: 'https://www.onet.pl/', // for some reason onet.pl will redirect to the main page if referer is not set
@@ -60,22 +60,22 @@ async function handler() {
                 return { description, author, category };
             });
             return {
-                title: item.title,
+                title: item.title!,
                 link: item.link,
                 description,
                 author,
                 category,
-                pubDate: parseDate(item.pubDate),
+                pubDate: parseDate(item.pubDate!),
                 guid: item.id,
             };
         })
     );
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.title,
         item: items,
-        language: 'pl',
+        language: 'pl' as Language,
         image: 'https://ocdn.eu/wiadomosciucs/static/logo2017/onet2017big_dark.png',
     };
 }

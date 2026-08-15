@@ -1,9 +1,11 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
-import { getItems } from './utils';
+import { parseNoticeList, resolveArticles } from './utils';
 
-const url = 'https://www.jou.edu.cn/index/tzgg.htm';
-const host = 'https://www.jou.edu.cn';
+const pageUrl = 'https://www.jou.edu.cn/index/tzgg.htm';
 
 export const route: Route = {
     path: '/tzgg',
@@ -29,16 +31,20 @@ export const route: Route = {
     url: 'www.jou.edu.cn/index/tzgg.htm',
 };
 
-async function handler(ctx) {
-    const out = await getItems(ctx, url, host, 'winstyle106390', 'timestyle106390', 'titlestyle106402', 'timestyle106402');
+async function handler() {
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
 
-    // 生成RSS源
+    const list = parseNoticeList($, pageUrl, 'table.winstyle106390 tr[height="20"]', '.timestyle106390');
+    const items = await resolveArticles(list, {
+        title: '.titlestyle106402',
+        content: '.v_news_content',
+        date: '.timestyle106402',
+    });
+
     return {
-        // 项目标题
         title: '江苏海洋大学 -- 通知公告',
-        // 项目链接
-        link: url,
-        // items的内容
-        item: out,
+        link: pageUrl,
+        item: items,
     };
 }

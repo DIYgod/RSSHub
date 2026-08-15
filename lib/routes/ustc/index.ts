@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -74,10 +74,10 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const child = $(element).children();
-            const info = {
-                title: $(child[1]).find('a').attr('title'),
-                link: $(child[1]).find('a').attr('href').startsWith('../') ? new URL($(child[1]).find('a').attr('href'), notice_type[type].url).href : $(child[1]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(child[2]).text(), 'YYYY-MM-DD'), +8),
+            const info: DataItem = {
+                title: $(child[1]).find('a').attr('title')!,
+                link: $(child[1]).find('a').attr('href')!.startsWith('../') ? new URL($(child[1]).find('a').attr('href')!, notice_type[type].url).href : $(child[1]).find('a').attr('href'),
+                pubDate: timezone(parseDate($(child[2]).text(), 'YYYY-MM-DD'), 8),
             };
             return info;
         });
@@ -86,7 +86,7 @@ async function handler(ctx) {
         items
             .filter((item) => item.link)
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     try {
                         const response = await got(item.link);
                         const $ = load(response.data);

@@ -73,7 +73,7 @@ async function handler(ctx) {
     const initData = JSON.parse(
         $('script')
             .text()
-            .match(/var initdata(.=?)(.*?);/)[2]
+            .match(/var initdata(.=?)(.*?);/)![2]
     );
 
     const list = initData.data.map((item) => {
@@ -115,14 +115,14 @@ async function handler(ctx) {
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th rowspan="2">股票代码</th>
-                                            <th rowspan="2">股票简称</th>
-                                            <th rowspan="2">报告名称</th>
-                                            <th rowspan="2">东财评级</th>
-                                            <th rowspan="2">评级变动</th>
-                                            <th colspan="2">{currentYear}盈利预测</th>
-                                            <th colspan="2">{nextYear}盈利预测</th>
-                                            <th rowspan="2">行业</th>
+                                            <th rowspan={2}>股票代码</th>
+                                            <th rowspan={2}>股票简称</th>
+                                            <th rowspan={2}>报告名称</th>
+                                            <th rowspan={2}>东财评级</th>
+                                            <th rowspan={2}>评级变动</th>
+                                            <th colspan={2}>{currentYear}盈利预测</th>
+                                            <th colspan={2}>{nextYear}盈利预测</th>
+                                            <th rowspan={2}>行业</th>
                                         </tr>
                                         <tr>
                                             <th>收益</th>

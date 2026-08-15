@@ -70,7 +70,7 @@ async function handler(ctx) {
             subtitle = '聚焦天大';
             path = 'jjtd.htm';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(news_base_url + path, {
             headers: {
@@ -125,10 +125,10 @@ async function handler(ctx) {
                                 parseDate(
                                     content('.contentTime')
                                         .text()
-                                        .match(/\d{4}-\d{2}-\d{2}/)[0],
+                                        .match(/\d{4}-\d{2}-\d{2}/)![0],
                                     'YYYY-MM-DD'
                                 ),
-                                +8
+                                8
                             );
                             item.description = content('.v_news_content').html();
                         } catch {

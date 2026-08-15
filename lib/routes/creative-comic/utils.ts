@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 const apiHost = 'https://api.creative-comic.tw';
@@ -48,8 +49,8 @@ const getImgKey = (pageId, uuid) =>
         },
     });
 
-const getUuid = (tryGet) =>
-    tryGet('creative-comic:uuid', async () => {
+const getUuid = () =>
+    cache.tryGet('creative-comic:uuid', async () => {
         const { data } = await got(`${apiHost}/guest`, {
             headers: {
                 device,

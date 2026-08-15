@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -66,9 +66,9 @@ async function handler(ctx) {
         .first()
         .children()
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             const timeMatch = a.text().match(/\d+/);
             const timestr = timeMatch ? timeMatch[0] : '';
 
@@ -76,18 +76,18 @@ async function handler(ctx) {
                 title: a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: `${baseUrl}/../${a.attr('href')}`,
-                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), +8) : null,
+                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), 8) : null,
                 author: '时间|' + timestr,
             };
         });
 
     const items = await Promise.all(
         list.slice(0, limit).map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const tenantId = detailResponse.match(/tenantid = '(\w+)';/)[1];
-                const articleId = item.link.match(/\/nbszxd\/(\d+)/)[1];
+                const articleId = item.link!.match(/\/nbszxd\/(\d+)/)![1];
 
                 const { data: apiResponse } = await got(apiUrl, {
                     searchParams: {
@@ -106,8 +106,8 @@ async function handler(ctx) {
                 item.title = data.title;
                 item.author = data.source;
                 item.guid = `hebtv-nbszxd-${articleId}`;
-                item.pubDate = timezone(parseDate(data.publishDate), +8);
-                item.updated = timezone(parseDate(data.modifyTime), +8);
+                item.pubDate = timezone(parseDate(data.publishDate), 8);
+                item.updated = timezone(parseDate(data.modifyTime), 8);
 
                 if (videoData) {
                     item.itunes_item_image = videoData.poster;
@@ -142,7 +142,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: baseUrl,
         description,
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('div.logo a img').prop('src'),
         icon,
         logo: icon,

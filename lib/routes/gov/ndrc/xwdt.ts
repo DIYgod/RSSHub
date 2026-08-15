@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -45,23 +45,23 @@ async function handler(ctx) {
     const list = $('.u-list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            let link = item.attr('href');
-            if (link.indexOf('../../..') === 0) {
-                link = `${rootUrl}${link.replace('../../..', '')}`;
-            } else if (link.indexOf('.') === 0) {
-                link = `${currentUrl}${link.replace('.', '')}`;
+        .map((item): DataItem => {
+            const $item = $(item);
+            let link = $item.attr('href');
+            if (link!.startsWith('../../..')) {
+                link = `${rootUrl}${link!.replace('../../..', '')}`;
+            } else if (link!.startsWith('.')) {
+                link = `${currentUrl}${link!.replace('.', '')}`;
             }
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

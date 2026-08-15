@@ -44,11 +44,11 @@ async function handler(ctx) {
     const list = $('#l-container .news_list > li.news')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').text();
-            const link = item.find('a').attr('href');
+            const $item = $(item);
+            const title = $item.find('a').text();
+            const link = $item.find('a').attr('href');
 
-            const date = item.find("span[class='news_meta']").text();
+            const date = $item.find("span[class='news_meta']").text();
 
             return {
                 title,
@@ -60,7 +60,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) => {
-            if (item.link.startsWith('http')) {
+            if (item.link!.startsWith('http')) {
                 item.description = `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>`;
                 return item;
             }
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 const itemsResponse = await got(`${host}${item.link}`);
                 const $ = load(itemsResponse.data);
                 item.link = `${host}${item.link}`;
-                item.description = $('div[class="wp_articlecontent"]').html();
+                item.description = $('div[class="wp_articlecontent"]').html() ?? '';
                 return item;
             });
         })

@@ -22,6 +22,9 @@ updates:
           - dependency-name: art-template
             versions: ['>=4.13.3']
       groups:
+          bbob:
+              patterns:
+                  - '@bbob/*'
           cloudflare:
               patterns:
                   - '@cloudflare/*'
@@ -36,6 +39,7 @@ updates:
           oxc:
               patterns:
                   - '@oxlint/*'
+                  - 'oxc-parser'
                   - 'oxfmt'
                   - 'oxlint'
                   - 'oxlint-plugin-eslint'

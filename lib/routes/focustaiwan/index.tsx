@@ -54,7 +54,7 @@ async function handler(ctx) {
         title: item.HeadLine,
         link: item.PageUrl,
         category: item.ClassName,
-        pubDate: timezone(parseDate(item.CreateTime), +8),
+        pubDate: timezone(parseDate(item.CreateTime), 8),
     }));
 
     const items = await Promise.all(

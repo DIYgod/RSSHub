@@ -95,16 +95,15 @@ async function handler(ctx) {
             videoList = videoList.map((item) => proxyVideo(item, relay));
         }
         let duration = post.video?.duration;
-        duration = duration && duration / 1000;
+        duration &&= duration / 1000;
         let img;
         // if (!embed) {
         //     img = post.video && post.video.dynamicCover; // dynamic cover (webp)
         // }
-        img =
-            img ||
+        img ||=
             post.video?.cover?.url_list.at(-1) || // HD
             post.video?.origin_cover?.url_list.at(-1); // LD
-        img = img && resolveUrl(img);
+        img &&= resolveUrl(img);
 
         // render description
         const desc = post.desc?.replaceAll('\n', '<br>');

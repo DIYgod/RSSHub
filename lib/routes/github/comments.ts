@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -90,11 +90,11 @@ async function allIssues(ctx, user, repo, limit, headers) {
     });
 
     const rateLimit = {
-        limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
-        remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
-        reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset')) * 1000),
+        limit: Number.parseInt(response.headers.get('x-ratelimit-limit') ?? ''),
+        remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining') ?? ''),
+        reset: parseDate(Number.parseInt(response.headers.get('x-ratelimit-reset') ?? '') * 1000),
         resoure: response.headers.get('x-ratelimit-resource'),
-        used: Number.parseInt(response.headers.get('x-ratelimit-used')),
+        used: Number.parseInt(response.headers.get('x-ratelimit-used') ?? ''),
     };
 
     const ret = {
@@ -123,7 +123,7 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
             per_page: limit,
         },
     });
-    const items = [];
+    const items: DataItem[] = [];
     const lastUrl = timelineResponse.headers.get('link')?.match(/<(\S+?)>; rel="last"/)?.[1];
     if (lastUrl) {
         timelineResponse = await ofetch.raw(lastUrl, { headers });
@@ -197,15 +197,15 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         item: items,
     };
 
-    const resetTimestamp = Number.parseInt(response.headers.get('x-ratelimit-reset'));
+    const resetTimestamp = Number.parseInt(response.headers.get('x-ratelimit-reset') ?? '');
     ctx.set('json', {
         ...ret,
         rateLimit: {
-            limit: Number.parseInt(response.headers.get('x-ratelimit-limit')),
-            remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining')),
+            limit: Number.parseInt(response.headers.get('x-ratelimit-limit') ?? ''),
+            remaining: Number.parseInt(response.headers.get('x-ratelimit-remaining') ?? ''),
             reset: parseDate(resetTimestamp * 1000),
             resoure: response.headers.get('x-ratelimit-resource'),
-            used: Number.parseInt(response.headers.get('x-ratelimit-used')),
+            used: Number.parseInt(response.headers.get('x-ratelimit-used') ?? ''),
         },
     });
     return ret;

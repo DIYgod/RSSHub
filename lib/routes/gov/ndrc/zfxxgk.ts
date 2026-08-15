@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,16 +22,16 @@ export const handler = async (ctx) => {
     let items = $('div.zwxxkg-result tr')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const a = item.find('a.xxgk_list1');
+            const a = $item.find('a.xxgk_list1');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('td').last().text()),
-                link: new URL(a.prop('href'), currentUrl).href,
-                language,
+                pubDate: parseDate($item.find('td').last().text()),
+                link: new URL(a.prop('href')!, currentUrl).href,
+                language: language as Language,
             };
         });
 
@@ -53,8 +53,8 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.article').text(),
                 };
-                item.language = language;
-                item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href'), currentUrl).href;
+                item.language = language as Language;
+                item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href')!, currentUrl).href;
                 item.enclosure_title = item.enclosure_url ? $$('table.enclosure a.xxgk_list1').first().text() : undefined;
 
                 return item;
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.zwgklogo img').prop('src'), currentUrl).href;
+    const image = new URL($('div.zwgklogo img').prop('src')!, currentUrl).href;
 
     return {
         title: `${$('meta[name="SiteName"]').prop('content')} - ${$('div.zwgktoptitle').text()}`,
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="SiteName"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

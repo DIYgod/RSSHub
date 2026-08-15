@@ -60,14 +60,14 @@ async function handler(ctx) {
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100)
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
 
                 return {
                     title: a.text(),
                     link: `https:${a.attr('href')}`,
-                    pubDate: timezone(parseDate(item.find('span.postTime').text()), +8),
-                    category: item.attr('data-label').split(',').filter(Boolean),
+                    pubDate: timezone(parseDate($item.find('span.postTime').text()), 8),
+                    category: $item.attr('data-label')!.split(',').filter(Boolean),
                 };
             });
     } else {
@@ -79,7 +79,7 @@ async function handler(ctx) {
         list = response.data.data.list.map((item) => ({
             title: item.title,
             link: `https:${item.url}`,
-            pubDate: timezone(parseDate(item.createtime), +8),
+            pubDate: timezone(parseDate(item.createtime), 8),
         }));
     }
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 计算机科学与技术学院：http://computer.upc.edu.cn/
 // - 学院新闻：http://computer.upc.edu.cn/6277/list.htm
@@ -59,21 +59,21 @@ async function handler(ctx) {
     // ## 获取列表
     const list = $('.list tbody table tr')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
             const link = a.attr('href');
             return {
-                title: a.attr('title'),
-                link: link.startsWith('http') ? link : `${baseUrl}${link}`,
-                pubDate: parseDate(item.find('div[style]').text(), 'YYYY-MM-DD'),
+                title: a.attr('title')!,
+                link: link!.startsWith('http') ? link : `${baseUrl}${link}`,
+                pubDate: parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'),
             };
         });
     // ## 定义输出的item
     const out = await Promise.all(
         // ### 遍历列表，筛选出自己想要的内容
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 // 获取详情页面的介绍
                 const detail_response = await got({
                     method: 'get',

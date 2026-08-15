@@ -51,7 +51,7 @@ async function handler(ctx): Promise<Data> {
         title: item.title,
         link: item.page_url.startsWith('http') ? item.page_url : `${baseUrl}${item.page_url}`,
         description: item.page_url.startsWith('/contents/') ? '' : `<p>${item.title}</p><img src="${item.image_url}" alt="">`,
-        pubDate: timezone(parseDate(item.publish_at), +9),
+        pubDate: timezone(parseDate(item.publish_at), 9),
         category: item.tags.map((tag) => tag.name),
         guid: item.id,
     }));
@@ -85,6 +85,6 @@ async function getContent(nextBuildId: string, contentId: string) {
         content
             .html()
             ?.replaceAll(rubyRegex, '$1（$2）')
-            ?.replaceAll(/[^\t\n\r\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/g, '') ?? '';
+            ?.replaceAll(/[^\t\n\r\u{0020}-\u{D7FF}\u{E000}-\u{FDCF}\u{FDE0}-\u{FFFD}]/gu, '') ?? '';
     return description;
 }

@@ -1,10 +1,10 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import ofetch from '@/utils/ofetch';
 
 export const getItem = async (item) => {
     const response = await ofetch(item.link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const reduxState = JSON.parse($('script#__REDUX_STATE__').text().replaceAll(':undefined', ':null').match('__REDUX_STATE__=(.*);')?.[1] || '{}');
 
@@ -29,7 +29,7 @@ export const getItem = async (item) => {
 };
 
 const renderArticle = (asset, link: string) => {
-    const $ = cheerio.load(asset.body, null, false);
+    const $ = load(asset.body, null, false);
     $('x-placeholder').each((_, el) => {
         const $el = $(el);
         const id = $el.attr('id');

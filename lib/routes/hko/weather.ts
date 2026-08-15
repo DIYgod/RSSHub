@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -9,13 +9,13 @@ const handler = async () => {
     const pageUrl = 'https://www.weather.gov.hk/en/wxinfo/currwx/current.htm';
 
     const data = await ofetch(url);
-    const $ = cheerio.load(data, {
+    const $ = load(data, {
         xmlMode: true,
     });
 
     const description = $('item').first().find('description');
 
-    const $$ = cheerio.load(description.text());
+    const $$ = load(description.text());
 
     const items = $$('table tr')
         .toArray()

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -200,14 +200,14 @@ async function handler(ctx) {
 
     const author = $('title').text();
     const description = `${city ?? ''}${category ?? ''}`;
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author}权益中心${description ? ` - ${description}` : ''}`,
         link: currentUrl,
         description,
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('meta[property="og:image"]').prop('content'),
         icon,
         logo: icon,

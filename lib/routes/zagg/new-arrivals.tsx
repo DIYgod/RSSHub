@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://www.zagg.com/en_us';
@@ -19,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'New Arrivals',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     description: 'For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`',
 };
@@ -48,12 +48,12 @@ async function handler(ctx) {
     const list = $('.item.product.product-item')
         .toArray()
         .map((element) => {
-            const data = {};
+            const data: DataItem = { title: '' };
             const details = $(element).find('.product.details-box').html();
             data.link = $(element).find('.product-item-link').eq(0).attr('href');
             data.title = $(element).find('.product-item-link').text();
             const regex = /(https.*?)\?/;
-            const imgUrl = $(element).find('img').eq(0).attr('data-src').match(regex)[1];
+            const imgUrl = $(element).find('img').eq(0).attr('data-src')!.match(regex)![1];
             const img = renderToString(
                 <div>
                     <img src={imgUrl} />

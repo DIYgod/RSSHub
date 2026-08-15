@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { baseUrl, getBuildId, parseItem, parseList } from './utils';
@@ -31,14 +30,14 @@ async function handler(ctx) {
     const { kolId, lang = 'en' } = ctx.req.param();
     const { limit = 10 } = ctx.req.query();
 
-    const buildId = await getBuildId(cache.tryGet);
+    const buildId = await getBuildId();
     const { data: response } = await got(`${baseUrl}/_next/data/${buildId}/${lang}/kol/${kolId}.json`);
 
     const { queries } = response.pageProps.dehydratedState;
     const { data: profile } = queries.find((q) => q.queryKey[0] === '/user/get_profile').state;
 
     const list = parseList(queries.find((q) => q.queryKey[0] === '/feed/list/user').state.data.pages[0].list.slice(0, limit), lang, buildId);
-    const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseItem(item)));
 
     return {
         title: `${profile.nickname} - Followin`,

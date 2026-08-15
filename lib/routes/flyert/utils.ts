@@ -19,7 +19,7 @@ async function loadContent(link) {
 
     // 去除全文末尾多余内容
     $('.lookMore').remove();
-    $('script, style').remove();
+    $('style').remove();
     $('#loginDialog').remove();
 
     // 获取第一个帖子对象
@@ -45,7 +45,7 @@ async function loadContent(link) {
     return { description };
 }
 
-const ProcessFeed = (list, caches) => {
+const ProcessFeed = (list: any[], caches) => {
     const host = 'https://www.flyert.com.cn';
 
     return pMap(
@@ -56,7 +56,7 @@ const ProcessFeed = (list, caches) => {
             const $label = $(".comiis_common a[data-track='版块页主题分类']");
             const $title = $(".comiis_common a[data-track='版块页文章']");
             // 还原相对链接为绝对链接
-            const itemUrl = new URL($title.attr('href'), host).href;
+            const itemUrl = new URL($title.attr('href')!, host).href;
 
             // 列表上提取到的信息
             const single = {

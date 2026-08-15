@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ async function handler() {
         '#kt_wrapper > div.main-content-area > div.container.container-fluid > div:nth-child(1) > div.col-xs-12.col-sm-6.col-md-8.post-listing > div.row.flex-row-fluid > div:nth-child(2) > div > div > div.card-body.pt-2 > div.d-flex'
     );
 
-    const list = alist.toArray().map((item) => {
+    const list = alist.toArray().map((item): DataItem => {
         const $item = $(item);
 
         const path = $item.find('a').attr('href');
@@ -44,7 +44,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,

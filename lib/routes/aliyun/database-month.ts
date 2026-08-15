@@ -38,7 +38,7 @@ async function handler() {
         .map((e) => {
             const element = $(e);
             const title = element.find('a').text().trim();
-            const link = `http://mysql.taobao.org${element.find('a').attr('href').trim()}/`;
+            const link = `http://mysql.taobao.org${element.find('a').attr('href')}/`;
             return {
                 title,
                 description: '',
@@ -53,7 +53,7 @@ async function handler() {
             return cache.tryGet(link, async () => {
                 const itemReponse = await got(link);
                 const itemElement = load(itemReponse.data);
-                item.description = itemElement('.content').html();
+                item.description = itemElement('.content').html() ?? '';
                 return item;
             });
         })

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { isValidHost } from '@/utils/valid-host';
@@ -60,19 +60,20 @@ async function handler(ctx) {
     let items = $('.item-icon, .picture-icon')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item).find('a');
+        .map((item): DataItem => {
+            const $item = $(item).find('a');
 
-            const link = item.attr('href');
+            const link = $item.attr('href')!;
 
             return {
                 link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',
@@ -82,9 +83,9 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     item.title = content('.headline').text();
-                    const pictures = /myfigurecollection\.net\/picture\//.test(item.link)
+                    const pictures = /myfigurecollection\.net\/picture\//.test(item.link!)
                         ? [{ src: content('meta[property="og:image"]').attr('content') }]
-                        : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content')));
+                        : JSON.parse(decodeURIComponent(content('meta[name="pictures"]').attr('content')!));
                     item.description = renderDescription(
                         pictures,
                         content('.form-field')
@@ -95,7 +96,7 @@ async function handler(ctx) {
                             }))
                     );
                 } catch {
-                    item.title = `Item #${item.link.split('/').pop()}`;
+                    item.title = `Item #${item.link!.split('/').pop()}`;
                 }
 
                 return item;

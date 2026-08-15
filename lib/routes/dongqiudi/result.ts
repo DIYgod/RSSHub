@@ -1,5 +1,3 @@
-import { JSDOM } from 'jsdom';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,20 +22,27 @@ async function handler(ctx) {
     const team = ctx.req.param('team');
     const link = `https://www.dongqiudi.com/team/${team}.html`;
 
-    const response = await got(link);
-    const dom = new JSDOM(response.data, {
-        runScripts: 'dangerously',
-    });
-    const data = dom.window.__NUXT__.data[0];
-    const resultData = data.teamScheduleData.filter((data) => data.fs_A && data.fs_B);
+    const { data: scheduleData } = await got(`https://api.dongqiudi.com/data/v1/team/schedule/${team}`);
+    const lastSeason = scheduleData.season_list.find((s) => !s.current);
 
-    const teamName = data.teamDetail.base_info.team_name;
+    if (!lastSeason) {
+        return {
+            title: `${team} 比赛结果`,
+            link,
+            item: [],
+        };
+    }
+
+    const { data: seasonResp } = await got(lastSeason.url);
+    const resultData = seasonResp.data.filter((match) => match.fs_A && match.fs_B);
+
+    const teamName = resultData.length ? (resultData[0].team_A_id === team ? resultData[0].team_A_name : resultData[0].team_B_name) : team;
 
     const out = resultData.map((result) => ({
         title: `${result.match_title} ${result.team_A_name} ${result.fs_A}-${result.fs_B} ${result.team_B_name}`,
         guid: result.match_id,
         link: result.scheme.replace('dongqiudi:///game/', 'https://www.dongqiudi.com/liveDetail/'),
-        pubDate: parseDate(result.start_time),
+        pubDate: parseDate(result.start_play),
     }));
 
     return {

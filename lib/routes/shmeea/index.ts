@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,12 +43,12 @@ async function handler(ctx) {
 
     const list = $('#main .pageList li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title') || item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), baseURL).href,
-                pubDate: parseDate(item.find('.listTime').text().trim(), 'YYYY-MM-DD'),
+                title: $item.find('a').attr('title') || $item.find('a').text(),
+                link: new URL($item.find('a').attr('href')!, baseURL).href,
+                pubDate: parseDate($item.find('.listTime').text(), 'YYYY-MM-DD'),
             };
         });
 
@@ -63,10 +63,10 @@ async function handler(ctx) {
                 const $ = load(result.data);
 
                 const description = $('#ivs_content').html();
-                const pbTimeText = $('#ivs_title .PBtime').text().trim();
+                const pbTimeText = $('#ivs_title .PBtime').text();
 
                 item.description = description;
-                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), +8) : item.pubDate;
+                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
 
                 return item;
             })

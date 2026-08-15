@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { getRollNewsList, parseArticle, parseRollNewsList } from './utils';
 
@@ -38,15 +37,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const lid = map.get(type).id;
-    const title = map.get(type).title;
+    const lid = map.get(type)!.id;
+    const title = map.get(type)!.title;
     const pageid = '207';
     const { limit = '50' } = ctx.req.query();
 
     const response = await getRollNewsList(pageid, lid, limit);
     const list = parseRollNewsList(response.data.result.data);
 
-    const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const out = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `${title}-新浪科技科学探索`,

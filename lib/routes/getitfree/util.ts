@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { Language } from '@/types';
 import got from '@/utils/got';
 
 const rootUrl = 'https://getitfree.cn';
@@ -186,13 +187,13 @@ const fetchData = async (url) => {
 
     const title = $('title').text().split(/\|/, 1)[0];
     const image = new URL('wp-content/uploads/site_logo.png', rootUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         title,
         link: url,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,
@@ -247,7 +248,7 @@ const getFilterKeyForSearchParams = (key, isApi = false) => {
  *                   e.g. `name1,name2`.
  */
 const getFilterNameForTitle = (filterPairs) =>
-    Object.values(filterPairs)
+    Object.values<any>(filterPairs)
         .flat()
         .map((pair) => pair?.name ?? pair?.slug ?? pair)
         .filter(Boolean)

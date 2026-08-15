@@ -73,7 +73,7 @@ describe('proxy', () => {
         });
 
         expect(proxy.agent).toBeInstanceOf(SocksProxyAgent);
-        expect(proxy.dispatcher).toBeNull();
+        expect(proxy.dispatcher).toBeInstanceOf(ProxyAgent);
         expect(proxy.getCurrentProxy()?.uri).toBe('socks5://proxy.local:1080');
     });
 

@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['roll.caijing.com.cn/index1.html', 'roll.caijing.com.cn/'],
+            source: ['roll.caijing.com.cn/'],
         },
     ],
     name: '滚动新闻',
@@ -32,9 +32,8 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://roll.caijing.com.cn';
-    const response = await got(`${baseUrl}/ajax_lists.php`, {
+    const response = await got(`${baseUrl}/json/lists1.json`, {
         searchParams: {
-            modelid: 0,
             time: Math.random(),
         },
     });
@@ -42,7 +41,7 @@ async function handler() {
     const list = response.data.map((item) => ({
         title: item.title,
         link: item.url.replace('http://', 'https://'),
-        pubDate: timezone(parseDate(item.published, 'MM-DD HH:mm'), +8),
+        pubDate: timezone(parseDate(item.published, 'MM-DD HH:mm'), 8),
         category: item.cat,
     }));
 
@@ -67,7 +66,7 @@ async function handler() {
     return {
         title: '滚动新闻-财经网',
         image: 'https://www.caijing.com.cn/favicon.ico',
-        link: response.url,
+        link: baseUrl,
         item: items,
     };
 }

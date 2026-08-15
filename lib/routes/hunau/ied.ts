@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import getContent from './utils/common';
+import { getContent } from './utils/common';
 
 export const route: Route = {
     path: '/ied/:type?/:category?/:page?',
@@ -32,7 +32,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    await getContent(ctx, {
+    return await getContent(ctx, {
         baseHost: 'https://ied.hunau.edu.cn',
         baseCategory: 'ggtz', // 默认：公告通知
         baseType: 'xwzx', // 默认：新闻中心

@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -219,8 +221,8 @@ function processListsAndLines(html: string): string {
 }
 
 function stripComments(html: string): string {
-    // Remove HTML comments
-    return html.replaceAll(/<!--[\s\S]*?-->/g, '');
+    // Remove HTML comments and unsafe tags
+    return sanitizeHtml(html);
 }
 
 // Wiki markup to HTML converter with proper list handling
@@ -267,23 +269,25 @@ async function fetchMultipleWikiContent(pageNames: string[]): Promise<Record<str
         const data = JSON.parse(response.body);
 
         if (data.query && data.query.pages) {
-            for (const page of Object.values(data.query.pages)) {
-                if (page.revisions && page.revisions[0] && page.revisions[0].slots && page.revisions[0].slots.main) {
-                    const wikitext = page.revisions[0].slots.main['*'];
+            for (const page of Object.values<{ title: string; revisions: Array<{ slots: { main: Record<string, string> } }> }>(data.query.pages)) {
+                if (!(page.revisions && page.revisions[0] && page.revisions[0].slots && page.revisions[0].slots.main)) {
+                    continue;
+                }
 
-                    // Parse the Current events template content
-                    const content = parseCurrentEventsTemplate(wikitext);
+                const wikitext = page.revisions[0].slots.main['*'];
 
-                    if (content) {
-                        // Convert wiki markup to HTML
-                        const html = wikiToHtml(content);
+                // Parse the Current events template content
+                const content = parseCurrentEventsTemplate(wikitext);
 
-                        // Use the page title as the key
-                        const pageTitle = page.title;
-                        // Convert back to the format we expect: "Portal:Current_events/2025_September_18"
-                        const normalizedTitle = pageTitle.replace(/Portal:Current events\/(\d{4}) (\w+) (\d+)/, 'Portal:Current_events/$1_$2_$3');
-                        results[normalizedTitle] = html;
-                    }
+                if (content) {
+                    // Convert wiki markup to HTML
+                    const html = wikiToHtml(content);
+
+                    // Use the page title as the key
+                    const pageTitle = page.title;
+                    // Convert back to the format we expect: "Portal:Current_events/2025_September_18"
+                    const normalizedTitle = pageTitle.replace(/Portal:Current events\/(\d{4}) (\w+) (\d+)/, 'Portal:Current_events/$1_$2_$3');
+                    results[normalizedTitle] = html;
                 }
             }
         }

@@ -53,12 +53,12 @@ async function handler(ctx) {
     const list = $('tr.bg-none');
 
     const out = list.toArray().map((item) => {
-        item = $(item);
+        const $item = $(item);
 
-        const title = item.find('div table:nth-child(1) tr td:nth-child(1)').text();
-        const description = renderToString(<YxdzqbDescription src={item.find('table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src')} description={item.find('div.collapse').html()} />);
-        const link = item.find('div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
-        const guid = link + item.find('div.cell_price span:nth-child(2)').text();
+        const title = $item.find('div table:nth-child(1) tr td:nth-child(1)').text();
+        const description = renderToString(<YxdzqbDescription src={$item.find('table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src')} description={$item.find('div.collapse').html() ?? undefined} />);
+        const link = $item.find('div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
+        const guid = link + $item.find('div.cell_price span:nth-child(2)').text();
 
         const single = {
             title,

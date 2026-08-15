@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 const rootUrl = 'https://oreno3d.com';
 
-async function sync_detail(link) {
+export const sync_detail = async (link) => {
     // 主选择器
     const sec_page_selector = 'article.g-main-video-article';
     // 分条选择器
@@ -20,10 +20,10 @@ async function sync_detail(link) {
     const response = await got(link);
     const $ = load(response.data);
     // 创建列表
-    const tags = [];
-    const authors = [];
-    const origins = [];
-    const characters = [];
+    const tags: string[] = [];
+    const authors: string[] = [];
+    const origins: string[] = [];
+    const characters: string[] = [];
     // 筛选
     const raw_pic_link = rootUrl + $(raw_pic_selector).find('img').attr('src');
     const video_name = $(video_name_selector).text();
@@ -33,28 +33,24 @@ async function sync_detail(link) {
         .each((i, el) => {
             authors[i] = $(el).text();
             authors[i].replace(' ', ''); // 去空格
-            authors[i].trim(); // 去首尾空格
         });
     $(sec_page_selector)
         .find(origins_selector)
         .each((i, el) => {
             origins[i] = $(el).text();
             origins[i].replace(' ', '');
-            origins[i].trim();
         });
     $(sec_page_selector)
         .find(characters_selector)
         .each((i, el) => {
             characters[i] = $(el).text();
             characters[i].replace(' ', '');
-            characters[i].trim();
         });
     $(sec_page_selector)
         .find(tags_selector)
         .each((i, el) => {
             tags[i] = $(el).text();
             tags[i].replace(' ', '');
-            tags[i].trim();
         });
     // 筛选
     const desc = $(sec_page_selector).find(desc_selector).text();
@@ -71,6 +67,4 @@ async function sync_detail(link) {
         iwara_link,
         oreno3d_link: link,
     };
-}
-
-export default sync_detail;
+};

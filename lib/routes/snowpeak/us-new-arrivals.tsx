@@ -1,10 +1,21 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://www.snowpeak.com';
+
+interface Product {
+    title: string;
+    handle: string;
+    published_at: string;
+    tags: string[];
+    description: string;
+    variants: Array<{ name: string }>;
+    images: string[];
+}
+
 export const route: Route = {
     path: '/us/new-arrivals',
     categories: ['shopping'],
@@ -24,7 +35,7 @@ export const route: Route = {
         },
     ],
     name: 'New Arrivals(USA)',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'snowpeak.com/collections/new-arrivals',
 };
@@ -41,30 +52,30 @@ async function handler() {
     const list = $('.element.product-tile')
         .toArray()
         .map((element) => {
-            const data = {};
-            const product = $(element).find('.product-data').data('product');
-            data.title = product.title;
-            data.link = `${host}/products/${product.handle}`;
-            data.pubDate = new Date(product.published_at).toUTCString();
-            data.category = product.tags;
-            data.variants = product.variants.map((item) => item.name);
-            data.description =
-                product.description +
-                renderToString(
-                    <div>
-                        Variant:
-                        <br />
-                        {product.variants.map((variant) => (
-                            <>
-                                {variant.name}
-                                <br />
-                            </>
-                        ))}
-                        {product.images.map((image) => (
-                            <img src={image} />
-                        ))}
-                    </div>
-                );
+            const product = $(element).find('.product-data').data('product') as Product;
+            const data: DataItem = {
+                title: product.title,
+                link: `${host}/products/${product.handle}`,
+                pubDate: new Date(product.published_at).toUTCString(),
+                category: product.tags,
+                description:
+                    product.description +
+                    renderToString(
+                        <div>
+                            Variant:
+                            <br />
+                            {product.variants.map((variant) => (
+                                <>
+                                    {variant.name}
+                                    <br />
+                                </>
+                            ))}
+                            {product.images.map((image) => (
+                                <img src={image} />
+                            ))}
+                        </div>
+                    ),
+            };
 
             return data;
         });

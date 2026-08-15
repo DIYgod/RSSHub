@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -14,7 +14,7 @@ const handler = async (ctx) => {
     const currentUrl = `${rootUrl}${category}/`;
     const response = await got(currentUrl);
 
-    const $ = cheerio.load(response.data);
+    const $ = load(response.data);
 
     const pattern = /item=(\[\{.*?\}\]);/;
     const newsList = JSON.parse($('script[language="javascript"]').text().match(pattern)?.[1].replaceAll("'", '"') || '[]');
@@ -29,7 +29,7 @@ const handler = async (ctx) => {
         topNewsList.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
-                const $ = cheerio.load(detailResponse.data);
+                const $ = load(detailResponse.data);
 
                 item.description = $('.word').html();
 

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -12,18 +13,18 @@ const getSingleRecord = async (url) => {
     const list = $('#info-list-ul').find('li');
 
     return list.toArray().map((item) => {
-        item = $(item);
-        const date = item.find('.time').text();
+        const $item = $(item);
+        const date = $item.find('.time').text();
         return {
-            title: item.find('a').attr('title'),
+            title: $item.find('a').attr('title'),
             pubDate: parseDate(date),
-            link: baseUrl + item.find('a').attr('href'),
+            link: baseUrl + $item.find('a').attr('href'),
         };
     });
 };
 
-const getArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const getArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const response = await got(item.link);
         const $ = load(response.data);
 

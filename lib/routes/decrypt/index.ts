@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
@@ -48,33 +47,17 @@ async function handler(ctx): Promise<Data> {
                         return {};
                     }
 
-                    try {
-                        const result = await extractFullText(item.link);
-                        return {
-                            title: item.title || 'Untitled',
-                            link: item.link.split('?', 1)[0], // Clean URL by removing query parameters
-                            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                            description: result?.fullText ?? (item.content || ''),
-                            author: item.creator || 'Decrypt',
-                            category: result?.tags ? [...new Set([...(item.categories ?? []), ...result.tags])] : item.categories || [],
-                            guid: item.guid || item.link,
-                            image: result?.featuredImage ?? item.enclosure?.url,
-                        };
-                    } catch (error: any) {
-                        logger.warn(`Couldn't fetch full content for ${item.link}: ${error.message}`);
-
-                        // Fallback to RSS content
-                        return {
-                            title: item.title || 'Untitled',
-                            link: item.link.split('?', 1)[0],
-                            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                            description: item.content || '',
-                            author: item.creator || 'Decrypt',
-                            category: item.categories || [],
-                            guid: item.guid || item.link,
-                            image: item.enclosure?.url,
-                        };
-                    }
+                    const result = await extractFullText(item.link);
+                    return {
+                        title: item.title || 'Untitled',
+                        link: item.link.split('?', 1)[0], // Clean URL by removing query parameters
+                        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                        description: result?.fullText ?? item.content,
+                        author: item.creator || 'Decrypt',
+                        category: result?.tags ? [...new Set([...(item.categories ?? []), ...result.tags])] : item.categories || [],
+                        guid: item.guid || item.link,
+                        image: result?.featuredImage ?? item.enclosure?.url,
+                    };
                 })
             )
     );
@@ -89,28 +72,23 @@ async function handler(ctx): Promise<Data> {
     } as Data;
 }
 
-async function extractFullText(url: string): Promise<null | { fullText: string; featuredImage: string; tags: string[] }> {
-    try {
-        const response = await ofetch(url);
+async function extractFullText(url: string): Promise<{ fullText: string; featuredImage: string; tags: string[] } | null> {
+    const response = await ofetch(url);
 
-        const $ = load(response);
+    const $ = load(response);
 
-        const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-        const post = nextData.props.pageProps.post;
+    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+    const post = nextData.props.pageProps.post;
 
-        if (post.content.length) {
-            const fullText = `<img src="${post.featuredImage.src}" alt="${post.featuredImage.alt}">` + post.content;
+    if (post.content.length) {
+        const fullText = `<img src="${post.featuredImage.src}" alt="${post.featuredImage.alt}">` + post.content;
 
-            return {
-                fullText,
-                featuredImage: post.featuredImage.src,
-                tags: post.tags.data.map((tag) => tag.name),
-            };
-        }
-
-        return null;
-    } catch (error) {
-        logger.error(`Error extracting full text from ${url}: ${error}`);
-        return null;
+        return {
+            fullText,
+            featuredImage: post.featuredImage.src,
+            tags: post.tags.data.map((tag) => tag.name),
+        };
     }
+
+    return null;
 }

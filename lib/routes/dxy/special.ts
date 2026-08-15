@@ -89,7 +89,7 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(list.map((item) => getPost(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => getPost(item)));
 
     return {
         title: specialDetail.name,

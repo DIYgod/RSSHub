@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -124,15 +124,15 @@ async function handler(ctx) {
                 content('div.logintips').remove();
 
                 content('img').each((_, e) => {
-                    e = content(e);
+                    const $e = content(e);
 
-                    content(e).replaceWith(
+                    content($e).replaceWith(
                         renderDescription({
                             image: {
-                                src: e.prop('data-original') ?? e.prop('src'),
-                                alt: e.prop('alt'),
-                                width: e.prop('width'),
-                                height: e.prop('height'),
+                                src: $e.prop('data-original') ?? $e.prop('src'),
+                                alt: $e.prop('alt'),
+                                width: $e.prop('width'),
+                                height: $e.prop('height'),
                             },
                         })
                     );
@@ -154,14 +154,14 @@ async function handler(ctx) {
 
     const title = $('title').text();
     const image = $('div.logo a img').prop('src');
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${$(`a[data-cid="${category}"]`).text()}${title}`,
         link: currentUrl,
         description: $('meta[name="keywords"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

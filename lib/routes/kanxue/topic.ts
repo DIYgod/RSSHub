@@ -86,9 +86,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: baseUrl + path,
-        headers: {
-            Referer: baseUrl,
-        },
     });
 
     const $ = load(response.data);
@@ -122,11 +119,11 @@ async function handler(ctx) {
                               .eq(0)
                               .find('.message img')
                               .each((_, item) => {
-                                  item = $(item);
+                                  const $item = $(item);
 
-                                  const src = item.attr('src');
+                                  const src = $item.attr('src');
                                   if (src !== undefined && !src.startsWith('https://') && !src.startsWith('http://')) {
-                                      item.attr('src', `https://bbs.kanxue.com/${src}`);
+                                      $item.attr('src', `https://bbs.kanxue.com/${src}`);
                                   }
                               });
 

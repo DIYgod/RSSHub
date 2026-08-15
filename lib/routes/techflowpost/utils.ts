@@ -62,7 +62,7 @@ function getHeaders(referer: string, cookie = acwScV2Cookie) {
         'accept-language': locale,
         referer,
         'user-agent': config.trueUA,
-        ...(cookie ? { cookie } : {}),
+        ...(cookie && { cookie }),
     };
 }
 

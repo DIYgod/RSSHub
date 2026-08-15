@@ -43,7 +43,7 @@ async function handler(ctx) {
             const imageSrc = element.find('img[style*="object-fit: cover"]').attr('src'); // 选择缩略图
 
             return {
-                title,
+                title: title!,
                 link: videoLink,
                 description: `<img src="${imageSrc}">`,
             };

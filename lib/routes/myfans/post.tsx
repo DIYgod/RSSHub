@@ -1,7 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, getPostByAccountId, showByUsername } from './utils';
@@ -52,8 +52,8 @@ async function handler(ctx) {
     const posts = await getPostByAccountId(account.id);
 
     const items = posts.map((p) => ({
-        title: p.body?.replaceAll('\r\n', ' ').trim().split(' ', 1)[0],
-        description: renderDescription(p.post_images, p.body?.replaceAll('\r\n', '<br>')),
+        title: p.body?.replaceAll('\r\n', ' ').trim().split(' ', 1)[0]!,
+        description: renderDescription(p.post_images, p.body!.replaceAll('\r\n', '<br>')),
         pubDate: parseDate(p.published_at),
         link: `${baseUrl}/posts/${p.id}`,
         author: p.user.name,
@@ -67,7 +67,7 @@ Followers ${account.followings_count} Follow ${account.about.replaceAll('\r\n', 
         image: account.avatar_url,
         icon: account.avatar_url,
         logo: account.avatar_url,
-        language: 'ja-JP',
+        language: 'ja' as Language,
         item: items,
     };
 }

@@ -43,12 +43,12 @@ async function handler() {
         .slice(1)
         .toArray()
         .map((tr) => {
-            tr = $(tr);
+            const $tr = $(tr);
 
             return {
-                title: tr.find('td[title]').attr('title'),
-                link: baseUrl + tr.find('td[title] > a').attr('href'),
-                author: tr.find('td:last').text(),
+                title: $tr.find('td[title]').attr('title')!,
+                link: baseUrl + $tr.find('td[title] > a').attr('href'),
+                author: $tr.find('td:last').text(),
             };
         });
 
@@ -62,8 +62,8 @@ async function handler() {
                 const $ = load(postPage.data);
 
                 const data = {
-                    title: item.title,
-                    description: $('.letter-details').html().trim(),
+                    title: item.title!,
+                    description: $('.letter-details').html()!.trim(),
                     pubDate: parseDate($('.letter-details div:first table tr:nth-child(2) > .td_label2').text() + ' +0800', 'YYYY-MM-DD HH:mm:ss ZZ'),
                     link: item.link,
                     author: item.author,

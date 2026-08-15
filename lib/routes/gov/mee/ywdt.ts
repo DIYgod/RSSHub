@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -54,15 +54,15 @@ async function handler(ctx) {
         .find(`div:nth-child(${columns[cate].order})`)
         .find('.mobile_none li , .mobile_clear li')
         .toArray()
-        .map((item) => {
-            const title = $(item).find('a.cjcx_biaob').text().trim();
+        .map((item): DataItem & { link: string } => {
+            const title = $(item).find('a.cjcx_biaob').text();
             const href = $(item).find('a').attr('href');
 
             let absolute_path;
-            if (href.search(String.raw`\./`) === 0) {
-                absolute_path = `${url}${href.slice(2)}`;
-            } else if (href.search(String.raw`\./`) === 1) {
-                absolute_path = `${baseUrl}${href.slice(3)}`;
+            if (href!.search(String.raw`\./`) === 0) {
+                absolute_path = `${url}${href!.slice(2)}`;
+            } else if (href!.search(String.raw`\./`) === 1) {
+                absolute_path = `${baseUrl}${href!.slice(3)}`;
             } else {
                 absolute_path = href;
             }
@@ -79,10 +79,10 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 try {
-                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')), +8);
+                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')!), 8);
                     // 视频新闻规则不一样
                     if (cate === 'spxw') {
-                        item.title = content('meta[name=ArticleTitle]').attr('content');
+                        item.title = content('meta[name=ArticleTitle]').attr('content')!;
                         // 取消视频自动播放
                         const video_control = content('.neiright_JPZ_GK_CP video');
                         video_control.removeAttr('autoplay');
@@ -90,7 +90,7 @@ async function handler(ctx) {
                         const video_source = content('.neiright_JPZ_GK_CP source');
                         const video_href = video_source.attr('src');
                         const _title_href = item.link.split('/').at(-1);
-                        const _video_src = item.link.replace(_title_href, () => video_href.slice(2));
+                        const _video_src = item.link.replace(_title_href!, () => video_href!.slice(2));
                         video_source.attr('src', _video_src);
                     }
                     item.description = content('.neiright_JPZ_GK_CP').html();

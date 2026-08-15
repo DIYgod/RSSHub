@@ -4,14 +4,12 @@ import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 
-const baseIndexUrl = 'https://www.auto.uestc.edu.cn/index/tzgg1.htm';
-const host = 'https://www.auto.uestc.edu.cn/';
+const baseIndexUrl = 'https://www.auto.uestc.edu.cn/xwgg/tzgs.htm';
 
 export const route: Route = {
     path: '/auto',
     categories: ['university'],
     example: '/uestc/auto',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -46,20 +44,21 @@ async function handler() {
 
     const $ = load(content);
 
-    const items = $('dl.clearfix');
+    const items = $('a.flex.wl');
 
     const out = $(items)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const newsTitle = item.find('a').text();
-            const newsLink = host + item.find('a[href]').attr('href').slice(3);
-            const newsPubDate = parseDate(item.find('span').text());
+            const $item = $(item);
+            const newsTitle = $item.attr('title') ?? $item.find('h3').text().trim();
+            const newsLink = new URL($item.attr('href') ?? '', baseIndexUrl).href;
+            const newsPubDate = $item.find('.date').text().trim();
 
             return {
                 title: newsTitle,
+                description: $item.find('.p1').text().trim(),
                 link: newsLink,
-                pubDate: newsPubDate,
+                pubDate: parseDate(`${newsPubDate.slice(0, 4)}-${newsPubDate.slice(4)}`),
             };
         });
 

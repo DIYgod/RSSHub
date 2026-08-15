@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/',
     example: '/jandan',
     name: 'Feed',
-    maintainers: ['nczitzk', 'bigfei', 'pseudoyu'],
+    maintainers: ['lonelykid', 'nczitzk', 'bigfei', 'pseudoyu'],
     parameters: {},
     features: {
         requireConfig: false,
@@ -33,15 +33,16 @@ async function handler(): Promise<{
     link: string;
     item: DataItem[];
 }> {
-    const rootUrl = 'http://i.jandan.net';
+    const rootUrl = 'https://i.jandan.net';
     const feed = await parser.parseURL(`${rootUrl}/feed/`);
     const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link || '', async () => {
-                if (!item.link) {
-                    return undefined as unknown as DataItem;
-                }
-                const response = await ofetch(item.link);
+        feed.items.map((item) => {
+            const link = item.link;
+            if (!link) {
+                return;
+            }
+            return cache.tryGet(link, async () => {
+                const response = await ofetch(link);
                 const $ = load(response);
                 $('.wechat-hide').prev().nextAll().remove();
                 $('img').replaceWith((i, e) => {
@@ -52,20 +53,20 @@ async function handler(): Promise<{
                 });
                 const single: DataItem = {
                     title: item.title || '',
-                    description: $('.entry').html() || '',
+                    description: $('.entry').html(),
                     pubDate: item.pubDate,
                     link: item.link,
                     author: item['dc:creator'],
                     category: item.categories,
                 };
                 return single;
-            })
-        )
+            });
+        })
     );
 
     return {
         title: '煎蛋',
         link: rootUrl,
-        item: items,
+        item: items.filter((item): item is DataItem => item !== undefined),
     };
 }

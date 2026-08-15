@@ -50,7 +50,8 @@ type Block = {
 
 const applyAttributes = (content: JSX.Element | string, attributes?: BlockAttribute[]): JSX.Element | string => {
     let result: JSX.Element | string = content;
-    for (const attribute of attributes ?? []) {
+    const attributeList = attributes ?? [];
+    for (const attribute of attributeList) {
         switch (attribute) {
             case 'bold':
                 result = <strong>{result}</strong>;
@@ -375,7 +376,7 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
         };
     }
 
-    const article = Object.values(initialData.data).find((d) => d.name === 'article')?.data;
+    const article = Object.values<any>(initialData.data).find((d) => d.name === 'article')?.data;
     const topics = Array.isArray(article?.topics) ? article.topics : [];
     const blocks = article?.content?.model?.blocks;
 

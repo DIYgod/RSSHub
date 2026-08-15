@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -13,16 +13,29 @@ import { setCookies } from '@/utils/playwright-utils';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',
+    categories: ['journal'],
+    example: '/pnas/latest',
+    parameters: {
+        topicPath: 'Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default',
+    },
+    features: {
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportScihub: true,
+    },
     radar: [
         {
             source: ['pnas.org/*topicPath'],
             target: '/:topicPath',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Journal',
+    maintainers: ['emdoe', 'HenryQW', 'y9c'],
     handler,
     url: 'pnas.org/*topicPath',
+    description: `::: tip
+Some topics require adding \`topic/\` to \`topicPath\` like [\`/pnas/topic/app-math\`](https://rsshub.app/pnas/topic/app-math) and some don't like [\`/pnas/biophysics-and-computational-biology\`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+:::`,
 };
 
 async function handler(ctx) {
@@ -30,7 +43,7 @@ async function handler(ctx) {
     const topicPath = ctx.req.param('topicPath');
     const link = `${baseUrl}/${topicPath ?? 'latest'}`;
 
-    let cookieJar = await cache.get('pnas:cookieJar');
+    let cookieJar: any = await cache.get('pnas:cookieJar');
     const cacheMiss = !cookieJar;
     cookieJar = cacheMiss ? new CookieJar() : CookieJar.fromJSON(cookieJar);
     const { data: res } = await got(link, {
@@ -43,13 +56,13 @@ async function handler(ctx) {
     const $ = load(res);
     const list = $('.card--row-reversed .card-content')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('.article-title a');
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const a = $item.find('.article-title a');
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.card__meta__date').text()),
+                link: new URL(a.attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('.card__meta__date').text()),
             };
         });
 
@@ -71,14 +84,14 @@ async function handler(ctx) {
                 });
                 await page.waitForSelector('.core-container');
 
-                const res = await page.evaluate(() => document.documentElement.innerHTML);
+                const res = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
 
                 const $ = load(res);
                 const PNASdataLayer = JSON.parse(
                     $('script')
                         .text()
-                        .match(/PNASdataLayer =(.*?);/)[1]
+                        .match(/PNASdataLayer =(.*?);/)![1]
                 );
 
                 $('.signup-alert-ad, .citations-truncation button').remove();
@@ -118,7 +131,7 @@ async function handler(ctx) {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,
         description: $('.banner-widget__content p').text(),
         image: 'https://www.pnas.org/favicon.ico',
-        language: 'en-US',
+        language: 'en-us' as Language,
         link,
         item: out,
     };

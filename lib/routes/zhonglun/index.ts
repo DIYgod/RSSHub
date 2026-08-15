@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,25 +21,25 @@ export const handler = async (ctx) => {
     let items = $('div#dataList > dl > dd, div#dataList > ul > li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             const description = renderDescription({
-                intro: item.find('p').text(),
+                intro: $item.find('p').text(),
             });
 
             return {
-                title: item.find('h3 > a').text(),
+                title: $item.find('h3 > a').text(),
                 description,
-                pubDate: parseDate(item.find('span').text()),
-                link: item.find('h3 > a').prop('href'),
+                pubDate: parseDate($item.find('span').text()),
+                link: $item.find('h3 > a').prop('href'),
                 language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -48,7 +48,7 @@ export const handler = async (ctx) => {
                 const description =
                     item.description +
                     renderDescription({
-                        description: $$('div.edit_con_original').html(),
+                        description: $$('div.edit_con_original').html() ?? undefined,
                     });
                 const image = $$('img.raw-image').first().prop('src');
 
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('header.header h1 a img').prop('src'), rootUrl).href;
+    const image = new URL($('header.header h1 a img').prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text()} - ${$('div.siteban_text').text()}`,

@@ -28,7 +28,7 @@ async function handler(ctx) {
     if (query) {
         const pairs = query.split('&');
         for (const pair of pairs) {
-            const [key, value] = pair.split('=');
+            const [key, value] = pair.split('=', 2);
             if (key) {
                 queries[key] = value;
             }

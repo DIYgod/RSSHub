@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
@@ -38,7 +38,7 @@ const handler = async () => {
             });
 
             const response = await page.content();
-            const $ = cheerio.load(response);
+            const $ = load(response);
 
             const items = $('.video-item')
                 .toArray()

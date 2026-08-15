@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,21 +43,21 @@ async function handler(ctx) {
     const count = list
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((each) => {
-            each = $(each);
-            const floor = each.find('th.new a.s.xst').text();
-            const floorUrl = each.find('th.new a.s.xst').attr('href');
+        .map((each): DataItem => {
+            const $each = $(each);
+            const floor = $each.find('th.new a.s.xst').text();
+            const floorUrl = $each.find('th.new a.s.xst').attr('href');
             return {
                 title: `${title}:${floor}`,
-                link: new URL(floorUrl, `${host}/2b/`).href,
-                author: each.find('td.by cite').text(),
-                pubDate: timezone(parseDate(each.find('td.by em').first().text()), +8),
+                link: new URL(floorUrl!, `${host}/2b/`).href,
+                author: $each.find('td.by cite').text(),
+                pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
             };
         });
 
     const resultItems = await Promise.all(
         count.map((i) =>
-            cache.tryGet(i.link, async () => {
+            cache.tryGet(i.link!, async () => {
                 i.description = await fetchContent(i.link);
                 return i;
             })
@@ -95,8 +95,8 @@ async function fetchContent(url) {
                         name: subind(el).find('.pls.favatar div.authi').text(),
                         postinfo: subind(el).find('div.authi em[id*=authorposton]').text(),
                     }}
-                    msg={subind(el).find('td[id*="postmessage_"]').html()}
-                    host={config.saraba1st.host}
+                    msg={subind(el).find('td[id*="postmessage_"]').html() ?? undefined}
+                    host={config.saraba1st.host!}
                 />
             );
             stubS.append(section);

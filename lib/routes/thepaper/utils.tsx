@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -38,7 +39,7 @@ export default {
             let description = contentDetail.content || contentDetail.summary || contentDetail.desc || '';
 
             if (contentDetail.videos) {
-                description = description + contentDetail.summary;
+                description += contentDetail.summary;
             }
             if (useOldMode) {
                 if (contentDetail.videos) {
@@ -54,7 +55,7 @@ export default {
                 pubDate = parseRelativeDate(contentDetail.pubTime);
             }
 
-            const rss_item = {
+            const rss_item: DataItem = {
                 title: contentDetail.name || contentDetail.shareName,
                 link: itemUrl,
                 description,
@@ -87,7 +88,7 @@ const ThepaperVideoDetail = ({ videos }: { videos: { url: string; coverUrl: stri
     <video
         src={videos.url}
         controls
-        playsinline="true"
+        playsinline
         webkit-playsinline="true"
         x5-playsinline="true"
         x5-video-player-type="h5"

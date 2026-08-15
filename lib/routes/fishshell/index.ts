@@ -1,20 +1,22 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['program-update'],
+    example: '/fishshell',
     radar: [
         {
             source: ['fishshell.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Release Notes',
     maintainers: ['x2cf'],
     handler,
     url: 'fishshell.com/',
@@ -27,7 +29,7 @@ async function handler() {
     return {
         link,
         title: 'Release notes — fish-shell',
-        language: 'en',
+        language: 'en' as Language,
         item: $('#release-notes > section')
             .toArray()
             .map((item) => {
@@ -35,7 +37,7 @@ async function handler() {
                 const date = title.match(/\(released (.+?)\)/)?.[1];
                 return {
                     title,
-                    link: new URL($(item).find('a').attr('href'), link).href,
+                    link: new URL($(item).find('a').attr('href')!, link).href,
                     pubDate: date ? parseDate(date, 'MMMM D, YYYY') : undefined,
                     description: $(item).html(),
                 };

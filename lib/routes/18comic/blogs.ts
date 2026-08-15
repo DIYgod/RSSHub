@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -53,13 +53,13 @@ async function handler(ctx) {
 
     let items = $('.title')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { guid: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.parent().attr('href')}`,
-                guid: `https://18comic.org${item.parent().attr('href')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.parent().attr('href')}`,
+                guid: `https://18comic.org${$item.parent().attr('href')}`,
             };
         });
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -44,7 +44,7 @@ export const handler = async () => {
             }
 
             const title = $el.find('span').text().trim();
-            const pubDateStr = $el.find('label').text().trim();
+            const pubDateStr = $el.find('label').text();
 
             return {
                 title,
@@ -53,7 +53,7 @@ export const handler = async () => {
                 description: title,
             };
         })
-        .filter(Boolean);
+        .filter(Boolean) as DataItem[];
 
     return {
         title: `${author} - ${pageTitle}`,

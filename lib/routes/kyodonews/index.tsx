@@ -57,7 +57,8 @@ async function handler(ctx) {
     try {
         response = await got(currentUrl);
     } catch (error) {
-        throw error.response && error.response.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
+        const err = error as { response?: { statusCode: number } };
+        throw err.response && err.response.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
     }
 
     const $ = load(response.data, { xmlMode: keyword === 'rss' });
@@ -86,8 +87,8 @@ async function handler(ctx) {
         items = $('.m-article-wrap:first-of-type .m-article-item__link')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const link = item.attr('href');
+                const $item = $(item);
+                const link = $item.attr('href');
                 return {
                     link: resolveRelativeLink(link, rootUrl),
                 };

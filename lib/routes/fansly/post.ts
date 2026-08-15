@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, getAccountByUsername, getTimelineByAccountId, parseDescription } from './utils';
@@ -48,7 +48,7 @@ async function handler(ctx) {
         image: account.banner.locations[0].location,
         icon: account.avatar.locations[0].location,
         logo: account.avatar.locations[0].location,
-        language: 'en',
+        language: 'en' as Language,
         allowEmpty: true,
         item: items,
     };

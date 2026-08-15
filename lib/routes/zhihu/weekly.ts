@@ -41,7 +41,7 @@ async function handler() {
         .map((element) => {
             const info = {
                 title: $(element).find('span.PubBookListItem-title').text(),
-                link: new URL($(element).find('a.PubBookListItem-buttonWrapper').attr('href'), host).href,
+                link: new URL($(element).find('a.PubBookListItem-buttonWrapper').attr('href')!, host).href,
                 description: $(element).find('div.PubBookListItem-description').text(),
                 author: $(element).find('span.PubBookListItem-author').text(),
             };

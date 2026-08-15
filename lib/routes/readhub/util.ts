@@ -1,3 +1,4 @@
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -12,13 +13,12 @@ const apiTopicUrl = new URL('topic/list', apiRootUrl).href;
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
-const processItems = async (items, tryGet) =>
+const processItems = async (items) =>
     await Promise.all(
         items.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 try {
                     if (!item.link.startsWith(rootUrl)) {
                         throw new Error(`"${item.link}" is an external URL`);

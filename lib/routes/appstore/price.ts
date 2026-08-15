@@ -59,7 +59,7 @@ async function handler(ctx) {
         result = res.data.results.macapps;
     }
 
-    const item = [];
+    const item: any[] = [];
 
     const title = `${country === 'cn' ? '限免提醒' : 'Price watcher'}: ${result.title} for ${type === 'macapps' ? 'macOS' : 'iOS'}`;
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,13 +38,13 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.datalist table tbody tr')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const noticeId = e
+        .map((e): DataItem => {
+            const $e = $(e);
+            const noticeId = $e
                 .find('a')
-                .attr('onclick')
-                .match(/viewNotice\('(.+?)'\)/)[1];
-            const tds = e.find('td');
+                .attr('onclick')!
+                .match(/viewNotice\('(.+?)'\)/)![1];
+            const tds = $e.find('td');
             return {
                 title: tds.eq(2).text(),
                 link: 'http://jwgl.ouc.edu.cn/public/viewSchoolNoticeDetail.action?schoolNoticeId=' + noticeId,
@@ -54,7 +54,7 @@ async function handler() {
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.description = $('div.notice').html();

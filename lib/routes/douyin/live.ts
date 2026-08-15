@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import playwright from '@/utils/playwright';
@@ -75,7 +75,7 @@ async function handler(ctx) {
     const nickname = roomOwner.nickname;
     const userAvatar = roomOwner.avatar_thumb.url_list[0];
 
-    const items = [];
+    const items: DataItem[] = [];
     if (roomInfo.id_str) {
         if (roomInfo.status === 2) {
             items.push({

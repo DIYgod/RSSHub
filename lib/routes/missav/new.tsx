@@ -1,5 +1,5 @@
 // import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -48,7 +48,7 @@ async function handler() {
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     });
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     await context.close();
 
     // const response = await ofetch(`${baseUrl}/dm397/new`, {
@@ -57,16 +57,16 @@ async function handler() {
     //     },
     // });
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const items = $('.grid .group')
         .toArray()
         .map((item) => {
             const $item = $(item);
             const title = $item.find('.text-secondary');
-            const poster = new URL($item.find('img').data('src'));
+            const poster = new URL($item.find('img').data('src') as string);
             poster.searchParams.set('class', 'normal');
-            const video = $item.find('video').data('src');
+            const video = $item.find('video').data('src') as string;
             return {
                 title: title.text().trim(),
                 link: title.attr('href'),

@@ -34,17 +34,17 @@ type ArticleData = [
 ];
 
 export async function fetchItems(queryParam: string): Promise<DataItem[]> {
-    const res = await got<string>('https://web.dev/_d/dynamic_content', {
+    const res = await got('https://web.dev/_d/dynamic_content', {
         body: `[null,null,null, "${queryParam}",null,null,null,null,31,null,null,null,2]`,
         method: 'post',
     });
-    const data = JSON.parse(res.data.replace(/^[^[]*/, '')) as [ArticleData[], number];
+    const data = JSON.parse((res.data as string).replace(/^[^[]*/, '')) as [ArticleData[], number];
     const items = await Promise.all(
         data[0].map((item) => {
             const link = item[6];
-            return cache.tryGet(link, async () => {
-                const { data: articleHtml } = await got.get<string>(link);
-                const $ = load(articleHtml);
+            return cache.tryGet(link, async (): Promise<DataItem> => {
+                const { data: articleHtml } = await got.get(link);
+                const $ = load(articleHtml as string);
                 const articleBody = $('.devsite-article-body');
                 articleBody.find('.wd-authors').remove();
 
@@ -54,7 +54,7 @@ export async function fetchItems(queryParam: string): Promise<DataItem[]> {
                     description: articleBody.html(),
                     link,
                 };
-            }) as unknown as DataItem;
+            });
         })
     );
 

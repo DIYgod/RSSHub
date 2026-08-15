@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -41,15 +41,15 @@ async function handler(ctx) {
 
     let items = $('div.media')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const a = item.find('h4.media-heading a');
+            const a = $item.find('h4.media-heading a');
 
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.find('span').first().text(), 'DDYYYY-MM'),
+                link: new URL(a.attr('href')!, currentUrl).href,
+                pubDate: parseDate($item.find('span').first().text(), 'DDYYYY-MM'),
             };
         });
 

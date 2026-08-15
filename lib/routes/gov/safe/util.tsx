@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { Language } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -14,7 +15,7 @@ const zxfkCategoryApis = {
     tsjy: 'www/complaint/complaintQuery?siteid=',
 };
 
-const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3') => {
+const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = 3) => {
     const apiUrl = new URL(`${zxfkCategoryApis[category]}${site}`, rootUrl).href;
     const currentUrl = new URL(`${site}/${category}/index.html`, rootUrl).href;
 
@@ -26,9 +27,9 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const spans = item.find('span[objid]');
+            const spans = $item.find('span[objid]');
 
             const message = {
                 author: spans.first().text().replace(/:$/, ''),
@@ -93,7 +94,7 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: content('meta[name="ColumnDescription"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as Language,
         image,
         icon,
         logo: icon,

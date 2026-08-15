@@ -47,7 +47,7 @@ async function handler() {
     const list: DataItem[] = apiResponse.results[0].data.map((item) => ({
         title: item.title,
         link: new URL(item.url, baseUrl).href,
-        pubDate: timezone(parseDate(item.publish_date), +8),
+        pubDate: timezone(parseDate(item.publish_date), 8),
     }));
 
     const items = await Promise.all(
@@ -57,7 +57,7 @@ async function handler() {
                 const $ = load(response);
 
                 const content = $('.article_detail');
-                item.pubDate = timezone(parseDate(content.find('b#time').text()), +8);
+                item.pubDate = timezone(parseDate(content.find('b#time').text()), 8);
                 content.find('h2, .tips').remove();
                 item.description = content.html()?.trim();
 

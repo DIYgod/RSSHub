@@ -63,7 +63,7 @@ async function handler(ctx) {
                 await page.waitForSelector('#pickup04 .grid-cell');
                 await page.waitForSelector('#main-block .grid-cell');
 
-                html = await page.evaluate(() => document.documentElement.innerHTML);
+                html = await page.evaluate(() => document.documentElement.getHTML());
             } catch {
                 throw new Error('Access denied (403)');
             }
@@ -78,49 +78,49 @@ async function handler(ctx) {
     const items = $('#main-block .grid .grid-cell')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             // remove event and styles
-            item.find('*').removeAttr('onclick');
-            item.find('*').removeAttr('onerror');
-            item.find('*').removeAttr('style');
+            $item.find('*').removeAttr('onclick');
+            $item.find('*').removeAttr('onerror');
+            $item.find('*').removeAttr('style');
 
             // format account style
-            const account = item.find('.account-group-link-row');
+            const account = $item.find('.account-group-link-row');
             account.html(account.text());
 
             // extract video tag from its player
-            item.find('.plyr--video').each((_, player) => {
-                player = $(player);
+            $item.find('.plyr--video').each((_, player) => {
+                const $player = $(player);
 
-                const v = player.find('video');
-                player.replaceWith(v);
+                const v = $player.find('video');
+                $player.replaceWith(v);
                 v.attr('poster', 'https:' + v.attr('data-poster'));
                 v.find('source').attr('src', 'https:' + v.find('source').attr('src'));
             });
 
             // correct src of img tags
-            item.find('img').each((_, i) => {
-                i = $(i);
-                i.attr('src', 'https:' + i.attr('data-src').split('?resize', 1)[0]);
-                i.removeAttr('data-src');
+            $item.find('img').each((_, i) => {
+                const $i = $(i);
+                $i.attr('src', 'https:' + $i.attr('data-src')!.split('?resize', 1)[0]);
+                $i.removeAttr('data-src');
             });
 
-            const author = item.find('.account-group').text();
-            const categories = item
+            const author = $item.find('.account-group').text();
+            const categories = $item
                 .find('.hashtag-item .hashtag')
                 .toArray()
                 .map((c) => $(c).text().trim());
-            const link = item.find('.account-group-link-row').attr('href');
-            const date = parseDate(item.find('.profile-char').attr('datetime'));
-            const guid = item.find('a.tap-image').attr('data-tweet-id') || item.find('video[class^="js-player-"]').attr('data-tweet-id');
+            const link = $item.find('.account-group-link-row').attr('href');
+            const date = parseDate($item.find('.profile-char').attr('datetime')!);
+            const guid = $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id');
 
-            item.find('.grow-room').remove();
-            item.find('div.profile-group.mt10.prl2').eq(1).remove();
+            $item.find('.grow-room').remove();
+            $item.find('div.profile-group.mt10.prl2').eq(1).remove();
 
             return {
-                title: item.find('.profile-text').text(),
-                description: item.html(),
+                title: $item.find('.profile-text').text(),
+                description: $item.html(),
                 link,
                 pubDate: date,
                 guid,

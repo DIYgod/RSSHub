@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
@@ -45,14 +45,17 @@ async function handler(ctx) {
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
-    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    const response = await page.evaluate(() => document.documentElement.getHTML());
     const cookies = await getCookies(page);
     await page.close();
     const $ = load(response);
 
     const list = $('.issue-item__title')
         .toArray()
-        .map((item) => ({ link: `${baseUrl}${$(item).find('a').attr('href')}` }));
+        .map((item): DataItem & { link: string } => ({
+            link: `${baseUrl}${$(item).find('a').attr('href')}`,
+            title: '',
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
@@ -68,13 +71,13 @@ async function handler(ctx) {
                     waitUntil: 'domcontentloaded',
                     referer: link,
                 });
-                const response = await page.evaluate(() => document.documentElement.innerHTML);
+                const response = await page.evaluate(() => document.documentElement.getHTML());
                 await page.close();
 
                 const $ = load(response);
 
                 item.title = $('head title').text();
-                item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content'));
+                item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content')!);
                 item.doi = $('head meta[scheme="doi"]').attr('content');
                 item.author = $('.author-name span')
                     .toArray()
@@ -105,6 +108,6 @@ async function handler(ctx) {
         link,
         image: $('head meta[property="og:image"]').attr('content'),
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

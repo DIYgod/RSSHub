@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '首页最新新闻',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     url: 'www.abmedia.io/',
 };

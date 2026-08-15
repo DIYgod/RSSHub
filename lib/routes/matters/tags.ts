@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -16,7 +16,7 @@ interface Tag {
 const getTagId = (tid: string) =>
     cache.tryGet(`matters:tags:${tid}`, async () => {
         const response = await ofetch(`${baseUrl}/tags/${tid}`);
-        const $ = cheerio.load(response);
+        const $ = load(response);
         const nextData = JSON.parse($('script#__NEXT_DATA__').text());
 
         const node = Object.entries(nextData.props.apolloState.data.ROOT_QUERY)

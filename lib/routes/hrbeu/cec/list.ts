@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,29 +37,24 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const response = await got(`${rootUrl}/${id}/list.htm`, {
-        headers: {
-            Referer: rootUrl,
-        },
-    });
+    const response = await got(`${rootUrl}/${id}/list.htm`);
 
     const $ = load(response.data);
 
     const bigTitle = $('div.column-news-box')
         .find('h2.column-title')
         .text()
-        .replaceAll(/[\s·]/g, '')
-        .trim();
+        .replaceAll(/[\s·]/g, '');
 
     const list = $('a.column-news-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).attr('href');
             if (link && link.includes('page.htm')) {
                 link = `${rootUrl}${link}`;
             }
             return {
-                title: $(item).find('span.column-news-title').text().trim(),
+                title: $(item).find('span.column-news-title').text(),
                 pubDate: parseDate($(item).find('span.column-news-date').text()),
                 link,
             };
@@ -67,8 +62,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.includes('page.htm')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.includes('page.htm')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('div.wp_articlecontent').html();

@@ -1,14 +1,14 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/blog/:category?',
+    path: '/blog',
     name: 'Blog',
-    url: 'cognition.ai/blog',
+    url: 'cognition.com/blog',
     maintainers: ['Loongphy', 'ttttmr'],
     example: '/cognition/blog',
     categories: ['programming'],
@@ -23,90 +23,31 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cognition.ai/blog/1', 'cognition.ai/blog/:category/1'],
-            target: '/blog/:category?',
+            source: ['cognition.com/blog'],
         },
     ],
     view: ViewType.Articles,
     handler,
-    parameters: {
-        category: 'Category name, e.g., Research, Tutorials',
-    },
 };
 
-const splitAuthors = (text: string | undefined): DataItem['author'] => {
-    if (!text) {
-        return undefined;
-    }
-
-    const names = text
-        .split(',')
-        .map((name) => name.trim())
-        .filter(Boolean);
-
-    if (names.length === 0) {
-        return undefined;
-    }
-
-    return names.map((name) => ({
-        name,
-    }));
-};
-
-export async function handler(ctx) {
-    const baseUrl = 'https://cognition.ai';
-    const { category } = ctx.req.param();
-    const listPath = category ? `/blog/${category}/1` : '/blog/1';
-    const targetUrl = new URL(listPath, baseUrl).href;
+async function handler() {
+    const baseUrl = 'https://cognition.com';
+    const targetUrl = `${baseUrl}/blog`;
     const html = await ofetch(targetUrl);
     const $ = load(html);
 
-    const items = $('#blog-post-list__list li.blog-post-list__list-item')
+    const items = $('section li a')
         .toArray()
-        .map((el) => {
-            const element = $(el);
-            const linkElement = element.find('a.o-blog-preview').first();
+        .map((item) => {
+            const $item = $(item);
 
-            const href = linkElement.attr('href');
-            const link = href ? new URL(href, baseUrl).href : undefined;
-
-            if (!link) {
-                return;
-            }
-
-            const title = linkElement.find('h3.o-blog-preview__title').text().trim();
-            if (!title) {
-                return;
-            }
-
-            const summary = linkElement.find('p.o-blog-preview__intro').text().trim();
-
-            const dateNode = linkElement.find('.o-blog-preview__meta-date').clone();
-            dateNode.find('.o-blog-preview__meta').remove();
-            const dateText = dateNode.text().trim();
-            const authorText = linkElement.find('.o-blog-preview__meta-author').text().trim();
-
-            const dataItem: DataItem = {
-                title,
-                link,
-                pubDate: parseDate(dateText),
+            return {
+                title: $item.find('h2').text(),
+                link: new URL($item.attr('href')!, baseUrl).href,
+                description: $item.find('p').text(),
+                pubDate: parseDate($item.find('span').text(), 'MM.DD.YY'),
             };
-
-            if (summary) {
-                dataItem.description = summary;
-            }
-
-            const authors = splitAuthors(authorText);
-            if (authors) {
-                dataItem.author = authors;
-            }
-
-            return dataItem;
-        })
-        .filter((item): item is DataItem => item !== undefined);
-
-    const imageAttr = $('meta[property="og:image"]').attr('content');
-    const image = imageAttr ? new URL(imageAttr, baseUrl).href : undefined;
+        });
 
     return {
         title: $('title').text(),
@@ -114,6 +55,6 @@ export async function handler(ctx) {
         link: targetUrl,
         allowEmpty: true,
         item: items,
-        image,
+        image: $('meta[property="og:image"]').attr('content'),
     };
 }

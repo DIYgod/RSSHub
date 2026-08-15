@@ -242,10 +242,7 @@ async function handler(ctx): Promise<Data> {
             if (item.beatmaps.at(0)!.difficulty_rating > upperLimit) {
                 return false;
             }
-            if (item.beatmaps.at(-1)!.difficulty_rating < lowerLimit) {
-                return false;
-            }
-            return true;
+            return item.beatmaps.at(-1)!.difficulty_rating >= lowerLimit;
         };
 
         beatmapsetList = beatmapsetList.filter((item) => difficultyRateFilterFunc(item));
@@ -315,7 +312,7 @@ async function handler(ctx): Promise<Data> {
                     </li>
                 </ul>
                 <h3>Difficulties</h3>
-                <table border="1">
+                <table border={1}>
                     <thead>
                         <tr>
                             <th>Version</th>

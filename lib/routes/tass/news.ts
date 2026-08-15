@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -39,12 +39,12 @@ async function handler(ctx) {
     const $ = load(categoryPage);
 
     const sectionId = $('.container .section-page')
-        .attr('ng-init')
+        .attr('ng-init')!
         .match(/sectionId\s*=\s*(\d+);/);
 
     const { data: response } = await got.post('https://tass.com/userApi/categoryNewsList', {
         json: {
-            sectionId: sectionId[1],
+            sectionId: sectionId![1],
             limit: 20,
             type: 'all',
         },
@@ -79,7 +79,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link,
-        language: 'en',
+        language: 'en' as Language,
         image: $('head meta[property="og:image"]').attr('content'),
         icon: $('head link[rel="apple-touch-icon"]').attr('href'),
         logo: $('head link[rel="apple-touch-icon"]').attr('href'),

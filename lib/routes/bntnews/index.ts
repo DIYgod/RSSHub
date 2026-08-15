@@ -59,7 +59,7 @@ async function handler(ctx) {
             title: article.title,
             link,
             description: article.content,
-            pubDate: timezone(parseDate(article.firstPublishDate), +9),
+            pubDate: timezone(parseDate(article.firstPublishDate), 9),
             author: article.reporter?.[0]?.name || '',
         };
     });
@@ -78,7 +78,6 @@ async function handler(ctx) {
 
                 // Remove ads
                 $content.find('.googleBanner').remove();
-                $content.find('script').remove();
                 $content.find('style').remove();
 
                 if ($content.length > 0) {

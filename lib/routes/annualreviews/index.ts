@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -51,18 +51,18 @@ async function handler(ctx) {
     let items = $('entry')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const doi = item.find('id').text().split('doi=').pop();
+            const doi = $item.find('id').text().split('doi=').pop();
 
             return {
                 doi,
                 guid: doi,
-                title: item.find('title').text(),
-                link: item.find('link').attr('href').split('?', 1)[0],
-                description: item.find('content').text(),
-                pubDate: parseDate(item.find('published').text()),
-                author: item
+                title: $item.find('title').text(),
+                link: $item.find('link').attr('href')!.split('?', 1)[0],
+                description: $item.find('content').text(),
+                pubDate: parseDate($item.find('published').text()),
+                author: $item
                     .find('author name')
                     .toArray()
                     .map((a) => $(a).text())
@@ -72,7 +72,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 const apiUrl = `${apiRootUrl}/works/${item.doi}`;
 
                 const detailResponse = await got({
@@ -95,6 +95,6 @@ async function handler(ctx) {
         description: $('subtitle').first().text(),
         link: currentUrl,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

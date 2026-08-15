@@ -191,7 +191,7 @@ async function handler(ctx) {
                 description,
                 link: `${url}/quota/${dataId}.html`,
                 guid: dataId, // 使用 data-id 作为唯一标识
-                pubDate: timezone(parseDate(dateStr, 'MM-DD'), +8),
+                pubDate: timezone(parseDate(dateStr, 'MM-DD'), 8),
             };
         });
 

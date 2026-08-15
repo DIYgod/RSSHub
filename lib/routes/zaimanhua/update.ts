@@ -43,7 +43,6 @@ export const route: Route = {
         const currentUrl = `${baseUrl}/api/v1/comic2/update_list?status&theme&zone&cate&firstLetter&sortType&page=1&size=20`;
         const headers: Record<string, string> = {
             'user-agent': config.trueUA,
-            referer: baseUrl,
         };
         const token = config.zaimanhua.token;
         if (token) {
@@ -55,7 +54,7 @@ export const route: Route = {
         });
 
         // 近期更新漫画数据
-        const updateData = response.data.comicList;
+        const updateData = response.data.comicList as Array<Record<string, any>>;
         const items = await pMap(
             updateData,
             async (item) => {
@@ -75,7 +74,7 @@ export const route: Route = {
                     return {
                         title: `[${item.status}] | ${item.name} - ${item.last_update_chapter_name}`,
                         author: item.authors,
-                        category: [item.status, ...item.types.split('/').map((type) => type.trim())],
+                        category: [item.status, ...item.types.split('/')],
                         image: item.cover,
                         link: `${baseUrl}/view/${comicPy}/${comicId}/${lastUpdateChapterId}`,
                         pubDate: parseDate(item.last_updatetime * 1000),

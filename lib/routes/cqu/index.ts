@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -44,14 +44,14 @@ async function handler(ctx) {
 
     const list = $('div.page-contner.fl li.pot-r')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a.no-wrap');
-            const link = new URL(a.attr('href'), url).href;
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const a = $item.find('a.no-wrap');
+            const link = new URL(a.attr('href')!, url).href;
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link,
-                pubDate: parseDate(item.find('span.fr').text()), // 假设日期格式是YYYY-MM-DD
+                pubDate: parseDate($item.find('span.fr').text()), // 假设日期格式是YYYY-MM-DD
             };
         });
 

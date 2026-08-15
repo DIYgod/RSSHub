@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -106,7 +106,7 @@ async function handler(ctx) {
 
     let items = $('#threadlist table')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const a = $(item).find('.subject_link');
 
             return {
@@ -117,7 +117,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -136,7 +136,7 @@ async function handler(ctx) {
                         content(el).attr(
                             'href',
                             `${rootUrl}/${content(el)
-                                .attr('href')
+                                .attr('href')!
                                 .replace(/^attach-dialog/, 'attach-download')}`
                         );
                     });
@@ -145,7 +145,7 @@ async function handler(ctx) {
 
                 item.description = content('.post').html();
                 item.author = content('.purple, .grey').first().prev().text();
-                item.pubDate = timezone(parseDate(content('.bg2 b').first().text()), +8);
+                item.pubDate = timezone(parseDate(content('.bg2 b').first().text()), 8);
 
                 if (torrents.length > 0) {
                     item.description += renderTorrents(torrents.toArray().map((t) => content(t).parent().html()));

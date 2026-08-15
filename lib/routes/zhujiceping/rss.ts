@@ -34,7 +34,7 @@ async function handler() {
             const dateraw = element.find('time').text();
 
             return {
-                title,
+                title: title!,
                 description,
                 link,
                 pubDate: parseDate(dateraw, 'YYYY-MM-DD'),

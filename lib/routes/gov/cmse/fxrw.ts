@@ -45,15 +45,15 @@ async function handler() {
     const items = $('#list li a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.title').text().split('：').pop().trim(),
-                link: new URL(item.attr('href'), currentUrl).href,
-                pubDate: timezone(parseDate(item.find('.infoR').first().text().trim(), 'YYYY年M月D日H时m分'), +8),
+                title: $item.find('.title').text().split('：').pop()!.trim(),
+                link: new URL($item.attr('href')!, currentUrl).href,
+                pubDate: timezone(parseDate($item.find('.infoR').first().text().trim(), 'YYYY年M月D日H时m分'), 8),
                 description: renderDescription({
-                    image: new URL(item.find('img').attr('src'), currentUrl).href,
-                    description: item.find('.info').html(),
+                    image: new URL($item.find('img').attr('src')!, currentUrl).href,
+                    description: $item.find('.info').html() ?? undefined,
                 }),
             };
         });

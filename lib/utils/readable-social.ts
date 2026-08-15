@@ -19,10 +19,7 @@ const queryToBoolean = (s) => {
         s = s[0];
     }
     s = s.toString();
-    if (s.toLowerCase() === 'false' || s === '0') {
-        return false;
-    }
-    return true;
+    return !(s.toLowerCase() === 'false' || s === '0');
 };
 
 const queryToInteger = (s) => {

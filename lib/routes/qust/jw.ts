@@ -41,7 +41,7 @@ async function handler() {
             const linkElement = $(element);
             const itemTitle = linkElement.text().trim();
             const path = linkElement.attr('href');
-            const itemUrl = path.startsWith('http') ? path : `${baseUrl}${path}`;
+            const itemUrl = path!.startsWith('http') ? path : `${baseUrl}${path}`;
             return {
                 title: itemTitle,
                 link: itemUrl,

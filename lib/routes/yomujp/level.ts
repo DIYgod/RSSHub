@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +35,7 @@ async function handler(ctx) {
     const level = formatLevel(ctx.req.param('level'));
     const url = new URL('https://yomujp.com/wp-json/wp/v2/posts');
     url.searchParams.append('categories', getLevel(level));
-    url.searchParams.append('per_page', Number.parseInt(ctx.req.query('limit')) || 10);
+    url.searchParams.append('per_page', `${Number.parseInt(ctx.req.query('limit')) || 10}`);
     const posts = await get(url);
 
     const item = posts.map((post) => {
@@ -48,8 +49,8 @@ async function handler(ctx) {
                 if (el.tagName === 'img') {
                     return `<img src=${el.attribs.src} />`;
                 }
-                if (el.firstChild.tagName === 'p') {
-                    return `<p>${$(el.firstChild).html()}</p>`;
+                if ((el.firstChild as Element).tagName === 'p') {
+                    return `<p>${$(el.firstChild!).html()}</p>`;
                 }
                 return `<p>${$(el).html()}</p>`;
             })
@@ -75,7 +76,7 @@ async function handler(ctx) {
         title: level ? `${level.toUpperCase()} | 日本語多読道場` : '日本語多読道場',
         link: `https://yomujp.com/${level}`,
         description: 'みなさん、こんにちは。 「 日本語多読道場(にほんごたどくどうじょう) Yomujp」は日本語を勉強する人のための読みものサイト（website）です。 日本の地理、食べもの、動物、植物、文化や歴史などを紹介します。',
-        language: 'ja-jp',
+        language: 'ja' as Language,
         itunes_author: 'Yomujp',
         image: 'https://yomujp.com/wp-content/uploads/2023/08/top1-2-300x99-1.png',
         item,

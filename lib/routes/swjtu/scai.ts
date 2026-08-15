@@ -74,9 +74,9 @@ const getItem = (item, cache) => {
             pubDate = parseDate(dateMatch[0]);
         } else {
             const dateItem = item.find('.calendar'); // 注意 .calendar 是 class
-            const day = dateItem.find('.day').text().trim(); // "31" （文本需 trim 去空格）
-            const ymd = dateItem.find('.date').text().trim(); // "2025/03"
-            const [year, month] = ymd.split('/'); // ["2025", "03"]
+            const day = dateItem.find('.day').text(); // "31"
+            const ymd = dateItem.find('.date').text(); // "2025/03"
+            const [year, month] = ymd.split('/', 2); // ["2025", "03"]
             const dateText = `${year}-${month}-${day.padStart(2, '0')}`;
             pubDate = new Date(dateText);
         }

@@ -69,14 +69,14 @@ export const route: Route = {
                 const $el = $(el);
                 const $a = $el.find('.listTxt h5 a');
                 const link = $a.attr('href') ?? '';
-                const title = $a.attr('title')?.trim() || $a.text().trim();
+                const title = $a.attr('title') || $a.text();
 
                 const pubDateRaw = $el.find('.listTxt .prompt > i').text().trim();
-                const author = $el.find('.listTxt .prompt > span').first().text().replace('来源：', '').trim();
+                const author = $el.find('.listTxt .prompt > span').first().text().replace('来源：', '');
                 const category = $el
                     .find('.listTxt .prompt > span:not(:first-of-type) em a')
                     .toArray()
-                    .map((a) => $(a).text().trim())
+                    .map((a) => $(a).text())
                     .filter(Boolean);
 
                 return {
@@ -95,9 +95,9 @@ export const route: Route = {
                     const detail = await ofetch(item.link!);
                     const $d = load(detail);
 
-                    item.description = $d('#article').html() ?? undefined;
+                    item.description = $d('#article').html();
 
-                    const detailAuthor = $d('p.source a').text().trim();
+                    const detailAuthor = $d('p.source a').text();
                     if (detailAuthor) {
                         item.author = detailAuthor;
                     }

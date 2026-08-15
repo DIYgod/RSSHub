@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
@@ -71,7 +71,7 @@ async function handler(ctx: Context): Promise<Data> {
     const link = `https://fanqienovel.com/page/${bookId}`;
 
     const response = await ofetch(link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const initialState = JSON.parse(
         $('script:contains("window.__INITIAL_STATE__")')

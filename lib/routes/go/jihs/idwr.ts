@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://id-info.jihs.go.jp';
-    const targetUrl: string = new URL(`surveillance/idwr/jp/idwr/${year}/`, baseUrl).href;
+    const targetUrl: string = new URL(`surveillance/idwr/idwr/${year}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -24,12 +24,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const items: DataItem[] = $('a.sizeview')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $pEl: Cheerio<Element> = $el.parent('p');
 
             const title: string = $pEl.prev('h2').text();
-            const description: string | undefined = $pEl.html() ?? undefined;
+            const description = $pEl.html();
             const pubDateStr: string | undefined = $pEl.text().match(/〔(\d{4}年\d{1,2}月\d{1,2}日)発行〕/)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     text: description,
                 },
                 updated: upDatedStr ? parseDate(upDatedStr, 'YYYY年M月D日') : undefined,
-                language,
+                language: language as Language,
             };
 
             const $enclosureEl: Cheerio<Element> = $el;
@@ -75,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img.common-branding__logo-image').attr('src') ? new URL($('img.common-branding__logo-image').attr('src') as string, baseUrl).href : undefined,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };
@@ -93,7 +93,7 @@ export const route: Route = {
         },
     },
     description: `::: tip
-To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/), where the source URL is \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025).
+To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/surveillance/idwr/idwr/2025/), where the source URL is \`https://id-info.jihs.go.jp/surveillance/idwr/idwr/2025/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025).
 :::`,
     categories: ['government'],
     features: {
@@ -107,7 +107,7 @@ To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/s
     },
     radar: [
         {
-            source: ['id-info.jihs.go.jp/surveillance/idwr/jp/idwr/:year'],
+            source: ['id-info.jihs.go.jp/surveillance/idwr/idwr/:year'],
             target: (params) => {
                 const year: string = params.year;
 
@@ -130,7 +130,7 @@ To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/s
             },
         },
         description: `::: tip
-若订阅 [传染病发生动向调查周报](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/)，网址为 \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/\`，请截取 \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/\` 到末尾 \`/\` 的部分 \`2025\` 作为 \`year\` 参数填入，此时目标路由为 [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025)。
+若订阅 [传染病发生动向调查周报](https://id-info.jihs.go.jp/surveillance/idwr/idwr/2025/)，网址为 \`https://id-info.jihs.go.jp/surveillance/idwr/idwr/2025/\`，请截取 \`https://id-info.jihs.go.jp/surveillance/idwr/idwr/\` 到末尾 \`/\` 的部分 \`2025\` 作为 \`year\` 参数填入，此时目标路由为 [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025)。
 :::`,
     },
 };

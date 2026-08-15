@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import parseList from './utils';
+import { parseList } from './utils';
 
 export const route: Route = {
     path: '/news/:type?',
@@ -16,7 +16,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '河南财政金融学院',
-    maintainers: [],
+    maintainers: ['deep1nlife'],
     handler,
     description: `| 校内公告通知 | 教务处公告通知 | 招生就业处公告通知 |
 | ------------ | -------------- | ------------------ |

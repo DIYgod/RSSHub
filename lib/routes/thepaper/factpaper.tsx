@@ -53,7 +53,7 @@ async function handler(ctx) {
         title: item.title,
         guid: item.proveId,
         link: `${rootUrl}/detail?id=${item.proveId}`,
-        pubDate: timezone(parseDate(item.publishTime), +8),
+        pubDate: timezone(parseDate(item.publishTime), 8),
     }));
 
     items = await Promise.all(

@@ -49,12 +49,12 @@ async function handler() {
     const items = $('h2')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
 
             let description = '';
-            item.nextUntil('h2').each((_, el) => {
+            $item.nextUntil('h2').each((_, el) => {
                 description += $(el).html();
             });
 
@@ -62,7 +62,7 @@ async function handler() {
                 title,
                 description,
                 link: `${logUrl}#${title.replaceAll(/\s+/g, '-').replaceAll('.', '')}`,
-                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)[1]),
+                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)![1]),
             };
         });
 

@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+import { youtube as googleYoutube } from '@googleapis/youtube';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -64,7 +64,7 @@ export const getVideos = (id, part, cache) =>
     });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
 export const formatDescription = (description) => description?.replaceAll(/\r\n|\r|\n/g, '<br>');
-export const renderDescription = (embed, videoId, img, description) =>
+export const renderYoutube = (embed, videoId, img, description) =>
     renderToString(
         <>
             {embed ? (
@@ -99,7 +99,7 @@ export const getSubscriptions = async (part, cache) => {
     return cache.tryGet('youtube:getSubscriptions', () => getSubscriptionsRecusive(part), config.cache.routeExpire, false);
 };
 export async function getSubscriptionsRecusive(part, nextPageToken?) {
-    const res = await google.youtube('v3').subscriptions.list({
+    const res = await googleYoutube('v3').subscriptions.list({
         auth: youtubeOAuth2Client,
         part,
         mine: true,
@@ -162,21 +162,4 @@ export const callApi = async function callApi<T>({ googleApi, youtubeiApi, param
         }
     }
     return await youtubeiApi(params);
-};
-
-export default {
-    getPlaylistItems,
-    getPlaylist,
-    getChannelWithId,
-    getChannelWithUsername,
-    getVideos,
-    getThumbnail,
-    formatDescription,
-    renderDescription,
-    getSubscriptions,
-    getSubscriptionsRecusive,
-    isYouTubeChannelId,
-    getLive,
-    getVideoUrl,
-    getPlaylistWithShortsFilter,
 };

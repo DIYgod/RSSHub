@@ -59,7 +59,7 @@ async function handler(ctx) {
                     ) : null}
                 </>
             ),
-            pubDate: timezone(parseDate(item.operTime), +8),
+            pubDate: timezone(parseDate(item.operTime), 8),
             link: 'https://www.xkb.com.cn/detail?id=' + item.id,
             contentUrl: item.contentUrl,
             author: item.metaInfo.author,

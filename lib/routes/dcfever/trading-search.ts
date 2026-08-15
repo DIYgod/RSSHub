@@ -30,12 +30,12 @@ async function handler(ctx) {
     const list = $('.item_list li a')
         .toArray()
         .map((item) => {
-            item = $(item);
-            item.find('.optional').remove();
+            const $item = $(item);
+            $item.find('.optional').remove();
             return {
-                title: item.find('.trade_title').text(),
-                link: new URL(item.attr('href'), link.href).href,
-                author: item.find('.trade_info').text(),
+                title: $item.find('.trade_title').text(),
+                link: new URL($item.attr('href')!, link.href).href,
+                author: $item.find('.trade_info').text(),
             };
         });
 

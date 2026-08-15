@@ -61,7 +61,7 @@ async function handler(ctx) {
                 .map((i0) => {
                     const i = $(i0);
                     return {
-                        title: i.find('h3>a').attr('title')?.trim(),
+                        title: i.find('h3>a').attr('title'),
                         link: `${url}${i.find('h3>a').attr('href')}`,
                         category: i.find('p>span:nth-child(1)').text(),
                     };

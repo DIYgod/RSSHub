@@ -46,18 +46,18 @@ async function handler(ctx) {
     const list = $('ul.news-list').children();
     const items = await Promise.all(
         list.map((i, item) => {
-            item = $(item);
-            const itemTitle = item.find('a').text();
-            const itemDate = item.find('.span-time').text();
-            const path = item.find('a').attr('href');
+            const $item = $(item);
+            const itemTitle = $item.find('a').text();
+            const itemDate = $item.find('.span-time').text();
+            const path = $item.find('a').attr('href');
             let itemUrl = '';
-            itemUrl = path.startsWith('http') ? path : host + path;
+            itemUrl = (path!.startsWith('http') ? path : host + path)!;
             return cache.tryGet(itemUrl, async () => {
                 let description: string;
                 if (itemUrl) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
-                    description = $('#article_dnull').html().trim();
+                    description = $('#article_dnull').html()!.trim();
                 } else {
                     description = itemTitle;
                 }

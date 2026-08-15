@@ -88,7 +88,7 @@ async function handler(ctx) {
         parsedData = responseData;
     } else {
         const hotKey = Object.keys(responseData).find((key) => key.startsWith('remen'));
-        parsedData = responseData[hotKey];
+        parsedData = responseData[hotKey!];
     }
 
     const items = parsedData.map((item) => ({

@@ -5,13 +5,15 @@ const baseUrl = 'https://www.iiilab.com/';
 
 export const route: Route = {
     path: '/',
+    categories: ['new-media'],
+    example: '/iiilab',
     radar: [
         {
             source: ['www.iiilab.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '发现',
     maintainers: ['Joey'],
     handler,
     url: 'www.iiilab.com/',
@@ -32,7 +34,7 @@ async function handler() {
             item: '.aw-common-list > div',
             title: `$('a').first().text()`,
             link: `$('a').first().attr('href')`,
-            description: `$('.markitup-box').first().text()`,
+            description: `$('.markitup-box').text()`,
             pubDate: `parseDate($('.text-color-999').first().text(), 'YYYY-MM-DD HH:mm')`,
             guid: Buffer.from(`$('a').attr('href')`).toString('base64'),
         },

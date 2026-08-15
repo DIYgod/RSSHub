@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
@@ -29,7 +29,7 @@ async function handler(ctx) {
 
     const { cookie, data } = await getSafeLineCookieWithData(link);
 
-    const $ = cheerio.load(data);
+    const $ = load(data);
     const feedTitle = $('head title').text();
     const list = parseList($);
 

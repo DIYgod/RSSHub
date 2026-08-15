@@ -59,7 +59,7 @@ async function handler(ctx) {
             type: item.entity_type,
             description: `<p>${item.summary}</p>`,
             link: `${rootUrl}/${item.entity_type}/${item.entity_id}`,
-            pubDate: timezone(parseDate(item.published_at), +8),
+            pubDate: timezone(parseDate(item.published_at), 8),
         }))
         .filter((item) => item.type !== 'newsflash');
 

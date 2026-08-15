@@ -74,7 +74,7 @@ async function handler(ctx): Promise<Data> {
     const apiBase = `${ROOT_URL}/wp-json/wp/v2`;
 
     // Build query using fixed category IDs
-    let categoriesQuery: undefined | { include?: number; exclude?: number[] };
+    let categoriesQuery: { include?: number; exclude?: number[] } | undefined;
     if (sectionParam) {
         if (Object.hasOwn(SECTION_CATEGORY_IDS, sectionParam)) {
             categoriesQuery = { include: SECTION_CATEGORY_IDS[sectionParam] };

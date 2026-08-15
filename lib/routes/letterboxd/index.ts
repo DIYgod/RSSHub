@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: $('title').text().trim().replaceAll('\u200E', '') || `${username}'s Watchlist • Letterboxd`,
+        title: $('title').text().trim().replaceAll('\u{200E}', '') || `${username}'s Watchlist • Letterboxd`,
         link: currentUrl,
         item: items,
         allowEmpty: true,

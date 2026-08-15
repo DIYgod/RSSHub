@@ -38,7 +38,7 @@ async function handler(ctx) {
     const mptitle = $('.album__author-name').text() + '|' + $('.album__label-title').text();
     const articledata = await Promise.all(
         list.map((item) => {
-            const link = $(item).attr('data-link').replace('http://', 'https://');
+            const link = $(item).attr('data-link')!.replace('http://', 'https://');
             const title = $(item).attr('data-title');
             const single = {
                 title,
@@ -57,7 +57,7 @@ async function handler(ctx) {
             link: articledata[index].link,
             guid: articledata[index].guid,
             author: articledata[index].author,
-            pubDate: dayjs.unix($(item).find('.js_article_create_time').text()).format(),
+            pubDate: dayjs.unix($(item).find('.js_article_create_time').text() as unknown as number).format(),
         })),
     };
 }

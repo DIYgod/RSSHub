@@ -38,8 +38,7 @@ async function handler(ctx) {
     }
     if (language === 'tw') {
         changelog = '更新日誌';
-    }
-    if (language === 'en') {
+    } else if (language === 'en') {
         changelog = 'Release Notes';
     }
 
@@ -68,10 +67,10 @@ async function handler(ctx) {
 
         // 遍历此前获取的数据
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             // 对获取的日期进行格式化处理
             function getDate() {
-                const str = item.find('.date').text();
+                const str = $item.find('.date').text();
                 let date = '';
                 if (language === 'cn' || language === 'tw') {
                     const patt = /\d+/g;
@@ -87,11 +86,11 @@ async function handler(ctx) {
             }
 
             return {
-                title: item.find('.ver').text(),
-                description: item.find('.logs').html(),
+                title: $item.find('.ver').text(),
+                description: $item.find('.logs').html(),
                 link: `https://${language}.eagle.cool/changelog`,
                 pubDate: parseDate(getDate()),
-                guid: item.find('.ver').text(),
+                guid: $item.find('.ver').text(),
             };
         }),
     };

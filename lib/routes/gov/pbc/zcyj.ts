@@ -32,8 +32,8 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href'), host).href,
-            pubDate: timezone(parseDate($(item).find('span.fr').text(), 'YYYY-MM-DD'), +8),
+            link: new URL($(item).find('a').attr('href')!, host).href,
+            pubDate: timezone(parseDate($(item).find('span.fr').text(), 'YYYY-MM-DD'), 8),
         }));
 
     const items = await processItems(list);

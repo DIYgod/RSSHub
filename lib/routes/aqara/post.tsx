@@ -1,15 +1,23 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['other'],
+    example: '/aqara/en/category/press-release',
+    parameters: { path: '路径，默认为首页' },
+    description: `路径处填写对应页面 URL 中 \`https://aqara.com/\` 后的字段，形如 \`:region/category/:id\` 或 \`:region/tag/:id\`。
+
+| 参数   | 说明                                                     |
+| ------ | -------------------------------------------------------- |
+| region | 地区 id，可在对应分类页 URL 中找到，默认为 en，即 Global |
+| id     | 分类 id 或标签 id，可在对应分类页或标签页 URL 中找到     |`,
+    name: '分类、标签',
+    maintainers: ['nczitzk'],
     handler,
 };
 
@@ -24,7 +32,7 @@ async function handler(ctx) {
     let currentUrl = rootUrl;
     let apiUrl = new URL(`${apiSlug}/posts?_embed=true&per_page=${limit}`, rootUrl).href;
 
-    const filterMatches = getSubPath(ctx).match(/^\/([^/]*)\/([^/]*)\/(.*)$/);
+    const filterMatches = (ctx.req.param('path') ?? '').match(/^([^/]*)\/([^/]*)\/(.*)$/);
 
     if (filterMatches) {
         const filterRegion = filterMatches[1];
@@ -91,7 +99,7 @@ async function handler(ctx) {
         title: `${title}${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:title"]').prop('content'),
-        language: $('meta[property="og:locale"]').prop('content'),
+        language: $('meta[property="og:locale"]').prop('content') as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

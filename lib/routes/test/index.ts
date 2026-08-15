@@ -12,6 +12,7 @@ let cacheIndex = 0;
 
 export const route: Route = {
     path: '/:id/:params?',
+    example: '/test/1',
     name: 'Test',
     maintainers: ['DIYgod', 'NeverBehave'],
     handler,
@@ -37,8 +38,7 @@ async function handler(ctx) {
         throw new CaptchaError('Test captcha error');
     }
     if (ctx.req.param('id') === 'redirect') {
-        ctx.set('redirect', '/test/1');
-        return;
+        return ctx.set('redirect', '/test/1');
     }
     let item: DataItem[] = [];
     let image: string | null = null;
@@ -80,7 +80,7 @@ async function handler(ctx) {
                 pubDate: new Date('2019-3-1').toUTCString(),
                 link: 'https://github.com/DIYgod/RSSHub/issues/1',
                 author: 'DIYgod0',
-                category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }],
+                category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }] as unknown as string[],
             });
 
             break;
@@ -97,9 +97,11 @@ async function handler(ctx) {
             break;
 
         case 'cache': {
-            const description = await cache.tryGet('test', () => ({
-                text: `Cache${++cacheIndex}`,
-            }));
+            const description = await cache.tryGet<{ text: string }>('test', () =>
+                Promise.resolve({
+                    text: `Cache${++cacheIndex}`,
+                })
+            );
             item.push({
                 title: 'Cache Title',
                 description: description.text,
@@ -132,13 +134,7 @@ async function handler(ctx) {
             break;
         }
         case 'cacheUrlKey': {
-            const description = await cache.tryGet(
-                new URL('https://rsshub.app'),
-                () => ({
-                    text: `Cache${++cacheIndex}`,
-                }),
-                config.cache.routeExpire * 2
-            );
+            const description = await cache.tryGet<{ text: string }>(new URL('https://rsshub.app') as unknown as string, () => Promise.resolve({ text: `Cache${++cacheIndex}` }), config.cache.routeExpire * 2);
             item.push({
                 title: 'Cache Title',
                 description: description.text,
@@ -336,7 +332,7 @@ async function handler(ctx) {
                     title: 'Title4 author is null',
                     pubDate: new Date('2019-3-1').toUTCString(),
                     link: 'https://github.com/DIYgod/RSSHub/pull/11555',
-                    author: null,
+                    author: null as unknown as DataItem['author'],
                 }
             );
 
@@ -360,18 +356,18 @@ async function handler(ctx) {
         item.push({
             title: `Title${i}`,
             description: `Description${i}`,
-            pubDate: new Date((ctx.req.param('id') === 'current_time' ? new Date() : 1_546_272_000_000) - i * 10 * 1000).toUTCString(),
+            pubDate: new Date((ctx.req.param('id') === 'current_time' ? Date.now() : 1_546_272_000_000) - i * 10 * 1000).toUTCString(),
             link: `https://github.com/DIYgod/RSSHub/issues/${i}`,
             author: `DIYgod${i}`,
         });
     }
 
     if (ctx.req.param('id') === 'empty') {
-        item = null;
+        item = null as unknown as DataItem[];
     }
 
     if (ctx.req.param('id') === 'allow_empty') {
-        item = null;
+        item = null as unknown as DataItem[];
     }
 
     if (ctx.req.param('id') === 'enclosure') {
@@ -413,9 +409,9 @@ async function handler(ctx) {
     }
 
     return {
-        image,
+        image: image ?? undefined,
         title: `Test ${ctx.req.param('id')}`,
-        itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : null,
+        itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : (null as unknown as string),
         link: 'https://github.com/DIYgod/RSSHub',
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',

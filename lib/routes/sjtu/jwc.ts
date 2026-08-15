@@ -17,18 +17,7 @@ async function getFullArticle(link) {
     if (content.length === 0) {
         return null;
     }
-    // resolve links of <img> and <a>
-    content.find('img').each((_, e) => {
-        const relativeLink = $(e).attr('src');
-        const absLink = new URL(relativeLink, urlRoot).href;
-        $(e).attr('src', absLink);
-    });
-    content.find('a').each((_, e) => {
-        const relativeLink = $(e).attr('href');
-        const absLink = new URL(relativeLink, urlRoot).href;
-        $(e).attr('href', absLink);
-    });
-    return content.html() + ($('.Newslist2').length ? $('.Newslist2').html() : '');
+    return content.html()! + ($('.Newslist2').length ? $('.Newslist2').html() : '')!;
 }
 
 export const route: Route = {
@@ -121,7 +110,7 @@ async function handler(ctx) {
             .map((e) => {
                 const info = $(e).find('.wz');
                 const relativeLink = info.find('a').attr('href');
-                const link = new URL(relativeLink, sectionLink).href;
+                const link = new URL(relativeLink!, sectionLink).href;
                 const title = info.find('a > h2').text();
                 const timeElement = $(e).find('.sj');
                 const day = timeElement.find('h2').text();

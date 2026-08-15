@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,7 @@ export const handler = async (ctx) => {
         return {
             title,
             description,
-            pubDate: timezone(parseDate(item.publishDate), +8),
+            pubDate: timezone(parseDate(item.publishDate), 8),
             link: new URL(`cn/view/pages/ItemDetail.html?docId=${guid}`, rootUrl).href,
             guid,
             id: guid,
@@ -60,7 +60,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate(data.publishDate), +8);
+                item.pubDate = timezone(parseDate(data.publishDate), 8);
                 item.category = data.listTwoItem?.[0]?.ItemLvs.map((c) => c.itemName);
                 item.author = data.docSource;
                 item.guid = `cbirc-${item.guid}`;
@@ -96,7 +96,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: item.type,
-        language,
+        language: language as Language,
     };
 };
 

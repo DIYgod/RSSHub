@@ -46,14 +46,14 @@ async function handler(ctx) {
     const { sockpuppetInfo: allData } = JSON.parse(
         $('script')
             .text()
-            .match(/var allData = (.*?);/)[1]
+            .match(/var allData = (.*?);/)![1]
     );
     const { data: contentData } = JSON.parse(contentResponse.match(/getListData\((.*)\)/)[1]);
     const { weMediaName: mediaName, honorDesc, description, logo } = allData;
 
     const list = contentData.map((item) => ({
         title: item.title,
-        pubDate: timezone(parseDate(item.newsTime), +8),
+        pubDate: timezone(parseDate(item.newsTime), 8),
         author: mediaName,
         link: `https:${item.url}`,
     }));
@@ -67,12 +67,11 @@ async function handler(ctx) {
                 const _allData = JSON.parse(
                     $('script')
                         .text()
-                        .match(/var allData = (\{.*?\});/)[1]
+                        .match(/var allData = (\{.*?\});/)![1]
                 );
                 if (type === 'doc') {
                     item.description = extractDoc(_allData.docData.contentData.contentList);
-                }
-                if (type === 'video') {
+                } else if (type === 'video') {
                     item.description = renderVideo(_allData.videoInfo);
                 }
 

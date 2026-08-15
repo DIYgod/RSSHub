@@ -85,7 +85,7 @@ async function handler(ctx) {
         postId: item.postId,
     }));
 
-    const items = await Promise.all(list.map((item) => getPost(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => getPost(item)));
 
     return {
         title: boardDetail.title,

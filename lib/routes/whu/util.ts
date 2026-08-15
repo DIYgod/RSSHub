@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -88,11 +89,11 @@ const getItemDetail = async (item, rootUrl) => {
         const attachments = content('form[name="_newscontent_fromname"] ul li')
             .toArray()
             .map((attachment) => {
-                attachment = content(attachment).find('a');
+                const $attachment = content(attachment).find('a');
 
                 return {
-                    title: attachment.text(),
-                    link: new URL(attachment.prop('href'), rootUrl).href,
+                    title: $attachment.text(),
+                    link: new URL($attachment.prop('href')!, rootUrl).href,
                 };
             });
 
@@ -101,13 +102,13 @@ const getItemDetail = async (item, rootUrl) => {
 
         item.title = getMeta(meta, 'ArticleTitle') ?? item.title;
         item.description = renderDescription({
-            description,
+            description: description ?? undefined,
             attachments,
         });
         item.author = getMeta(meta, 'ContentSource');
         item.category = getMeta(meta, 'Keywords')?.split(' ').filter(Boolean) ?? [];
         item.guid = getMeta(meta, 'Url') ?? item.link;
-        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), +8) : item.pubDate;
+        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), 8) : item.pubDate;
 
         // Set enclosure information if attachments exist.
         if (attachments.length > 0) {
@@ -125,18 +126,17 @@ const getItemDetail = async (item, rootUrl) => {
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {Function} tryGet     - The function to attempt to get the content of a URL.
  * @param {string} rootUrl      - The root URL.
  * @returns {Array<Promise<Object>>} An array of promises that resolve to the processed items.
  */
-const processItems = async (items, tryGet, rootUrl) =>
+const processItems = async (items, rootUrl) =>
     await Promise.all(
         items.map((item) => {
             if (!item.link.includes(domain)) {
                 return item;
             }
 
-            return tryGet(item.link, async () => await getItemDetail(item, rootUrl));
+            return cache.tryGet(item.link, async () => await getItemDetail(item, rootUrl));
         })
     );
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,7 +47,7 @@ export const route: Route = {
         const list = $('#wp_news_w9')
             .find('a[title]')
             .toArray()
-            .map((element, index) => {
+            .map((element, index): DataItem => {
                 const $a = $(element);
                 let linkStr = $a.attr('href') || '';
 
@@ -57,16 +57,16 @@ export const route: Route = {
                 return {
                     title: $a.text(),
                     link: linkStr,
-                    pubDate: timezone(parseDate(dateList[index]), +8),
+                    pubDate: timezone(parseDate(dateList[index]), 8),
                 };
             });
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link.toString(), async () => {
+                cache.tryGet(item.link!.toString(), async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
-                    item.description = $('.read').first().html();
+                    item.description = $('.read').html();
 
                     // 提取PDF链接，先转换为数组再使用map
                     const pdfLinks = $('div[pdfsrc$=".pdf"]')

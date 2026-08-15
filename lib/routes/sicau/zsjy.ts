@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -46,13 +46,13 @@ async function handler(ctx) {
 
     const list = $('a.tit')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                pubDate: parseDate(item.prev().text()),
-                link: `${rootUrl}${item.attr('href').replace(/\.\./, '/')}`,
+                title: $item.text(),
+                pubDate: parseDate($item.prev().text()),
+                link: `${rootUrl}${$item.attr('href')!.replace(/^\.\./, '/')}`,
             };
         });
 

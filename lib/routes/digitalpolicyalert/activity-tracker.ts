@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -46,9 +46,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    const items: DataItem[] = (response.results ?? []).slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.results.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const description: string | undefined = item.latest_event?.description ?? undefined;
+        const description: string | undefined = item.latest_event?.description;
         const pubDate: number | string = item.latest_event?.date;
         const linkUrl: string | undefined = item.slug ? `change/${item.slug}` : undefined;
         const categories: string[] = [
@@ -60,12 +60,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 item.type?.name,
             ]),
         ].filter(Boolean);
-        const authors: DataItem['author'] =
-            item.implementers?.map((author) => ({
-                name: author.name,
-                url: undefined,
-                avatar: undefined,
-            })) ?? undefined;
+        const authors: DataItem['author'] = item.implementers?.map((author) => ({
+            name: author.name,
+            url: undefined,
+            avatar: undefined,
+        }));
         const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
@@ -80,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 text: description,
             },
             updated: updated ? parseDate(updated) : undefined,
-            language,
+            language: language as Language,
         };
 
         return processedItem;
@@ -92,9 +91,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('meta[property="og:image"]').attr('content') ? new URL($('meta[property="og:image"]').attr('content'), baseUrl).href : undefined,
+        image: $('meta[property="og:image"]').attr('content') ? new URL($('meta[property="og:image"]').attr('content')!, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
-        language,
+        language: language as Language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

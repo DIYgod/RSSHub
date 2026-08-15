@@ -1,14 +1,16 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/cn/news',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['other'],
+    example: '/aqara/cn/news',
+    name: '新闻',
+    maintainers: ['nczitzk'],
     handler,
 };
 
@@ -40,21 +42,21 @@ async function handler(ctx) {
 
                 item.title = content('h4.fnt_56').last().text();
                 item.description = content('div.news_body').html();
-                item.pubDate = parseDate(content('div.news_date').first().text(), 'YYYY  年  MM  月  DD  日');
+                item.pubDate = parseDate(content('div.news_date').text(), 'YYYY  年  MM  月  DD  日');
 
                 return item;
             })
         )
     );
 
-    const icon = $('link[rel="shortcut icon"]').prop('href').split('?', 1)[0];
+    const icon = $('link[rel="shortcut icon"]').prop('href')!.split('?', 1)[0];
 
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         image: $('meta[property="og:image"]').prop('content'),
         icon,
         logo: icon,

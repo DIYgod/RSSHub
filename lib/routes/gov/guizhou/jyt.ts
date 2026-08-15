@@ -72,7 +72,7 @@ async function handler(ctx) {
                 return {
                     ...item,
                     author,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate,
+                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate,
                     description: $$('.trs_editor_view').html() || $$('.TRS_UEDITOR').html(),
                 };
             })

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,10 +23,10 @@ export const handler = async (ctx) => {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('div.List-item-excerpt img').prop('src')?.split(/\?/, 1)[0] ?? undefined;
-            const title = item.find('h2.List-item-title').text();
+            const image = $item.find('div.List-item-excerpt img').prop('data-src')?.split(/\?/, 1)[0] ?? undefined;
+            const title = $item.find('h2.List-item-title').text();
             const description = renderDescription({
                 images: image
                     ? [
@@ -36,24 +36,21 @@ export const handler = async (ctx) => {
                           },
                       ]
                     : undefined,
-                intro: item.find('div.List-item-preview').text(),
+                intro: $item.find('div.List-item-preview').text(),
             });
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.primary-border-color-after').text()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('span.primary-border-color-after').text()),
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 content: {
                     html: description,
-                    text: item.find('div.List-item-preview').text(),
+                    text: $item.find('div.List-item-preview').text(),
                 },
                 image,
                 banner: image,
-                language,
-                enclosure_url: image,
-                enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
-                enclosure_title: title,
+                language: language as Language,
             };
         });
 
@@ -64,9 +61,14 @@ export const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
+                $$('div.Post-content img[data-src]').each((_, img) => {
+                    $$(img).prop('src', $$(img).prop('data-src').split(/\?/, 1)[0]);
+                    $$(img).removeAttr('data-src');
+                });
+
                 const title = $$('h1.Post-title').text().trim();
                 const description = renderDescription({
-                    description: $$('div.Post-content').html(),
+                    description: $$('div.Post-content').html() ?? undefined,
                 });
                 const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/, 1)[0] ?? undefined;
 
@@ -79,10 +81,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language;
-                item.enclosure_url = image;
-                item.enclosure_type = image ? `image/${image.split(/\./).pop()}` : undefined;
-                item.enclosure_title = title;
+                item.language = language as Language;
 
                 return item;
             })
@@ -99,7 +98,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language,
+        language: language as Language,
     };
 };
 

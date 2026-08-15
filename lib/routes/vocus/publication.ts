@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     const list = processList(articles);
 
-    const items = await ProcessFeed(list, cache.tryGet);
+    const items = await ProcessFeed(list);
 
     return {
         title: `${publicationData.title} - 文章列表｜方格子 vocus`,

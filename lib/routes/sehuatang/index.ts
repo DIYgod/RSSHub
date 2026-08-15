@@ -2,13 +2,11 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-import { puppeteerGet } from './utils';
 
 const allowDomain = new Set(['www.sehuatang.net', 'www.sehuatang.org']);
 
@@ -44,6 +42,7 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
+    categories: ['multimedia'],
     example: '/sehuatang/103',
     parameters: {
         subforumid: {
@@ -81,9 +80,7 @@ export const route: Route = {
     features: {
         nsfw: true,
     },
-    description: `
-    
-  **原创 BT 电影**
+    description: `**原创 BT 电影**
 
 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
 | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
@@ -95,23 +92,21 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 155      | 125      | 50       | 48       | 49       | 117      | 165      |
 
-  **query 参数说明**
-- 'domain' ：可选，指定论坛域名，默认为 'www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' 选项。
-  `,
+**query 参数说明**
+
+- 'domain' ：可选，指定论坛域名，默认为 '[www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用](http://www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用) 'ALLOW\\_USER\\_SUPPLY\\_UNSAFE\\_DOMAIN' 选项。`,
 };
 
-const getSafeId = (headers, host) =>
+const getSafeId = (host) =>
     cache.tryGet(
         'sehuatang:safeid',
         async () => {
-            const current = await puppeteerGet(headers, host);
-            const $ = load(current.response);
-            const safeId =
-                $('script:contains("safeid")')
-                    .text()
-                    .match(/safeid\s*=\s*'(.+)';/)?.[1] || '';
-            logger.debug(`safeId: ${safeId}`);
-            return safeId;
+            const response = await ofetch(host);
+            const $ = load(response);
+            const safeId = $('script:contains("safeid")')
+                .text()
+                .match(/safeid\s*=\s*'(.+)';/)?.[1];
+            return safeId ?? '';
         },
         config.cache.routeExpire,
         false
@@ -128,38 +123,38 @@ async function handler(ctx) {
     const typeFilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumId}${typeFilter}`;
 
-    const cookiesSafeId = `_safe=${await getSafeId(null, host)};`;
+    const cookiesSafeId = `_safe=${await getSafeId(host)};`;
 
     const headers: Record<string, string> = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0',
         Cookie: cookiesSafeId,
     };
 
-    const current = await puppeteerGet(headers, link);
-    headers.Cookie = current.cookiesStr + '; ' + cookiesSafeId;
-    const $ = load(current.response);
+    const response = await ofetch(link, {
+        headers,
+    });
+    const $ = load(response);
 
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const hasCategory = $item.find('th em a').length;
             return {
                 title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
                 link: host + $item.find('a.xst').attr('href'),
-                pubDate: parseDate($item.find('td.by').find('em span span').attr('title') || ''),
+                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
                 author: $item.find('td.by cite a').first().text(),
-                description: '',
-                enclosure_url: '',
-                enclosure_type: '',
             };
         });
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                const response = await puppeteerGet(headers, info.link).then((res) => res.response);
+            cache.tryGet(info.link!, async () => {
+                const response = await ofetch(info.link!, {
+                    headers,
+                });
 
                 const $ = load(response);
                 const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
@@ -169,7 +164,7 @@ async function handler(ctx) {
                     if (!file || file === 'undefined') {
                         $(image).replaceWith('');
                     } else {
-                        let imageURL = file;
+                        const imageURL = file;
                         $(image).replaceWith($(`<img src="${imageURL}">`));
                     }
                 }
@@ -188,7 +183,7 @@ async function handler(ctx) {
                 $('em[onclick]').remove();
 
                 info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
-                info.pubDate = timezone(parseDate($('.authi em span').attr('title') || ''), 8);
+                info.pubDate = timezone(parseDate($('.authi em span').attr('title')!), 8);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
@@ -196,7 +191,7 @@ async function handler(ctx) {
 
                 const hasEnclosureUrl = isMag || torrent !== '';
                 if (hasEnclosureUrl) {
-                    const enclosureUrl = isMag ? magnet : new URL(torrent, host).href;
+                    const enclosureUrl = isMag ? magnet : new URL(torrent!, host).href;
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }

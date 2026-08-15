@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -35,12 +35,13 @@ export const route: Route = {
         const pageTitle = $('title').text();
         const list = $('div.fr li')
             .toArray()
-            .map((item) => {
-                item = $(item);
-                const a = item.find('a').first();
+            .map((item): DataItem & { link: string } => {
+                const $item = $(item);
+                const a = $item.find('a').first();
                 const link = baseURL + a.attr('href');
                 return {
                     link,
+                    title: '',
                 };
             });
 
@@ -54,7 +55,7 @@ export const route: Route = {
                         item.title = title;
                         const titleDiv = $('div.tit');
                         const date = titleDiv.find('span').first().text();
-                        item.pubDate = timezone(parseDate(/\d+-\d+-\d+/.exec(date)[0]), +8);
+                        item.pubDate = timezone(parseDate(/\d+-\d+-\d+/.exec(date)![0]), 8);
                         const frame = $('div.fr');
                         item.description = frame
                             .children()

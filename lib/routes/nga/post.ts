@@ -31,7 +31,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     uid: (node) => ({ tag: 'a', attrs: { href: `https://nga.178.com/nuke.php?func=ucp&uid=${attrValue(node)}` }, content: ['@', ...childrenOf(node)] }),
     tid: (node) => ({ tag: 'a', attrs: { href: `https://nga.178.com/read.php?tid=${attrValue(node)}` }, content: node.content }),
     pid: (node) => {
-        const [pid, tid, page] = attrValue(node).split(',');
+        const [pid, tid, page] = attrValue(node).split(',', 3);
         return { tag: 'a', attrs: { href: `https://nga.178.com/read.php?tid=${tid}&page=${page}#pid${pid}Anchor` }, content: node.content };
     },
     // 分割线
@@ -68,8 +68,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const getPageUrl = (tid, authorId, page = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
-    const getPage = async (tid, authorId, pageId = 1) => {
+    const getPageUrl = (tid, authorId, page: string | number = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
+    const getPage = async (tid, authorId, pageId: string | number = 1) => {
         const link = getPageUrl(tid, authorId, pageId);
         const timestamp = Math.floor(Date.now() / 1000);
         let cookieString = `guestJs=${timestamp};`;
@@ -90,7 +90,7 @@ async function handler(ctx) {
     const getLastPageId = async (tid, authorId) => {
         const $ = await getPage(tid, authorId);
         const nav = $('#pagebtop');
-        const match = nav.html().match(/\{0:'\/read\.php\?tid=(\d)[^']*',1:(\d+),[^}]*\}/);
+        const match = nav.html()!.match(/\{0:'\/read\.php\?tid=(\d)[^']*',1:(\d+),[^}]*\}/);
         return match ? match[2] : 1;
     };
 
@@ -99,11 +99,11 @@ async function handler(ctx) {
     const pageId = await getLastPageId(tid, authorId);
 
     const $ = await getPage(tid, authorId, pageId);
-    const title = $('title').text() || '';
+    const title = $('title').text();
     const posterMap = JSON.parse(
         $('script')
             .text()
-            .match(/commonui\.userInfo\.setAll\((.*)\)$/m)[1]
+            .match(/commonui\.userInfo\.setAll\((.*)\)$/m)![1]
     );
     const authorName = authorId ? posterMap[authorId].username : undefined;
 
@@ -116,14 +116,14 @@ async function handler(ctx) {
             const posterId = post
                 .find('.posterinfo a')
                 .first()
-                .attr('href')
-                .match(/&uid=(-?\d+)$/)[1];
+                .attr('href')!
+                .match(/&uid=(-?\d+)$/)![1];
             const poster = authorName || posterMap[posterId].username;
             const content = post.find('.postcontent').first();
             const description = formatContent(content.html());
             const postId = content.attr('id');
             const link = getPageUrl(tid, authorId, pageId, postId);
-            const pubDate = timezone(parseDate(post.find('.postInfo > span').first().text(), 'YYYY-MM-DD HH:mm'), +8);
+            const pubDate = timezone(parseDate(post.find('.postInfo > span').first().text(), 'YYYY-MM-DD HH:mm'), 8);
 
             return {
                 title: load(description).text(),

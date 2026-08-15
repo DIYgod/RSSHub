@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -93,8 +93,8 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.title = item.title ?? content('div.article-header-title').text();
-                item.description = content('#select-main').html().replaceAll('<p><br></p>', '');
+                item.title ??= content('div.article-header-title').text();
+                item.description = content('#select-main').html()!.replaceAll('<p><br></p>', '');
                 item.author = content('div.article-header-author div.author-link a.label').first().text();
                 item.category = item.category.filter(Boolean);
                 item.guid = `latepost-${item.guid}`;
@@ -105,7 +105,7 @@ async function handler(ctx) {
                     item.pubDate = /\d+月\d+日/.test(pubDate) ? parseDate(pubDate, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm']) : parseRelativeDate(pubDate);
                 }
 
-                item.pubDate = timezone(item.pubDate, +8);
+                item.pubDate = timezone(item.pubDate, 8);
                 item.comments = commentResponse.data?.length() ?? 0;
 
                 return item;
@@ -124,8 +124,8 @@ async function handler(ctx) {
         title: `${title} - ${proma ? columns[proma].title : defaultTitle}`,
         link: currentUrl,
         description: $('div.logo-txt').first().text(),
-        language: 'zh-cn',
-        image: new URL($('div.logo-txt img').prop('src'), rootUrl).href,
+        language: 'zh-CN' as Language,
+        image: new URL($('div.logo-txt img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         author: title,

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -44,28 +44,28 @@ async function handler(ctx) {
         .not('.story__placeholder')
         .toArray()
         .map((story) => {
-            story = $(story);
+            const $story = $(story);
 
-            const a = story.find('.story__title a');
-            fixImage(story);
-            story.find('.player').each((_, elem) => {
-                elem = $(elem);
-                fixVideo(elem);
+            const a = $story.find('.story__title a');
+            fixImage($story);
+            $story.find('.player').each((_, elem) => {
+                const $elem = $(elem);
+                fixVideo($elem);
             });
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(story.find('time').attr('datetime')),
-                description: story.find('.story__content-inner').html(),
-                author: story.find('.user__nick').text(),
+                pubDate: parseDate($story.find('time').attr('datetime')!),
+                description: $story.find('.story__content-inner').html(),
+                author: $story.find('.user__nick').text(),
             };
         });
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content')!,
         description: $('.profile__user-about-content').text(),
         image: $('meta[property="og:image"]').attr('content'),
-        language: 'ru-RU',
+        language: 'ru-ru' as Language,
         link,
         item: items,
     };

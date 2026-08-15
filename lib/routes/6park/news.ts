@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,6 +8,8 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:site?/:id?/:keyword?',
+    categories: ['new-media'],
+    example: '/6park/news',
     radar: [
         {
             source: ['club.6parkbbs.com/:id/index.php', 'club.6parkbbs.com/'],
@@ -17,11 +19,16 @@ export const route: Route = {
     name: '新闻栏目',
     maintainers: ['nczitzk', 'cscnk52'],
     parameters: {
-        site: '分站，可选newspark、local，默认为 newspark',
-        id: '栏目 id，可选，默认为空',
-        keyword: '关键词，可选，默认为空',
+        site: '分站，见下表，默认为 newspark',
+        id: '栏目 id',
+        keyword: '关键字',
     },
-    description: `::: tip 提示
+    description: `分站
+
+| newspark | local |
+| -------- | ----- |
+
+::: tip 提示
 若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 <https://www.6parknews.com/newspark/index.php?type=1>，其中 \`newspark\` 为分站，\`1\` 为栏目 id。
 若订阅 [美国](https://local.6parknews.com/index.php?type_id=1)，其网址为 <https://local.6parknews.com/index.php?type_id=1>，其中 \`local\` 为分站，\`1\` 为栏目 id。
 :::`,
@@ -51,23 +58,23 @@ async function handler(ctx) {
     let items = $('#d_list ul li, #thread_list li, .t_l .t_subject')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
             const link = a.attr('href');
 
             return {
                 title: a.text(),
-                link: link.startsWith('http') ? link : `${rootUrl}/${link.startsWith('view') ? `newspark/${link}` : link}`,
+                link: link!.startsWith('http') ? link : `${rootUrl}/${link!.startsWith('view') ? `newspark/${link}` : link}`,
             };
         });
 
     items = await Promise.all(
         items
-            .filter((item) => /6parknews\.com/.test(item.link))
+            .filter((item) => /6parknews\.com/.test(item.link!))
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     try {
                         const detailResponse = await got({
                             method: 'get',
@@ -80,8 +87,8 @@ async function handler(ctx) {
 
                         item.title = content('h2').text();
                         item.author = matches[1].trim();
-                        item.pubDate = timezone(parseDate(matches[2], 'YYYY-MM-DD h:m'), +8);
-                        item.description = content('#shownewsc').html().replaceAll('<p></p>', '');
+                        item.pubDate = timezone(parseDate(matches[2], 'YYYY-MM-DD h:m'), 8);
+                        item.description = content('#shownewsc').html()!.replaceAll('<p></p>', '');
                     } catch {
                         // no-empty
                     }

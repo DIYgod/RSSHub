@@ -1,4 +1,3 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -63,7 +62,7 @@ function publishDateFromImage(imageUrl: string): Date | undefined {
         return undefined;
     }
     const [, y, mo, d] = m;
-    return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), +8);
+    return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), 8);
 }
 
 function renderDescription(item: ListItem): string {
@@ -74,21 +73,6 @@ function renderDescription(item: ListItem): string {
             {item.topic && <p>主题：{item.topic}</p>}
         </>
     );
-}
-
-function rewriteRelativeUrls($: CheerioAPI, item: Cheerio<any>): void {
-    item.find('img').each((_, e) => {
-        const src = $(e).attr('src') || $(e).attr('_src');
-        if (src) {
-            $(e).attr('src', absolutize(src));
-        }
-    });
-    item.find('a').each((_, e) => {
-        const href = $(e).attr('href');
-        if (href) {
-            $(e).attr('href', absolutize(href));
-        }
-    });
 }
 
 function extractWechatUrl(finalUrl: string): string {
@@ -129,14 +113,13 @@ function enrichItem(item: ListItem): Promise<DataItem> {
             const $body = $('.xw-cont');
             if ($body.length > 0) {
                 const $txt = $body.find('.txt');
-                rewriteRelativeUrls($, $txt);
                 description += `<hr>${$txt.html() ?? ''}`;
 
                 const publishedText = $body.find('.jj p').first().text();
                 const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
                 if (publishedMatch) {
                     const [, y, m, d] = publishedMatch;
-                    pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), +8);
+                    pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
                 }
             }
         }

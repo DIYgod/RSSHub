@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -17,21 +17,21 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('li.list-group-item div.subject h2')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
 
             return {
                 title,
-                pubDate: timezone(parseDate(item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), +8),
-                link: item.find('a').prop('href'),
-                category: item
+                pubDate: timezone(parseDate($item.parent().find('span').text(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8),
+                link: $item.find('a').prop('href'),
+                category: $item
                     .nextAll('a')
                     .toArray()
                     .map((c) => $(c).text()),
@@ -41,7 +41,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -52,7 +52,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate($$('i.icon-clock-o').parent().contents().last().text().trim(), 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm'), 8);
                 item.author = $$('img.avatar-1').parent().contents().last().text().trim();
                 item.content = {
                     html: description,

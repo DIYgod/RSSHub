@@ -74,10 +74,10 @@ async function handler(ctx) {
         return {
             title,
             link: new URL(item.publishUrl, rootUrl).href,
-            pubDate: item.publishTime ? timezone(parseDate(item.publishTime), +8) : undefined,
+            pubDate: item.publishTime ? timezone(parseDate(item.publishTime), 8) : undefined,
             description: item.summary?.trim() || title,
             author: [...new Set([item.sourceText, item.author, item.editor, item.responsibleEditor].filter(Boolean))].map((author) => ({
-                name: author,
+                name: author!,
             })),
             category: item.keywords.split(/,/),
         };
@@ -85,16 +85,16 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item: DataItem) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
-                    const response = await ofetch(item.link);
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
 
                     item.title = $('meta[name="ArticleTitle"]').prop('content') || item.title;
                     item.description = $('#detailContent').html() || $('div.article-content').html() || item.description;
                     item.category = [...new Set([...(item.category ?? []), ...($('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
                     const detailPubDate = $('meta[name="PubDate"]').prop('content');
-                    item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), +8) : item.pubDate;
+                    item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), 8) : item.pubDate;
                 } catch {
                     //
                 }

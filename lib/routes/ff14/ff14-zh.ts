@@ -67,7 +67,7 @@ async function handler(ctx) {
                 image: HomeImagePath,
                 description: Summary,
             }),
-            pubDate: timezone(parseDate(PublishDate), +8),
+            pubDate: timezone(parseDate(PublishDate), 8),
         })),
     };
 }

@@ -38,7 +38,7 @@ async function handler() {
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
 
     delete nextData.props.pageProps.initialApolloState.ROOT_QUERY;
-    const result = Object.values(nextData.props.pageProps.initialApolloState).map((item) => ({
+    const result = Object.values<Record<string, any>>(nextData.props.pageProps.initialApolloState).map((item) => ({
         title: item.name,
         pubDate: parseDate(item.startDate),
         link: `https://www.nintendo.com/nintendo-direct/${item.slug}/`,

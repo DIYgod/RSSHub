@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 
 const categories = {
@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const item = $(`div#featured-tropes div.${categories[category]}`);
 
-    const link = new URL(item.find('h2.entry-title a').prop('href'), rootUrl).href;
+    const link = new URL(item.find('h2.entry-title a').prop('href')!, rootUrl).href;
 
     const { data: detailResponse } = await got(link);
 
@@ -50,11 +50,11 @@ async function handler(ctx) {
     content('div.folderlabel').remove();
 
     content('div.lazy_load_img_box').each((_, el) => {
-        el = content(el);
+        const $el = content(el);
 
-        const image = el.find('img');
+        const image = $el.find('img');
 
-        el.replaceWith(
+        $el.replaceWith(
             renderToString(
                 <figure>
                     <img src={image.prop('src')} alt={image.prop('alt')} width={image.prop('width')} height={image.prop('height')} />
@@ -71,7 +71,7 @@ async function handler(ctx) {
         },
     ];
 
-    const image = new URL($('img.logo-big').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo-big').prop('src')!, rootUrl).href;
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
     return {
@@ -79,7 +79,7 @@ async function handler(ctx) {
         title: `${$('title').text()} - ${item.find('span.box-title').text()}`,
         link: rootUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const parseArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const detailResponse = await got({
             method: 'get',
             url: item.link,

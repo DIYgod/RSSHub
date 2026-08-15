@@ -1,6 +1,7 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -8,8 +9,8 @@ const domain = 'otobanana.com';
 const apiBase = `https://api.${domain}`;
 const baseUrl = `https://${domain}`;
 
-const getUserInfo = (id, tryGet) =>
-    tryGet(`otobanana:user:${id}`, async () => {
+const getUserInfo = (id) =>
+    cache.tryGet(`otobanana:user:${id}`, async () => {
         const { data } = await got(`${apiBase}/users/${id}/`);
         return data;
     });

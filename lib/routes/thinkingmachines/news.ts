@@ -37,8 +37,8 @@ async function handler() {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('.post-title').text().trim();
-            const dateStr = $el.find('time.desktop-time').text().trim();
+            const title = $el.find('.post-title').text();
+            const dateStr = $el.find('time.desktop-time').text();
             const href = $el.attr('href') || '';
             const link = href.startsWith('http') ? href : `${baseUrl}${href}`;
 

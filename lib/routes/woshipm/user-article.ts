@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -43,21 +42,21 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const postCardTitle = item.find('h2.post--card__title a');
+            const $item = $(item);
+            const postCardTitle = $item.find('h2.post--card__title a');
             return {
                 title: postCardTitle.attr('title'),
                 link: postCardTitle.attr('href'),
-                pubDate: parseDate(item.find('time').text(), 'YYYY-MM-DD'),
+                pubDate: parseDate($item.find('time').text(), 'YYYY-MM-DD'),
             };
         });
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `${name}的文章-人人都是产品经理`,
         description: $('.author--meta .description').text(),
-        image: $('.author--meta .avatar').attr('src').split('!', 1)[0],
+        image: $('.author--meta .avatar').attr('src')!.split('!', 1)[0],
         link,
         item: items,
     };

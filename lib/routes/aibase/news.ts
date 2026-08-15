@@ -50,7 +50,7 @@ export const route: Route = {
         return {
             title: 'AI新闻资讯',
             description: 'AI新闻资讯 - 不错过全球AI革新的每一个时刻',
-            language: 'zh-cn',
+            language: 'zh-CN',
             link: 'https://www.aibase.com/zh/news',
             item: items,
             allowEmpty: true,

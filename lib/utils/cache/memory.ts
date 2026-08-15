@@ -21,7 +21,7 @@ export default {
         if (key && status.available && clients.memoryCache) {
             let value = clients.memoryCache.get(key, { updateAgeOnGet: refresh }) as string | undefined;
             if (value) {
-                value = value + '';
+                value += '';
             }
             return value;
         }

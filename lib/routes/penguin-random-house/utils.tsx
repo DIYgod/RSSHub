@@ -17,7 +17,7 @@ const parseBookInList = (element) => {
         imageAlt = $('img.img-responsive').attr('alt');
     }
 
-    return renderBookDescription(imageSrc, imageAlt, title, author, description);
+    return renderBookDescription(imageSrc!, imageAlt!, title, author, description);
 };
 
 const parsePubDate = (data) => {
@@ -63,7 +63,7 @@ const parseArticle = (element) => {
     const description = $('h2.hdr-smalltxt').first().html();
     const imageSrc = $('div.img-block>img').first().attr('src');
     const imageAlt = $('div.img-block>img').first().attr('alt');
-    const descriptionBlock = renderArticleHeader(imageSrc, imageAlt, description);
+    const descriptionBlock = renderArticleHeader(imageSrc!, imageAlt!, description!);
 
     const mainBlock = $('div.main-content>p,div.main-content>ul')
         .toArray()

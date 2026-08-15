@@ -42,7 +42,7 @@ export async function processItems(ctx, baseURL, exclude) {
         list.map((item) => {
             const link = $(item).find('a');
             const href = link.attr('href');
-            const pubDate = timezone(parseDate($(item).find('span').text().replaceAll(/[[\]]/g, ''), 'MM-DD'), +8);
+            const pubDate = timezone(parseDate($(item).find('span').text().replaceAll(/[[\]]/g, ''), 'MM-DD'), 8);
             const text = link.text();
 
             if (href === undefined) {

@@ -23,7 +23,7 @@ async function handler(ctx: Context) {
 
     const uid = ctx.req.param('uid');
 
-    const [posts, userInfo] = await Promise.all([getUserPosts(uid, 1), getUserInfo(uid)]);
+    const [posts, userInfo] = await Promise.all([getUserPosts(uid!, 1), getUserInfo(uid!)]);
 
     return {
         title: `石之家 - ${userInfo.character_name}@${userInfo.group_name} 发布的帖子`,

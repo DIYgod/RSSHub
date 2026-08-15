@@ -79,7 +79,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.article-content').html();
-                item.author = item.author ?? content('.author-name p').first().text();
+                item.author ??= content('.author-name p').first().text();
 
                 return item;
             })

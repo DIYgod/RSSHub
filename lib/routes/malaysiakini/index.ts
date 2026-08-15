@@ -1,7 +1,7 @@
 import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -129,7 +129,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(`https://www.malaysiakini.com/api/content/${item.guid}`);
                 if (response.data.stories.content) {
                     item.description = response.data.stories.content;
@@ -161,19 +161,17 @@ async function handler(ctx) {
                 if (response.data.stories.author) {
                     item.author = response.data.stories.author;
                 }
-                if (response.data.stories.tags) {
-                    item.category = response.data.stories.tags;
-                }
+                item.category = response.data.stories.tags;
                 return item;
             })
         )
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         language: lang,
-        item: items,
+        item: items as DataItem[],
     };
 }

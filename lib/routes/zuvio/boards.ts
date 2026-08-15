@@ -1,5 +1,4 @@
-import type { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Language, Route } from '@/types';
 
 import { getBoards, rootUrl } from './utils';
 
@@ -22,7 +21,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const items = await getBoards(cache.tryGet);
+    const items = await getBoards();
 
     return {
         title: 'Zuvio 校園話題列表 - 大學生論壇',
@@ -30,6 +29,6 @@ async function handler() {
         image: 'https://s3.hicloud.net.tw/zuvio.public/public/system/images/irs_v4/chicken/shared/webshare.png',
         link: `${rootUrl}/articles`,
         item: items,
-        language: 'zh-Hant',
+        language: 'zh-TW' as Language,
     };
 }

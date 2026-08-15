@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -24,14 +24,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = $('ul.infinite-list li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const $aEl: Cheerio<Element> = $el.find('div.tt a');
 
             const title: string = $aEl.text();
-            const description: string = $el.find('div.text').html();
-            const pubDateStr: string | undefined = $el.find('div.info span').last().text().trim();
+            const description: string = $el.find('div.text').html() ?? '';
+            const pubDateStr: string | undefined = $el.find('div.info span').last().text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.tags span').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
@@ -42,7 +42,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), +8) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
@@ -52,8 +52,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), +8) : undefined,
-                language,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr, ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8) : undefined,
+                language: language as Language,
             };
 
             return processedItem;
@@ -67,12 +67,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.detail-title').text();
-                    const description: string = $$('div.detail-content').html() ?? '';
-                    const pubDateStr: string | undefined = $$('div.detail-info span').last().text().trim();
+                    const description = $$('div.detail-content').html();
+                    const pubDateStr: string | undefined = $$('div.detail-info span').last().text();
                     const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [];
                     const authors: DataItem['author'] = $$('div.detail-info span').first().text().split(/：/).pop();
                     const upDatedStr: string | undefined = pubDateStr;
@@ -80,15 +80,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                         category: categories,
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : item.updated,
-                        language,
+                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
+                        language: language as Language,
                     };
 
                     return {
@@ -108,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img.stcn-logo').attr('src'),
         author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0],
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };

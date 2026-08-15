@@ -31,7 +31,7 @@ const getInfoUrlList = async (rootUrl, infoBasicUrl) => {
     const infoList = $('.list_div li')
         .toArray()
         .map((item) => ({
-            title: $('a', item).attr('title'),
+            title: $('a', item).attr('title')!,
             url: `${rootUrl}${$('a', item).attr('href')}`,
         }));
     return infoList;
@@ -55,7 +55,7 @@ const getInfoContent = (rootUrl, item) =>
                 title: $('h1').text().trim(),
                 id: $('#attribute > span:nth-child(1)').text().split('：', 2)[1].trim(),
                 infoNum: $('#attribute > span:nth-child(2)').text().split('：', 2)[1].trim(),
-                pubDate: parseDate(timezone(rawDate, +8)),
+                pubDate: parseDate(timezone(rawDate, 8)),
                 date: rawDate,
                 keyWord: $('#attribute > span:nth-child(6)').text().split('：', 2)[1].trim(),
                 source: $('#attribute > span:nth-child(5)').text().split('：', 2)[1].trim(),
@@ -110,7 +110,7 @@ async function handler(ctx) {
             description: renderToString(
                 item._isCompleteInfo ? (
                     <>
-                        <table border="1" cellpadding="2" cellspacing="0" align="center">
+                        <table border={1} cellpadding={2} cellspacing={0} align="center">
                             <tbody>
                                 <tr>
                                     <td>索引号</td>

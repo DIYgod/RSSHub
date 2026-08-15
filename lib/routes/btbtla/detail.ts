@@ -45,7 +45,8 @@ async function handler(ctx) {
             // 使用缓存获取磁力链接
             const magnet = await cache.tryGet(`btbtla:magnet:${link}`, async () => {
                 if (link) {
-                    return await getMagnet('https://www.btbtla.com' + link);
+                    const magnetLink = await getMagnet('https://www.btbtla.com' + link);
+                    return magnetLink as string;
                 }
                 return '';
             });
@@ -53,7 +54,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                enclosure_url: magnet,
+                enclosure_url: magnet as string,
                 enclosure_type: 'application/x-bittorrent',
             };
         })

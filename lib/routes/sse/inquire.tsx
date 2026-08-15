@@ -68,7 +68,7 @@ async function handler() {
 }
 
 const SseInquireDescription = ({ item }: { item: any }) => (
-    <table border="1">
+    <table border={1}>
         <tr>
             <td> 公司代码 : </td>
             <td>{item.stockcode}</td>

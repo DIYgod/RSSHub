@@ -68,7 +68,7 @@ async function handler(ctx) {
     const result = await util.ProcessFeed(list, cache, struct[type]);
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link: url,
         description: name,
         item: result,

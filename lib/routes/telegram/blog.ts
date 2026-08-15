@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -35,7 +35,7 @@ async function handler() {
     const link = 'https://telegram.org/blog';
 
     const res = await ofetch(link);
-    const $$ = cheerio.load(res);
+    const $$ = load(res);
 
     const items = await Promise.all(
         $$('.dev_blog_card_link_wrap')
@@ -45,11 +45,11 @@ async function handler() {
                 const link = 'https://telegram.org' + $.attr('href');
                 return cache.tryGet(link, async () => {
                     const result = await ofetch(link);
-                    const $ = cheerio.load(result);
+                    const $ = load(result);
                     return {
                         title: $('#dev_page_title').text(),
                         link,
-                        pubDate: parseDate($('[property="article:published_time"]').attr('content')),
+                        pubDate: parseDate($('[property="article:published_time"]').attr('content')!),
                         description: $('#dev_page_content_wrap').html(),
                     };
                 });

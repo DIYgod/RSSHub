@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,18 +47,18 @@ async function handler(ctx) {
     const list = $('body > div.dataBox > table > tbody > tr')
         .slice(1)
         .toArray()
-        .map((elem) => {
-            elem = $(elem);
+        .map((elem): DataItem => {
+            const $elem = $(elem);
             return {
-                title: elem.find('td:nth-child(2) > a').text(),
-                link: elem.find('td:nth-child(2) > a').attr('href'),
-                pubDate: timezone(parseDate(elem.find('td:nth-child(5)').text()), 8),
+                title: $elem.find('td:nth-child(2) > a').text(),
+                link: $elem.find('td:nth-child(2) > a').attr('href'),
+                pubDate: timezone(parseDate($elem.find('td:nth-child(5)').text()), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const contentData = await got(item.link);
                 const $ = load(contentData.data);
                 item.description = $('#UCAP-CONTENT').html();

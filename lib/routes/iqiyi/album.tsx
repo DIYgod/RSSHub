@@ -46,7 +46,7 @@ async function handler(ctx) {
 
     let pos = 1;
     let hasMore: boolean;
-    let epgs = [];
+    let epgs: any[] = [];
     do {
         const {
             data: { data },

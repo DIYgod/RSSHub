@@ -56,7 +56,7 @@ export const route: Route = {
                     category: [children.eq(1).text()],
                     link: `${baseUrl}/${a.attr('href')!}`,
                     title: a.children().first().text(),
-                    pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), +8),
+                    pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), 8),
                     author: children.eq(4).text(),
                     description: '请在应用内抓取全文内容',
                 } as DataItem;

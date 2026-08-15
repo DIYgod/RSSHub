@@ -252,7 +252,7 @@ async function handler(ctx) {
         item: list.map((item) => ({
             title: `${item.article_title} - ${item.article_price}`,
             description: `${item.article_title} - ${item.article_price}<br><img src="${item.article_pic}">`,
-            pubDate: timezone(item.article_pubdate, +8),
+            pubDate: timezone(item.article_pubdate, 8),
             link: item.article_url,
         })),
     };

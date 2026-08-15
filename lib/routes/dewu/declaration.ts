@@ -56,7 +56,7 @@ async function handler(ctx) {
         title: item.title,
         id: item.id,
         link: `https://open.dewu.com/#/declaration/read?articleId=${item.id}`,
-        pubDate: timezone(parseDate(item.publishTime), +8),
+        pubDate: timezone(parseDate(item.publishTime), 8),
     }));
 
     const result = await Promise.all(

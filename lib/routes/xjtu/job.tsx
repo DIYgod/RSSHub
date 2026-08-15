@@ -56,7 +56,7 @@ async function handler(ctx) {
     const list = data.data.map((item) => ({
         title: item.menutitle,
         description: item.NR,
-        pubDate: timezone(parseDate(item.SBSJ), +8),
+        pubDate: timezone(parseDate(item.SBSJ), 8),
         guid: item.menuid,
         link: `${baseUrl}/xsfw/sys/emaphome/website/template/detail.html?menuid=${item.menuid}&msg=TZGG&msgChild=NRXQ`,
     }));

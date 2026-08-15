@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -132,7 +132,7 @@ async function handler(ctx) {
         title: feedTitle || 'Le Monde',
         link: feedLink,
         description: feedTitle || 'Le Monde',
-        language: 'fr',
+        language: 'fr' as Language,
         item: items,
     };
 }

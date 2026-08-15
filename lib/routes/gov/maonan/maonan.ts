@@ -110,12 +110,12 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((i, item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const url = new URL(item.attr('href'));
+            const url = new URL($item.attr('href')!);
             const link = url.href;
 
-            const pubDate = timezone(parseDate($('a[href="' + link + '"] ~ .time').text()), +8);
+            const pubDate = timezone(parseDate($('a[href="' + link + '"] ~ .time').text()), 8);
 
             return cache.tryGet(link, async () => {
                 // 获取网页
@@ -125,7 +125,7 @@ async function handler(ctx) {
                 switch (url.host) {
                     case 'mp.weixin.qq.com':
                         return {
-                            title: item.text(),
+                            title: $item.text(),
                             description: content('#js_content').html(),
                             pubDate,
                             link,
@@ -135,7 +135,7 @@ async function handler(ctx) {
                         switch (url.pathname) {
                             case '/zcjdpt':
                                 return {
-                                    title: content('meta[name="ArticleTitle"]').attr('content'),
+                                    title: content('meta[name="ArticleTitle"]').attr('content')!,
                                     description: content('.wrap').html(),
                                     pubDate,
                                     link,

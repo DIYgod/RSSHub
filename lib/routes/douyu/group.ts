@@ -54,7 +54,7 @@ async function handler(ctx) {
     const items = response.data.data.map((item) => ({
         title: item.title,
         link: `${rootUrl}/p/${item.post_id}`,
-        pubDate: timezone(parseDate(item.created_at_std), +8),
+        pubDate: timezone(parseDate(item.created_at_std), 8),
         description: renderDescription({
             content: item.describe,
             images: item.imglist.map((i) => ({

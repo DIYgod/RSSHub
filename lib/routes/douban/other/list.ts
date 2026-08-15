@@ -69,7 +69,7 @@ async function handler(ctx) {
     const score = fallback(undefined, queryToFloat(routeParams.score), 0);
     let start = 0;
     const count = 50;
-    let items = [];
+    let items: any[] = [];
     let title = '';
     let description = '';
     let total = null;

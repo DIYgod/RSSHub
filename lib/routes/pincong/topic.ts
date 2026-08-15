@@ -8,12 +8,23 @@ import { baseUrl, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
+    categories: ['bbs'],
+    example: '/pincong/topic/美国',
+    parameters: { topic: '话题，可在官网获取' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['pincong.rocks/topic/:topic'],
         },
     ],
-    name: 'Unknown',
+    name: '话题',
     maintainers: ['zphw'],
     handler,
 };
@@ -33,7 +44,7 @@ async function handler(ctx) {
         item: list.toArray().map((item) => ({
             title: $(item).find('h4 a').text().trim(),
             link: baseUrl + $(item).find('h4 a').attr('href'),
-            pubDate: parseDate($(item).attr('data-created-at') * 1000),
+            pubDate: parseDate(Number($(item).attr('data-created-at')) * 1000),
         })),
     };
 }

@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -74,10 +74,10 @@ async function handler(ctx) {
             data &&
             data.data &&
             data.data.map((item) => {
-                const ret = {
+                const ret: DataItem = {
                     title: item.title,
                     author: item.publisher,
-                    pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), +8),
+                    pubDate: timezone(parseDate(item.publishTime, 'YYYY-MM-DD HH:mm:ss'), 8),
                     link: item.url,
                 };
                 if (type === 'ggtz') {

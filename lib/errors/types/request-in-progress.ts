@@ -1,5 +1,3 @@
-class RequestInProgressError extends Error {
+export default class RequestInProgressError extends Error {
     name = 'RequestInProgressError';
 }
-
-export default RequestInProgressError;

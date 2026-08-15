@@ -1,5 +1,5 @@
 import { fetchContentItems } from '@/routes/ainvest/utils';
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 
 export const route: Route = {
     path: '/article',
@@ -32,7 +32,7 @@ async function handler(ctx) {
     return {
         title: 'AInvest - Latest Articles',
         link: 'https://www.ainvest.com/news/articles-latest/',
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

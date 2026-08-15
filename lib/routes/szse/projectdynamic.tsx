@@ -131,7 +131,7 @@ async function handler(ctx) {
 
                 item.description = renderDescription(data, current);
 
-                item.pubDate = timezone(parseDate(current.startTime, 'YYYY-MM-DD HH:mm:ss'), +8);
+                item.pubDate = timezone(parseDate(current.startTime, 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 return item;
             })
@@ -212,7 +212,7 @@ const renderDescription = (data, current): string =>
                     </tr>
                     <tr>
                         <td class="title">最近一期审计基准日</td>
-                        <td class="info" colspan="3">
+                        <td class="info" colspan={3}>
                             {data.lastestAuditEndDate}
                         </td>
                     </tr>

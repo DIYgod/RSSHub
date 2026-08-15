@@ -74,7 +74,7 @@ async function handler(ctx) {
     const list = contents.records.map((item) => ({
         title: item.title,
         link: `${baseUrl}${item.draftPath}`,
-        pubDate: timezone(parseDate(item.releaseDate, 'YYYY-MM-DD'), +8),
+        pubDate: timezone(parseDate(item.releaseDate, 'YYYY-MM-DD'), 8),
         contentId: item.contentId,
     }));
 
@@ -87,21 +87,21 @@ async function handler(ctx) {
                 const article = $('.article-a-body');
                 article.find('*').removeAttr('style');
                 article.find('font').each((_, ele) => {
-                    $(ele).replaceWith($(ele).html());
+                    $(ele).replaceWith($(ele).html() ?? '');
                 });
                 article.find('span').each((_, ele) => {
-                    $(ele).replaceWith($(ele).html());
+                    $(ele).replaceWith($(ele).html() ?? '');
                 });
                 article.find('.article-a-attach-body a').each((i, ele) => {
-                    ele = $(ele);
-                    if (ele.attr('onclick')?.startsWith("location.href=encodeURI($('#fileDownUrl').val()+'fileDownLoad.do")) {
-                        ele.attr('href', `${baseUrl}/dqs/cm-s-notice-query/fileDownLoad.do?mode=open&contentId=${item.contentId}&priority=${i}`);
-                        ele.removeAttr('onclick');
+                    const $ele = $(ele);
+                    if ($ele.attr('onclick')?.startsWith("location.href=encodeURI($('#fileDownUrl').val()+'fileDownLoad.do")) {
+                        $ele.attr('href', `${baseUrl}/dqs/cm-s-notice-query/fileDownLoad.do?mode=open&contentId=${item.contentId}&priority=${i}`);
+                        $ele.removeAttr('onclick');
                     }
                 });
 
                 item.description = article.html();
-                item.pubDate = timezone(parseDate($('.AC-l span').text().trim(), 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate($('.AC-l span').text().trim(), 'YYYY-MM-DD HH:mm'), 8);
 
                 return item;
             })

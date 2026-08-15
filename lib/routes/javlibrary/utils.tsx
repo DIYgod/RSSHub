@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -32,7 +34,7 @@ const renderDescription = ({ cover, info, comment, videos, thumbs }) =>
             {thumbs?.length ? thumbs.map((thumb) => <img src={thumb} />) : null}
         </>
     );
-const ProcessItems = async (language, currentUrl, tryGet) => {
+const ProcessItems = async (language, currentUrl) => {
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -45,18 +47,18 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
     let items = $('.videotextlist, #video_comments')
         .find('a')
         .toArray()
-        .filter((i) => $(i).parent().hasClass('video') || $(i).parent().get(0).tagName === 'strong')
-        .map((item) => {
-            item = $(item);
+        .filter((i) => $(i).parent().hasClass('video') || $(i).parent().get(0)!.tagName === 'strong')
+        .map((item): DataItem & { url?: string } => {
+            const $item = $(item);
 
-            const table = item.parentsUntil('table');
-            const link = `${rootUrl}/${language}/${item.attr('href').replace(/^\.\//, '')}`;
+            const table = $item.parentsUntil('table');
+            const link = `${rootUrl}/${language}/${$item.attr('href')!.replace(/^\.\//, '')}`;
 
             return {
                 link, // url to target content.
                 url: link.replace(/video.*\.php/, ''), // url to the video page.
 
-                title: item.text(),
+                title: $item.text(),
                 description: table.find('textarea').text(),
                 pubDate: parseDate(table.find('.date').text()),
             };
@@ -64,7 +66,7 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
 
     items = await Promise.all(
         items.map((item) =>
-            tryGet(item.url, async () => {
+            cache.tryGet(item.url!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.url,
@@ -90,14 +92,14 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
                     .filter((tag) => tag !== '');
                 item.description = renderDescription({
                     cover: content('#video_jacket_img').attr('src'),
-                    info: content('#video_info').html().replaceAll('span><span', 'span>,&nbsp;<span'),
+                    info: content('#video_info').html()!.replaceAll('span><span', 'span>,&nbsp;<span'),
                     comment: item.description?.replaceAll('[img]', '<img src="')?.replaceAll('[/img]', '"/>'),
                     thumbs: content('.previewthumbs img')
                         .toArray()
-                        .map((img) => content(img).attr('src').replaceAll('-', 'jp-')),
+                        .map((img) => content(img).attr('src')!.replaceAll('-', 'jp-')),
                     videos: [...new Set(detailResponse.data.match(/(http[^"[\]]+\.mp4)/g))],
                 });
-                item.pubDate = item.pubDate.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;
+                item.pubDate = item.pubDate!.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;
 
                 delete item.url;
 

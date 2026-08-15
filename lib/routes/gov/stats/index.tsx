@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -92,19 +92,19 @@ async function handler(ctx) {
     let items = $($('a.pchide').length === 0 ? 'a[title]' : '.list-content a.pchide')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.attr('title'),
-                link: new URL(item.attr('href'), currentUrl).href,
+                title: $item.attr('title')!,
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link, {
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!, {
                     headers: {
                         Cookie: sid,
                         Referer: rootUrl,
@@ -115,9 +115,9 @@ async function handler(ctx) {
 
                 // articles from www.news.cn or www.gov.cn
 
-                if (/news\.cn|www\.gov\.cn/.test(item.link)) {
+                if (/news\.cn|www\.gov\.cn/.test(item.link!)) {
                     if (content('.year').text()) {
-                        item.pubDate = timezone(parseDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`, 'YYYY/MM/DD HH:mm:ss'), +8);
+                        item.pubDate = timezone(parseDate(`${content('.year').text()}/${content('.day').text()} ${content('.time').text()}`, 'YYYY/MM/DD HH:mm:ss'), 8);
                         item.author = content('.source')
                             .text()
                             .replace(/来源：/, '')
@@ -126,11 +126,11 @@ async function handler(ctx) {
                         content('.pages_print').remove();
 
                         const info = content('.info, .pages-date').text().split('来源：');
-                        item.pubDate = timezone(parseDate(info[0].trim()), +8);
+                        item.pubDate = timezone(parseDate(info[0].trim()), 8);
                         item.author = info.pop();
                     }
 
-                    item.title = item.title || content('h1').first().text() || content('h2').first().text();
+                    item.title ||= content('h1').first().text() || content('h2').first().text();
                     item.description = content('#detail, .xlcontent, .pages_content').html();
 
                     return item;
@@ -140,17 +140,17 @@ async function handler(ctx) {
 
                 content('.pchide').remove();
 
-                item.title = item.title || content('div.detail-title h1').text();
-                item.pubDate = timezone(parseDate(content('div.detail-title-des h2 p, .info').first().text().trim()), +8);
+                item.title ||= content('div.detail-title h1').text();
+                item.pubDate = timezone(parseDate(content('div.detail-title-des h2 p, .info').first().text().trim()), 8);
                 item.description = renderDescription({
-                    description: content('.TRS_Editor').html() || content('.TRS_UEDITOR').html(),
+                    description: (content('.TRS_Editor').html() || content('.TRS_UEDITOR').html()) ?? undefined,
                     attachments: content('a[oldsrc]')
                         .toArray()
                         .map((a) => {
-                            a = $(a);
+                            const $a = $(a);
                             return {
-                                link: new URL(a.attr('href'), item.link).href,
-                                name: a.text().trim(),
+                                link: new URL($a.attr('href')!, item.link!).href,
+                                name: $a.text().trim(),
                             };
                         }),
                 });

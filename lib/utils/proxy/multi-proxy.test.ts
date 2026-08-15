@@ -8,7 +8,7 @@ const baseProxyObj = {
     port: undefined,
     auth: undefined,
     url_regex: '.*',
-    strategy: 'all',
+    strategy: 'all' as const,
 };
 
 describe('multi-proxy', () => {

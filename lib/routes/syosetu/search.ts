@@ -1,7 +1,6 @@
 import type { Context } from 'hono';
 import type { Genre, NovelTypeParam, Order, SearchParams } from 'narou';
 import { GenreNotation, NarouNovelFetch, R18Site, SearchBuilder, SearchBuilderR18 } from 'narou';
-import type { Join } from 'narou/util/type';
 import queryString from 'query-string';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -10,6 +9,8 @@ import type { Data, Route } from '@/types';
 import { renderDescription } from './templates/description';
 import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
+
+type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
 export const route: Route = {
     path: '/search/:sub/:query',
@@ -139,7 +140,7 @@ async function handler(ctx: Context): Promise<Data> {
         // pubDate: novel.general_lastup,
         author: novel.writer,
         // Split by whitespace characters(\s), slash(/), full-width slash(／)
-        category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
+        category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
     }));
 
     const searchTerms: string[] = [];

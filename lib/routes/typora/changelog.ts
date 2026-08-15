@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,9 +34,9 @@ async function handler() {
 
     const { data } = await got(`${host}/store/`);
 
-    const list = Object.values(data)
+    const list = Object.values<{ category: string; title: string; author: string; content: DataItem['description']; url: string }>(data)
         .filter((i) => i.category === 'new')
-        .map((i) => ({
+        .map((i): DataItem & { link: string } => ({
             title: i.title,
             author: i.author,
             description: i.content,

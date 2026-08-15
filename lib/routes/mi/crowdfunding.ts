@@ -40,7 +40,7 @@ const getDataItem = (item: CrowdfundingDetailInfo) =>
         description: utils.renderCrowdfunding(item),
         link: `https://m.mi.com/crowdfunding/proddetail/${item.project_id}`,
         image: item.big_image,
-        language: 'zh-cn',
+        language: 'zh-CN',
     }) as DataItem;
 
 async function handler() {
@@ -55,6 +55,6 @@ async function handler() {
         item: items,
         allowEmpty: true,
         image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
-        language: 'zh-cn',
+        language: 'zh-CN',
     } as Data;
 }

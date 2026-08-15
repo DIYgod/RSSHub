@@ -434,11 +434,11 @@ async function handler(ctx) {
         link: struct[type].link,
         description: '北京科技大学研究生院',
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             // logger.info("item:" + item);
 
             // time
-            let time = item.find($(struct[type].timeSelector.list)).text();
+            let time = $item.find($(struct[type].timeSelector.list)).text();
             let date;
             if (time !== '') {
                 if (time.includes('[')) {
@@ -449,16 +449,20 @@ async function handler(ctx) {
             // logger.info("date:" + date);
 
             // link
-            let link = item.find($(struct[type].linkSelector.list)).attr('href');
+            let link = $item.find($(struct[type].linkSelector.list)).attr('href');
             if (link === undefined) {
-                link = item.attr('href');
+                link = $item.attr('href');
             }
             // logger.info("link:" + link);
 
             // title
-            let title = item.find($(struct[type].titleSelector.list)).clone().children().remove().end().text();
+            let title = $item
+                .find($(struct[type].titleSelector.list))
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text();
             if (title === '') {
-                title = item.find($(struct[type].titleSelector.list)).text();
+                title = $item.find($(struct[type].titleSelector.list)).text();
             }
             // logger.info("title:" + title);
             // logger.info("=====");

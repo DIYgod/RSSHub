@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,17 +47,17 @@ async function handler(ctx) {
     let items = $('li > figure.thumb')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
         .toArray()
-        .map((item) => ({
-            title: $(item).find('img.lazyload').attr('data-src').split('/').pop(),
+        .map((item): DataItem => ({
+            title: $(item).find('img.lazyload').attr('data-src')!.split('/').pop()!,
             description: $(item)
-                .html()
-                .match(/<img.*?>/)[0],
+                .html()!
+                .match(/<img.*?>/)![0],
             link: $(item).find('a.preview').attr('href'),
         }));
     if (needDetails) {
         items = await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -65,13 +65,13 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    item.title = content('meta[name="title"]').attr('content');
+                    item.title = content('meta[name="title"]').attr('content')!;
                     item.author = content('.username').text();
-                    item.pubDate = parseDate(content('time').attr('datetime'));
+                    item.pubDate = parseDate(content('time').attr('datetime')!);
                     item.category = content('.tagname')
                         .toArray()
                         .map((tag) => content(tag).text());
-                    item.description = content('div.scrollbox').html();
+                    item.description = content('div.scrollbox').html() ?? '';
 
                     return item;
                 })

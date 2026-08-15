@@ -85,7 +85,7 @@ export const route: Route = {
                 image: each.mainCoverUrl,
                 author: each.name,
                 link: `https://asmr-200.com/work/${each.source_id}`,
-                pubDate: timezone(parseDate(each.release, 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(each.release, 'YYYY-MM-DD'), 8),
                 category,
                 description: render(each, `https://asmr-200.com/work/${each.source_id}`),
             };

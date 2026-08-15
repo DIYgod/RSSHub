@@ -49,15 +49,15 @@ async function handler(ctx) {
     const items = $('div.article > div.grid-view > div.item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const itemPicUrl = item.find('.pic a img').attr('src');
-            const info = item.find('.info');
+            const $item = $(item);
+            const itemPicUrl = $item.find('.pic a img').attr('src');
+            const info = $item.find('.info');
             const title = info.find('ul li.title a').text();
             const url = info.find('ul li.title a').attr('href');
             const title_ = title.split('/').find((title) => title.trim());
             const day = info.find('ul li .date').text().trim();
             return {
-                title: title_,
+                title: title_!,
                 description: `${info.find('.intro').text()}<br><img src="${itemPicUrl}">`,
                 link: url,
                 pubDate: new Date(day),

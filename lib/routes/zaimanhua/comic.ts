@@ -50,7 +50,6 @@ async function handler(ctx) {
 
     const headers: Record<string, string> = {
         'user-agent': config.trueUA,
-        referer: baseUrl,
     };
 
     const token = config.zaimanhua.token;
@@ -62,7 +61,7 @@ async function handler(ctx) {
 
     const comicInfo = response.data.comicInfo;
     const status = comicInfo.chapterList[0].title; // 更新状态
-    const data = comicInfo.chapterList[0].data;
+    const data = comicInfo.chapterList[0].data as Array<Record<string, any>>;
     const comicPy = comicInfo.comicPy;
     const comicTitle = comicInfo.title;
     const items = await pMap(

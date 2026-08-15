@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -36,34 +36,34 @@ async function handler() {
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
-    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    const html = await page.evaluate(() => document.documentElement.getHTML());
     const $ = load(html);
     const list = $('font.newslist_style')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a[title]');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a[title]');
             return {
-                title: a.attr('title'),
-                link: new URL(a.attr('href'), 'http://www.pbc.gov.cn').href,
+                title: a.attr('title')!,
+                link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailPage = await context.newPage();
                 await detailPage.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
-                await detailPage.goto(item.link, {
+                await detailPage.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
                 });
-                const detailHtml = await detailPage.evaluate(() => document.documentElement.innerHTML);
+                const detailHtml = await detailPage.evaluate(() => document.documentElement.getHTML());
                 const content = load(detailHtml);
                 item.description = content('#zoom').html();
-                item.pubDate = timezone(parseDate(content('#shijian').text()), +8);
+                item.pubDate = timezone(parseDate(content('#shijian').text()), 8);
                 return item;
             })
         )

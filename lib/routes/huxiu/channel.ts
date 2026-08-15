@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiArticleRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, processItems, rootUrl } from './util';
@@ -54,7 +53,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await processItems(response.data?.dataList ?? response.data.datalist, limit, cache.tryGet);
+    const items = await processItems(response.data?.dataList ?? response.data.datalist, limit);
     const rawTitle = response.data?.share_info?.share_title ?? response.data?.name ?? '全部';
 
     const data = buildFeedMetadata({

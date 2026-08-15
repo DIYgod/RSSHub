@@ -55,7 +55,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.description = $('.new_zwCot').first().html();
+                item.description = $('.new_zwCot').html();
                 return item;
             })
         )

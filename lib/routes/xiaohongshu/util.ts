@@ -1,3 +1,4 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import { config } from '@/config';
@@ -26,7 +27,7 @@ const getHeaders = (cookie?: string) => ({
     'Sec-Fetch-User': '?1',
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-    ...(cookie ? { Cookie: cookie } : {}),
+    ...(cookie && { Cookie: cookie }),
 });
 
 // Fetch HTML through proxy when configured
@@ -77,17 +78,22 @@ const getUser = (url, cache) =>
                 await page.goto(url, {
                     waitUntil: 'domcontentloaded',
                 });
-                await page.waitForSelector('div.reds-tab-item:nth-child(2), #red-captcha');
+                try {
+                    await page.waitForSelector('div.reds-tab-item:nth-child(2), .fe-verify-box', { timeout: 3000 });
+                } catch {
+                    //
+                }
 
-                if (await page.$('#red-captcha')) {
+                if (await page.$('.fe-verify-box')) {
                     throw new CaptchaError('小红书风控校验，请稍后再试');
                 }
 
-                const initialState = await page.evaluate(() => (window as any).__INITIAL_STATE__);
+                const content = await page.content();
+                const initialState = JSON.parse(extractInitialState(load(content)));
 
                 if (!(await page.$('.lock-icon'))) {
-                    await page.click('div.reds-tab-item:nth-child(2)');
                     try {
+                        await page.click('div.reds-tab-item:nth-child(2)', { timeout: 3000 });
                         const response = await page.waitForResponse(
                             (res) => {
                                 const req = res.request();
@@ -104,6 +110,10 @@ const getUser = (url, cache) =>
                 let { userPageData, notes } = initialState.user;
                 userPageData = userPageData._rawValue || userPageData;
                 notes = notes._rawValue || notes;
+
+                if (!userPageData.basicInfo) {
+                    throw new Error(`小红书未返回用户数据，请稍后再试: ${JSON.stringify(userPageData.result)}`);
+                }
 
                 return { userPageData, notes, collect };
             } finally {
@@ -276,7 +286,7 @@ async function getFullNote(link, displayLivePhoto) {
             pubDate,
             updated,
         };
-    })) as Promise<{ title: string; description: string; pubDate: Date; updated: Date }>;
+    })) as { title: string; description: string; pubDate: Date; updated: Date };
     return data;
 }
 
@@ -291,45 +301,27 @@ async function getUserWithCookie(url: string) {
     for (const item of state.user.notes.flat()) {
         const path = paths[index];
         if (path && path.includes('?')) {
-            item.id = item.id + path?.slice(path.indexOf('?'));
+            item.id += path?.slice(path.indexOf('?'));
         }
-        index = index + 1;
+        index += 1;
     }
     return state.user;
 }
 
 // Add helper function to extract initial state
-function extractInitialState($) {
-    let script = $('script')
-        .filter((i, script) => {
-            const text = script.children[0]?.data;
-            return text?.startsWith('window.__INITIAL_STATE__=');
-        })
-        .text();
-    script = script.slice('window.__INITIAL_STATE__='.length);
+function extractInitialState($: CheerioAPI) {
+    let script = $('script:contains("window.__INITIAL_STATE__=")').text();
+    script = script.slice(script.indexOf('window.__INITIAL_STATE__=') + 'window.__INITIAL_STATE__='.length);
     script = script.replaceAll('undefined', 'null');
     return script;
 }
 
 // Add helper function to extract initial SSR state
-function extractInitialSsrState($) {
-    let script = $('script')
-        .filter((i, script) => {
-            const text = script.children[0]?.data;
-            return text?.includes('window.__INITIAL_SSR_STATE__=');
-        })
-        .text();
+function extractInitialSsrState($: CheerioAPI) {
+    const script = $('script:contains("window.__INITIAL_SSR_STATE__=")').text();
     const match = script.match(/window\.__INITIAL_SSR_STATE__\s*=\s*(\{[\s\S]*?\})\s*(?:;|$)/);
     if (match) {
         return match[1].replaceAll('undefined', 'null');
-    }
-    // Fallback: try simple extraction
-    const startMarker = 'window.__INITIAL_SSR_STATE__=';
-    const startIndex = script.indexOf(startMarker);
-    if (startIndex !== -1) {
-        script = script.slice(startIndex + startMarker.length);
-        script = script.replaceAll('undefined', 'null');
-        return script;
     }
     throw new Error('Cannot extract __INITIAL_SSR_STATE__');
 }

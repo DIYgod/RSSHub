@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import loadArticle from './article';
+import { loadArticle } from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
 
 export const route: Route = {
@@ -40,7 +40,7 @@ async function handler() {
     return {
         title: `${SUB_NAME_PREFIX} - Latest`,
         link: SUB_URL,
-        item: await Promise.all(
+        item: (await Promise.all(
             itemRaw
                 .map((e) => {
                     const item = $(e);
@@ -54,6 +54,6 @@ async function handler() {
                     return cache.tryGet(link, () => loadArticle(link));
                 })
                 .filter(Boolean)
-        ),
+        )) as DataItem[],
     };
 }

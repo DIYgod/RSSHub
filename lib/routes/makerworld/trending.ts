@@ -1,9 +1,7 @@
-import { config } from '@/config';
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, getNextBuildId } from './utils';
+import { baseUrl, fetchJson, getNextBuildId } from './utils';
 
 export const route: Route = {
     path: '/trending',
@@ -21,20 +19,17 @@ export const route: Route = {
 
 async function handler() {
     const nextBuildId = await getNextBuildId();
-    const response = await ofetch(`${baseUrl}/_next/data/${nextBuildId}/en.json`, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+    const response = await fetchJson(`${baseUrl}/_next/data/${nextBuildId}/en.json`);
 
-    const items = response.pageProps.popularDesignsData.map((d) => ({
-        title: d.title,
-        link: `${baseUrl}/en/models/${d.id}-${d.slug}`,
-        author: d.designCreator.name,
-        category: d.tags,
-        pubDate: parseDate(d.startTime),
-        description: d.designExtension.design_pictures.map((i) => `<figure><img src="${i.url}" alt="${d.name}"><figcaption>${i.name}</figcaption></figure>`).join(''),
-    }));
+    const items = response.pageProps.v2Props.foryouData.hits
+        .filter((hit) => hit.design?.title)
+        .map(({ design: d }) => ({
+            title: d.title,
+            link: `${baseUrl}/en/models/${d.id}-${d.slug}`,
+            author: d.designCreator.name,
+            pubDate: parseDate(d.createTime),
+            description: d.designExtension.design_pictures.map((i) => `<figure><img src="${i.url}" alt="${d.title}"><figcaption>${i.name}</figcaption></figure>`).join(''),
+        }));
 
     return {
         title: 'Trending Models - MakerWorld',

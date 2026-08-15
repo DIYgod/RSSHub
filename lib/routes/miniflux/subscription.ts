@@ -75,9 +75,9 @@ async function handler(ctx) {
         headers: { 'X-Auth-Token': token },
     });
 
-    const subscription = [];
-    const categories = [];
-    const feeds = [];
+    const subscription: any[] = [];
+    const categories: any[] = [];
+    const feeds: any[] = [];
     const feedsList = response.data;
 
     const parameters = ctx.req

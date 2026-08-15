@@ -11,6 +11,11 @@ import kv, { getKVNamespace } from './kv';
 const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
     set: (key: string, value?: string | Record<string, any>, maxAge?: number) => any;
+    /**
+     * Atomically set `key` to '1' and return true, unless it is already '1' (return false).
+     * A get-then-set in the caller races: two same-tick requests would both read "not '1'".
+     */
+    claim: (key: string, maxAge: number) => Promise<boolean> | boolean;
 } = {
     get: async (key) => {
         if (key && kv.status.available && getKVNamespace()) {
@@ -32,6 +37,14 @@ const globalCache: {
         if (key) {
             await getKVNamespace()!.put(key, value, { expirationTtl: maxAge });
         }
+    },
+    claim: async (key, maxAge) => {
+        // best effort: KV has no atomic operation
+        if ((await globalCache.get(key)) === '1') {
+            return false;
+        }
+        await globalCache.set(key, '1', maxAge);
+        return true;
     },
 };
 

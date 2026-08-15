@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import Parser from 'rss-parser';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 const titleRegex = /(.*\S)\s+is\s+([A-Z]+)\s+\((.+)\)/;
@@ -28,6 +28,9 @@ const formatTime = (s) => {
 };
 
 class Monitor {
+    name: string;
+    uptime: number;
+    downtime: number;
     constructor(name, uptime = 0, downtime = 0) {
         this.name = name;
         this.uptime = uptime;
@@ -98,7 +101,7 @@ async function handler(ctx) {
     const monitors = {};
 
     const items = rss.items.toReversed().map((item) => {
-        const titleMatch = item.title.match(titleRegex);
+        const titleMatch = item.title!.match(titleRegex);
         if (!titleMatch) {
             throw new InvalidParameterError('Unexpected title, please open an issue.');
         }
@@ -117,7 +120,7 @@ async function handler(ctx) {
         }
 
         const duration = item['details:duration'];
-        const monitor = (monitors[monitorName] = monitors[monitorName] || new Monitor(monitorName));
+        const monitor = (monitors[monitorName] ||= new Monitor(monitorName));
 
         if (status === 'UP') {
             monitor.up(duration);
@@ -177,7 +180,7 @@ async function handler(ctx) {
         title: 'Uptime Robot - RSS (enhanced)',
         description: rss.description,
         link: rssUrl,
-        item: items,
+        item: items as DataItem[],
         image: 'https://uptimerobot.com/favicon.ico',
     };
 }

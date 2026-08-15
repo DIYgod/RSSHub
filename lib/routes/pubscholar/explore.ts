@@ -47,14 +47,17 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.content.map((item) => ({
-        title: (item.is_free || item.links.some((l) => l.is_open_access) ? '「Open Access」' : '') + sanitizeHtml(item.title, { allowedTags: [], allowedAttributes: {} }),
-        description: item.abstracts + `<br>${item.links.map((link) => `<a href="${link.url}">${link.is_open_access ? '「Open Access」' : ''}${link.name}</a>`).join('<br>')}`,
-        author: item.author.join('; '),
-        pubDate: parseDate(item.date),
-        category: item.keywords.map((keyword) => sanitizeHtml(keyword, { allowedTags: [], allowedAttributes: {} })),
-        link: `${baseUrl}/${category}/${getArticleLink(item.id)}`,
-    }));
+    const list = response.content.map((item) => {
+        const date = item.date ?? item.issue_date ?? item.year;
+        return {
+            title: (item.is_free || item.links?.some((l) => l.is_open_access) ? '「Open Access」' : '') + sanitizeHtml(item.title, { allowedTags: [], allowedAttributes: {} }),
+            description: item.abstracts + `<br>${(item.links ?? []).map((link) => `<a href="${link.url}">${link.is_open_access ? '「Open Access」' : ''}${link.name}</a>`).join('<br>')}`,
+            author: (item.author ?? item.inventors)?.join('; '),
+            pubDate: date ? parseDate(String(date), ['YYYY-MM-DD', 'YYYYMMDD', 'YYYY']) : undefined,
+            category: item.keywords?.map((keyword) => sanitizeHtml(keyword, { allowedTags: [], allowedAttributes: {} })),
+            link: `${baseUrl}/${category}/${getArticleLink(item.id)}`,
+        };
+    });
 
     return {
         title: 'PubScholar 公益学术平台',

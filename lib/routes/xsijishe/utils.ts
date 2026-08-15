@@ -28,7 +28,7 @@ const playwrightGet = async (url: string, context: BrowserContext, waitForSelect
             waitUntil: 'domcontentloaded',
         });
 
-        let html = await page.evaluate(() => document.documentElement.innerHTML);
+        let html = await page.evaluate(() => document.documentElement.getHTML());
         if (html.includes('抱歉，您尚未登录，没有权限访问该版块')) {
             return html;
         }
@@ -39,7 +39,7 @@ const playwrightGet = async (url: string, context: BrowserContext, waitForSelect
             // Return the loaded HTML even when the expected selector is missing.
         }
 
-        html = await page.evaluate(() => document.documentElement.innerHTML);
+        html = await page.evaluate(() => document.documentElement.getHTML());
         return html;
     } finally {
         await page.close();

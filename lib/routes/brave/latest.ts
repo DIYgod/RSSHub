@@ -42,10 +42,10 @@ async function handler() {
     const items = $('.box h3')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
-            const device = item.parent().find('h2').text();
+            const title = $item.text();
+            const device = $item.parent().find('h2').text();
             const matchVersion = title.match(/(v[\d.]+)/);
             const matchDate = title.match(/\((.*?)\)/);
 
@@ -53,8 +53,8 @@ async function handler() {
                 title: `[${device}] ${title}`,
                 link: currentUrl,
                 guid: `${currentUrl}#${device}-${matchVersion?.[1] ?? title}`,
-                description: item.next().html(),
-                pubDate: parseDate(matchDate?.[1].replace(/(st|nd|rd|th)?,/, ''), ['MMMM D YYYY', 'MMM D YYYY']),
+                description: $item.next().html(),
+                pubDate: parseDate(matchDate?.[1].replace(/(st|nd|rd|th)?,/, '')!, ['MMMM D YYYY', 'MMM D YYYY']),
             };
         });
 

@@ -63,7 +63,7 @@ async function handler(ctx) {
             image: officialFeed.image?.url,
             link: officialFeed.link,
             item: officialFeed.items.map((item) => ({
-                title: item.title,
+                title: item.title!,
                 description: item.content,
                 link: item.link,
                 pubDate: item.pubDate ? parseDate(item.pubDate) : null,

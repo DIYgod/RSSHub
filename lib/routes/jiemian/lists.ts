@@ -1,6 +1,10 @@
-import type { Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { handler } from './common';
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { feedMeta, fetchArticle, handler as commonHandler, parseCardList } from './common';
 
 export const route: Route = {
     path: '/lists/:id',
@@ -97,3 +101,71 @@ export const route: Route = {
 
 :::`,
 };
+
+async function handler(ctx: Context): Promise<Data> {
+    const { id } = ctx.req.param();
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+
+    const currentUrl = `https://www.jiemian.com/lists/${id}.html`;
+    const pageResponse = await ofetch(currentUrl);
+    const $ = load(pageResponse);
+
+    const loadMore = $('div.channel-load-more');
+    if (loadMore.length === 0) {
+        const kbId = id.endsWith('kb')
+            ? id
+            : $('a.active[data-url]')
+                  .attr('data-url')
+                  ?.match(/lists\/(\d+kb)\.html/)?.[1];
+        if (!kbId) {
+            return commonHandler(ctx);
+        }
+
+        const kuaixunResponse = await ofetch('https://papi.jiemian.com/page/api/kuaixun/getlistmore', {
+            query: {
+                cid: kbId,
+                start_time: Math.floor(Date.now() / 1000),
+                page: 1,
+                tagid: kbId.replace('kb', ''),
+            },
+        });
+
+        const items = await Promise.all(
+            kuaixunResponse.result.list.slice(0, limit).map((flash) =>
+                fetchArticle({
+                    title: flash.title,
+                    link: `https://www.jiemian.com/article/${flash.id}.html`,
+                })
+            )
+        );
+
+        return {
+            item: items,
+            ...feedMeta($, currentUrl),
+        };
+    }
+
+    const listResponse = await ofetch<string>('https://a.jiemian.com/index.php', {
+        query: {
+            m: 'newLists',
+            a: 'loadMore',
+            tid: loadMore.attr('data-tid'),
+            page: 1,
+            // request a fixed template so the returned markup is always the card list
+            tpl: 'sub-card',
+            cid: id,
+            repeat: '',
+            list_type: loadMore.attr('data-list_type'),
+        },
+    });
+
+    const { html } = JSON.parse(listResponse.slice(listResponse.indexOf('(') + 1, listResponse.lastIndexOf(')')));
+    const list = parseCardList(html);
+
+    const items = await Promise.all(list.slice(0, limit).map((item) => fetchArticle(item)));
+
+    return {
+        item: items,
+        ...feedMeta($, currentUrl),
+    };
+}

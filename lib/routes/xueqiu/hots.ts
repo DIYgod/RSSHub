@@ -45,7 +45,6 @@ async function handler() {
         }),
         headers: {
             Cookie: token,
-            Referer: 'https://xueqiu.com/',
         },
     });
     const data = res2.data;

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,11 +55,11 @@ async function handler(ctx) {
     let items = $('div.r-box > ul')
         .find('li')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('a').text().trim();
-            const link = item.find('a').attr('href').startsWith('/article') ? host + item.find('a').attr('href') : item.find('a').attr('href');
-            const pubDate = timezone(parseDate(item.find('time').text(), 'YYYY-MM-DD'), +8);
+        .map((item): DataItem => {
+            const $item = $(item);
+            const title = $item.find('a').text();
+            const link = $item.find('a').attr('href')!.startsWith('/article') ? host + $item.find('a').attr('href') : $item.find('a').attr('href');
+            const pubDate = timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD'), 8);
             return {
                 title,
                 pubDate,
@@ -69,10 +69,10 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    const desc: string = load(response.data)('article.article').html();
+                    const desc = load(response.data)('article.article').html();
                     item.description = desc;
                 } catch {
                     // intranet only contents

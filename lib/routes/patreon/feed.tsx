@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -118,7 +118,7 @@ async function handler(ctx) {
     const creatorData = (await cache.tryGet(`patreon:creator:${creator}`, async () => {
         const response = await ofetch(link);
 
-        const $ = cheerio.load(response);
+        const $ = load(response);
 
         const ogUrl = $('meta[property="og:url"]').attr('content');
         if (ogUrl?.startsWith(`${baseUrl}/cw/`)) {
@@ -198,12 +198,12 @@ async function handler(ctx) {
             link: attributes.url,
             pubDate: parseDate(attributes.published_at),
             image: attributes.thumbnail?.url ?? attributes.image?.url,
-            category: relationships.user_defined_tags?.map((tag) => tag.attributes.value),
+            category: (relationships.user_defined_tags as unknown as Array<{ attributes: { value: string } }> | undefined)?.map((tag) => tag.attributes.value),
         };
     });
 
     return {
-        title: creatorData.attributes.name,
+        title: creatorData.attributes.name!,
         description: creatorData.attributes.creation_name,
         link,
         image:

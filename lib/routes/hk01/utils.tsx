@@ -1,5 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -91,7 +92,7 @@ const renderDescription = ({ image, teasers, blocks }) =>
         </>
     );
 
-const ProcessItems = (items, limit, tryGet) =>
+const ProcessItems = (items, limit) =>
     Promise.all(
         items
             .filter((item) => item.type !== 2)
@@ -104,7 +105,7 @@ const ProcessItems = (items, limit, tryGet) =>
                 author: item.data.authors.map((a) => a.publishName).join(', '),
             }))
             .map((item) =>
-                tryGet(item.link, async () => {
+                cache.tryGet(item.link, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,

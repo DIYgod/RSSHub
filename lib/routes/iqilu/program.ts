@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,8 +9,33 @@ import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/v/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['traditional-media'],
+    example: '/iqilu/v/sdws/sdxwlb',
+    parameters: {
+        category: '节目 id，可在对应节目页 URL 中找到，见下表，默认为 `sdws/sdxwlb`，即山东新闻联播',
+    },
+    features: {
+        supportPodcast: true,
+    },
+    name: '电视节目',
+    maintainers: ['nczitzk'],
+    description: `| 节目名称         | 节目 id        |
+| ---------------- | -------------- |
+| 山东新闻联播     | sdws/sdxwlb    |
+| 闪电大视野       | ggpd/sddsy     |
+| 山东三农新闻联播 | nkpd/snxw      |
+| 每日新闻         | qlpd/mrxw      |
+| 新闻午班车       | ggpd/xwwbc     |
+| 戏宇宙           | sdws/xyz/      |
+| 中国礼 中国乐    | qlpd/zglzgy    |
+| 超级语文课       | sdws/cjywk     |
+| 文物里的山东     | yspd/wwldsd    |
+| 拉呱             | qlpd/l0        |
+| 生活帮           | shpd/shb       |
+| 快乐大赢家       | zypd/kldyj     |
+| 乡村季风         | nkpd/xcjf      |
+| 健康是 1         | ggpd/jks1      |
+| 此时此刻         | sdws/cishicike |`,
     handler,
 };
 
@@ -28,16 +53,16 @@ async function handler(ctx) {
     let items = $('#jmzhanshi1 dl')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').first();
-            const image = item.find('img').first();
+            const a = $item.find('a').first();
+            const image = $item.find('img').first();
 
-            item.find('dd').last().remove();
+            $item.find('dd').last().remove();
 
             return {
-                title: a.prop('title'),
+                title: a.prop('title') ?? '',
                 link: a.prop('href'),
                 description: renderDescription({
                     image: {
@@ -46,11 +71,11 @@ async function handler(ctx) {
                     },
                 }),
                 pubDate: parseDate(
-                    item
+                    $item
                         .find('dd')
                         .last()
                         .text()
-                        .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                        .match(/(\d{4}-\d{2}-\d{2})/)![1]
                 ),
                 itunes_item_image: image.prop('src'),
             };
@@ -58,7 +83,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -84,7 +109,7 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
     const author = $('div.host_pic dl dd a')
         .toArray()
         .map((a) => $(a).text())
@@ -95,7 +120,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('div.s_logo img').prop('src'),
         icon,
         logo: icon,

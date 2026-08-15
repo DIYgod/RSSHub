@@ -1,22 +1,40 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id/:order?',
+    categories: ['new-media'],
+    example: '/guancha/topic/110/1',
+    parameters: { id: '话题 id，可在URL中找到，默认为全部，即为 `0`', order: '排序参数，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['guancha.cn/'],
             target: '/:category?',
         },
     ],
-    name: 'Unknown',
+    name: '风闻话题',
     maintainers: ['occupy5', 'nczitzk'],
     handler,
     url: 'guancha.cn/',
+    description: `| 最新回复 | 最新发布 | 24 小时最热 | 3 天最热 | 7 天最热 | 3 个月最热 | 专栏文章 |
+| -------- | -------- | ----------- | -------- | -------- | ---------- | -------- |
+| 1        | 2        | 3           | 6        | 7        | 8          | 5        |
+
+::: tip
+仅在话题 id 为 0，即选择 全部 时，**3 个月最热**、**24 小时最热**、**3 天最热**、**7 天最热** 和 **专栏文章** 参数生效。
+:::`,
 };
 
 async function handler(ctx) {
@@ -35,18 +53,18 @@ async function handler(ctx) {
 
     let items = $('.list-item h4 a, ul.home li .list-item h4 a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}&page=0`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}&page=0`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

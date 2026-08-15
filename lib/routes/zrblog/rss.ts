@@ -34,7 +34,7 @@ async function handler() {
             const dateraw = element.find('div.info').find('span').eq(0).text();
 
             return {
-                title,
+                title: title!,
                 description,
                 link,
                 pubDate: parseDate(dateraw, '发布日期：YYYY年MM月DD日'),

@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: 'Research Highlight',
-    maintainers: [],
+    maintainers: ['y9c', 'TonyRL'],
     handler,
     description: `::: warning
 Only some journals are supported.

@@ -35,9 +35,9 @@ async function handler() {
     const list = $('#content1 > .center > .col_box1 > .col_body1 > ul > li')
         .toArray()
         .map((item) => {
-            const [title, date] = $(item).text().trim().replaceAll(']', '').split(' [');
+            const [title, date] = $(item).text().trim().replaceAll(']', '').split(' [', 2);
             const link = new URL($(item).children('a').attr('href')!, baseUrl).href;
-            const pubDate = timezone(parseDate(date), +8);
+            const pubDate = timezone(parseDate(date), 8);
             return {
                 title,
                 link,

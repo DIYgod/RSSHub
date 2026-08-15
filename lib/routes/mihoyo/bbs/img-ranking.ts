@@ -9,7 +9,7 @@ const getGameInfo = (game) => ({
     title: DATA_MAP[game]?.title,
 });
 const getForumInfo = (game, forum_type) => {
-    forum_type = forum_type || DATA_MAP[game]?.default_forum || 'tongren';
+    forum_type ||= DATA_MAP[game]?.default_forum || 'tongren';
     const forum = DATA_MAP[game]?.forums?.[forum_type];
     return {
         forum_id: forum?.forum_id,
@@ -17,7 +17,7 @@ const getForumInfo = (game, forum_type) => {
     };
 };
 const getCateInfo = (game, forum_type, cate_type) => {
-    forum_type = forum_type || DATA_MAP[game]?.default_forum || 'tongren';
+    forum_type ||= DATA_MAP[game]?.default_forum || 'tongren';
     const forum = DATA_MAP[game]?.forums?.[forum_type];
     const default_cate = forum?.default_cate;
     if (!default_cate) {
@@ -26,14 +26,14 @@ const getCateInfo = (game, forum_type, cate_type) => {
             cate_id: '0',
         };
     }
-    cate_type = cate_type || default_cate;
+    cate_type ||= default_cate;
     return {
         title: `${forum?.cates?.[cate_type]?.title}榜`,
         cate_id: forum?.cates?.[cate_type]?.cate_id,
     };
 };
 const getRankingTypeInfo = (game, ranking_type) => {
-    ranking_type = ranking_type || DATA_MAP[game]?.default_ranking_type || 'daily';
+    ranking_type ||= DATA_MAP[game]?.default_ranking_type || 'daily';
     return {
         id: RANKING_TYPE_MAP[ranking_type]?.id,
         title: RANKING_TYPE_MAP[ranking_type]?.title,

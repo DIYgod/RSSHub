@@ -47,7 +47,7 @@ async function handler(ctx) {
     const $mainSections = $('main .Layout-main').children();
 
     const $subheading = $mainSections.eq(0);
-    const [periodFrom, periodTo] = $subheading.find('h2').text().split('–');
+    const [periodFrom, periodTo] = $subheading.find('h2').text().split('–', 2);
 
     const $overview = $mainSections.eq(1);
     const overviewItems = $overview
@@ -85,7 +85,7 @@ async function handler(ctx) {
                         const $link = $item.find('a');
                         const $details = $item.find('p');
                         const $relativeTime = $details.find('relative-time');
-                        $relativeTime.replaceWith($relativeTime.attr('datetime'));
+                        $relativeTime.replaceWith($relativeTime.attr('datetime') ?? '');
                         return {
                             link: { text: $link.text(), url: $link.attr('href') },
                             details: $details.text(),

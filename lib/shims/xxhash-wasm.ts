@@ -29,7 +29,7 @@ const simpleHash32 = (input: Uint8Array, seed = 0): number => {
     return hash >>> 0;
 };
 
-function xxhash(): Promise<XXHashAPI> {
+function xxhash(): XXHashAPI {
     return {
         h32: (input: string, seed?: number): number => simpleHash32(encoder.encode(input), seed),
         h32ToString: (input: string, seed?: number): string => simpleHash32(encoder.encode(input), seed).toString(16).padStart(8, '0'),

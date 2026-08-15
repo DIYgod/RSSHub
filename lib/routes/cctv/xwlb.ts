@@ -72,7 +72,7 @@ const getXWLB = async () => {
             const item = {
                 title: `新闻联播 ${newsDate.format('YYYY/MM/DD')}`,
                 link: url,
-                pubDate: timezone(parseDate(newsDate.format()), +8),
+                pubDate: timezone(parseDate(newsDate.format()), 8),
                 description: await cache.tryGet(url, async () => {
                     const res = await got(url);
                     const content = load(res.data);

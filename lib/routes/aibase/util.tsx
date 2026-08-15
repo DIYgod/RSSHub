@@ -91,7 +91,7 @@ const processItems = (items: any[]): any[] =>
         return {
             title,
             description,
-            pubDate: timezone(parseDate(item.addtime), +8),
+            pubDate: timezone(parseDate(item.addtime), 8),
             link: new URL(`tool/${item.zurl}`, rootUrl).href,
             category: [...new Set([...strToArray(item.categories), ...strToArray(item.tags), item.catname, item.procattrname, item.procformname, item.proctypename])].filter(Boolean),
             guid,

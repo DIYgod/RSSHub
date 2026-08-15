@@ -1,7 +1,7 @@
 import type { RouteHandler } from '@hono/zod-openapi';
 import { createRoute } from '@hono/zod-openapi';
 
-import { namespaces } from '@/registry';
+import { ensureAllLoaded, namespaces } from '@/registry';
 
 const route = createRoute({
     method: 'get',
@@ -15,6 +15,9 @@ const route = createRoute({
     },
 });
 
-const handler: RouteHandler<typeof route> = (ctx) => ctx.json(namespaces);
+const handler: RouteHandler<typeof route> = async (ctx) => {
+    await ensureAllLoaded();
+    return ctx.json(namespaces);
+};
 
 export { handler, route };

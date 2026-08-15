@@ -40,7 +40,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href'), host).href,
+            link: new URL($(item).find('a').attr('href')!, host).href,
             author: $(item).find('span.fr').text().replaceAll('…', ''),
         }));
 

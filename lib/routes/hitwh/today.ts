@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,13 +23,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hitwh.edu.cn/1024/list.htm', 'hitwh.edu.cn/'],
+            source: ['today.hitwh.edu.cn/1024/list.htm', 'today.hitwh.edu.cn/'],
         },
     ],
     name: '今日工大 - 通知公告',
     maintainers: ['raptazure'],
     handler,
-    url: 'hitwh.edu.cn/1024/list.htm',
+    url: 'today.hitwh.edu.cn/1024/list.htm',
 };
 
 async function handler() {
@@ -38,9 +38,9 @@ async function handler() {
     const type = (filename) => filename.split('.').pop();
     const links = $('.list_list_wrap #wp_news_w10002 ul > li')
         .toArray()
-        .map((el) => ({
+        .map((el): DataItem & { link: string } => ({
             pubDate: timezone(parseDate($(el).find('.news-time2').text()), 8),
-            link: new URL($(el).find('a').attr('href'), baseUrl).href,
+            link: new URL($(el).find('a').attr('href')!, baseUrl).href,
             title: $(el).find('a').text(),
         }));
 
@@ -50,28 +50,15 @@ async function handler() {
         item: await Promise.all(
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            item.description =
-                                $('div.wp_articlecontent').html() &&
-                                $('div.wp_articlecontent')
-                                    .html()
-                                    .replaceAll('src="/', () => `src="${baseUrl}/`)
-                                    .replaceAll('href="/', () => `href="${baseUrl}/`)
-                                    .trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
-                        }
-                    } else {
+                    if (type(item.link) !== 'htm') {
                         // file to download
                         item.description = '此链接为文件，点击以下载';
                         return item;
                     }
+                    const { data } = await got(item.link);
+                    const $ = load(data);
+                    item.description = $('div.wp_articlecontent').html() ?? '请进行统一身份认证之后再访问';
+                    return item;
                 })
             )
         ),

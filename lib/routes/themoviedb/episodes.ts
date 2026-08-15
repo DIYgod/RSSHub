@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import apiKey from './api-key';
+import { keys as apiKey } from './api-key';
 import { handleDescription } from './utils';
 
 export const route: Route = {

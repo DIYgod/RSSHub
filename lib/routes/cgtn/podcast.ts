@@ -11,7 +11,7 @@ async function getData(category, id) {
 
 function combDate(date, time) {
     // combine date and time, return a Date object
-    return timezone(parseDate(date + ' ' + time), +8);
+    return timezone(parseDate(date + ' ' + time), 8);
 }
 
 export const route: Route = {

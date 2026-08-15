@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -34,10 +34,10 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div .ms-slide')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const img = item.find('img');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
+            const img = $item.find('img');
 
             return {
                 title: a.text(),
@@ -48,7 +48,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 const p = $('div .blog-grid').find('p');
@@ -64,6 +64,6 @@ async function handler() {
         link: url,
         description: '印尼气象气候和地球物理局 新闻 | BMKG news',
         item: items,
-        language: 'in',
+        language: 'in' as Language,
     };
 }

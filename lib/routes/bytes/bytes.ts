@@ -8,14 +8,17 @@ const currentURL = 'https://bytes.dev/archives';
 
 export const route: Route = {
     path: '/',
+    categories: ['programming'],
+    example: '/bytes',
     radar: [
         {
             source: ['bytes.dev/archives', 'bytes.dev/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Your weekly dose of JS',
     maintainers: ['meixger'],
+    description: 'Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free.',
     handler,
     url: 'bytes.dev/archives',
 };

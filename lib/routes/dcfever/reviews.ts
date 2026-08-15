@@ -34,12 +34,13 @@ async function handler(ctx) {
     const list = $('.col-md-left .title a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: new URL(item.attr('href'), link).href,
+                title: $item.text(),
+                link: new URL($item.attr('href')!, link).href,
             };
-        });
+        })
+        .filter((item, index, arr) => arr.findIndex((i) => i.link === item.link) === index);
 
     const items = await Promise.all(list.map((item) => parseItem(item)));
 

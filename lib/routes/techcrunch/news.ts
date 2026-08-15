@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'techcrunch.com/',
 };

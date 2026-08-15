@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -9,15 +10,14 @@ const rootUrl = 'https://nzmz.xyz';
 
 /**
  * Retrieve all movies and TV shows under a specified category on the homepage and obtain their detail links.
- * @param {function} tryGet     - cache.tryGet
  * @param {string} homeUrl      - Homepage URL
  * @param {string} id           - Category id
  * @param {string} modSelector  - Selector for mods
  * @param {string} itemSelector - Selector for items
  * @returns {Array} An array containing the links in the map.
  */
-const getItems = async (tryGet, homeUrl, id, modSelector, itemSelector) => {
-    const response = await tryGet(homeUrl, async () => {
+const getItems = async (homeUrl, id, modSelector, itemSelector) => {
+    const response = await cache.tryGet(homeUrl, async () => {
         const { data: response } = await got(homeUrl);
 
         return response;
@@ -30,22 +30,21 @@ const getItems = async (tryGet, homeUrl, id, modSelector, itemSelector) => {
         .find(itemSelector)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                link: new URL(item.prop('href'), rootUrl).href,
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 };
 
 /**
  * Obtain the information corresponding to a given movie or TV show item based on the provided URL.
- * @param {function} tryGet - cache.tryGet
  * @param {string} itemUrl  - Item URL
  * @returns {Object} An object containing information of the item.
  */
-const getItemInfo = (tryGet, itemUrl) =>
-    tryGet(`newzmz#${itemUrl.match(/details-(.*?)\.html/)[1]}`, async () => {
+const getItemInfo = (itemUrl) =>
+    cache.tryGet(`newzmz#${itemUrl.match(/details-(.*?)\.html/)[1]}`, async () => {
         const { data: detailResponse } = await got(itemUrl);
 
         const content = load(detailResponse);
@@ -67,7 +66,7 @@ const getItemInfo = (tryGet, itemUrl) =>
                 content('span.duration')
                     .first()
                     .text()
-                    .match(/(\d{4}-\d{2}-\d{2})/)[1]
+                    .match(/(\d{4}-\d{2}-\d{2})/)![1]
             ),
             description: {
                 image: content('div.details-bg img').prop('src'),
@@ -78,11 +77,11 @@ const getItemInfo = (tryGet, itemUrl) =>
                 links: content('div.ep-infos a[title]')
                     .toArray()
                     .map((a) => {
-                        a = content(a);
+                        const $a = content(a);
 
                         return {
-                            title: a.prop('title'),
-                            link: a.prop('href'),
+                            title: $a.prop('title'),
+                            link: $a.prop('href'),
                         };
                     }),
             },
@@ -113,26 +112,26 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
     return content(itemSelector)
         .toArray()
         .map((item) => {
-            item = content(item);
+            const $item = content(item);
 
-            const categories = item
+            const categories = $item
                 .find(categorySelector)
                 .toArray()
                 .map((c) => content(c).text());
 
-            const downLinks = item
+            const downLinks = $item
                 .find(downLinkSelector)
                 .toArray()
                 .map((downLink) => {
-                    downLink = content(downLink);
+                    const $downLink = content(downLink);
 
                     return {
-                        title: downLink.find('p.link-name').text(),
-                        link: downLink.find('a[title]').prop('href'),
+                        title: $downLink.find('p.link-name').text(),
+                        link: $downLink.find('a[title]').prop('href'),
                     };
                 });
 
-            const subtitle = item
+            const subtitle = $item
                 .find('span.up')
                 .text()
                 .replaceAll(/[\s-]+/g, '');

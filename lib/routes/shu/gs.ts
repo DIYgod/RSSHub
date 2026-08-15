@@ -68,7 +68,7 @@ async function handler(ctx) {
             return {
                 title, // 获取标题
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
-                pubDate: timezone(parseDate(dateParts, 'YYYY/MM/DD HH:mm:ss'), +8), // 解析日期
+                pubDate: timezone(parseDate(dateParts, 'YYYY/MM/DD HH:mm:ss'), 8), // 解析日期
                 description: item.find('td').eq(2).text().trim(), // 提取访问次数或其他信息
             };
         });

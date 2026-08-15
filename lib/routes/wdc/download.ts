@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Download',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
 };
 
@@ -44,7 +44,7 @@ async function handler(ctx) {
             enclosure_url: $('#WD_hlDownloadFWSelected').attr('href'),
             pubDate: parseDate($('#WD_lblReleaseDateSelected').text(), 'D/M/YYYY'),
             description: $('.toggleInner')
-                .html()
+                .html()!
                 .replace(/style="color:White;"/, ''),
         },
     ];

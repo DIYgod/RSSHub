@@ -1,3 +1,4 @@
+import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 
@@ -6,8 +7,8 @@ const criticalFailure = 'auto: DO NOT merge';
 const routeTestFailed = 'auto: not ready to review';
 const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
 const requiredHeadings = ['Involved Issue / 该 PR 相关 Issue', 'Example for the Proposed Route(s) / 路由地址示例', 'New RSS Route Checklist / 新 RSS 路由检查表', 'Note / 说明'];
-const routeHeading = 'Example for the Proposed Route(s) / 路由地址示例';
-const requiredHeadingDepth = 2;
+const routeHeading = requiredHeadings[1];
+const checklistHeading = requiredHeadings[2];
 
 /** @type {boolean} */
 const isPR = Boolean(process.env.PULL_REQUEST);
@@ -102,6 +103,10 @@ export default async function identify({ github, context, core }, body, number, 
     };
 
     if (isPR) {
+        if (issue.labels.some((e) => e.name === 'spam')) {
+            core.info('PR labeled as spam, skipping');
+            return;
+        }
         if (issue.state === 'closed') {
             await updatePrState('open');
         }
@@ -137,17 +142,29 @@ export default async function identify({ github, context, core }, body, number, 
     let routes;
 
     if (body) {
-        const ast = unified().use(remarkParse).parse(body);
+        const ast = unified().use(remarkParse).use(remarkGfm).parse(body);
 
         let searchStart = 0;
         let searchEnd = ast.children.length;
 
         if (isPR) {
             /** @param {string} text */
-            const findHeading = (text) => ast.children.findIndex((node) => node.type === 'heading' && node.depth === requiredHeadingDepth && node.children?.some((child) => child.type === 'text' && child.value.trim() === text));
+            const findHeading = (text) => ast.children.findIndex((node) => node.type === 'heading' && node.depth === 2 && node.children?.some((child) => child.type === 'text' && child.value.trim() === text));
+
+            /** @param {string} text */
+            const missingChecklist = (text) => {
+                const headingIndex = findHeading(text);
+                const nextHeading = ast.children.findIndex((node, i) => i > headingIndex && node.type === 'heading');
+                const checkboxCount = ast.children
+                    .slice(headingIndex + 1, nextHeading === -1 ? undefined : nextHeading)
+                    .filter((node) => node.type === 'list')
+                    .flatMap((node) => node.children ?? [])
+                    .filter((item) => typeof item.checked === 'boolean').length;
+                return checkboxCount < 5;
+            };
 
             const missingHeadings = requiredHeadings.filter((text) => findHeading(text) === -1);
-            if (missingHeadings.length > 0) {
+            if (missingHeadings.length > 0 || missingChecklist(checklistHeading)) {
                 searchStart = -1; // skip search
             } else {
                 const headingIndex = findHeading(routeHeading);

@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { baseUrl, getPlurk } from './utils';
@@ -36,7 +35,7 @@ async function handler(ctx) {
         },
     });
 
-    const items = await Promise.all(apiResponse.map((item) => getPlurk(item.link_url.startsWith('https://www.plurk.com/p/') ? item.link_url : `plurk:${item.link_url}`, item, null, cache.tryGet)));
+    const items = await Promise.all(apiResponse.map((item) => getPlurk(item.link_url.startsWith('https://www.plurk.com/p/') ? item.link_url : `plurk:${item.link_url}`, item, null)));
 
     return {
         title: 'Hot Links - Plurk',

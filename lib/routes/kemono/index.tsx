@@ -225,7 +225,7 @@ const renderPostFiles = (post: KemonoPost & { files?: KemonoFile[] }) =>
         <>
             {post.files?.map((file) => {
                 const extension = file.extension;
-                const typeSuffix = file.extention ?? '';
+                const typeSuffix = file.extension ?? '';
 
                 if (['jpg', 'png', 'webp', 'jpeg', 'jfif'].includes(extension)) {
                     return <img src={file.path} />;
@@ -354,7 +354,8 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
             });
 
             description = (kemonoFileElements[0] || '') + $.html();
-            for (const fileElement of kemonoFileElements.slice(replacementCount + 1)) {
+            const remainingFileElements = kemonoFileElements.slice(replacementCount + 1);
+            for (const fileElement of remainingFileElements) {
                 description += fileElement;
             }
 

@@ -84,7 +84,7 @@ async function handler(ctx) {
                 })}`,
                 {
                     headers: {
-                        Authorization: String(isPrivate ? `Bearer ${accessToken}` : ''),
+                        Authorization: isPrivate ? `Bearer ${accessToken}` : '',
                         'User-Agent': config.trueUA,
                     },
                 }
@@ -116,7 +116,7 @@ async function handler(ctx) {
                 })}`,
                 {
                     headers: {
-                        Authorization: String(isPrivate ? `Bearer ${accessToken}` : ''),
+                        Authorization: isPrivate ? `Bearer ${accessToken}` : '',
                         'User-Agent': config.trueUA,
                     },
                 }

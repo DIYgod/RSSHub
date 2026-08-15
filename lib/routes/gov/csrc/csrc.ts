@@ -63,7 +63,7 @@ export const handler = async (ctx) => {
     const $ = load(currentResponse);
 
     const description = channelName ?? id;
-    const image = new URL($('div.zfxx-logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.zfxx-logo img').prop('src')!, rootUrl).href;
     const author = $('meta[name="SiteName"]').prop('content');
 
     return {

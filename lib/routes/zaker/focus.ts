@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
@@ -25,7 +25,7 @@ async function handler() {
 
     const { cookie, data } = await getSafeLineCookieWithData(link);
 
-    const $ = cheerio.load(data);
+    const $ = load(data);
     const list = parseList($);
 
     const items = await pMap(list, (item) => cache.tryGet(item.link!, () => fetchItem(item, cookie)), { concurrency: 2 });

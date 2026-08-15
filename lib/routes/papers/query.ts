@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
@@ -38,7 +38,7 @@ export const handler = async (ctx) => {
         });
 
         return {
-            title,
+            title: title!,
             description,
             pubDate: parseDate(item.pubDate ?? ''),
             link: item.link,
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 html: description,
                 text: item.content,
             },
-            language,
+            language: language as Language,
             enclosure_url: pdfUrl,
             enclosure_type: 'application/pdf',
             enclosure_title: title,
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
     });
 
     return {
-        title: feed.title,
+        title: feed.title!,
         description: feed.description,
         link: currentUrl,
         item: items,

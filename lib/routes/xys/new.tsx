@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,14 +49,14 @@ async function handler(ctx) {
     let items = $('li a')
         .slice(4, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            let link = item.attr('href');
-            /^https?:\/\//.test(link) || (link = rootUrl + '/' + link.replace(/^\//, ''));
-            let date = item.parent().text().trim().slice(0, 8);
+        .map((item): DataItem => {
+            const $item = $(item);
+            let link = $item.attr('href');
+            /^https?:\/\//.test(link!) || (link = rootUrl + '/' + link!.replace(/^\//, ''));
+            let date: string | Date = $item.parent().text().trim().slice(0, 8);
             date = parseDate(date, 'YY.MM.DD');
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
                 pubDate: date,
             };
@@ -64,14 +64,14 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items
-            .filter((item) => !item.link.endsWith('.zip'))
+            .filter((item) => !item.link!.endsWith('.zip'))
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const youTube = /(?:https?:\/\/)?(?:www\.)?youtu\.?be.*(?:v=|v\/|\/)([\w-]+)&?/g;
-                    const matchYoutube = item.link.match(youTube);
+                    const matchYoutube = item.link!.match(youTube);
 
                     if (matchYoutube) {
-                        item.description = renderDescription(item.link.slice(32));
+                        item.description = renderDescription(item.link!.slice(32));
                     } else {
                         const detailResponse = await got({
                             method: 'get',

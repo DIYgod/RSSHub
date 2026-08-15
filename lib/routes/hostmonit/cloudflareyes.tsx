@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -89,11 +89,9 @@ async function handler(ctx) {
     const { data: response } = await got.post(apiUrl, {
         json: {
             key,
-            ...(type === 'v6'
-                ? {
-                      type: 'v6',
-                  }
-                : {}),
+            ...(type === 'v6' && {
+                type: 'v6',
+            }),
         },
     });
 
@@ -104,7 +102,7 @@ async function handler(ctx) {
         const loss = item.loss === undefined ? undefined : `${item.loss}%`;
         const node = item.node;
         const speed = item.speed === undefined ? undefined : `${item.speed} KB/s`;
-        const pubDate = timezone(parseDate(item.time), +8);
+        const pubDate = timezone(parseDate(item.time), 8);
 
         return {
             title: renderTitle({
@@ -135,7 +133,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
@@ -144,7 +142,7 @@ async function handler(ctx) {
             .replace(/- .*$/, () => `- ${title}`),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         icon,
         logo: icon,
         subtitle: title,

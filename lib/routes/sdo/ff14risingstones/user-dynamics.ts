@@ -23,7 +23,7 @@ async function handler(ctx: Context) {
 
     const uid = ctx.req.param('uid');
 
-    const [dynamics, userInfo] = await Promise.all([getUserDynamic(uid), getUserInfo(uid)]);
+    const [dynamics, userInfo] = await Promise.all([getUserDynamic(uid!), getUserInfo(uid!)]);
 
     return {
         title: `石之家 - ${userInfo.character_name}@${userInfo.group_name} 的动态`,

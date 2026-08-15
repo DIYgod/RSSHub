@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,9 +48,9 @@ export const route: Route = {
         const $ = load(response.data);
 
         const filteredEls = $(`div.limit_style1[frag="${fragList[type].frag}"]`).find('table > tbody > tr > td').toArray();
-        const links = filteredEls.map((el) => ({
-            pubDate: timezone(parseDate($(el).find('.data').text()), +8),
-            link: new URL($(el).find('a').attr('href'), baseUrl).href,
+        const links = filteredEls.map((el): DataItem & { link: string } => ({
+            pubDate: timezone(parseDate($(el).find('.data').text()), 8),
+            link: new URL($(el).find('a').attr('href')!, baseUrl).href,
             title: $(el).find('.news_title').text(),
         }));
         const items = await Promise.all(
@@ -68,7 +68,7 @@ export const route: Route = {
                                 $el.attr(attr, new URL(val, baseUrl).href);
                             }
                         });
-                        item.description = $read.html()?.trim();
+                        item.description = $read.html();
                         return item;
                     }
                     // file to download

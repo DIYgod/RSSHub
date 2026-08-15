@@ -12,10 +12,17 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['music.163.com/artist/album'],
+            target: '/music/artist/:id',
+        },
+    ],
     name: '歌手专辑',
     maintainers: ['metowolf'],
     handler,
@@ -24,11 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got(`https://music.163.com/api/artist/albums/${id}`, {
-        headers: {
-            Referer: 'https://music.163.com/',
-        },
-    });
+    const response = await got(`https://music.163.com/api/artist/albums/${id}`);
 
     const data = response.data;
 

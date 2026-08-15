@@ -13,7 +13,7 @@ function formatDate(now) {
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
     const date = now.getDate();
-    const dateTime = year + '' + (month >= 10 ? month : '0' + month) + '' + (date >= 10 ? date : '0' + date);
+    const dateTime = year + '' + (month >= 10 ? month : '0' + month) + (date >= 10 ? date : '0' + date);
     return dateTime;
 }
 

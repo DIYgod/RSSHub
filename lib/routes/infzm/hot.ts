@@ -1,7 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
-import type { ContentsResponse } from './types';
 import { fetchArticles } from './utils';
 
 export const route: Route = {
@@ -21,12 +20,9 @@ export const route: Route = {
 
 async function handler(): Promise<Data> {
     const link = 'https://www.infzm.com/';
-    const { data } = await got<ContentsResponse>({
+    const { data } = await got({
         method: 'get',
         url: 'https://www.infzm.com/hot_contents',
-        headers: {
-            Referer: link,
-        },
     });
 
     const resultItem = await fetchArticles(data.data.hot_contents);

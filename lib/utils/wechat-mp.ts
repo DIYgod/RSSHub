@@ -605,7 +605,7 @@ const redirectHelper = async (url: string, maxRedirects: number = 5) => {
         } else if (maxRedirects <= 1) {
             error('too many redirects', url);
         }
-        return await redirectHelper(new URL(location, url).href, maxRedirects - 1);
+        return await redirectHelper(new URL(location!, url).href, maxRedirects - 1);
     }
     return raw;
 };
@@ -668,7 +668,7 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
                 item.link = skipLink ? item.link : fetchedItem.link || item.link;
                 break;
             default:
-                item[key] = item[key] || fetchedItem[key];
+                item[key] ||= fetchedItem[key];
         }
     }
     return item;

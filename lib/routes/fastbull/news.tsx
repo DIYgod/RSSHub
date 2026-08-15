@@ -47,14 +47,14 @@ async function handler() {
     let items = $('.trending_type')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.title').text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                author: item.find('.resource').text(),
-                description: item.find('.tips').text(),
-                pubDate: parseDate(Number.parseInt(item.find('.new_time').attr('data-date'))),
+                title: $item.find('.title').text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                author: $item.find('.resource').text(),
+                description: $item.find('.tips').text(),
+                pubDate: parseDate(Number.parseInt($item.find('.new_time').attr('data-date')!)),
             };
         });
 

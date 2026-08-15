@@ -10,7 +10,7 @@ const playwrightGet = async (url, context) => {
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     });
-    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    const html = await page.evaluate(() => document.documentElement.getHTML());
     return html;
 };
 

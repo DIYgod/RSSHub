@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -9,8 +9,14 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:domain/:category?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['new-media'],
+    example: '/gamme/news',
+    parameters: {
+        domain: '網站，`news` 為宅宅新聞，`sexynews` 為西斯新聞',
+        category: '分類名，可在 URL 找到，預設為全部',
+    },
+    name: '分類',
+    maintainers: ['TonyRL'],
     handler,
 };
 
@@ -24,7 +30,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
@@ -54,10 +60,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         image: domain === 'news' ? `${baseUrl}/blogico.ico` : `${baseUrl}/favicon.ico`,
         description: feed.description,
-        item: items,
+        item: items as DataItem[],
     };
 }

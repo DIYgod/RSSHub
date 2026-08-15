@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -28,39 +29,39 @@ const cleanUpHTML = (data) => {
     $('div.neirong-shouquan').remove();
     $('em.vote__bar, div.vote__btn, div.vote__time').remove();
     $('p img').each((_, e) => {
-        e = $(e);
-        if ((e.prop('src') ?? e.prop('_src')) !== undefined) {
-            e.parent().replaceWith(
+        const $e = $(e);
+        if (($e.prop('src') ?? $e.prop('_src')) !== undefined) {
+            $e.parent().replaceWith(
                 renderDescription({
                     image: {
-                        src: (e.prop('src') ?? e.prop('_src')).split(/\?/, 1)[0],
-                        width: e.prop('data-w'),
-                        height: e.prop('data-h'),
+                        src: ($e.prop('src') ?? $e.prop('_src')).split(/\?/, 1)[0],
+                        width: $e.prop('data-w'),
+                        height: $e.prop('data-h'),
                     },
                 })
             );
         }
     });
     $('p, span').each((_, e) => {
-        e = $(e);
-        if (e.contents().length === 1 && /^\s*$/.test(e.text())) {
-            e.remove();
+        const $e = $(e);
+        if ($e.contents().length === 1 && /^\s*$/.test($e.text())) {
+            $e.remove();
         } else {
-            e.removeClass();
-            e.removeAttr('data-check-id label class');
+            $e.removeClass();
+            $e.removeAttr('data-check-id label class');
         }
     });
     $('.text-big-title').each((_, e) => {
         e.tagName = 'h3';
-        e = $(e);
-        e.removeClass();
-        e.removeAttr('class');
+        const $e = $(e);
+        $e.removeClass();
+        $e.removeAttr('class');
     });
     $('.text-sm-title').each((_, e) => {
         e.tagName = 'h4';
-        e = $(e);
-        e.removeClass();
-        e.removeAttr('class');
+        const $e = $(e);
+        $e.removeClass();
+        $e.removeAttr('class');
     });
 
     return $.html();
@@ -410,7 +411,7 @@ const processAudioInfo = (info) => {
  * @param {Object} item - The item to resolve identifiers for.
  * @returns {Object|null} - Object with guid and link, or null if invalid item.
  */
-const resolveItemIdentifiers = (item): null | { guid: string; link: string } => {
+const resolveItemIdentifiers = (item): { guid: string; link: string } | null => {
     if (item.object_type === 8) {
         return {
             guid: `huxiu-moment-${item.object_id}`,
@@ -511,10 +512,9 @@ const mapItem = (item) => {
  *
  * @param {Object[]} items - The items to process.
  * @param {number} limit - The maximum number of items to process.
- * @param {Function} tryGet   - The tryGet function that handles the retrieval process.
  * @returns {Promise<Object[]>} - A promise that resolves to an array of processed items.
  */
-const processItems = async (items, limit, tryGet) => {
+const processItems = async (items, limit) => {
     const processedItems = items
         .map((item) => mapItem(item))
         .filter(Boolean)
@@ -522,7 +522,7 @@ const processItems = async (items, limit, tryGet) => {
 
     return await Promise.all(
         processedItems.map((item) =>
-            tryGet(item.guid, async () => {
+            cache.tryGet(item.guid, async () => {
                 const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
                 const isMoment = item.guid.startsWith('huxiu-moment');
 

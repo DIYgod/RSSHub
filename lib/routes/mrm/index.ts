@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -36,19 +36,19 @@ async function handler(ctx) {
 
     const list = $('#datalist_wap .li')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text().trim(),
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(item.find('.d').text(), 'YYYY.MM.DD'),
+                pubDate: parseDate($item.find('.d').text(), 'YYYY.MM.DD'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 

@@ -111,15 +111,17 @@ function formatEventItem(event: any) {
             description = `Member ${payload.action} in repository ${repo.name}`;
             link = `https://github.com/${repo.name}`;
             break;
-        case 'GollumEvent':
+        case 'GollumEvent': {
             title = `${actor.login} update the wiki in ${repo.name}`;
             description = '<ul>';
-            for (const page of payload.pages ?? []) {
+            const pages = payload.pages ?? [];
+            for (const page of pages) {
                 description += `<li>Page <a href=${page.html_url}>${page.page_name}</a> ${page.action} ${page.summary ? `: ${page.summary}` : ''}</li>`;
             }
             description += '</ul>';
             link = `https://github.com/${repo.name}`;
             break;
+        }
         case 'DiscussionEvent':
             title = `${actor.login} ${payload.action} a discussion ${repo.discussion?.title ?? ''} on ${repo.name}`;
             description = payload.discussion?.body ?? 'Unknown';

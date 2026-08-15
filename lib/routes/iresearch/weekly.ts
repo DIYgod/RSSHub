@@ -1,14 +1,13 @@
 import type { Context } from 'hono';
 
-import type { Data, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 
-export const handler = (ctx: Context): Data | undefined => {
+export const handler = (ctx: Context): void => {
     const { id } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '20');
 
-    ctx.set('redirect', `/iresearch/report/3${id ? `/${id}` : ''}?limit=${limit}`);
-    return;
+    return ctx.set('redirect', `/iresearch/report/3${id ? `/${id}` : ''}?limit=${limit}`);
 };
 
 export const route: Route = {

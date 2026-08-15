@@ -53,8 +53,8 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         });
     }
 
-    let errorMessage = (process.env.NODE_ENV || process.env.VERCEL_ENV) === 'production' ? error.message : error.stack || error.message;
-    switch (error.constructor.name) {
+    let errorMessage = (process.env.NODE_ENV || process.env.VERCEL_ENV) === 'production' || !error.stack ? `${error.name}: ${error.message}` : error.stack;
+    switch (error.name) {
         case 'HTTPError':
         case 'RequestError':
         case 'FetchError':
@@ -75,9 +75,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
             ctx.status(503);
             break;
     }
-    const message = `${error.name}: ${errorMessage}`;
-
-    logger.error(`Error in ${requestPath}: ${message}`);
+    logger.error(`Error in ${requestPath}: ${errorMessage}`);
     requestMetric.error({ path: matchedRoute, method: ctx.req.method, status: ctx.res.status });
 
     return config.isPackage || ctx.req.query('format') === 'json'
@@ -86,7 +84,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
                   message: error.message ?? error,
               },
           })
-        : ctx.html(<Error requestPath={requestPath} message={message} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
+        : ctx.html(<Error requestPath={requestPath} message={errorMessage} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
 };
 
 export const notFoundHandler: NotFoundHandler = (ctx) => errorHandler(new NotFoundError(), ctx);

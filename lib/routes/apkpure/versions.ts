@@ -39,23 +39,23 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
 
-    const r = await page.evaluate(() => document.documentElement.innerHTML);
+    const r = await page.evaluate(() => document.documentElement.getHTML());
     await context.close();
 
     const $ = load(r);
-    const img = new URL($('.ver-top img').attr('src'));
+    const img = new URL($('.ver-top img').attr('src')!);
     img.searchParams.delete('w'); // get full resolution icon
 
     const items = $('.ver li')
         .toArray()
         .map((ver) => {
-            ver = $(ver);
+            const $ver = $(ver);
             return {
-                title: ver.find('.ver-item-n').text(),
-                description: ver.html(),
-                link: `${baseUrl}${ver.find('a').attr('href')}`,
+                title: $ver.find('.ver-item-n').text(),
+                description: $ver.html(),
+                link: `${baseUrl}${$ver.find('a').attr('href')}`,
                 pubDate: parseDate(
-                    ver
+                    $ver
                         .find('.update-on')
                         .text()
                         .replaceAll(/年|月/g, '-')

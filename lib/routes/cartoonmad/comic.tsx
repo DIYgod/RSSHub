@@ -27,10 +27,10 @@ const loadContent = (id, { chapter, pages }) => {
     return description;
 };
 
-const getChapters = (id, list, tryGet) =>
+const getChapters = (id, list) =>
     Promise.all(
         list.map((item) =>
-            tryGet(item.link, () => {
+            cache.tryGet(item.link, () => {
                 item.description = loadContent(id, item);
 
                 return item;
@@ -81,17 +81,17 @@ async function handler(ctx) {
         .find('a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${baseUrl}${item.attr('href')}`,
-                chapter: item.text().match(/\d+/)[0],
-                pages: item.next('font').text().match(/\d+/)[0],
+                title: $item.text(),
+                link: `${baseUrl}${$item.attr('href')}`,
+                chapter: $item.text().match(/\d+/)![0],
+                pages: $item.next('font').text().match(/\d+/)![0],
             };
         })
         .toReversed();
 
-    const chapters = await getChapters(id, list, cache.tryGet);
+    const chapters = await getChapters(id, list);
 
     return {
         title: $('head title').text(),

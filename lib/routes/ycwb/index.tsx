@@ -62,7 +62,7 @@ async function handler(ctx) {
                 ) : null}
             </>
         ),
-        pubDate: timezone(parseDate(item.PUBTIME), +8),
+        pubDate: timezone(parseDate(item.PUBTIME), 8),
         link: item.PUBURL,
         nodeName: item.NODENAME,
     }));
@@ -100,7 +100,7 @@ async function handler(ctx) {
                 const children = content('.path').children('a');
                 for (const child of children) {
                     if (content(child).text() === nodeName && nodeLink === '') {
-                        nodeLink = content(child).attr('href');
+                        nodeLink = content(child).attr('href')!;
                     }
                 }
 

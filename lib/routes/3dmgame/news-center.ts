@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -43,25 +42,25 @@ async function handler(ctx) {
     const list = $(isArcPost ? '.selectarcpost' : '.selectpost')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             if (isArcPost) {
                 return {
-                    title: item.find('.bt').text(),
-                    link: item.attr('href'),
-                    description: item.find('p').text(),
-                    pubDate: timezone(parseDate(item.find('.time').text().trim()), 8),
+                    title: $item.find('.bt').text(),
+                    link: $item.attr('href'),
+                    description: $item.find('p').text(),
+                    pubDate: timezone(parseDate($item.find('.time').text()), 8),
                 };
             }
-            const a = item.find('.text a');
+            const a = $item.find('.text a');
             return {
                 title: a.first().text(),
                 link: a.attr('href'),
-                description: item.find('.miaoshu').text(),
-                pubDate: timezone(parseDate(item.find('.time').text().trim()), 8),
+                description: $item.find('.miaoshu').text(),
+                pubDate: timezone(parseDate($item.find('.time').text()), 8),
             };
         });
 
-    const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const out = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: '3DM - ' + $('title').text().split('_', 1)[0],

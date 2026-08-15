@@ -1,4 +1,5 @@
 import type { Context } from 'hono';
+import type { FetchOptions } from 'ofetch';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -47,7 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
         referer: 'https://s.tver.jp/',
         credentials: 'omit',
         mode: 'cors',
-    });
+    } as FetchOptions<'json'>);
 
     const { platform_uid, platform_token } = browser;
 
@@ -59,7 +60,7 @@ async function handler(ctx: Context): Promise<Data> {
         referer: 'https://tver.jp/',
         credentials: 'omit',
         mode: 'cors',
-    });
+    } as FetchOptions<'json'>);
 
     const { result } = await ofetch(`https://platform-api.tver.jp/service/api/v1/callSeriesEpisodes/${id}?platform_uid=${platform_uid}&platform_token=${platform_token}`, {
         method: 'GET',
@@ -70,14 +71,14 @@ async function handler(ctx: Context): Promise<Data> {
         referer: 'https://tver.jp/',
         credentials: 'omit',
         mode: 'cors',
-    });
+    } as FetchOptions<'json'>);
 
     const items: DataItem[] = (result.contents?.[0]?.contents ?? [])
         .filter((i) => i.type === 'episode')
         .map((i) => {
             const rawPubDate = i.content.broadcastDateLabel;
             const cleanedPubDate = rawPubDate.replaceAll(/\(.*?\)|放送分/g, '').trim();
-            const parsedPubDate = timezone(parseDate(cleanedPubDate, 'M月D日'), +9).toDateString();
+            const parsedPubDate = timezone(parseDate(cleanedPubDate, 'M月D日'), 9).toDateString();
 
             return {
                 title: i.content.title,

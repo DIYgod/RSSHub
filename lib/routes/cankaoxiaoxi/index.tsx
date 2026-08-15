@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -68,7 +68,7 @@ async function handler(ctx) {
         title: item.data.title,
         author: item.data.userName,
         category: item.data.channelName,
-        pubDate: timezone(parseDate(item.data.publishTime), +8),
+        pubDate: timezone(parseDate(item.data.publishTime), 8),
         link: item.data.moVideoPath ? item.data.sourceUrl : `${rootUrl}/json/content/${item.data.url.match(/\/pages\/(.*?)\.html/)[1]}.detailjson`,
         video: item.data.moVideoPath,
         cover: item.data.mCoverImg,
@@ -100,7 +100,7 @@ async function handler(ctx) {
         title: `参考消息 - ${channelResponse.data.name}`,
         link: currentUrl,
         description: '参考消息',
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         item: items,
     };
 }

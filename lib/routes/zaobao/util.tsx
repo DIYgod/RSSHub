@@ -52,33 +52,30 @@ export const parseList = async (
                     return {
                         title: isSingapore ? $item.text().trim() : ($item.attr('title')?.trim() as string),
                         link: $item.attr('href') as string,
-                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), +8),
+                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), 8),
                     };
                 }
                 const response = await ofetch.raw(new URL($item.attr('href') as string, origin).href);
                 let $1 = load(response._data);
 
-                let title, pubDate, category, images;
-                const jsonText = $1('script[type="application/ld+json"]')
+                let category, images;
+                const jsonText = $1('script[type="application/ld+json"]:contains("NewsArticle")')
                     .text()
                     .replaceAll(/\p{Cc}/gu, '');
                 const ldJson = JSON.parse(jsonText);
 
+                const title = ldJson.headline;
+                const pubDate = parseDate(ldJson.datePublished);
+
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
                 if (isSingapore) {
-                    const ldJson = JSON.parse($1('#seo-article-page').text());
-                    const article = ldJson['@graph'].find((item) => item['@type'] === 'NewsArticle');
-                    title = article.headline;
-                    pubDate = parseDate(article.datePublished);
                     category = $1('meta[name="keywords"]')
                         .attr('content')
                         ?.split(',')
                         .map((s) => s.trim());
-                    $1 = load($1('.articleBody').html(), null, false);
-                    images = [{ url: article.image.url }];
+                    $1 = load($1('.articleBody').html()!, null, false);
+                    images = [{ url: ldJson.image[0].url }];
                 } else {
-                    title = ldJson.headline;
-                    pubDate = parseDate(ldJson.datePublished);
                     category = ldJson.keywords?.split(',');
                 }
 
@@ -122,7 +119,7 @@ export const parseList = async (
 };
 
 export const orderContent = (parent) => {
-    for (const [i, e] of parent
+    const sortedChildren = parent
         .children()
         .toArray()
         .toSorted((a, b) => {
@@ -144,8 +141,8 @@ export const orderContent = (parent) => {
                 )
             ).toString();
             return a - b;
-        })
-        .entries()) {
+        });
+    for (const [i, e] of sortedChildren.entries()) {
         parent.find((element) => e(element)).attr('s', i);
         parent.append(e);
     }

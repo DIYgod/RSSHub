@@ -1,19 +1,32 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/8world/realtime',
+    parameters: { category: '分类 id，见下表，默认为即时 REALTIME' },
+    description: `| 分类                   | id             |
+| ---------------------- | -------------- |
+| 即时 REALTIME          | realtime       |
+| 新加坡 SINGAPORE       | singapore      |
+| 东南亚 SOUTH-EAST ASIA | southeast-asia |
+| 中港台 GREATER CHINA   | greater-china  |
+| 国际 WORLD             | world          |
+| 财经 FINANCE           | finance        |
+| 体育 SPORTS            | sports         |
+| 社团 COMMUNITY         | community      |`,
+    name: '分类',
+    maintainers: ['nczitzk'],
     handler,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const path = getSubPath(ctx) === '/' ? '/realtime' : getSubPath(ctx);
 
     const rootUrl = 'https://www.8world.com';
@@ -28,18 +41,18 @@ async function handler(ctx) {
 
     let items = $('div[data-column="Two-Third"] .article-title .article-link')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -48,12 +61,12 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.text-long').html();
-                item.title = content('meta[name="cXenseParse:mdc-title"]').attr('content');
+                item.title = content('meta[name="cXenseParse:mdc-title"]').attr('content')!;
                 item.author = content('meta[name="cXenseParse:author"]').attr('content');
-                item.pubDate = parseDate(content('meta[name="cXenseParse:recs:publishtime"]').attr('content'));
+                item.pubDate = parseDate(content('meta[name="cXenseParse:recs:publishtime"]').attr('content')!);
                 item.category = content('meta[name="cXenseParse:mdc-keywords"]')
                     .toArray()
-                    .map((keyword) => content(keyword).attr('content'));
+                    .map((keyword) => content(keyword).attr('content')!);
 
                 return item;
             })
