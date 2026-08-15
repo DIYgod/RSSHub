@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import type { BrowserContext } from 'patchright';
 
 import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -10,8 +9,6 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { addCookies, getContext, playwrightGet } from './utils';
-
-const allowDomain = new Set(['www.sehuatang.net', 'www.sehuatang.org']);
 
 const forumIdMaps = {
     // 原创 BT 电影
@@ -126,9 +123,6 @@ const getSafeId = (host: string, context: BrowserContext) =>
 
 async function handler(ctx) {
     const domain = ctx.req.query('domain') ?? 'www.sehuatang.net';
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
     const host = `https://${domain}/`;
     const { subforumName = '103', type } = ctx.req.param();
     const subforumId = Object.hasOwn(forumIdMaps, subforumName) ? forumIdMaps[subforumName] : subforumName;
