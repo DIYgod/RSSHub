@@ -5,6 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -45,36 +46,10 @@ const forumIdMaps = {
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
     categories: ['multimedia'],
-    example: '/sehuatang/103',
+    example: '/sehuatang/36/368',
     parameters: {
-        subforumid: {
-            description: '板块 ID ',
-            options: [
-                { value: 'forum_01', label: '== 原创 BT 电影 ==' },
-                { value: '2', label: '国产原创' },
-                { value: '36', label: '亚洲无码原创' },
-                { value: '37', label: '亚洲有码原创' },
-                { value: '103', label: '高清中文字幕' },
-                { value: '107', label: '三级写真' },
-                { value: '160', label: 'VR 视频' },
-                { value: '104', label: '素人有码' },
-                { value: '38', label: '欧美无码' },
-                { value: '152', label: '韩国主播' },
-                { value: '39', label: '动漫原创' },
-                { value: '95', label: '综合讨论' },
-                { value: 'forum_02', label: '== 色花图片 ==' },
-                { value: '155', label: '原创自拍' },
-                { value: '125', label: '转贴自拍' },
-                { value: '50', label: '华人街拍' },
-                { value: '48', label: '亚洲性爱' },
-                { value: '49', label: '欧美性爱' },
-                { value: '117', label: '卡通动漫' },
-                { value: '165', label: '套图下载' },
-            ],
-        },
-        type: {
-            description: '分类 ID, 可选,  板块内子分类 请参考论坛',
-        },
+        subforumid: '版块 id 或板块名称（见下表）, 为空默认高清中文字幕',
+        type: '类型 id, 可在分区类型过滤后的 URL 中找到',
     },
     name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
@@ -87,32 +62,32 @@ export const route: Route = {
 
 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
 | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-| 2        | 36           | 37           | 103          | 107      | 160     | 104      | 38       | 152      | 39       | 95       |
+| gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
 
 **色花图片**
 
 | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 155      | 125      | 50       | 48       | 49       | 117      | 165      |
-
-**query 参数说明**
-
-- 'domain' ：可选，指定论坛域名，默认为 '[www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用](http://www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用) 'ALLOW\\_USER\\_SUPPLY\\_UNSAFE\\_DOMAIN' 选项。`,
+| yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
 };
 
 const getSafeId = (host: string, context: BrowserContext) =>
     cache.tryGet(
         `sehuatang:safeid:${host}`,
         async () => {
+            logger.debug(`[sehuatang] getSafeId start, host=${host}`);
             const page = await context.newPage();
             try {
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     ['document', 'script'].includes(request.resourceType()) ? route.continue() : route.abort();
                 });
+                logger.debug(`[sehuatang] getSafeId goto ${host}`);
                 await page.goto(host, { waitUntil: 'domcontentloaded' });
+                logger.debug(`[sehuatang] getSafeId goto done, title=${await page.title()}, url=${page.url()}`);
                 // Wait for the safeid script to appear (gives Cloudflare challenge time to pass).
                 try {
+                    logger.debug('[sehuatang] getSafeId waiting for safeid script...');
                     await page.waitForFunction(
                         () => {
                             const scripts = document.querySelectorAll('script');
@@ -125,8 +100,9 @@ const getSafeId = (host: string, context: BrowserContext) =>
                         },
                         { timeout: 30000 }
                     );
+                    logger.debug('[sehuatang] getSafeId safeid script found');
                 } catch {
-                    // Fall through and extract whatever is available.
+                    logger.debug('[sehuatang] getSafeId waitForFunction timeout');
                 }
                 const safeId = await page.evaluate(() => {
                     const scripts = document.querySelectorAll('script');
@@ -138,6 +114,7 @@ const getSafeId = (host: string, context: BrowserContext) =>
                     }
                     return '';
                 });
+                logger.debug(`[sehuatang] getSafeId result=${JSON.stringify(safeId)}`);
                 return safeId;
             } finally {
                 await page.close();
@@ -160,7 +137,9 @@ async function handler(ctx) {
 
     const { context, destroy } = await getContext(host);
     try {
+        logger.debug(`[sehuatang] handler start, domain=${domain}, host=${host}, link=${link}`);
         const safeId = await getSafeId(host, context);
+        logger.debug(`[sehuatang] handler safeId=${JSON.stringify(safeId)}`);
 
         const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0';
         // Let the browser manage cookies (including Cloudflare challenge cookies) via the shared context.
@@ -174,6 +153,7 @@ async function handler(ctx) {
 
         const response = await playwrightGet(headers, link, context, '#threadlisttableid tbody[id^=normalthread]');
         const $ = load(response);
+        logger.debug(`[sehuatang] handler list page fetched, html length=${response.length}, hasThreadTable=${$('#threadlisttableid').length > 0}, cf-chl=${response.includes('cf-chl') || response.includes('challenge-platform')}`);
 
         const list = $('#threadlisttableid tbody[id^=normalthread]')
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
@@ -188,11 +168,13 @@ async function handler(ctx) {
                     author: $item.find('td.by cite a').first().text(),
                 };
             });
+        logger.debug(`[sehuatang] handler list parsed, count=${list.length}`);
 
         const out = await Promise.all(
             list.map((info) =>
                 cache.tryGet(info.link!, async () => {
                     const response = await playwrightGet(headers, info.link!, context, 'div[id^="postmessage"], td[id^="postmessage"]');
+                    logger.debug(`[sehuatang] detail fetched, link=${info.link}, length=${response.length}, cf-chl=${response.includes('cf-chl') || response.includes('challenge-platform')}`);
 
                     const $ = load(response);
                     const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
