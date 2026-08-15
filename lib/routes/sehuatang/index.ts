@@ -124,8 +124,8 @@ const getSafeId = (host: string, context: BrowserContext) =>
 async function handler(ctx) {
     const domain = ctx.req.query('domain') ?? 'www.sehuatang.net';
     const host = `https://${domain}/`;
-    const { subforumName = '103', type } = ctx.req.param();
-    const subforumId = Object.hasOwn(forumIdMaps, subforumName) ? forumIdMaps[subforumName] : subforumName;
+    const { subforumid = '103', type } = ctx.req.param();
+    const subforumId = Object.hasOwn(forumIdMaps, subforumid) ? forumIdMaps[subforumid] : subforumid;
     const typeFilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumId}${typeFilter}`;
 
