@@ -36,11 +36,9 @@ async function handler() {
             pg: 10,
             level: 6,
             dateField: 'deploytime',
-            selectFields: 'title,content,deploytime,url,columnname,publishgroupname',
+            selectFields: 'title,content,deploytime,url,columnname,publishgroupname,infoextends',
             sortFields: JSON.stringify([{ name: 'deploytime', type: 'desc' }]),
             group: 'distinct',
-            highlightConfigs: JSON.stringify([{ field: 'infocontent', numberOfFragments: 2, fragmentOffset: 0, fragmentSize: 30, noMatchSize: 145 }]),
-            highlightFields: 'infocontent',
         },
     });
 
@@ -49,10 +47,12 @@ async function handler() {
 
     const items = dataList.map((item: any) => {
         const data = item.groupData?.[0].data ?? {};
+        const extendedInfo = data.infoextends ? JSON.parse(data.infoextends) : {};
+        const infoContent = extendedInfo.infoContent ? JSON.parse(extendedInfo.infoContent) : {};
         return {
             title: data.title,
-            link: new URL(data.url, rootUrl).href,
-            description: data.infocontent,
+            link: data.url ? new URL(data.url, rootUrl).href : '',
+            description: infoContent[0]?.fieldValue || '',
             pubDate: parseDate(Number(data.deploytime || data.publishtime)),
             author: data.publishgroupname,
         };
