@@ -43,20 +43,22 @@ async function handler() {
     });
 
     const result = response.data;
-    const dataList = result.data.searchResult.dataResults.filter((item: any) => item.groupData?.[0]?.data?.url);
+    const dataList = result.data.searchResult.dataResults;
 
-    const items = dataList.map((item: any) => {
-        const data = item.groupData?.[0].data ?? {};
-        const extendedInfo = data.infoextends ? JSON.parse(data.infoextends) : {};
-        const infoContent = extendedInfo.infoContent ? JSON.parse(extendedInfo.infoContent) : {};
-        return {
-            title: data.title,
-            link: new URL(data.url, rootUrl).href,
-            description: infoContent[0]?.fieldValue || '',
-            pubDate: parseDate(Number(data.deploytime || data.publishtime)),
-            author: data.publishgroupname,
-        };
-    });
+    const items = dataList
+        .map((item: any) => {
+            const data = item.groupData?.[0].data ?? {};
+            const extendedInfo = data.infoextends ? JSON.parse(data.infoextends) : {};
+            const infoContent = extendedInfo.infoContent ? JSON.parse(extendedInfo.infoContent) : {};
+            return {
+                title: data.title,
+                link: data.url ? new URL(data.url, rootUrl).href : '',
+                description: infoContent[0]?.fieldValue || '',
+                pubDate: data.deploytime ? parseDate(Number(data.deploytime)) : undefined,
+                author: data.publishgroupname,
+            };
+        })
+        .filter((item: any) => item.link);
 
     return {
         title: '中国工业和信息化部',
