@@ -46,12 +46,12 @@ async function handler() {
     const dataList = result.data.searchResult.dataResults;
 
     const items = dataList.map((item: any) => {
-        const data = item.groupData?.[0].data ?? {};
+        const data = (item.groupData?.[0].data ?? {}).filter((data) => data?.url);
         const extendedInfo = data.infoextends ? JSON.parse(data.infoextends) : {};
         const infoContent = extendedInfo.infoContent ? JSON.parse(extendedInfo.infoContent) : {};
         return {
             title: data.title,
-            link: data.url ? new URL(data.url, rootUrl).href : '',
+            link: new URL(data.url, rootUrl).href,
             description: infoContent[0]?.fieldValue || '',
             pubDate: parseDate(Number(data.deploytime || data.publishtime)),
             author: data.publishgroupname,
