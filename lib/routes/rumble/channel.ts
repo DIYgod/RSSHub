@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -50,7 +50,7 @@ export const route: Route = {
     handler,
 };
 
-function parseDescription($: ReturnType<typeof load>, fallback: string | undefined): string | undefined {
+function parseDescription($: CheerioAPI, fallback: string | undefined): string | undefined {
     const paragraphs = $('div[data-js="media_long_description_container"] > p.media-description')
         .toArray()
         .map((element) => $.html(element))
@@ -60,7 +60,7 @@ function parseDescription($: ReturnType<typeof load>, fallback: string | undefin
     return paragraphs || $('meta[name="description"]').attr('content') || fallback || undefined;
 }
 
-function parseStructuredVideoObject($: ReturnType<typeof load>): RumbleVideoObject | undefined {
+function parseStructuredVideoObject($: CheerioAPI): RumbleVideoObject | undefined {
     const elements = $('script[type="application/ld+json"]').toArray();
 
     for (const element of elements) {
@@ -76,7 +76,7 @@ function parseStructuredVideoObject($: ReturnType<typeof load>): RumbleVideoObje
     }
 }
 
-function parseListVideos($: ReturnType<typeof load>): RumbleListVideo[] {
+function parseListVideos($: CheerioAPI): RumbleListVideo[] {
     const content = $('rum-videos-grid script[type="application/json"]').text();
     if (!content) {
         return [];
@@ -90,7 +90,7 @@ function parseListVideos($: ReturnType<typeof load>): RumbleListVideo[] {
     }
 }
 
-function parseImage($: ReturnType<typeof load>, videoObject: RumbleVideoObject | undefined) {
+function parseImage($: CheerioAPI, videoObject: RumbleVideoObject | undefined) {
     const image = videoObject?.thumbnailUrl || $('meta[property="og:image"]').attr('content');
 
     return image || undefined;
