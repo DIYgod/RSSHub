@@ -43,10 +43,10 @@ async function handler() {
     });
 
     const result = response.data;
-    const dataList = result.data.searchResult.dataResults;
+    const dataList = result.data.searchResult.dataResults.filter((item: any) => item.groupData?.[0]?.data?.url);
 
     const items = dataList.map((item: any) => {
-        const data = (item.groupData?.[0].data ?? {}).filter((data) => data?.url);
+        const data = item.groupData?.[0].data ?? {};
         const extendedInfo = data.infoextends ? JSON.parse(data.infoextends) : {};
         const infoContent = extendedInfo.infoContent ? JSON.parse(extendedInfo.infoContent) : {};
         return {
