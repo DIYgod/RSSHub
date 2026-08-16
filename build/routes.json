@@ -127013,6 +127013,29 @@
   },
   "gov/miit": {
     "routes": {
+      "/zcwj": {
+        "path": "/zcwj",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/miit/zcwj",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "政策文件",
+        "maintainers": [
+          "Yoge-Code",
+          "hutianyu2006"
+        ],
+        "location": "zcwj.ts",
+        "module": "() => import('@/routes/gov/miit/zcwj.ts')"
+      },
       "/wjfb/:ministry": {
         "path": "/wjfb/:ministry",
         "categories": [
@@ -127117,28 +127140,6 @@
         ],
         "location": "zcjd.ts",
         "module": "() => import('@/routes/gov/miit/zcjd.ts')"
-      },
-      "/zcwj": {
-        "path": "/zcwj",
-        "categories": [
-          "government"
-        ],
-        "example": "/gov/miit/zcwj",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "政策文件",
-        "maintainers": [
-          "Yoge-Code"
-        ],
-        "location": "zcwj.ts",
-        "module": "() => import('@/routes/gov/miit/zcwj.ts')"
       }
     },
     "apiRoutes": {},

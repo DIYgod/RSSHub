@@ -9193,6 +9193,10 @@
   "/gov/mgs/:path{.+}": [
     "ShuiHuo"
   ],
+  "/gov/miit/zcwj": [
+    "Yoge-Code",
+    "hutianyu2006"
+  ],
   "/gov/miit/wjfb/:ministry": [
     "Fatpandac"
   ],
@@ -9203,9 +9207,6 @@
     "Fatpandac"
   ],
   "/gov/miit/zcjd": [
-    "Yoge-Code"
-  ],
-  "/gov/miit/zcwj": [
     "Yoge-Code"
   ],
   "/gov/mmht/:path{.+}": [
