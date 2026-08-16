@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -10,19 +9,15 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://rumble.com';
 type RumbleVideoObject = {
-    author?: {
-        name?: string;
-    };
     description?: string;
     embedUrl?: string;
     thumbnailUrl?: string;
 };
 type RumbleListVideo = {
-    relative_url?: string;
-    tags?: string[];
-    thumb?: string;
-    title?: string;
-    upload_date?: string;
+    relative_url: string;
+    thumb: string;
+    title: string;
+    upload_date: string;
     url?: string;
 };
 
@@ -55,10 +50,6 @@ export const route: Route = {
     handler,
 };
 
-function parseChannelTitle($: ReturnType<typeof load>): string {
-    return $('title').first().text().trim() || 'Rumble';
-}
-
 function parseDescription($: ReturnType<typeof load>, fallback: string | undefined): string | undefined {
     const paragraphs = $('div[data-js="media_long_description_container"] > p.media-description')
         .toArray()
@@ -66,34 +57,43 @@ function parseDescription($: ReturnType<typeof load>, fallback: string | undefin
         .filter(Boolean)
         .join('');
 
-    return paragraphs || $('meta[name="description"]').attr('content')?.trim() || fallback || undefined;
+    return paragraphs || $('meta[name="description"]').attr('content') || fallback || undefined;
 }
 
 function parseStructuredVideoObject($: ReturnType<typeof load>): RumbleVideoObject | undefined {
-    const content = $('script[type="application/ld+json"]').text().trim();
-    if (!content) {
-        return;
-    }
+    const elements = $('script[type="application/ld+json"]').toArray();
 
-    const parsed = JSON.parse(content);
-    const type = parsed?.['@type'];
-    return type === 'VideoObject' ? (parsed as RumbleVideoObject) : undefined;
+    for (const element of elements) {
+        try {
+            const parsed = JSON.parse($(element).text());
+            const videoObject = Array.isArray(parsed) ? parsed.find((item) => item?.['@type'] === 'VideoObject') : parsed;
+            if (videoObject?.['@type'] === 'VideoObject') {
+                return videoObject as RumbleVideoObject;
+            }
+        } catch {
+            continue;
+        }
+    }
 }
 
 function parseListVideos($: ReturnType<typeof load>): RumbleListVideo[] {
-    const content = $('rum-videos-grid script[type="application/json"]').text().trim();
+    const content = $('rum-videos-grid script[type="application/json"]').text();
     if (!content) {
         return [];
     }
 
-    const parsed = JSON.parse(content);
-    return Array.isArray(parsed?.items) ? parsed.items : [];
+    try {
+        const parsed = JSON.parse(content);
+        return parsed.items;
+    } catch {
+        return [];
+    }
 }
 
 function parseImage($: ReturnType<typeof load>, videoObject: RumbleVideoObject | undefined) {
-    const image = videoObject?.thumbnailUrl || $('meta[property="og:image"]').attr('content')?.trim();
+    const image = videoObject?.thumbnailUrl || $('meta[property="og:image"]').attr('content');
 
-    return image ? new URL(image, rootUrl).href : undefined;
+    return image || undefined;
 }
 
 function renderDescription(image: string | undefined, description: string | undefined, embedUrl: string | undefined, includeEmbed: boolean): string | undefined {
@@ -126,27 +126,31 @@ function getMedia(image: string | undefined): DataItem['media'] {
         : undefined;
 }
 
-async function buildItem(link: string, title: string, listImage: string | undefined, pubDate: Date | undefined, includeEmbed: boolean, category: string[] | undefined): Promise<DataItem> {
-    const response = await ofetch(link, {
+async function buildItem(link: string, title: string, listImage: string, pubDate: Date, includeEmbed: boolean): Promise<DataItem> {
+    const initialResponse = await ofetch.raw<string>(link, {
+        ignoreResponseError: true,
+    });
+    const cookies = (initialResponse.headers.getSetCookie?.() || []).map((cookie) => cookie.split(';', 1)[0]).join('; ');
+    if (!cookies) {
+        throw new Error(`Failed to get Rumble page cookie from ${link}`);
+    }
+
+    const response = await ofetch<string>(link, {
         headers: {
-            'user-agent': config.trueUA,
+            Cookie: cookies,
         },
-        retryStatusCodes: [403],
     });
 
     const $ = load(response);
     const videoObject = parseStructuredVideoObject($);
     const image = listImage || parseImage($, videoObject);
-    const description = renderDescription(image, parseDescription($, videoObject?.description?.trim()), videoObject?.embedUrl, includeEmbed);
-    const author = videoObject?.author?.name;
+    const description = renderDescription(image, parseDescription($, videoObject?.description), videoObject?.embedUrl, includeEmbed);
 
     return {
         title,
-        author,
         image,
         link,
         description,
-        category,
         itunes_item_image: image,
         media: getMedia(image),
         pubDate,
@@ -159,41 +163,21 @@ async function handler(ctx) {
     const channelUrl = new URL(`/c/${encodeURIComponent(channel)}`, rootUrl).href;
     const videosUrl = `${channelUrl}/videos`;
 
-    const response = await ofetch(videosUrl, {
-        headers: {
-            'user-agent': config.trueUA,
-        },
-        retryStatusCodes: [403],
-    });
+    const response = await ofetch(videosUrl);
 
     const $ = load(response);
 
-    const title = parseChannelTitle($);
+    const title = $('title').first().text() || 'Rumble';
 
     const videos = parseListVideos($);
     const items = await pMap(
         videos,
         (video) => {
-            const videoUrl = video.url || video.relative_url;
-            if (!videoUrl) {
-                return null;
-            }
+            const link = new URL(video.url || video.relative_url, rootUrl).href;
+            const listImage = new URL(video.thumb, rootUrl).href;
+            const pubDate = parseDate(video.upload_date);
 
-            const url = new URL(videoUrl, rootUrl);
-            url.search = '';
-
-            const title = video.title;
-            if (!title) {
-                return null;
-            }
-
-            const imageRaw = video.thumb;
-            const listImage = imageRaw ? new URL(imageRaw, rootUrl).href : undefined;
-            const pubDateRaw = video.upload_date;
-            const pubDate = pubDateRaw ? parseDate(pubDateRaw) : undefined;
-            const category = video.tags?.length ? video.tags : undefined;
-
-            return cache.tryGet(`${url.href}:${includeEmbed ? 'embed' : 'noembed'}`, () => buildItem(url.href, title, listImage, pubDate, includeEmbed, category));
+            return cache.tryGet(`${link}:${includeEmbed ? 'embed' : 'noembed'}`, () => buildItem(link, video.title, listImage, pubDate, includeEmbed));
         },
         { concurrency: 5 }
     );
@@ -201,6 +185,6 @@ async function handler(ctx) {
     return {
         title: `Rumble - ${title}`,
         link: videosUrl,
-        item: items.filter((item): item is DataItem => Boolean(item && item.link)),
+        item: items,
     };
 }
