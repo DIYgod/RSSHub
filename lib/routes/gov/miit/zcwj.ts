@@ -52,7 +52,7 @@ async function handler() {
         return {
             title: data.title,
             link: new URL(data.url, rootUrl).href,
-            description: data.infocontent || data.title,
+            description: data.infocontent,
             pubDate: parseDate(Number(data.deploytime || data.publishtime)),
             author: data.publishgroupname,
         };

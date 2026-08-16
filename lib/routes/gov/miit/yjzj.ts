@@ -22,13 +22,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www.miit.gov.cn/gzcy/yjzj/index.html'],
+            source: ['miit.gov.cn/gzcy/yjzj/index.html'],
         },
     ],
     name: '意见征集',
     maintainers: ['Fatpandac'],
     handler,
-    url: 'https://www.miit.gov.cn/gzcy/yjzj/index.html',
+    url: 'miit.gov.cn/gzcy/yjzj/index.html',
 };
 
 async function handler() {
