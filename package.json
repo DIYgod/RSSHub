@@ -139,7 +139,7 @@
         "winston": "3.19.0",
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.10.2",
-        "youtubei.js": "17.2.0",
+        "youtubei.js": "18.0.0",
         "zod": "4.4.3"
     },
     "devDependencies": {
