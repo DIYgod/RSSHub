@@ -67,7 +67,7 @@
         "@hono/node-server": "2.1.1",
         "@hono/zod-openapi": "1.5.2",
         "@jocmp/mercury-parser": "3.1.0",
-        "@notionhq/client": "5.24.0",
+        "@notionhq/client": "5.25.2",
         "@opentelemetry/api": "1.9.1",
         "@opentelemetry/exporter-prometheus": "0.221.0",
         "@opentelemetry/exporter-trace-otlp-http": "0.221.0",
