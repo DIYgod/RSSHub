@@ -30,9 +30,9 @@ export const route: Route = {
     example: '/rumble/c/MikhailaPeterson',
     parameters: {
         channel: 'Channel slug from `https://rumble.com/c/<channel>`',
-        embed: 'Default to not embed the video, set to any value to enable embedding',
+        embed: 'Default to embed the video, set to any value to disable embedding',
     },
-    description: 'Fetches full Rumble video descriptions without embedding the player by default.',
+    description: 'Fetches full Rumble video descriptions and embeds the player by default.',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -159,7 +159,7 @@ async function buildItem(link: string, title: string, listImage: string, pubDate
 
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const includeEmbed = Boolean(ctx.req.param('embed'));
+    const includeEmbed = !ctx.req.param('embed');
     const channelUrl = new URL(`/c/${encodeURIComponent(channel)}`, rootUrl).href;
     const videosUrl = `${channelUrl}/videos`;
 
