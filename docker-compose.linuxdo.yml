@@ -1,0 +1,67 @@
+services:
+  rsshub:
+    build:
+      context: .
+      args:
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "0"
+    image: rsshub-linuxdo:local
+    container_name: rsshub
+    restart: unless-stopped
+    ports:
+      - "1200:1200"
+    environment:
+      NODE_ENV: production
+      CACHE_EXPIRE: "1800"
+      CACHE_CONTENT_EXPIRE: "3600"
+      REQUEST_TIMEOUT: "30000"
+      REQUEST_RETRY: "1"
+      CACHE_TYPE: redis
+      REDIS_URL: redis://redis:6379/
+      LOGGER_LEVEL: info
+      ACCESS_KEY: ${RSSHUB_ACCESS_KEY:-}
+      DISCOURSE_CONFIG_0: '{"link":"https://linux.do"}'
+    shm_size: "1gb"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:1200/healthz
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - rsshub
+
+  redis:
+    image: redis:alpine
+    container_name: rsshub-redis
+    restart: unless-stopped
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - rsshub
+
+networks:
+  rsshub:
+    driver: bridge
+
+volumes:
+  redis-data:
