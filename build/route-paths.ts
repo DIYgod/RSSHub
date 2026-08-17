@@ -1737,8 +1737,8 @@ export type RoutePath =
   | `/kovidgoyal/kitty/changelog`
   | `/koyso/:category?/:sort?`
   | `/kpmg/insights/:lang?`
+  | `/kpopping/community/:filter{.+}?`
   | `/kpopping/kpics/:filter{.+}?`
-  | `/kpopping/news/:filter{.+}?`
   | `/ktown4u/artistBrandlist/:grpNo/:grpNo2?`
   | `/kuaidi100/company`
   | `/kuaidi100/track/:number/:id/:phone?`

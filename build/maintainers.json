@@ -1600,6 +1600,14 @@
   "/jin10/:important?": [
     "laampui"
   ],
+  "/kpopping/community/:filter{.+}?": [
+    "nczitzk",
+    "pinapelz"
+  ],
+  "/kpopping/kpics/:filter{.+}?": [
+    "nczitzk",
+    "pinapelz"
+  ],
   "/lanqiao/questions/:id": [
     "huhuhang"
   ],
@@ -5023,12 +5031,6 @@
   ],
   "/kpmg/insights/:lang?": [
     "LogicJake"
-  ],
-  "/kpopping/kpics/:filter{.+}?": [
-    "nczitzk"
-  ],
-  "/kpopping/news/:filter{.+}?": [
-    "nczitzk"
   ],
   "/kunchengblog/essay": [
     "nczitzk"

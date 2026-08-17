@@ -21319,6 +21319,120 @@
     "url": "jin10.com",
     "lang": "zh-CN"
   },
+  "kpopping": {
+    "routes": {
+      "/community/:filter{.+}?": {
+        "path": "/community/:filter{.+}?",
+        "name": "Community",
+        "url": "kpopping.com",
+        "maintainers": [
+          "nczitzk",
+          "pinapelz"
+        ],
+        "example": "/kpopping/community/category=news&idolId=7d8f48d4-97c4-4164-9f04-11febc9c8ac1",
+        "parameters": {
+          "filter": "Filter parameters in `key=value&key2=value2` format. Supported keys: `category`, `gender`, `sort`, `entityType`, `idolId`, `groupId`"
+        },
+        "description": "::: tip\nQuery community posts using filter parameters found on kpopping such as `idolId`, `groupId`, `gender`, `category`, `sort`, etc.\n:::",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "kpopping.com/community"
+            ],
+            "target": "/community"
+          }
+        ],
+        "view": 0,
+        "zh": {
+          "path": "/community/:filter{.+}?",
+          "name": "Community",
+          "url": "kpopping.com",
+          "maintainers": [
+            "nczitzk",
+            "pinapelz"
+          ],
+          "example": "/kpopping/community/category=news&idolId=7d8f48d4-97c4-4164-9f04-11febc9c8ac1",
+          "parameters": {
+            "filter": "以 `key=value&key2=value2` 格式传递的过滤参数。支持的 key 包括 `category`、`gender`、`sort`、`entityType`、`idolId`、`groupId`"
+          },
+          "description": "::: tip\n支持通过 `idolId`、`groupId`、`gender`、`category`、`sort` 等过滤条件获取新闻与社区帖子。\n:::"
+        },
+        "location": "community.ts",
+        "module": "() => import('@/routes/kpopping/community.ts')"
+      },
+      "/kpics/:filter{.+}?": {
+        "path": "/kpics/:filter{.+}?",
+        "name": "Pics",
+        "url": "kpopping.com",
+        "maintainers": [
+          "nczitzk",
+          "pinapelz"
+        ],
+        "example": "/kpopping/kpics/gender=female&category=musicshow&idolId=a1664634-5caf-45d3-a57f-49d99d929aa9",
+        "parameters": {
+          "filter": "Filter parameters in `key=value&key2=value2` format. Supported keys: `category`, `gender`, `sort`, `entityType`, `idolId`, `groupId`"
+        },
+        "description": "::: tip\nQuery photos using filter parameters found on kpopping such as `idolId`, `groupId`, `gender`, `category`, `sort`, etc.\n:::",
+        "categories": [
+          "picture"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "kpopping.com/kpics"
+            ],
+            "target": "/kpics"
+          }
+        ],
+        "view": 2,
+        "zh": {
+          "path": "/kpics/:filter{.+}?",
+          "name": "Pics",
+          "url": "kpopping.com",
+          "maintainers": [
+            "nczitzk",
+            "pinapelz"
+          ],
+          "example": "/kpopping/kpics/gender=female&category=musicshow&idolId=43012da1-8edb-4ca4-b060-9c0c1777c159",
+          "parameters": {
+            "filter": "以 `key=value&key2=value2` 格式传递的过滤参数。支持的 key 包括 `category`、`gender`、`sort`、`entityType`、`idolId`、`groupId`"
+          },
+          "description": "::: tip\n支持通过 `idolId`、`groupId`、`gender`、`category`、`sort` 等过滤条件获取照片。\n:::"
+        },
+        "location": "kpics.ts",
+        "module": "() => import('@/routes/kpopping/kpics.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "kpopping",
+    "url": "kpopping.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "",
+    "lang": "en"
+  },
   "lanqiao": {
     "routes": {
       "/questions/:id": {
@@ -71458,114 +71572,6 @@
     "zh": {
       "name": "毕马威"
     },
-    "lang": "en"
-  },
-  "kpopping": {
-    "routes": {
-      "/kpics/:filter{.+}?": {
-        "path": "/kpics/:filter{.+}?",
-        "name": "Pics",
-        "url": "kpopping.com",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "example": "/kpopping/kpics/gender-male/category-all/idol-any/group-any/order",
-        "parameters": {
-          "filter": "Filter"
-        },
-        "description": "::: tip\nIf you subscribe to [All male photo albums](https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order)，where the URL is `https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order`, extract the part `https://kpopping.com/kpics/` to the end, which is `gender-male/category-all/idol-any/group-any/order`, and use it as the parameter to fill in. Therefore, the route will be [`/kpopping/kpics/gender-male/category-all/idol-any/group-any/order`](https://rsshub.app/kpopping/kpics/gender-male/category-all/idol-any/group-any/order).\n:::",
-        "categories": [
-          "picture"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "kpopping.com/kpics/:filter"
-            ]
-          }
-        ],
-        "view": 0,
-        "zh": {
-          "path": "/kpics/:filter{.+}?",
-          "name": "Pics",
-          "url": "kpopping.com",
-          "maintainers": [
-            "nczitzk"
-          ],
-          "example": "/kpopping/kpics/gender-male/category-all/idol-any/group-any/order",
-          "parameters": {
-            "filter": "筛选，可在对应分类页 URL 中找到"
-          },
-          "description": "::: tip\n若订阅 [All male photo albums](https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order)，网址为 `https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order`，请截取 `https://kpopping.com/kpics/` 到末尾的部分 `gender-male/category-all/idol-any/group-any/order` 作为 `filter` 参数填入，此时目标路由为 [`/kpopping/kpics/gender-male/category-all/idol-any/group-any/order`](https://rsshub.app/kpopping/kpics/gender-male/category-all/idol-any/group-any/order)。\n:::"
-        },
-        "location": "kpics.ts",
-        "module": "() => import('@/routes/kpopping/kpics.ts')"
-      },
-      "/news/:filter{.+}?": {
-        "path": "/news/:filter{.+}?",
-        "name": "News",
-        "url": "kpopping.com",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "example": "/kpopping/news/gender-all/category-all/idol-any/group-any/order",
-        "parameters": {
-          "filter": "Filter"
-        },
-        "description": "::: tip\nIf you subscribe to [All male articles](https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order)，where the URL is `https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order`, extract the part `https://kpopping.com/news` to the end, which is `gender-male/category-all/idol-any/group-any/order`, and use it as the parameter to fill in. Therefore, the route will be [`/kpopping/news/gender-male/category-all/idol-any/group-any/order`](https://rsshub.app/kpopping/news/gender-male/category-all/idol-any/group-any/order).\n:::",
-        "categories": [
-          "new-media"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "kpopping.com/news/:filter"
-            ]
-          }
-        ],
-        "view": 0,
-        "zh": {
-          "path": "/news/:filter{.+}?",
-          "name": "News",
-          "url": "kpopping.com",
-          "maintainers": [
-            "nczitzk"
-          ],
-          "example": "/kpopping/news/gender-all/category-all/idol-any/group-any/order",
-          "parameters": {
-            "filter": "筛选，可在对应分类页 URL 中找到"
-          },
-          "description": "::: tip\n若订阅 [All male articles](https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order)，网址为 `https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order`，请截取 `https://kpopping.com/news/` 到末尾的部分 `gender-male/category-all/idol-any/group-any/order` 作为 `filter` 参数填入，此时目标路由为 [`/kpopping/news/gender-male/category-all/idol-any/group-any/order`](https://rsshub.app/kpopping/news/gender-male/category-all/idol-any/group-any/order)。\n:::"
-        },
-        "location": "news.ts",
-        "module": "() => import('@/routes/kpopping/news.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "kpopping",
-    "url": "kpopping.com",
-    "categories": [
-      "new-media"
-    ],
-    "description": "",
     "lang": "en"
   },
   "kunchengblog": {
