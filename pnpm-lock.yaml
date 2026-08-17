@@ -53,8 +53,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1(hono@4.13.2)
       '@hono/zod-openapi':
-        specifier: 1.5.2
-        version: 1.5.2(hono@4.13.2)(zod@4.4.3)
+        specifier: 1.6.0
+        version: 1.6.0(hono@4.13.2)(zod@4.4.3)
       '@jocmp/mercury-parser':
         specifier: 3.1.0
         version: 3.1.0
@@ -516,8 +516,8 @@ packages:
     resolution: {integrity: sha512-UJLfKXBhrc8i1vH2eJXuYQMwlsLKWFw3O+CPqXSuVEiikeAim3UgrfWX0k4tA/X8cRFM8iZ7OaqBokFGbYusdg==}
     engines: {node: ^22.13.0 || >=24.0.0}
 
-  '@asteasolutions/zod-to-openapi@8.5.0':
-    resolution: {integrity: sha512-SABbKiObg5dLRiTFnqiW1WWwGcg1BJfmHtT2asIBnBHg6Smy/Ms2KHc650+JI4Hw7lSkdiNebEGXpwoxfben8Q==}
+  '@asteasolutions/zod-to-openapi@9.1.0':
+    resolution: {integrity: sha512-pLMeRgRYS7/vZIgAAkOe2P6+XGTifR1MT9pqDoxZ11EmcJJ+DPmdPqLN8ZZF4U8R9KHCCQCS9c2wtuE8wSrfkw==}
     peerDependencies:
       zod: ^4.0.0
 
@@ -1255,8 +1255,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@1.5.2':
-    resolution: {integrity: sha512-FPlspM6+qObGoMfux+0SSE0of0tGO+BVo3havhKzZMxRyz/ql89kuCd/7POd70aW3T4kz/aVL6gNZ6sVd0ItUQ==}
+  '@hono/zod-openapi@1.6.0':
+    resolution: {integrity: sha512-42HXUBIaGmQh+hZGLw3Hy5piOreIXgnBnUSs55mtn2gnW/xWtU9nQwEUtRRCk5to8Vm2XbfO0J83eUCwCf5eTg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.10.0'
@@ -6589,7 +6589,7 @@ snapshots:
       is-potential-custom-element-name: 1.0.1
       lru-cache: 11.5.2
 
-  '@asteasolutions/zod-to-openapi@8.5.0(zod@4.4.3)':
+  '@asteasolutions/zod-to-openapi@9.1.0(zod@4.4.3)':
     dependencies:
       openapi3-ts: 4.6.1
       zod: 4.4.3
@@ -7074,9 +7074,9 @@ snapshots:
     dependencies:
       hono: 4.13.2
 
-  '@hono/zod-openapi@1.5.2(hono@4.13.2)(zod@4.4.3)':
+  '@hono/zod-openapi@1.6.0(hono@4.13.2)(zod@4.4.3)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.5.0(zod@4.4.3)
+      '@asteasolutions/zod-to-openapi': 9.1.0(zod@4.4.3)
       '@hono/zod-validator': 0.9.0(hono@4.13.2)(zod@4.4.3)
       hono: 4.13.2
       openapi3-ts: 4.6.1
