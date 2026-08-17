@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const idolId = ctx.req.query('idolId');
     const groupId = ctx.req.query('groupId');
 
-    const apiUrl = new URL('https://kpopping.com/api/photos');
+    const apiUrl = new URL('https://kpopping.com/api/articles');
     apiUrl.searchParams.set('offset', offset);
     apiUrl.searchParams.set('sort', sort);
     apiUrl.searchParams.set('gender', gender);
@@ -30,16 +30,18 @@ export const handler = async (ctx: Context): Promise<Data> => {
     }
 
     const response = await ofetch(apiUrl.href);
+    const articles = response.articles || [];
 
-    const items: DataItem[] = response.map((item: any) => {
+    const items: DataItem[] = articles.map((item: any) => {
         const title: string = item.title;
         const description = renderDescription({
-            images: item.src ? [{ src: item.src, alt: title }] : undefined,
+            images: item.coverImage ? [{ src: item.coverImage, alt: title }] : undefined,
+            description: item.excerpt,
         });
-        const link = `https://kpopping.com/kpics/${item.slug}`;
-        const pubDate = item.photoDate ? parseDate(item.photoDate) : item.createdAt ? parseDate(item.createdAt) : undefined;
-        const author = item.uploaderName || item.idolName;
+        const link = `https://kpopping.com/community/${item.slug}`;
+        const pubDate = item.publishedAt ? parseDate(item.publishedAt) : item.createdAt ? parseDate(item.createdAt) : undefined;
         const category = item.category || undefined;
+        const author = item.authorName;
 
         return {
             title,
@@ -52,14 +54,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 html: description,
                 text: description,
             },
-            image: item.src,
-            banner: item.src,
+            image: item.coverImage,
+            banner: item.coverImage,
         };
     });
 
     return {
-        title: 'kpics - kpopping',
-        link: 'https://kpopping.com/kpics',
+        title: 'Community - kpopping',
+        link: 'https://kpopping.com/community',
         item: items,
         allowEmpty: true,
         language: 'en',
@@ -67,17 +69,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/kpics',
-    name: 'Pics',
+    path: '/community',
+    name: 'Community',
     url: 'kpopping.com',
     maintainers: ['nczitzk', 'pinapelz'],
     handler,
-    example: '/kpopping/kpics?gender=female&category=musicshow&idolId=a1664634-5caf-45d3-a57f-49d99d929aa9',
+    example: '/kpopping/community?category=news&idolId=7d8f48d4-97c4-4164-9f04-11febc9c8ac1',
     parameters: {},
     description: `::: tip
-Query photos using query parameters found on kpopping such as \`idolId\`, \`groupId\`, \`gender\`, \`category\`, \`sort\`, etc.
+Query community posts using query parameters found on kpopping such as \`idolId\`, \`groupId\`, \`gender\`, \`category\`, \`sort\`, etc.
 :::`,
-    categories: ['picture'],
+    categories: ['new-media'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -89,22 +91,22 @@ Query photos using query parameters found on kpopping such as \`idolId\`, \`grou
     },
     radar: [
         {
-            source: ['kpopping.com/kpics'],
-            target: '/kpics',
+            source: ['kpopping.com/community'],
+            target: '/community',
         },
     ],
-    view: ViewType.Pictures,
+    view: ViewType.Articles,
 
     zh: {
-        path: '/kpics',
-        name: 'Pics',
+        path: '/community',
+        name: 'Community',
         url: 'kpopping.com',
         maintainers: ['nczitzk', 'pinapelz'],
         handler,
-        example: '/kpopping/kpics?gender=female&category=musicshow&idolId=43012da1-8edb-4ca4-b060-9c0c1777c159',
+        example: '/kpopping/community?category=news&idolId=7d8f48d4-97c4-4164-9f04-11febc9c8ac1',
         parameters: {},
         description: `::: tip
-支持通过 \`idolId\`、\`groupId\`、\`gender\`、\`category\`、\`sort\` 等查询参数获取照片。
+支持通过 \`idolId\`、\`groupId\`、\`gender\`、\`category\`、\`sort\` 等查询参数获取新闻。
 :::`,
     },
 };
