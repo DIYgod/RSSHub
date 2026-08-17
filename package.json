@@ -179,7 +179,7 @@
         "eslint-plugin-n": "18.3.0",
         "eslint-plugin-regexp": "3.2.0",
         "eslint-plugin-simple-import-sort": "14.0.0",
-        "eslint-plugin-unicorn": "72.0.0",
+        "eslint-plugin-unicorn": "73.0.0",
         "eslint-plugin-yml": "3.8.1",
         "fast-string-width": "3.0.2",
         "fs-extra": "11.4.0",
