@@ -8,26 +8,11 @@ import { parseDate } from '@/utils/parse-date';
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const offset = ctx.req.query('offset') ?? '';
-    const sort = ctx.req.query('sort') ?? '';
-    const gender = ctx.req.query('gender') ?? '';
-    const entityType = ctx.req.query('entityType') ?? '';
-    const category = ctx.req.query('category') ?? '';
-    const idolId = ctx.req.query('idolId');
-    const groupId = ctx.req.query('groupId');
+    const filter = ctx.req.param('filter');
+    const params = new URLSearchParams(filter);
 
     const apiUrl = new URL('https://kpopping.com/api/photos');
-    apiUrl.searchParams.set('offset', offset);
-    apiUrl.searchParams.set('sort', sort);
-    apiUrl.searchParams.set('gender', gender);
-    apiUrl.searchParams.set('entityType', entityType);
-    apiUrl.searchParams.set('category', category);
-
-    if (idolId) {
-        apiUrl.searchParams.set('idolId', idolId);
-    } else if (groupId) {
-        apiUrl.searchParams.set('groupId', groupId);
-    }
+    apiUrl.search = params.toString();
 
     const response = await ofetch(apiUrl.href);
 
@@ -37,9 +22,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
             images: item.src ? [{ src: item.src, alt: title }] : undefined,
         });
         const link = `https://kpopping.com/kpics/${item.slug}`;
-        const pubDate = item.photoDate ? parseDate(item.photoDate) : item.createdAt ? parseDate(item.createdAt) : undefined;
+        const dateStr = item.photoDate ?? item.createdAt;
+        const pubDate = dateStr ? parseDate(dateStr) : undefined;
         const author = item.uploaderName || item.idolName;
-        const category = item.category || undefined;
+        const category = item.category;
 
         return {
             title,
@@ -61,21 +47,22 @@ export const handler = async (ctx: Context): Promise<Data> => {
         title: 'kpics - kpopping',
         link: 'https://kpopping.com/kpics',
         item: items,
-        allowEmpty: true,
         language: 'en',
     };
 };
 
 export const route: Route = {
-    path: '/kpics',
+    path: '/kpics/:filter{.+}?',
     name: 'Pics',
     url: 'kpopping.com',
     maintainers: ['nczitzk', 'pinapelz'],
     handler,
-    example: '/kpopping/kpics?gender=female&category=musicshow&idolId=a1664634-5caf-45d3-a57f-49d99d929aa9',
-    parameters: {},
+    example: '/kpopping/kpics/gender=female&category=musicshow&idolId=a1664634-5caf-45d3-a57f-49d99d929aa9',
+    parameters: {
+        filter: 'Filter parameters in `key=value&key2=value2` format. Supported keys: `category`, `gender`, `sort`, `entityType`, `idolId`, `groupId`',
+    },
     description: `::: tip
-Query photos using query parameters found on kpopping such as \`idolId\`, \`groupId\`, \`gender\`, \`category\`, \`sort\`, etc.
+Query photos using filter parameters found on kpopping such as \`idolId\`, \`groupId\`, \`gender\`, \`category\`, \`sort\`, etc.
 :::`,
     categories: ['picture'],
     features: {
@@ -96,15 +83,17 @@ Query photos using query parameters found on kpopping such as \`idolId\`, \`grou
     view: ViewType.Pictures,
 
     zh: {
-        path: '/kpics',
+        path: '/kpics/:filter{.+}?',
         name: 'Pics',
         url: 'kpopping.com',
         maintainers: ['nczitzk', 'pinapelz'],
         handler,
-        example: '/kpopping/kpics?gender=female&category=musicshow&idolId=43012da1-8edb-4ca4-b060-9c0c1777c159',
-        parameters: {},
+        example: '/kpopping/kpics/gender=female&category=musicshow&idolId=43012da1-8edb-4ca4-b060-9c0c1777c159',
+        parameters: {
+            filter: '以 `key=value&key2=value2` 格式传递的过滤参数。支持的 key 包括 `category`、`gender`、`sort`、`entityType`、`idolId`、`groupId`',
+        },
         description: `::: tip
-支持通过 \`idolId\`、\`groupId\`、\`gender\`、\`category\`、\`sort\` 等查询参数获取照片。
+支持通过 \`idolId\`、\`groupId\`、\`gender\`、\`category\`、\`sort\` 等过滤条件获取照片。
 :::`,
     },
 };
