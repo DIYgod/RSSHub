@@ -16,12 +16,7 @@
 
 <table>
 <tr>
-<td align="center" width="50%">
-<a href="https://sx.org/?c=p9gKCb"><img src="https://github.com/user-attachments/assets/801b4587-f6fe-41f3-8538-c656c0eb2910" alt="SX.org proxies for RSSHub" width="419"></a>
-<br>
-<a href="https://sx.org/?c=p9gKCb">SX.org</a> proxies fit well with RSSHub's proxy configuration and self-hosted RSS workflows. Use promo code <code>RSShub3gb</code> to get a free trial period for RSSHub users.
-</td>
-<td align="center" width="50%">
+<td align="center" width="100%">
 <a href="https://folo.is/"><img src="https://github.com/user-attachments/assets/68c66528-8c79-4a8a-8e43-ade7d936ab80" alt="Folo" width="419"></a>
 <br>
 RSSHub pairs especially well with <a href="https://folo.is/">Folo</a>, an AI RSS reader for feed discovery and modern reading workflows. The project is also open source on <a href="https://github.com/RSSNext/Folo">GitHub</a>.
