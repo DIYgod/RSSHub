@@ -43,9 +43,11 @@ async function handler() {
                 const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
 
-                item.title = $('.detail-tit h2').text();
-                item.description = $('.v_news_content').html();
-                return item;
+                return {
+                    ...item,
+                    title: $('.detail-tit h2').text(),
+                    description: $('.v_news_content').html(),
+                };
             })
         )
     );

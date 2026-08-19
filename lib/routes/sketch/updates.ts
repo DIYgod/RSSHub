@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -20,7 +20,7 @@ export const route: Route = {
     url: 'www.sketch.com/changelog',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const link = 'https://www.sketch.com/changelog/';
     const response = await ofetch(link);
     const $ = load(response);
@@ -47,7 +47,7 @@ async function handler() {
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang'),
+        language: 'en',
         item: items,
     };
 }

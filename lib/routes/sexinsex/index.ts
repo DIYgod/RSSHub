@@ -39,7 +39,7 @@ function parseContent(buffer: ArrayBuffer) {
     const author = $('#wrapper > div:nth-child(1) > form > div:nth-child(2) > table > tbody > tr:nth-child(1) > td.postauthor > cite > a').text();
     const regRes = /\d{4}(?:-\d{1,2}){2} \d{1,2}:\d{1,2}/.exec($('.postinfo').text());
 
-    const content = $('.postmessage').html();
+    const content = $('.postmessage').html() ?? '';
     $ = load(content);
     $('.postratings').remove();
     $('div.quote').remove();
@@ -62,7 +62,7 @@ async function handler(ctx: Context) {
     const title = (type ? `[${$('.threadlist .headactions strong').text()}]` : '') + $('title').text();
     const list = $('tbody[id^="normalthread_"] tr th').toArray();
 
-    const items = await Promise.all(
+    const rawItems = await Promise.all(
         list.map((item) => {
             const $item = $(item);
             const guid = $item.find('span[id^="thread_"]').attr('id')!; // thread_7836473
@@ -89,6 +89,6 @@ async function handler(ctx: Context) {
     return {
         title,
         link: pageUrl,
-        item: items,
+        item: rawItems.filter((item) => item !== ''),
     };
 }

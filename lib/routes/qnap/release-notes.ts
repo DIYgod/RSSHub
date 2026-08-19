@@ -35,7 +35,7 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find('.version-title h4').text().trim(),
                 link: $item.find('.version-btn-container a').attr('href'),
-                pubDate: parseDate($item.find('.release-note-time').text().trim()),
+                pubDate: parseDate($item.find('.release-note-time').text()),
             };
         }) as DataItem[];
 

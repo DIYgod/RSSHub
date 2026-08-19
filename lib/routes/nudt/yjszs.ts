@@ -97,9 +97,10 @@ async function handler(ctx) {
                 content('h1').remove();
                 content('div.time-browse').remove();
 
-                item.description = content('div.content').html();
-
-                return item;
+                return {
+                    ...item,
+                    description: content('div.content').html(),
+                };
             })
         )
     );

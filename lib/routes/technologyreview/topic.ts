@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -33,7 +33,7 @@ export const route: Route = {
     url: 'www.technologyreview.com',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { category_name: categoryName } = ctx.req.param();
 
     const categories = (await cache.tryGet(`technologyreview:category:${categoryName}`, () =>

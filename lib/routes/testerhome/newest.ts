@@ -22,7 +22,7 @@ async function handler() {
         .map((elem) => {
             const $item = $(elem);
             const a = $item.find('.title a');
-            const title = a.attr('title');
+            const title = a.attr('title') ?? '';
 
             return {
                 title,

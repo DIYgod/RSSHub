@@ -25,7 +25,7 @@ async function handler() {
         .map((item) => {
             const a = $(item);
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: a.attr('href')!,
             };
         });

@@ -36,9 +36,17 @@ async function handler() {
                 const year = $item.find('.year').html();
                 const monthDay = $item.find('.day').html();
 
-                let version = $item.find('.num > a').clone().children().remove().end().text();
+                let version = $item
+                    .find('.num > a')
+                    .contents()
+                    .filter((_, node) => node.type === 'text')
+                    .text();
                 if (version === '') {
-                    version = $item.find('.num').clone().children().remove().end().text();
+                    version = $item
+                        .find('.num')
+                        .contents()
+                        .filter((_, node) => node.type === 'text')
+                        .text();
                 }
 
                 let versionType = $item.find('.num > a > i').attr('class') ?? $item.find('.num > i').attr('class') ?? '';

@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { apiUrl, renderItem } from './utils';
@@ -20,7 +20,7 @@ export const route: Route = {
     url: 'www.technologyreview.com',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const limit = Number(ctx.req.query('limit') ?? 10);
 
     const posts = await ofetch(`${apiUrl}/posts`, {

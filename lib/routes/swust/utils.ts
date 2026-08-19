@@ -11,7 +11,7 @@ export async function request(url: string, referer?: string): Promise<string> {
         headers.Referer = referer;
     }
 
-    const body = await ofetch<string>(url, { responseType: 'text', headers });
+    const body = await ofetch(url, { responseType: 'text', headers });
 
     const content = load(body)('meta[http-equiv="refresh"]').attr('content');
     if (!content) {

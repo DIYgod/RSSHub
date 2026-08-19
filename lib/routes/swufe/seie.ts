@@ -56,10 +56,17 @@ async function handler(ctx: Context) {
                 const response = await ofetch(info.link);
                 const $ = load(response);
 
+                const content = $('.article-main');
+                content.find('img[orisrc]').each((_, img) => {
+                    const $img = $(img);
+                    $img.attr('src', $img.attr('orisrc')!);
+                    $img.removeAttr('orisrc');
+                });
+
                 return {
                     title: info.title,
                     link: info.link,
-                    description: $('.article-main').html()!.replaceAll('src="/', 'src="https://it.swufe.edu.cn/').trim(),
+                    description: content.html()!.trim(),
                     pubDate: timezone(parseDate(info.date), 8),
                 };
             })

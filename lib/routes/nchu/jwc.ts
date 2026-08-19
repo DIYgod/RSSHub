@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -36,7 +36,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { type = 'notice' } = ctx.req.param();
     const link = `${host}/xwzx/${map[type]}`;
 
@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const a = $item.find('.title a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 description: $item.find('.intro').text().trim(),
                 pubDate: timezone(parseDate($item.find('.date').text().replace('发表时间：', '')), 8),

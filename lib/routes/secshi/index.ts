@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -21,7 +21,7 @@ export const route: Route = {
     url: 'www.secshi.com',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { category = '1' } = ctx.req.param();
     const baseUrl = 'https://www.secshi.com';
     const link = `${baseUrl}/go/${category}.html`;

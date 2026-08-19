@@ -35,11 +35,7 @@ async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const link = `${host}/${type}/list.htm`;
 
-    const response = await ofetch(link, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch(link);
     const $ = load(response);
 
     const items = await Promise.all(

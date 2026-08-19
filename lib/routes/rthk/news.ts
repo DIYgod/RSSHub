@@ -24,8 +24,9 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 };
 
 async function handler(ctx: Context) {
-    let category = ctx.req.param('category').toLowerCase();
-    const language = ctx.req.param('lang').toLowerCase();
+    const params = ctx.req.param();
+    let category = params.category.toLowerCase();
+    const language = params.lang.toLowerCase();
     const languageUrlKey = language === 'en' ? 'e' : 'c';
     if (languageUrlKey !== 'c' || category !== 'greaterchina') {
         category = languageUrlKey + category;
@@ -59,7 +60,7 @@ async function handler(ctx: Context) {
                     .join('');
 
                 return {
-                    title: item.title,
+                    title: item.title ?? '',
                     description: media + item.content!.replaceAll('\r\n', '<br>'),
                     pubDate: item.pubDate,
                     link: item.guid,
@@ -70,7 +71,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title ?? 'RTHK News',
         link: feed.link,
         description: feed.description,
         item: items,

@@ -34,7 +34,7 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('.date').text(), 'YYYY-MM-DD'), 8),
             };
@@ -46,7 +46,7 @@ async function handler() {
                 if (!item.link.includes('/article.jsp')) {
                     const response = await ofetch(item.link);
                     const $ = load(response);
-                    item.description = $('#vsb_content').html()?.trim();
+                    return { ...item, description: $('#vsb_content').html() };
                 }
                 return item;
             })

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +22,7 @@ export const route: Route = {
     url: 'reactnativenewsletter.com/past-issues',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://reactnativenewsletter.com';
     const link = `${baseUrl}/past-issues`;
 
@@ -62,8 +62,10 @@ async function handler(ctx: Context) {
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
-                item.description = $('#templateBody').html();
-                return item;
+                return {
+                    ...item,
+                    description: $('#templateBody').html(),
+                };
             })
         )
     );

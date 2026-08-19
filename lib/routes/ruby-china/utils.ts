@@ -17,7 +17,7 @@ async function loadAndParseTopic(link: string) {
         author: $('.topic-detail .user-name').text(),
         guid: link,
         description: $('.topic-detail .card-body').html(),
-        pubDate: parseDate($('.topic-detail .timeago').first().attr('title')!),
+        pubDate: parseDate($('.topic-detail .timeago').attr('title')!),
     };
 }
 

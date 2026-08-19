@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -31,7 +31,7 @@ async function handler() {
     ]);
     const data = [...response.data.contentlist, ...response2.data.contentlist];
 
-    const list = data.map((item) => ({
+    const list = data.map((item): DataItem & { link: string; contentId: number } => ({
         title: item.contentTitle,
         pubDate: parseDate(item.contentPublishTime, 'X'),
         link: `https://pay.weixin.qq.com/index.php/public/cms/content_detail?platformType=0&lang=zh&id=${item.contentId}`,
