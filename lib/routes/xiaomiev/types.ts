@@ -1,48 +1,5 @@
-export interface DetailBatchedInfo {
-    batchedSsuList: DetailGoods[];
-}
-
-export interface DetailData {
-    batchedInfoMap?: Record<string, DetailBatchedInfo>;
-    batchedSsuList: DetailGoods[];
-    goodsInfo: {
-        goodsList: DetailGoods[];
-    };
-    product: DetailProduct;
-}
-
-export interface DetailGoods {
-    imgUrl: string;
-    marketPrice: string;
-    name: string;
-    price: string;
-}
-
-export interface DetailProduct {
-    productId: number;
-    sellPointList: string[];
-}
-
-export interface DetailResponse {
-    data: DetailData;
-}
-
-export interface Floor {
-    dynamicData?: FloorDynamicData[];
-    moduleKey: string;
-}
-
-export interface FloorDynamicData {
-    list: FloorListItem[];
-}
-
-export interface FloorListItem {
-    type: string;
-    value: FloorListItemValue;
-}
-
-export interface FloorListItemValue {
-    goods: Goods;
+export interface DataResponse<Data> {
+    data: Data;
 }
 
 export interface Goods {
@@ -51,10 +8,37 @@ export interface Goods {
     name: string;
 }
 
-export interface ListData {
-    floors: Floor[];
+export type ListResponse = DataResponse<{
+    floors: Array<{
+        dynamicData?: Array<{
+            list: Array<{
+                type: string;
+                value: {
+                    goods: Goods;
+                };
+            }>;
+        }>;
+        moduleKey: string;
+    }>;
+}>;
+
+export interface DetailGoods {
+    imgUrl: string;
+    marketPrice: string;
+    name: string;
+    price: string;
 }
 
-export interface ListResponse {
-    data: ListData;
+export interface DetailData {
+    batchedInfoMap?: Record<string, { batchedSsuList: DetailGoods[] }>;
+    batchedSsuList: DetailGoods[];
+    goodsInfo: {
+        goodsList: DetailGoods[];
+    };
+    product: {
+        productId: number;
+        sellPointList: string[];
+    };
 }
+
+export type DetailResponse = DataResponse<DetailData>;
