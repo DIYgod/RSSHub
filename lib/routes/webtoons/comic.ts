@@ -1,21 +1,36 @@
-const parser = require('@/utils/rss-parser');
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
+
+export const route: Route = {
+    path: '/:lang/:category/:name/:id',
+    categories: ['anime'],
+    example: '/webtoons/zh-hant/drama/gongzhuweimian/894',
+    parameters: { lang: 'Language', category: 'Category', name: 'Name', id: 'ID' },
+    name: 'Comic updates',
+    maintainers: ['machsix'],
+    handler,
+    description: 'For example: `https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894`, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.',
+};
+
 const domain = 'https://www.webtoons.com';
 
-module.exports = async (ctx) => {
-    const { lang, category, name, id } = ctx.params;
+async function handler(ctx: Context) {
+    const { lang, category, name, id } = ctx.req.param();
     const comicLink = `${domain}/${lang}/${category}/${name}/list?title_no=${id}`;
     const rssLink = `${domain}/${lang}/${category}/${name}/rss?title_no=${id}`;
-    const dP = (html, lang) => {
+    const dP = (html: string, lang: string) => {
         if (lang === 'zh-cn' || lang === 'zh-hant') {
             return parseDate(html, 'DD MMMM YYYY HH:mm:ss', lang);
-        } else if (lang === 'en') {
-            return parseDate(html, 'DD MMM YYYY HH:mm:ss');
-        } else {
-            return html;
         }
+        if (lang === 'en') {
+            return parseDate(html, 'DD MMM YYYY HH:mm:ss');
+        }
+        return html;
     };
 
     let rss;
@@ -27,14 +42,14 @@ module.exports = async (ctx) => {
             description: body.description,
             item: body.items.map((x) => ({
                 title: x.title,
-                pubDate: dP(x.pubDate, lang),
+                pubDate: x.pubDate ? dP(x.pubDate, lang) : undefined,
                 link: x.link,
                 description: `<a href=${x.link} target="_blank">${x.title}</a>`,
             })),
         };
     } catch {
-        const { body } = await got.get(comicLink);
-        const $ = cheerio.load(body);
+        const body = await ofetch(comicLink);
+        const $ = load(body);
         rss = {
             title: `Webtoons - ${$('.detail_header .info .subj').text()}`,
             link: comicLink,
@@ -43,12 +58,12 @@ module.exports = async (ctx) => {
                 .toArray()
                 .map((ep) => ({
                     title: $('.subj > span', ep).text(),
-                    pubDate: new Date($('.date', ep).text()).toUTCString(),
+                    pubDate: lang === 'zh-cn' || lang === 'zh-hant' ? parseDate($('.date', ep).text(), 'YYYY年M月D日') : parseDate($('.date', ep).text()),
                     link: $(ep).attr('href'),
                     description: `<a href=${$(ep).attr('href')} target="_blank">${$('.subj > span', ep).text()}</a>`,
                 })),
         };
     }
-    rss.item = rss.item.sort((a, b) => (new Date(a.pubDate) > new Date(b.pubDate) ? -1 : 1));
-    ctx.state.data = rss;
-};
+
+    return rss;
+}
