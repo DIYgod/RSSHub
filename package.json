@@ -149,7 +149,7 @@
         "@cloudflare/containers": "0.3.7",
         "@cloudflare/playwright": "1.3.5",
         "@cloudflare/vitest-pool-workers": "0.21.3",
-        "@cloudflare/workers-types": "5.20260814.1",
+        "@cloudflare/workers-types": "5.20260817.1",
         "@eslint/eslintrc": "3.3.6",
         "@eslint/js": "10.0.1",
         "@oxlint/plugins": "1.78.0",
