@@ -71,7 +71,7 @@ jobs:
                   echo "repo-name=$REPO_NAME_LOWER" >> "$GITHUB_OUTPUT"
 
             - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
+              uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
 
             - name: Log in to Docker Hub
               uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
@@ -204,7 +204,7 @@ jobs:
             id-token: write
         steps:
             - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
+              uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
 
             - name: Log in to Docker Hub
               uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
