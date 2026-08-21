@@ -50,10 +50,10 @@ async function handler(ctx: Context) {
         .map((e) => {
             const $e = $(e);
             return {
-                title: $e.find('title').first().text(),
-                link: $e.find('guid').first().text(),
-                pubDate: $e.find('pubDate').first().text(),
-                description: $e.find('description').first().text(),
+                title: $e.find('title').text(),
+                link: $e.find('guid').text(),
+                pubDate: $e.find('pubDate').text(),
+                description: $e.find('description').text(),
             };
         })
         .filter((item) => item.link);

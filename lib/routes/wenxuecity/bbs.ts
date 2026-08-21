@@ -53,9 +53,11 @@ async function handler(ctx: Context) {
                     },
                 });
                 const content = load(result);
-                item.description = content('div#content').html();
-                item.pubDate = parseDate(content('span.date').text());
-                return item;
+                return {
+                    ...item,
+                    description: content('div#content').html(),
+                    pubDate: parseDate(content('span.date').text()),
+                };
             })
         )
     );

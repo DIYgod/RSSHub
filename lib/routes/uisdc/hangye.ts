@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -34,20 +34,21 @@ async function handler(ctx: Context) {
         .slice(0, 10)
         .toArray()
         .map((item) => ({
-            link: $(item).attr('href'),
+            link: $(item).attr('href') ?? '',
         }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
+                const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
 
-                item.title = content('.post-title').text().trim();
-                item.description = content('.article').html();
-                item.pubDate = timezone(parseDate(content('.meta-time').attr('title')!), 8);
-
-                return item;
+                return {
+                    title: content('.post-title').text().trim(),
+                    link: item.link,
+                    description: content('.article').html(),
+                    pubDate: timezone(parseDate(content('.meta-time').attr('title')!), 8),
+                };
             })
         )
     );

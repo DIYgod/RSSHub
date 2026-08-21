@@ -27,7 +27,7 @@ const map = new Map([
 ]);
 
 async function handler(ctx: Context) {
-    const type = Number.parseInt(ctx.req.param('type'));
+    const type = Number.parseInt(ctx.req.param('type') ?? '');
     const { title, link } = map.get(type)!;
 
     const response = await ofetch(link);
@@ -39,7 +39,7 @@ async function handler(ctx: Context) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('td a').attr('title'),
+                title: $item.find('td a').attr('title') ?? '',
                 link: $item.find('td a').attr('href'),
                 pubDate: parseDate($item.find('td div').text()),
             };

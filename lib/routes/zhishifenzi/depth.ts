@@ -38,9 +38,7 @@ async function handler() {
                 const detailResponse = await ofetch(item.link!);
                 const detailCapture = load(detailResponse);
 
-                item.description = detailCapture('.main div.inner_content')
-                    .html()!
-                    .replaceAll('src="/', () => `src="${base}/`);
+                item.description = detailCapture('.main div.inner_content').html();
 
                 return item;
             })

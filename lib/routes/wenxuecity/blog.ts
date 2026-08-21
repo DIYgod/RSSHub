@@ -49,8 +49,10 @@ async function handler(ctx: Context) {
                     },
                 });
                 const content = load(result);
-                item.description = content('div.articalContent').html();
-                return item;
+                return {
+                    ...item,
+                    description: content('div.articalContent').html(),
+                };
             })
         )
     );

@@ -10,11 +10,7 @@ export const processPages = ({ list, host, department }: { list: Array<{ path: s
         list.map(({ path, title, author }) => {
             const link = path.includes('http://') ? path : host + path;
             return cache.tryGet(link, async () => {
-                const response = await ofetch(link, {
-                    headers: {
-                        Referer: host,
-                    },
-                });
+                const response = await ofetch(link);
                 const $ = load(response);
 
                 let dateString = '';
@@ -30,18 +26,9 @@ export const processPages = ({ list, host, department }: { list: Array<{ path: s
                     // No default
                 }
 
-                let description = $('.v_news_content')
-                    .html()
-                    ?.replaceAll('src="/', () => `src="${host}`)
-                    .replaceAll('href="/', () => `href="${host}`)
-                    .trim();
+                let description = $('.v_news_content').html()?.trim();
                 if (department === 'jwc' && $('#vsb_content').siblings().has('ul li').length > 0) {
-                    const attachment = $('#vsb_content')
-                        .siblings('ul')
-                        .html()!
-                        .replaceAll('src="/', () => `src="${host}`)
-                        .replaceAll('href="/', () => `href="${host}`)
-                        .trim();
+                    const attachment = $('#vsb_content').siblings('ul').html()!.trim();
                     description += '\n' + attachment;
                 }
 

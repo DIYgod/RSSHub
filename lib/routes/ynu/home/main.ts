@@ -18,18 +18,14 @@ export const route: Route = {
 async function handler() {
     const host = 'https://www.ynu.edu.cn/';
 
-    const response = await ofetch('https://www.ynu.edu.cn/ydkx.htm', {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch('https://www.ynu.edu.cn/ydkx.htm');
 
     const $ = load(response);
     const list = $('.list li')
         .toArray()
         .map((e) => ({
-            path: $('a', e).attr('href'),
-            title: $('a', e).attr('title'),
+            path: $('a', e).attr('href') ?? '',
+            title: $('a', e).attr('title') ?? '',
             author: '云南大学',
         }));
 

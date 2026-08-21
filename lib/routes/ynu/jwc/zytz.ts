@@ -28,11 +28,7 @@ async function handler(ctx: Context) {
     const { category } = ctx.req.param();
     const dep = ['教务科', '学籍科', '教学研究科', '实践教学科'];
 
-    const response = await ofetch(host, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch(host);
 
     const $ = load(response);
     const firstRow = Number(category) < 3 ? 0 : 1;
@@ -44,8 +40,8 @@ async function handler(ctx: Context) {
         .slice(0, 8)
         .toArray()
         .map((e) => ({
-            path: $('a', e).attr('href'),
-            title: $('a', e).attr('title'),
+            path: $('a', e).attr('href') ?? '',
+            title: $('a', e).attr('title') ?? '',
             author: dep[Number(category) - 1],
         }));
 

@@ -43,7 +43,7 @@ async function handler(ctx: Context) {
                 .toArray()
                 .map((img) => $(img).attr('title')!.replace('字幕', ''));
             return {
-                title: baseInfoNode.attr('title'),
+                title: baseInfoNode.attr('title') ?? '',
                 link: `${baseUrl}${baseInfoNode.attr('href')}`,
                 author,
                 description: `语言: ${langs.join(' | ')}`,

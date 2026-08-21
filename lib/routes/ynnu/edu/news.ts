@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +22,7 @@ export const route: Route = {
     url: 'jxjy.ynnu.edu.cn',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://jxjy.ynnu.edu.cn';
 
     const lists = await Promise.all(
@@ -45,12 +45,14 @@ async function handler() {
 
     const items = await Promise.all(
         lists.flat().map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.pubDate = timezone(parseDate($('.art-tit p span').text(), '发布日期：YYYY-MM-DD'), 8);
-                item.description = $('.v_news_content').html();
-                return item;
+                return {
+                    ...item,
+                    pubDate: timezone(parseDate($('.art-tit p span').text(), '发布日期：YYYY-MM-DD'), 8),
+                    description: $('.v_news_content').html(),
+                };
             })
         )
     );

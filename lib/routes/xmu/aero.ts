@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -42,11 +42,11 @@ async function handler(ctx: Context) {
 
     const list = $('.ej_list ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const $a = $item.find('a');
             return {
-                title: $a.attr('title'),
+                title: $a.attr('title') ?? '',
                 link: new URL($a.attr('href')!, link).href,
                 pubDate: parseDate($item.find('.sj').text(), 'YYYY-MM-DD'),
             };

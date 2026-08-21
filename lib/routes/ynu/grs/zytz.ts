@@ -18,19 +18,15 @@ export const route: Route = {
 async function handler() {
     const host = 'http://www.grs.ynu.edu.cn/';
 
-    const response = await ofetch('http://www.grs.ynu.edu.cn/index.htm', {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch('http://www.grs.ynu.edu.cn/index.htm');
 
     const $ = load(response);
     const list = $('#news table table tbody tr')
         .slice(0, 9)
         .toArray()
         .map((e) => ({
-            path: $('td a', e).attr('href'),
-            title: $('td a', e).attr('title'),
+            path: $('td a', e).attr('href') ?? '',
+            title: $('td a', e).attr('title') ?? '',
             author: '研究生院',
         }));
     const out = await processPages({ list, host, department: 'grs' });

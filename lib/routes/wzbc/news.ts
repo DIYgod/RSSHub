@@ -68,11 +68,7 @@ async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const { path, func } = MAP[type] ?? MAP.notice;
 
-    const response = await ofetch(`${host}/Col/${path}/Index.aspx`, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch(`${host}/Col/${path}/Index.aspx`);
 
     return func(load(response));
 }

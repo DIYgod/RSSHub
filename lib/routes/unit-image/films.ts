@@ -61,9 +61,9 @@ async function handler(ctx: Context) {
                 const response = await ofetch(post.link);
                 const $ = load(response);
                 const content = $('main');
-                content.find('script, style, noscript, input').remove();
+                content.find('style, noscript, input').remove();
                 content.find('.youtube-player').each((_, el) => {
-                    $(el).replaceWith(renderDescription(true, $(el).attr('data-id')));
+                    $(el).replaceWith(renderDescription(true, $(el).attr('data-id'), undefined, undefined));
                 });
                 content.find('.comparison-img').each((_, el) => {
                     const image = $(el)

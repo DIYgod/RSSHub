@@ -14,11 +14,7 @@ const baseUrl = 'http://job.kmust.edu.cn';
 
 async function handler(): Promise<Data> {
     const pageUrl = `${baseUrl}/module/getjobfairs?start_page=1&keyword=&count=20&start=1&_=${Date.now()}`;
-    const data = await ofetch(pageUrl, {
-        headers: {
-            Referer: baseUrl,
-        },
-    });
+    const data = await ofetch(pageUrl);
 
     return {
         title: '双选会-昆明理工大学就业网',

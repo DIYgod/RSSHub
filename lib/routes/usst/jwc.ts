@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,7 +29,7 @@ async function handler() {
                 const singleUrl = new URL($item.find('.news_title a').attr('href')!, host).href;
 
                 return cache.tryGet(singleUrl, async () => {
-                    const singleItem = {
+                    const singleItem: DataItem = {
                         title,
                         link: singleUrl,
                         pubDate,

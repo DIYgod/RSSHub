@@ -60,7 +60,7 @@ async function handler(ctx) {
             const pubDateText = $element.find('.new-date').text();
 
             // 尝试获取描述
-            const description = $element.find('p a').text().trim() || '';
+            const description = $element.find('p a').text().trim();
 
             return {
                 title,

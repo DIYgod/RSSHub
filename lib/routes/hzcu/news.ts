@@ -48,8 +48,7 @@ async function handler(ctx: Context) {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.description = $('#vsb_content .v_news_content').html();
-                return item;
+                return { ...item, description: $('#vsb_content .v_news_content').html() };
             })
         )
     );

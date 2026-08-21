@@ -39,7 +39,7 @@ async function loadArticle(articleURL: string) {
     description.append('<br /><br />tags: ' + tags.join(', '));
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content') ?? '',
         author: 'by ' + $('meta[name="author"]').attr('content'),
         pubDate: $('meta[property="article:published_time"]').attr('content'),
         link: articleURL,

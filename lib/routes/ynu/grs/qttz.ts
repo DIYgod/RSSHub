@@ -28,19 +28,15 @@ async function handler(ctx: Context) {
     const { category } = ctx.req.param();
     const dep = ['招生工作', '研究生培养', '质量管理', '学位工作', '综合办公室', '相关下载'];
 
-    const response = await ofetch('http://www.grs.ynu.edu.cn/index.htm', {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await ofetch('http://www.grs.ynu.edu.cn/index.htm');
 
     const $ = load(response);
     const list = $('#con3:nth-of-type(' + category + ') ul li')
         .slice(0, 6)
         .toArray()
         .map((e) => ({
-            path: $('a', e).attr('href'),
-            title: $('a', e).attr('title'),
+            path: $('a', e).attr('href') ?? '',
+            title: $('a', e).attr('title') ?? '',
             author: dep[Number(category) - 1],
         }));
     const out = await processPages({ list, host, department: 'grs' });

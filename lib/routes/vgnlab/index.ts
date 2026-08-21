@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -33,7 +33,7 @@ async function handler() {
 
     const list = [data.top, ...data.list]
         .filter((item) => item?.id)
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: item.title,
             link: `${baseUrl}/web/news-${item.id}`,
             pubDate: parseDate(item.publish_time * 1000),

@@ -24,7 +24,7 @@ async function handler(ctx: Context) {
     const url = response.url;
 
     const $ = load(response._data as string);
-    const title = $('meta[property="og:title"]').attr('content');
+    const title = $('meta[property="og:title"]').attr('content') ?? '';
     const description = $('meta[property="og:description"]').attr('content');
 
     const list = $('script[type="application/ld+json"]')
