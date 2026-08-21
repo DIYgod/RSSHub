@@ -1,0 +1,131 @@
+import { load } from 'cheerio';
+import type { BrowserContext } from 'patchright';
+
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+import { getCookies, setCookies } from '@/utils/playwright-utils';
+
+let cookie;
+
+const baseUrl = 'https://www.cw.com.tw';
+
+const pathMap = {
+    today: {
+        pageUrl: () => '/today',
+        limit: 30,
+    },
+    master: {
+        pageUrl: (channel) => `/masterChannel.action?idMasterChannel=${channel}`,
+        limit: 12,
+    },
+    sub: {
+        pageUrl: (channel) => `/subchannel.action?idSubChannel=${channel}`,
+        limit: 12,
+    },
+    author: {
+        pageUrl: (channel) => `/author/${channel}`,
+        limit: 10,
+    },
+};
+
+const getCookie = async (context) => {
+    if (!cookie) {
+        cookie = await cache.tryGet('cw:cookie', async () => {
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            });
+            logger.http(`Requesting ${baseUrl}/user/get/cookie-bar`);
+            await page.goto(`${baseUrl}/user/get/cookie-bar`, {
+                waitUntil: 'domcontentloaded',
+            });
+            cookie = await getCookies(page);
+            await page.close();
+            return cookie;
+        });
+    }
+    return cookie;
+};
+
+const parsePage = async (path, context: BrowserContext, ctx) => {
+    const pageUrl = `${baseUrl}${pathMap[path].pageUrl(ctx.req.param('channel'))}`;
+
+    const cookie = await getCookie(context);
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+    });
+    await setCookies(page, cookie, 'cw.com.tw');
+    logger.http(`Requesting ${pageUrl}`);
+    await page.goto(pageUrl, {
+        waitUntil: 'domcontentloaded',
+    });
+
+    await page.waitForSelector('.caption');
+    const response = await page.evaluate(() => document.documentElement.getHTML());
+    await page.close();
+    const $ = load(response);
+
+    const list = parseList($, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : pathMap[path].limit);
+    const items = await parseItems(list, context);
+
+    return { $, items };
+};
+
+const parseList = ($, limit) =>
+    $('.caption')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            return {
+                title: $item.find('h3').text(),
+                link: $item.find('h3 a').attr('href'),
+                pubDate: parseDate($item.find('time').text()),
+            };
+        })
+        .slice(0, limit);
+
+const parseItems = (list, context: BrowserContext) =>
+    Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                });
+                await page.goto(item.link, {
+                    waitUntil: 'domcontentloaded',
+                });
+                const response = await page.evaluate(() => document.documentElement.getHTML());
+                await page.close();
+                const $ = load(response);
+
+                const meta = JSON.parse($('head script[type="application/ld+json"]:contains("NewsArticle")').first().text());
+                $('.article__head .breadcrumb, .article__head h1, .article__provideViews, .ad').remove();
+                $('img.lazyload').each((_, img) => {
+                    if (!img.attribs['data-src']) {
+                        return;
+                    }
+
+                    img.attribs.src = img.attribs['data-src'];
+                    delete img.attribs['data-src'];
+                });
+
+                item.title = $('head title').text();
+                item.category = $('meta[name=keywords]').attr('content')!.split(',');
+                item.pubDate = parseDate(meta.datePublished);
+                item.author = Array.isArray(meta.author) ? meta.author : meta.author.name;
+                item.description = $('.article__head .container').html()! + $('.article__content').html()!;
+
+                return item;
+            })
+        )
+    );
+
+export { baseUrl, getCookie, parseItems, parseList, parsePage, pathMap };
+
+export { setCookies } from '@/utils/playwright-utils';

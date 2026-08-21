@@ -1,11 +1,17 @@
 .DS_Store
+.cursorrules
+.devenv
+.direnv
 .env
 .eslintcache
 .idea
+.pre-commit-config.yaml
 .log
 .now
+.roomodes
 .vercel
 .vscode
+.windsurfrules
 .yarn
 .yarnrc.yml
 .pnp*
@@ -17,8 +23,13 @@ app-minimal/
 assets/build/
 coverage
 docs/.vuepress/dist
+memory-bank/
 node_modules
 tmp
+dist
+dist-lib
+dist-worker
+.wrangler
 
 Session.vim
 combined.log
@@ -30,4 +41,4 @@ package-lock.json
 yarn.lock
 yarn-error.log
 
-scripts/twitter-token/accounts.*
+dist-container

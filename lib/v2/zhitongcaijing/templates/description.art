@@ -1,6 +1,0 @@
-{{ if digest }}
-{{@ digest }}
-{{ /if }}
-{{ if description }}
-{{@ description }}
-{{ /if }}

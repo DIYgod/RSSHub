@@ -1,3 +1,0 @@
-{{ each images image }}
-<img src="{{ image.original_url || image.url }}">
-{{ /each }}

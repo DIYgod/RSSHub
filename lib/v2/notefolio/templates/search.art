@@ -1,9 +1,0 @@
-{{ if item.type === 'Image' }}
-    {{each item.files}}
-        <img src="{{$value.url}}" alt style="max-width: 100%; height: auto;"><br>
-    {{/each}}
-{{ else if item.type === 'Text' }}
-    {{@ item.content }}<br>
-{{ else if type === 'Video' }}
-    <iframe src="{{ item.url }}"></iframe><br>
-{{ /if }}

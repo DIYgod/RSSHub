@@ -1,7 +1,0 @@
-{{ if headerImage }}
-  <img src="{{ headerImage }}"><br>
-{{ /if }}
-
-{{ if content }}
-  {{@ content }}
-{{ /if }}

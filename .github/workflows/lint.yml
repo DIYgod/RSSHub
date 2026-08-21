@@ -4,86 +4,145 @@ name: Linter
 # pull_request includes [opened, reopened, synchronize] events by default
 # 'edited' is required for title-lint
 on:
-  push: {}
-  pull_request:
-    types: [opened, reopened, synchronize, edited]
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited]
+    push: {}
+    pull_request:
+        types: [opened, reopened, synchronize, edited]
+    pull_request_target:
+        types: [opened, reopened, synchronize, edited]
 
 jobs:
-  # eslint:
-  #   name: ESLint
-  #   if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 5
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v2
-  #       with:
-  #         version: 8
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: lts/*
-  #         cache: 'pnpm'
-  #     - run: pnpm i
-  #     - name: Lint
-  #       run: pnpm run lint
+    # https://github.com/actions/starter-workflows/blob/main/code-scanning/eslint.yml
+    eslint-warning:
+        name: Lint
+        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        permissions:
+            security-events: write
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - run: pnpm i
+            - name: Install oxlint to SARIF converter
+              run: pnpm i -g oxlint-json-to-sarif
+            - name: Typecheck
+              run: pnpm typecheck
+            - name: Lint
+              run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
+                  --format=json | oxlint-json-to-sarif > oxlint-results.sarif
+              continue-on-error: true
+            - name: Upload analysis results to GitHub
+              uses: github/codeql-action/upload-sarif@v4
+              with:
+                  sarif_file: oxlint-results.sarif
+                  wait-for-processing: true
+            - name: Upload Artifact
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+              with:
+                  path: oxlint-results.sarif
 
-# https://github.com/actions/starter-workflows/blob/main/code-scanning/eslint.yml
-  eslint-warning:
-    name: Lint
-    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: read
-      security-events: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - run: pnpm i
-      - name: Lint
-        run: pnpm run lint
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
-        continue-on-error: true
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+    # https://github.com/amannn/action-semantic-pull-request
+    title-lint:
+        if: ${{ github.event_name == 'pull_request_target' && github.repository == 'DIYgod/RSSHub' }}
+        name: Validate PR title
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        steps:
+            - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  ignoreLabels: |
+                      dependencies
+                  wip: true
 
-# https://github.com/amannn/action-semantic-pull-request
-  title-lint:
-    if: ${{ github.event_name == 'pull_request_target' && github.repository == 'DIYgod/RSSHub' }}
-    name: Validate PR title
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      pull-requests: read
-    steps:
-      - uses: amannn/action-semantic-pull-request@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ignoreLabels: |
-            dependencies
-          wip: true
+    labeler:
+        name: Pull Request Labeler
+        if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            pull-requests: write
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        steps:
+            - uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0
+              with:
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}
+                  sync-labels: true
 
-  labeler:
-    name: Pull Request Labeler
-    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' }}
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/labeler@v5
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+    vouch-check-pr:
+        name: Vouch check PR
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            contents: read
+            issues: write
+            pull-requests: write
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        steps:
+            - name: Check if PR author is denounced
+              id: vouch
+              uses: mitchellh/vouch/action/check-pr@d66fa29a64600490892131ad87597c30c91fcac4 # v1.5.0
+              with:
+                  pr-number: ${{ github.event.pull_request.number }}
+                  auto-close: true
+                  require-vouch: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Label denounced PR as spam
+              if: ${{ steps.vouch.outputs.status == 'closed' }}
+              run: gh pr edit ${{ github.event.pull_request.number }} --add-label spam
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_REPO: ${{ github.repository }}
+
+    agentscan:
+        name: AgentScan
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            contents: read
+            issues: write
+            pull-requests: write
+        runs-on: ubuntu-slim
+        timeout-minutes: 10
+        steps:
+            - name: Cache AgentScan analysis
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+              with:
+                  path: .agentscan-cache
+                  key: agentscan-cache-${{ github.actor }}
+                  restore-keys: agentscan-cache-
+
+            - name: AgentScan
+              uses: MatteoGabriele/agentscan-action@cf7615ba9f4fa86beab3323bc84b803ab430f8dc # v2.3.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  trusted-author-associations: 'collaborator,member,owner'
+                  cache-path: .agentscan-cache
+                  label-community-flagged: spam
+                  label-mixed: spam
+                  label-automation: spam
+                  auto-close: true
+                  auto-close-classifications: automation,mixed
+
+    anti-slop:
+        name: Anti Slop
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        runs-on: ubuntu-slim
+        permissions:
+            contents: read
+            issues: read
+            pull-requests: write
+        steps:
+            - name: Anti Slop
+              uses: peakoss/anti-slop@57858eead489d08b255fab2af45a506c2ca6eab2 # v0.3.0
+              with:
+                  close-pr: true
+                  exempt-label: exempt
+                  failure-add-pr-labels: spam
+                  failure-pr-message: |
+                      Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam [signals](https://github.com/peakoss/anti-slop).
+                  lock-pr: false
+                  max-changed-lines: 1000

@@ -1,4 +1,0 @@
-{{ if summary }}
-<blockquote>{{ summary }}</blockquote><br>
-{{ /if }}
-{{@ article }}

@@ -1,0 +1,39 @@
+name: Build assets (Full Routes Test Result)
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: '0 0 * * 0'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        name: Build assets
+        timeout-minutes: 120
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - name: Install pnpm
+              uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - name: Use Node.js Active LTS
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - name: Install dependencies (yarn)
+              run: pnpm i
+            - name: Build assets
+              run: pnpm build
+            - name: Build full routes test result
+              continue-on-error: true
+              run: pnpm vitest:fullroutes
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./assets
+                  user_name: 'github-actions[bot]'
+                  user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+                  keep_files: true

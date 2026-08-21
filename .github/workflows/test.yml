@@ -1,166 +1,155 @@
 name: Test
 
 on:
-  push:
-    branches-ignore:
-      - 'dependabot/**'
-    paths:
-      - 'test/**'
-      - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '.github/workflows/test.yml'
-  pull_request: {}
+    push:
+        branches-ignore:
+            - 'dependabot/**'
+        paths:
+            - 'lib/**'
+            - 'package.json'
+            - 'pnpm-lock.yaml'
+            - '.github/workflows/test.yml'
+    pull_request: {}
 
 permissions:
-  contents: read
+    checks: write
 
 jobs:
-  jest:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379/tcp
-        options: --entrypoint redis-server
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18, 20, 21 ]
-    name: Jest on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: Install dependencies (pnpm)
-        run: pnpm i
-      - name: Run postinstall script for dependencies
-        run: pnpm rb
-      - name: Test all and generate coverage
-        run: pnpm run jest:coverage
-        env:
-          REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-      - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == '20' }}
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+    vitest:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        services:
+            redis:
+                image: redis
+                ports:
+                    - 6379/tcp
+                options: --entrypoint redis-server
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version: [latest, lts/*]
+        name: Vitest on Node ${{ matrix.node-version }}
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm)
+              run: pnpm i
+            - name: Run postinstall script for dependencies
+              run: pnpm rb && pnpm exec patchright install chromium
+            - name: Build routes
+              run: pnpm build
+            - name: Build worker routes
+              run: WORKER_BUILD=true pnpm build:routes
+            - name: Build worker
+              run: pnpm worker-build
+            - name: Test all and generate coverage
+              run: pnpm run vitest:coverage --reporter=github-actions
+              env:
+                  REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}/
+            - name: Test worker runtime (workerd)
+              run: pnpm run vitest:workerd
+            - name: Upload coverage to Codecov
+              if: ${{ matrix.node-version == 'lts/*' }}
+              uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
 
-  puppeteer:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18, 20, 21 ]
-        chromium:
-          - name: bundled Chromium
-            dependency: ''
-            environment: '{}'
-          - name: Chromium from Ubuntu
-            dependency: chromium-browser
-            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "chromium-browser" }'
-          - name: Chrome from Google
-            dependency: google-chrome-stable
-            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
-    name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: Install dependencies (pnpm)
-        run: pnpm i
-      - name: Run postinstall script for dependencies
-        run: pnpm rb
-      - name: Install Chromium
-        if: ${{ matrix.chromium.dependency != '' }}
-        # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
-        # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
-        # which provides up-to-date native packages.
-        run: |
-          set -ex
-          curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
-            sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
-          echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
-            sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
-          sudo apt-get update
-          sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
-      - name: Test puppeteer
-        run: pnpm run jest puppeteer
-        env: ${{ fromJSON(matrix.chromium.environment) }}
+    playwright:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version: [latest, lts/*]
+                chromium:
+                    - name: bundled Chromium
+                      dependency: ''
+                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "0" }'
+                    - name: Chromium from Ubuntu
+                      dependency: chromium-browser
+                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
+                    - name: Chrome from Google
+                      dependency: google-chrome-stable
+                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
+        name: Vitest Playwright on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm)
+              run: pnpm i
+              env: ${{ fromJSON(matrix.chromium.environment) }}
+            - name: Run postinstall script for dependencies
+              run: pnpm rb
+            - name: Build routes
+              run: pnpm build
+            - name: Install bundled Chromium
+              if: ${{ matrix.chromium.dependency == '' }}
+              run: pnpm exec patchright install chromium
+            - name: Install Chromium
+              if: ${{ matrix.chromium.dependency != '' }}
+              # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
+              # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
+              # That's not really a problem since the Chromium-bundled Docker image is based on Debian trixie,
+              # which provides up-to-date native packages.
+              run: |
+                  set -eux
+                  curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+                    sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+                  echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+                    sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+                  sudo apt-get update
+                  sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
+            - name: Test Playwright
+              run: |
+                  set -eux
+                  if [ -n "${{ matrix.chromium.dependency }}" ]; then
+                    export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+                  fi
+                  pnpm run vitest playwright
 
-  docs:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18, 20, 21 ]
-    defaults:
-      run:
-        working-directory: website
-    name: Build docs on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: website/pnpm-lock.yaml
-      - run: pnpm i
-      - name: Build docs
-        run: pnpm run build
-        working-directory: website
+    all:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            attestations: write
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version: [26, 24]
+        name: Build radar and maintainer on Node ${{ matrix.node-version }}
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - run: pnpm i
+            - name: Build radar and maintainer
+              run: npm run build
+            - name: Upload assets
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+              with:
+                  name: generated-assets-${{ matrix.node-version }}
+                  path: assets/build/
 
-  all:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18, 20, 21 ]
-    name: Build radar and maintainer on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - run: pnpm i
-      - name: Build radar and maintainer
-        run: npm run build:all
-
-  automerge:
-    if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-    needs: [ jest, puppeteer, docs, all ]
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - uses: fastify/github-action-merge-dependabot@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          target: patch
+    automerge:
+        if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+        needs: [vitest, playwright, all]
+        runs-on: ubuntu-slim
+        permissions:
+            pull-requests: write
+            contents: write
+        steps:
+            - uses: fastify/github-action-merge-dependabot@73ec4cbb5e56df5591eae286972d5b2201ffe90f # v3.15.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  target: patch

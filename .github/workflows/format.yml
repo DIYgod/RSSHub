@@ -1,37 +1,31 @@
 name: Format
 
 on:
-  push:
-    branches:
-      - master
-
-permissions:
-  contents: read
+    push:
+        branches:
+            - master
 
 jobs:
-  format:
-    permissions:
-      contents: write  # for Git to git push
-    name: Auto format
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+    format:
+        permissions:
+            contents: write # for Git to git push
+        name: Auto format
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - run: pnpm i
-      - run: pnpm i
-        working-directory: website
-      - run: npm run format
-      - name: Commit files
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git status
-          git diff-index --quiet HEAD || (git commit -m "style: auto format" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - run: pnpm i
+            - run: npm run format:description
+            - run: npm run format
+            - name: Commit files
+              run: |
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git status
+                  git diff-index --quiet HEAD || (git commit -m "style: auto format" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)

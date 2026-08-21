@@ -1,0 +1,64 @@
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+export const route: Route = {
+    path: '/international/:subpath{.+}',
+    categories: ['university'],
+    example: '/xjtu/international/hzjl',
+    parameters: { subpath: '栏目路径，支持多级，不包括末尾的`.htm`' },
+    name: '国际处通知',
+    maintainers: ['guitaoliu'],
+    handler,
+};
+
+async function handler(ctx) {
+    const subpath = ctx.req.param('subpath');
+    const base = 'http://international.xjtu.edu.cn';
+
+    const url = `${base}/${subpath.split('.', 1)[0]}.htm`;
+    const resp = await got(url);
+
+    const $ = load(resp.data);
+    const name = $('div.pageTitle').text();
+    const list = $('.news-list-a > .c')
+        .toArray()
+        .map((item): DataItem => {
+            const $item = $(item);
+            const title = $item.find('a').attr('title');
+            const pubDate = parseDate($item.find('p.list-time').text());
+            const link = new URL($item.find('a').attr('href')!, base).href;
+            return {
+                title: title!,
+                pubDate,
+                link,
+            };
+        });
+
+    const item = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link!, async () => {
+                if (new URL(item.link!).pathname.startsWith('/content.jsp')) {
+                    return item;
+                }
+                const resp = await got(item.link);
+
+                const $Des = load(resp.data);
+                const description = $Des('div.ctnCont').html();
+
+                item.description = description;
+                return item;
+            })
+        )
+    );
+
+    return {
+        title: `西安交通大学国际处 - ${name}`,
+        link: url,
+        description: `西安交通大学国际处 - ${name}`,
+        item,
+    };
+}

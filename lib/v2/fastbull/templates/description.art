@@ -1,7 +1,0 @@
-{{ if tips }}
-<b>摘要</b>：
-<p>{{ tips }}</p>
-{{ /if }}
-{{ if description }}
-{{@ description }}
-{{ /if }}

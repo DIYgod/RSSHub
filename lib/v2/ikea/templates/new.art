@@ -1,7 +1,0 @@
-<img src="{{ p.mainImageUrl }}" alt="{{ p.mainImageAlt }}">
-<br>
-<b>{{ p.name }}</b>
-<br>
-{{ p.typeName }}, {{ p.itemMeasureReferenceText }}
-<br>
-{{ p.salesPrice.current.prefix }} <b>{{ p.salesPrice.current.wholeNumber }}</b>

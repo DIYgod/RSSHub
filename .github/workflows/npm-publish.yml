@@ -1,49 +1,42 @@
 name: npm Publish
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '.github/workflows/npm-publish.yml'
-      - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
-      - '!**/radar-rules.js'
+    push:
+        branches:
+            - master
+        paths:
+            - '.github/workflows/npm-publish.yml'
+            - 'tsdown-lib.config.ts'
+            - 'scripts/workflow/build-routes.ts'
+            - 'lib/**'
 
 permissions:
-  contents: read
-  id-token: write
+    id-token: write # Required for OIDC
 
 jobs:
-  build:
-    name: npm publish
-    if: github.repository == 'DIYgod/RSSHub'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-      HUSKY: 0
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          # pinned to 18 until https://github.com/compulim/version-from-git/issues/16 is fixed
-          node-version: 18
-          cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
-      - name: Install dependencies (pnpm)
-        run: pnpm i
-      - name: Run postinstall script for dependencies
-        run: pnpm rb
-      - name: Release
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          npx version-from-git --allow-same-version --template 'master.short'
-      - name: Publish to npmjs
-        run: pnpm publish --provenance --access public
+    build:
+        name: npm publish
+        if: github.repository == 'DIYgod/RSSHub'
+        runs-on: ubuntu-slim
+        timeout-minutes: 10
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            HUSKY: 0
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+                  registry-url: 'https://registry.npmjs.org'
+            - name: Install dependencies (pnpm)
+              run: pnpm i
+            - name: Run postinstall script for dependencies
+              run: pnpm rb
+            - name: Release
+              run: |
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  pnpx version-from-git --allow-same-version --template 'master.short'
+            - name: Publish to npmjs
+              run: pnpm publish --access public --tag latest

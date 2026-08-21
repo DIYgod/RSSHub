@@ -1,30 +1,77 @@
 name: Comment on Issue
 
 on:
-  issues:
-    types: [opened, edited, reopened]
+    issues:
+        types: [opened, edited, reopened]
+    workflow_dispatch:
+        inputs:
+            issue_number:
+                description: 'Issue number to run the check issue job against'
+                required: true
+                type: number
 
 jobs:
-  testRoute:
-    name: Call maintainers
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: github.event.sender.login != 'issuehunt-oss[bot]'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4 # just need its cache
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - name: Install dependencies (pnpm) # needed since we need to parse markdown, so we also use got instead
-        run: pnpm i
-      - name: Generate feedback
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
-            return script({ github, context, core })
+    checkIssue:
+        name: Check issue
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        permissions:
+            issues: write
+        if: |
+            github.event_name == 'workflow_dispatch' ||
+              (github.event_name == 'issues' &&
+              contains(fromJSON('["opened", "edited"]'), github.event.action) &&
+              github.event.sender.login != 'issuehunt-oss[bot]' &&
+              !contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.issue.author_association))
+        outputs:
+            closed: ${{ steps.check.outputs.closed }}
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm) # import remark-parse and unified
+              run: pnpm i
+            - name: Check issue format
+              id: check
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              env:
+                  ISSUE_NUMBER: ${{ inputs.issue_number }}
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const { default: invalidIssue } = await import('${{ github.workspace }}/scripts/workflow/test-issue/check-issue.mjs')
+                      const invalid = await invalidIssue({ github, context, core })
+                      core.setOutput('closed', invalid ? 'true' : 'false')
+
+    callMaintainers:
+        name: Call maintainers
+        needs: [checkIssue]
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        permissions:
+            issues: write
+        if: |
+            !cancelled() &&
+            github.event_name == 'issues' &&
+            github.event.sender.login != 'issuehunt-oss[bot]' &&
+            (needs.checkIssue.result == 'success' || needs.checkIssue.result == 'skipped') &&
+            needs.checkIssue.outputs.closed != 'true'
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm) # import remark-parse and unified
+              run: pnpm i
+            - name: Generate feedback
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const { default: callMaintainer } = await import('${{ github.workspace }}/scripts/workflow/test-issue/call-maintainer.mjs')
+                      await callMaintainer({ github, context, core })

@@ -1,0 +1,63 @@
+name: duplicate-issues
+
+on:
+    issues:
+        types: [opened]
+    workflow_dispatch:
+        inputs:
+            issue_number:
+                description: Issue number to check manually
+                required: true
+                type: number
+
+jobs:
+    check-duplicates:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            issues: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+            - name: Check for duplicate issues
+              uses: anthropics/claude-code-action@v1
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue_number }}
+                  CLAUDE_CODE_SUBPROCESS_ENV_SCRUB: 0
+              with:
+                  claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  display_report: 'true'
+                  allowed_non_write_users: '*'
+                  claude_args: |
+                      --model ${{ vars.OPENCODE_MODEL }}
+                      ${{ vars.CLAUDE_EFFORT && format('--effort {0}', vars.CLAUDE_EFFORT) || '' }}
+                      --allowedTools "Bash(gh issue:*),Bash(gh search:*)"
+                      --disallowedTools "WebFetch,WebSearch"
+                  prompt: |
+                      A new issue has been created:
+
+                      Issue number:
+                      ${{ github.event.issue.number || inputs.issue_number }}
+
+                      Lookup this issue and search through existing issues (excluding #${{ github.event.issue.number || inputs.issue_number }}) in this repository (${{ github.repository }}) to find any potential duplicates of this new issue.
+                      Consider:
+                      1. Similar titles or descriptions
+                      2. Same error messages or symptoms
+                      3. Related functionality or components
+                      4. Similar feature requests
+
+                      If you find any potential duplicates, please comment on the new issue with:
+                      - A brief explanation of why it might be a duplicate
+                      - Links to the potentially duplicate issues
+                      - A suggestion to check those issues first
+
+                      Use this format for the comment:
+                      "This issue might be a duplicate of existing issues. Please check:
+                      - #[issue_number]: [brief description of similarity]
+
+                      Feel free to ignore if none of these address your specific case."
+
+                      If no clear duplicates are found, do not comment.

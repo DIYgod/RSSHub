@@ -1,3 +1,0 @@
-<figure>
-    <img src="{{ src }}" width="{{ width }}" height="{{ height }}">
-</figure>

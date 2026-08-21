@@ -1,5 +1,0 @@
-{{ if embed }}
-<iframe height=498 width=510 src='https://player.youku.com/embed/{{videoId}}' frameborder=0 'allowfullscreen'></iframe>
-{{ /if }}
-<br>
-<img src="{{cover}}">
