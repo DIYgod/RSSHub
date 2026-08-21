@@ -44,8 +44,8 @@ importers:
         specifier: 4.4.1
         version: 4.4.1
       '@googleapis/youtube':
-        specifier: 34.0.0
-        version: 34.0.0
+        specifier: 34.1.0
+        version: 34.1.0
       '@honeybadger-io/js':
         specifier: 6.16.0
         version: 6.16.0
@@ -1228,8 +1228,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@googleapis/youtube@34.0.0':
-    resolution: {integrity: sha512-yBiAWYXl4qKNzET4bK5Oejo5a/rXNA0tNp+54kGsCEM/ZW4MHhmwS0U2QWYkcM/8gVOROhnv+fhW2Wi8StXHBg==}
+  '@googleapis/youtube@34.1.0':
+    resolution: {integrity: sha512-AVOh1t4NAGJ/qZ5VhiV0NLrNxEneaE6v7dhSMSrMA0L3n8+Q+cVCfsyGN/W31xShLz2gZF9Wg1iQ7lZA4tdZDQ==}
     engines: {node: '>=12.0.0'}
 
   '@honeybadger-io/core@6.11.0':
@@ -3270,8 +3270,8 @@ packages:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
 
-  ansi-regex@6.2.2:
-    resolution: {integrity: sha512-Bq3SmSpyFHaWjPk8If9yc6svM8c56dB5BAtW4Qbw5jHTwwXXcTLoRMkpDJp6VL0XzlWaCHTXrkFURMYmD0sLqg==}
+  ansi-regex@6.3.0:
+    resolution: {integrity: sha512-WpDfL7NO6j7tH88IDBNVdUJxDh9nmCteAVW9dsep846XdwF4naCBK+/tGLX3KJgcpgMRXCFlTM2hKGoK9FsdrQ==}
     engines: {node: '>=12'}
 
   ansi-styles@4.3.0:
@@ -3745,7 +3745,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.53:
@@ -7057,7 +7057,7 @@ snapshots:
     optionalDependencies:
       '@noble/hashes': 2.2.0
 
-  '@googleapis/youtube@34.0.0':
+  '@googleapis/youtube@34.1.0':
     dependencies:
       googleapis-common: 8.0.3
     transitivePeerDependencies:
@@ -8648,7 +8648,7 @@ snapshots:
 
   ansi-regex@5.0.1: {}
 
-  ansi-regex@6.2.2: {}
+  ansi-regex@6.3.0: {}
 
   ansi-styles@4.3.0:
     dependencies:
@@ -11614,7 +11614,7 @@ snapshots:
 
   strip-ansi@7.2.0:
     dependencies:
-      ansi-regex: 6.2.2
+      ansi-regex: 6.3.0
 
   strip-final-newline@3.0.0: {}
 
