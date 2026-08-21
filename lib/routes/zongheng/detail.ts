@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '章节更新',
-    maintainers: ['TonyRL'],
+    maintainers: ['georeth', 'TonyRL'],
     handler,
     url: 'www.zongheng.com',
 };
