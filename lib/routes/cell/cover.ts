@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -46,32 +47,34 @@ async function handler() {
     };
 
     const out = await Promise.all(
-        journals.map(async (journal) => {
-            const feed = await ofetch(`${baseURL}/${journal}/current.rss`, { responseType: 'text' });
-            const $ = load(feed, { xmlMode: true });
-            const channel = $('channel');
+        journals.map((journal) =>
+            cache.tryGet(`${baseURL}/${journal}/current.rss`, async () => {
+                const feed = await ofetch(`${baseURL}/${journal}/current.rss`, { responseType: 'text' });
+                const $ = load(feed, { xmlMode: true });
+                const channel = $('channel');
 
-            const volume = channel.find(String.raw`prism\:volume`).text();
-            const number = channel.find(String.raw`prism\:number`).text();
-            const issn = coverIssn[journal] ?? channel.find(String.raw`prism\:issn`).text();
-            const address = `${baseURL}/${journal}/current`;
-            const coverImg = `https://ars.els-cdn.com/content/image/X${issn.replaceAll('-', '')}.jpg`;
-            const publicationName = channel.find(String.raw`prism\:publicationName`).text();
+                const volume = channel.find(String.raw`prism\:volume`).text();
+                const number = channel.find(String.raw`prism\:number`).text();
+                const issn = coverIssn[journal] ?? channel.find(String.raw`prism\:issn`).text();
+                const address = `${baseURL}/${journal}/current`;
+                const coverImg = `https://ars.els-cdn.com/content/image/X${issn.replaceAll('-', '')}.jpg`;
+                const publicationName = channel.find(String.raw`prism\:publicationName`).text();
 
-            return {
-                title: `${publicationName} | Volume ${volume}, Issue ${number}`,
-                author: '@y9c',
-                description: `<img src="${coverImg}" alt="${publicationName}">`,
-                link: address,
-                guid: `${address}#${volume}-${number}`,
-                pubDate: parseDate(
-                    channel
-                        .find(String.raw`prism\:publicationDate`)
-                        .text()
-                        .slice(0, 10)
-                ),
-            };
-        })
+                return {
+                    title: `${publicationName} | Volume ${volume}, Issue ${number}`,
+                    author: '@y9c',
+                    description: `<img src="${coverImg}" alt="${publicationName}">`,
+                    link: address,
+                    guid: `${address}#${volume}-${number}`,
+                    pubDate: parseDate(
+                        channel
+                            .find(String.raw`prism\:publicationDate`)
+                            .text()
+                            .slice(0, 10)
+                    ),
+                };
+            })
+        )
     );
 
     return {

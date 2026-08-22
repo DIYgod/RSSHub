@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -36,23 +37,25 @@ async function handler(ctx: Context) {
         $('div.sons:has(div.contson)')
             .slice(0, 10)
             .toArray()
-            .map(async (item) => {
+            .map((item) => {
                 const $item = $(item);
                 const href = $item.find('p a').attr('href');
                 const link = href ? new URL(href, url).href : undefined;
 
-                let description = $item.find('div.contson').html();
-                const onclick = $item.find('img[onclick]').attr('onclick');
-                if (annotation && onclick) {
-                    description = await getContent(onclick, annotation);
-                }
+                return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
+                    let description = $item.find('div.contson').html();
+                    const onclick = $item.find('img[onclick]').attr('onclick');
+                    if (annotation && onclick) {
+                        description = await getContent(onclick, annotation);
+                    }
 
-                return {
-                    title: $item.find('b').text(),
-                    link,
-                    description,
-                    author: $item.find('p.source').text(),
-                };
+                    return {
+                        title: $item.find('b').text(),
+                        link,
+                        description,
+                        author: $item.find('p.source').text(),
+                    };
+                });
             })
     );
 

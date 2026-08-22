@@ -46,7 +46,7 @@ async function handler(ctx: Context) {
             return {
                 title,
                 link: `https://www.xiachufang.com${$link.attr('href')}`,
-                description: `<img src="${img}"><br><strong>${title}</strong><br>${desc}`,
+                description: `<img src="${img}"><br>${desc}`,
             };
         });
 

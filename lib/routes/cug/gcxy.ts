@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -45,22 +46,24 @@ async function handler(ctx: Context) {
         const items = await Promise.all(
             $('ul.col-news-list li.list_item')
                 .toArray()
-                .map(async (item) => {
+                .map((item) => {
                     const $item = $(item);
                     const a = $item.find('a.news-title');
                     const linkUrl = new URL(a.attr('href')!, host + url);
                     const link = linkUrl.href;
-                    const entry: DataItem = {
-                        title: a.attr('title')!,
-                        link,
-                        pubDate: timezone(parseDate($item.find('span.news-date').text()), 8),
-                    };
-                    if (linkUrl.hostname !== 'gcxy.cug.edu.cn') {
+                    return cache.tryGet(link, async () => {
+                        const entry: DataItem = {
+                            title: a.attr('title')!,
+                            link,
+                            pubDate: timezone(parseDate($item.find('span.news-date').text()), 8),
+                        };
+                        if (linkUrl.hostname !== 'gcxy.cug.edu.cn') {
+                            return entry;
+                        }
+                        const res = await ofetch(link);
+                        entry.description = load(res)('.v_news_content').html();
                         return entry;
-                    }
-                    const res = await ofetch(link);
-                    entry.description = load(res)('.v_news_content').html();
-                    return entry;
+                    }) as Promise<DataItem>;
                 })
         );
         return { name, items };

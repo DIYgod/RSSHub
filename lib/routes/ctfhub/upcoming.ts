@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -36,16 +37,18 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const items = await Promise.all(
-        response.data.items.map(async (item) => {
-            const det = await getDetails(item.id);
-            return {
-                title: item.title,
-                description: det.details,
-                pubDate: parseDate(item.start_time * 1000),
-                link: det.official_url,
-                guid: md5(item.title + item.start_time),
-            };
-        })
+        response.data.items.map((item) =>
+            cache.tryGet(`ctfhub:event:${item.id}`, async () => {
+                const det = await getDetails(item.id);
+                return {
+                    title: item.title,
+                    description: det.details,
+                    pubDate: parseDate(item.start_time * 1000),
+                    link: det.official_url,
+                    guid: md5(item.title + item.start_time),
+                };
+            })
+        )
     );
 
     return {

@@ -3,6 +3,7 @@ import { decodeXML } from 'entities';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -41,45 +42,48 @@ async function handler(ctx: Context) {
         detailUrls.push(baseUrl + $(list[i]).find('a').attr('href'));
     }
 
-    const cards = await Promise.all(detailUrls.map((detailUrl) => ofetch(detailUrl)));
+    const item = await Promise.all(
+        detailUrls.map((detailUrl) =>
+            cache.tryGet(detailUrl, async () => {
+                const card = await ofetch(detailUrl);
+                const $detail = load(card);
+                const link = $detail('meta[property="og:url"]').attr('content')!;
 
-    const item = cards.map((card) => {
-        const $detail = load(card);
-        const link = $detail('meta[property="og:url"]').attr('content')!;
+                let author = '';
+                let title = '';
+                let titleSub = '';
+                for (const element of $detail('table[summary="タイトルデータ"] > tbody > tr').toArray()) {
+                    const tmp = decodeXML($detail(element).html()!); // should convert from escaped to unicode
+                    if (tmp.includes('作品名：')) {
+                        title = $detail(element).find('td:nth-child(2)').text();
+                    }
+                    if (tmp.includes('副題：')) {
+                        titleSub = $detail(element).find('td:nth-child(2)').text();
+                    }
+                    if (tmp.includes('著者名：')) {
+                        author = $detail(element).find('td:nth-child(2)').text();
+                    }
+                }
+                if (titleSub !== '') {
+                    title += '　——　' + titleSub;
+                }
 
-        let author = '';
-        let title = '';
-        let titleSub = '';
-        for (const element of $detail('table[summary="タイトルデータ"] > tbody > tr').toArray()) {
-            const tmp = decodeXML($detail(element).html()!); // should convert from escaped to unicode
-            if (tmp.includes('作品名：')) {
-                title = $detail(element).find('td:nth-child(2)').text();
-            }
-            if (tmp.includes('副題：')) {
-                titleSub = $detail(element).find('td:nth-child(2)').text();
-            }
-            if (tmp.includes('著者名：')) {
-                author = $detail(element).find('td:nth-child(2)').text();
-            }
-        }
-        if (titleSub !== '') {
-            title += '　——　' + titleSub;
-        }
+                const pubDateRaw = $detail('table[summary="底本データ"] > tbody > tr:nth-child(3) > td:nth-child(2)').text();
+                const pubDateNum = pubDateRaw.replaceAll(/（.*）|日/g, '').replaceAll(/[年月]/g, '-');
+                const fullTextLink = $detail('table.download > tbody > tr:nth-child(3) > td:nth-child(3) > a').attr('href');
+                const fullTextLinkHtml = `<a href="${fullTextLink}">いますぐXHTML版で読む</a><br>`;
+                const summury = $detail('table[summary="作品データ"]').html()!;
 
-        const pubDateRaw = $detail('table[summary="底本データ"] > tbody > tr:nth-child(3) > td:nth-child(2)').text();
-        const pubDateNum = pubDateRaw.replaceAll(/（.*）|日/g, '').replaceAll(/[年月]/g, '-');
-        const fullTextLink = $detail('table.download > tbody > tr:nth-child(3) > td:nth-child(3) > a').attr('href');
-        const fullTextLinkHtml = `<a href="${fullTextLink}">いますぐXHTML版で読む</a><br>`;
-        const summury = $detail('table[summary="作品データ"]').html()!;
-
-        return {
-            title,
-            author,
-            pubDate: parseDate(pubDateNum),
-            link,
-            description: fullTextLinkHtml + summury,
-        };
-    });
+                return {
+                    title,
+                    author,
+                    pubDate: parseDate(pubDateNum),
+                    link,
+                    description: fullTextLinkHtml + summury,
+                };
+            })
+        )
+    );
 
     return {
         title: '青空文庫新着リスト',
