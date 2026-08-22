@@ -1,0 +1,163 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
+
+const handler: Route['handler'] = async (ctx) => {
+    const baseUrl = 'https://www.czechstepbystep.cz';
+    const targetUrl = `${baseUrl}/kategorie/kratke-ceske-zpravy`;
+
+    const response = await ofetch(targetUrl);
+    const $ = load(response);
+
+    const limit = Number(ctx.req.query('limit') || 20);
+
+    const list = $('.news-item-info')
+        .slice(0, limit)
+        .toArray()
+        .map((item) => {
+            const el = $(item);
+            const linkEl = el.find('a.news-item-link');
+            const rawLink = linkEl.attr('href');
+            const link = rawLink ? (rawLink.startsWith('http') ? rawLink : `${baseUrl}${rawLink}`) : '';
+            const title = el.find('.news-item-link__title').text().trim();
+            const dateStr = el.find('.news-item-meta__date').text().trim();
+            const pubDate = dateStr ? parseDate(dateStr, 'D. M. YYYY') : undefined;
+
+            return {
+                title,
+                link,
+                pubDate,
+            };
+        })
+        .filter((item) => item.link);
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const html = await ofetch(item.link);
+                const $detail = load(html);
+
+                // 1. Video ID
+                let videoId: string | undefined;
+                const iframeEl = $detail('.entry-text iframe[src*="youtube.com"], .entry-text iframe[src*="youtu.be"], .entry-text iframe[data-src*="youtube.com"], .entry-text iframe[data-src*="youtu.be"]');
+                const iframeSrc = iframeEl.attr('data-src') || iframeEl.attr('src');
+                if (iframeSrc) {
+                    const match = iframeSrc.match(/(?:embed\/|v=|youtu\.be\/)([^?&]+)/);
+                    if (match) {
+                        videoId = match[1];
+                    }
+                }
+                if (!videoId) {
+                    const ytLink = $detail('.entry-text a[href*="youtube.com"], .entry-text a[href*="youtu.be"]').attr('href');
+                    if (ytLink) {
+                        const match = ytLink.match(/(?:v=|youtu\.be\/)([^?&]+)/);
+                        if (match) {
+                            videoId = match[1];
+                        }
+                    }
+                }
+
+                // 2. Full transcript HTML
+                let transcriptHtml: string | undefined;
+                const allParagraphs = $detail('.entry-text p');
+                const startIdx = allParagraphs.toArray().findIndex((p) => $detail(p).text().includes('Text zprávy:'));
+                if (startIdx !== -1) {
+                    const endIdx = allParagraphs.toArray().findIndex((p, i) => {
+                        if (i <= startIdx) {
+                            return false;
+                        }
+                        const txt = $detail(p).text();
+                        return txt.includes('Online cvičení') || txt.includes('Pracovní list') || txt.includes('Krátké české zprávy můžete sledovat') || txt.includes('Toto dílo podléhá licenci');
+                    });
+                    const slice = allParagraphs.slice(startIdx + 1, endIdx === -1 ? undefined : endIdx);
+                    transcriptHtml = slice.filter((_, p) => $detail(p).text().trim() !== '').toString();
+                }
+
+                // 3. Online exercise link
+                const exerciseHref = $detail('.entry-text a[href*="wordwall.net"]').attr('href');
+
+                // 4. Worksheet link & enclosure
+                let worksheetHref: string | undefined;
+                let worksheetExt: string | undefined;
+                let enclosureUrl: string | undefined;
+                let enclosureType: string | undefined;
+
+                const rawWsHref = $detail('.entry-text a[href*="uploads"]').attr('href');
+                if (rawWsHref && (rawWsHref.includes('PL_') || rawWsHref.endsWith('.docx') || rawWsHref.endsWith('.pdf'))) {
+                    const wsHref = rawWsHref.startsWith('http') ? rawWsHref : `${baseUrl}${rawWsHref}`;
+                    worksheetHref = wsHref;
+                    enclosureUrl = wsHref;
+                    if (wsHref.endsWith('.pdf')) {
+                        enclosureType = 'application/pdf';
+                        worksheetExt = 'PDF';
+                    } else if (wsHref.endsWith('.docx')) {
+                        enclosureType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                        worksheetExt = 'DOCX';
+                    } else {
+                        worksheetExt = 'soubor';
+                    }
+                }
+
+                const description = renderDescription({
+                    videoId,
+                    transcriptHtml,
+                    exerciseHref,
+                    worksheetHref,
+                    worksheetExt,
+                });
+
+                const detailDateStr = $detail('.sigle-meta__date').text().trim();
+                const pubDate = detailDateStr ? parseDate(detailDateStr, 'D. M. YYYY') : item.pubDate;
+
+                return {
+                    title: item.title,
+                    link: item.link,
+                    pubDate,
+                    description,
+                    enclosure_url: enclosureUrl,
+                    enclosure_type: enclosureType,
+                };
+            })
+        )
+    );
+
+    return {
+        title: 'Krátké české zprávy - CzechStepByStep',
+        link: targetUrl,
+        description: 'Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.',
+        language: 'cs',
+        item: items,
+    };
+};
+
+export const route: Route = {
+    path: '/kratke-ceske-zpravy',
+    categories: ['study'],
+    example: '/czechstepbystep/kratke-ceske-zpravy',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy'],
+            target: '/kratke-ceske-zpravy',
+        },
+    ],
+    name: 'Krátké české zprávy',
+    maintainers: ['cmp0xff'],
+    handler,
+    url: 'www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy',
+    description: 'Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.',
+};
