@@ -34,12 +34,10 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit');
     const list = $('a', '.dd_bt')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                link: rootUrl + $(item).attr('href'),
-                title: $(item).text(),
-            })
-        )
+        .map((item): DataItem => ({
+            link: rootUrl + $(item).attr('href'),
+            title: $(item).text(),
+        }))
         .slice(0, limit ? Number.parseInt(limit) : 50);
 
     const items = await Promise.all(

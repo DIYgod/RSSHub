@@ -32,13 +32,11 @@ async function handler() {
     const $ = load(response.data);
     const list = $('ul.wp_article_list > li.list_item')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                pubDate: $(item).find('.Article_PublishDate').text(),
-                title: $(item).find('a').attr('title')!,
-                link: `${rootUrl}${$(item).find('a').attr('href')}`,
-            })
-        );
+        .map((item): DataItem => ({
+            pubDate: $(item).find('.Article_PublishDate').text(),
+            title: $(item).find('a').attr('title')!,
+            link: `${rootUrl}${$(item).find('a').attr('href')}`,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

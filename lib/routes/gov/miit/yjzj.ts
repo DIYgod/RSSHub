@@ -34,9 +34,8 @@ export const route: Route = {
 async function handler() {
     const url = `${rootUrl}/gzcy/yjzj/index.html`;
 
-    const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
-    const indexContent = load(cookieResponse.data);
+    const indexResponse = await got(url);
+    const indexContent = load(indexResponse.data);
     const dataRequestUrl = indexContent('div.clist_con > script:nth-child(2)')
         .toArray()
         .map((item) => ({
@@ -50,9 +49,6 @@ async function handler() {
     const response = await got({
         method: 'get',
         url: dataUrl,
-        headers: {
-            Cookie: cookie,
-        },
     });
     const $ = load(response.data.data.html);
     const list = $('ul > li')

@@ -36,14 +36,12 @@ async function handler(/* ctx*/): Promise<Data> {
 
     const list: DataItem[] = $('.article  ')
         .toArray()
-        .map(
-            (ele): DataItem => ({
-                title: $('h2 > a', ele).text(),
-                link: $('h2 > a', ele).attr('href'),
-                pubDate: parseDate($('div.by-line > time', ele).attr('datetime')!),
-                author: $('div.by-line > a', ele).text(),
-            })
-        );
+        .map((ele): DataItem => ({
+            title: $('h2 > a', ele).text(),
+            link: $('h2 > a', ele).attr('href'),
+            pubDate: parseDate($('div.by-line > time', ele).attr('datetime')!),
+            author: $('div.by-line > a', ele).text(),
+        }));
 
     const items: DataItem[] = await Promise.all(
         list.map((item: DataItem) =>

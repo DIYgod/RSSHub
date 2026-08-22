@@ -32,12 +32,10 @@ async function handler() {
 
     const articlesLink = $('.post-info-box .post-thumb a')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                link: $(item).attr('href'),
-                title: '',
-            })
-        );
+        .map((item): DataItem => ({
+            link: $(item).attr('href'),
+            title: '',
+        }));
 
     const articles = await Promise.all(
         articlesLink.map((item) =>

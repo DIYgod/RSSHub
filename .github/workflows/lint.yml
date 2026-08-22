@@ -21,7 +21,7 @@ jobs:
             security-events: write
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-            - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
             - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
               with:
                   node-version: lts/*
@@ -116,7 +116,7 @@ jobs:
                   restore-keys: agentscan-cache-
 
             - name: AgentScan
-              uses: MatteoGabriele/agentscan-action@e02ef270c024bfad3541b2a71619c3c9f20b3312 # v2.2.0
+              uses: MatteoGabriele/agentscan-action@cf7615ba9f4fa86beab3323bc84b803ab430f8dc # v2.3.0
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   trusted-author-associations: 'collaborator,member,owner'
@@ -143,6 +143,6 @@ jobs:
                   exempt-label: exempt
                   failure-add-pr-labels: spam
                   failure-pr-message: |
-                      Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam signals.
+                      Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam [signals](https://github.com/peakoss/anti-slop).
                   lock-pr: false
                   max-changed-lines: 1000

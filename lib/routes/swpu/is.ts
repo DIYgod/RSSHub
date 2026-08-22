@@ -45,13 +45,11 @@ async function handler(ctx) {
 
     const items = $('tr[height="20"]')
         .toArray()
-        .map(
-            (elem): DataItem => ({
-                title: $('a[title]', elem).text().trim(),
-                pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), 8),
-                link: `https://www.swpu.edu.cn/is/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
-            })
-        );
+        .map((elem): DataItem => ({
+            title: $('a[title]', elem).text().trim(),
+            pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), 8),
+            link: `https://www.swpu.edu.cn/is/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
+        }));
 
     const out = await Promise.all(
         items.map((item) =>

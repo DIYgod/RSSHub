@@ -44,7 +44,7 @@ const getUserData = (id) =>
 
 const cacheTryGet = async (_id, params, operationName, func) => {
     const userData: any = await getUserData(_id);
-    const id = (userData.data?.user || userData.data?.user_result)?.result?.rest_id;
+    const id = userData.data?.user?.result?.rest_id;
     if (id === undefined) {
         cache.set(`twitter-userdata-${_id}`, '', config.cache.contentExpire);
         throw new InvalidParameterError('User not found');
@@ -174,8 +174,8 @@ const getUser = async (id: string) => {
 
     return {
         profile_image_url: userData.data?.user?.result?.avatar?.image_url,
+        description: userData.data?.user?.result?.profile_bio?.description,
         ...userData.data?.user?.result?.core,
-        ...(userData.data?.user || userData.data?.user_result)?.result?.legacy,
     };
 };
 

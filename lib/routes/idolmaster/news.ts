@@ -78,14 +78,12 @@ async function handler(ctx: Context): Promise<Data> {
     const listnRsp = await got(listUrl);
     const articleList = listnRsp.data.data.article_list;
 
-    let items = articleList.map(
-        (article): DataItem => ({
-            title: article.title,
-            link: article.url,
-            pubDate: timezone(parseDate(article.dspdate), 9),
-            category: article.categories.subcategory.map((cat) => cat.name),
-        })
-    );
+    let items = articleList.map((article): DataItem => ({
+        title: article.title,
+        link: article.url,
+        pubDate: timezone(parseDate(article.dspdate), 9),
+        category: article.categories.subcategory.map((cat) => cat.name),
+    }));
 
     items = await Promise.all(
         items.map((item: DataItem) =>

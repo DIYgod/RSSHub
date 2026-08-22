@@ -62,17 +62,15 @@ async function handler(): Promise<Data> {
         link: feed.link || 'https://ntrblog.com',
         description: feed.description || 'NTR BLOG（寝取られブログ）最新文章',
         image: feed.image?.url,
-        item: items.map(
-            (item): DataItem => ({
-                title: item.title || '',
-                link: item.link || '',
-                author: item.author || '',
-                pubDate: item.issued ? new Date(item.issued) : undefined,
-                description: item.content || '',
-                image: item.enclosure?.url,
-                guid: item.guid,
-            })
-        ),
+        item: items.map((item): DataItem => ({
+            title: item.title || '',
+            link: item.link || '',
+            author: item.author || '',
+            pubDate: item.issued ? new Date(item.issued) : undefined,
+            description: item.content || '',
+            image: item.enclosure?.url,
+            guid: item.guid,
+        })),
         language: 'ja',
     };
 }

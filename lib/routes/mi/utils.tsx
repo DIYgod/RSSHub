@@ -9,7 +9,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import type { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, CrowdfundingList, DataResponse } from './types';
+import type { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, CrowdfundingList, DataResponse, NewProductDetailData, NewProductItem, NewProductListData } from './types';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
@@ -59,6 +59,47 @@ export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<Crowdfundin
         return response.data.crowd_funding_info;
     }) as Promise<CrowdfundingDetailInfo>;
 
+/**
+ * Fetch the list of new products, merging `history_date_list` (primary) with `new_list` (supplement).
+ *
+ * @returns {Promise<NewProductItem[]>} The merged new product list, sorted by start time in descending order.
+ */
+export const getNewProductList = async (): Promise<NewProductItem[]> => {
+    const response = await ofetch<DataResponse<NewProductListData>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
+        method: 'POST',
+    });
+    const map = new Map<number, NewProductItem>();
+    for (const group of response.data.history_date_list) {
+        for (const item of group.product_list) {
+            map.set(item.product_id, item);
+        }
+    }
+    for (const item of response.data.new_list) {
+        if (!map.has(item.product_id)) {
+            map.set(item.product_id, item);
+        }
+    }
+    return map
+        .values()
+        .toArray()
+        .toSorted((a, b) => b.start_time - a.start_time);
+};
+
+/**
+ * Fetch and cache new product details.
+ *
+ * @param {NewProductItem} item - New product list item.
+ * @returns {Promise<NewProductDetailData>} New product details.
+ */
+export const getNewProductItem = (item: NewProductItem): Promise<NewProductDetailData> =>
+    cache.tryGet(`mi:product:${item.product_id}`, async () => {
+        const response = await ofetch<DataResponse<NewProductDetailData>>('https://m.mi.com/mtop/xiaomishop/product/info', {
+            body: [{}, { productId: item.product_id }],
+            method: 'POST',
+        });
+        return response.data;
+    }) as Promise<NewProductDetailData>;
+
 const CrowdfundingDescription = ({ item }: { item: CrowdfundingDetailInfo }) => (
     <>
         <img src={item.big_image} />
@@ -100,10 +141,53 @@ const CrowdfundingDescription = ({ item }: { item: CrowdfundingDetailInfo }) => 
  */
 export const renderCrowdfunding = (item: CrowdfundingDetailInfo): string => renderToString(<CrowdfundingDescription item={item} />);
 
+const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem; detail: NewProductDetailData }) => (
+    <>
+        <img src={listItem.img} />
+        <br />
+        <ol>
+            {detail.product.sellPointList.map((point) => (
+                <li>{point}</li>
+            ))}
+        </ol>
+        <br />
+        <table>
+            <thead>
+                <tr>
+                    <th>规格</th>
+                    <th>原价</th>
+                    <th>现价</th>
+                </tr>
+            </thead>
+            <tbody>
+                {[...(detail.goodsInfo.goodsList ?? []), ...(detail.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => (
+                    <tr>
+                        <td>{goods.name}</td>
+                        <td>{goods.marketPrice} 元</td>
+                        <td>{goods.price} 元</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </>
+);
+
+/**
+ * Render the new product item description.
+ *
+ * @param {NewProductItem} listItem - New product list item.
+ * @param {NewProductDetailData} detail - New product details.
+ * @returns {string} Rendered description HTML.
+ */
+export const renderNewProduct = (listItem: NewProductItem, detail: NewProductDetailData): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
+
 const formatDate = (timestamp: number): string => dayjs.unix(timestamp).tz('Asia/Shanghai').locale('zh-cn').format('lll');
 
 export default {
     getCrowdfundingList,
     getCrowdfundingItem,
     renderCrowdfunding,
+    getNewProductList,
+    getNewProductItem,
+    renderNewProduct,
 };

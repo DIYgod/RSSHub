@@ -64,7 +64,7 @@ export const getVideos = (id, part, cache) =>
     });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
 export const formatDescription = (description) => description?.replaceAll(/\r\n|\r|\n/g, '<br>');
-export const renderDescription = (embed, videoId, img, description) =>
+export const renderYoutube = (embed, videoId, img, description) =>
     renderToString(
         <>
             {embed ? (
@@ -162,21 +162,4 @@ export const callApi = async function callApi<T>({ googleApi, youtubeiApi, param
         }
     }
     return await youtubeiApi(params);
-};
-
-export default {
-    getPlaylistItems,
-    getPlaylist,
-    getChannelWithId,
-    getChannelWithUsername,
-    getVideos,
-    getThumbnail,
-    formatDescription,
-    renderDescription,
-    getSubscriptions,
-    getSubscriptionsRecusive,
-    isYouTubeChannelId,
-    getLive,
-    getVideoUrl,
-    getPlaylistWithShortsFilter,
 };

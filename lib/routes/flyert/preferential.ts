@@ -43,13 +43,11 @@ async function handler() {
     const $ = load(gbk2utf8(response.data));
     const list = $('.comiis_wzli')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('.wzbt').text(),
-                link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
-                description: $(item).find('.wznr > div:first-child').text(),
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('.wzbt').text(),
+            link: `${host}/${$(item).find('.wzbt a').attr('href')}`,
+            description: $(item).find('.wznr > div:first-child').text(),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

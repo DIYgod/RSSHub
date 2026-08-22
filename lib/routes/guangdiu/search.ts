@@ -32,12 +32,10 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#mainleft > div.zkcontent > div.gooditem')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('a.goodname').text().trim(),
-                link: `${host}/${$(item).find('a.goodname').attr('href')}`,
-            })
-        );
+        .map((item): DataItem => ({
+            title: $(item).find('a.goodname').text().trim(),
+            link: `${host}/${$(item).find('a.goodname').attr('href')}`,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

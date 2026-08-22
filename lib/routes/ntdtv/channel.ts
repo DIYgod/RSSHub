@@ -44,13 +44,11 @@ async function handler(ctx) {
     const title = $('h1.block_title').text();
     const list = $('div.list_wrapper > div')
         .toArray()
-        .map(
-            (item): DataItem => ({
-                title: $(item).find('div.title').text(),
-                link: $(item).find('div.title > a').attr('href'),
-                description: $(item).find('div.excerpt').text(),
-            })
-        )
+        .map((item): DataItem => ({
+            title: $(item).find('div.title').text(),
+            link: $(item).find('div.title > a').attr('href'),
+            description: $(item).find('div.excerpt').text(),
+        }))
         .filter((item) => item.link);
 
     const items = await Promise.all(
