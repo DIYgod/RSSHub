@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
+import type { BrowserContext } from 'patchright';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const host = 'https://www.sehuatang.net/';
+import { addCookies, getContext, playwrightGet } from './utils';
 
 const forumIdMaps = {
     // 原创 BT 电影
@@ -51,6 +52,7 @@ export const route: Route = {
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     handler,
     features: {
+        requirePuppeteer: true,
         nsfw: true,
     },
     description: `**原创 BT 电影**
@@ -66,104 +68,159 @@ export const route: Route = {
 | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
 };
 
-const getSafeId = () =>
+const getSafeId = (host: string, context: BrowserContext) =>
     cache.tryGet(
-        'sehuatang:safeid',
+        `sehuatang:safeid:${host}`,
         async () => {
-            const response = await ofetch(host);
-            const $ = load(response);
-            const safeId = $('script:contains("safeid")')
-                .text()
-                .match(/safeid\s*=\s*'(.+)';/)?.[1];
-            return safeId ?? '';
+            logger.debug(`[sehuatang] getSafeId start, host=${host}`);
+            const page = await context.newPage();
+            try {
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    ['document', 'script'].includes(request.resourceType()) ? route.continue() : route.abort();
+                });
+                logger.debug(`[sehuatang] getSafeId goto ${host}`);
+                await page.goto(host, { waitUntil: 'domcontentloaded' });
+                logger.debug(`[sehuatang] getSafeId goto done, title=${await page.title()}, url=${page.url()}`);
+                // Wait for the safeid script to appear (gives Cloudflare challenge time to pass).
+                try {
+                    logger.debug('[sehuatang] getSafeId waiting for safeid script...');
+                    await page.waitForFunction(
+                        () => {
+                            const scripts = document.querySelectorAll('script');
+                            for (const script of scripts) {
+                                if (script.textContent?.includes('safeid')) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        },
+                        { timeout: 30000 }
+                    );
+                    logger.debug('[sehuatang] getSafeId safeid script found');
+                } catch {
+                    logger.debug('[sehuatang] getSafeId waitForFunction timeout');
+                }
+                const safeId = await page.evaluate(() => {
+                    const scripts = document.querySelectorAll('script');
+                    for (const script of scripts) {
+                        const match = script.textContent?.match(/safeid\s*=\s*'(.+)';/);
+                        if (match) {
+                            return match[1];
+                        }
+                    }
+                    return '';
+                });
+                logger.debug(`[sehuatang] getSafeId result=${JSON.stringify(safeId)}`);
+                return safeId;
+            } finally {
+                await page.close();
+            }
         },
         config.cache.routeExpire,
         false
     );
 
 async function handler(ctx) {
-    const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
-    const subformId = Object.hasOwn(forumIdMaps, subformName) ? forumIdMaps[subformName] : subformName;
-    const type = ctx.req.param('type');
-    const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
-    const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;
-    const headers = {
-        Cookie: `_safe=${await getSafeId()};`,
-    };
+    const domain = ctx.req.query('domain') ?? 'www.sehuatang.net';
+    const host = `https://${domain}/`;
+    const { subforumid: subforumName = 'gqzwzm', type } = ctx.req.param();
+    const subforumId = Object.hasOwn(forumIdMaps, subforumName) ? forumIdMaps[subforumName] : subforumName;
+    const typeFilter = type ? `&filter=typeid&typeid=${type}` : '';
+    const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumId}${typeFilter}`;
 
-    const response = await ofetch(link, {
-        headers,
-    });
-    const $ = load(response);
+    const { context, destroy } = await getContext(host);
+    try {
+        logger.debug(`[sehuatang] handler start, domain=${domain}, host=${host}, link=${link}`);
+        const safeId = await getSafeId(host, context);
+        logger.debug(`[sehuatang] handler safeId=${JSON.stringify(safeId)}`);
 
-    const list = $('#threadlisttableid tbody[id^=normalthread]')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-            const hasCategory = $item.find('th em a').length;
-            return {
-                title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
-                link: host + $item.find('a.xst').attr('href'),
-                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
-                author: $item.find('td.by cite a').first().text(),
-            };
-        });
+        const userAgent = config.trueUA;
+        // Let the browser manage cookies (including Cloudflare challenge cookies) via the shared context.
+        if (safeId) {
+            await addCookies(context, `_safe=${safeId}`, new URL(host).host);
+        }
+        const headers: Record<string, string> = {
+            'User-Agent': userAgent,
+            Cookie: safeId ? `_safe=${safeId};` : '',
+        };
 
-    const out = await Promise.all(
-        list.map((info) =>
-            cache.tryGet(info.link!, async () => {
-                const response = await ofetch(info.link!, {
-                    headers,
-                });
+        const response = await playwrightGet(headers, link, context, '#threadlisttableid tbody[id^=normalthread]');
+        const $ = load(response);
+        logger.debug(`[sehuatang] handler list page fetched, html length=${response.length}, hasThreadTable=${$('#threadlisttableid').length > 0}, cf-chl=${response.includes('cf-chl') || response.includes('challenge-platform')}`);
 
-                const $ = load(response);
-                const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
-                const images = $(postMessage).find('img');
-                for (const image of images) {
-                    const file = $(image).attr('file');
-                    if (!file || file === 'undefined') {
-                        $(image).replaceWith('');
-                    } else {
-                        $(image).replaceWith($(`<img src="${file}">`));
+        const list = $('#threadlisttableid tbody[id^=normalthread]')
+            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
+            .toArray()
+            .map((item): DataItem => {
+                const $item = $(item);
+                const hasCategory = $item.find('th em a').length;
+                return {
+                    title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
+                    link: host + $item.find('a.xst').attr('href'),
+                    pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
+                    author: $item.find('td.by cite a').first().text(),
+                };
+            });
+        logger.debug(`[sehuatang] handler list parsed, count=${list.length}`);
+
+        const out = await Promise.all(
+            list.map((info) =>
+                cache.tryGet(info.link!, async () => {
+                    const response = await playwrightGet(headers, info.link!, context, 'div[id^="postmessage"], td[id^="postmessage"]');
+                    logger.debug(`[sehuatang] detail fetched, link=${info.link}, length=${response.length}, cf-chl=${response.includes('cf-chl') || response.includes('challenge-platform')}`);
+
+                    const $ = load(response);
+                    const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
+                    const images = $(postMessage).find('img');
+                    for (const image of images) {
+                        const file = $(image).attr('file');
+                        if (!file || file === 'undefined') {
+                            $(image).replaceWith('');
+                        } else {
+                            const imageURL = file;
+                            $(image).replaceWith($(`<img src="${imageURL}">`));
+                        }
                     }
-                }
-                // also parse image url from `.pattl`
-                const pattl = $('.pattl');
-                const pattlImages = $(pattl).find('img');
-                for (const pattlImage of pattlImages) {
-                    const file = $(pattlImage).attr('file');
-                    if (!file || file === 'undefined') {
-                        $(pattlImage).replaceWith('');
-                    } else {
-                        $(pattlImage).replaceWith($(`<img src="${file}" />`));
+                    // also parse image url from `.pattl`
+                    const pattl = $('.pattl');
+                    const pattlImages = $(pattl).find('img');
+                    for (const pattlImage of pattlImages) {
+                        const file = $(pattlImage).attr('file');
+                        if (!file || file === 'undefined') {
+                            $(pattlImage).replaceWith('');
+                        } else {
+                            $(pattlImage).replaceWith($(`<img src="${file}" />`));
+                        }
                     }
-                }
-                postMessage.append($(pattl));
-                $('em[onclick]').remove();
+                    postMessage.append($(pattl));
+                    $('em[onclick]').remove();
 
-                info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
-                info.pubDate = timezone(parseDate($('.authi em span').attr('title')!), 8);
+                    info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
+                    info.pubDate = timezone(parseDate($('.authi em span').attr('title')!), 8);
 
-                const magnet = postMessage.find('div.blockcode li').first().text();
-                const isMag = magnet.startsWith('magnet');
-                const torrent = postMessage.find('p.attnm a').attr('href');
+                    const magnet = postMessage.find('div.blockcode li').first().text();
+                    const isMag = magnet.startsWith('magnet');
+                    const torrent = postMessage.find('p.attnm a').attr('href') || '';
 
-                const hasEnclosureUrl = isMag || torrent !== undefined;
-                if (hasEnclosureUrl) {
-                    const enclosureUrl = isMag ? magnet : new URL(torrent!, host).href;
-                    info.enclosure_url = enclosureUrl;
-                    info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
-                }
+                    const hasEnclosureUrl = isMag || torrent !== '';
+                    if (hasEnclosureUrl) {
+                        const enclosureUrl = isMag ? magnet : new URL(torrent!, host).href;
+                        info.enclosure_url = enclosureUrl;
+                        info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
+                    }
 
-                return info;
-            })
-        )
-    );
+                    return info;
+                })
+            )
+        );
 
-    return {
-        title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
-        link,
-        item: out,
-    };
+        return {
+            title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
+            link,
+            item: out,
+        };
+    } finally {
+        await destroy();
+    }
 }
