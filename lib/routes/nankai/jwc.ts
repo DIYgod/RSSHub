@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '教务处通知公告',
-    maintainers: ['vicguo0724'],
+    maintainers: ['zhongweili', 'vicguo0724'],
     description: '南开大学教务处通知公告',
     url: 'jwc.nankai.edu.cn',
     handler: async () => {
@@ -89,12 +89,8 @@ export const route: Route = {
                                 const sudyfileAttrJson = JSON.parse(sudyfileAttr);
                                 const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
                                 if (pdfSrc) {
-                                    let pdfUrl = pdfSrc;
-                                    if (!pdfUrl.startsWith('http')) {
-                                        pdfUrl = `${baseUrl}${pdfUrl}`;
-                                    }
                                     // 替换PDF播放器为下载链接
-                                    $el.replaceWith(`<p><a href="${pdfUrl}" target="_blank">${fileName}</a></p>`);
+                                    $el.replaceWith(`<p><a href="${pdfSrc}" target="_blank">${fileName}</a></p>`);
                                 }
                             });
 

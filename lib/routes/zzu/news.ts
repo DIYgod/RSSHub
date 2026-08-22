@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -22,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '郑大新闻网',
-    maintainers: ['amandus1990'],
+    maintainers: ['nia3y', 'amandus1990'],
     handler,
     description: `| 要闻速递 | 教学科研 | 基层动态 | 媒体郑大 |
 | -------- | -------- | -------- | -------- |
@@ -59,7 +60,7 @@ async function handler(ctx) {
             const pubDateText = $element.find('.new-date').text();
 
             // 尝试获取描述
-            const description = $element.find('p a').text().trim() || '';
+            const description = $element.find('p a').text().trim();
 
             return {
                 title,
@@ -69,9 +70,21 @@ async function handler(ctx) {
             };
         });
 
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const $ = load(response.data);
+
+                item.description = $('.v_news_content').html() || item.description;
+                return item;
+            })
+        )
+    );
+
     return {
         title: `郑大新闻网-${typeDict[type][0]}`,
         link: typeDict[type][1],
-        item: list,
+        item: items,
     };
 }

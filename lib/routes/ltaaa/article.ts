@@ -31,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text();
             const description: string = renderDescription({
-                intro: $el.find('div.dbody p').first().text(),
+                intro: $el.find('div.dbody p').text(),
             });
             const pubDateStr: string | undefined = $el.find('i.icon-time').next().text().trim();
             const linkUrl: string | undefined = $aEl.attr('href');
@@ -152,7 +152,7 @@ export const route: Route = {
     path: '/article',
     name: '网站翻译',
     url: 'www.ltaaa.cn',
-    maintainers: ['nczitzk'],
+    maintainers: ['sgqy', 'nczitzk'],
     handler,
     example: '/ltaaa/article',
     parameters: undefined,

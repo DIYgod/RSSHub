@@ -18,7 +18,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    maintainers: ['1200522928'],
+    maintainers: ['korokor0', '1200522928'],
     radar: [
         {
             source: ['jwb.dgut.edu.cn/tzgg/'],
@@ -45,7 +45,7 @@ async function handler(ctx) {
             const $li = $(item);
             const $a = $li.find('a.con');
             return {
-                title: $a.find('.tit').text().trim(),
+                title: $a.find('.tit').text(),
                 pubDate: parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`),
                 link: `${baseurl}${$a.attr('href')}`,
             };

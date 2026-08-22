@@ -74,7 +74,7 @@ export const route: Route = {
     path: '/legal-updates',
     name: '君合法评',
     url: 'junhe.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['snipersteve', 'nczitzk'],
     handler,
     example: '/junhe/legal-updates',
     description: '',

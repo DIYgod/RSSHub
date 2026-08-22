@@ -110,6 +110,7 @@ type ConfigEnvKeys =
     | 'EH_STAR'
     | 'EH_IMG_PROXY'
     | `EMAIL_CONFIG_${string}`
+    | 'ETHERSCAN_API_KEY'
     | 'F95ZONE_COOKIE'
     | 'FANBOX_SESSION_ID'
     | 'FANFOU_CONSUMER_KEY'
@@ -419,6 +420,9 @@ export type Config = {
     };
     email: {
         config: Record<string, string | undefined>;
+    };
+    etherscan: {
+        apiKey?: string;
     };
     f95zone: {
         cookie?: string;
@@ -925,6 +929,9 @@ const calculateValue = () => {
         },
         email: {
             config: email_config,
+        },
+        etherscan: {
+            apiKey: envs.ETHERSCAN_API_KEY,
         },
         f95zone: {
             cookie: envs.F95ZONE_COOKIE,

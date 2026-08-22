@@ -113,7 +113,7 @@ export const route: Route = {
     path: '/',
     name: '产品',
     url: 'coolbuy.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['xyqfer', 'nczitzk'],
     handler,
     example: '/coolbuy',
     parameters: undefined,

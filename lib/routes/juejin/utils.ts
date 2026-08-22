@@ -19,6 +19,15 @@ const s256 = (s1: Uint8Array, s2: string) => {
 
 /**
  * Solve _wafchallengeid
+ *
+ * `v` is the server-authored envelope that the signature covers:
+ * - `a` is the hash prefix. It is bound to the client rather than random per challenge.
+ * - `b` is the issue time, in unix seconds.
+ * - `c` is the target digest, sha256 of `a` concatenated with the ASCII decimal of an `n` the server picked. Recovering `n` is the work, and it is usually below 10.
+ * - `s` is a signature over `v` under a server-side key.
+ *
+ * Solving appends `d`, the base64 of the decimal `n`.
+ *
  * @param cs - base64 encoded challenge string {"v":{"a":"...", "b":"timestamp", "c":"..."}, "s":"..."}
  * @returns base64 encoded solved challenge string {"v":{"a":"...", "b":"timestamp", "c":"..."}, "s":"...", "d":"solution"}
  */

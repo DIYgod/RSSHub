@@ -2,12 +2,13 @@ import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 /* 研究生院 */
-const host = 'http://yjszs.nudt.edu.cn';
+const host = 'https://yjszs.nudt.edu.cn';
 
 // 目前研究生院最近仍在更新的链接
 const yjszs = new Map([
@@ -49,7 +50,7 @@ export const route: Route = {
         },
     ],
     name: '研究生院',
-    maintainers: ['Blank0120'],
+    maintainers: ['nczitzk', 'Blank0120'],
     handler,
     url: 'yjszs.nudt.edu.cn/',
     description: `| 通知公告 | 首页 | 招生简章 | 学校政策 | 硕士招生 | 博士招生 | 院所发文 | 数据统计 |
@@ -72,7 +73,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const content = $('.news-list li');
-    const items = content.toArray().map((elem) => {
+    const list = content.toArray().map((elem) => {
         const $elem = $(elem);
         return {
             link: new URL($elem.find('a').attr('href')!, host).href,
@@ -80,6 +81,29 @@ async function handler(ctx) {
             pubDate: timezone(parseDate($elem.find('.time').text(), 'YYYY-MM-DD'), -8),
         };
     });
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
+                const content = load(detailResponse.data);
+
+                item.title = content('h1').text();
+                item.pubDate = timezone(parseDate(content('p.time').eq(0).text()), 8);
+
+                content('h1').remove();
+                content('div.time-browse').remove();
+
+                return {
+                    ...item,
+                    description: content('div.content').html(),
+                };
+            })
+        )
+    );
 
     return {
         title: info.title,

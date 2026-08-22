@@ -105,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         language: language as Language,
                     };
 
-                    const $enclosureEl: Cheerio<Element> = $$('iframe#playerFrame, audio').first();
+                    const $enclosureEl: Cheerio<Element> = $$('iframe#playerFrame, audio');
                     const enclosureUrl: string | undefined = $enclosureEl.attr('src');
 
                     if (enclosureUrl) {
@@ -167,7 +167,7 @@ export const route: Route = {
     path: '/language/:category{.+}?',
     name: '英语点津',
     url: 'language.chinadaily.com.cn',
-    maintainers: ['nczitzk'],
+    maintainers: ['sanmmm', 'nczitzk'],
     handler,
     example: '/chinadaily/language/thelatest',
     parameters: {
@@ -217,6 +217,10 @@ export const route: Route = {
                 {
                     label: '权威发布',
                     value: '5af95d44a3103f6866ee845c',
+                },
+                {
+                    label: '考试培训',
+                    value: 'englishexams',
                 },
             ],
         },

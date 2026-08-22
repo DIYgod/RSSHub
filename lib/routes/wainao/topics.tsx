@@ -106,7 +106,7 @@ export const route: Route = {
     path: '/topics/:id?',
     name: '主题',
     url: 'wainao.me',
-    maintainers: ['nczitzk'],
+    maintainers: ['shuiRong', 'nczitzk'],
     handler,
     example: '/wainao/topics/hotspot',
     parameters: {

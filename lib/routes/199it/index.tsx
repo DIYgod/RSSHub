@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('h3.site-title img').attr('src'),
-        author: title.split(/-/).pop()?.trim(),
+        author: title.split(/-/).pop(),
         language: language as Language,
         id: targetUrl,
     };
@@ -151,7 +151,7 @@ export const route: Route = {
     path: '/:category{.+}?',
     name: '资讯',
     url: '199it.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['salviox', 'nczitzk'],
     handler,
     example: '/199it/newly',
     parameters: {

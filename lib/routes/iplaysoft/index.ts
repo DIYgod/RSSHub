@@ -53,7 +53,7 @@ export const route: Route = {
     path: '/',
     name: '首页',
     url: 'www.iplaysoft.com',
-    maintainers: ['williamgateszhao', 'cscnk52', 'LokHsu'],
+    maintainers: ['kimi360', 'williamgateszhao', 'cscnk52', 'LokHsu'],
     handler,
     example: '/iplaysoft',
     parameters: {},

@@ -28,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search Result',
-    maintainers: ['Lava-Swimmer', 'noname1776', 'camera-2018', 'Q16KBreak'],
+    maintainers: ['LandonLi', 'noname1776', 'camera-2018', 'Q16KBreak'],
     handler,
 };
 
