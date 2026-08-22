@@ -99,7 +99,6 @@ async function handler(ctx: Context) {
     const currentUrl = `${rootUrl}/news/s.jsonp?${sectorsUrl}&${categoriesUrl}`;
     const response = await ofetch(currentUrl, { responseType: 'text' });
 
-    // the JSONP payload embeds the list markup as a JS string literal with \uXXXX escapes
     const $ = load(
         response
             .match(/"html":"(.*)","relatedUrl"/)![1]

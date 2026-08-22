@@ -75,13 +75,6 @@ async function handler(ctx) {
                 const article = await ofetch(item.link, { headers: { cookie: cookies } });
                 const content = load(article);
 
-                // remove unwanted elements
-                // content('#ad_popup').remove();
-                // content('[class^=ad-]').remove();
-                // content('[id^=ad-]').remove();
-                // content('[id^=div-gpt-ad-]').remove();
-                // content('.hkej_sub_ex_article_nonsubscriber_ad_2014').remove();
-
                 // fix article image
                 const articleImg = (content('div.hkej_detail_thumb_2014 td a').length ? content('div.hkej_detail_thumb_2014 td a') : content('div.thumb td a')).toArray().map((e) => {
                     const $e = content(e);

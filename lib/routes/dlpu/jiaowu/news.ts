@@ -61,7 +61,6 @@ async function handler(ctx: Context) {
         link: `${baseUrl}/engine2/general/more?appId=${appId}&pageId=${pageId}&websiteId=239444&typeId=${typeId}`,
         title: `大连工业大学教务处 - ${title}`,
         item: response.data.datas.datas.map((item) => ({
-            // the list links go through a JS redirect shim, this is the page it lands on
             link: `${baseUrl}/engine2/d/${item.id}/${engineInstanceId}/0/${appId}?t=${typeId}&p=${pageId}`,
             title: item.title,
             pubDate: timezone(parseDate(item.publishTime), 8),
