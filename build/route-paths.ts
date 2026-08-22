@@ -2487,6 +2487,7 @@ export type RoutePath =
   | `/ruc/ai/:category?`
   | `/ruc/hr/:category?`
   | `/rule34video/latest`
+  | `/rumble/c/:channel/:embed?`
   | `/runyeah/`
   | `/rustcc/jobs`
   | `/rustcc/news`

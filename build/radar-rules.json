@@ -36505,6 +36505,20 @@
       }
     ]
   },
+  "rumble.com": {
+    "_name": "Rumble",
+    ".": [
+      {
+        "title": "Channel",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/c/:channel",
+          "/c/:channel/videos"
+        ],
+        "target": "/rumble/c/:channel"
+      }
+    ]
+  },
   "rustcc.cn": {
     "_name": "Rust 语言中文社区",
     ".": [

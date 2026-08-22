@@ -94558,6 +94558,50 @@
     "url": "rule34video.com",
     "lang": "en"
   },
+  "rumble": {
+    "routes": {
+      "/c/:channel/:embed?": {
+        "path": "/c/:channel/:embed?",
+        "categories": [
+          "multimedia"
+        ],
+        "view": 3,
+        "name": "Channel",
+        "maintainers": [
+          "luckycold"
+        ],
+        "example": "/rumble/c/MikhailaPeterson",
+        "parameters": {
+          "channel": "Channel slug from `https://rumble.com/c/<channel>`",
+          "embed": "Default to not embed the video, set to `embed` to enable embedding"
+        },
+        "description": "Fetches full Rumble video descriptions without embedding the player by default.",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "rumble.com/c/:channel",
+              "rumble.com/c/:channel/videos"
+            ],
+            "target": "/c/:channel"
+          }
+        ],
+        "location": "channel.ts",
+        "module": "() => import('@/routes/rumble/channel.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Rumble",
+    "url": "rumble.com",
+    "lang": "en"
+  },
   "rustcc": {
     "routes": {
       "/jobs": {

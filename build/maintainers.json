@@ -6557,6 +6557,9 @@
   "/rule34video/latest": [
     "ashi-koki"
   ],
+  "/rumble/c/:channel/:embed?": [
+    "luckycold"
+  ],
   "/rustcc/jobs": [
     "CcccFz"
   ],
