@@ -22,7 +22,7 @@ const fetchChallenged = async (link: string, waitSelector: string) => {
 
         logger.http(`Requesting ${link}`);
         await page.goto(link, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector(waitSelector, { timeout: 3000 });
+        await page.waitForSelector(waitSelector, { timeout: 10000 });
 
         const html = await page.content();
         const cookie = await getCookies(page, 'www.caict.ac.cn');
