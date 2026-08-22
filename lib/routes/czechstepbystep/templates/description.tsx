@@ -1,35 +1,26 @@
-/** @jsxImportSource hono/jsx */
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderDescription as renderYouTubeDescription } from '@/routes/youtube/utils';
+
 interface DescriptionData {
     videoId?: string;
-    paragraphs?: string[];
+    transcriptHtml?: string;
     exerciseHref?: string;
     worksheetHref?: string;
     worksheetExt?: string;
 }
 
-const CzechStepByStepDescription = ({ videoId, paragraphs, exerciseHref, worksheetHref, worksheetExt }: DescriptionData) => (
+const CzechStepByStepDescription = ({ videoId, transcriptHtml, exerciseHref, worksheetHref, worksheetExt }: DescriptionData) => (
     <div>
-        {videoId && (
-            <p>
-                <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-                    width="560"
-                    height="315"
-                    frameBorder="0"
-                    allowFullScreen
-                />
-            </p>
-        )}
+        {videoId && raw(renderYouTubeDescription(true, videoId, undefined, undefined))}
 
-        {paragraphs && paragraphs.length > 0 && (
+        {transcriptHtml && (
             <>
                 <p>
                     <strong>Text zprávy:</strong>
                 </p>
-                {paragraphs.map((p) => raw(`<p>${p}</p>`))}
+                {raw(transcriptHtml)}
             </>
         )}
 

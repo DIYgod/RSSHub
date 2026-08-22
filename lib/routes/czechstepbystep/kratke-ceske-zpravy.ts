@@ -71,7 +71,8 @@ async function handler(ctx): Promise<Data> {
 
                 // 1. Video ID
                 let videoId: string | undefined;
-                const iframeSrc = $detail('.entry-text iframe[src*="youtube.com"], .entry-text iframe[src*="youtu.be"]').attr('src');
+                const iframeEl = $detail('.entry-text iframe[src*="youtube.com"], .entry-text iframe[src*="youtu.be"], .entry-text iframe[data-src*="youtube.com"], .entry-text iframe[data-src*="youtu.be"]');
+                const iframeSrc = iframeEl.attr('data-src') || iframeEl.attr('src');
                 if (iframeSrc) {
                     const match = iframeSrc.match(/(?:embed\/|v=)([^?&]+)/);
                     if (match) {
@@ -88,34 +89,31 @@ async function handler(ctx): Promise<Data> {
                     }
                 }
 
-                // 2. Full transcript paragraphs
-                const paragraphs: string[] = [];
-                let isTranscript = false;
-
-                $detail('.entry-text p').each((_, p) => {
-                    const txt = $detail(p).text().trim();
-                    if (txt.includes('Text zprávy:')) {
-                        isTranscript = true;
-                        return;
-                    }
-                    if (isTranscript) {
-                        if (
-                            txt.includes('Online cvičení') ||
-                            txt.includes('Pracovní list') ||
-                            txt.includes('Krátké české zprávy můžete sledovat') ||
-                            txt.includes('Toto dílo podléhá licenci')
-                        ) {
-                            isTranscript = false;
-                            return;
+                // 2. Full transcript HTML
+                let transcriptHtml: string | undefined;
+                const allParagraphs = $detail('.entry-text p');
+                const startIdx = allParagraphs.toArray().findIndex((p) => $detail(p).text().includes('Text zprávy:'));
+                if (startIdx !== -1) {
+                    const endIdx = allParagraphs.toArray().findIndex((p, i) => {
+                        if (i <= startIdx) {
+                            return false;
                         }
-                        if (txt) {
-                            paragraphs.push($detail(p).html()?.trim() || txt);
-                        }
+                        const txt = $detail(p).text();
+                        return txt.includes('Online cvičení') || txt.includes('Pracovní list') || txt.includes('Krátké české zprávy můžete sledovat') || txt.includes('Toto dílo podléhá licenci');
+                    });
+                    const slice = allParagraphs.slice(startIdx + 1, endIdx === -1 ? undefined : endIdx);
+                    const paragraphsHtml = slice
+                        .toArray()
+                        .filter((p) => $detail(p).text().trim())
+                        .map((p) => $detail(p).toString())
+                        .join('');
+                    if (paragraphsHtml) {
+                        transcriptHtml = paragraphsHtml;
                     }
-                });
+                }
 
                 // 3. Online exercise link
-                const exerciseEl = $detail('.entry-text a[href*="wordwall.net"]').first();
+                const exerciseEl = $detail('.entry-text a[href*="wordwall.net"]');
                 const exerciseHref = exerciseEl.attr('href');
 
                 // 4. Worksheet link & enclosure
@@ -124,7 +122,7 @@ async function handler(ctx): Promise<Data> {
                 let enclosureUrl: string | undefined;
                 let enclosureType: string | undefined;
 
-                const worksheetEl = $detail('.entry-text a[href*="uploads"]').first();
+                const worksheetEl = $detail('.entry-text a[href*="uploads"]');
                 const wsHref = worksheetEl.attr('href');
                 if (wsHref && (wsHref.includes('PL_') || wsHref.endsWith('.docx') || wsHref.endsWith('.pdf'))) {
                     worksheetHref = wsHref;
@@ -142,7 +140,7 @@ async function handler(ctx): Promise<Data> {
 
                 const description = renderDescription({
                     videoId,
-                    paragraphs,
+                    transcriptHtml,
                     exerciseHref,
                     worksheetHref,
                     worksheetExt,
