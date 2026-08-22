@@ -1,11 +1,11 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
 
 import { renderDescription } from './templates/description';
+import { extractArticleInfo, fetchArticleDetail } from './utils';
 
 export const route: Route = {
     path: ['/main', '/'],
@@ -13,6 +13,7 @@ export const route: Route = {
     example: '/futunn/main',
     features: {
         supportRadar: true,
+        requirePuppeteer: true,
     },
     radar: [
         {
@@ -48,37 +49,26 @@ async function handler(ctx) {
         }),
     }));
 
+    const context = await playwright();
+
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 if (/news\.futunn\.com/.test(item.link)) {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
+                    const content = await fetchArticleDetail(context, item.link);
 
-                    const content = load(detailResponse.data);
+                    const { description, category } = extractArticleInfo(content);
 
-                    content('.futu-news-time-stamp').remove();
-                    content('.nnstock').each((_, el) => {
-                        content(el).replaceWith(`<a href="${content(el).attr('href')}">${content(el).text().replaceAll('$', '')}</a>`);
-                    });
-
-                    item.description = content('.origin_content').html();
-                    item.category = [
-                        ...content('.news__from-topic__title')
-                            .toArray()
-                            .map((a) => content(a).text().trim()),
-                        ...content('#relatedStockWeb .stock-name')
-                            .toArray()
-                            .map((s) => content(s).text().trim()),
-                    ];
+                    item.description = description;
+                    item.category = category;
                 }
 
                 return item;
             })
         )
     );
+
+    await context.close();
 
     return {
         title: '富途牛牛 - 要闻',
