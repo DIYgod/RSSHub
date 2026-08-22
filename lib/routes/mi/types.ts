@@ -11,8 +11,10 @@ export interface CrowdfundingList {
 }
 
 export interface CrowdfundingItem {
-    project_id: number;
+    img_url: string;
     product_market_price: string;
+    product_name: string;
+    project_id: number;
 }
 
 export interface CrowdfundingDetailData {
@@ -22,25 +24,27 @@ export interface CrowdfundingDetailData {
 export interface CrowdfundingDetailInfo {
     big_image: string;
     end_time: number;
-    end_time_desc: string; // injected
     price: string;
-    product_market_price: string; // injected
     project_desc: string;
     project_id: number;
-    project_name: string;
     send_info: string;
     start_time: number;
-    start_time_desc: string; // injected
     support_list: CrowdfundingDetailSupportList[];
 }
 
 export interface CrowdfundingDetailSupportList {
+    goods_list: CrowdfundingGoods[];
     name: string;
     price: string;
     support_desc: string;
 }
 
+export interface CrowdfundingGoods {
+    goods_image: string;
+}
+
 export interface NewProductListData {
+    date_list: NewProductDateGroup[];
     history_date_list: NewProductDateGroup[];
     new_list: NewProductItem[];
 }
@@ -72,6 +76,7 @@ export interface NewProductDetail {
 }
 
 export interface NewProductGoods {
+    imgUrl: string;
     marketPrice: string;
     name: string;
     price: string;

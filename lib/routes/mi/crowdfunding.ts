@@ -1,7 +1,8 @@
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingDetailInfo, CrowdfundingList } from './types';
+import type { CrowdfundingDetailInfo, CrowdfundingItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -29,17 +30,18 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: CrowdfundingList[]) => {
-    const result: Array<Promise<CrowdfundingDetailInfo>> = list.flatMap((section) => section.items.map((item) => utils.getCrowdfundingItem(item)));
-    return await Promise.all(result);
+const getDetails = async (list: Map<number, CrowdfundingItem>): Promise<Map<number, CrowdfundingDetailInfo>> => {
+    const details = await Promise.all(list.values().map((item) => utils.getCrowdfundingItem(item)));
+    return new Map(details.map((detail) => [detail.project_id, detail]));
 };
 
-const getDataItem = (item: CrowdfundingDetailInfo) =>
+const getDataItem = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo) =>
     ({
-        title: item.project_name,
-        description: utils.renderCrowdfunding(item),
-        link: `https://m.mi.com/crowdfunding/proddetail/${item.project_id}`,
-        image: item.big_image,
+        title: listItem.product_name,
+        description: utils.renderCrowdfunding(listItem, detail),
+        link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
+        image: listItem.img_url,
+        pubDate: parseDate(detail.start_time, 'X'),
         language: 'zh-CN',
     }) as DataItem;
 
@@ -47,13 +49,22 @@ async function handler() {
     const list = await utils.getCrowdfundingList();
     const details = await getDetails(list);
 
-    const items: DataItem[] = details.map((item) => getDataItem(item));
+    const items: DataItem[] = list
+        .values()
+        .toArray()
+        .toSorted((a, b) => b.project_id - a.project_id)
+        .map((item) => {
+            const detail = details.get(item.project_id);
+            if (!detail) {
+                throw new Error(`Details not found for project ${item.project_id}`);
+            }
+            return getDataItem(item, detail);
+        });
 
     return {
         title: '小米众筹',
         link: 'https://m.mi.com/crowdfunding/home',
         item: items,
-        allowEmpty: true,
         image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
         language: 'zh-CN',
     } as Data;
