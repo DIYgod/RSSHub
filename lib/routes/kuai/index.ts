@@ -55,7 +55,7 @@ export const route: Route = {
         },
     ],
     name: '首页更新 / 具体栏目更新',
-    maintainers: ['xfangbao'],
+    maintainers: ['salviox'],
     handler,
     url: 'www.kuai.media',
 };

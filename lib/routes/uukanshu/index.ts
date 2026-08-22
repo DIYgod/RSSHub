@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/uukanshu/18893',
     parameters: { uid: '小说 id, 可在对应小说页 URL 中找到' },
     name: '小说更新',
-    maintainers: ['bott0n', 'jacky2001114'],
+    maintainers: ['bott0n'],
     handler,
 };
 

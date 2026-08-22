@@ -19,7 +19,7 @@ export const route: Route = {
         { title: '人物风采', source: ['news.hbut.edu.cn/rwfc.htm'], target: '/news/rwfc' },
     ],
     name: '新闻中心',
-    maintainers: ['Lava-Swimmer'],
+    maintainers: ['LandonLi'],
     handler,
     description: `| 通知公告 | 学校新闻 | 菁菁校园 | 媒体聚焦 | 人物风采 |
 | -------- | -------- | -------- | -------- | -------- |

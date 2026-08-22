@@ -22,7 +22,7 @@ export const route: Route = {
         { title: '党建活动', source: ['scs.hbut.edu.cn/djhd/djhd.htm'], target: '/scs/djhd' },
     ],
     name: '计算机科学与人工智能学院',
-    maintainers: ['Lava-Swimmer'],
+    maintainers: ['LandonLi'],
     handler,
     description: `| 新闻动态 | 通知公告 | 教学信息 | 科研动态 | 党建活动 |
 | -------- | -------- | -------- | -------- | -------- |
