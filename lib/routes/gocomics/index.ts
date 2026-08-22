@@ -58,7 +58,7 @@ async function handler(ctx: Context) {
 
     while (items.length < limit && previous) {
         const link = `${baseUrl}${previous}`;
-        // eslint-disable-next-line no-await-in-loop
+        // oxlint-disable-next-line no-await-in-loop
         const page = (await cache.tryGet(link, async () => {
             const detailResponse = await ofetch(link);
             const $ = load(detailResponse);

@@ -17,21 +17,22 @@ export const route: Route = {
     description: 'For example: `https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894`, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.',
 };
 
+const dP = (html: string, lang: string) => {
+    if (lang === 'zh-cn' || lang === 'zh-hant') {
+        return parseDate(html, 'DD MMMM YYYY HH:mm:ss', lang);
+    }
+    if (lang === 'en') {
+        return parseDate(html, 'DD MMM YYYY HH:mm:ss');
+    }
+    return html;
+};
+
 const domain = 'https://www.webtoons.com';
 
 async function handler(ctx: Context) {
     const { lang, category, name, id } = ctx.req.param();
     const comicLink = `${domain}/${lang}/${category}/${name}/list?title_no=${id}`;
     const rssLink = `${domain}/${lang}/${category}/${name}/rss?title_no=${id}`;
-    const dP = (html: string, lang: string) => {
-        if (lang === 'zh-cn' || lang === 'zh-hant') {
-            return parseDate(html, 'DD MMMM YYYY HH:mm:ss', lang);
-        }
-        if (lang === 'en') {
-            return parseDate(html, 'DD MMM YYYY HH:mm:ss');
-        }
-        return html;
-    };
 
     let rss;
     try {
