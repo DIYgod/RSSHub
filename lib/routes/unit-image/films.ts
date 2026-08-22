@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { renderDescription } from '@/routes/youtube/utils';
+import { renderYoutube } from '@/routes/youtube/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                 const content = $('main');
                 content.find('style, noscript, input').remove();
                 content.find('.youtube-player').each((_, el) => {
-                    $(el).replaceWith(renderDescription(true, $(el).attr('data-id'), undefined, undefined));
+                    $(el).replaceWith(renderYoutube(true, $(el).attr('data-id'), undefined, undefined));
                 });
                 content.find('.comparison-img').each((_, el) => {
                     const image = $(el)
