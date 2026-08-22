@@ -53,7 +53,7 @@ async function handler() {
 
     const list = lists
         .flat()
-        .sort((a, b) => parseDate(b.updated).valueOf() - parseDate(a.updated).valueOf())
+        .toSorted((a, b) => parseDate(b.updated).valueOf() - parseDate(a.updated).valueOf())
         .slice(0, 20);
 
     const items = await Promise.all(

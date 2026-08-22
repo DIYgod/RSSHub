@@ -52,8 +52,7 @@ async function handler(ctx: Context) {
                     .contents()
                     .filter((_, node) => node.nodeType === 3)
                     .text()
-                    .replace(']', '')
-                    .replace('[', '');
+                    .replaceAll(/[[\]]/g, '');
 
                 return {
                     title: imgdesc.find('.imgtitle').text(),

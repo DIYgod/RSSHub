@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
     const result = timeline.map((item) => {
         let imgHTML = '';
         if (item.photo) {
-            imgHTML = `<br/><img src="${item.photo.largeurl.replace(/@.[^\n\r.\u2028\u2029]*\..+$/, '')}" alt="饭否动态图片"/>`;
+            imgHTML = `<br/><img src="${item.photo.largeurl.replace(/@.[^\n\r.\u{2028}\u{2029}]*\..+$/u, '')}" alt="饭否动态图片"/>`;
         }
         return {
             title: getPlainText(getEntities(item.text)),

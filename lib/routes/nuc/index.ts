@@ -64,7 +64,8 @@ async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const typeConfig = config[type] ?? config.other;
 
-    const response = await ofetch(`${typeConfig.basePath}index/${type}.htm`);
+    const pageUrl = `${typeConfig.basePath}index/${type}.htm`;
+    const response = await ofetch(pageUrl);
     const $ = load(response);
 
     const items = await Promise.all(
@@ -72,9 +73,7 @@ async function handler(ctx: Context) {
             .toArray()
             .map((item) => {
                 const $li = load(item);
-                const articleUrl = $li('a')
-                    .attr('href')!
-                    .replace(/\.\./, () => typeConfig.basePath);
+                const articleUrl = new URL($li('a').attr('href')!, pageUrl).href;
 
                 return cache.tryGet(articleUrl, async () => {
                     const response = await ofetch(articleUrl);

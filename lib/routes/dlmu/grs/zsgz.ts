@@ -33,7 +33,7 @@ async function handler(ctx: Context) {
             const a = $item.find('a');
             return {
                 title: a.text(),
-                link: 'http://grs.dlmu.edu.cn/' + a.attr('href')!.replace('..', ''),
+                link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
         }) as DataItem[];

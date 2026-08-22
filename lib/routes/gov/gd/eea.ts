@@ -60,7 +60,7 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (item.link!.includes('weixin.qq.com')) {
+                if (item.link!.startsWith('https://mp.weixin.qq.com/')) {
                     return item;
                 }
                 const detailResponse = await ofetch(item.link!);

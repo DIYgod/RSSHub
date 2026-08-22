@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { namespace, project, host = 'gitlab.com' } = ctx.req.param();
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.includes(host)) {
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowHost.includes(new URL(`https://${host}/`).hostname)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
