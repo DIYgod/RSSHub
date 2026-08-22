@@ -1,18 +1,24 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
-function getKeysRecursive(dic, key, attr, array) {
-    for (const v of Object.values<Record<string, any>>(dic)) {
-        if (v[key] === undefined) {
+interface ChannelNode {
+    children?: Record<string, ChannelNode>;
+    domain_name: string;
+    node: string;
+}
+
+function getKeysRecursive(dic: Record<string, ChannelNode>, attr: 'domain_name' | 'node', array: string[]) {
+    for (const v of Object.values(dic)) {
+        if (v.children === undefined) {
             array.push(v[attr]);
         } else {
-            getKeysRecursive(v[key], key, attr, array);
+            getKeysRecursive(v.children, attr, array);
         }
     }
     return array;
@@ -58,9 +64,9 @@ async function handler(ctx) {
         url: `${host}/api/channel_pc`,
     });
 
-    const name = getKeysRecursive(resp.data.children, 'children', 'domain_name', [])[0];
+    const name = getKeysRecursive(resp.data.children, 'domain_name', [])[0];
 
-    const nodes = getKeysRecursive(resp.data.children, 'children', 'node', [])
+    const nodes = getKeysRecursive(resp.data.children, 'node', [])
         .map((x) => `"${x}"`)
         .join(',');
     const req = await got({
@@ -98,7 +104,7 @@ async function handler(ctx) {
         title: `${name} - 环球网`,
         link: host,
         description: '环球网',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         item: items,
     };
 }

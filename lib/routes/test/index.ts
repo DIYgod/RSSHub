@@ -10,6 +10,8 @@ import { fetchArticle } from '@/utils/wechat-mp';
 
 let cacheIndex = 0;
 
+const illegalValue = <T>(value: URL | null = null): T => value as T;
+
 export const route: Route = {
     path: '/:id/:params?',
     example: '/test/1',
@@ -80,7 +82,7 @@ async function handler(ctx) {
                 pubDate: new Date('2019-3-1').toUTCString(),
                 link: 'https://github.com/DIYgod/RSSHub/issues/1',
                 author: 'DIYgod0',
-                category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }] as unknown as string[],
+                category: [1, 'CategoryIllegal', true, null, undefined, { type: 'object' }] as string[],
             });
 
             break;
@@ -134,7 +136,8 @@ async function handler(ctx) {
             break;
         }
         case 'cacheUrlKey': {
-            const description = await cache.tryGet<{ text: string }>(new URL('https://rsshub.app') as unknown as string, () => Promise.resolve({ text: `Cache${++cacheIndex}` }), config.cache.routeExpire * 2);
+            const urlCacheKey = illegalValue<string>(new URL('https://rsshub.app'));
+            const description = await cache.tryGet<{ text: string }>(urlCacheKey, () => Promise.resolve({ text: `Cache${++cacheIndex}` }), config.cache.routeExpire * 2);
             item.push({
                 title: 'Cache Title',
                 description: description.text,
@@ -332,7 +335,7 @@ async function handler(ctx) {
                     title: 'Title4 author is null',
                     pubDate: new Date('2019-3-1').toUTCString(),
                     link: 'https://github.com/DIYgod/RSSHub/pull/11555',
-                    author: null as unknown as DataItem['author'],
+                    author: illegalValue<DataItem['author']>(),
                 }
             );
 
@@ -363,11 +366,11 @@ async function handler(ctx) {
     }
 
     if (ctx.req.param('id') === 'empty') {
-        item = null as unknown as DataItem[];
+        item = illegalValue<DataItem[]>();
     }
 
     if (ctx.req.param('id') === 'allow_empty') {
-        item = null as unknown as DataItem[];
+        item = illegalValue<DataItem[]>();
     }
 
     if (ctx.req.param('id') === 'enclosure') {
@@ -411,7 +414,7 @@ async function handler(ctx) {
     return {
         image: image ?? undefined,
         title: `Test ${ctx.req.param('id')}`,
-        itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : (null as unknown as string),
+        itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : illegalValue<string>(),
         link: 'https://github.com/DIYgod/RSSHub',
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',

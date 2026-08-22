@@ -31,13 +31,13 @@ async function handler(ctx: Context): Promise<Data> {
 
     const list = $('li a[target="_blank"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, currentUrl).href,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

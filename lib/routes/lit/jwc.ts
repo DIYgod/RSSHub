@@ -22,7 +22,7 @@ async function handler(): Promise<Data> {
 
     const $ = load(response);
 
-    const list = $('.news-content')
+    const list: DataItem[] = $('.news-content')
         .toArray()
         .map((item) => {
             const a = $(item).find('a');
@@ -30,7 +30,7 @@ async function handler(): Promise<Data> {
                 title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -54,6 +54,6 @@ async function handler(): Promise<Data> {
         title: '教务处 - 洛阳理工学院',
         link: baseUrl,
         description: '洛阳理工教务在线 RSS',
-        item: items as DataItem[],
+        item: items,
     };
 }

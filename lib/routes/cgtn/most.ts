@@ -28,14 +28,14 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $(`#${time}Items div.most-read-item-box div.cg-title`)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const a = $(item).find('a');
             return {
                 title: a.text(),
                 link: a.attr('href'),
                 pubDate: parseDate(Number.parseInt(a.attr('data-time')!)),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -53,6 +53,6 @@ async function handler(ctx: Context) {
     return {
         title: `CGTN - Most ${type}`,
         link: rootUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

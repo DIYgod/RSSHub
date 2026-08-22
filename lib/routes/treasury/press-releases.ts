@@ -33,13 +33,13 @@ async function handler(ctx: Context) {
     const list = $('.featured-stories__headline a')
         .toArray()
         .slice(0, 10)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -58,6 +58,6 @@ async function handler(ctx: Context) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

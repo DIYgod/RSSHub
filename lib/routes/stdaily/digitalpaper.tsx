@@ -33,7 +33,7 @@ export const route: Route = {
     ],
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const dateListResponse = await ofetch<DateListResponse>(`${API_HOST}/uv/article/period/date`, {
         method: 'POST',
         body: {
@@ -70,7 +70,7 @@ async function handler() {
                 return await Promise.all(
                     list.map(
                         async (article) =>
-                            await cache.tryGet(`stddaily:epaper:article:${article.id}`, async () => {
+                            await cache.tryGet(`stddaily:epaper:article:${article.id}`, async (): Promise<DataItem> => {
                                 const {
                                     obj: { articleVo },
                                 } = await ofetch<ArticleDetailResponse>(`${API_HOST}/uv/article/article/articleId`, {
@@ -102,7 +102,7 @@ async function handler() {
                                     pubDate: timezone(parseDate(articleVo.periodTime), 8),
                                     author: articleVo.author,
                                     link: `https://epaper.stdaily.com/statics/technology-site/index.html#/home?isDetail=1&currentNewsId=${article.id}&currentVersionName=${articleVo.editionName}&currentVersion=${Number(section.editionCode)}&timeValue=${articleVo.periodTime}`,
-                                } as DataItem;
+                                };
                             })
                     )
                 );
@@ -115,5 +115,5 @@ async function handler() {
         link: 'https://epaper.stdaily.com',
         item: items.flat(),
         image: 'https://www.stdaily.com/favicon.ico',
-    } as Data;
+    };
 }

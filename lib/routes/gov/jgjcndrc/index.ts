@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
 
     const $ = load(currentResponse);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     const { data: response } = await got(apiColumnUrl, {
         searchParams: {
@@ -36,7 +36,7 @@ export const handler = async (ctx) => {
             link: new URL(`prod-api/portal/article/${item.articleId}`, rootUrl).href,
             guid,
             id: guid,
-            language: language as Language,
+            language,
         };
     });
 
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('header h1').text(),
-        language: language as Language,
+        language,
     };
 };
 

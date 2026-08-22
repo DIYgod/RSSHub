@@ -1,14 +1,22 @@
-import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 
+interface NodeAttrs {
+    href?: string;
+    level?: number;
+    src?: string;
+    alt?: string;
+}
+
 interface ContentNode {
     type: string;
-    attrs?: Record<string, unknown>;
+    attrs?: NodeAttrs;
     content?: ContentNode[];
     text?: string;
-    marks?: Array<{ type: string; attrs?: Record<string, unknown> }>;
+    marks?: Array<{ type: string; attrs?: NodeAttrs }>;
 }
+
+const headingTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
 const TextNode = ({ node }: { node: ContentNode }) => {
     let content: JSX.Element | string = node.text ?? '';
@@ -47,7 +55,7 @@ const ContentNode = ({ node }: { node: ContentNode }) => {
             return <br />;
         case 'heading': {
             const level = Math.min(6, Math.max(1, Number(node.attrs?.level) || 3));
-            const Tag = `h${level}` as unknown as FC;
+            const Tag = headingTags[level - 1];
             return (
                 <Tag>
                     {node.content?.map((child, index) => (
@@ -99,6 +107,6 @@ export const renderContentJson = (jsonString?: string | null): string => {
     if (!jsonString) {
         return '';
     }
-    const doc = JSON.parse(jsonString) as ContentNode;
+    const doc: ContentNode = JSON.parse(jsonString);
     return renderToString(<ContentNode node={doc} />);
 };

@@ -113,35 +113,35 @@ export const ProcessFeed = (list) =>
 
 export const getCategoryBrief = () =>
     cache.tryGet('juejin:categoryBriefs', async () => {
-        const response = await ofetch('https://api.juejin.cn/tag_api/v1/query_category_briefs');
+        const response = await ofetch<{ data: Category[] }>('https://api.juejin.cn/tag_api/v1/query_category_briefs');
         return response.data;
-    }) as Promise<Category[]>;
+    });
 
 export const getCollection = (collectionId) =>
     cache.tryGet(`juejin:collectionId:${collectionId}`, async () => {
-        const response = await ofetch('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
+        const response = await ofetch<{ data: Collection }>('https://api.juejin.cn/interact_api/v1/collectionSet/get', {
             query: {
                 tag_id: collectionId,
                 cursor: 0,
             },
         });
         return response.data;
-    }) as Promise<Collection>;
+    });
 
 export const getTag = (tag) =>
     cache.tryGet(`juejin:tag:${tag}`, async () => {
-        const response = await ofetch('https://api.juejin.cn/tag_api/v1/query_tag_detail', {
+        const response = await ofetch<{ data: { tag_id: string; tag: Tag } }>('https://api.juejin.cn/tag_api/v1/query_tag_detail', {
             method: 'POST',
             body: {
                 key_word: tag,
             },
         });
         return response.data;
-    }) as Promise<{ tag_id: string; tag: Tag }>;
+    });
 
 export const getTagList = () =>
     cache.tryGet('juejin:tagList', async () => {
-        const response = await ofetch('https://api.juejin.cn/tag_api/v1/query_tag_list', {
+        const response = await ofetch<{ data: Array<{ tag_id: string; tag: Tag }> }>('https://api.juejin.cn/tag_api/v1/query_tag_list', {
             method: 'POST',
             body: {
                 key_word: '',
@@ -153,4 +153,4 @@ export const getTagList = () =>
             },
         });
         return response.data;
-    }) as Promise<Array<{ tag_id: string; tag: Tag }>>;
+    });

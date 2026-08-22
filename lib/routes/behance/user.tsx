@@ -41,8 +41,8 @@ export const route: Route = {
     description: `Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be \`mishapetrick\`。`,
 };
 
-const getUserProfile = async (nodes, user) =>
-    (await cache.tryGet(`behance:profile:${user}`, () => {
+const getUserProfile = (nodes, user) =>
+    cache.tryGet<{ displayName: string; id: string; link: string; image: string }>(`behance:profile:${user}`, () => {
         const profile = nodes.flatMap((item) => item.owners).find((owner) => owner.username === user);
 
         return Promise.resolve({
@@ -51,7 +51,7 @@ const getUserProfile = async (nodes, user) =>
             link: profile.url,
             image: profile.images.size_50.url.replace('/user/50/', '/user/source/'),
         });
-    })) as { displayName: string; id: string; link: string; image: string };
+    });
 
 const renderDescription = (description, modules) =>
     renderToString(

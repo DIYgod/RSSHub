@@ -31,7 +31,7 @@ async function handler(ctx: Context) {
     const list = $('.BlogTitle')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const link = $item.attr('href')!;
             const split = link.split('/');
@@ -41,7 +41,7 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 pubDate: parseDate(`${split[5]}-${split[6]}-${split[7]}`),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

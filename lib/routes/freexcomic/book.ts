@@ -23,7 +23,7 @@ const getLatestAddress = () =>
 const handler = async (ctx) => {
     const { id } = ctx.req.param();
     const limit = Number(ctx.req.query('limit')) || 10;
-    const addresses = (await getLatestAddress()) as string[];
+    const addresses = await getLatestAddress();
     const link = `${addresses[0]}book/${id}`;
 
     const response = await ofetch(link);

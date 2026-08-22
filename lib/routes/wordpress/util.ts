@@ -10,11 +10,11 @@ interface Filter {
     slug: string;
 }
 
-const filterKeys: Record<string, string> = {
+const filterKeys = {
     search: 's',
 };
 
-const filterApiKeys: Record<string, string | undefined> = {
+const filterApiKeys = {
     category: 'categories',
     tag: 'tags',
     search: undefined,

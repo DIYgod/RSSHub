@@ -1,69 +1,46 @@
+import { Context } from 'hono';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 afterEach(() => {
     vi.resetModules();
     vi.restoreAllMocks();
-    vi.unmock('@/config');
-    vi.unmock('@/utils/helpers');
-    vi.unmock('@/utils/logger');
-    vi.unmock('@honeybadger-io/js');
+    delete process.env.HONEYBADGER_API_KEY;
+    delete process.env.ERROR_TRACKING_ROUTE_TIMEOUT;
+    delete process.env.NODE_NAME;
 });
 
 describe('honeybadger middleware', () => {
-    const loadMiddleware = async () => {
-        const honeybadger = {
-            configure: vi.fn(),
-            setContext: vi.fn(),
-            notify: vi.fn(),
-        };
-        const logger = {
-            info: vi.fn(),
-        };
-        const getRouteNameFromPath = vi.fn((path: string) => `route:${path}`);
+    it('initializes honeybadger and captures slow routes', async () => {
+        process.env.HONEYBADGER_API_KEY = 'hbp_test_key';
+        process.env.ERROR_TRACKING_ROUTE_TIMEOUT = '50';
+        process.env.NODE_NAME = 'node-a';
 
-        vi.doMock('@honeybadger-io/js', () => ({
-            default: honeybadger,
-        }));
-        vi.doMock('@/utils/logger', () => ({
-            default: logger,
-        }));
-        vi.doMock('@/utils/helpers', () => ({
-            getRouteNameFromPath,
-        }));
-        vi.doMock('@/config', () => ({
-            config: {
-                honeybadger: {
-                    apiKey: 'hbp_test_key',
-                },
-                errorTrackingRouteTimeout: 50,
-                nodeName: 'node-a',
-            },
-        }));
+        const { default: honeybadger } = await import('@honeybadger-io/js');
+        const configureSpy = vi.spyOn(honeybadger, 'configure').mockReturnValue(honeybadger);
+        const setContextSpy = vi.spyOn(honeybadger, 'setContext').mockReturnValue(honeybadger);
+        const notifySpy = vi.spyOn(honeybadger, 'notify').mockReturnValue(false);
+
+        const { default: logger } = await import('@/utils/logger');
+        const infoSpy = vi.spyOn(logger, 'info');
 
         const { default: middleware } = await import('@/middleware/honeybadger');
 
-        return { middleware, honeybadger, logger, getRouteNameFromPath };
-    };
-
-    it('initializes honeybadger and captures slow routes', async () => {
-        const { middleware, honeybadger, logger, getRouteNameFromPath } = await loadMiddleware();
-
-        expect(honeybadger.configure).toHaveBeenCalledWith({
+        expect(configureSpy).toHaveBeenCalledWith({
             apiKey: 'hbp_test_key',
             enableUncaught: false,
         });
-        expect(honeybadger.setContext).toHaveBeenCalledWith({ node_name: 'node-a' });
-        expect(logger.info).toHaveBeenCalledWith('Honeybadger inited.');
+        expect(setContextSpy).toHaveBeenCalledWith({ node_name: 'node-a' });
+        expect(infoSpy).toHaveBeenCalledWith('Honeybadger inited.');
 
         const nowSpy = vi.spyOn(Date, 'now');
         nowSpy.mockReturnValueOnce(0).mockReturnValueOnce(100);
 
-        await middleware({ req: { path: '/test/slow' } } as any, async () => {});
+        const ctx = new Context(new Request('http://localhost/test/slow'), { env: {}, path: '/test/slow' });
+        await middleware(ctx, () => Promise.resolve());
 
-        expect(getRouteNameFromPath).toHaveBeenCalledWith('/test/slow');
-        expect(honeybadger.notify).toHaveBeenCalledTimes(1);
-        expect(honeybadger.notify).toHaveBeenCalledWith(expect.any(Error), {
-            context: { name: 'route:/test/slow' },
+        expect(notifySpy).toHaveBeenCalledTimes(1);
+        expect(notifySpy).toHaveBeenCalledWith(expect.any(Error), {
+            context: { name: 'test' },
         });
     });
 });

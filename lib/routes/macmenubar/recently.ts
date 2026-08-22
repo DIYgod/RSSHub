@@ -33,15 +33,13 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://macmenubar.com/wp-json/wp/v2/posts';
     const categories = ctx.req.param('category');
-    const searchParams: { per_page: number; categories?: string } = {
-        per_page: 100,
-    };
-    if (categories) {
-        searchParams.categories = await getCategoryId(categories);
-    }
+    const categoryIds = categories ? await getCategoryId(categories) : undefined;
     const response = await got(baseUrl, {
         method: 'GET',
-        searchParams,
+        searchParams: {
+            per_page: 100,
+            categories: categoryIds,
+        },
     });
     const items = response.data.map((post) => {
         const title = post.title.rendered;

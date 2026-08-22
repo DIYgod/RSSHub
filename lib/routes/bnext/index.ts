@@ -1,5 +1,3 @@
-import type { Item } from 'rss-parser';
-
 import type { Route } from '@/types';
 import parser from '@/utils/rss-parser';
 
@@ -32,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const feed = await parser.parseURL(FEED_URL);
-    const items = (feed.items as Item[]).map((item) => {
+    const items = feed.items.map((item) => {
         const enclosure = item.enclosure;
         const enclosure_url = enclosure?.url;
         const enclosure_type = enclosure?.type;

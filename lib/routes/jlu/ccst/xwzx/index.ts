@@ -27,7 +27,7 @@ async function handler(ctx: any) {
 
     const list = $('.section.container .main .list3 ul li');
 
-    const titles: { [key: string]: string } = {
+    const titles = {
         gsl: '公示栏',
         xstd: '学生天地',
         xytz: '学院通知',

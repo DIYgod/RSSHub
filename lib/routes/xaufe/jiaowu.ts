@@ -74,7 +74,7 @@ async function handler(ctx) {
         title: `${category.title}-${rootMeta.title}`,
         link: rootMeta.url + category.url,
         description: `${category.title}-${rootMeta.title}`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         item: await Promise.all(
             data.map((item) =>
                 cache.tryGet(item.link!, async () => {

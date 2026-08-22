@@ -1,4 +1,7 @@
+import { http, HttpResponse } from 'msw';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import server from '@/setup.test';
 
 afterEach(() => {
     vi.resetModules();
@@ -116,35 +119,17 @@ describe('config', () => {
     });
 });
 
-const errorSpy = vi.fn();
-const infoSpy = vi.fn();
-const ofetchMock = vi.fn();
-
-const setupRemoteMocks = () => {
-    vi.resetModules();
-    vi.doMock('@/utils/logger', () => ({
-        default: {
-            error: errorSpy,
-            info: infoSpy,
-        },
-    }));
-    vi.doMock('ofetch', () => ({
-        ofetch: ofetchMock,
-    }));
-};
-
 describe('config remote errors', () => {
     afterEach(() => {
-        vi.clearAllMocks();
-        vi.unmock('@/utils/logger');
-        vi.unmock('ofetch');
-        ofetchMock.mockReset();
+        vi.restoreAllMocks();
     });
 
     it('logs when remote config returns empty', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/empty';
-        setupRemoteMocks();
-        ofetchMock.mockResolvedValueOnce(null);
+        server.use(http.get('http://rsshub.test/empty', () => HttpResponse.json(null)));
+        vi.resetModules();
+        const { default: logger } = await import('@/utils/logger');
+        const errorSpy = vi.spyOn(logger, 'error').mockReturnValue(logger);
         await import('@/config');
         await vi.waitFor(() => {
             expect(errorSpy).toHaveBeenCalledWith('Remote config load failed.');
@@ -155,12 +140,13 @@ describe('config remote errors', () => {
 
     it('logs when remote config throws', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/fail';
-        const error = new Error('boom');
-        setupRemoteMocks();
-        ofetchMock.mockRejectedValueOnce(error);
+        server.use(http.get('http://rsshub.test/fail', () => HttpResponse.error()));
+        vi.resetModules();
+        const { default: logger } = await import('@/utils/logger');
+        const errorSpy = vi.spyOn(logger, 'error').mockReturnValue(logger);
         await import('@/config');
         await vi.waitFor(() => {
-            expect(errorSpy).toHaveBeenCalledWith('Remote config load failed.', error);
+            expect(errorSpy).toHaveBeenCalledWith('Remote config load failed.', expect.any(Error));
         });
 
         delete process.env.REMOTE_CONFIG;

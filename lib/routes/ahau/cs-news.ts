@@ -36,7 +36,7 @@ async function handler(ctx: Context) {
 
     const list = $('.txt-list li.flex')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -44,7 +44,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

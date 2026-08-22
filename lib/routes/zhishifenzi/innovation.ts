@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
     const navTitle = $('div.innovation_nav > ul > li.sel').text().split('：').pop();
     const title = navTitle === '' ? '全部創新' : `創新「${navTitle}」`;
 
-    const list = $('div.inner_news_list > ul > li.clearfix')
+    const list: DataItem[] = $('div.inner_news_list > ul > li.clearfix')
         .toArray()
         .slice(0, 4)
         .map((elem) => {
@@ -48,7 +48,7 @@ async function handler(ctx: Context) {
                 pubDate: parseRelativeDate($elem.find('span').first().text()),
                 link: new URL($elem.find('div > h5 > a').attr('href')!, base).href,
             };
-        }) as DataItem[];
+        });
 
     const out = await Promise.all(
         list.map((item) =>

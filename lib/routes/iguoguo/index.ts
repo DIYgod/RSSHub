@@ -93,7 +93,7 @@ async function handler(ctx: Context) {
         title: '爱果果',
         link: currentUrl,
         description: '爱果果iguoguo是一个优秀酷站、h5、UI素材资源的发布分享平台，是设计师的灵感聚合地和素材下载源。',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         item: items,
     };
 }

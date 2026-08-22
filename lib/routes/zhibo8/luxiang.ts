@@ -43,8 +43,9 @@ async function handler(ctx) {
                 .toArray()
                 .map((item) => {
                     const href = $(item).attr('href');
+                    const timeText = item.previousSibling as Text;
                     return {
-                        title: `${(item.previousSibling as Text).data.replace(' | ', '')} ${$(item).text()}`,
+                        title: `${timeText.data.replace(' | ', '')} ${$(item).text()}`,
                         link: `${rootUrl}${href}`,
                         pubDate: timezone(parseDate(`${href!.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日'), 8),
                     };

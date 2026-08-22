@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -110,11 +110,12 @@ async function handler(ctx) {
                 category,
             };
         })
-        .filter((item) => item && item.title && item.pubDate);
+        .filter((item) => item !== null)
+        .filter((item) => Boolean(item.title) && Boolean(item.pubDate));
 
     return {
         title: `${baseTitle} - ${info.title}`,
         link,
-        item: list as DataItem[],
+        item: list,
     };
 }

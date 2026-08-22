@@ -13,7 +13,7 @@ import { renderEshopCnDescription } from './templates/eshop-cn';
 dayjs.extend(localizedFormat);
 
 function nuxtReader(data) {
-    let nuxt: Record<string, unknown>;
+    let nuxt;
     try {
         const dom = new JSDOM(data, {
             runScripts: 'dangerously',

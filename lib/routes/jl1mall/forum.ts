@@ -6,29 +6,35 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+type Racer = {
+    mainId?: string;
+    name?: string;
+    nextList?: Racer[];
+};
+
 type MainIdsResult = {
     name: string | undefined;
     racer2: string | undefined;
     racer3: string | undefined;
 };
 
-const findMainIds = (data: readonly any[], searchKey: string): MainIdsResult => {
-    const recurse = (currentList: readonly any[], parentMainId: string | undefined = undefined, grandParentMainId: string | undefined = undefined): MainIdsResult => {
+const findMainIds = (data: readonly Racer[], searchKey: string): MainIdsResult => {
+    const recurse = (currentList: readonly Racer[], parentMainId: string | undefined = undefined, grandParentMainId: string | undefined = undefined): MainIdsResult => {
         for (const item of currentList) {
             const isMatch = item.mainId === searchKey || item.name === searchKey;
 
             if (isMatch) {
                 if (grandParentMainId !== undefined) {
                     return {
-                        name: item.name as string,
+                        name: item.name,
                         racer2: grandParentMainId,
-                        racer3: item.mainId as string,
+                        racer3: item.mainId,
                     };
                 }
                 if (parentMainId !== undefined) {
                     return {
-                        name: item.name as string,
-                        racer2: item.mainId as string,
+                        name: item.name,
+                        racer2: item.mainId,
                         racer3: undefined,
                     };
                 }
@@ -37,7 +43,7 @@ const findMainIds = (data: readonly any[], searchKey: string): MainIdsResult => 
             const nextList = item.nextList;
 
             if (Array.isArray(nextList) && nextList.length > 0) {
-                const result = recurse(nextList, item.mainId as string | undefined, parentMainId);
+                const result = recurse(nextList, item.mainId, parentMainId);
 
                 return result;
             }
@@ -62,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const apiUrl: string = new URL(`postApi/${type === 'recommend' ? 'recommend' : 'post'}/getPostData`, baseUrl).href;
     const apiRacerUrl: string = new URL('postApi/racer/getRacerList', baseUrl).href;
 
-    const racerResponse = await ofetch(apiRacerUrl);
+    const racerResponse = await ofetch<{ data: Racer[] }>(apiRacerUrl);
     const racerData = racerResponse.data;
 
     const { name, ...mainIds } = findMainIds(racerData, key);

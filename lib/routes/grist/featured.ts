@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -30,7 +30,7 @@ export const route: Route = {
     url: 'grist.org/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://grist.org/';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
@@ -54,6 +54,6 @@ async function handler() {
         description: 'Featured Articles on Grist.org',
         logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
         icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

@@ -62,7 +62,7 @@ async function getFullcontent(item, cookie = '') {
 async function handler(ctx) {
     const url = 'https://api-media.51cto.com';
     const requestPath = 'index/index/recommend';
-    const token = (await getToken()) as string;
+    const token = await getToken();
     const timestamp = Date.now();
     const params = {
         page: 1,

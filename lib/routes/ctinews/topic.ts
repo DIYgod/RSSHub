@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -32,7 +32,7 @@ export const route: Route = {
     url: 'ctinews.com',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { topic = 'KDdek5vgXx' } = ctx.req.param();
     const baseUrl = 'https://www.ctinews.com';
     const link = `${baseUrl}/news/topics/${topic}`;
@@ -45,33 +45,36 @@ async function handler(ctx) {
             .toArray()
             .map((item) => {
                 const $item = $(item);
+                const href = $item.attr('href');
                 return {
                     title: $item.attr('title')!,
-                    link: $item.attr('href')?.startsWith('http') ? $item.attr('href') : baseUrl + $item.attr('href'),
+                    link: href?.startsWith('http') ? href : baseUrl + href,
                 };
             }),
         ...$('.second-section .news-link')
             .toArray()
             .map((item) => {
                 const $item = $(item);
+                const href = $item.attr('href');
                 return {
                     title: $item.attr('title')!,
-                    link: $item.attr('href')?.startsWith('http') ? $item.attr('href') : baseUrl + $item.attr('href'),
+                    link: href?.startsWith('http') ? href : baseUrl + href,
                 };
             }),
         ...$('.news-section .news-link.absolute')
             .toArray()
             .map((item) => {
                 const $item = $(item);
+                const href = $item.attr('href');
                 return {
                     title: $item.attr('title')?.replace('點擊觀看', '') as string,
-                    link: $item.attr('href')?.startsWith('http') ? $item.attr('href') : baseUrl + $item.attr('href'),
+                    link: href?.startsWith('http') ? href : baseUrl + href,
                 };
             }),
     ];
 
     const seen = new Set<string>();
-    const dedupedList: Array<Partial<DataItem>> = [];
+    const dedupedList: Array<DataItem & { link: string }> = [];
     for (const item of list) {
         const link = item.link || '';
         if (seen.has(link)) {
@@ -83,8 +86,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         dedupedList.map((item) =>
-            cache.tryGet(item.link as string, async () => {
-                const response = await ofetch(item.link as string);
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
                 if (item.link?.includes('/videos/')) {
                     const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("VideoObject")').text());
@@ -118,7 +121,7 @@ async function handler(ctx) {
         description: $('meta[name="description"]').attr('content'),
         link,
         image: `${baseUrl}/favicon.ico`,
-        language: 'zh-TW' as Language,
-        item: items as DataItem[],
+        language: 'zh-TW',
+        item: items,
     };
 }

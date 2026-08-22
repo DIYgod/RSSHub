@@ -41,7 +41,7 @@ export const route: Route = {
     handler,
 };
 
-const CATEGORY_CONFIG: Record<string, { url: (keyword: string) => string; templateIds: string[] }> = {
+const CATEGORY_CONFIG = {
     all: {
         url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m.all&where=m&sm=mtb_opt&query=${encodeURIComponent(keyword)}&nso=so%3Add&nso_open=1`,
         templateIds: ['webItem', 'ugcItem', 'newsItem', 'videoItem'],
@@ -62,9 +62,9 @@ const CATEGORY_CONFIG: Record<string, { url: (keyword: string) => string; templa
         url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m_video.all&where=m_video&sm=mtb_jum&query=${encodeURIComponent(keyword)}&nso=so%3Add`,
         templateIds: ['videoItem'],
     },
-};
+} satisfies Record<string, { url: (keyword: string) => string; templateIds: string[] }>;
 
-const CATEGORY_NAMES: Record<string, string> = {
+const CATEGORY_NAMES = {
     all: '통합검색',
     blog: '블로그',
     cafe: '카페',
@@ -90,12 +90,12 @@ async function handler(ctx) {
     };
 }
 
-function extractItems(response: string, templateId: string) {
+function extractItems(response: string, templateId: string): DataItem[] {
     const segments = response.split(`"templateId":"${templateId}"`);
     return segments
         .slice(0, -1)
         .map((segment) => (templateId === 'videoItem' ? extractVideoItem(segment) : extractGenericItem(segment, templateId)))
-        .filter(Boolean) as DataItem[];
+        .filter((item) => item !== null);
 }
 
 function extractVideoItem(segment: string) {

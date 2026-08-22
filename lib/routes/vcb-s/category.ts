@@ -43,19 +43,12 @@ async function handler(ctx) {
     const cateUrl = `${cateAPIUrl}?slug=${cate}`;
     const category = await cache.tryGet(cateUrl, async () => {
         const res = await got.get(cateUrl);
-
-        if (typeof res.data === 'string') {
-            res.data = JSON.parse(res.body.trim());
-        }
-        return res.data[0];
+        return JSON.parse(res.body.trim())[0];
     });
 
     const url = `${postsAPIUrl}?categories=${category.id}&page=1&per_page=${limit}&_embed`;
     const response = await got.get(url);
-    if (typeof response.data === 'string') {
-        response.data = JSON.parse(response.body.trim());
-    }
-    const data = response.data;
+    const data = JSON.parse(response.body.trim());
 
     const items = data.map((item) => {
         const description = renderDescription({

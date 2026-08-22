@@ -4,13 +4,13 @@ import { parseDate } from '@/utils/parse-date';
 
 type Mapping = Record<string, string>;
 
-const JP: Mapping = {
+const JP = {
     '0': 'すべて',
     '1': 'お知らせ',
     '2': 'イベント',
     '3': 'メインテナンス',
     '4': '重要',
-};
+} satisfies Mapping;
 
 const mkTable = (mapping: Mapping): string => {
     const heading: string[] = [];

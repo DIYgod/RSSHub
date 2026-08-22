@@ -72,7 +72,7 @@ export const route: Route = {
         return {
             title: `${typeName} - 国家市场监督管理总局`,
             link: url,
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

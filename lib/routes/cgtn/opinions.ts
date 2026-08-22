@@ -25,14 +25,14 @@ async function handler() {
     const list = $('.cg-title h3')
         .toArray()
         .slice(0, 15)
-        .map((item) => {
+        .map((item): DataItem => {
             const a = $(item).find('a');
             return {
                 title: a.text(),
                 link: a.attr('href'),
                 pubDate: parseDate(Number.parseInt(a.attr('data-time')!)),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -51,6 +51,6 @@ async function handler() {
     return {
         title: 'CGTN - Opinions',
         link: rootUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

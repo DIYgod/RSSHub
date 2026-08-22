@@ -1,5 +1,4 @@
-const isObject = (obj: any) => obj && typeof obj === 'object';
-const isPlainObject = (obj: any) => isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]' && Object.getPrototypeOf(obj) === Object.prototype;
+const isPlainObject = (obj: any) => Boolean(obj) && Object.prototype.toString.call(obj) === '[object Object]' && Object.getPrototypeOf(obj) === Object.prototype;
 
 /**
  * A simple camelCase function that only handles strings, but not handling symbol, date, or other complex case.
@@ -7,7 +6,8 @@ const isPlainObject = (obj: any) => isObject(obj) && Object.prototype.toString.c
  */
 export const camelcaseKeys = <T = any>(obj: any): T => {
     if (Array.isArray(obj)) {
-        return obj.map((x) => camelcaseKeys(x)) as any;
+        const result: any = obj.map((x) => camelcaseKeys(x));
+        return result;
     }
 
     if (isPlainObject(obj)) {
@@ -16,7 +16,7 @@ export const camelcaseKeys = <T = any>(obj: any): T => {
             const nextKey = isMongoId(key) ? key : camelcase(key);
             result[nextKey] = camelcaseKeys(value);
         }
-        return result as any;
+        return result;
     }
 
     return obj;

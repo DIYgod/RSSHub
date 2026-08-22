@@ -70,7 +70,7 @@ export const route: Route = {
         return {
             title: `${dict[typeId]} - 深圳市医疗器械行业协会`,
             link: 'https://www.samd.org.cn/home/newsList',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

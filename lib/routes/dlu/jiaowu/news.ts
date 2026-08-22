@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -31,7 +31,7 @@ async function handler() {
                 const article = load(detailResponse);
                 return {
                     link,
-                    title: a.attr('title'),
+                    title: a.attr('title')!,
                     pubDate: timezone(parseDate(article('td[height="28"]').text(), 'YYYY年MM月DD日 HH:mm'), 8),
                     description: article('form[name="_newscontent_fromname"] > div > *:not(table)')
                         .toArray()
@@ -44,6 +44,6 @@ async function handler() {
     return {
         link: baseUrl,
         title: '大连大学教务处',
-        item: (await Promise.all(items)) as DataItem[],
+        item: await Promise.all(items),
     };
 }

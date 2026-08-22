@@ -57,12 +57,14 @@ const getPost = (item) =>
 
         $('img').each((_, img) => {
             const $img = $(img);
-            if ($img.data('hsrc')) {
-                $img.attr('src', $img.data('hsrc') as string);
+            const hsrc = $img.attr('data-hsrc');
+            const osrc = $img.attr('data-osrc');
+            if (hsrc) {
+                $img.attr('src', hsrc);
                 $img.removeAttr('data-hsrc');
             }
-            if ($img.data('osrc')) {
-                $img.attr('src', $img.data('osrc') as string);
+            if (osrc) {
+                $img.attr('src', osrc);
                 $img.removeAttr('data-osrc');
             }
         });

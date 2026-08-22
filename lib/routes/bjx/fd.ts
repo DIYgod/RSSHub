@@ -58,7 +58,7 @@ export const route: Route = {
             title: `北极星风力发电网${typeName}`,
             description: $('meta[name="Description"]').attr('content'),
             link: `https://fd.bjx.com.cn/${type}/`,
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

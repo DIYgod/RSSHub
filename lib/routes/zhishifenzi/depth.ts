@@ -21,7 +21,7 @@ async function handler() {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const list = $('div.inner_depth_list > ul > li')
+    const list: DataItem[] = $('div.inner_depth_list > ul > li')
         .toArray()
         .map((elem) => {
             const $elem = $(elem);
@@ -30,7 +30,7 @@ async function handler() {
                 pubDate: parseRelativeDate($elem.find('div.inner_depth_list_tags > p').first().text()),
                 link: new URL($elem.find('h5 > a').attr('href')!, base).href,
             };
-        }) as DataItem[];
+        });
 
     const out = await Promise.all(
         list.map((item) =>

@@ -26,16 +26,16 @@ async function handler(ctx: Context) {
     const rootUrl = 'https://www.csail.mit.edu';
     const currentUrl = `${rootUrl}/news/`;
 
-    const response = await ofetch(`${rootUrl}/api-proxy/angular-solr?_api_proxy_uri=news&q=*%3A*&sort=ds_field_publication_date%20DESC&rows=${limit}&start=0`, {
+    const response = await ofetch<{ response: { docs: Array<{ ss_title: string; ss_url: string }> } }>(`${rootUrl}/api-proxy/angular-solr?_api_proxy_uri=news&q=*%3A*&sort=ds_field_publication_date%20DESC&rows=${limit}&start=0`, {
         headers: {
             accept: 'application/json',
         },
     });
 
-    const list = response.response.docs.map((doc) => ({
+    const list: DataItem[] = response.response.docs.map((doc) => ({
         title: doc.ss_title,
         link: `${rootUrl}${doc.ss_url}`,
-    })) as DataItem[];
+    }));
 
     const items = await Promise.all(
         list.map((item) =>

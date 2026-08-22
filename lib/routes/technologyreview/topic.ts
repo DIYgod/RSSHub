@@ -33,14 +33,19 @@ export const route: Route = {
     url: 'www.technologyreview.com',
 };
 
+interface Category {
+    id: number;
+    name: string;
+}
+
 async function handler(ctx: Context): Promise<Data> {
     const { category_name: categoryName } = ctx.req.param();
 
-    const categories = (await cache.tryGet(`technologyreview:category:${categoryName}`, () =>
-        ofetch(`${apiUrl}/categories`, {
+    const categories = await cache.tryGet(`technologyreview:category:${categoryName}`, () =>
+        ofetch<Category[]>(`${apiUrl}/categories`, {
             query: { slug: categoryName },
         })
-    )) as any[];
+    );
     const limit = Number(ctx.req.query('limit') ?? 10);
 
     const posts = await ofetch(`${apiUrl}/posts`, {

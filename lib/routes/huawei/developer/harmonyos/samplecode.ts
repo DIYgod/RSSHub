@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -31,7 +31,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const response = await ofetch('https://svc-drcn.developer.huawei.com/community/servlet/consumer/partnerCommunityService/v1/servlet/samplecode/getSampleCodes', {
         method: 'POST',
         headers: {
@@ -43,7 +43,7 @@ async function handler() {
             classifyId: '',
             classifyIdList: [],
             keywords: '',
-            language: 'zh' as Language,
+            language: 'zh',
             pageIndex: 1,
             pageSize: 100,
         }),
@@ -64,7 +64,7 @@ async function handler() {
         title: 'HarmonyOS 示例代码 - 华为开发者联盟',
         link: 'https://developer.huawei.com/consumer/cn/samples/',
         description: '华为鸿蒙系统示例代码更新',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: items,
     };
 }

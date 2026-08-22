@@ -28,7 +28,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { link, key } = getConfig(ctx) as any;
+    const discourseConfig: unknown = getConfig(ctx);
+    const { link, key } = discourseConfig as { link: string; key: string };
 
     const feed = await RSSParser.parseString(
         (

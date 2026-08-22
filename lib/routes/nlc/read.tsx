@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -88,7 +88,7 @@ async function handler(ctx) {
         title: `${$('title').text()} - ${type}`,
         link: currentUrl,
         description: type,
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image,
         icon,
         logo: icon,

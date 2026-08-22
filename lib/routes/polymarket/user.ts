@@ -57,7 +57,7 @@ async function handler(ctx) {
     const displayName = profile?.name || profile?.pseudonym || address;
 
     const items = activity.map((act) => {
-        const typeEmoji: Record<string, string> = {
+        const typeEmoji = {
             TRADE: '💱',
             SPLIT: '✂️',
             MERGE: '🔗',
@@ -65,7 +65,7 @@ async function handler(ctx) {
             REWARD: '🎁',
             CONVERSION: '🔄',
             MAKER_REBATE: '💵',
-        };
+        } satisfies Record<Activity['type'], string>;
 
         const typeLabel = `${typeEmoji[act.type] || '📝'} ${act.type}`;
 

@@ -20,19 +20,19 @@ export const route: Route = {
     handler,
 };
 
-const titles: Record<string, string> = {
-    0: '推荐',
-    3: '时事日报',
-    6: '时事专题',
-    13: '备考技巧',
-    12: '招考信息',
-    4: '时事月报',
-    10: '重要会议',
-    11: '领导讲话',
-    5: '时事周刊',
-    8: '官网公告',
-    7: '时事评论',
-};
+const titles = new Map([
+    ['0', '推荐'],
+    ['3', '时事日报'],
+    ['6', '时事专题'],
+    ['13', '备考技巧'],
+    ['12', '招考信息'],
+    ['4', '时事月报'],
+    ['10', '重要会议'],
+    ['11', '领导讲话'],
+    ['5', '时事周刊'],
+    ['8', '官网公告'],
+    ['7', '时事评论'],
+]);
 
 async function handler(ctx: Context) {
     const { id = '' } = ctx.req.param();
@@ -62,7 +62,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: `${titles[id || '0']} - 时事一点通`,
+        title: `${titles.get(id || '0')} - 时事一点通`,
         link: `${rootUrl}/article?type=${id}`,
         item: items,
     };

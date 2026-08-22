@@ -4,7 +4,8 @@ import type { OutgoingHttpHeaders } from 'node:http';
 import http from 'node:http';
 import https from 'node:https';
 
-import type { Response as UndiciResponse } from 'undici';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import type { RequestInfo } from 'undici';
 import undici from 'undici';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -40,14 +41,21 @@ const { config } = await import('@/config');
 const { default: ofetch } = await import('@/utils/ofetch');
 
 const createJsonResponse = () =>
-    Response.json(
+    undici.Response.json(
         { ok: true },
         {
             headers: {
                 'content-type': 'application/json',
             },
         }
-    ) as unknown as UndiciResponse;
+    );
+
+const lastRequestHeaders = (input: RequestInfo | undefined) => {
+    if (!(input instanceof undici.Request)) {
+        throw new TypeError('undici.fetch was not called with a Request');
+    }
+    return input.headers;
+};
 
 describe('request-rewriter', () => {
     afterAll(() => {
@@ -93,7 +101,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
+        const headers = lastRequestHeaders(fetchSpy.mock.lastCall?.[0]);
         expect(headers.get('user-agent')).toMatch(/Chrome/);
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
@@ -140,7 +148,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
+        const headers = lastRequestHeaders(fetchSpy.mock.lastCall?.[0]);
         expect(headers.get('user-agent')).toMatch(/Chrome/);
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
@@ -193,7 +201,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
+        const headers = lastRequestHeaders(fetchSpy.mock.lastCall?.[0]);
         expect(headers.get('user-agent')).toBe(userAgent);
     });
 
@@ -210,7 +218,7 @@ describe('request-rewriter', () => {
         }
 
         // headers
-        const headers: Headers = (fetchSpy.mock.lastCall as any)?.[0].headers;
+        const headers = lastRequestHeaders(fetchSpy.mock.lastCall?.[0]);
         expect(headers.get('user-agent')).toBeDefined();
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
@@ -240,10 +248,13 @@ describe('request-rewriter', () => {
         expect(headers?.referer).toBe('http://rsshub.test');
 
         // proxy
-        const agent = options?.agent as any;
-        const agentUri = agent?.proxy?.href;
-        expect(agentUri).toBe(process.env.PROXY_URI);
-        expect(agent?.proxyHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
+        const agent = options?.agent;
+        if (!(agent instanceof HttpsProxyAgent)) {
+            throw new TypeError('the rewriter did not attach an HttpsProxyAgent');
+        }
+        expect(agent.proxy.href).toBe(process.env.PROXY_URI);
+        const proxyHeaders = agent.proxyHeaders as OutgoingHttpHeaders;
+        expect(proxyHeaders['proxy-authorization']).toBe(`Basic ${process.env.PROXY_AUTH}`);
 
         // url regex not match
         {

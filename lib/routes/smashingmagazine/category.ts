@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -65,7 +65,7 @@ export const route: Route = {
 | Workflow           | workflow           |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category');
     const baseUrl = 'https://www.smashingmagazine.com';
     const route = category ? `/category/${category}` : '/articles';
@@ -124,6 +124,6 @@ async function handler(ctx) {
         description: 'Latest Articles on Smashingmagazine.com',
         logo: 'https://www.smashingmagazine.com/images/favicon/apple-touch-icon.png',
         icon: 'https://www.smashingmagazine.com/images/favicon/favicon.svg',
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

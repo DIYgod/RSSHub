@@ -6,6 +6,11 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 let client: TelegramClient | undefined;
+
+const onError = (err: Error) => {
+    throw new Error('Cannot start TG: ' + err);
+};
+
 export async function getClient(authParams?: UserAuthParams, session?: string) {
     if (!config.telegram.session && session === undefined) {
         throw new ConfigNotFoundError('TELEGRAM_SESSION is not configured');
@@ -33,19 +38,13 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
                 : undefined,
     });
 
-    await client.start(
-        Object.assign(authParams ?? {}, {
-            onError: (err: Error) => {
-                throw new Error('Cannot start TG: ' + err);
-            },
-        }) as any
-    );
+    await client.start({ ...authParams, onError } as UserAuthParams);
     return client;
 }
 
 export function getFilename(x: Api.TypeMessageMedia) {
-    if (x instanceof Api.MessageMediaDocument) {
-        for (const a of (x.document as Api.Document).attributes) {
+    if (x instanceof Api.MessageMediaDocument && x.document instanceof Api.Document) {
+        for (const a of x.document.attributes) {
             if (a instanceof Api.DocumentAttributeFilename) {
                 return a.fileName;
             }

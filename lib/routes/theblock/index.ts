@@ -101,7 +101,7 @@ async function handler(ctx): Promise<Data> {
             item: items,
             description: `Latest articles from TheBlock in the ${category} category`,
             language: 'en',
-        } as Data;
+        };
     } catch (error: any) {
         logger.error(`Error in TheBlock handler: ${error.message}`);
         throw error;

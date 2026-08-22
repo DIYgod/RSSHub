@@ -29,7 +29,7 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const list = $('.list ul li a')
+    const list: DataItem[] = $('.list ul li a')
         .slice(0, 15)
         .toArray()
         .map((item) => {
@@ -41,7 +41,7 @@ async function handler(ctx: Context) {
                 pubDate: timezone(parseDate($item.prev().text()), 8),
                 link: link.includes('http') ? link : `${rootUrl}${link}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

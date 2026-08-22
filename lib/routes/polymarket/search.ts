@@ -42,7 +42,7 @@ async function handler(ctx) {
         description: formatEventDescription(event),
         link: `https://polymarket.com/event/${event.slug}`,
         pubDate: event.startDate ? parseDate(event.startDate) : undefined,
-        category: event.tags?.map((t) => t.label).filter(Boolean) as string[],
+        category: event.tags?.map((t) => t.label).filter((label): label is string => Boolean(label)),
     }));
 
     return {

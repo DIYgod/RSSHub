@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
@@ -135,7 +135,7 @@ export const route: Route = {
     url: 'app.daily.dev/popular',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const link = `${baseUrl}/posts`;
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
     const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
@@ -157,6 +157,6 @@ async function handler(ctx) {
         description: 'daily.dev is the easiest way to stay updated on the latest programming news. Get the best content from the top tech publications on any topic you want.',
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

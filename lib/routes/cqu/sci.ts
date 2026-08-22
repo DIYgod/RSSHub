@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const links = $('.inner-list1 a[href*="/info/"]')
+    const links: DataItem[] = $('.inner-list1 a[href*="/info/"]')
         .toArray()
         .map((item) => {
             const a = $(item);
@@ -61,7 +61,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, url).href,
                 pubDate: timezone(parseDate(dateText), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         links.map((item) =>

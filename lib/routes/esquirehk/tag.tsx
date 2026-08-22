@@ -11,6 +11,19 @@ import { parseDate } from '@/utils/parse-date';
 
 const topics = new Set(['style', 'watches', 'lifestyle', 'health', 'money-investment', 'gear', 'people', 'watch', 'mens-talk']);
 
+interface ArticleTag {
+    name: string;
+}
+
+interface Article {
+    status?: string;
+    intro: { raw: string };
+    subpages: unknown[];
+    date: { published: string; lastModified: string };
+    author: { name: string };
+    tags: { topic: ArticleTag[]; normal: ArticleTag[] };
+}
+
 const handler = async (ctx) => {
     let { id = 'Fashion' } = ctx.req.param();
 
@@ -56,7 +69,7 @@ const handler = async (ctx) => {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const resp = await ofetch(`https://api.esquirehk.com${item.slug}`);
-                const response = destr(resp) as any;
+                const response = destr<Article>(resp);
                 if (response.status === '404') {
                     return item;
                 }

@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -69,7 +69,7 @@ async function handler(ctx) {
                     }
                     return null;
                 })
-                .filter((e) => e?.link);
+                .filter((e): e is NonNullable<typeof e> => Boolean(e?.link));
         },
         config.cache.routeExpire,
         false
@@ -79,6 +79,6 @@ async function handler(ctx) {
         title: `${keyword} - 百度搜索`,
         description: `${keyword} - 百度搜索`,
         link: url,
-        item: items as DataItem[],
+        item: items,
     };
 }

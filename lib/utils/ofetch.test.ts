@@ -1,4 +1,5 @@
 import http from 'node:http';
+import type { AddressInfo } from 'node:net';
 
 import { http as mswHttp, HttpResponse } from 'msw';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -28,7 +29,7 @@ describe('ofetch', () => {
                 retry: 1,
                 retryDelay: 0,
                 onResponse({ options }) {
-                    options.headers = null as unknown as Headers;
+                    (options as { headers: Headers | null }).headers = null;
                 },
             })
         ).rejects.toBeDefined();
@@ -61,8 +62,7 @@ describe('ofetch', () => {
         });
 
         await new Promise<void>((resolve) => server.listen(0, resolve));
-        const address = server.address();
-        const port = typeof address === 'object' && address ? address.port : 0;
+        const { port } = server.address() as AddressInfo;
 
         try {
             await ofetch(`http://127.0.0.1:${port}/redirect`);

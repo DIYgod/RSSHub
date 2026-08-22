@@ -120,7 +120,7 @@ export const route: Route = {
             title: `${typeName} - MC百科`,
             description: $('meta[name="description"]').attr('content'),
             link: 'https://www.mcmod.cn',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

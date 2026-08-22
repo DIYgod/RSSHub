@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,7 +25,7 @@ export const route: Route = {
     ],
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.fanxinzhui.com';
@@ -122,7 +123,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh',
         image,
         author: title.split(/_/).pop(),
         allowEmpty: true,

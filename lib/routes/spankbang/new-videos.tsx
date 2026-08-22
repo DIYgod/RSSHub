@@ -18,7 +18,7 @@ const render = ({ preview, cover }) =>
         </>
     );
 
-const handler = async () => {
+const handler = async (): Promise<Data> => {
     const baseUrl = 'https://spankbang.com';
     const link = `${baseUrl}/new_videos/`;
 
@@ -48,7 +48,7 @@ const handler = async () => {
                     const cover = $item.find('img.cover');
 
                     return {
-                        title: thumb.attr('title'),
+                        title: thumb.attr('title')!,
                         link: new URL(thumb.attr('href')!, baseUrl).href,
                         description: render({
                             cover: cover.data('src'),
@@ -74,7 +74,7 @@ const handler = async () => {
         description: data.description,
         link,
         item: data.item,
-    } as unknown as Promise<Data>;
+    };
 };
 
 export const route: Route = {

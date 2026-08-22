@@ -34,14 +34,14 @@ async function handler(ctx: Context) {
     const list = $('li.clearfix div.news-right a')
         .toArray()
         .slice(0, 10)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
                 pubDate: timezone(parseDate($item.next().text().replace('时间 ：', '')), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

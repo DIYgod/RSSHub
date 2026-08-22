@@ -19,11 +19,12 @@ const getTagId = (tid: string) =>
         const $ = load(response);
         const nextData = JSON.parse($('script#__NEXT_DATA__').text());
 
-        const node = Object.entries(nextData.props.apolloState.data.ROOT_QUERY)
-            .find(([key]) => key.startsWith('node'))
-            ?.pop() as Tag;
+        const node = Object.entries<Tag>(nextData.props.apolloState.data.ROOT_QUERY).find(([key]) => key.startsWith('node'))?.[1];
+        if (!node) {
+            throw new Error(`Failed to find the tag id of ${tid}`);
+        }
 
-        return node?.id.split(':', 2)[1];
+        return node.id.split(':', 2)[1];
     });
 
 const handler = async (ctx) => {

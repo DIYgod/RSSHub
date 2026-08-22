@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -8,12 +9,12 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.1lou.me';
 
-export const handler = async (ctx) => {
+export const handler = async (ctx: Context) => {
     const { params } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const queryString = Object.entries(ctx.req.query())
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
         .join('&');
 
     const currentUrl = new URL(`${params && params.endsWith('.htm') ? params : `${params}.htm`}${queryString ? `?${queryString}` : ''}`, rootUrl).href;
@@ -22,7 +23,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('li.media.thread.tap:not(li.hidden-sm)')
         .slice(0, limit)
@@ -44,7 +45,7 @@ export const handler = async (ctx) => {
                         .map((c) => $(c).text()),
                 ].filter(Boolean),
                 author: $item.find('a.username').text(),
-                language: language as Language,
+                language,
             };
         });
 
@@ -73,7 +74,7 @@ export const handler = async (ctx) => {
                     };
                     item.image = image;
                     item.banner = image;
-                    item.language = language as Language;
+                    item.language = language;
 
                     const torrents = $$('ul.attachlist li a');
 
@@ -102,7 +103,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language: language as Language,
+        language,
     };
 };
 

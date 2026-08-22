@@ -29,7 +29,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl);
     const $ = load(response);
 
-    const list = $('.gp-ellipsis a')
+    const list: DataItem[] = $('.gp-ellipsis a')
         .slice(0, 15)
         .toArray()
         .map((item) => {
@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: `${currentUrl.replace('/index.htm', '')}/${$item.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -75,7 +75,7 @@ async function handler(ctx: Context): Promise<Data> {
         const newsTitle = element.find('a').attr('title') ?? '';
         const newsLink = detailUrl + element.find('a').attr('newsid');
 
-        const newsDetail = await cache.tryGet(newsLink, async () => {
+        const newsDetail = await cache.tryGet(newsLink, async (): Promise<DataItem> => {
             const newsContent = await ofetch(newsLink);
             const content = load(newsContent);
 
@@ -99,6 +99,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `教务处通知（${typeName}）`,
         link: baseUrl,
         description: `电子科技大学教务处通知（${typeName}）`,
-        item: out as DataItem[],
+        item: out,
     };
 }

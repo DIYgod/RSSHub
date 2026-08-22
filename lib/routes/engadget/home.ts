@@ -23,9 +23,9 @@ export const route: Route = {
 async function handler() {
     const feed = await parser.parseURL('https://www.engadget.com/rss.xml');
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet<DataItem>(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
                 const article = $('article');
@@ -35,7 +35,7 @@ async function handler() {
                 });
 
                 return {
-                    title: item.title,
+                    title: item.title!,
                     description: article.html(),
                     pubDate: item.pubDate,
                     link: item.link,
@@ -43,7 +43,7 @@ async function handler() {
                 };
             })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: feed.title!,

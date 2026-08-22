@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -33,7 +33,7 @@ export const route: Route = {
     description: 'Always Control（旭衡电子）智能能源管理系统解决方案专家的最新动态',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const listUrl = `${baseUrl}/zh-CN/about/news`;
 
     // 获取新闻列表页面
@@ -92,7 +92,7 @@ async function handler() {
         title: 'Always Control - 最新动态',
         link: listUrl,
         description: 'Always Control（旭衡电子）- 智能能源管理系统解决方案专家最新动态',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: items,
         image: `${baseUrl}/logo.png`,
     };

@@ -75,6 +75,6 @@ async function handler() {
         link: url,
         description: 'USENIX Security Symposium Accpeted Papers',
         allowEmpty: true,
-        item: items.filter((r) => r.status === 'fulfilled').map((r) => (r as PromiseFulfilledResult<any>).value),
+        item: items.filter((r): r is PromiseFulfilledResult<DataItem> => r.status === 'fulfilled').map((r) => r.value),
     };
 }

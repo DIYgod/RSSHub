@@ -78,7 +78,7 @@ export function resolveArticles(list: NoticeItem[], pageUrl: string, selectors: 
             if (new URL(item.link).host !== pageHost) {
                 return { ...item, description: FALLBACK_DESCRIPTION };
             }
-            return cache.tryGet(item.link, () => fetchArticle(item, selectors)) as Promise<DataItem>;
+            return cache.tryGet(item.link, () => fetchArticle(item, selectors));
         })
     );
 }

@@ -86,7 +86,7 @@ describe('header-generator (mocked)', () => {
 
         vi.resetModules();
         const { generateHeaders: generateMockedHeaders } = await import('@/utils/header-generator');
-        const headers = generateMockedHeaders({ preset: 'safari' } as any);
+        const headers = generateMockedHeaders({ browsers: ['safari'] });
 
         expect(headers['user-agent']).toContain('Safari');
         expect(headersQueue.length).toBe(0);

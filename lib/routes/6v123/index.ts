@@ -23,7 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         responseType: 'arrayBuffer',
     });
     const $: CheerioAPI = load(iconv.decode(Buffer.from(response), encoding));
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('ul.list li')
         .slice(0, limit)
@@ -47,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid,
                 id: guid,
                 updated: upDatedStr ? parseDate(upDatedStr, ['MM-DD', 'YYYY-MM-DD']) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 const $enclosureEl: Cheerio<Element> = $$('td a[href^="magnet"]').last();
@@ -125,7 +125,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: new URL('images/logo.gif', baseUrl).href,
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

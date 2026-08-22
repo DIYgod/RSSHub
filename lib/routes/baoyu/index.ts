@@ -31,10 +31,10 @@ async function handler() {
 
     const items = await Promise.all(
         feed.items.map((item) => {
-            const link = item.link;
+            const link = item.link as string;
 
-            return cache.tryGet(link as string, async () => {
-                const response = await ofetch(link as string);
+            return cache.tryGet(link, async () => {
+                const response = await ofetch(link);
                 const $ = load(response);
 
                 const container = $('.container');

@@ -1,7 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { Route } from '@/types';
-
 describe('pkg', () => {
     beforeEach(() => {
         vi.resetModules();
@@ -95,6 +93,8 @@ describe('pkg', () => {
             {
                 path: '/hello',
                 name: 'Custom Hello',
+                maintainers: [],
+                example: '/custom/hello',
                 handler: () => ({
                     title: 'Custom',
                     link: 'https://example.com',
@@ -106,7 +106,7 @@ describe('pkg', () => {
                     ],
                     allowEmpty: true,
                 }),
-            } as unknown as Route,
+            },
             {
                 name: 'Custom Namespace',
                 url: 'https://example.com',
@@ -129,8 +129,10 @@ describe('pkg', () => {
         await registerRoute('custom-response', {
             path: '/hello',
             name: 'Custom Response',
+            maintainers: [],
+            example: '/custom-response/hello',
             handler: () => new Response('ok'),
-        } as unknown as Route);
+        });
 
         const app = (await import('@/app')).default;
         const response = await app.request('/custom-response/hello');

@@ -37,10 +37,6 @@ async function handler(ctx: Context) {
     const apiUrl = `${baseUrl}/wp-json/wp/v2`;
     const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 10;
 
-    const query: Record<string, string | number | undefined> = {
-        per_page: limit === 10 ? undefined : limit,
-        _embed: '',
-    };
     let category;
     if (type) {
         category = await cache.tryGet(`unit-image:category:${type}`, async () => {
@@ -50,10 +46,15 @@ async function handler(ctx: Context) {
             }
             return categories[0];
         });
-        query.categories = category.id;
     }
 
-    const posts = await ofetch(`${apiUrl}/project`, { query });
+    const posts = await ofetch(`${apiUrl}/project`, {
+        query: {
+            per_page: limit === 10 ? undefined : limit,
+            _embed: '',
+            categories: category?.id,
+        },
+    });
 
     const items = await Promise.all(
         posts.map((post) =>

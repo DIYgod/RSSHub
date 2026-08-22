@@ -7,6 +7,30 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+interface SharedPost {
+    title: string;
+    summary?: string;
+    image?: string;
+    permalink: string;
+}
+
+interface FeedPost extends SharedPost {
+    id: string;
+    type: string;
+    commentsPermalink?: string;
+    createdAt: string;
+    numUpvotes?: number;
+    numComments?: number;
+    author?: { name: string };
+    tags?: string[];
+    contentHtml?: string;
+    sharedPost: SharedPost;
+}
+
+export interface FeedEdge {
+    node: FeedPost;
+}
+
 export const baseUrl = 'https://app.daily.dev';
 const gqlUrl = 'https://api.daily.dev/graphql';
 export const variables = {
@@ -46,7 +70,7 @@ const render = ({ image, content }: { image?: string; content?: string }) =>
         </>
     );
 
-export const getList = (edges, dateSort: boolean) =>
+export const getList = (edges: FeedEdge[], dateSort: boolean): DataItem[] =>
     edges.map(({ node }) => {
         const post = node.type === 'share' ? node.sharedPost : node;
 
@@ -65,5 +89,5 @@ export const getList = (edges, dateSort: boolean) =>
             upvotes: node.numUpvotes,
             comments: node.numComments,
             category: node.tags,
-        } as DataItem;
+        };
     });

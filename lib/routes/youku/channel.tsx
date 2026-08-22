@@ -3,7 +3,7 @@ import path from 'node:path';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -31,7 +31,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const channelId = ctx.req.param('channelId');
     const embed = !ctx.req.param('embed');
 
@@ -80,6 +80,6 @@ async function handler(ctx) {
                     pubDate,
                 };
             })
-            .filter(Boolean) as DataItem[],
+            .filter((item) => item !== null),
     };
 }

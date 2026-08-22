@@ -72,7 +72,6 @@ interface CommunityData {
     orderBy: null | string;
     order: null | string;
     autoCount: boolean;
-    map: Record<string, unknown>;
     params: string;
     result: ResultItem[];
     totalCount: number;
@@ -132,7 +131,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
         body: {
             category_id: '',
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit') as string) : 30,
+            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
             order: 0,
             start: 1,
             type: 0,

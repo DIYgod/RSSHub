@@ -30,7 +30,7 @@ export const route: Route = {
     handler,
 };
 
-export async function handler(ctx) {
+export async function handler(ctx): Promise<Data> {
     const selName = ctx.req.param('selName');
     const link = `https://newsupport.lenovo.com.cn/api/drive/drive_listnew?searchKey=${selName}`;
 
@@ -42,21 +42,18 @@ export async function handler(ctx) {
 
     const driveList = response.data.partList.flatMap((part) => part.drivelist);
 
-    const items: DataItem[] = driveList.map(
-        (item) =>
-            ({
-                title: `${item.DriverName} ${item.Version}`,
-                link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
-                description: renderToString(<DriveDescription driveName={item.DriverName} driveCode={item.DriverCode} driveVersion={item.Version} downloadFileName={item.FileName} downloadFilePath={item.FilePath} />),
-                pubDate: timezone(parseDate(item.CreateTime), 8),
-            }) as DataItem
-    );
+    const items: DataItem[] = driveList.map((item) => ({
+        title: `${item.DriverName} ${item.Version}`,
+        link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
+        description: renderToString(<DriveDescription driveName={item.DriverName} driveCode={item.DriverCode} driveVersion={item.Version} downloadFileName={item.FileName} downloadFilePath={item.FilePath} />),
+        pubDate: timezone(parseDate(item.CreateTime), 8),
+    }));
 
     return {
         title: `${response.data.driverSerious[0].NodeCode} 驱动`,
         item: items,
         language: 'zh-CN',
-    } as Data;
+    };
 }
 
 const DriveDescription = ({ driveName, driveCode, driveVersion, downloadFileName, downloadFilePath }: { driveName: string; driveCode: string; driveVersion: string; downloadFileName: string; downloadFilePath: string }) => (

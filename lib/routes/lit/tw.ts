@@ -32,7 +32,7 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await ofetch(urla);
     const $ = load(response);
 
-    const list = $(name === 'all' ? '.newslayout li, .announlist1 li' : '.newslist li')
+    const list: DataItem[] = $(name === 'all' ? '.newslayout li, .announlist1 li' : '.newslist li')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -42,7 +42,7 @@ async function handler(ctx: Context): Promise<Data> {
                 link: new URL(a.attr('href')!, urla).href,
                 pubDate: timezone(parseDate($item.find('i, span').text() || `${$item.find('.rq p').text()}-${$item.find('.rq h2').text()}`), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -68,6 +68,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: name === 'all' ? '团委 - 洛阳理工学院' : `${nameProps[name]} - 洛理团委`,
         link: urla,
         description: '洛阳理工学院团委 RSS',
-        item: items as DataItem[],
+        item: items,
     };
 }

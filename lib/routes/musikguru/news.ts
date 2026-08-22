@@ -20,7 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'de';
+    const language = ($('html').attr('lang') ?? 'de') as Language;
 
     let items: DataItem[] = $('section')
         .eq(1)
@@ -55,7 +55,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -89,7 +89,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? timezone(parseDate(upDatedStr, 'DD.MM.YYYY HH:mm'), 1) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -100,15 +100,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
+    const logoSrc: string | undefined = $('a.navbar-brand img').attr('src');
+
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('a.navbar-brand img').attr('src') ? new URL($('a.navbar-brand img').attr('src') as string, baseUrl).href : undefined,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('a.navbar-brand img').attr('alt'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -107,6 +107,6 @@ async function handler(ctx) {
         title: $('head title').text(),
         link,
         item: items,
-        language: 'zh-HK' as Language,
+        language: 'zh-HK' as const,
     };
 }

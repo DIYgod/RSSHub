@@ -59,7 +59,7 @@ describe('test camelcase keys', () => {
     });
 
     it('case 4: nullable value', () => {
-        let value = null as any;
+        let value: number | null | undefined = null;
         expect(camelcaseKeys(value)).toBe(value);
 
         value = undefined;

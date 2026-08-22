@@ -721,7 +721,7 @@ export type Config = {
     };
 };
 
-const value: Config | Record<string, any> = {};
+const value = {} as Config;
 
 const TRUE_UA = 'RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-Google)';
 
@@ -1230,9 +1230,7 @@ const calculateValue = () => {
         },
     };
 
-    for (const name in _value) {
-        value[name] = _value[name];
-    }
+    Object.assign(value, _value);
 };
 calculateValue();
 (async () => {
@@ -1258,7 +1256,6 @@ calculateValue();
     }
 })();
 
-// @ts-expect-error value is set
 export const config: Config = value;
 
 export const setConfig = (env: ConfigEnv) => {

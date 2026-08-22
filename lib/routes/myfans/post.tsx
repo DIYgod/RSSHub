@@ -67,7 +67,7 @@ Followers ${account.followings_count} Follow ${account.about.replaceAll('\r\n', 
         image: account.avatar_url,
         icon: account.avatar_url,
         logo: account.avatar_url,
-        language: 'ja' as Language,
+        language: 'ja' as const satisfies Language,
         item: items,
     };
 }

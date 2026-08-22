@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -16,6 +17,8 @@ const apiMemberRootUrl = `https://api-account.${domain}`;
 const apiMomentRootUrl = `https://moment-api.${domain}`;
 const apiSearchRootUrl = `https://search-api.${domain}`;
 const siteTitle = '虎嗅';
+
+type ItemEnclosure = Pick<DataItem, 'enclosure_length' | 'enclosure_type' | 'enclosure_url' | 'itunes_duration' | 'itunes_item_image'>;
 
 /**
  * Cleans up HTML data by removing specific elements and attributes.
@@ -155,11 +158,11 @@ const fetchApiRouteData = async <T>({
         descriptionPrefix?: string;
     };
 }) => {
-    const { data: response } = await got.post(apiUrl, { form });
+    const { data: response }: { data: { data: T } } = await got.post(apiUrl, { form });
 
     return buildFeedMetadata({
         link: currentUrl,
-        ...mapData(response.data as T),
+        ...mapData(response.data),
     });
 };
 
@@ -274,7 +277,7 @@ const fetchItem = async (item) => {
         const { brief, brief_column: briefColumn, club_info: clubInfo } = data;
         const briefAudioInfo = processAudioInfo(brief.audio_info);
         const audio = briefAudioInfo.processed;
-        const audioItem: Record<string, unknown> = briefAudioInfo.processedItem ?? {};
+        const audioItem: ItemEnclosure = briefAudioInfo.processedItem ?? {};
         const body = [brief.preface, brief.content, brief.peroration].filter(Boolean).join('');
 
         return {
@@ -295,7 +298,7 @@ const fetchItem = async (item) => {
 
     const articleAudioInfo = processAudioInfo(data.audio_info);
     const audio = articleAudioInfo.processed;
-    const audioItem: Record<string, unknown> = articleAudioInfo.processedItem ?? {};
+    const audioItem: ItemEnclosure = articleAudioInfo.processedItem ?? {};
 
     if (Object.keys(audioItem).length !== 0) {
         audioItem.itunes_item_image = data.pic_path ?? data.share_info?.share_img ?? undefined;
@@ -479,7 +482,7 @@ const mapItem = (item) => {
 
     const mappedAudioInfo = processAudioInfo(item.audio_info);
     const audio = mappedAudioInfo.processed;
-    const audioItem: Record<string, unknown> = mappedAudioInfo.processedItem ?? {};
+    const audioItem: ItemEnclosure = mappedAudioInfo.processedItem ?? {};
 
     if (Object.keys(audioItem).length !== 0) {
         audioItem.itunes_item_image = item.pic_path ?? item.share_info?.share_img ?? undefined;

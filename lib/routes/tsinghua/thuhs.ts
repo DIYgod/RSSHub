@@ -11,12 +11,12 @@ import timezone from '@/utils/timezone';
  * Dictionary of supported text-based categories.
  * Other sections (such as video news) are intentionally excluded as they require complex media parsing.
  */
-const categoryMap: Record<string, string> = {
-    tzgg: '通知公告',
-    xstd: '学生活动',
-    jsfc: '教师风采',
-    xwdt: '新闻动态',
-};
+const categoryMap = new Map([
+    ['tzgg', '通知公告'],
+    ['xstd', '学生活动'],
+    ['jsfc', '教师风采'],
+    ['xwdt', '新闻动态'],
+]);
 
 export const route: Route = {
     path: '/thuhs/:category?',
@@ -74,7 +74,7 @@ async function handler(ctx: Context) {
         })
         .filter((item) => item.link); // Filter out empty links
 
-    const feedTitle = categoryMap[category] || '通知公告';
+    const feedTitle = categoryMap.get(category) || '通知公告';
 
     /* Fetch full article content using the RSSHub cache mechanism */
     const out = await Promise.all(
@@ -97,7 +97,7 @@ async function handler(ctx: Context) {
     return {
         title: `清华附中 - ${feedTitle}`,
         link: targetUrl,
-        item: out as DataItem[],
+        item: out,
         image: icon,
         icon,
         logo: icon,

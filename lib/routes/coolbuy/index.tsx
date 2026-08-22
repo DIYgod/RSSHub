@@ -25,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(baseUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     const items: DataItem[] = response.objects.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -104,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: new URL('static/coolbuy/packages/dongguan/dist/images/97be46f6.png', imageBaseUrl).href,
-        language: language as Language,
+        language,
         id: baseUrl,
     };
 };

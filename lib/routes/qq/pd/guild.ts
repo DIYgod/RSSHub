@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -142,6 +142,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: guildName,
         link: baseUrl + id,
         description: guildName,
-        item: feedItems as DataItem[],
+        item: feedItems,
     };
 }

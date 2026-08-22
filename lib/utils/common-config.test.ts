@@ -1,4 +1,6 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import iconv from 'iconv-lite';
+import { http, HttpResponse } from 'msw';
+import { describe, expect, it } from 'vitest';
 
 import configUtils, { getProp, replaceParams, transElemText } from '@/utils/common-config';
 
@@ -84,39 +86,29 @@ describe('charset', () => {
     <ul>
         <li>
             <a href="/1">1</a>
-            <div class="description">RSSHub1</div>
+            <div class="description">中文RSSHub1</div>
             <div class="date">2025-01-01</div>
         </li>
     </ul>
 </div>`;
 
-    const rawSpy = vi.fn(() =>
-        Promise.resolve({
-            headers: new Headers({
-                'content-type': 'text/html; charset=gbk',
-            }),
-            _data: html,
-        })
-    );
-    const ofetchSpy = vi.fn(() => Promise.resolve(Buffer.from(html)));
-
-    beforeAll(() => {
-        vi.doMock('@/utils/ofetch', () => ({
-            default: Object.assign(ofetchSpy, { raw: rawSpy }),
-        }));
-        vi.resetModules();
-    });
-
-    afterAll(() => {
-        vi.doUnmock('@/utils/ofetch');
-        vi.resetModules();
-    });
-
     it('parses charset from content-type', async () => {
-        const buildData = (await import('@/utils/common-config')).default;
-        const data = await buildData({
-            link: 'http://rsshub.test/buildData',
-            url: 'http://rsshub.test/buildData',
+        const { default: server } = await import('@/setup.test');
+        server.use(
+            http.get(
+                'http://rsshub.test/buildData-gbk',
+                () =>
+                    new HttpResponse(iconv.encode(html, 'gbk'), {
+                        headers: {
+                            'content-type': 'text/html; charset=gbk',
+                        },
+                    })
+            )
+        );
+
+        const data = await configUtils({
+            link: 'http://rsshub.test/buildData-gbk',
+            url: 'http://rsshub.test/buildData-gbk',
             title: '%title%',
             params: {
                 title: 'buildData',
@@ -132,5 +124,6 @@ describe('charset', () => {
 
         expect(data.title).toBe('buildData');
         expect(data.item[0].title).toBe('1 - buildData');
+        expect(data.item[0].description).toBe('中文RSSHub1');
     });
 });

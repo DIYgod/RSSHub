@@ -24,14 +24,10 @@ const rofetch = createFetch({ fetch: (input: Parameters<typeof fetch>[0], init?:
         }
 
         logger.warn(`Request ${request} with error ${response.status} remaining retry attempts: ${options.retry}`);
-        if (!options.headers) {
-            (options as any).headers = {};
+        if (!(options.headers instanceof Headers)) {
+            options.headers = new Headers(options.headers || {});
         }
-        if (options.headers instanceof Headers) {
-            options.headers.set('x-prefer-proxy', '1');
-        } else {
-            ((options as any).headers as Record<string, string>)['x-prefer-proxy'] = '1';
-        }
+        options.headers.set('x-prefer-proxy', '1');
     },
     onRequestError({ request, error }) {
         logger.error(`Request ${request} fail: ${error.cause} ${error}`);

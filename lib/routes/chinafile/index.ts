@@ -26,6 +26,7 @@ async function handler(ctx: Context) {
     const { category = 'all' } = ctx.req.param();
     const rssUrl = `https://feeds.feedburner.com/chinafile/${category}`;
 
+    const language: Language = 'en-us';
     const icon = 'https://www.chinafile.com/sites/default/files/chinafile_favicon.png';
     const logo = 'https://www.chinafile.com/sites/all/themes/cftwo/assets/images/logos/logo-large.png';
 
@@ -78,7 +79,7 @@ async function handler(ctx: Context) {
         link: feed.link,
         description: feed.description,
         item: items as DataItem[],
-        language: 'en-us' as Language,
+        language,
         icon,
         logo,
     };

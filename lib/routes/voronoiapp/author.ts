@@ -18,7 +18,7 @@ export const route: Route = {
     parameters: {
         username: 'The username of the author',
     },
-    handler: async (ctx) => {
+    handler: async (ctx): Promise<Data> => {
         const { username } = ctx.req.param();
         const uid = await getUidFromUsername(username);
         const items = await getPostItems({ order: 'DESC', author: uid });
@@ -27,16 +27,16 @@ export const route: Route = {
             title: `Voronoi Posts by ${username}`,
             link: `https://www.voronoiapp.com/author/${username}`,
             item: items,
-        } as Data;
+        };
     },
 };
-async function getUidFromUsername(username: string): Promise<string> {
-    return (await cache.tryGet(`voronoiapp-author-${username}`, async () => {
+function getUidFromUsername(username: string): Promise<string> {
+    return cache.tryGet(`voronoiapp-author-${username}`, async () => {
         const response = await ofetch<'text'>(`https://www.voronoiapp.com/author/${username}`);
         const match = response.match(/\\"uid\\":\\"([\w-]+)\\"/);
         if (!match) {
             throw new Error(`No UID found for username: ${username}`);
         }
         return match[1];
-    })) as string;
+    });
 }

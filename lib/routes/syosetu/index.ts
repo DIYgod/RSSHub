@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import { NovelType } from 'narou';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { fetchChapterContent, fetchNovelInfo } from './utils';
 
@@ -57,7 +57,7 @@ async function handler(ctx: Context): Promise<Data> {
             title: novel.title,
             description: novel.story,
             link: chapterUrl,
-            item: [item] as DataItem[],
+            item: [item],
             language: 'ja',
         };
     }
@@ -81,7 +81,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: novel.title,
         description: novel.story,
         link: `${baseUrl}/${ncode}`,
-        item: items as DataItem[],
+        item: items,
         language: 'ja',
     };
 }

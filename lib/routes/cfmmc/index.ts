@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -126,7 +126,7 @@ async function handler(ctx) {
         title: `${author} - ${$('h3.SubPage_t3').text()}`,
         link: currentUrl,
         description: $('meta[name="Description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image,
         subtitle: $('meta[name="Keywords"]').prop('content'),
         author,

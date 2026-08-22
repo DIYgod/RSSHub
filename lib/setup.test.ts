@@ -280,10 +280,8 @@ Unknown paragraph
             req: { headers: Object.fromEntries(request.headers.entries()) },
         });
     }),
-    http.post('http://rsshub.test/json-post', async ({ request }) => {
-        const jsonData = (await request.json()) as {
-            test: string;
-        };
+    http.post<never, { test: string }>('http://rsshub.test/json-post', async ({ request }) => {
+        const jsonData = await request.json();
         return HttpResponse.json({
             test: jsonData?.test,
         });

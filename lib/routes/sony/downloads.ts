@@ -4,6 +4,13 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 
 const host = 'https://www.sony.com';
+
+interface DownloadResult {
+    title: string;
+    publicationDate: string;
+    url: string;
+}
+
 export const route: Route = {
     path: '/downloads/:productType/:productId',
     categories: ['program-update'],
@@ -45,21 +52,19 @@ async function handler(ctx) {
     const regex = /window\.__PRELOADED_STATE__\.downloads\s*=\s*(\{.*?\});\s*window\.__PRELOADED_STATE__/s;
 
     const match = contents.match(regex);
-    let results = {} as Record<string, any>;
+    let results: DownloadResult[] = [];
     if (match) {
         results = JSON.parse(match[1]).searchResults.results;
     }
     const list = results.map((item) => {
-        const data: { title: string; pubDate: string; url?: string } = { title: item.title, pubDate: item.publicationDate };
         const url = item.url;
+        let absoluteUrl = host + url;
         if (url.startsWith('http')) {
-            data.url = url;
+            absoluteUrl = url;
         } else if (url.startsWith('//')) {
-            data.url = 'https:' + url;
-        } else {
-            data.url = host + url;
+            absoluteUrl = 'https:' + url;
         }
-        return data;
+        return { title: item.title, pubDate: item.publicationDate, url: absoluteUrl };
     });
     return {
         title: `Sony - ${productId.toUpperCase()}`,

@@ -11,7 +11,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/yahoo/author/hannah-keyser',
     parameters: { author: 'Author' },
-    name: 'News',
+    name: 'News By Author',
     maintainers: ['loganrockmore'],
     description: 'Provides all of the articles by the specified Yahoo! author.',
     handler,
@@ -20,10 +20,10 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const { author } = ctx.req.param();
 
-    const response = await ofetch.raw(`https://www.yahoo.com/author/${author}/`);
+    const response = await ofetch.raw<string>(`https://www.yahoo.com/author/${author}/`);
     const url = response.url;
 
-    const $ = load(response._data as string);
+    const $ = load(response._data!);
     const title = $('meta[property="og:title"]').attr('content') ?? '';
     const description = $('meta[property="og:description"]').attr('content');
 

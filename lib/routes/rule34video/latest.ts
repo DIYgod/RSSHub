@@ -75,7 +75,7 @@ async function handler() {
                 hasSound,
                 isHD,
                 videoId,
-            } as VideoItem;
+            } satisfies VideoItem;
         })
         .filter((item) => item.title && item.link);
 

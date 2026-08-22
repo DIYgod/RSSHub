@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,7 +29,7 @@ export const route: Route = {
     ],
     name: 'Game Blog',
     maintainers: ['fishyo'],
-    handler: handler as any,
+    handler,
     description: `Supported games
 
 | Game           | Slug         |
@@ -187,9 +189,8 @@ function renderBlock(block: any): string {
     return parts.join('');
 }
 
-async function handler(ctx: any) {
-    const game: string = ctx.req.param('game');
-    const locale: string = ctx.req.param('locale') || '';
+async function handler(ctx: Context) {
+    const { game, locale = '' } = ctx.req.param();
 
     if (!Object.hasOwn(GAME_NAMES, game)) {
         throw new Error(`Unsupported game: ${game}. Supported games: ${Object.keys(GAME_NAMES).join(', ')}`);
@@ -251,6 +252,6 @@ async function handler(ctx: any) {
         title: `${GAME_NAMES[game]} Blog${locale ? ` (${locale})` : ''}`,
         link: currentUrl,
         item: items,
-        language: locale || 'en',
+        language: (locale || 'en') as Language,
     };
 }

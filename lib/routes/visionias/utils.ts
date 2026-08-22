@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -49,7 +48,7 @@ export async function extractNews(item, selector) {
                     description,
                     link: `${item.link}${id}`,
                     author: 'Vision IAS',
-                } as DataItem;
+                };
             });
             return items;
         }
@@ -68,7 +67,7 @@ export async function extractNews(item, selector) {
                 link: item.link,
                 updated: updatedDate ? parseDate(updatedDate) : null,
                 author: 'Vision IAS',
-            } as DataItem;
+            };
         }
         const items = sections.toArray().map((element) => {
             const mainDiv = $$(element);
@@ -92,7 +91,7 @@ export async function extractNews(item, selector) {
             link: item.link,
             updated: updatedDate ? parseDate(updatedDate) : null,
             author: 'Vision IAS',
-        } as DataItem;
+        };
     });
 }
 

@@ -11,6 +11,20 @@ import { toQueryString } from '../_utils';
 
 const DEFAULT_LIMIT = 25;
 
+/**
+ * @see https://api.mangadex.org/docs/redoc.html#tag/Feed/operation/get-user-follows-manga-feed
+ */
+interface Chapter {
+    id: string;
+    attributes: {
+        volume: string | null;
+        chapter: string | null;
+        title: string | null;
+        publishAt: string;
+    };
+    relationships: Array<{ id: string; type: string }>;
+}
+
 export const route: Route = {
     path: '/user/feed/follow/:lang?',
     name: ' Follows Feed',
@@ -71,9 +85,10 @@ async function handler(ctx) {
 
     const accessToken = await getToken();
 
-    const languagesQuery = new Set([...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean));
+    const filteredLanguages = await getFilteredLanguages();
+    const languagesQuery = new Set([...(lang ? [lang] : []), ...filteredLanguages].filter(Boolean));
 
-    const feed = (await cache.tryGet(
+    const feed = await cache.tryGet<Chapter[]>(
         'mangadex:user-follows',
         async () => {
             const response = await got.get(
@@ -101,9 +116,9 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Array<Record<string, any>>;
+    );
 
-    const mangaIds = feed.map((chapter) => chapter?.relationships.find((relationship) => relationship.type === 'manga')?.id);
+    const mangaIds = feed.map((chapter) => chapter.relationships.find((relationship) => relationship.type === 'manga')?.id).filter((mangaId) => mangaId !== undefined);
 
     const mangaMetas = await getMangaMetaByIds(mangaIds);
 
@@ -113,7 +128,7 @@ async function handler(ctx) {
         description: 'The latest updates of all the manga you follow on MangaDex.',
         item: feed.map((chapter) => {
             const mangaId = chapter.relationships.find((relationship) => relationship.type === 'manga')?.id;
-            const mangaMeta = mangaMetas.get(mangaId);
+            const mangaMeta = mangaId === undefined ? undefined : mangaMetas.get(mangaId);
             const chapterTitile = [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' ');
 
             return {

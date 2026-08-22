@@ -110,7 +110,7 @@ function findNode(
                 return result;
             }
         }
-    } else if (json && typeof json === 'object') {
+    } else if (json instanceof Object) {
         if (json[idKey] === idValue) {
             return json[siblingKey]?.[childKey];
         }

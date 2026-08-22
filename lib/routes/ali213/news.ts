@@ -21,7 +21,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language: string = $('html').prop('lang') ?? 'zh-CN';
+    const language = ($('html').prop('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('div.n_lone')
         .slice(0, limit)
@@ -66,14 +66,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image: imageSrc,
                 banner: imageSrc,
-                language: language as Language,
+                language,
             };
         });
 
     items = (
         await Promise.all(
             items.map((item) => {
-                if (!item.link && typeof item.link !== 'string') {
+                if (item.link === undefined) {
                     return item;
                 }
 
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             mediaContent.each((_, el) => {
                                 const $$el: Cheerio<Element> = $$(el);
 
-                                const pEl: Cheerio<Element> = $$el.closest('p') as Cheerio<Element>;
+                                const pEl = $$el.closest('p');
 
                                 const mediaUrl: string | undefined = $$el.prop('src');
                                 const mediaType: string | undefined = mediaUrl?.split(/\./).pop();
@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             },
                             image,
                             banner: image,
-                            language: language as Language,
+                            language,
                             media: Object.keys(media).length > 0 ? media : undefined,
                             _extra: {
                                 links: extraLinks.length > 0 ? extraLinks : undefined,
@@ -167,7 +167,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: feedImage,
         author,
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

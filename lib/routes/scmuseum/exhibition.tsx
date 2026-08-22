@@ -41,13 +41,13 @@ export const route: Route = {
             temp: { endpoint: 'queryExhibitionTempList', name: '临时展览', isBase: false },
         };
 
-        const fetchTypes = typeParam ? [typeParam] : ['base', 'temp'];
+        const fetchTypes = (typeParam ? [typeParam] : ['base', 'temp']) as Array<keyof typeof apiConfig>;
         const museumName = namespace.zh?.name || namespace.name;
-        const titleTag = fetchTypes.length === 2 ? '' : apiConfig[fetchTypes[0] as keyof typeof apiConfig].name;
+        const titleTag = fetchTypes.length === 2 ? '' : apiConfig[fetchTypes[0]].name;
 
         const responses = await Promise.all(
             fetchTypes.map(async (t) => {
-                const config = apiConfig[t as keyof typeof apiConfig];
+                const config = apiConfig[t];
                 const apiUrl = `https://www.scmuseum.cn/japi/sw-cms-cloud/api/${config.endpoint}`;
 
                 const response = await got({

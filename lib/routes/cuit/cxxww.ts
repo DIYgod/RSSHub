@@ -45,7 +45,7 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const list = $('.newlist1 ul.list li a')
+    const list: DataItem[] = $('.newlist1 ul.list li a')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -54,7 +54,7 @@ async function handler(ctx: Context): Promise<Data> {
                 link: new URL($item.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

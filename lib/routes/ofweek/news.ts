@@ -24,14 +24,14 @@ async function handler() {
     const list = $('div.list-left div.con-details h3 > a')
         .slice(0, 20)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

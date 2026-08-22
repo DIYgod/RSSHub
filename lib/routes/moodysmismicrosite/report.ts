@@ -47,7 +47,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const industryMap: Record<number, string> = {
+    const industryMap = {
         0: '企业',
         1: '金融机构',
         2: '主权',

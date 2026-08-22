@@ -25,20 +25,20 @@ export const route: Route = {
     handler,
 };
 
-const types: Record<string, string> = {
-    excellent: '精华贴',
-    popular: '优质帖子',
-    no_reply: '无人问津',
-    last_reply: '最新回复',
-    last: '最新发布',
-};
+const types = new Map([
+    ['excellent', '精华贴'],
+    ['popular', '优质帖子'],
+    ['no_reply', '无人问津'],
+    ['last_reply', '最新回复'],
+    ['last', '最新发布'],
+]);
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
 
     let title = 'Ruby China';
     let link = `${RUBY_CHINA_HOST}/topics`;
-    const typeName = type ? types[type] : undefined;
+    const typeName = type ? types.get(type) : undefined;
     if (typeName) {
         title += ` - ${typeName}`;
         link += `/${type}`;

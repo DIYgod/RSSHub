@@ -55,7 +55,7 @@ export const route: Route = {
     url: 'thewirehindi.com/',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { category } = ctx.req.param();
     const categoryData = categories.find((cat) => cat.value === category);
 
@@ -75,5 +75,5 @@ async function handler(ctx) {
         description: `Latest news from The Wire Hindi - ${categoryData.label} category`,
         logo: 'https://thewirehindi.com/wp-content/uploads/2023/05/cropped-The-wire-32x32.jpeg',
         language: 'hi',
-    } as Data;
+    };
 }

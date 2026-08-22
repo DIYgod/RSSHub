@@ -11,19 +11,19 @@ enum LogPrefix {
 }
 
 const colorStatus = (status: number) => {
-    const out: { [key: string]: string } = {
-        7: `\u{1B}[35m${status}\u{1B}[0m`,
-        5: `\u{1B}[31m${status}\u{1B}[0m`,
-        4: `\u{1B}[33m${status}\u{1B}[0m`,
-        3: `\u{1B}[36m${status}\u{1B}[0m`,
-        2: `\u{1B}[32m${status}\u{1B}[0m`,
-        1: `\u{1B}[32m${status}\u{1B}[0m`,
-        0: `\u{1B}[33m${status}\u{1B}[0m`,
-    };
+    const out = new Map<number, string>([
+        [7, `\u{1B}[35m${status}\u{1B}[0m`],
+        [5, `\u{1B}[31m${status}\u{1B}[0m`],
+        [4, `\u{1B}[33m${status}\u{1B}[0m`],
+        [3, `\u{1B}[36m${status}\u{1B}[0m`],
+        [2, `\u{1B}[32m${status}\u{1B}[0m`],
+        [1, `\u{1B}[32m${status}\u{1B}[0m`],
+        [0, `\u{1B}[33m${status}\u{1B}[0m`],
+    ]);
 
     const calculateStatus = Math.trunc(status / 100);
 
-    return out[calculateStatus];
+    return out.get(calculateStatus);
 };
 
 const middleware: MiddlewareHandler = async (ctx, next) => {

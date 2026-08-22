@@ -55,7 +55,7 @@ async function handler(ctx) {
             const bookImageUrl = bookImageRelative ? baseUrl + bookImageRelative : '';
             const bookDetailUrl = bookContent('li.work_block').prop('data-route');
 
-            const { renderedDescription, publishDate } = (await cache.tryGet(bookDetailUrl, async () => {
+            const { renderedDescription, publishDate } = await cache.tryGet(bookDetailUrl, async () => {
                 const detailResponse = await got(bookDetailUrl);
                 const detailPage = load(detailResponse.data);
                 const bookDescription = detailPage('article.intro_cont').html() || '';
@@ -87,7 +87,7 @@ async function handler(ctx) {
                     renderedDescription,
                     publishDate,
                 };
-            })) as { renderedDescription: string; publishDate: string };
+            });
 
             return {
                 title: bookTitle,

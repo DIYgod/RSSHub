@@ -42,10 +42,10 @@ export const route: Route = {
                 const a = $(item).find('a').first();
                 return {
                     link: `${baseUrl}${a.attr('href')}`,
-                    title: a.attr('title'),
+                    title: a.attr('title')!,
                 };
             });
-        const items = (await Promise.all(list.map((elem) => getFeedItem(elem)))) as DataItem[];
+        const items = await Promise.all(list.map((elem) => getFeedItem(elem)));
         return {
             title: typeMap[type],
             link: url,
@@ -54,8 +54,8 @@ export const route: Route = {
     },
 };
 
-async function getFeedItem(item) {
-    return await cache.tryGet(item.link, async () => {
+async function getFeedItem(item: { link: string; title: string }): Promise<DataItem> {
+    return await cache.tryGet<DataItem>(item.link, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);
         return {

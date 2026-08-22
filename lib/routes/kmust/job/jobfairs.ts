@@ -1,5 +1,14 @@
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+interface Jobfair {
+    meet_day?: string;
+    meet_time?: string;
+    title?: string;
+    school_name?: string;
+    address?: string;
+    fair_id?: string;
+}
 
 export const route: Route = {
     path: '/job/jobfairs',
@@ -14,7 +23,7 @@ const baseUrl = 'http://job.kmust.edu.cn';
 
 async function handler(): Promise<Data> {
     const pageUrl = `${baseUrl}/module/getjobfairs?start_page=1&keyword=&count=20&start=1&_=${Date.now()}`;
-    const data = await ofetch(pageUrl);
+    const data = await ofetch<{ data: Jobfair[] }>(pageUrl);
 
     return {
         title: '双选会-昆明理工大学就业网',
@@ -26,6 +35,6 @@ async function handler(): Promise<Data> {
                 description: `时间：${meetDay} ${meetTime}<br>地点：${schoolName ? `${schoolName}-${address}` : address}`,
                 link: `${baseUrl}/detail/jobfair?id=${fairId}`,
             };
-        }) as DataItem[],
+        }),
     };
 }

@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('a.cjcx_biaob, ul#div li a')
         .slice(0, limit)
@@ -32,8 +32,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl as string, baseUrl).href) : undefined,
-                language: language as Language,
+                link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl, baseUrl).href) : undefined,
+                language,
             };
 
             return processedItem;
@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -87,15 +87,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
+    const logoSrc: string | undefined = $('a.logo img').attr('src');
+
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('a.logo img').attr('src') ? new URL($('a.logo img').attr('src') as string, baseUrl).href : undefined,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('meta[name="SiteName"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

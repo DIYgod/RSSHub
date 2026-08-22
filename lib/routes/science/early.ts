@@ -55,7 +55,7 @@ async function handler(ctx) {
         description: $('.body02').text().trim(),
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageUrl,
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
         item: items,
     };
 }

@@ -7,18 +7,21 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import app from '@/app';
 import { config } from '@/config';
 import registryApp, { collectNamespaceRoots, namespaces, resolveModuleNamespace, sortRoutes } from '@/registry';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 // The dev registry lists lib/routes at startup; expose the fixture directory names there
-const fakeTopDirectories = vi.hoisted(() => ({ names: [] as string[] }));
+const fakeTopDirectories = vi.hoisted(() => {
+    const names: string[] = [];
+    return { names };
+});
 
 vi.mock('node:fs', async (importOriginal) => {
     const actual = await importOriginal<typeof fs>();
-    const readdirSync = ((target: unknown, options: unknown) => {
-        if (fakeTopDirectories.names.length > 0 && String(target).endsWith(path.join('lib', 'routes'))) {
+    const readdirSync = ((...args: Parameters<typeof actual.readdirSync>) => {
+        if (fakeTopDirectories.names.length > 0 && String(args[0]).endsWith(path.join('lib', 'routes'))) {
             return fakeTopDirectories.names.map((name) => ({ name, isDirectory: () => true }));
         }
-        return actual.readdirSync(target as never, options as never);
+        return actual.readdirSync(...args);
     }) as typeof actual.readdirSync;
     return { ...actual, readdirSync, default: { ...actual, readdirSync } };
 });
@@ -157,16 +160,34 @@ describe('nested namespace mounting', () => {
     });
 });
 
-const perDirectoryMock = (fakeDirectories: Record<string, Record<string, unknown>>) => {
+type FakeRouteModule = {
+    route: {
+        path: string | string[];
+        name: string;
+        handler?: () => Data;
+        module?: () => Promise<{ route: { handler: () => Response } }>;
+    };
+};
+
+type FakeApiRouteModule = {
+    apiRoute: {
+        path: string;
+        name: string;
+        handler?: () => { ok: boolean };
+        module?: () => Promise<{ apiRoute: { handler: () => { ok: boolean } } }>;
+    };
+};
+
+const perDirectoryMock = (fakeDirectories: Record<string, Record<string, FakeRouteModule | FakeApiRouteModule>>) => {
     fakeTopDirectories.names = Object.keys(fakeDirectories);
     return vi.fn(({ targetDirectoryPath }: { targetDirectoryPath: string }) => {
-        const name = targetDirectoryPath.split(/[/\\]/).findLast(Boolean) as string;
+        const name = path.basename(targetDirectoryPath);
         return Promise.resolve(fakeDirectories[name]);
     });
 };
 
 const wrap = (registry: Hono) => {
-    const app = new Hono<{ Variables: { data: Record<string, unknown>; apiData: Record<string, unknown> } }>();
+    const app = new Hono<{ Variables: { data: Data; apiData: { ok: boolean } | { code: number } } }>();
     app.use(async (ctx, next) => {
         const response = await next();
         const apiData = ctx.get('apiData');

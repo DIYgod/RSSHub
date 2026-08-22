@@ -38,11 +38,11 @@ async function handler(ctx) {
 
     const { data } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
     const categoryId = data[0].id;
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}`);
+    const { data: posts }: { data: WPPost[] } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Category: ${category}`,
         link: categoryUrl,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

@@ -1,5 +1,4 @@
 import { raw } from 'hono/html';
-import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
 type DescriptionData = {
@@ -15,7 +14,7 @@ type DescriptionData = {
 };
 
 const AbcDescription = ({ image, enclosure, description }: DescriptionData) => {
-    const enclosureTag = enclosure?.type?.split('/', 1)[0] as unknown as FC | undefined;
+    const enclosureTag = enclosure?.type?.split('/', 1)[0] as 'audio' | 'video' | undefined;
 
     return (
         <>

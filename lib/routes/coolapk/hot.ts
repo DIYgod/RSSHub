@@ -1,4 +1,4 @@
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 import utils from './utils';
@@ -122,14 +122,12 @@ async function handler(ctx) {
         }
     }
 
-    let out = await Promise.all(t.map((item) => utils.parseDynamic(item)));
-
-    out = out.filter(Boolean);
+    const out = await Promise.all(t.map((item) => utils.parseDynamic(item)));
 
     return {
         title,
         link: 'https://www.coolapk.com/',
         description: '热榜-' + title,
-        item: out as DataItem[],
+        item: out.filter((item) => item !== undefined),
     };
 }

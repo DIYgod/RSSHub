@@ -1,13 +1,16 @@
+import { z } from 'zod';
+
 import { config } from '@/config';
 import logger from '@/utils/logger';
 import md5 from '@/utils/md5';
 
 import type CacheModule from './base';
+import { stringify } from './base';
 
-type CacheHitResponse = {
-    hit: true;
-    value: string;
-};
+const cacheHitSchema = z.object({
+    hit: z.literal(true),
+    value: z.string(),
+});
 
 const status = { available: false };
 
@@ -21,7 +24,7 @@ const cacheUrl = (key: string, refresh = false) => {
     return refresh ? `${url}?refresh=1` : url;
 };
 
-const requestSignal = () => (typeof AbortSignal.timeout === 'function' ? AbortSignal.timeout(config.requestTimeout) : undefined);
+const requestSignal = () => ('timeout' in AbortSignal ? AbortSignal.timeout(config.requestTimeout) : undefined);
 
 const request = async (url: string, init: Omit<RequestInit, 'headers'> = {}, headers: Record<string, string> = {}) => {
     if (!status.available || !apiToken) {
@@ -53,7 +56,9 @@ const readResponseText = async (response: Response) => {
 
 const readCacheHitResponse = async (response: Response) => {
     try {
-        return (await response.json()) as CacheHitResponse;
+        const payload = await response.json();
+        const parsed = cacheHitSchema.safeParse(payload);
+        return parsed.success ? parsed.data : null;
     } catch {
         return null;
     }
@@ -110,7 +115,7 @@ export default {
         }
 
         const data = await readCacheHitResponse(response);
-        if (data?.hit === true && typeof data.value === 'string') {
+        if (data) {
             return data.value;
         }
 
@@ -138,17 +143,12 @@ export default {
         await logUnexpectedResponse('has', response);
         return false;
     },
-    set: async (key: string, value?: string | Record<string, any>, maxAge = config.cache.contentExpire) => {
+    set: async <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
         if (!key) {
             return;
         }
 
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
+        const stored = stringify(value);
 
         const response = await request(
             cacheUrl(key),
@@ -156,7 +156,7 @@ export default {
                 method: 'PUT',
                 body: JSON.stringify({
                     ttl: maxAge,
-                    value,
+                    value: stored,
                 }),
             },
             {
@@ -170,4 +170,4 @@ export default {
     },
     clients: {},
     status,
-} as CacheModule;
+} satisfies CacheModule;

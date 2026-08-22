@@ -33,23 +33,26 @@ export const route: Route = {
 :::`,
 };
 
+const sortMap = new Map(Object.entries(MercariSort));
+const orderMap = new Map(Object.entries(MercariOrder));
+const statusMap = new Map([
+    ['on_sale', MercariStatus.onsale],
+    ['sold_out|trading', MercariStatus.soldout],
+]);
+
 function parseSearchQuery(queryString: string) {
     const params = new URLSearchParams(queryString);
 
     const keyword = params.get('keyword') || '';
-    const sort = MercariSort[params.get('sort') as keyof typeof MercariSort] || MercariSort.default;
-    const order = MercariOrder[params.get('order') as keyof typeof MercariOrder] || MercariOrder.desc;
+    const sort = sortMap.get(params.get('sort') ?? '') || MercariSort.default;
+    const order = orderMap.get(params.get('order') ?? '') || MercariOrder.desc;
 
-    const statusMap: Record<string, keyof typeof MercariStatus> = {
-        on_sale: 'onsale',
-        'sold_out|trading': 'soldout',
-    };
     const statusArray =
         params
             .get('status')
             ?.split(',')
-            .map((s) => MercariStatus[statusMap[s]])
-            .filter(Boolean) || [];
+            .map((s) => statusMap.get(s))
+            .filter((status) => status !== undefined) || [];
 
     const attributeIds = [
         '7bd3eacc-ae45-4d73-bc57-a611c9432014', // 色

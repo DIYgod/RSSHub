@@ -73,7 +73,7 @@ export const signedHeaders = (path: string, query: Record<string, string>) => {
         .toSorted(sortByCodeUnit)
         .map((k) => `${k}=${query[k]}`)
         .join('&')}`;
-    const headers: Record<string, string> = {
+    const headers = {
         'User-Agent': device.ua,
         aid: device.aid,
         at: ms.toString(16),
@@ -81,9 +81,9 @@ export const signedHeaders = (path: string, query: Record<string, string>) => {
         di: device.di,
         sdi: device.sdi,
     };
-    const str2 = Object.keys(headers)
-        .toSorted(sortByCodeUnit)
-        .map((k) => headers[k])
+    const str2 = Object.entries(headers)
+        .toSorted(([a], [b]) => sortByCodeUnit(a, b))
+        .map(([, v]) => v)
         .join('');
     return {
         ...headers,

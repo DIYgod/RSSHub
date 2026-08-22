@@ -28,7 +28,7 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const list = $('.archive-item-link')
+    const list: DataItem[] = $('.archive-item-link')
         .toArray()
         .slice(0, 15)
         .map((item) => {
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

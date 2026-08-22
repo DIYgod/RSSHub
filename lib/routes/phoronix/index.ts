@@ -233,7 +233,7 @@ async function handler(ctx) {
                             })
                         )
                     );
-                    content.append(pages as unknown as string);
+                    content.append(...pages);
                 }
 
                 const images = content.find('img');

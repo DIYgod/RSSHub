@@ -4,19 +4,22 @@
 import { config } from '@/config';
 
 import type CacheModule from './base';
+import { stringify } from './base';
 import kv, { getKVNamespace } from './kv';
 
 // Re-export setKVNamespace for use in app.worker.tsx
 
-const globalCache: {
+type GlobalCache = {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
-    set: (key: string, value?: string | Record<string, any>, maxAge?: number) => any;
+    set: <T>(key: string, value?: string | T, maxAge?: number) => any;
     /**
      * Atomically set `key` to '1' and return true, unless it is already '1' (return false).
      * A get-then-set in the caller races: two same-tick requests would both read "not '1'".
      */
     claim: (key: string, maxAge: number) => Promise<boolean> | boolean;
-} = {
+};
+
+const globalCache: GlobalCache = {
     get: async (key) => {
         if (key && kv.status.available && getKVNamespace()) {
             const value = await getKVNamespace()!.get(key);
@@ -28,14 +31,9 @@ const globalCache: {
         if (!kv.status.available || !getKVNamespace()) {
             return;
         }
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
+        const stored = stringify(value);
         if (key) {
-            await getKVNamespace()!.put(key, value, { expirationTtl: maxAge });
+            await getKVNamespace()!.put(key, stored, { expirationTtl: maxAge });
         }
     },
     claim: async (key, maxAge) => {
@@ -64,7 +62,7 @@ export default {
      * @param refresh Whether to renew the cache expiration time when the cache is hit. `true` by default.
      * @returns
      */
-    tryGet: async <T extends string | Record<string, any>>(key: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
+    tryGet: async <T>(key: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
         if (typeof key !== 'string') {
             throw new TypeError('Cache key must be a string');
         }

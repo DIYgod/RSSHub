@@ -26,7 +26,7 @@ async function handler() {
     const link = `${baseUrl}/tzgg.htm`;
     const res = await ofetch(link);
     const $ = load(res);
-    const list = $('.btlist ul li')
+    const list: DataItem[] = $('.btlist ul li')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -36,7 +36,7 @@ async function handler() {
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
             };
-        }) as DataItem[];
+        });
     const item = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {

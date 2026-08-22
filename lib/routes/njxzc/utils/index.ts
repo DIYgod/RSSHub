@@ -48,5 +48,5 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
 }
 
 export function resolveArticles(list: NoticeItem[]): Promise<DataItem[]> {
-    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item)) as Promise<DataItem>));
+    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item))));
 }

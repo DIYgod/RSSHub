@@ -27,25 +27,25 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
 
-    const struct: Record<string, { url: string }> = {
-        all: { url: 'https://yzb.bupt.edu.cn/zsjj/ssyjs.htm' },
-        sice: { url: 'https://sice.bupt.edu.cn/rcpy/yjsjy/zsgz.htm' },
-        see: { url: 'https://see.bupt.edu.cn/rcpy/zsxx.htm' },
-        scs: { url: 'https://scs.bupt.edu.cn/rcpy1/yjspy/zsxx1.htm' },
-        scss: { url: 'https://scss.bupt.edu.cn/zsjy1/yjszs.htm' },
-        ai: { url: 'https://ai.bupt.edu.cn/rcpy/yjspy/yjszs.htm' },
-        iea: { url: 'https://iea.bupt.edu.cn/rcpy/zsxx/yjszs.htm' },
-        ic: { url: 'https://ic.bupt.edu.cn/rcpy1/yjspy.htm' },
-        sem: { url: 'https://sem.bupt.edu.cn/jxxm/ss/zsxx.htm' },
-        math: { url: 'https://math.bupt.edu.cn/rcpy/zsxx.htm' },
-        spst: { url: 'https://spst.bupt.edu.cn/zszp/yjszs.htm' },
-        gce: { url: 'https://gce.bupt.edu.cn/rcpy/zsxx.htm' },
-        sh: { url: 'https://sh.bupt.edu.cn/rcpy/yjszs.htm' },
-        sdmda: { url: 'https://sdmda.bupt.edu.cn/jyjx/yjsjy/zsxx.htm' },
-        mtri: { url: 'https://mtri.bupt.edu.cn/yjsgz/zsgz.htm' },
-    };
+    const struct = new Map([
+        ['all', { url: 'https://yzb.bupt.edu.cn/zsjj/ssyjs.htm' }],
+        ['sice', { url: 'https://sice.bupt.edu.cn/rcpy/yjsjy/zsgz.htm' }],
+        ['see', { url: 'https://see.bupt.edu.cn/rcpy/zsxx.htm' }],
+        ['scs', { url: 'https://scs.bupt.edu.cn/rcpy1/yjspy/zsxx1.htm' }],
+        ['scss', { url: 'https://scss.bupt.edu.cn/zsjy1/yjszs.htm' }],
+        ['ai', { url: 'https://ai.bupt.edu.cn/rcpy/yjspy/yjszs.htm' }],
+        ['iea', { url: 'https://iea.bupt.edu.cn/rcpy/zsxx/yjszs.htm' }],
+        ['ic', { url: 'https://ic.bupt.edu.cn/rcpy1/yjspy.htm' }],
+        ['sem', { url: 'https://sem.bupt.edu.cn/jxxm/ss/zsxx.htm' }],
+        ['math', { url: 'https://math.bupt.edu.cn/rcpy/zsxx.htm' }],
+        ['spst', { url: 'https://spst.bupt.edu.cn/zszp/yjszs.htm' }],
+        ['gce', { url: 'https://gce.bupt.edu.cn/rcpy/zsxx.htm' }],
+        ['sh', { url: 'https://sh.bupt.edu.cn/rcpy/yjszs.htm' }],
+        ['sdmda', { url: 'https://sdmda.bupt.edu.cn/jyjx/yjsjy/zsxx.htm' }],
+        ['mtri', { url: 'https://mtri.bupt.edu.cn/yjsgz/zsgz.htm' }],
+    ]);
 
-    const college = struct[type];
+    const college = struct.get(type);
     if (!college) {
         throw new Error(`Unknown college: ${type}`);
     }
@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
 
     const list = $('a[href*="/info/"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const $parent = $item.closest('li, dd');
             const text = $parent.text();
@@ -86,7 +86,7 @@ async function handler(ctx: Context) {
                 pubDate: date ? timezone(parseDate(date, 'YYYY-M-D'), 8) : undefined,
             };
         })
-        .filter((item) => item.pubDate) as DataItem[];
+        .filter((item) => item.pubDate);
 
     const result = await Promise.all(
         list.map((item) =>

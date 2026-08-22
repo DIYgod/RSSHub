@@ -72,9 +72,32 @@ async function handler(ctx) {
     };
 }
 
-const parseDescriptionFromState = (rcState) => {
-    const rcStateJson = JSON.parse(rcState);
-    const news = Object.values(rcStateJson?.pages?.pages ?? {})[0] as any;
+type RadioCanadaPicture = {
+    pattern?: string;
+    alt?: string;
+    legend?: string;
+};
+
+type RadioCanadaPage = {
+    data?: {
+        newsStory?: {
+            headerMultimediaItem?: { picture?: RadioCanadaPicture };
+            primer?: string;
+            body?: {
+                html?: string;
+                attachments?: Array<{ picture?: RadioCanadaPicture; dimensionRatio?: string }>;
+            };
+        };
+    };
+};
+
+type RadioCanadaState = {
+    pages?: { pages?: Record<string, RadioCanadaPage | undefined> };
+};
+
+const parseDescriptionFromState = (rcState: string) => {
+    const rcStateJson: RadioCanadaState | null = JSON.parse(rcState);
+    const news = Object.values(rcStateJson?.pages?.pages ?? {})[0];
 
     const headerImg = news?.data?.newsStory?.headerMultimediaItem?.picture;
     const headerImgUrl = headerImg?.pattern ? headerImg?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', '16x9') : '';

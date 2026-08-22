@@ -57,19 +57,19 @@ const UNIT_PATTERNS: UnitPattern[] = [
     { unit: 'seconds', regExp: /(\d+)\s*(?:秒[鐘钟]?|s(?:ec(?:ond)?)?s?)/i },
 ];
 
-const CN_NUM_MAP: Record<string, string> = {
-    一: '1',
-    二: '2',
-    两: '2',
-    三: '3',
-    四: '4',
-    五: '5',
-    六: '6',
-    七: '7',
-    八: '8',
-    九: '9',
-    十: '10',
-};
+const CN_NUM_MAP = new Map([
+    ['一', '1'],
+    ['二', '2'],
+    ['两', '2'],
+    ['三', '3'],
+    ['四', '4'],
+    ['五', '5'],
+    ['六', '6'],
+    ['七', '7'],
+    ['八', '8'],
+    ['九', '9'],
+    ['十', '10'],
+]);
 
 /**
  * Calculates the date of the most recent occurrence of a specific weekday.
@@ -160,7 +160,7 @@ const normalize = (date: string): string => {
     str = str.replaceAll(/[几幾数]/g, '3');
 
     // 4. Chinese numerals
-    str = str.replaceAll(/[一二两三四五六七八九十]/g, (match) => CN_NUM_MAP[match] || match);
+    str = str.replaceAll(/[一二两三四五六七八九十]/g, (match) => CN_NUM_MAP.get(match) ?? match);
 
     // 5. Remove commas
     str = str.replaceAll(',', '');
@@ -195,10 +195,13 @@ const parseDuration = (str: string): plugin.Duration => {
  * A wrapper around `dayjs()` to parse standard date formats.
  *
  * @param date - The date input (string, number, or Date object).
- * @param options - Optional Day.js configuration (e.g., format string).
+ * @param format - Optional Day.js format string(s) or config object.
+ * @param localeOrStrict - Optional locale string, or the strict flag when no locale is given (mirrors `dayjs()`).
+ * @param strict - Optional strict flag when a locale is given.
  * @returns A native JavaScript Date object.
  */
-export const parseDate = (date: string | number | Date, ...options: OptionType[]): Date => dayjs(date, ...options).toDate();
+export const parseDate = (date: string | number | Date, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date =>
+    (typeof localeOrStrict === 'string' ? dayjs(date, format, localeOrStrict, strict) : dayjs(date, format, localeOrStrict)).toDate();
 
 /**
  * Processes a date string composed of a semantic keyword and an optional time component.
@@ -282,10 +285,12 @@ const processSemanticKeyword = (baseTime: Dayjs, timePart: string, originalConte
  *    - Any format not matched above is passed to Day.js with the provided options.
  *
  * @param date - The relative or absolute date string to parse.
- * @param options - Optional configuration passed to Day.js for fallback parsing.
+ * @param format - Optional Day.js format string(s) or config object for fallback parsing.
+ * @param localeOrStrict - Optional locale string, or the strict flag when no locale is given (mirrors `dayjs()`).
+ * @param strict - Optional strict flag when a locale is given.
  * @returns A parsed JavaScript Date object.
  */
-export const parseRelativeDate = (date: string, ...options: OptionType[]): Date => {
+export const parseRelativeDate = (date: string, format?: OptionType, localeOrStrict?: string | boolean, strict?: boolean): Date => {
     if (!date) {
         return new Date();
     }
@@ -326,5 +331,5 @@ export const parseRelativeDate = (date: string, ...options: OptionType[]): Date 
     }
 
     // Strategy 4: Fallback to standard Day.js parsing
-    return parseDate(date, ...options);
+    return parseDate(date, format, localeOrStrict, strict);
 };

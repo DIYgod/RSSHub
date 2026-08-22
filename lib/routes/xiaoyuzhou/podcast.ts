@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -88,7 +88,7 @@ async function handler(ctx) {
                 const response = await ofetch(episodeLink);
                 const episodeItem = response.pageProps.episode;
                 item.description = episodeItem.shownotes || episodeItem.description || episodeItem.title || '';
-                return item as DataItem;
+                return item;
             })
         )
     );

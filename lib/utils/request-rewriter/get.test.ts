@@ -19,7 +19,7 @@ describe('request-rewriter get wrapper', () => {
         const origin = vi.fn(() => 'fallback');
         const wrapped = getWrappedGet(origin as any);
         const callback = vi.fn();
-        const options = { href: 'http://' } as any;
+        const options = { href: 'http://' };
 
         const result = wrapped(options, callback);
 

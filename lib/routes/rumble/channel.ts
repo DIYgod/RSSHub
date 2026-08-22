@@ -68,7 +68,7 @@ function parseStructuredVideoObject($: CheerioAPI): RumbleVideoObject | undefine
             const parsed = JSON.parse($(element).text());
             const videoObject = Array.isArray(parsed) ? parsed.find((item) => item?.['@type'] === 'VideoObject') : parsed;
             if (videoObject?.['@type'] === 'VideoObject') {
-                return videoObject as RumbleVideoObject;
+                return videoObject;
             }
         } catch {
             continue;

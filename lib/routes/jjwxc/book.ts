@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -78,7 +78,7 @@ async function handler(ctx) {
                     chapterUpdatedTime,
                 }),
                 author,
-                category: [isVip ? 'VIP' : undefined, ...(category?.split(/\s/) ?? [])].filter(Boolean) as string[],
+                category: [isVip ? 'VIP' : '', ...(category?.split(/\s/) ?? [])].filter(Boolean),
                 guid: `jjwxc-${id}#${chapterId}`,
                 pubDate: timezone(parseDate(chapterUpdatedTime), 8),
                 isVip,
@@ -123,7 +123,7 @@ async function handler(ctx) {
         title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author}${keywords[0]}`,
         link: currentUrl,
         description: $('span[itemprop="description"]').text(),
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image,
         icon,
         logo: icon,

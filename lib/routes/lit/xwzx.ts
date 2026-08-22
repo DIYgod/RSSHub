@@ -55,7 +55,7 @@ async function handler(ctx: Context): Promise<Data> {
         })
     );
 
-    const list = lists.flat().toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()) as DataItem[];
+    const list: DataItem[] = lists.flat().toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
     const items = await Promise.all(
         list.map((item) =>
@@ -85,6 +85,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: name === 'all' ? '新闻中心 - 洛阳理工学院' : `${nameProps[name]} - 洛理新闻中心`,
         link: name === 'all' ? baseUrl : new URL(`${name}.htm`, baseUrl).href,
         description: '洛阳理工学院新闻中心 RSS',
-        item: items as DataItem[],
+        item: items,
     };
 }

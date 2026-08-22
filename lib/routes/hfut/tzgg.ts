@@ -25,10 +25,10 @@ async function handler() {
         item: $('#tzz li')
             .slice(0, 10)
             .toArray()
-            .map((elem) => ({
-                title: $('a', elem).attr('title'),
+            .map((elem): DataItem => ({
+                title: $('a', elem).attr('title')!,
                 link: $('a', elem).attr('href'),
                 pubDate: timezone(parseDate($('a > i', elem).text().replace('年', '-').replace('月', '-').replace('日', '')), 8),
-            })) as DataItem[],
+            })),
     };
 }

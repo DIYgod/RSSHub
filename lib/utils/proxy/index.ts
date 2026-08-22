@@ -3,6 +3,7 @@ import { PacProxyAgent } from 'pac-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 import { ProxyAgent } from 'undici';
 
+import type { Config } from '@/config';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 
@@ -17,7 +18,7 @@ interface ProxyExport {
     agent: PacProxyAgent<string> | HttpsProxyAgent<string> | SocksProxyAgent | null;
     dispatcher: ProxyAgent | null;
     proxyUri?: string;
-    proxyObj: Record<string, any>;
+    proxyObj: Config['proxy'];
     proxyUrlHandler?: URL | null;
     multiProxy?: MultiProxyResult;
     getCurrentProxy: () => ProxyState | null;
@@ -27,11 +28,11 @@ interface ProxyExport {
 }
 
 let proxyUri: string | undefined;
-let proxyObj: Record<string, any> = {};
+let proxyObj: Config['proxy'];
 let proxyUrlHandler: URL | null = null;
 let multiProxy: MultiProxyResult | undefined;
 
-const createAgentForProxy = (uri: string, proxyObj: Record<string, any>): any => {
+const createAgentForProxy = (uri: string, proxyObj: Config['proxy']): any => {
     if (uri.startsWith('http')) {
         return new HttpsProxyAgent(uri, {
             headers: {
@@ -45,7 +46,7 @@ const createAgentForProxy = (uri: string, proxyObj: Record<string, any>): any =>
     return null;
 };
 
-const createDispatcherForProxy = (uri: string, proxyObj: Record<string, any>): ProxyAgent | null => {
+const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy']): ProxyAgent | null => {
     if (uri.startsWith('http')) {
         return new ProxyAgent({
             uri,

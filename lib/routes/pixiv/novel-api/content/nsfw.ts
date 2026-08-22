@@ -29,7 +29,7 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
             virtualConsole,
         });
 
-        const novelDetail = window.pixiv?.novel as NSFWNovelDetail;
+        const novelDetail: NSFWNovelDetail | undefined = window.pixiv?.novel;
 
         window.close();
 

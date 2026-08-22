@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { ParsedQuery } from 'query-string';
 import queryString from 'query-string';
 
 import { config } from '@/config';
@@ -49,7 +50,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let queryParams: Record<string, any> = {};
+    let queryParams: ParsedQuery = {};
     const path = ctx.req.param('path');
     if (/^f\d+-\d+/.test(path)) {
         queryParams.fid = path.match(/^f(\d+)-\d+/)[1];

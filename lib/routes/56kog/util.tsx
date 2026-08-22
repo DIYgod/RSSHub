@@ -10,6 +10,11 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.56kog.com';
 
+interface Detail {
+    label: string;
+    value: any;
+}
+
 const fetchItems = async (limit, currentUrl) => {
     const { data: response } = await got(currentUrl, {
         responseType: 'buffer',
@@ -43,7 +48,7 @@ const fetchItems = async (limit, currentUrl) => {
 
                     const details = content('div.mohe-content p')
                         .toArray()
-                        .map((detail): { label: string; value: any } => {
+                        .map((detail): Detail => {
                             const $detail = content(detail);
                             const as = $detail.find('a');
 
@@ -107,7 +112,7 @@ const fetchItems = async (limit, currentUrl) => {
     };
 };
 
-const renderDescription = ({ images, details }: { images?: Array<{ src?: string; alt?: string }>; details?: Array<{ label: string; value: any }> }): string =>
+const renderDescription = ({ images, details }: { images?: Array<{ src?: string; alt?: string }>; details?: Detail[] }): string =>
     renderToString(
         <>
             {images?.map((image, index) =>

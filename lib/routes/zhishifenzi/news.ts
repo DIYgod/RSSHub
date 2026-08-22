@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
     });
 
     const $ = load(response);
-    const list = $('h5 a')
+    const list: DataItem[] = $('h5 a')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -57,7 +57,7 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
             };
-        }) as DataItem[];
+        });
 
     const out = await Promise.all(
         list.map((item) =>

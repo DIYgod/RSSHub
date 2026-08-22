@@ -1,13 +1,5 @@
 // Worker-compatible logger shim using console
 // Winston is not compatible with Cloudflare Workers
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface LogInfo {
-    level: string;
-    message: string;
-    timestamp?: string;
-    [key: string]: unknown;
-}
-
 type LogMethod = (message: string, ...meta: unknown[]) => void;
 
 interface Logger {

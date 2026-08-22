@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://efe.com';
 
-const categories: Record<string, string> = {
+const categories = {
     mundo: 'Mundo',
     espana: 'España',
     economia: 'Economía',
@@ -19,7 +19,7 @@ const categories: Record<string, string> = {
     'medio-ambiente': 'Medio Ambiente',
     educacion: 'Educación',
     'euro-efe': 'EuroEFE',
-};
+} satisfies Record<string, string>;
 
 export const route: Route = {
     path: '/:category?',

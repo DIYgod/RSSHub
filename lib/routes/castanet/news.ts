@@ -65,8 +65,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link as string, async () => {
-                const response = await ofetch(item.link as string);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 delete item.content;

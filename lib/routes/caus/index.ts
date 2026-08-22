@@ -36,6 +36,12 @@ export const route: Route = {
 | 0    | 1    | 2    | 3    | 8    | 6    |`,
 };
 
+interface PostsQuery {
+    per_page: number;
+    _embed: string;
+    categories?: number;
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') || '0';
     const cat = categories[category] || categories[0];
@@ -43,7 +49,7 @@ async function handler(ctx) {
     const rootUrl = 'https://caus.com';
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
-    const query: Record<string, string | number> = {
+    const query: PostsQuery = {
         per_page: 20,
         _embed: '',
     };

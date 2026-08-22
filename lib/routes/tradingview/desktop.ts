@@ -73,12 +73,14 @@ async function handler(ctx) {
     const titleSplits = title.split(/—/);
     const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title,
         link: currentUrl,
         description: titleSplits[0],
-        language: $('html').prop('lang') as Language,
+        language,
         icon,
         logo: icon,
         subtitle: titleSplits[0],

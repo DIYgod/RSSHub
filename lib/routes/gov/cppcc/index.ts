@@ -30,7 +30,7 @@ async function handler(ctx: Context) {
 
     const list = $('#txtBox li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('.time').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

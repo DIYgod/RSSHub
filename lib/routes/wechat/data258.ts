@@ -116,7 +116,7 @@ async function handler(ctx) {
                 if (response.data.includes('今日浏览次数已达上限')) {
                     // !!! as long as cache hits, the link will not be crawled and consume the limit !!!
                     // !!! so that's not a big problem if the RSSHub instance is self-hosted !!!
-                    err = new (got as any).RequestError(response.data, {}, response.request);
+                    err = new Error(response.data);
                     return '';
                 }
                 const $ = load(response.data);

@@ -20,18 +20,18 @@ async function handler(): Promise<Data> {
     const response = await ofetch(url);
     const $ = load(response);
 
-    const list = $('div#wp_news_w6 ul.news_list li')
+    const list: DataItem[] = $('div#wp_news_w6 ul.news_list li')
         .slice(0, 10)
         .toArray()
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
             return {
-                title: $link.attr('title'),
+                title: $link.attr('title')!,
                 link: new URL($link.attr('href')!, baseUrl).href,
                 pubDate: parseDate($item.find('span.news_meta').text()),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -49,7 +49,7 @@ async function handler(): Promise<Data> {
     return {
         title: '中国药科大学 - 教务处 | 最新通知',
         link: url,
-        item: items as DataItem[],
+        item: items,
         description: '中国药科大学 | 教务处',
     };
 }

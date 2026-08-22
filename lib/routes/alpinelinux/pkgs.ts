@@ -75,7 +75,7 @@ async function handler(ctx: Context): Promise<Data> {
     query.append('name', name);
     const link = `https://pkgs.alpinelinux.org/packages?${query.toString()}`;
     const key = `alpinelinux:packages:${query.toString()}`;
-    const rowData = (await cache.tryGet(
+    const rowData = await cache.tryGet(
         key,
         async () => {
             const response = await got({
@@ -86,7 +86,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
         config.cache.routeExpire,
         false
-    )) as RowData[];
+    );
 
     const items = rowData.map((e) => ({
         title: `${e.package}@${e.version}/${e.architecture}`,

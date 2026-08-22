@@ -30,5 +30,5 @@ async function handler(ctx: Context) {
         link: `${INDEX_URL}#/me/posts?uuid=${uid}`,
         image: userInfo.avatar,
         item: await generatePostFeeds(posts),
-    } as Data;
+    } satisfies Data;
 }

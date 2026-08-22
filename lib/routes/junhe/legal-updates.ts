@@ -15,7 +15,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('a.content-wrap')
         .slice(0, limit)
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.d-content').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -66,7 +66,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: '君合律师事务所',
-        language: language as Language,
+        language,
     };
 };
 

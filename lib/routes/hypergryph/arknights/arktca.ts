@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +34,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = `https://${url}`;
     const { data: allResponse } = await got(`${baseUrl}/posts/`);
     const $ = load(allResponse);
@@ -119,7 +119,7 @@ async function handler() {
         logo: logoUrl,
         image: logoUrl,
         author,
-        language: 'zh-CN' as Language,
-        item: journals.flat(Infinity) as DataItem[],
+        language: 'zh-CN',
+        item: journals.flat(),
     };
 }

@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
 
 const ALLOWED_TAGS = new Set(['div', 'span', 'p', 'br', 'b', 'strong', 'i', 'em', 'u', 's', 'a', 'img', 'ul', 'ol', 'li', 'blockquote', 'hr', 'pre', 'code']);
-const ALLOWED_ATTRS: Record<string, string[]> = {
-    a: ['href', 'target', 'rel'],
-    img: ['src', 'alt', 'title', 'style'],
-    div: ['style'],
-    span: ['style'],
-};
+const ALLOWED_ATTRS = new Map([
+    ['a', ['href', 'target', 'rel']],
+    ['img', ['src', 'alt', 'title', 'style']],
+    ['div', ['style']],
+    ['span', ['style']],
+]);
 
 export const processContent = (html: string): string => {
     const $ = load(html);
@@ -53,7 +53,7 @@ export const processContent = (html: string): string => {
         if (el.type !== 'tag') {
             return;
         }
-        const allowed = new Set(ALLOWED_ATTRS[el.name] || []);
+        const allowed = new Set(ALLOWED_ATTRS.get(el.name) || []);
         const attrKeys = Object.keys(el.attribs || {});
         for (const attr of attrKeys) {
             if (!allowed.has(attr)) {

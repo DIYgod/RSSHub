@@ -1,9 +1,21 @@
 import cache from '@/utils/cache';
 import ofetch from '@/utils/got';
 
+interface LuoguUserResponse {
+    data: {
+        currentData: {
+            user: {
+                name: string;
+                slogan: string;
+                avatar: string;
+            };
+        };
+    };
+}
+
 export const getUserInfoFromUID = (uid) =>
     cache.tryGet('luogu:username:' + uid, async () => {
-        const data = await ofetch(`https://www.luogu.com/user/${uid}`, {
+        const data: LuoguUserResponse = await ofetch(`https://www.luogu.com/user/${uid}`, {
             query: {
                 _contentOnly: 1,
             },
@@ -14,4 +26,4 @@ export const getUserInfoFromUID = (uid) =>
             description: data.data.currentData.user.slogan,
             avatar: data.data.currentData.user.avatar,
         };
-    }) as Promise<{ name: string; description: string; avatar: string }>;
+    });

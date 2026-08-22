@@ -6,10 +6,10 @@ import type { City, District } from './types';
 
 export const baseUrl = 'https://www.wellcee.com';
 export const getCitys = () =>
-    cache.tryGet(
+    cache.tryGet<City[]>(
         'wellcee:citys',
         async () => {
-            const response = await ofetch(`${baseUrl}/api/home/index`, {
+            const response = await ofetch<{ data: { citys: City[] } }>(`${baseUrl}/api/home/index`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -25,13 +25,13 @@ export const getCitys = () =>
         },
         config.cache.routeExpire,
         false
-    ) as Promise<City[]>;
+    );
 
 export const getDistricts = (cityId: string) =>
-    cache.tryGet(
+    cache.tryGet<District[]>(
         `wellcee:city:${cityId}`,
         async () => {
-            const response = await ofetch(`${baseUrl}/api/house/filterType`, {
+            const response = await ofetch<{ data: { district: District[] } }>(`${baseUrl}/api/house/filterType`, {
                 query: {
                     cityId,
                     lang: '1',
@@ -42,4 +42,4 @@ export const getDistricts = (cityId: string) =>
         },
         config.cache.routeExpire,
         false
-    ) as Promise<District[]>;
+    );

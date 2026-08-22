@@ -12,6 +12,17 @@ import timezone from '@/utils/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezonePlugin);
 
+type DailySentence = {
+    content: string;
+    note: string;
+    picture2: string;
+    picture3: string;
+    picture4: string;
+    fenxiang_img: string;
+    dateline: string;
+    tts: string;
+};
+
 export const route: Route = {
     path: '/:days?/:img_type?',
     categories: ['study'],
@@ -37,14 +48,14 @@ async function handler(ctx: Context) {
         medium: 'picture2',
         thumbnail: 'picture3',
         poster: 'fenxiang_img',
-    };
+    } as const;
     const imgType = imgTypes[imgTypeParam] ?? imgTypes.original;
 
     const data = await Promise.all(
         Array.from({ length: days }, (_, x) => {
             const date = dayjs().tz('Asia/Shanghai').subtract(x, 'day').format('YYYY-MM-DD');
             const link = `https://open.iciba.com/dsapi/?date=${date}`;
-            return cache.tryGet(link, () => ofetch(link, { parseResponse: JSON.parse })) as Promise<any>;
+            return cache.tryGet(link, () => ofetch<DailySentence>(link, { parseResponse: JSON.parse }));
         })
     );
 

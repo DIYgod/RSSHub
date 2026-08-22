@@ -23,7 +23,7 @@ export const route: Route = {
     },
 };
 
-const getProfileById = (uid: string) => cache.tryGet(`manyvids:profile:${uid}`, () => ofetch(`https://www.manyvids.com/bff/profile/profiles/${uid}`)) as Promise<UserProfile>;
+const getProfileById = (uid: string) => cache.tryGet<UserProfile>(`manyvids:profile:${uid}`, () => ofetch<UserProfile>(`https://www.manyvids.com/bff/profile/profiles/${uid}`));
 
 const render = ({ poster, src }: { poster: string; src: string }) =>
     renderToString(

@@ -55,7 +55,7 @@ describe('cache', () => {
         const fresh = await cache.tryGet('snowflake', fetcher);
         expect(fresh).toBe(snowflakeId);
         const cached = await cache.tryGet('snowflake', fetcher);
-        expect(typeof cached).toBe('string');
+        expect(cached).toBeTypeOf('string');
         expect(cached).toBe(snowflakeId);
         expect(fetcher).toHaveBeenCalledTimes(1);
     });

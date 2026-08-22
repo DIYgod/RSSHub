@@ -25,11 +25,11 @@ function getContentType(link: string): keyof typeof CONTENT_TYPES {
         doujin: ['/cg/', '/comic/', '/voice/'],
         video: ['/nipple-video/'],
         article: ['/post-'],
-    };
+    } satisfies Record<keyof typeof CONTENT_TYPES, string[]>;
 
-    for (const [type, patterns] of Object.entries(typePatterns)) {
-        if (patterns.some((pattern) => link.includes(pattern))) {
-            return type as keyof typeof CONTENT_TYPES;
+    for (const type of ['doujin', 'video', 'article'] as const) {
+        if (typePatterns[type].some((pattern) => link.includes(pattern))) {
+            return type;
         }
     }
 
@@ -39,7 +39,7 @@ function getContentType(link: string): keyof typeof CONTENT_TYPES {
 export async function processItems(list): Promise<DataItem[]> {
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
@@ -57,7 +57,7 @@ export async function processItems(list): Promise<DataItem[]> {
                     description,
                     link: item.link,
                     pubDate,
-                } as DataItem;
+                };
             })
         )
     );
@@ -79,7 +79,7 @@ const WP_REST_API_URL = 'https://chikubi.jp/wp-json/wp/v2';
 export async function getPosts(ids?: string[]): Promise<DataItem[]> {
     const url = `${WP_REST_API_URL}/posts${ids?.length ? `?include=${ids.join(',')}` : ''}`;
 
-    const cachedData = await cache.tryGet(url, async () => {
+    const cachedData = await cache.tryGet<DataItem[]>(url, async () => {
         const response = await got(url);
         const data = JSON.parse(response.body);
 
@@ -95,7 +95,7 @@ export async function getPosts(ids?: string[]): Promise<DataItem[]> {
         }));
     });
 
-    return ((Array.isArray(cachedData) ? cachedData : []) as Array<DataItem | null>).filter((item): item is DataItem => item !== null);
+    return (Array.isArray(cachedData) ? cachedData : []).filter((item) => item !== null);
 }
 
 const API_TYPES = {
@@ -117,7 +117,7 @@ export async function getBySlug<T extends keyof typeof API_TYPES>(type: T, slug:
 
 export async function getPostsBy<T extends keyof typeof API_TYPES>(type: T, id: number): Promise<DataItem[]> {
     const url = `${WP_REST_API_URL}/posts?${API_TYPES[type]}=${id}`;
-    const cachedData = await cache.tryGet(url, async () => {
+    const cachedData = await cache.tryGet<DataItem[]>(url, async () => {
         const { body } = await got(url);
         const data = JSON.parse(body);
 
@@ -132,5 +132,5 @@ export async function getPostsBy<T extends keyof typeof API_TYPES>(type: T, id: 
         return [];
     });
 
-    return ((Array.isArray(cachedData) ? cachedData : []) as Array<DataItem | null>).filter((item): item is DataItem => item !== null);
+    return (Array.isArray(cachedData) ? cachedData : []).filter((item) => item !== null);
 }

@@ -61,7 +61,7 @@ async function handler(ctx) {
         title: `${author} - ${route.name}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         image,
         icon,
         logo: icon,

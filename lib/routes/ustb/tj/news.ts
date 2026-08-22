@@ -60,11 +60,7 @@ async function handler(ctx) {
         type = 'all';
     }
 
-    const responseData = {
-        title: '北京科技大学天津学院新闻动态',
-        link: baseUrl,
-        item: undefined as any[] | undefined,
-    };
+    let item;
 
     if (type === 'all') {
         const all = await Promise.all(
@@ -74,12 +70,15 @@ async function handler(ctx) {
                 return news;
             })
         );
-        responseData.item = all.flat();
+        item = all.flat();
     } else {
         const response = await got(baseUrl + maps[type]);
-        const news = getNews(response.data);
-        responseData.item = news;
+        item = getNews(response.data);
     }
 
-    return responseData;
+    return {
+        title: '北京科技大学天津学院新闻动态',
+        link: baseUrl,
+        item,
+    };
 }

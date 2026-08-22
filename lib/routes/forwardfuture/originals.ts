@@ -49,7 +49,7 @@ function extractPostsArray(rscPayload: string): OriginalPost[] | null {
                 } else if (c === ']') {
                     depth--;
                     if (depth === 0) {
-                        return JSON.parse(rscPayload.slice(arrayStart, i + 1)) as OriginalPost[];
+                        return JSON.parse(rscPayload.slice(arrayStart, i + 1));
                     }
                 }
             }

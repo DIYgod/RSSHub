@@ -35,7 +35,7 @@ async function handler() {
 
     const list = $('li.date')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -44,7 +44,7 @@ async function handler() {
                 pubDate: timezone(parseDate($item.find('.date-info').text()), 8),
             };
         })
-        .slice(0, 1) as DataItem[];
+        .slice(0, 1);
 
     const items = await Promise.all(
         list.map((item) =>

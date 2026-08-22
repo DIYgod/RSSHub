@@ -197,7 +197,7 @@ async function handler(ctx) {
                                           .replaceAll('来源：', '')
                                           .trim()
                                     : undefined,
-                            ].filter(Boolean) as string[]
+                            ].filter((c): c is string => Boolean(c))
                         ),
                     ];
                     item.pubDate = content('div.end_info em').text() ? timezone(parseDate(content('div.end_info em').text(), 'YYYY年MM月DD日HH:mm'), 8) : parseDate(content('meta[name="publishdate"]').prop('content'));
@@ -217,7 +217,7 @@ async function handler(ctx) {
         title: $('title').text().replaceAll('--', ' - '),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image: new URL($('h1.logo a img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

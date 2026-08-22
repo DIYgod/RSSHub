@@ -137,7 +137,7 @@ async function handler(ctx) {
     return {
         title: 'GIGAZINE - English News',
         link: LIST_URL,
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         item: items,
     };
 }

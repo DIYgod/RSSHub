@@ -1,4 +1,4 @@
-import type { Data, Route } from '@/types';
+import type { Route } from '@/types';
 
 import { CategoryParam, CommonDataProperties, CommonRouteProperties, getPostItems, TabMap, TabParam, TimeRangeParam } from './common';
 
@@ -45,6 +45,6 @@ export const route: Route = {
             title: `Voronoi ${TabParam.options.find((option) => option.value === tab.toLowerCase())?.label} Posts in ${TimeRangeParam.options.find((option) => option.value === time_range.toUpperCase())?.label}${category ? ` - ${category}` : ''}`,
             link: `https://www.voronoiapp.com/posts/${tab}`,
             item: items,
-        } as Data;
+        };
     },
 };
