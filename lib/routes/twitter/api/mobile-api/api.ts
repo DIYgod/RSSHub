@@ -188,7 +188,11 @@ function gatherLegacyFromData(entries, filterNested?, userId?) {
     return tweets;
 }
 
-const getUserTweetsByID = async (id, params = {}) => gatherLegacyFromData(await timelineTweets(id, params));
+const getUserTweetsByID = async (id, params = {}) => {
+    // Keep only root posts; drop replies and self-thread continuations from profile-conversation modules
+    const tweets = gatherLegacyFromData(await timelineTweets(id, params), ['profile-conversation-'], id);
+    return tweets.filter((t) => !t.in_reply_to_status_id_str);
+};
 // TODO: show the whole conversation instead of just the reply tweet
 const getUserTweetsAndRepliesByID = async (id, params = {}) => gatherLegacyFromData(await timelineTweetsAndReplies(id, params), ['profile-conversation-'], id);
 const getUserMediaByID = async (id, params = {}) => gatherLegacyFromData(await timelineMedia(id, params));
