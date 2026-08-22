@@ -102,7 +102,7 @@ const QqFactDescription = ({ data }: { data: any }) => {
                     </ol>
                 </>
             ) : null}
-            {data.content ? <div class="dangerouslySet">{raw(data.content)}</div> : null}
+            {data.content ? <div>{raw(data.content)}</div> : null}
         </>
     );
 };
