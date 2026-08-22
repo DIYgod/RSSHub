@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -73,7 +73,7 @@ async function handler() {
         });
 
     // Wait for all article fetches to complete
-    const articlesWithContent = (await Promise.all(articlePromises)).filter(Boolean) as DataItem[];
+    const articlesWithContent = (await Promise.all(articlePromises)).filter((article) => article !== null);
 
     return {
         title: 'Transformer Circuits Thread',

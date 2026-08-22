@@ -34,7 +34,7 @@ const createNonce = (length = 16) => {
     return nonce;
 };
 
-const cleanQuery = (query: ApiQuery) => Object.fromEntries(Object.entries(query).filter(([, value]) => value !== undefined)) as Record<string, number | string>;
+const cleanQuery = (query: ApiQuery) => Object.fromEntries(Object.entries(query).filter((entry): entry is [string, number | string] => entry[1] !== undefined));
 
 const buildSignedHeaders = (path: string, query: Record<string, number | string>) => {
     const timestamp = Date.now().toString();

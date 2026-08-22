@@ -55,6 +55,6 @@ async function handler() {
     return {
         title: '通知公告 - 四川旅游学院人工智能学院',
         link,
-        item: items as DataItem[],
+        item: items,
     };
 }

@@ -60,20 +60,22 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
+    const items = $('.pg-list>ul>li')
+        .slice(0, 10)
+        .toArray()
+        .map((elem) => {
+            const foodTime = $('span.food-time', elem).text();
+            const pubDate = timezone(parseDate(`${date.getFullYear()}-${foodTime}`), 8);
+            return {
+                link: new URL($('a', elem).attr('href')!, link).href,
+                title: $('a', elem).attr('title'),
+                pubDate: pubDate > date ? timezone(parseDate(`${date.getFullYear() - 1}-${foodTime}`), 8) : pubDate,
+            };
+        }) as DataItem[];
+
     return {
         link,
         title: $('title').text(),
-        item: $('.pg-list>ul>li')
-            .slice(0, 10)
-            .toArray()
-            .map((elem) => {
-                const foodTime = $('span.food-time', elem).text();
-                const pubDate = timezone(parseDate(`${date.getFullYear()}-${foodTime}`), 8);
-                return {
-                    link: new URL($('a', elem).attr('href')!, link).href,
-                    title: $('a', elem).attr('title'),
-                    pubDate: pubDate > date ? timezone(parseDate(`${date.getFullYear() - 1}-${foodTime}`), 8) : pubDate,
-                };
-            }) as DataItem[],
+        item: items,
     };
 }

@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 // type id => display name
 type Mapping = Record<string, string>;
 
-const TYPE: Mapping = {
+const TYPE = {
     '403': '720P',
     '404': '1080P',
     '405': 'BDMV',

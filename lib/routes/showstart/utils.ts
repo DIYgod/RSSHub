@@ -11,7 +11,8 @@ const uuid = (length = 20) => {
     return r.join('');
 };
 
-const cookieMap = new Map([['token', uuid(32).toLowerCase()]]);
+const deviceNo = uuid(32).toLowerCase();
+const cookieMap = new Map([['token', deviceNo]]);
 
 const devioceInfo = {
     vendorName: '',
@@ -43,9 +44,9 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
         method: 'POST',
         headers: {
             cdeviceinfo: encodeURIComponent(JSON.stringify(devioceInfo)),
-            cdeviceno: cookieMap.get('token'),
+            cdeviceno: deviceNo,
             cookie: [...cookieMap].map(([key, value]) => `${key}=${value}`).join('; '),
-            crpsign: md5(accessToken + /* sign/cusut (empty) + idToken (empty) + userInfo.userId (empty) + */ 'web' + cookieMap.get('token') + (payload ? JSON.stringify(payload) : '') + requestPath + '999web' + traceId),
+            crpsign: md5(accessToken + /* sign/cusut (empty) + idToken (empty) + userInfo.userId (empty) + */ 'web' + deviceNo + (payload ? JSON.stringify(payload) : '') + requestPath + '999web' + traceId),
             crtraceid: traceId,
             csappid: 'web',
             cterminal: 'web',
@@ -55,7 +56,7 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
             cusname: '',
             cusut: '',
             cversion: '999',
-        } as HeadersInit,
+        },
         body: payload,
     });
 

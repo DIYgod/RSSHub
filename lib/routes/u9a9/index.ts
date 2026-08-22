@@ -49,14 +49,14 @@ async function handler(ctx) {
                 .find('td')
                 .eq(3)
                 .text()
-                .match(/(?<size>\d+\.\d+)\s(?<unit>\w+)/)!.groups as any;
+                .match(/(?<size>\d+\.\d+)\s(?<unit>\w+)/)!.groups!;
             return {
                 title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: timezone(parseDate($item.find('td').eq(4).text()), 8),
 
                 enclosure_url: $item.find('td').eq(2).find('a').eq(1).attr('href'),
-                enclosure_length: Number.parseInt((size * (unit === 'GB' ? 1024 * 1024 * 1024 : 1024 * 1024)) as unknown as string),
+                enclosure_length: Math.trunc(Number(size) * (unit === 'GB' ? 1024 * 1024 * 1024 : 1024 * 1024)),
                 enclosure_type: 'application/x-bittorrent',
             };
         });

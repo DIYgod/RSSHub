@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -91,7 +91,7 @@ async function handler(ctx) {
         description: `A Science.org blog called ${blog_name}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: `${baseUrl}/blogs/${name}`,
-        language: 'en-us' as Language,
+        language: 'en-us' as const,
         item: items,
     };
 }

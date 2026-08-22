@@ -20,13 +20,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
     const selector: string = time ? `div[id$="-${time}"] div.card-panel` : 'div.card-panel';
 
     const items: DataItem[] = await fetchItems($, selector, targetUrl, country, limit);
 
     const title: string = $('title').text();
     const tabTitle: string = $(`ul.tabs li.tab a[href$="-${time}"]`).text();
+    const logoUrl: string | undefined = $('a.brand-logo img').attr('src');
 
     return {
         title: `${title}${tabTitle ? ` - ${tabTitle}` : ''}`,
@@ -34,9 +35,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('a.brand-logo img').attr('src') ? new URL($('a.brand-logo img').attr('src') as string, baseUrl).href : undefined,
+        image: logoUrl ? new URL(logoUrl, baseUrl).href : undefined,
         author: title.split(/\|/).pop(),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

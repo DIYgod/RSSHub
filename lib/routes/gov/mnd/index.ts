@@ -30,7 +30,7 @@ async function handler() {
 
     const list = $('a.news_list')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const dateSplit = $item.find('.date').text().split('.');
             dateSplit[0] = (Number.parseInt(dateSplit[0]) + 1911).toString();
@@ -41,7 +41,7 @@ async function handler() {
                 pubDate: timezone(parseDate(dateSplit.join('-')), 8),
                 category: [$item.find('.category').text()],
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

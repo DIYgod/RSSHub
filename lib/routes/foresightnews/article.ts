@@ -38,7 +38,7 @@ async function handler(ctx) {
         title: 'Foresight News - 文章',
         link: rootUrl,
         description: '文章 - Foresight News',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image,
         icon,
         logo: icon,

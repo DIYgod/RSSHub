@@ -26,7 +26,7 @@ export const route: Route = {
     description: '英語之家 - The Home of English 首頁',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const rootUrl = 'https://englishhome.org';
     const apiUrl = `${rootUrl}/wp-json/wp/v2/posts?per_page=20&_embed=author,wp:term`;
 
@@ -51,5 +51,5 @@ async function handler() {
         link: rootUrl,
         language: 'zh-TW',
         item: items,
-    } as Data;
+    };
 }

@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
     });
     const $ = load(response.results);
 
-    const list = $('.search-filter-result')
+    const list: DataItem[] = $('.search-filter-result')
         .toArray()
         .map((elem) => {
             const $elem = $(elem);
@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                 pubDate: parseDate(date),
                 author: author?.trim(),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

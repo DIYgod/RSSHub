@@ -22,7 +22,7 @@ async function handler() {
 
     const list = $('.news-links-wrapper')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.news-title');
             return {
@@ -30,7 +30,7 @@ async function handler() {
                 link: a.attr('href'),
                 pubDate: parseDate($item.find('.news-date').text()),
             };
-        }) as DataItem[];
+        });
 
     return {
         title: 'Simons Foundation | Articles',

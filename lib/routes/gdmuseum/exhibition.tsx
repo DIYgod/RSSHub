@@ -52,7 +52,7 @@ export const route: Route = {
 
         const list = $('.ULLIST li a[href^="/cn/col"]')
             .toArray()
-            .map((el) => {
+            .map((el): DataItem | null => {
                 const $item = $(el);
                 const title = $item.find('.divtt.qui-dot').text();
 
@@ -111,7 +111,7 @@ export const route: Route = {
                         startDate,
                         endDate,
                     },
-                } as DataItem;
+                };
             })
             .filter((i): i is DataItem => i !== null);
 

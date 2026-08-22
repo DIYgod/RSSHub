@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
+
+type Section77Item = DataItem & { category: string[] };
 
 export const route: Route = {
     path: '/section77/:type?',
@@ -63,11 +65,11 @@ async function handler(ctx) {
             }[isMonetaryAct] ?? '';
     }
 
-    const result = {
+    const result: Data = {
         title,
         link: `${baseUrl}/survey_more_news.php${type ? '?type=' + type : ''}`,
         language: 'th-th' as Language,
-        item: [] as DataItem[],
+        item: [],
     };
 
     const queryParams = {
@@ -91,7 +93,7 @@ async function handler(ctx) {
 
     const actList = $('div.item-77')
         .toArray()
-        .map((item): DataItem => {
+        .map((item): Section77Item => {
             const $item = $(item);
             return {
                 title: $item.find('a').text(),
@@ -127,7 +129,7 @@ async function handler(ctx) {
                 // Act draft status
                 const [, presenter, monetaryType] = $('.type77 h5').text().split(' ', 3);
                 item.category = [
-                    ...(item.category as string[]),
+                    ...item.category,
                     ...$('.container-fluid .bg-status .col-md-8.p-0 h5 span,a')
                         .toArray()
                         .map((statusElem) => $(statusElem).text()),
@@ -143,8 +145,8 @@ async function handler(ctx) {
                     const upvotePercent = Number(voteRegex[1]);
                     const downvotePercent = Number(voteRegex[2]);
 
-                    item.upvotes = Number.parseInt(((upvotePercent / 100) * voteTotal) as unknown as string);
-                    item.downvotes = Number.parseInt(((downvotePercent / 100) * voteTotal) as unknown as string);
+                    item.upvotes = Math.trunc((upvotePercent / 100) * voteTotal);
+                    item.downvotes = Math.trunc((downvotePercent / 100) * voteTotal);
                 }
 
                 const dateText = $('.banner-detail .banner-detail-caption .blockquote p:last-child').text();

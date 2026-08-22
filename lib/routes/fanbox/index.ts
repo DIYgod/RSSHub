@@ -45,9 +45,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     try {
         const userApi = `https://api.fanbox.cc/creator.get?creatorId=${creator}`;
-        const userInfoResponse = (await ofetch(userApi, {
+        const userInfoResponse = await ofetch<UserInfoResponse>(userApi, {
             headers: getHeaders(),
-        })) as UserInfoResponse;
+        });
         title = `Fanbox - ${userInfoResponse.body.user.name}`;
         description = userInfoResponse.body.description;
         image = userInfoResponse.body.user.iconUrl;
@@ -55,7 +55,7 @@ async function handler(ctx: Context): Promise<Data> {
         // ignore
     }
 
-    const postListResponse = (await ofetch(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20&withPinned=true`, { headers: getHeaders() })) as PostListResponse;
+    const postListResponse = await ofetch<PostListResponse>(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20&withPinned=true`, { headers: getHeaders() });
 
     const context = await playwright();
     const page = await context.newPage();

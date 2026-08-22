@@ -55,7 +55,7 @@ export const route: Route = {
 };
 
 export async function handler(ctx: Context) {
-    const type = (ctx.req.param?.('type') as string) || 'gyyw';
+    const type = ctx.req.param?.('type') || 'gyyw';
     const newsType = {
         gyyw: { title: '赣医要闻', url: '/xwzx/gyyw.htm' },
         ybdt: { title: '院部动态', url: '/xwzx/ybdt.htm' },

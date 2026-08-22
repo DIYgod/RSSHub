@@ -116,5 +116,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 泉州师范学院-教务处',
         link: rootUrl + type + '/list.htm',
         item: items,
-    } as Data;
+    } satisfies Data;
 }

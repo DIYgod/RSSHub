@@ -91,7 +91,7 @@ async function handler(ctx) {
             const typeName = leftNode.find('.type-name').first().text().trim();
             const imgUrl = leftNode.find('img').first().attr('src');
             const rightNode = $item('.home-info-content');
-            const infoType: any = (rightNode.find('.user-name').contents()[0] as Text).data.trim();
+            const infoType = (rightNode.find('.user-name').contents()[0] as Text).data.trim();
             const infoTitle = rightNode.find('.user-content').text();
             const infoTime = rightNode.find('.type-time').text();
             return {

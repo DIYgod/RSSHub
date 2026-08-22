@@ -130,25 +130,25 @@ function getCompanyList() {
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, 0 as unknown as string);
+        cache.set(query_count, '');
     } else {
-        const count = cache.get(query_count) as unknown as number | null;
+        const count = cache.get(query_count) as string | null;
         if (count) {
-            if (count > max_query_count) {
-                cache.set(query_count, 0 as unknown as string);
+            if (Number(count) > max_query_count) {
+                cache.set(query_count, '');
                 clearCookie();
             } else {
-                cache.set(query_count, (count + 1) as unknown as string);
+                cache.set(query_count, count + 1);
             }
         } else {
-            cache.set(query_count, 1 as unknown as string);
+            cache.set(query_count, '1');
         }
     }
 }
 
 function clearCookie() {
-    cache.set(wwwid_key, null as unknown as string);
-    cache.set(csrf_key, null as unknown as string);
+    cache.set(wwwid_key, '');
+    cache.set(csrf_key, '');
 }
 
 export default {

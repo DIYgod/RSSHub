@@ -10,18 +10,18 @@ import { parseDate } from '@/utils/parse-date';
 
 import { namespace } from './namespace';
 
-const titleTagMap: Record<string, string> = {
-    zhanlanyugao: '正在展出',
-    jbcl: '基本陈列',
-    ztcl: '专题展览',
-    lszl: '临时展览',
-    'lszl/lswh': '临时展览 - 历史文化',
-    'lszl/gjjl': '临时展览 - 国际交流',
-    'lszl/zdzt': '临时展览 - 重大主题',
-    'lszl/yscx': '临时展览 - 艺术创新',
-    gjzl: '国家展览',
-    gbxz: '国博巡展',
-};
+const titleTagMap = new Map<string, string>([
+    ['zhanlanyugao', '正在展出'],
+    ['jbcl', '基本陈列'],
+    ['ztcl', '专题展览'],
+    ['lszl', '临时展览'],
+    ['lszl/lswh', '临时展览 - 历史文化'],
+    ['lszl/gjjl', '临时展览 - 国际交流'],
+    ['lszl/zdzt', '临时展览 - 重大主题'],
+    ['lszl/yscx', '临时展览 - 艺术创新'],
+    ['gjzl', '国家展览'],
+    ['gbxz', '国博巡展'],
+]);
 
 // Formatting Function: Returns YYYY-MM-DD when there are 3 valid numeric segments that are formatted by parseExhibitionDate; otherwise, returns undefined.
 const formatExhibitionDate = (dateStr: string | undefined): string | undefined => {
@@ -86,7 +86,7 @@ const resolveRouteConfig = (type: string | undefined, subtype: string | undefine
     return {
         cleanType,
         url,
-        titleTag: titleTagMap[cleanType] || '展览',
+        titleTag: titleTagMap.get(cleanType) || '展览',
     };
 };
 
@@ -128,7 +128,10 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
     };
 
     if (cleanType === 'lszl') {
-        const subKeys = Object.keys(titleTagMap).filter((key) => key.startsWith('lszl/'));
+        const subKeys = titleTagMap
+            .keys()
+            .filter((key) => key.startsWith('lszl/'))
+            .toArray();
         const pagesData = await Promise.all(
             subKeys.map(async (subKey) => {
                 const targetSubUrl = `${baseUrl}/zl/${subKey}/`;
@@ -179,7 +182,7 @@ export const route: Route = {
                     const rawLink = aTag.attr('href') || '';
                     const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
 
-                    return cache.tryGet(itemLink, async () => {
+                    return cache.tryGet(itemLink, async (): Promise<DataItem> => {
                         // for detailed exhibition page if available, different from base exhibition page.
                         const rawZtzl = aTag.attr('ztzlurl') || '';
                         const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
@@ -269,8 +272,8 @@ export const route: Route = {
                                 startDate,
                                 endDate,
                             },
-                        } as DataItem;
-                    }) as Promise<DataItem>;
+                        };
+                    });
                 })
             )
         ).filter((i): i is DataItem => i !== null);

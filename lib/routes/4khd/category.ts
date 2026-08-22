@@ -3,7 +3,6 @@ import got from '@/utils/got';
 
 import loadArticle from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
-import type { WPPost } from './types';
 
 export const route: Route = {
     path: '/category/:category',
@@ -44,6 +43,6 @@ async function handler(ctx) {
     return {
         title: `${SUB_NAME_PREFIX} - Category: ${category}`,
         link: categoryUrl,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

@@ -29,7 +29,7 @@ async function handler() {
 
     const list = $('.news_list li.cle')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('.text').text().trim(),
@@ -37,7 +37,7 @@ async function handler() {
                 author: '安徽医科大学研究生学院',
                 pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD'), 8),
             };
-        }) as DataItem[];
+        });
 
     const result = await Promise.all(
         list.map((item) =>

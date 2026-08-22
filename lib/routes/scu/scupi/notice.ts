@@ -33,7 +33,7 @@ async function handler() {
     return {
         title: '四川大学匹兹堡学院',
         description: '四川大学匹兹堡学院官网通知',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image: 'https://upload.wikimedia.org/wikipedia/zh/4/45/Sichuan_University_logo.svg',
         logo: 'https://upload.wikimedia.org/wikipedia/zh/4/45/Sichuan_University_logo.svg',
         link: 'https://scupi.scu.edu.cn/',

@@ -25,7 +25,7 @@ async function handler() {
         title: '井冈山大学教务处',
         item: $('.xn_c_sv_20_li')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const $item = $(item);
                 return {
                     link: new URL($item.find('.xn_c_sv_20_top a').attr('href')!, baseUrl).href,
@@ -33,6 +33,6 @@ async function handler() {
                     description: $item.find('.xn_c_sv_20_text').text().trim(),
                     pubDate: timezone(parseDate($item.find('.time').text().replaceAll(/[[\]]/g, '')), 8),
                 };
-            }) as DataItem[],
+            }),
     };
 }

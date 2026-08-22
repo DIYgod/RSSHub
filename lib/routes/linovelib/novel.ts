@@ -47,7 +47,7 @@ async function handler(ctx) {
         title: `哩哔轻小说 - ${title}`,
         link: `https://www.linovelib.com/novel/${ctx.req.param('id')}/catalog`,
         description: title,
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         item: items,
     };
 }

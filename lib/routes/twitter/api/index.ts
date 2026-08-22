@@ -4,14 +4,16 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import devApi from './developer-api/api';
 // import mobileApi from './mobile-api/api';
 import webApi from './web-api/api';
+import type { ApiParams } from './web-api/utils';
 
 const enableThirdPartyApi = config.twitter.thirdPartyApi;
 // const enableMobileApi = config.twitter.username && config.twitter.password;
 const enableWebApi = config.twitter.authToken;
 const enableDeveloperApi = config.twitter.consumerKey && config.twitter.consumerSecret;
 
-type ApiItem = (id: string, params?: Record<string, any>) => Promise<Record<string, any>> | Record<string, any> | null;
-let api: {
+type ApiItem = (id: string, params?: ApiParams) => Promise<any> | null;
+
+interface TwitterApi {
     init: () => void;
     getUser: ApiItem;
     getUserTweets: ApiItem;
@@ -23,7 +25,9 @@ let api: {
     getList: ApiItem;
     getHomeTimeline: ApiItem;
     getHomeLatestTimeline: ApiItem;
-} = {
+}
+
+let api: TwitterApi = {
     init: () => {
         throw new ConfigNotFoundError('Twitter API is not configured');
     },

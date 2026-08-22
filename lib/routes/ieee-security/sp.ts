@@ -26,10 +26,13 @@ export const route: Route = {
 async function handler() {
     const last = new Date().getFullYear() + 1;
     const urlList = Array.from({ length: last - 2020 }, (_, v) => `${url}TC/SP${v + 2020}/program-papers.html`);
-    const responses = await Promise.allSettled(urlList.map((url) => ofetch(url)));
+    const responses = await Promise.allSettled(urlList.map((url) => ofetch<string>(url)));
 
     const items = responses.flatMap((response, i) => {
-        const $ = load((response as PromiseFulfilledResult<any>).value);
+        if (response.status !== 'fulfilled') {
+            return [];
+        }
+        const $ = load(response.value);
         return $('div.panel-body > div.list-group-item')
             .toArray()
             .map((item) => {

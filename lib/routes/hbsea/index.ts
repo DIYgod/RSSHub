@@ -39,14 +39,14 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $('ul.list li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('b').text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
                 pubDate: timezone(parseDate($item.find('.text i').text(), 'YYYY-MM-DD'), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

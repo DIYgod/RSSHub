@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const links = $('li[id] > a')
+    const links: DataItem[] = $('li[id] > a')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
                 link: new URL($item.attr('href')!, url).href,
                 pubDate: timezone(parseDate($item.find('p.time').text(), 'YYYY年MM月DD日'), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         links.map((item) =>

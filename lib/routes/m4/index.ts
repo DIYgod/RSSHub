@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -102,7 +102,7 @@ export async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: $('meta[name="author"]').prop('content'),

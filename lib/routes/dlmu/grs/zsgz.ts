@@ -28,7 +28,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $('div.main_conRCb ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -36,7 +36,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     return {
         title: $('title').text(),

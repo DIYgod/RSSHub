@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -53,7 +53,7 @@ export const route: Route = {
             title: `${museumName} - 湘博动态`,
             link: apiUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

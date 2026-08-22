@@ -63,21 +63,25 @@ async function handler(ctx) {
     const feed = await parser.parseURL(url);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                item.pubDate = (lang === 'ko' ? parseDate(item.pubDate!) : timezone(parseDate(item.pubDate!), 9)) as unknown as string; // Timezone is only included in the pubDate of the Korean language RSS
+            cache.tryGet<DataItem>(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                item.author =
-                    item.creator ??
-                    $('.tit-name')
-                        .toArray()
-                        .map((c) => $(c).text())
-                        .join(', ');
                 const article = $('article.story-news');
                 article.find('.related-group').remove();
                 article.find('.writer-zone01').remove();
-                item.description = article.html();
-                return item;
+
+                return {
+                    title: item.title!,
+                    link: item.link,
+                    pubDate: lang === 'ko' ? parseDate(item.pubDate!) : timezone(parseDate(item.pubDate!), 9),
+                    author:
+                        item.creator ??
+                        $('.tit-name')
+                            .toArray()
+                            .map((c) => $(c).text())
+                            .join(', '),
+                    description: article.html(),
+                };
             })
         )
     );
@@ -87,6 +91,6 @@ async function handler(ctx) {
         link: feed.link,
         description: feed.description,
         language: feed.language ?? lang,
-        item: items as DataItem[],
+        item: items,
     };
 }

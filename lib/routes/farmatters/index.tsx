@@ -47,16 +47,16 @@ async function handler(ctx) {
     const { type, id, locale = 'zh-CN' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    const searchParams: Record<string, string | number> = {
+    const searchParams = new URLSearchParams({
         locale,
-        page: 0,
-        pagesize: limit,
-    };
+        page: '0',
+        pagesize: String(limit),
+    });
 
     if (type === 'wiki' && id) {
-        searchParams.subCatalogId = id;
+        searchParams.set('subCatalogId', id);
     } else if (type && id) {
-        searchParams[type] = id;
+        searchParams.set(type, id);
     }
 
     const rootUrl = 'https://farmatters.com';

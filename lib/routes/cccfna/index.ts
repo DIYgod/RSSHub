@@ -77,7 +77,7 @@ export const route: Route = {
         return {
             title: $('head > title').text(),
             link: baseURL,
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

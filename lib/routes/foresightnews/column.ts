@@ -44,7 +44,7 @@ async function handler(ctx) {
         title: `Foresight News - ${column}`,
         link: currentUrl,
         description: `${column} - Foresight News`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image,
         icon,
         logo: icon,

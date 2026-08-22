@@ -163,6 +163,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const language: Language = 'zh-CN';
     const { id = '58af05dfb6b4300151760176d2aad0a04c275aaadbb1315039263f021f920dcd' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
@@ -243,7 +244,7 @@ async function handler(ctx) {
         title: `${$('title').text()} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language,
         image: new URL('img/logo.jpg', rootUrl).href,
         icon,
         logo: icon,

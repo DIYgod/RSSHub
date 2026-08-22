@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -11,6 +11,19 @@ import { parseDate } from '@/utils/parse-date';
 import type { ArticleDetail, Category, CategoryArticle } from './types';
 
 const baseUrl = 'https://www.famitsu.com';
+
+interface CategoryPageData {
+    pageProps: {
+        categoryArticleDataForPc: CategoryArticle[];
+        targetCategory: Category;
+    };
+}
+
+interface ArticlePageData {
+    pageProps: {
+        articleDetailData: ArticleDetail;
+    };
+}
 
 export const route: Route = {
     path: '/category/:category?',
@@ -101,14 +114,14 @@ async function handler(ctx) {
 
     const buildId = await getBuildId();
 
-    const data = await ofetch(`https://www.famitsu.com/_next/data/${buildId}/category/${category}/page/1.json`, {
+    const data = await ofetch<CategoryPageData>(`https://www.famitsu.com/_next/data/${buildId}/category/${category}/page/1.json`, {
         query: {
             categoryCode: category,
             pageNumber: 1,
         },
     });
 
-    const list = (data.pageProps.categoryArticleDataForPc as CategoryArticle[])
+    const list = data.pageProps.categoryArticleDataForPc
         .filter((item) => !item.advertiserName)
         .map((item): DataItem & { link: string; publicationDate: string | undefined; articleId: string } => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');
@@ -125,14 +138,14 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const data = await ofetch(`https://www.famitsu.com/_next/data/${buildId}/article/${item.publicationDate}/${item.articleId}.json`, {
+                const data = await ofetch<ArticlePageData>(`https://www.famitsu.com/_next/data/${buildId}/article/${item.publicationDate}/${item.articleId}.json`, {
                     query: {
                         publicationDate: item.publicationDate,
                         articleId: item.articleId,
                     },
                 });
 
-                const articleDetail = data.pageProps.articleDetailData as ArticleDetail;
+                const articleDetail = data.pageProps.articleDetailData;
                 item.author = articleDetail.authors?.map((a) => a.name_ja).join(', ') ?? articleDetail.user.name_ja;
                 item.description = render({
                     bannerImage: articleDetail.ogpImageUrl ?? articleDetail.thumbnailUrl,
@@ -145,11 +158,11 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${(data.pageProps.targetCategory as Category).nameJa}の最新記事 | ゲーム・エンタメ最新情報のファミ通.com`,
+        title: `${data.pageProps.targetCategory.nameJa}の最新記事 | ゲーム・エンタメ最新情報のファミ通.com`,
         image: 'https://www.famitsu.com/img/1812/favicons/apple-touch-icon.png',
         link: url,
         item: items,
-        language: 'ja' as Language,
+        language: 'ja' as const,
     };
 }
 

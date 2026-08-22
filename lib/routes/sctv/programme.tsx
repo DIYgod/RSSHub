@@ -93,16 +93,14 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items: any[] = [];
-
     const array = response.data.data.programmeArray.slice(0, limit).map((list) => ({
         guid: list.id,
         link: `${apiRootUrl}${list.programmeListUrl}`,
     }));
 
-    await Promise.all(
+    const itemsPerDate = await Promise.all(
         array.map((list) =>
-            cache.tryGet(list.link, (async () => {
+            cache.tryGet(list.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: list.link,
@@ -120,16 +118,14 @@ async function handler(ctx) {
                     ),
                 }));
 
-                let currentFullItems = [];
+                const currentFullItems = isFull ? currentItems.filter((item) => /（\d{4}(?:\.\d{2}){2}）/.test(item.title)) : [];
 
-                if (isFull) {
-                    currentFullItems = currentItems.filter((item) => /（\d{4}(?:\.\d{2}){2}）/.test(item.title));
-                }
-
-                items = [...items, ...(currentFullItems.length === 0 ? currentItems : currentFullItems)];
-            }) as unknown as () => Promise<Record<string, any>>)
+                return currentFullItems.length === 0 ? currentItems : currentFullItems;
+            })
         )
     );
+
+    const items = itemsPerDate.flat();
 
     response = await got({
         method: 'get',

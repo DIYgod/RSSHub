@@ -54,11 +54,10 @@ async function handler() {
                     </>
                 );
                 item.guid = item.guid!.slice(0, item.link!.lastIndexOf('/'));
-                item.pubDate = parseDate(item.pubDate!) as unknown as string;
                 item.enclosure_url = $('div.introduction.media.news-intro div.media-left').find('img').attr('src');
                 item.enclosure_type = 'image/jpeg';
 
-                return item;
+                return { ...item, pubDate: parseDate(item.pubDate!) };
             })
         )
     );

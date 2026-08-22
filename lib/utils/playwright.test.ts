@@ -1,10 +1,13 @@
-import type { BrowserContext } from 'patchright';
+import type { Browser, BrowserContext } from 'patchright';
+import type { Mock } from 'vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import type { MultiProxyResult } from '@/utils/proxy/multi-proxy';
 
 import wait from './wait';
 
-const connect = vi.fn();
-const connectOverCDP = vi.fn();
+const connect = vi.fn<(endpoint: string) => Promise<Browser>>();
+const connectOverCDP = vi.fn<(endpoint: string) => Promise<Browser>>();
 const launch = vi.fn();
 
 let mockPage: any;
@@ -32,10 +35,19 @@ const createBrowserMocks = () => {
     };
 };
 
-const proxyMock = {
+interface ProxyMock {
+    proxyObj: { url_regex: string };
+    proxyUrlHandler: URL;
+    multiProxy: Partial<MultiProxyResult> | undefined;
+    getCurrentProxy: Mock;
+    markProxyFailed: Mock;
+    getDispatcherForProxy: Mock;
+}
+
+const proxyMock: ProxyMock = {
     proxyObj: { url_regex: '.*' },
     proxyUrlHandler: new URL('http://proxy.local'),
-    multiProxy: undefined as any,
+    multiProxy: undefined,
     getCurrentProxy: vi.fn(),
     markProxyFailed: vi.fn(),
     getDispatcherForProxy: vi.fn(),
@@ -162,7 +174,7 @@ describe('getPlaywrightPage (mocked)', () => {
                 onBeforeLoad,
             });
 
-            const endpoint = connect.mock.calls[0][0] as string;
+            const endpoint = connect.mock.calls[0][0];
             expect(connectOverCDP).not.toHaveBeenCalled();
             expect(endpoint).toContain('launch=');
             expect(endpoint).not.toContain('launch-options=');
@@ -196,7 +208,7 @@ describe('getPlaywrightPage (mocked)', () => {
         const getPlaywrightPage = await loadPlaywright();
         const result = await getPlaywrightPage('https://example.com', { noGoto: true });
 
-        const endpoint = connect.mock.calls[0][0] as string;
+        const endpoint = connect.mock.calls[0][0];
         const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
         expect(launchOptions.stealth).toBeUndefined();
         expect(launchOptions.headless).toBe(true);
@@ -265,7 +277,7 @@ describe('getPlaywrightPage (mocked)', () => {
         const result = await getPlaywrightPage('https://example.com', { noGoto: true });
 
         const connectMock = route === 'cdp' ? connectOverCDP : connect;
-        const endpointUrl = connectMock.mock.calls[0][0] as string;
+        const endpointUrl = connectMock.mock.calls[0][0];
         const launchOptions = JSON.parse(new URL(endpointUrl).searchParams.get('launch') || '{}');
         assertLaunch(launchOptions);
 
@@ -289,7 +301,7 @@ describe('getPlaywrightPage (mocked)', () => {
         expect(connectOverCDP).toHaveBeenCalled();
         expect(connect).not.toHaveBeenCalled();
         expect(launch).not.toHaveBeenCalled();
-        const endpoint = connectOverCDP.mock.calls[0][0] as string;
+        const endpoint = connectOverCDP.mock.calls[0][0];
         const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
         expect(launchOptions.stealth).toBe(true);
         expect(launchOptions.headless).toBe(true);

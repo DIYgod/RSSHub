@@ -9,6 +9,12 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import playwright, { getPlaywrightPage } from '@/utils/playwright';
 
+declare global {
+    interface Window {
+        __INITIAL_SSR_STATE__: { Main: any };
+    }
+}
+
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
     Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -148,7 +154,7 @@ const getBoard = (url, cache) =>
                 logger.http(`Requesting ${url}`);
                 await page.goto(url);
                 await page.waitForSelector('.pc-container');
-                const initialSsrState = await page.evaluate(() => (window as any).__INITIAL_SSR_STATE__);
+                const initialSsrState = await page.evaluate(() => window.__INITIAL_SSR_STATE__);
                 return initialSsrState.Main;
             } finally {
                 await context.close();
@@ -205,7 +211,7 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
 }
 
 async function getFullNote(link, displayLivePhoto) {
-    const data = (await cache.tryGet(link, async () => {
+    const data = await cache.tryGet(link, async () => {
         const res = await fetchWithProxy(link, config.xiaohongshu.cookie);
         const $ = load(res);
         const script = extractInitialState($);
@@ -286,7 +292,7 @@ async function getFullNote(link, displayLivePhoto) {
             pubDate,
             updated,
         };
-    })) as { title: string; description: string; pubDate: Date; updated: Date };
+    });
     return data;
 }
 

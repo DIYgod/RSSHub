@@ -43,7 +43,7 @@ export const route: Route = {
 | 校区班车   | xqbc       |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const type = ctx.req.param('type');
     const response = await ofetch(rootUrl + type + '/list.htm');
     const $ = load(response);
@@ -117,5 +117,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 浙江工业大学',
         link: rootUrl + type,
         item: items,
-    } as Data;
+    };
 }

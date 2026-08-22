@@ -39,6 +39,6 @@ export const route: Route = {
             title: `虎扑 - ${team.teamName} 新闻`,
             link: 'https://m.hupu.com',
             item: items,
-        } as Data;
+        };
     },
 };

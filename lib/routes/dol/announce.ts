@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
@@ -32,10 +32,10 @@ async function handler(ctx) {
         searchconcerned: owner ?? '',
     };
 
-    const result = {
+    const result: Data = {
         title: `ประกาศสำนักงานที่ดิน${province ? 'จังหวัด' + province + ' ' : ''}${office ? 'สำนักงานที่ดิน' + office : ''}${owner ? 'ชื่อผู้ถือกรรมสิทธิ/ผู้ขอ ' + owner : ''}`,
         link: `${baseUrl}/index.php`,
-        item: [] as DataItem[],
+        item: [],
     };
 
     // If office/province provided, fetch index page to lookup province/office code

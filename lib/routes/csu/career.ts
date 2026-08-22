@@ -60,8 +60,10 @@ async function handler() {
                     .match(/Base64\.decode\(unzip\("(.*)"\)\./)![1];
                 const { slice1, slice2 } = $('script[type="text/javascript"]')
                     .text()
-                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)!.groups as any;
-                const unzipped = Buffer.from(unzip(zipped).slice(slice1), 'base64').toString().slice(slice2);
+                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)!.groups!;
+                const unzipped = Buffer.from(unzip(zipped).slice(Number(slice1)), 'base64')
+                    .toString()
+                    .slice(Number(slice2));
 
                 $ = load(unzipped, null, false);
                 item.description = $.html();

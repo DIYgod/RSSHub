@@ -30,17 +30,16 @@ const getDetails = async (list: NewProductItem[]): Promise<Map<number, NewProduc
     return new Map(details.map((detail) => [detail.product.productId, detail]));
 };
 
-const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData) =>
-    ({
-        title: listItem.product_name,
-        description: utils.renderNewProduct(listItem, detail),
-        link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
-        image: listItem.img,
-        pubDate: parseDate(listItem.start_time, 'X'),
-        language: 'zh-CN',
-    }) as DataItem;
+const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): DataItem => ({
+    title: listItem.product_name,
+    description: utils.renderNewProduct(listItem, detail),
+    link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
+    image: listItem.img,
+    pubDate: parseDate(listItem.start_time, 'X'),
+    language: 'zh-CN',
+});
 
-async function handler() {
+async function handler(): Promise<Data> {
     const list = await utils.getNewProductList();
     const details = await getDetails(list);
 
@@ -59,5 +58,5 @@ async function handler() {
         allowEmpty: true,
         image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
         language: 'zh-CN',
-    } as Data;
+    };
 }

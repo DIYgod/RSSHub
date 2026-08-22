@@ -1,5 +1,5 @@
 import { type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
+import type { AnyNode } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
@@ -21,7 +21,7 @@ interface ExhibitionItem {
 type ExhibitionConfig = {
     selector: string;
     type: 'permanent' | 'special' | 'temporary';
-    extra: ($item: Cheerio<Element>) => Partial<Pick<ExhibitionItem, 'location' | 'fullDuration'>>;
+    extra: ($item: Cheerio<AnyNode>) => Partial<Pick<ExhibitionItem, 'location' | 'fullDuration'>>;
 };
 
 // convert date string like "YYYY年M月D日" to "YYYY-MM-DD"
@@ -41,7 +41,7 @@ const formatStr = (dateStr: string | undefined): string | undefined => {
     return undefined;
 };
 
-const extractDates = (durationStr?: string): { startDate?: string; endDate?: string } => {
+const extractDates = (durationStr?: string) => {
     if (!durationStr || durationStr.includes('永久')) {
         return { startDate: undefined, endDate: undefined };
     }
@@ -110,7 +110,7 @@ export const route: Route = {
             {
                 selector: '#block-views-a784821b4fd9f41563c7164fd2a2f96e .views-row',
                 type: 'permanent' as const,
-                extra: ($item: Cheerio<Element>) => ({
+                extra: ($item: Cheerio<AnyNode>) => ({
                     location: $item.find('.views_zhanting .field-content').text(),
                     fullDuration: $item.find('.views_startdate .field-content').text().trim(),
                 }),
@@ -118,14 +118,14 @@ export const route: Route = {
             {
                 selector: '#block-views-chen-lie-block .views-row',
                 type: 'special' as const,
-                extra: ($item: Cheerio<Element>) => ({
+                extra: ($item: Cheerio<AnyNode>) => ({
                     location: $item.find('.views_zhanting .field-content').text(),
                 }),
             },
             {
                 selector: '#block-views-zhan-lan-block .views-row',
                 type: 'temporary' as const,
-                extra: (_$item: Cheerio<Element>) => ({}),
+                extra: (_$item: Cheerio<AnyNode>) => ({}),
             },
         ];
 
@@ -143,7 +143,7 @@ export const route: Route = {
                         title: $a.text(),
                         itemLink: link.startsWith('http') ? link : `${baseUrl}${link}`,
                         imgUrl: $item.find('img').attr('src') || '',
-                        ...config.extra($item as Cheerio<Element>),
+                        ...config.extra($item),
                     };
                 })
         );
@@ -201,7 +201,7 @@ export const route: Route = {
                         description: renderDescription(item.imgUrl),
                         _extra: { museumName },
                     };
-                }) as Promise<DataItem>;
+                });
             })
         );
 
@@ -209,7 +209,7 @@ export const route: Route = {
             title: `${museumName} - 当前展览${isSpecial ? ' - 专题&临时展览' : ''}`,
             link: listUrl,
             language: 'zh-CN',
-            item: items.filter((item) => item.title && Object.keys(item).length > 0) as DataItem[],
+            item: items.filter((item) => item.title && Object.keys(item).length > 0),
         };
     },
 };

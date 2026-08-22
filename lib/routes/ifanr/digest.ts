@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language: string = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     const items: DataItem[] = response.objects.slice(0, limit).map((item): DataItem => {
         const title: string = item.post_title;
@@ -46,7 +46,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 text: item.post_content ?? description,
             },
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
             _extra: {
                 links: [
                     {
@@ -71,7 +71,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img.c-header-navbar__logo').attr('src'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

@@ -8,6 +8,6 @@ describe('api/radar/rules/all', () => {
         expect(response.status).toBe(200);
 
         const data = await response.json();
-        expect(typeof data).toBe('object');
+        expect(data).toEqual(expect.any(Object));
     });
 });

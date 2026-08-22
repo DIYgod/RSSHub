@@ -44,7 +44,7 @@ async function handler(ctx: Context) {
 
     const urlType = 'medias/user_timeline.json';
     const now = String(Date.now());
-    const params: Record<string, string> = {
+    const params = {
         build: '16601',
         channel: '8888',
         client_id: '1089857299',
@@ -67,6 +67,8 @@ async function handler(ctx: Context) {
         uid,
         count: String(limit),
         page: '1',
+        /** Placeholder */
+        sig: '',
     };
     params.sig = sign(urlType, params);
 

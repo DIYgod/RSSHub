@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.home__item')
         .slice(0, limit)
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
                 link: new URL($item.find('h2.family-title a').prop('href')!, rootUrl).href,
                 image,
                 banner: image,
-                language: language as Language,
+                language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -80,7 +80,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.article-content').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -98,7 +98,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

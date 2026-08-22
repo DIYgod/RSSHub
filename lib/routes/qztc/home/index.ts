@@ -96,5 +96,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 泉州师范学院-首页',
         link: rootUrl + type + '/list.htm',
         item: items,
-    } as Data;
+    } satisfies Data;
 }

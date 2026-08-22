@@ -91,7 +91,7 @@ async function handler(ctx) {
         title: '新聞首頁 - 客家電視台',
         description: '客家電視是屬於全民、以至於全世界客家族群的頻道，亦是為傳播客家文化而存在，定位為「全體客家族群之媒體」。',
         link: `${baseUrl}/news`,
-        language: 'zh-TW' as Language,
+        language: 'zh-TW' as const satisfies Language,
         item: items,
     };
 }

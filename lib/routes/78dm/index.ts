@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('section.box-content div.card a.card-title')
         .slice(0, limit)
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
                 ].filter(Boolean),
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
         });
 
@@ -110,7 +110,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.image-text-content').first().text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -128,7 +128,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

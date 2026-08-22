@@ -28,7 +28,7 @@ async function handler(): Promise<Data> {
 
     const list = $('.list_main01')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('h3 a');
             return {
@@ -36,7 +36,7 @@ async function handler(): Promise<Data> {
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('.list_time').text(), 'YYYY年MM月DD日'), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

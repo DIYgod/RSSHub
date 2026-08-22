@@ -75,7 +75,7 @@ async function handler(ctx) {
         title: `${$('title').text()}-${$('div.headbottom_menu_selected').text()}`,
         link: currentUrl,
         description: $('td').last().text(),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image: $('img').first().prop('src'),
         author: '国家广播电影电视总局电视剧管理司',
     };

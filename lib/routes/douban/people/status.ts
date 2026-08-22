@@ -111,7 +111,24 @@ function tryFixStatus(status) {
     return result;
 }
 
-function getContentByActivity(ctx, item, params = {} as Record<string, any>, picsPrefixes: string[] = []) {
+interface ContentParams {
+    readable?: boolean;
+    authorNameBold?: boolean;
+    showAuthorInTitle?: boolean;
+    showAuthorInDesc?: boolean;
+    showAuthorAvatarInDesc?: boolean;
+    showEmojiForRetweet?: boolean;
+    showRetweetTextInTitle?: boolean;
+    addLinkForPics?: boolean;
+    showTimestampInDescription?: boolean;
+    showComments?: boolean;
+    showColonInDesc?: boolean;
+    widthOfPics?: number;
+    heightOfPics?: number;
+    sizeOfAuthorAvatar?: number;
+}
+
+function getContentByActivity(ctx, item, params: ContentParams = {}, picsPrefixes: string[] = []) {
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
     const mergedParams = {
@@ -133,8 +150,6 @@ function getContentByActivity(ctx, item, params = {} as Record<string, any>, pic
         sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.sizeOfAuthorAvatar), 48),
     };
 
-    params = mergedParams;
-
     const {
         readable,
         authorNameBold,
@@ -152,7 +167,7 @@ function getContentByActivity(ctx, item, params = {} as Record<string, any>, pic
         widthOfPics,
         heightOfPics,
         sizeOfAuthorAvatar,
-    } = params;
+    } = mergedParams;
 
     function prepareImages(imageUrls: Array<string | undefined>) {
         if (!imageUrls.length) {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -150,7 +150,7 @@ export async function handler(ctx) {
         title: $('title').text().split(/-/, 1)[0].trim(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

@@ -92,9 +92,8 @@ class LoopReturn extends Error {
     }
 }
 
-const forEachScript = ($: CheerioAPI | string, callback: (script) => void, defaultReturn: any = null, selector = 'script[nonce][type="text/javascript"]') => {
-    const scripts = typeof $ === 'string' ? [$] : $(selector).toArray();
-    for (const script of scripts) {
+const forEachScript = ($: CheerioAPI, callback: (script) => void, defaultReturn: any = null, selector = 'script[nonce][type="text/javascript"]') => {
+    for (const script of $(selector).toArray()) {
         try {
             callback(script);
         } catch (error) {
@@ -151,7 +150,7 @@ class ExtractMetadata {
         return (str: string) => {
             const values: string[] = [];
             for (const match of str.matchAll(regExp)) {
-                const value = match.groups?.value as string;
+                const value = match.groups!.value;
                 if (!multiple) {
                     return value;
                 }
@@ -165,9 +164,9 @@ class ExtractMetadata {
     };
 
     private static doExtract = (metadataToBeExtracted: Record<string, (str: string) => string | string[] | null | undefined>, scriptText: string) => {
-        const metadataExtracted: Record<string, string | string[]> = {};
+        const metadataExtracted: Record<string, string | string[] | null | undefined> = {};
         for (const [key, extractFunc] of Object.entries(metadataToBeExtracted)) {
-            metadataExtracted[key] = extractFunc(scriptText) as string;
+            metadataExtracted[key] = extractFunc(scriptText);
         }
         metadataExtracted._extractedFrom = scriptText;
         return metadataExtracted;
@@ -189,7 +188,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = this.doExtract(this.commonMetadataToBeExtracted, scriptText) as Record<string, string>;
+                const metadataExtracted = this.doExtract(this.commonMetadataToBeExtracted, scriptText);
                 throw new LoopReturn(metadataExtracted);
             },
             {},
@@ -202,7 +201,7 @@ class ExtractMetadata {
                 $,
                 (script) => {
                     const scriptText = $(script).text();
-                    const metadataExtracted = this.doExtract(this.showTypeMetadataToBeExtracted, scriptText) as Record<string, string>;
+                    const metadataExtracted = this.doExtract(this.showTypeMetadataToBeExtracted, scriptText);
                     throw new LoopReturn(metadataExtracted);
                 },
                 {},
@@ -246,7 +245,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = this.doExtract(this.audioMetadataToBeExtracted, scriptText) as Record<string, string>;
+                const metadataExtracted = this.doExtract(this.audioMetadataToBeExtracted, scriptText);
                 throw new LoopReturn(metadataExtracted);
             },
             {},
@@ -262,7 +261,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = this.doExtract(this.imgMetadataToBeExtracted, scriptText) as Record<string, string[]>;
+                const metadataExtracted = this.doExtract(this.imgMetadataToBeExtracted, scriptText);
                 if (Array.isArray(metadataExtracted.imgUrls)) {
                     metadataExtracted.imgUrls = metadataExtracted.imgUrls.map((url) => fixUrl(url));
                 }
@@ -346,13 +345,8 @@ const genVideoSrc = (videoId: string) => {
  * @param {boolean} skipImg - Whether to skip fixing images.
  * @return {string} - The fixed html, a string.
  */
-const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) => {
-    let htmlResult = '';
-    if (typeof html === 'string') {
-        htmlResult = html;
-    } else if (html?.html) {
-        htmlResult = html.html() || '';
-    }
+const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false): string => {
+    const htmlResult = (typeof html === 'string' ? html : html?.html()) || '';
     if (!htmlResult) {
         return '';
     }
@@ -380,10 +374,14 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
     // fix iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
     $('iframe.video_iframe[data-src]').each((_, iframe) => {
         const $iframe = $(iframe);
-        const dataSrc = $iframe.attr('data-src') as string;
+        const dataSrc = $iframe.attr('data-src');
+        if (!dataSrc) {
+            return;
+        }
         const srcUrlObj = new URL(dataSrc);
-        if (srcUrlObj.host === 'v.qq.com' && srcUrlObj.searchParams.has('vid')) {
-            const newSrc = genVideoSrc(srcUrlObj.searchParams.get('vid') as string);
+        const vid = srcUrlObj.searchParams.get('vid');
+        if (srcUrlObj.host === 'v.qq.com' && vid !== null) {
+            const newSrc = genVideoSrc(vid);
             $iframe.attr('src', newSrc);
             $iframe.removeAttr('data-src');
             const width = $iframe.attr('data-w');
@@ -472,8 +470,20 @@ const normalizeUrl = (url: string, bypassHostCheck = false) => {
     return urlObj.href;
 };
 
+type WeChatMpPage = {
+    title: string;
+    author: string;
+    description: string;
+    summary: string;
+    pubDate?: Date;
+    mpName?: string;
+    enclosure_url?: string;
+    itunes_duration?: string | number;
+    enclosure_type?: string;
+};
+
 class PageParsers {
-    private static common = ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+    private static common = ($: CheerioAPI, commonMetadata: Record<string, string>): WeChatMpPage => {
         const title = replaceReturnNewline($('meta[property="og:title"]').attr('content') || '', '', ' ');
         const author = replaceReturnNewline($('meta[name=author]').attr('content') || '', '', ' ');
         const pubDate = commonMetadata.createTime ? parseDate(Number.parseInt(commonMetadata.createTime) * 1000) : undefined;
@@ -483,17 +493,7 @@ class PageParsers {
         const description = summary;
         summary = summary.replaceAll('<br>', ' ') === title ? '' : summary;
 
-        return { title, author, description, summary, pubDate, mpName } as {
-            title: string;
-            author: string;
-            description: string;
-            summary: string;
-            pubDate?: Date;
-            mpName?: string;
-            enclosure_url?: string;
-            itunes_duration?: string | number;
-            enclosure_type?: string;
-        };
+        return { title, author, description, summary, pubDate, mpName };
     };
     private static appMsg = async ($: CheerioAPI, commonMetadata: Record<string, string>) => {
         const page = PageParsers.common($, commonMetadata);
@@ -540,7 +540,7 @@ class PageParsers {
     static dispatch = async (html: string, url: string) => {
         const $ = load(html);
         const commonMetadata = ExtractMetadata.common($);
-        let page: Record<string, any>;
+        let page: WeChatMpPage;
         let pageText: string, pageTextShort: string;
         switch (commonMetadata.showType) {
             case 'APP_MSG_PAGE':
@@ -564,14 +564,12 @@ class PageParsers {
                     pageTextShort += '...';
                 }
                 if (pageText.includes('已被发布者删除')) {
-                    errorNoMention('deleted by author', pageTextShort, url);
-                } else if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
-                    errorNoMention('request blocked by WAF', pageTextShort, url);
-                } else {
-                    error('unknown page, probably due to WAF', pageTextShort, url);
+                    return errorNoMention('deleted by author', pageTextShort, url);
                 }
-                /* v8 ignore next */
-                return {}; // just to make TypeScript happy, actually UNREACHABLE
+                if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
+                    return errorNoMention('request blocked by WAF', pageTextShort, url);
+                }
+                return error('unknown page, probably due to WAF', pageTextShort, url);
             default:
                 warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);
                 page = PageParsers.fallback($, commonMetadata);
@@ -625,18 +623,7 @@ const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
         // pass the redirected URL to dispatcher for better error logging
         const page = await PageParsers.dispatch(raw._data, raw.url);
         return { ...page, link: url };
-    }) as Promise<{
-        title: string;
-        author: string;
-        description: string;
-        summary: string;
-        pubDate?: Date;
-        mpName?: string;
-        link: string;
-        enclosure_type?: string;
-        enclosure_url?: string;
-        itunes_duration?: string | number;
-    }>;
+    });
 };
 
 /**

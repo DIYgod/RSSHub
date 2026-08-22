@@ -60,7 +60,7 @@ class ScriptShim {
 }
 
 const vmShim = {
-    createContext: (sandbox?: object) => sandbox || {},
+    createContext: <TSandbox>(sandbox?: TSandbox) => sandbox || {},
     runInContext: () => {
         throw new Error('vm.runInContext is not supported in Workers');
     },
@@ -106,7 +106,7 @@ const child_process = {
 const eventsModule = Object.assign(events, eventsNamespace);
 
 // Map of module names to their exports
-const builtinModules: Record<string, unknown> = {
+const builtinModules = {
     fs,
     path,
 
@@ -185,9 +185,11 @@ const builtinModules: Record<string, unknown> = {
     'node:vm': vmShim,
 };
 
+const isBuiltinModule = (id: string): id is keyof typeof builtinModules => Object.hasOwn(builtinModules, id);
+
 export function createRequire(_filename: string | URL) {
-    return function require(id: string): unknown {
-        if (Object.hasOwn(builtinModules, id)) {
+    return function require(id: string) {
+        if (isBuiltinModule(id)) {
             return builtinModules[id];
         }
         // For non-builtin modules, throw an error

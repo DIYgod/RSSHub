@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Comment } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
@@ -78,8 +77,8 @@ async function handler(ctx): Promise<Data> {
                         .contents()
                         .filter((_, elem) => elem.type === 'comment')
                         .replaceWith((_, elem) => {
-                            const attribute = (elem as Comment).data.trim();
-                            const imageData = attribute?.startsWith('IMG') ? data.originAttribute[attribute] : undefined;
+                            const attribute = elem.type === 'comment' ? elem.data.trim() : '';
+                            const imageData = attribute.startsWith('IMG') ? data.originAttribute[attribute] : undefined;
 
                             return renderToString(imageData ? <img src={imageData.imgurl0} style={imageData.style} /> : null);
                         });

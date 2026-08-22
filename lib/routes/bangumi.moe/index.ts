@@ -100,7 +100,7 @@ async function searchTagIds(tags, rootUrl): Promise<string[]> {
     const tagIds = await Promise.all(
         tags.split('/').map((param) =>
             cache.tryGet(`bangumi.moe:tag:${param}`, async () => {
-                const paramResponse = await got({
+                const paramResponse: { data: { found: boolean; tag: Array<{ _id: string }> } } = await got({
                     method: 'post',
                     url: tagUrl,
                     json: {
@@ -110,7 +110,7 @@ async function searchTagIds(tags, rootUrl): Promise<string[]> {
                     },
                 });
 
-                return paramResponse.data.found ? (paramResponse.data.tag.map((tag) => tag._id)[0] as string) : '';
+                return paramResponse.data.found ? paramResponse.data.tag.map((tag) => tag._id)[0] : '';
             })
         )
     );

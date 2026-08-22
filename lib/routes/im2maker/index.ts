@@ -5,6 +5,18 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+type Category = {
+    id: number;
+    name: string;
+    link: string;
+};
+
+type PostsQuery = {
+    _embed: string;
+    per_page?: string;
+    categories?: number;
+};
+
 export const route: Route = {
     path: '/:channel?',
     categories: ['new-media'],
@@ -24,14 +36,14 @@ async function handler(ctx: Context) {
 
     let title = '最新文章';
     let link = baseUrl;
-    const query: Record<string, any> = {
+    const query: PostsQuery = {
         _embed: '',
         per_page: ctx.req.query('limit') === '10' ? undefined : ctx.req.query('limit'),
     };
 
     if (channel) {
         const category = await cache.tryGet(`im2maker:category:${channel}`, async () => {
-            const categories = await ofetch(`${baseUrl}/wp-json/wp/v2/categories`, { query: { slug: channel } });
+            const categories = await ofetch<Category[]>(`${baseUrl}/wp-json/wp/v2/categories`, { query: { slug: channel } });
             return categories[0];
         });
         title = category.name;

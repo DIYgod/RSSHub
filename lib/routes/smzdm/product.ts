@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -37,7 +37,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     if (!config.smzdm.cookie) {
         throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
     }
@@ -84,7 +84,7 @@ async function handler(ctx) {
                 item.pubDate = pubDate;
 
                 if (item.description === '阅读全文') {
-                    item.description = $('p[itemprop="description"]').first().html() as string;
+                    item.description = $('p[itemprop="description"]').first().html() ?? undefined;
                 }
 
                 return item;
@@ -97,6 +97,6 @@ async function handler(ctx) {
     return {
         title,
         link,
-        item: filteredOut as DataItem[],
+        item: filteredOut,
     };
 }

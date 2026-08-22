@@ -17,7 +17,7 @@ export async function getSFWNovelContent(novelId: string): Promise<NovelContent>
             },
         });
 
-        const novelDetail = response.data as SFWNovelDetail;
+        const novelDetail: SFWNovelDetail | undefined = response.data;
 
         if (!novelDetail) {
             throw new Error('No novel data found');

@@ -40,7 +40,7 @@ export const route: Route = {
 
         const currentType = typeParam ? TYPE_MAP[typeParam] : undefined;
 
-        const searchParams: Record<string, string> = {
+        const searchParams = {
             [Math.random().toString()]: '',
             category_id: '169',
             old_year: '1',
@@ -105,7 +105,7 @@ export const route: Route = {
 
             const cacheKey = hasNoLink ? `dpm-exhibit-${title}-${duration}` : itemLink;
 
-            return cache.tryGet(cacheKey, async () => {
+            return cache.tryGet(cacheKey, async (): Promise<DataItem> => {
                 let fullDuration = duration;
 
                 // if the exhibition is marked as incomplete, try to fetch the detail page to get the full duration, but only if there is a valid link to follow
@@ -185,7 +185,7 @@ export const route: Route = {
                         endDate, // format: YYYY-MM-DD or '未定/常设'
                         itemLink,
                     },
-                } as DataItem;
+                };
             });
         });
 

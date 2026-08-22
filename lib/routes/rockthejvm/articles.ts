@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     $('footer').remove();
 
@@ -41,11 +41,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const authorEls: Element[] = $el.find('picture').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {
                 const $authorEl: Cheerio<Element> = $(authorEl).parent();
+                const authorHref: string | undefined = $authorEl.find('p.text-content a').attr('href');
+                const avatarSrc: string | undefined = $authorEl.find('img').attr('src');
 
                 return {
                     name: $authorEl.find('p.text-content').text(),
-                    url: $authorEl.find('p.text-content a').attr('href') ? new URL($authorEl.find('p.text-content a').attr('href') as string, baseUrl).href : undefined,
-                    avatar: $authorEl.find('img').attr('src') ? new URL($authorEl.find('img').attr('src') as string, baseUrl).href : undefined,
+                    url: authorHref ? new URL(authorHref, baseUrl).href : undefined,
+                    avatar: avatarSrc ? new URL(avatarSrc, baseUrl).href : undefined,
                 };
             });
             const upDatedStr: string | undefined = pubDateStr;
@@ -62,7 +64,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     text: description,
                 },
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -86,7 +88,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const categoryEls: Element[] = $$('meta[property="article:tag"]').toArray();
-                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).attr('content')).filter(Boolean) as string[])];
+                const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).attr('content')).filter((content): content is string => Boolean(content)))];
                 const authorEls: Element[] = $$('meta[property="article:author"]').toArray();
                 const authors: DataItem['author'] = authorEls.map((authorEl) => {
                     const $$authorEl: Cheerio<Element> = $$(authorEl);
@@ -113,7 +115,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -132,7 +134,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

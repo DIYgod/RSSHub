@@ -36,13 +36,13 @@ async function handler(ctx: Context) {
 
     const list = $('.show-more-container .inline_block')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('span').text().trim(),
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -254,7 +254,7 @@ async function handler() {
                     const content = await crawler(item, context);
                     const $ = load(content);
                     item.category = $('meta[name="ColumnType"]').attr('content');
-                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')) as any);
+                    item.description = renderDescription(analyzer($('.item-left .item .bg_box')));
                     item.author = '浙江政务服务网';
                 } else {
                     // 其他正常抓取
@@ -265,7 +265,7 @@ async function handler() {
                     item.author = $('meta[name="ContentSource"]').attr('content');
                     item.category = $('meta[name="ColumnType"]').attr('content');
                 }
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content') as string, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
                 return item;
             })
         )

@@ -13,6 +13,12 @@ export const route: Route = {
     handler,
 };
 
+interface AsmlArticle {
+    title: { data: { value: string } };
+    url: { path: string };
+    articleDate: { data: { value: string } };
+}
+
 async function handler() {
     const rootUrl = 'https://www.asml.com';
     const currentUrl = `${rootUrl}/en/news/press-releases`;
@@ -22,16 +28,18 @@ async function handler() {
         return html.match(/"buildId":"(.*?)"/)[1];
     });
 
-    const response = await ofetch(`${rootUrl}/_next/data/${buildId}/en/news/press-releases.json`, {
+    const response = await ofetch<{ pageProps: { componentProps: Record<string, { articles: AsmlArticle[] }> } }>(`${rootUrl}/_next/data/${buildId}/en/news/press-releases.json`, {
         query: { path: ['news', 'press-releases'] },
     });
 
-    const list = (Object.values(response.pageProps.componentProps)[0] as { articles: any[] }).articles.flat().map((article) => ({
-        title: article.title.data.value.trim(),
-        link: `${rootUrl}${article.url.path}`,
-        pubDate: parseDate(article.articleDate.data.value),
-        path: article.url.path,
-    }));
+    const list = Object.values(response.pageProps.componentProps)[0]
+        .articles.flat()
+        .map((article) => ({
+            title: article.title.data.value.trim(),
+            link: `${rootUrl}${article.url.path}`,
+            pubDate: parseDate(article.articleDate.data.value),
+            path: article.url.path,
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

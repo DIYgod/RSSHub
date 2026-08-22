@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -40,7 +40,7 @@ export const route: Route = {
     url: 'deadline.com/',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://deadline.com';
     const response = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
@@ -79,7 +79,7 @@ async function handler(ctx) {
         title: 'Deadline – Hollywood Entertainment Breaking News',
         description: 'Deadline.com is always the first to break up-to-the-minute entertainment, Hollywood and media news, with an unfiltered, no-holds-barred analysis of events.',
         link: baseUrl,
-        language: 'en-us' as Language,
+        language: 'en-us',
         image: `${baseUrl}/wp-content/themes/pmc-deadline-2019/assets/app/icons/apple-touch-icon.png`,
         item: items,
     };

@@ -46,10 +46,10 @@ async function handler(ctx) {
 
     const pageUrl = `https://www.douyin.com/user/${uid}`;
 
-    const pageData = (await cache.tryGet(
+    const pageData = await cache.tryGet(
         `douyin:user:${uid}`,
         async () => {
-            let postData;
+            let postData: PostData | undefined;
             const context = await playwright();
             const page = await context.newPage();
             await page.route('**/*', (route) => {
@@ -78,7 +78,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as PostData;
+    );
 
     if (!pageData.aweme_list?.length) {
         throw new Error('Empty post data. The request may be filtered by WAF.');

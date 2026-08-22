@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -59,10 +59,10 @@ async function handler(ctx) {
             };
         });
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link as string);
+                const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
@@ -77,7 +77,7 @@ async function handler(ctx) {
                 };
             })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: '贵州省教育厅 - 通知公告',

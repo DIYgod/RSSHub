@@ -25,6 +25,7 @@ interface GeoLocation {
 interface JobInformation {
     readonly title: string;
     readonly description: string;
+    readonly company_info_description?: string;
 }
 
 interface ProcessedJobData {
@@ -88,8 +89,7 @@ const fetchJobs = async (searchParams: SearchParams): Promise<ApiResponse> => {
 
 const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJobData): string => {
     const isCompensationTransparent = Boolean(processedData.is_compensation_transparent && processedData.yearly_min_compensation && processedData.yearly_max_compensation);
-    const companyInfoDescription = (jobInfo as { company_info_description?: string }).company_info_description;
-    const hasCompanyInfo = Boolean(companyInfoDescription);
+    const companyInfoDescription = jobInfo.company_info_description;
 
     return renderToString(
         <>
@@ -111,10 +111,10 @@ const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJ
                 <strong>Requirements:</strong> {processedData.requirements_summary ?? 'No requirements specified'}
             </p>
             <div class="job-description">{jobInfo.description ? raw(jobInfo.description) : null}</div>
-            {hasCompanyInfo ? (
+            {companyInfoDescription ? (
                 <>
                     <h2>About {processedData.company_name}</h2>
-                    {raw(companyInfoDescription as string)}
+                    {raw(companyInfoDescription)}
                 </>
             ) : null}
         </>

@@ -20,7 +20,7 @@ export const route: Route = {
 
 const rootUrl = 'https://www.autotrader.co.uk';
 
-const filterNames: Record<string, string> = {
+const filterNames = {
     'body-type': 'body_type',
     'exclude-writeoff-categories': 'is_writeoff',
     'fuel-type': 'fuel_type',

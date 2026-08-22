@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,7 @@ export const route: Route = {
     url: 'kuwaitlocal.com/news/latest',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://kuwaitlocal.com';
     const { category = 'latest' } = ctx.req.param();
     const url = `${baseUrl}/news/${category === 'latest' ? category : `categories/${category}`}`;
@@ -71,6 +71,6 @@ async function handler(ctx) {
         description: $('head meta[name="description"]').attr('content')!.trim(),
         link: url,
         item: items,
-        language: 'en' as Language,
+        language: 'en',
     };
 }

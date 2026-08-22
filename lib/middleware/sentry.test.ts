@@ -1,18 +1,25 @@
+import { Context } from 'hono';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 type Scope = { setTag: ReturnType<typeof vi.fn> };
 
+const makeContext = (path: string) => new Context(new Request(`http://localhost${path}`), { env: {}, path });
+
 afterEach(() => {
     vi.resetModules();
     vi.restoreAllMocks();
-    vi.unmock('@/config');
-    vi.unmock('@/utils/helpers');
-    vi.unmock('@/utils/logger');
-    vi.unmock('@sentry/node');
+    vi.doUnmock('@sentry/node');
+    delete process.env.SENTRY;
+    delete process.env.SENTRY_ROUTE_TIMEOUT;
+    delete process.env.NODE_NAME;
 });
 
 describe('sentry middleware', () => {
     const loadMiddleware = async () => {
+        process.env.SENTRY = 'https://sentry.example/123';
+        process.env.SENTRY_ROUTE_TIMEOUT = '50';
+        process.env.NODE_NAME = 'node-a';
+
         const scope: Scope = { setTag: vi.fn() };
         const sentry = {
             init: vi.fn(),
@@ -20,69 +27,45 @@ describe('sentry middleware', () => {
             withScope: vi.fn((cb: (scope: Scope) => void) => cb(scope)),
             captureException: vi.fn(),
         };
-        const logger = {
-            info: vi.fn(),
-        };
-        const getRouteNameFromPath = vi.fn((path: string) => `route:${path}`);
 
         vi.doMock('@sentry/node', () => sentry);
-        vi.doMock('@/utils/logger', () => ({
-            default: logger,
-        }));
-        vi.doMock('@/utils/helpers', () => ({
-            getRouteNameFromPath,
-        }));
-        vi.doMock('@/config', () => ({
-            config: {
-                sentry: {
-                    dsn: 'https://sentry.example/123',
-                },
-                errorTrackingRouteTimeout: 50,
-                nodeName: 'node-a',
-            },
-        }));
+
+        const { default: logger } = await import('@/utils/logger');
+        const infoSpy = vi.spyOn(logger, 'info');
 
         const { default: middleware } = await import('@/middleware/sentry');
 
-        return { middleware, sentry, logger, scope, getRouteNameFromPath };
+        return { middleware, sentry, infoSpy, scope };
     };
 
     it('does not load sentry when dsn is not configured', async () => {
         const sentryFactory = vi.fn(() => ({ init: vi.fn() }));
         vi.doMock('@sentry/node', sentryFactory);
-        vi.doMock('@/config', () => ({
-            config: {
-                sentry: {
-                    dsn: '',
-                },
-                errorTrackingRouteTimeout: 50,
-                nodeName: 'node-a',
-            },
-        }));
+        process.env.SENTRY = '';
 
         const { default: middleware } = await import('@/middleware/sentry');
-        await middleware({ req: { path: '/test/slow' } } as any, async () => {});
+        await middleware(makeContext('/test/slow'), async () => {});
 
         expect(sentryFactory).not.toHaveBeenCalled();
     });
 
     it('initializes sentry and captures slow routes', async () => {
-        const { middleware, sentry, logger, scope, getRouteNameFromPath } = await loadMiddleware();
+        const { middleware, sentry, infoSpy, scope } = await loadMiddleware();
 
         expect(sentry.init).toHaveBeenCalledWith({
             dsn: 'https://sentry.example/123',
         });
         expect(sentry.getCurrentScope).toHaveBeenCalledTimes(1);
         expect(scope.setTag).toHaveBeenCalledWith('node_name', 'node-a');
-        expect(logger.info).toHaveBeenCalledWith('Sentry inited.');
+        expect(infoSpy).toHaveBeenCalledWith('Sentry inited.');
 
+        const ctx = makeContext('/test/slow');
         const nowSpy = vi.spyOn(Date, 'now');
         nowSpy.mockReturnValueOnce(0).mockReturnValueOnce(100);
 
-        await middleware({ req: { path: '/test/slow' } } as any, async () => {});
+        await middleware(ctx, async () => {});
 
-        expect(getRouteNameFromPath).toHaveBeenCalledWith('/test/slow');
-        expect(scope.setTag).toHaveBeenCalledWith('name', 'route:/test/slow');
+        expect(scope.setTag).toHaveBeenCalledWith('name', 'test');
         expect(sentry.captureException).toHaveBeenCalledTimes(1);
     });
 });

@@ -41,7 +41,7 @@ async function handler(ctx) {
     const title = $('head title').text();
     const link = url;
     const description = $('head meta[name=description]').attr('content');
-    const language = 'ja';
+    const language: Language = 'ja';
 
     const item = articles.toArray().map((article) => {
         const _subtitle = $('p.m-listitem__title span.subtitle', article).text();
@@ -65,7 +65,7 @@ async function handler(ctx) {
         title,
         link,
         description,
-        language: language as Language,
+        language,
         item,
     };
 }

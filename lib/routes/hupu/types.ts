@@ -125,7 +125,7 @@ interface ApiResponseProps {
 export interface HupuApiResponse {
     props: ApiResponseProps;
     page: string;
-    query: Record<string, any>;
+    query: Record<string, string | string[]>;
     buildId: string;
     assetPrefix: string;
     isFallback: boolean;

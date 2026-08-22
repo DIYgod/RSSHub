@@ -29,7 +29,21 @@ export const route: Route = {
     url: 'www.igetget.com',
 };
 
-function handleParagraph(data) {
+interface ArticleNode {
+    type?: string;
+    contents?: ArticleNode[];
+    text?: {
+        content?: string;
+        bold?: boolean;
+        highlight?: boolean;
+    };
+    image?: {
+        src?: string;
+        alt?: string;
+    };
+}
+
+function handleParagraph(data: ArticleNode) {
     let html = '<p>';
     if (data.contents && Array.isArray(data.contents)) {
         html += data.contents.map((data) => extractArticleContent(data)).join('');
@@ -38,7 +52,7 @@ function handleParagraph(data) {
     return html;
 }
 
-function handleText(data) {
+function handleText(data: ArticleNode) {
     let content = data.text?.content || '';
     if (data.text?.bold || data.text?.highlight) {
         content = `<strong>${content}</strong>`;
@@ -46,7 +60,7 @@ function handleText(data) {
     return content;
 }
 
-function handleImage(data) {
+function handleImage(data: ArticleNode) {
     return data.image?.src ? `<img src="${data.image.src}" alt="${data.image.alt || ''}" />` : '';
 }
 
@@ -54,8 +68,8 @@ function handleHr() {
     return '<hr />';
 }
 
-function extractArticleContent(data) {
-    if (!data || typeof data !== 'object') {
+function extractArticleContent(data: ArticleNode | null | undefined): string {
+    if (!data) {
         return '';
     }
 

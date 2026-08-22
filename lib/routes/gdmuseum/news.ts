@@ -29,7 +29,7 @@ export const route: Route = {
 
         const list = $('.ULLIST li a[href^="/cn/col"]')
             .toArray()
-            .map((el) => {
+            .map((el): DataItem => {
                 const $item = $(el);
 
                 const rawLink = $item.attr('href') || '';
@@ -45,7 +45,7 @@ export const route: Route = {
                     title,
                     link: itemLink,
                     pubDate,
-                } as DataItem;
+                };
             });
 
         return {

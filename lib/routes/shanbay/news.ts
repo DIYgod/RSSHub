@@ -56,10 +56,10 @@ async function handler(ctx: Context) {
         Referer: 'https://web.shanbay.com/',
     };
 
-    const categoryMap = (await cache.tryGet('shanbay:news:categories', async () => {
-        const { objects } = await ofetch(`${apiUrl}/news/categories`);
+    const categoryMap = await cache.tryGet<Record<string, string>>('shanbay:news:categories', async () => {
+        const { objects } = await ofetch<{ objects: Array<{ id: string; name: string }> }>(`${apiUrl}/news/categories`);
         return Object.fromEntries(objects.map((item) => [item.id, item.name]));
-    })) as Record<string, string>;
+    });
 
     const response = await ofetch(`${apiUrl}/news/retrieve/articles`, {
         headers,

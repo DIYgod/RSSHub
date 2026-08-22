@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet<DataItem>(item.link!, async () => {
                 const response = await got(item.link);
 
                 const $ = load(response.data);
@@ -89,7 +89,6 @@ async function handler(ctx) {
 
                 // remove unwanted key value
                 delete item.categories;
-                delete item.content;
                 delete item.contentSnippet;
                 delete item.creator;
                 delete item.enclosure;
@@ -97,9 +96,13 @@ async function handler(ctx) {
 
                 // tw || tw || hk || hk || hk
                 item.description = $('div.user-comment-block').html() || $('div.content').html() || $('li.inner').html() || $('div.section-content').html() || $('.article__content').html();
-                (item as DataItem).pubDate = parseDate(item.pubDate!);
 
-                return item;
+                return {
+                    ...item,
+                    title: item.title!,
+                    content: undefined,
+                    pubDate: parseDate(item.pubDate!),
+                };
             })
         )
     );
@@ -108,7 +111,7 @@ async function handler(ctx) {
         title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items as DataItem[],
+        item: items,
         image: feed.image!.url,
         language: feed.language,
     };

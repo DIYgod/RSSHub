@@ -17,7 +17,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = 'zh';
+    const language = 'zh' as const satisfies Language;
 
     let items = $('div.list_d ul li.q')
         .slice(0, limit)
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="keywords"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

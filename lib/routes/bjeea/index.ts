@@ -52,7 +52,7 @@ async function handler(ctx: Context) {
 
     const list = $('ul.com-list>li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const title = $item.find('a').text();
             const link = new URL($item.find('a').attr('href')!, baseUrl).href;
@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                 guid: link,
                 description: title,
             };
-        }) as Array<DataItem & { link: string }>;
+        });
 
     const result = await Promise.all(
         list.map((item) =>

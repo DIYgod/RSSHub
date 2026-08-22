@@ -16,7 +16,7 @@ export const handler = async (ctx) => {
 
     const $ = load(currentResponse);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
     const apiUrl = new URL(`backend/lm2.php?style=normal&mode=${$('input#lm_mode').prop('value')}`, rootUrl).href;
 
     const { data: response } = await got(apiUrl);
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

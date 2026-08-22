@@ -38,7 +38,7 @@ function xxhash(): XXHashAPI {
             const chunks: Uint8Array[] = [];
             return {
                 update(input: string | Uint8Array) {
-                    chunks.push(typeof input === 'string' ? encoder.encode(input) : input);
+                    chunks.push(input instanceof Uint8Array ? input : encoder.encode(input));
                     return this;
                 },
                 digest() {

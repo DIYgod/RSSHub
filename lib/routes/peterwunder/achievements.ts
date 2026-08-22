@@ -53,7 +53,7 @@ function extractListItems($: CheerioAPI, limit: number): BadgeItem[] {
                 image: image ? new URL(image, rootUrl).href : undefined,
             };
         })
-        .filter(Boolean) as BadgeItem[];
+        .filter((item) => item !== null);
 }
 
 function fetchBadge(item: BadgeItem) {

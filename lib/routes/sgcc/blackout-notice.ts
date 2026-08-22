@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -60,7 +60,7 @@ async function handler(ctx: Context) {
     return {
         title: `${region.codeName}停电通知`,
         link,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         item: items,
     };
 }

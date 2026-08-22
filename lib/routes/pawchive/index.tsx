@@ -80,7 +80,7 @@ const processPostFiles = (post: PawchivePost) =>
                 path: file.path,
             };
         })
-        .filter(Boolean) as PawchiveFile[];
+        .filter((file) => file !== null);
 
 const render = (post: PawchivePost, files: PawchiveFile[]) =>
     renderToString(
@@ -139,11 +139,11 @@ async function handler(ctx: Context) {
         throw new Error('The user does not exist.');
     }
 
-    const author = (await cache.tryGet(`pawchive:${service}:${id}`, async () => {
+    const author = await cache.tryGet<string>(`pawchive:${service}:${id}`, async () => {
         const profileUrl = `${apiBaseUrl}/${service}/user/${id}/profile`;
         const data = await ofetch(profileUrl);
         return data.name || 'Unknown User';
-    })) as Promise<string>;
+    });
 
     const items = response.map((post) => {
         const description = render(post, processPostFiles(post));

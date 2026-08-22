@@ -7,8 +7,7 @@ const originalEnv = {
 
 afterEach(() => {
     vi.resetModules();
-    vi.clearAllMocks();
-    vi.unmock('node:child_process');
+    vi.unstubAllEnvs();
 
     if (originalEnv.HEROKU_SLUG_COMMIT === undefined) {
         delete process.env.HEROKU_SLUG_COMMIT;
@@ -27,11 +26,8 @@ describe('git-hash', () => {
         delete process.env.HEROKU_SLUG_COMMIT;
         delete process.env.VERCEL_GIT_COMMIT_SHA;
 
-        vi.doMock('node:child_process', () => ({
-            execSync: () => {
-                throw new Error('git failure');
-            },
-        }));
+        // With an empty PATH the shell cannot find git, so the real execSync throws
+        vi.stubEnv('PATH', '');
 
         const { gitHash } = await import('@/utils/git-hash');
         expect(gitHash).toBe('unknown');

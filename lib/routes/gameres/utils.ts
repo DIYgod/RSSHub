@@ -11,7 +11,7 @@ export const getFeed = async (currentUrl: string, query: string): Promise<Data> 
     const response = await ofetch(currentUrl);
     const $ = load(response);
 
-    const list = $(query)
+    const list: DataItem[] = $(query)
         .slice(0, 20)
         .toArray()
         .map((item) => {
@@ -23,7 +23,7 @@ export const getFeed = async (currentUrl: string, query: string): Promise<Data> 
                 description: $item.parent().find('p').text(),
                 link: `${rootUrl}${a.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -35,7 +35,7 @@ export const getFeed = async (currentUrl: string, query: string): Promise<Data> 
                 const content = load(detailResponse);
 
                 const payload = JSON.parse(content('#__NUXT_DATA__').text());
-                const article = payload.find((entry) => entry && typeof entry === 'object' && !Array.isArray(entry) && 'dateline' in entry && 'content_html' in entry);
+                const article = payload.find((entry) => entry instanceof Object && 'dateline' in entry && 'content_html' in entry);
 
                 item.description = payload[article.content_html];
                 item.title = payload[article.subject];
@@ -50,6 +50,6 @@ export const getFeed = async (currentUrl: string, query: string): Promise<Data> 
     return {
         title: $('title').text(),
         link: rootUrl,
-        item: items as DataItem[],
+        item: items,
     };
 };

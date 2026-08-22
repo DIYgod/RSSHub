@@ -32,13 +32,13 @@ async function handler(ctx: Context): Promise<Data> {
     const list = $('.c48101')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -57,6 +57,6 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

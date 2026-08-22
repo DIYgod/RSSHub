@@ -45,6 +45,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const isEnglish = ctx.req.param('lang') !== 'zh';
+    const language: Language = isEnglish ? 'en-us' : 'zh-CN';
 
     const data = await ofetch<NamespacesType>('https://docs.rsshub.app/routes.json');
 
@@ -63,7 +64,7 @@ async function handler(ctx) {
         title: isEnglish ? 'RSSHub has new routes' : 'RSSHub 有新路由啦',
         link: 'https://docs.rsshub.app',
         description: isEnglish ? 'Everything is RSSible' : '万物皆可 RSS',
-        language: (isEnglish ? 'en-us' : 'zh-CN') as Language,
+        language,
         item: items,
     };
 }

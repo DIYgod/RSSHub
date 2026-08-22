@@ -41,15 +41,13 @@ async function handler(ctx: Context): Promise<Data> {
 
     const $ = load(res);
 
-    const selectorMap: {
-        [key: string]: string;
-    } = {
-        podcasts: '.episode-content__title a',
-        blog: '.card-series__content-link',
-        'books-reports': '.card-article__link',
-    };
+    const selectorMap = new Map([
+        ['podcasts', '.episode-content__title a'],
+        ['blog', '.card-series__content-link'],
+        ['books-reports', '.card-article__link'],
+    ]);
 
-    const listSelector = selectorMap[category] ?? '.card-article-large__link';
+    const listSelector = selectorMap.get(category) ?? '.card-article-large__link';
 
     const items = await pMap($(listSelector).toArray(), (item) => getDataItem($(item).attr('href')!), { concurrency: 5 });
 

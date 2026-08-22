@@ -52,7 +52,7 @@ export const route: Route = {
     handler: async (ctx) => {
         const typeParam = ctx.req.param('type') || 'all';
 
-        const typeMap: Record<string, string> = {
+        const typeMap = {
             new: '最新展览',
             review: '展览回顾',
         };
@@ -72,7 +72,7 @@ export const route: Route = {
         const targetType = typeMap[typeParam];
 
         const exhibitionList = nuxtData.filter((item: any) => {
-            if (typeof item === 'object' && 'eid' in item) {
+            if (item instanceof Object && 'eid' in item) {
                 const itemType = nuxtData[item.cid];
                 // when typeParam is 'all', include all items; otherwise, filter by the specific type
                 return typeParam === 'all' ? Object.values(typeMap).includes(itemType) : itemType === targetType;
@@ -112,7 +112,7 @@ export const route: Route = {
                     const detailNuxtDataStr = detail$('#__NUXT_DATA__').text();
                     const detailNuxtData = JSON.parse(detailNuxtDataStr);
 
-                    const detailObj = detailNuxtData.find((obj: any) => typeof obj === 'object' && 'address' in obj);
+                    const detailObj = detailNuxtData.find((obj: any) => obj instanceof Object && 'address' in obj);
 
                     const location = detailNuxtData[detailObj.address];
                     const fullDuration = detailNuxtData[detailObj.open_time];
@@ -155,7 +155,7 @@ export const route: Route = {
                             startDate,
                             endDate,
                         },
-                    } as DataItem;
+                    };
                 })
             )
         );
@@ -164,7 +164,7 @@ export const route: Route = {
             title: `${museumName} - 展览陈列${targetType ? ` - ${targetType}` : ''}`,
             link: apiUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

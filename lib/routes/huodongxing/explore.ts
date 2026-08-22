@@ -20,7 +20,7 @@ async function handler() {
 
     const list = $('div.search-tab-content-item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const $a = $item.find('.item-title');
 
@@ -32,12 +32,12 @@ async function handler() {
                 link: link.href,
                 author: $item.find('.user-name').text(),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
 
                 item.description = $('#event_desc_page').html();

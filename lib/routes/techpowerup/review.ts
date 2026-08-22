@@ -32,6 +32,8 @@ export const route: Route = {
     url: 'www.techpowerup.com/review/',
 };
 
+const language: Language = 'en';
+
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
@@ -89,7 +91,7 @@ async function handler(ctx) {
     return {
         title: 'Reviews | TechPowerUp',
         link: url.href,
-        language: 'en' as Language,
+        language,
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
     };

@@ -25,7 +25,7 @@ async function handler(ctx: Context) {
     const list = $('.view-content .views-row')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.views-field-title a');
             return {
@@ -33,7 +33,7 @@ async function handler(ctx: Context) {
                 link: `${rootUrl}${a.attr('href')}`,
                 pubDate: parseDate($item.find('time').attr('datetime')!),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -51,6 +51,6 @@ async function handler(ctx: Context) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

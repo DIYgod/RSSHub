@@ -48,7 +48,7 @@ async function handler(ctx) {
     const list = $('.articlebox-compact')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
-        .map((item): DataItem => {
+        .map((item): DataItem & { category: string[] } => {
             const $item = $(item);
             const a = $item.find('.title a');
             return {
@@ -82,7 +82,7 @@ async function handler(ctx) {
 
                 item.category = [
                     ...new Set([
-                        ...(item.category as string[]),
+                        ...item.category,
                         ...$('.article-hash-tag a')
                             .toArray()
                             .map((i) => $(i).text()),

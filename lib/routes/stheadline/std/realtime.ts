@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -59,7 +59,7 @@ async function handler(ctx) {
         title: $('head meta[name="title"]').attr('content') || $('head title').text(),
         description: $('meta[name=description]').attr('content'),
         image: 'https://www.sthlstatic.com/sthl/assets/favicon/android-icon-192x192.png',
-        language: 'zh-HK' as Language,
+        language: 'zh-HK' as const,
         link: url,
         item: items,
     };

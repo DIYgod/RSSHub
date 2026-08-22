@@ -8,6 +8,15 @@ import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 import timezone from '@/utils/timezone';
 
+interface TopListItem {
+    thread_id: number;
+    subject: string;
+    author: string;
+    icon: string;
+    dateline: string | number;
+    description?: string | null;
+}
+
 export const route: Route = {
     path: '/bbs/:types?',
     name: '清水河畔',
@@ -61,7 +70,7 @@ export const route: Route = {
                 authorization: bbsAuthStr,
             },
         });
-        const itemsRaw = Object.entries<Array<Record<string, any>>>(data.data.top_list).flatMap(([label, items]) => items.map((item) => ({ ...item, label }) as Record<string, any>));
+        const itemsRaw = Object.entries<TopListItem[]>(data.data.top_list).flatMap(([label, items]) => items.map((item) => ({ ...item, label })));
         const items = await Promise.all(
             itemsRaw.map((item) =>
                 cache.tryGet(`https://bbs.uestc.edu.cn/forum.php?mod=viewthread&tid=${item.thread_id}`, async () => {

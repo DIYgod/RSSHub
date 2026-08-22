@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,7 +43,7 @@ export const route: Route = {
 | science    | environment-health | acg        | book-sharing | other-topics |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category');
     const rootUrl = 'https://blog.simpleinfo.cc';
     const link = `${rootUrl}${category ? (category === 'work' || category === 'talk' ? `/blog/${category}` : `/shasha77?category=${category}`) : '/shasha77'}`;
@@ -82,7 +82,7 @@ async function handler(ctx) {
     return {
         title,
         link,
-        language: 'zh-TW' as Language,
+        language: 'zh-TW',
         item: items,
     };
 }

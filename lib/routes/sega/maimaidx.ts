@@ -2,7 +2,7 @@ import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -44,7 +44,7 @@ async function handler() {
             const pubDateStr = i.find('.newsDate').text().slice(0, 10);
             const pubDate = parseDate(pubDateStr, 'YYYY.MM.DD');
             const image = i.find('.newsImg');
-            const link = i.find('a').attr('href') as string;
+            const link = i.find('a').attr('href')!;
             return await cache.tryGet(link, async () => {
                 const response = await got(link);
                 const description = parseContent(response.body, image);
@@ -61,7 +61,7 @@ async function handler() {
     return {
         title: 'maimai DX - Japanese Ver. News',
         link: baseUrl,
-        language: 'ja' as Language,
+        language: 'ja' as const,
         item,
     };
 }

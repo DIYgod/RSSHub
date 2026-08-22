@@ -81,5 +81,5 @@ async function handler(ctx): Promise<Data> {
         image: avatar,
         item: items.slice(0, limit),
         language: 'en',
-    } as Data;
+    };
 }

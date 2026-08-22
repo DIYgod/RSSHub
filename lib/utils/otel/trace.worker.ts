@@ -1,5 +1,6 @@
 // Worker-specific lightweight trace implementation
 // Full OpenTelemetry is too heavy for Worker startup, use no-op implementations
+import type { SpanOptions } from '@opentelemetry/api';
 
 interface Span {
     addEvent(name: string): void;
@@ -7,7 +8,7 @@ interface Span {
 }
 
 interface Tracer {
-    startSpan(name: string, options?: unknown): Span;
+    startSpan(name: string, options?: SpanOptions): Span;
 }
 
 // No-op span implementation

@@ -55,10 +55,10 @@ const getAiCompletion = async (prompt: string, text: string) => {
     return response.choices[0].message.content;
 };
 
-const getAuthorString = (item) => {
+const getAuthorString = (item: DataItem) => {
     let author = '';
     if (item.author) {
-        author = typeof item.author === 'string' ? item.author : item.author.map((i) => i.name).join(' ');
+        author = Array.isArray(item.author) ? item.author.map((i) => i.name).join(' ') : item.author;
     }
     return author;
 };
@@ -66,7 +66,7 @@ const getAuthorString = (item) => {
 const middleware: MiddlewareHandler = async (ctx, next) => {
     await next();
 
-    const data = ctx.get('data') as Data;
+    const data: Data = ctx.get('data');
     if (data) {
         if ((!data.item || data.item.length === 0) && !data.allowEmpty) {
             throw new Error('this route is empty, please check the original site or <a href="https://github.com/DIYgod/RSSHub/issues/new/choose">create an issue</a>');
@@ -173,7 +173,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.category) {
                 // convert single string to array, and filter only string type category
                 Array.isArray(item.category) || (item.category = [item.category]);
-                item.category = item.category.filter((e) => typeof e === 'string');
+                item.category = item.category.filter((e) => String(e) === e);
             }
             return item;
         };
@@ -202,7 +202,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title || '';
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = (item.category as string[] | undefined) || [];
+                const category = Array.isArray(item.category) ? item.category : [];
                 const isFilter =
                     regex instanceof RE2JS
                         ? regex.matcher(title).find() || regex.matcher(description).find() || regex.matcher(author).find() || category.some((c) => regex.matcher(c).find())
@@ -218,7 +218,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title || '';
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = (item.category as string[] | undefined) || [];
+                const category = Array.isArray(item.category) ? item.category : [];
                 let isFilter = true;
 
                 if (ctx.req.query('filter_title')) {
@@ -247,7 +247,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title;
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = (item.category as string[] | undefined) || [];
+                const category = Array.isArray(item.category) ? item.category : [];
                 let isFilter = true;
 
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_title')) {

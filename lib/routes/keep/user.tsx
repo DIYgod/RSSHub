@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');
 
     const response = await ofetch(`https://api.gotokeep.com/social/v3/people/${id}/home`, {
@@ -64,7 +64,7 @@ async function handler(ctx) {
     return {
         title: `${items[0].author} 的 Keep 动态`,
         link: `https://show.gotokeep.com/users/${id}`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: items,
     };
 }

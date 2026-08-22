@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     return {
         title: 'Obsidian Publish',
-        language: 'en-us' as Language,
+        language: 'en-us' as const,
         item: items,
         link: 'https://publish.obsidian.md/',
     };
@@ -79,7 +79,7 @@ async function fetchPage(id: string) {
 
             return item;
         })
-        .filter(Boolean) as DataItem[];
+        .filter((item) => item !== null);
 
     return items;
 }

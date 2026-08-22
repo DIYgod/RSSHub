@@ -287,11 +287,11 @@ async function handler(ctx) {
 
     let body: BilibiliWebDynamicResponse;
 
-    const cookie = (await cacheIn.getCookie()) as string;
+    const cookie = await cacheIn.getCookie();
     body = await getDynamic(cookie);
 
     if (body?.code === -352) {
-        const cookie = (await cacheIn.getCookie(true)) as string;
+        const cookie = await cacheIn.getCookie(true);
         body = await getDynamic(cookie);
 
         if (body?.code === -352) {
@@ -299,7 +299,7 @@ async function handler(ctx) {
             throw new CaptchaError('遇到源站风控校验，请稍后再试');
         }
     }
-    const items = (body as BilibiliWebDynamicResponse)?.data?.items;
+    const items = body?.data?.items;
 
     let author = items[0]?.modules?.module_author?.name;
     let face = items[0]?.modules?.module_author?.face;

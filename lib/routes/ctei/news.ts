@@ -28,7 +28,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl);
     const $ = load(response);
 
-    const list = $('.news_text ul li a')
+    const list: DataItem[] = $('.news_text ul li a')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
                 title: $item.text(),
                 link: `${currentUrl}${$item.attr('href')!.replace(/\./, '')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

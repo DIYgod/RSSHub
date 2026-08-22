@@ -38,11 +38,11 @@ async function handler(ctx) {
 
     const { data } = await got(`${SUB_URL}wp-json/wp/v2/tags?slug=${tag}`);
     const tagId = data[0].id;
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?tags=${tagId}&per_page=${limit}`);
+    const { data: posts }: { data: WPPost[] } = await got(`${SUB_URL}wp-json/wp/v2/posts?tags=${tagId}&per_page=${limit}`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Tag: ${tag}`,
         link: tagUrl,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

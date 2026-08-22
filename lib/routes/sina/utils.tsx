@@ -106,7 +106,7 @@ const parseArticle = (item) =>
             // https://finance.sina.com.cn
             // https://sports.sina.com.cn
             item.description = $('#artibody').html();
-            item.category = ($('#keywords').data('wbkey') as string | undefined)?.split(',');
+            item.category = $('#keywords').attr('data-wbkey')?.split(',');
         }
 
         return item;

@@ -18,7 +18,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     const categoryMap = {};
 
@@ -40,7 +40,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('a.articles__title').text();
-            const image: string | undefined = $el.find('div.articles__image img').attr('srcset') ? new URL($el.find('div.articles__image img').attr('srcset') as string, baseUrl).href : undefined;
+            const srcset: string | undefined = $el.find('div.articles__image img').attr('srcset');
+            const image: string | undefined = srcset ? new URL(srcset, baseUrl).href : undefined;
             const description: string | undefined = renderToString(
                 <>
                     {image ? (
@@ -74,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -100,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         html: description,
                         text: description,
                     },
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -118,7 +119,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

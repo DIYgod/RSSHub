@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     const response = await ofetch(apiUrl, {
         query: {
@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             description,
             pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
             link: linkUrl,
-            id: categories as unknown as string,
+            id: categories.join(','),
             content: {
                 html: description,
                 text: item.zhaiyao ?? description,
@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated, 'X') : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -76,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         .text()
                         .match(/\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/)?.[1];
                     const idEls: Element[] = $$('a.news-column, div.label span').toArray();
-                    const categories: string[] = [...new Set([...(item.id as unknown as string[]), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
+                    const categories: string[] = [...new Set([...(item.id?.split(',') ?? []), ...idEls.map((el) => $$(el).text()).filter(Boolean)].filter(Boolean))];
                     const authors: DataItem['author'] = $$('span.news-date')
                         .text()
                         ?.split(/\d{4}-\d{2}-\d{2}/, 1)?.[0]
@@ -91,14 +91,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         title,
                         description,
                         pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                        id: categories as unknown as string,
+                        id: categories.join(','),
                         author: authors,
                         content: {
                             html: description,
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language: language as Language,
+                        language,
                     };
 
                     const extraLinkEls: Element[] = $$('ul.xgxw-ul li a').toArray();
@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author,
-        language: language as Language,
+        language,
     };
 };
 

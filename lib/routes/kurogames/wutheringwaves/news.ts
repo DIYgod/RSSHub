@@ -75,7 +75,7 @@ Language codes for the \`${Parameter.Language}\` parameter:
                     item.description = $.html() ?? article.articleDesc ?? '';
 
                     return item;
-                }) as Promise<DataItem>;
+                });
             })
         );
 

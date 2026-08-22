@@ -189,7 +189,7 @@ async function handler(ctx): Promise<Data> {
     const modeInTitle = searchParams.get('modeInTitle') ?? 'true'; // show mode name in title, default to true.
 
     // fetch beatmap JSON info from website within cache
-    let beatmapsetList = (await cache.tryGet(
+    let beatmapsetList = await cache.tryGet<BeatmapsetInfo[]>(
         'https://osu.ppy.sh/beatmapsets:JSON',
         async () => {
             const link = 'https://osu.ppy.sh/beatmapsets';
@@ -210,7 +210,7 @@ async function handler(ctx): Promise<Data> {
         },
         config.cache.routeExpire,
         false
-    )) as BeatmapsetInfo[];
+    );
 
     // Sort beatmap by difficultyRate.desc
     // This step is necessary even if difficultyLimit not enabled, since we want the beatmap

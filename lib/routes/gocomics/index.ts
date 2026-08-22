@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
             description: `<img src="${strip.contentUrl}" />`,
             pubDate: parseDate(strip.datePublished),
             link: `${baseUrl}/${name}/${dayjs(strip.datePublished).format('YYYY/MM/DD')}`,
-        } as DataItem,
+        },
     ];
 
     const previousSelector = '[data-testid="main-comic-viewer"] a[class*="controls__button_previous"]';
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
     while (items.length < limit && previous) {
         const link = `${baseUrl}${previous}`;
         // oxlint-disable-next-line no-await-in-loop
-        const page = (await cache.tryGet(link, async () => {
+        const page = await cache.tryGet(link, async () => {
             const detailResponse = await ofetch(link);
             const $ = load(detailResponse);
 
@@ -74,7 +74,7 @@ async function handler(ctx: Context) {
                 } as DataItem,
                 previous: $(previousSelector).attr('href'),
             };
-        })) as { item: DataItem; previous?: string };
+        });
         items.push(page.item);
         previous = page.previous;
     }

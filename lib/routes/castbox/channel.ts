@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const PERMUTAION_MAP = [24, 13, 4, 19, 6, 0, 8, 21, 25, 7, 28, 1, 15, 31, 10, 9, 17, 18, 22, 11, 27, 23, 2, 26, 12, 5, 29, 14, 20, 30, 16, 3];
 
-const getNonce = (params: Record<string, any>) => {
+const getNonce = (params: Record<string, string | number>) => {
     const m = new Date().toISOString().slice(0, 10).replaceAll('-', '');
 
     const sortedKeys = Object.keys(params).toSorted((a, b) => a.localeCompare(b));
@@ -66,7 +66,8 @@ You can use the RSSHub global \`limit\` query parameter to specify the maximum n
         }
 
         const chData = channelData.data;
-        const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit') as string) : 50;
+        const limitQuery = ctx.req.query('limit');
+        const limit = limitQuery ? Number(limitQuery) : 50;
 
         const epParams = { cid, limit, r: 1, raw: 1, web: 1 };
         const { m: em, n: en, queryStr: eQuery } = getNonce(epParams);

@@ -57,18 +57,18 @@ const flatten = (arr) => {
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, 0 as unknown as string);
+        cache.set(query_count, '');
     } else {
-        const count = cache.get(query_count) as unknown as number | null;
+        const count = cache.get(query_count);
         if (count) {
-            if (count > max_query_count) {
-                cache.set(query_count, 0 as unknown as string);
+            if (Number(count) > max_query_count) {
+                cache.set(query_count, '');
                 clearCookie();
             } else {
-                cache.set(query_count, (count + 1) as unknown as string);
+                cache.set(query_count, `${count}1`);
             }
         } else {
-            cache.set(query_count, 1 as unknown as string);
+            cache.set(query_count, '1');
         }
     }
 }
@@ -82,7 +82,7 @@ async function getCookie() {
     // Check if this key should be replace? every 30 times should be fine.
     shouldUpdateCookie();
     let token = await cache.get(newrank_cookie_token);
-    const newrankConfig = config.newrank as any;
+    const newrankConfig = config.newrank as { username?: string; password?: string };
     const username = String(newrankConfig.username);
     const password = md5(md5(String(newrankConfig.password)) + 'daddy');
     const nonce = random_nonce(9);

@@ -1,26 +1,30 @@
-import type { Context } from 'hono';
+import { Context } from 'hono';
 import { describe, expect, it, vi } from 'vitest';
 
 import { config } from '@/config';
 import template from '@/middleware/template';
 
-const createCtx = (query: Record<string, string | undefined>, data: any, extra: Record<string, unknown> = {}) => {
-    const store = new Map<string, unknown>([['data', data], ...Object.entries(extra)]);
-    return {
-        req: {
-            query: (key: string) => query[key],
-            url: 'http://localhost/rss',
-        },
-        get: (key: string) => store.get(key),
-        set: (key: string, value: unknown) => store.set(key, value),
+const createCtx = (query: Record<string, string | undefined>, data: any, extra: { json?: { ok: boolean }; apiData?: { ok: boolean }; redirect?: string } = {}) => {
+    const url = new URL('http://localhost/rss');
+    for (const [key, value] of Object.entries(query)) {
+        if (value !== undefined) {
+            url.searchParams.set(key, value);
+        }
+    }
+    const ctx = new Context(new Request(url), { env: {}, path: url.pathname });
+    ctx.set('data', data);
+    for (const [key, value] of Object.entries(extra)) {
+        ctx.set(key, value);
+    }
+
+    return Object.assign(ctx, {
         json: vi.fn((payload) => payload),
         html: vi.fn((payload) => payload),
         render: vi.fn((payload) => payload),
         body: vi.fn((payload) => payload),
-        redirect: vi.fn((url: string, status: number) => ({ url, status })),
+        redirect: vi.fn((redirectUrl: string, status: number) => ({ url: redirectUrl, status })),
         header: vi.fn(),
-        res: { headers: new Headers() },
-    } as unknown as Context & { json: ReturnType<typeof vi.fn>; html: ReturnType<typeof vi.fn>; render: ReturnType<typeof vi.fn>; body: ReturnType<typeof vi.fn>; redirect: ReturnType<typeof vi.fn>; header: ReturnType<typeof vi.fn> };
+    });
 };
 
 describe('template middleware', () => {

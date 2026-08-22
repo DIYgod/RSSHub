@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
     const $ = load(response);
 
     const author = 'IT之家';
-    const language = 'zh';
+    const language = 'zh' as const;
 
     let items = $('div.newsbody')
         .slice(0, limit)
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
                 author: $item.find('div.editor').contents().first().text(),
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
         });
 
@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language: language as Language,
+        language,
     };
 };
 

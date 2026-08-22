@@ -17,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(baseUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     $('div.incidents-list').remove();
 
@@ -40,7 +40,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 </>
             );
             const pubDateStr: string | undefined = $el.find('span.ago').attr('data-datetime-unix');
-            const linkUrl: string | undefined = $actualTitleEl.attr('href') ? new URL($actualTitleEl.attr('href') as string, baseUrl).href : undefined;
+            const href: string | undefined = $actualTitleEl.attr('href');
+            const linkUrl: string | undefined = href ? new URL(href, baseUrl).href : undefined;
             const categories: string[] = [type].filter(Boolean);
             const guid: string = linkUrl ? `${linkUrl}#${pubDateStr}` : '';
             const upDatedStr: string | undefined = pubDateStr;
@@ -58,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     text: description,
                 },
                 updated: upDatedStr ? parseDate(upDatedStr, 'x') : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -70,7 +71,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: baseUrl,
         item: items,
         allowEmpty: true,
-        language: language as Language,
+        language,
         id: baseUrl,
     };
 };

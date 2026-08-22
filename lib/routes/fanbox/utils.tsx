@@ -172,7 +172,7 @@ async function parseDetail(i: PostDetailResponse['body']['post']) {
 }
 
 export function parseItem(page: Page, item: PostItem) {
-    return cache.tryGet(`fanbox-${item.id}-${item.updatedDatetime}`, async () => {
+    return cache.tryGet<DataItem>(`fanbox-${item.id}-${item.updatedDatetime}`, async () => {
         const postDetail: PostDetailResponse = await page.evaluate(
             async ({ url }) => {
                 const res = await fetch(url, {
@@ -201,7 +201,7 @@ export function parseItem(page: Page, item: PostItem) {
             link: `https://${item.creatorId}.fanbox.cc/posts/${item.id}`,
             category: item.tags,
         };
-    }) as Promise<DataItem>;
+    });
 }
 
 async function getSoundCloudEmbedUrl(videoId: string) {

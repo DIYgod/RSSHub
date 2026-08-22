@@ -27,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '50');
     const query: string = ctx.req.param('query') ?? '';
-    const queries: Record<string, string> = {
+    const queries = {
         stock: '',
         beginDate: '',
         endDate: '',
@@ -58,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
     const response = await ofetch(apiUrl, {
         method: 'POST',
         body: {
@@ -88,7 +88,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid,
                 id: guid,
                 updated: updated ? timezone(parseDate(updated), 8) : undefined,
-                language: language as Language,
+                language,
             };
 
             const enclosureUrl: string | undefined = new URL(`download${item.attachPath}`, staticBaseUrl).href;
@@ -117,7 +117,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('a.navbar-brand img').attr('src'),
         author: $('meta[name="author"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

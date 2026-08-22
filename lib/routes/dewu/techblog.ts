@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const categoryMap: Record<string, string> = {
+const categoryMap = {
     1: '大前端',
     2: 'Java',
     3: '音视频',
@@ -51,13 +51,8 @@ export const route: Route = {
 async function handler(ctx) {
     const categoryId = ctx.req.param('categoryId');
 
-    const params: Record<string, string> = { page: '1' };
-    if (categoryId) {
-        params.category_id = categoryId;
-    }
-
     const response = await ofetch('https://tech.dewu.com/api/v1/article', {
-        query: params,
+        query: categoryId ? { page: '1', category_id: categoryId } : { page: '1' },
     });
 
     const items = response.data.data.map((item) => ({

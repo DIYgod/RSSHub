@@ -90,11 +90,13 @@ async function handler(ctx) {
         };
     });
 
+    const language: Language = lang === 'Mandarin' ? 'zh-CN' : lang === 'Cantonese' ? 'zh-HK' : 'en';
+
     return {
         title: lang === 'Mandarin' ? '富途牛牛 - 快讯' : lang === 'Cantonese' ? '富途牛牛 - 快訊' : 'Futubull - Latest',
         link,
         item: items,
-        language: (lang === 'Mandarin' ? 'zh-CN' : lang === 'Cantonese' ? 'zh-HK' : 'en') as Language,
+        language,
         itunes_author: lang === 'Mandarin' || lang === 'Cantonese' ? '富途牛牛' : 'Futubull',
         itunes_category: 'News',
     };

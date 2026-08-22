@@ -60,8 +60,8 @@ async function handler(ctx) {
     const bulletinList: NewsItem[] = await cache.tryGet(
         `hypergryph:endfield:news:${normalizedGroup}`,
         async () => {
-            const response = await ofetch(apiUrl);
-            return response.data.list as NewsItem[];
+            const response = await ofetch<{ data: { list: NewsItem[] } }>(apiUrl);
+            return response.data.list;
         },
         config.cache.routeExpire,
         false
@@ -98,10 +98,10 @@ async function handler(ctx) {
                     } catch {
                         continue;
                     }
-                    if (!Array.isArray(parsed) || parsed[0] !== 1 || typeof parsed[1] !== 'string') {
+                    if (!Array.isArray(parsed) || parsed[0] !== 1) {
                         continue;
                     }
-                    const chunk: string = parsed[1];
+                    const chunk = parsed[1] as string;
                     if (!tTypeHtml && chunk.trimStart().startsWith('<')) {
                         tTypeHtml = chunk;
                     }
@@ -121,8 +121,8 @@ async function handler(ctx) {
                         const colonIdx = line.indexOf(':');
                         if (colonIdx !== -1) {
                             try {
-                                const data = JSON.parse(line.slice(colonIdx + 1))?.[3]?.value?.bulletin?.data;
-                                if (typeof data === 'string') {
+                                const data = JSON.parse(line.slice(colonIdx + 1))?.[3]?.value?.bulletin?.data as string | undefined;
+                                if (data !== undefined) {
                                     item.description = data;
                                 }
                             } catch {
@@ -141,6 +141,6 @@ async function handler(ctx) {
         title: '《明日方舟：终末地》游戏公告与新闻',
         link: 'https://endfield.hypergryph.com/news',
         item: items,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
     };
 }

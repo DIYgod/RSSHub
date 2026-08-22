@@ -37,7 +37,7 @@ async function handler(ctx) {
         title: '新假期周刊',
         description: '新假期周刊網站為全港最強吃喝玩樂搵節目平台。網羅世界各地最詳盡旅遊潮流資訊；最新鮮熱辣本地飲食情報；最好玩周末玩樂節目，即時瞓身報導，全天候為你update。',
         link: baseUrl,
-        language: 'zh-HK' as Language,
+        language: 'zh-HK' as const satisfies Language,
         image: `${baseUrl}/wp-content/themes/bucket/theme-content/images/196x196.png`,
         item: items,
     };

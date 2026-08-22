@@ -37,13 +37,13 @@ export const route: Route = {
 };
 
 async function handler() {
-    const data = await ofetch(`${baseUrl}/page-data/news/page-data.json`);
+    const data = await ofetch<{ result: { pageContext: { postsData: { articles: { edges: Array<{ node: { slug: string } }> } } } } }>(`${baseUrl}/page-data/news/page-data.json`);
 
     const articleMeta = data.result.pageContext.postsData.articles.edges;
     // { 0: node: { id, locale, slug, title, excerpt, image, published_at, article_category}}
 
     const items = await Promise.all(
-        Object.values<Record<string, any>>(articleMeta).map((edge) => {
+        articleMeta.map((edge) => {
             const content = edge.node;
             const slug = content.slug;
             const dataUrl = `${baseUrl}/page-data/news/${slug}/page-data.json`;

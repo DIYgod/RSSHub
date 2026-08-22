@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,7 @@ export const route: Route = {
     url: 'hazyresearch.stanford.edu/blog',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://hazyresearch.stanford.edu';
     const currentUrl = `${baseUrl}/blog`;
     const { data: response } = await got(currentUrl);
@@ -72,7 +72,7 @@ async function handler() {
         title: 'Hazy Research Blog',
         link: currentUrl,
         description: 'Research updates from Stanford Hazy Research',
-        language: 'en' as Language,
+        language: 'en',
         item: items,
     };
 }

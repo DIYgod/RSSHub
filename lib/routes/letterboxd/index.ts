@@ -9,6 +9,11 @@ import { namespace } from './namespace';
 
 const baseUrl = `https://${namespace.url}`;
 
+type PosterData = {
+    url?: string;
+    url2x?: string;
+};
+
 export const route: Route = {
     path: '/:username/watchlist',
     categories: ['social-media'],
@@ -41,12 +46,12 @@ async function handler(ctx: Context) {
             const wrapper = $(el);
             const linkPath = wrapper.attr('data-item-link') || wrapper.attr('data-target-link') || '';
             const link = linkPath ? new URL(linkPath, baseUrl).href : undefined;
-            const title = (wrapper.attr('data-item-full-display-name') || wrapper.attr('data-item-name') || '') as string;
+            const title = wrapper.attr('data-item-full-display-name') || wrapper.attr('data-item-name') || '';
             let image: string | undefined;
             if (link) {
                 const posterApiUrl = `${link}poster/std/125/`;
                 const cacheKey = `letterboxd:poster:${posterApiUrl}`;
-                const posterData = await cache.tryGet<Record<string, any>>(cacheKey, () => ofetch(posterApiUrl, { responseType: 'json' }));
+                const posterData = await cache.tryGet<PosterData>(cacheKey, () => ofetch<PosterData>(posterApiUrl, { responseType: 'json' }));
                 image = posterData.url2x || posterData.url;
             }
 

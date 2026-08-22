@@ -23,16 +23,16 @@ export const route: Route = {
 
 const host = 'https://www.nanjing.gov.cn';
 
-const categories: Record<string, string> = {
-    news: 'njxx',
-    department: 'bmdt',
-    district: 'gqdt',
-    livelihood: 'msxx',
-};
+const categories = new Map([
+    ['news', 'njxx'],
+    ['department', 'bmdt'],
+    ['district', 'gqdt'],
+    ['livelihood', 'msxx'],
+]);
 
 async function handler(ctx: Context): Promise<Data> {
     const { category } = ctx.req.param();
-    const path = categories[category];
+    const path = categories.get(category);
 
     if (!path) {
         throw new Error('Cannot find page');
@@ -44,7 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const items = $('.center ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const $aTag = $item.find('a');
 
@@ -62,6 +62,6 @@ async function handler(ctx: Context): Promise<Data> {
         title,
         link,
         description: `${title} - ${$('head title').text()}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

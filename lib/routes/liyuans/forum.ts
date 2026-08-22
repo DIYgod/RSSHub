@@ -23,10 +23,10 @@ async function handler(ctx: Context) {
 
     if (!Number.isNaN(Number(forumId))) {
         const forumUrl = `https://api.forums.liyuans.com/forum/${forumId}`;
-        const forum = (await cache.tryGet(forumUrl, async () => {
-            const { data } = await ofetch(forumUrl);
+        const forum = await cache.tryGet(forumUrl, async () => {
+            const { data } = await ofetch<{ data: { name: string; descr: string } }>(forumUrl);
             return data;
-        })) as { name: string; descr: string };
+        });
 
         feed.title = `${forum.name} - 梨园`;
         feed.description = forum.descr;

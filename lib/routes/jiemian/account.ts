@@ -7,11 +7,11 @@ import { parseDate } from '@/utils/parse-date';
 
 import { fetchArticle } from './common';
 
-const categoryMap: Record<string, { ckey: string; name: string }> = {
-    '1': { ckey: 'finance_config_index', name: '财经号' },
-    '2': { ckey: 'city_config_index', name: '城市号' },
-    '3': { ckey: 'media_config_index', name: '媒体号' },
-};
+const categoryMap = new Map([
+    ['1', { ckey: 'finance_config_index', name: '财经号' }],
+    ['2', { ckey: 'city_config_index', name: '城市号' }],
+    ['3', { ckey: 'media_config_index', name: '媒体号' }],
+]);
 
 export const route: Route = {
     path: '/account/main/:id',
@@ -29,7 +29,7 @@ async function handler(ctx: Context): Promise<Data> {
     const { id } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
-    const category = categoryMap[id];
+    const category = categoryMap.get(id);
     if (!category) {
         throw new InvalidParameterError('Invalid id');
     }

@@ -17,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let count = 0;
 
@@ -27,11 +27,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
             .map(async (monthlyEl): Promise<DataItem[] | undefined> => {
                 const $monthlyEl: Cheerio<Element> = $(monthlyEl);
 
-                const monthlyUrl: string | undefined = $monthlyEl.attr('href') ? new URL($monthlyEl.attr('href') as string, baseUrl).href : undefined;
+                const href = $monthlyEl.attr('href');
 
-                if (!monthlyUrl) {
+                if (!href) {
                     return undefined;
                 }
+
+                const monthlyUrl: string = new URL(href, baseUrl).href;
 
                 const monthlyResponse = await ofetch(monthlyUrl);
 
@@ -53,19 +55,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                                language: language as Language,
+                                language,
                             };
                             count++;
                             return processedItem;
                         }
                         return;
                     })
-                    .filter(Boolean) as DataItem[];
+                    .filter((processedItem) => processedItem !== undefined);
             })
     );
 
     const items: DataItem[] = await Promise.all(
-        (monthlyItems.filter(Boolean) as DataItem[][])
+        monthlyItems
+            .filter((monthlyItem) => monthlyItem !== undefined)
             .flat()
             .slice(0, limit)
             .map((item) => {
@@ -102,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language: language as Language,
+                        language,
                     };
 
                     return {
@@ -122,7 +125,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author: title,
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

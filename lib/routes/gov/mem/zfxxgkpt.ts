@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,24 +48,24 @@ async function handler(ctx) {
         .find('tr')
         .slice(1, limit)
         .toArray()
-        .map((item) => {
+        .map((item): (DataItem & { link: string }) | null => {
             const aLabel = $(item).find('a[href]');
             const href = aLabel.attr('href');
-            if (href) {
-                const link = currentUrl + aLabel.attr('href')!.replaceAll('..', '');
-                return {
-                    title: aLabel.contents().first().text(),
-                    link,
-                    pubDate: parseDate($(item).find('.fbsj').text()),
-                };
+            if (!href) {
+                return null;
             }
-            return null;
+            const link = currentUrl + href.replaceAll('..', '');
+            return {
+                title: aLabel.contents().first().text(),
+                link,
+                pubDate: parseDate($(item).find('.fbsj').text()),
+            };
         })
-        .filter(Boolean) as Array<{ title: string; link: string; pubDate: Date }>;
+        .filter((item) => item !== null);
 
-    items = (await Promise.all(
+    items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem & { link: string }> => {
                 if (!item.link.endsWith('.html') && !item.link.endsWith('.shtml')) {
                     return item;
                 }
@@ -85,7 +85,7 @@ async function handler(ctx) {
                 };
             })
         )
-    )) as typeof items;
+    );
 
     return {
         item: items,

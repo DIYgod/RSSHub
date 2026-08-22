@@ -13,6 +13,8 @@ import proxy from '@/utils/proxy';
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
 // import login from './login';
 
+export type ApiParams = Record<string, string | number | boolean | undefined>;
+
 let authTokenIndex = 0;
 
 const token2Cookie = async (token) => {
@@ -89,7 +91,7 @@ export const twitterGot = async (
 
     const requestUrl = `${url}?${queryString.stringify(params)}`;
 
-    let cookie: string | Record<string, any> | null | undefined = await token2Cookie(auth?.token);
+    const cookie = await token2Cookie(auth?.token);
     // if (!cookie && auth) {
     //     cookie = await login({
     //         username: auth.username,
@@ -105,10 +107,7 @@ export const twitterGot = async (
         | undefined;
     if (cookie) {
         logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
-        if (typeof cookie === 'string') {
-            cookie = JSON.parse(cookie);
-        }
-        const jar = CookieJar.deserializeSync(cookie as any);
+        const jar = CookieJar.deserializeSync(JSON.parse(cookie));
         const agent = proxy.proxyUri
             ? new ProxyAgent({
                   uri: proxy.proxyUri,
@@ -244,7 +243,7 @@ export const twitterGot = async (
     return responseData;
 };
 
-export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: Record<string, any>, path?: string[]) => {
+export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: ApiParams, path?: string[]) => {
     const params = {
         variables: JSON.stringify({ ...variables, userId }),
         features: JSON.stringify(gqlFeatures[endpoint]),

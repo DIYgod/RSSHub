@@ -44,13 +44,14 @@ export const getFeed = async (cfg: { link: string; title: string; rss: string })
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const description = processFeed(response);
+                const rawCategories: unknown[] | undefined = item.categories;
 
                 return {
                     title: item.title,
                     description: description ?? item.content,
                     pubDate: item.pubDate,
                     link: item.link,
-                    category: item.categories?.map((c) => (c as unknown as { _: string })._),
+                    category: rawCategories?.map((c) => (c as { _: string })._),
                 };
             })
         )

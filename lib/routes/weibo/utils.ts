@@ -17,7 +17,26 @@ class RenewWeiboCookiesError extends Error {
     }
 }
 
-const getDescriptionRenderParams = (routeParams, params = {} as Record<string, any>) => ({
+interface FormatExtendedParams {
+    readable?: boolean;
+    authorNameBold?: boolean;
+    showAuthorInTitle?: boolean;
+    showAuthorInDesc?: boolean;
+    showAuthorAvatarInDesc?: boolean;
+    showAtBeforeAuthor?: boolean;
+    showEmojiForRetweet?: boolean;
+    showRetweetTextInTitle?: boolean;
+    addLinkForPics?: boolean;
+    showTimestampInDescription?: boolean;
+    widthOfPics?: number;
+    heightOfPics?: number;
+    sizeOfAuthorAvatar?: number;
+    showEmojiInDescription?: boolean;
+    showLinkIconInDescription?: boolean;
+    preferMobileLink?: boolean;
+}
+
+const getDescriptionRenderParams = (routeParams, params: FormatExtendedParams = {}) => ({
     showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
     showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
 });
@@ -159,7 +178,7 @@ const weiboUtils = {
             .replaceAll(/<[^<]*>/g, '')
             .replaceAll('\n', ' ')
             .trim(),
-    formatExtended: (ctx, status, uid?, params = {} as Record<string, any>, picsPrefixes: string[] = []) => {
+    formatExtended: (ctx, status, uid?, params: FormatExtendedParams = {}, picsPrefixes: string[] = []) => {
         // `uid = undefined` to explicitly mark it as optional, avoiding IDEs prompting warnings
 
         // undefined and strings like "1" is also safely parsed, so no if branch is needed
@@ -204,7 +223,7 @@ const weiboUtils = {
             heightOfPics,
             sizeOfAuthorAvatar,
             preferMobileLink,
-        } = params;
+        } = mergedParams;
 
         let retweeted = '';
         // 长文章的处理
@@ -247,7 +266,7 @@ const weiboUtils = {
         // status.pics can be either an array or an object:
         // array: [ object, object, ... ]
         // object: { '0': object, '1': object, ... }  // REALLY AMAZING data structure
-        if (status.pics && !Array.isArray(status.pics) && typeof status.pics === 'object') {
+        if (status.pics && !Array.isArray(status.pics)) {
             status.pics = Object.values(status.pics);
         }
 
@@ -333,10 +352,12 @@ const weiboUtils = {
                 };
             }
             // 插入转发的微博
-            const retweetedParams = Object.assign({} as Record<string, any>, params);
-            retweetedParams.showAuthorInDesc = true;
-            retweetedParams.showAuthorAvatarInDesc = false;
-            retweetedParams.showAtBeforeAuthor = true;
+            const retweetedParams: FormatExtendedParams = {
+                ...params,
+                showAuthorInDesc: true,
+                showAuthorAvatarInDesc: false,
+                showAtBeforeAuthor: true,
+            };
             retweeted += weiboUtils.formatExtended(ctx, status.retweeted_status, undefined, retweetedParams, picsPrefixes).description;
 
             html += retweeted;

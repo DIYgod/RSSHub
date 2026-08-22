@@ -7,6 +7,11 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+interface AppArticle {
+    content: string;
+    author: string;
+}
+
 const handler = async (ctx) => {
     // 从 URL 参数中获取通知分类
     const { type = 'tzgg' } = ctx.req.param();
@@ -46,7 +51,7 @@ const handler = async (ctx) => {
                         item.author = $('.nr-zz h2').html() ?? undefined;
                     } else if (item.link.includes('app.upc.edu.cn')) {
                         const scriptContent = $('body script').first().html();
-                        let dataObj: Record<string, any> | null = null;
+                        let dataObj: AppArticle | null = null;
                         if (scriptContent) {
                             const match = scriptContent.match(/data\s*:\s*function\s*\(\)\s*\{\s*return\s*\{[^}]*data\s*:\s*(\{[\s\S]*?\})/);
                             if (match && match[1]) {

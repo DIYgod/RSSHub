@@ -12,31 +12,26 @@ export const handler = async (ctx): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') || '20');
 
     const filteredItems = feed.items
-        .filter((item) => {
-            if (!item?.link || !item?.pubDate) {
-                return false;
-            }
-            return new URL(item.link).hostname.match(/.*\.iplaysoft\.com$/);
-        })
-        .slice(0, limit) as DataItem[];
+        .map((item) => (item.title && item.link && item.pubDate && /.*\.iplaysoft\.com$/.test(new URL(item.link).hostname) ? { ...item, title: item.title, link: item.link, pubDate: item.pubDate } : null))
+        .filter((item) => item !== null)
+        .slice(0, limit);
 
-    const items: DataItem[] = await Promise.all(
-        filteredItems.map(
-            (item) =>
-                cache.tryGet(item.link as string, async () => {
-                    const response = await ofetch(item.link!);
-                    const $ = load(response);
+    const items = await Promise.all(
+        filteredItems.map((item) =>
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
 
-                    $('.entry-content').find('div[style*="overflow:hidden"]').remove();
+                $('.entry-content').find('div[style*="overflow:hidden"]').remove();
 
-                    return {
-                        title: item.title,
-                        description: $('.entry-content').html(),
-                        link: item.link,
-                        author: item.author,
-                        pubDate: parseDate(item.pubDate as string),
-                    } as DataItem;
-                }) as Promise<DataItem>
+                return {
+                    title: item.title,
+                    description: $('.entry-content').html(),
+                    link: item.link,
+                    author: item.author,
+                    pubDate: parseDate(item.pubDate),
+                };
+            })
         )
     );
 

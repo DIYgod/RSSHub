@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 
 import { fetchData, processItems } from './utils';
@@ -79,6 +79,6 @@ async function handler(ctx): Promise<Data> {
     return {
         title: `Skebetter - ${typeMap[type]}`,
         link: `https://skebetter.com/${linkMap[type]}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

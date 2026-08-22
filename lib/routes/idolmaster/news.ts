@@ -49,16 +49,18 @@ export const route: Route = {
 
 const apiUrl = 'https://cmsapi-frontend.idolmaster-official.jp';
 
+type NewsQuery = {
+    category: string[];
+    subcategory?: string | string[];
+    brand?: string | string[];
+};
+
 async function handler(ctx: Context): Promise<Data> {
     const tokenUrl = `${apiUrl}/sitern/api/cmsbase/Token/get`;
     const tokenRsp = await got(tokenUrl);
     const token = tokenRsp.data.data.token;
 
-    const options: {
-        category: string[];
-        subcategory?: string | string[];
-        brand?: string | string[];
-    } = {
+    const options: NewsQuery = {
         category: ['NEWS'],
     };
 
@@ -109,5 +111,5 @@ function toUpperCase(input: string | string[] | undefined): string | string[] | 
     if (!input) {
         return input;
     }
-    return typeof input === 'string' ? input.toUpperCase() : input.map((item) => item.toUpperCase());
+    return Array.isArray(input) ? input.map((item) => item.toUpperCase()) : input.toUpperCase();
 }

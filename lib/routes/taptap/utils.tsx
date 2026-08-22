@@ -12,13 +12,13 @@ const getRootUrl = (isIntl = false) => (isIntl ? 'https://www.taptap.io' : 'http
 
 const appDetail = (appId, lang = 'zh_CN', isIntl = false) =>
     cache.tryGet(`taptap:appDetail:${appId}:${lang}:${isIntl}`, async () => {
-        const data = await ofetch(`${getRootUrl(isIntl)}/webapiv2/group/v1/detail?app_id=${appId}&${X_UA(lang)}`, {
+        const data = await ofetch<{ data: Detail }>(`${getRootUrl(isIntl)}/webapiv2/group/v1/detail?app_id=${appId}&${X_UA(lang)}`, {
             headers: {
                 Referer: `${getRootUrl(isIntl)}/app/${appId}`,
             },
         });
         return data.data;
-    }) as Promise<Detail>;
+    });
 
 const imagePost = (images) =>
     renderToString(

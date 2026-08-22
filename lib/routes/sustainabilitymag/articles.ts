@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import oftech from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -66,7 +66,7 @@ const render = (widgets) =>
 async function handler() {
     const baseURL = 'https://sustainabilitymag.com';
     const feedURL = `${baseURL}/articles`;
-    const feedLang = 'en' as Language;
+    const feedLang = 'en' as const;
     const feedDescription = 'Sustainability Magazine Articles';
 
     const requestEndpoint = `${baseURL}/graphql`;

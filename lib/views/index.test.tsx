@@ -1,11 +1,18 @@
 import { renderToString } from 'hono/jsx/dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+const envKeys = ['DEBUG_INFO', 'DISALLOW_ROBOT', 'NODE_NAME', 'CACHE_EXPIRE', 'HEROKU_SLUG_COMMIT'] as const;
+const originalEnv = Object.fromEntries(envKeys.map((key) => [key, process.env[key]]));
+
 afterEach(() => {
+    for (const key of envKeys) {
+        if (originalEnv[key] === undefined) {
+            delete process.env[key];
+        } else {
+            process.env[key] = originalEnv[key];
+        }
+    }
     vi.resetModules();
-    vi.unmock('@/config');
-    vi.unmock('@/utils/debug-info');
-    vi.unmock('@/utils/git-hash');
 });
 
 describe('Index view', () => {
@@ -33,23 +40,19 @@ describe('Index view', () => {
             },
         };
 
-        vi.doMock('@/config', () => ({
-            config: {
-                debugInfo,
-                disallowRobot: true,
-                nodeName: 'TestNode',
-                cache: {
-                    routeExpire: 120,
-                },
-            },
-        }));
-        vi.doMock('@/utils/debug-info', () => ({
-            getDebugInfo: () => debugData,
-        }));
-        vi.doMock('@/utils/git-hash', () => ({
-            gitHash: 'abc123',
-            gitDate: new Date('2020-01-01T00:00:00Z'),
-        }));
+        vi.resetModules();
+        if (debugInfo === undefined) {
+            delete process.env.DEBUG_INFO;
+        } else {
+            process.env.DEBUG_INFO = debugInfo;
+        }
+        process.env.DISALLOW_ROBOT = 'true';
+        process.env.NODE_NAME = 'TestNode';
+        process.env.CACHE_EXPIRE = '120';
+        process.env.HEROKU_SLUG_COMMIT = 'abc123';
+
+        const { setDebugInfo } = await import('@/utils/debug-info');
+        setDebugInfo(debugData);
 
         const { default: Index } = await import('@/views/index');
 

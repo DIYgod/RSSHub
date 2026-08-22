@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('#main article')
         .slice(0, limit)
@@ -39,7 +39,7 @@ export const handler = async (ctx) => {
                     .find('span.cat-links')
                     .toArray()
                     .map((c) => $(c).text()),
-                language: language as Language,
+                language,
             };
         });
 
@@ -86,7 +86,7 @@ export const handler = async (ctx) => {
                 item.image = image;
                 item.banner = image;
                 item.updated = data ? parseDate(data.dateModified) : undefined;
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -103,7 +103,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

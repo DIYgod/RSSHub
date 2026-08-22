@@ -21,11 +21,7 @@ export const route: Route = {
 };
 
 const resolveArticle = (data, store) => {
-    if (data === null) {
-        return data;
-    }
-
-    if (typeof data !== 'object') {
+    if (!(data instanceof Object)) {
         return data;
     }
 

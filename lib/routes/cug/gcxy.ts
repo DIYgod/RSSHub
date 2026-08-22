@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                         const res = await ofetch(link);
                         entry.description = load(res)('.v_news_content').html();
                         return entry;
-                    }) as Promise<DataItem>;
+                    });
                 })
         );
         return { name, items };

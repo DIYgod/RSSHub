@@ -34,16 +34,15 @@ const getDetails = async (list: CrowdfundingList[]) => {
     return await Promise.all(result);
 };
 
-const getDataItem = (item: CrowdfundingDetailInfo) =>
-    ({
-        title: item.project_name,
-        description: utils.renderCrowdfunding(item),
-        link: `https://m.mi.com/crowdfunding/proddetail/${item.project_id}`,
-        image: item.big_image,
-        language: 'zh-CN',
-    }) as DataItem;
+const getDataItem = (item: CrowdfundingDetailInfo): DataItem => ({
+    title: item.project_name,
+    description: utils.renderCrowdfunding(item),
+    link: `https://m.mi.com/crowdfunding/proddetail/${item.project_id}`,
+    image: item.big_image,
+    language: 'zh-CN',
+});
 
-async function handler() {
+async function handler(): Promise<Data> {
     const list = await utils.getCrowdfundingList();
     const details = await getDetails(list);
 
@@ -56,5 +55,5 @@ async function handler() {
         allowEmpty: true,
         image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
         language: 'zh-CN',
-    } as Data;
+    };
 }

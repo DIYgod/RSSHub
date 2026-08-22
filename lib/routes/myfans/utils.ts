@@ -25,10 +25,10 @@ export const showByUsername = (username: string) =>
         }
 
         return accountInfo;
-    }) as Promise<UserProfile>;
+    });
 
 export const getPostByAccountId = async (accountId) => {
-    const post = await ofetch(`${apiBaseUrl}/api/v2/users/${accountId}/posts`, {
+    const post = await ofetch<{ data: Post[] }>(`${apiBaseUrl}/api/v2/users/${accountId}/posts`, {
         headers,
         query: {
             sort_key: 'publish_start_at',
@@ -36,5 +36,5 @@ export const getPostByAccountId = async (accountId) => {
         },
     });
 
-    return post.data as Promise<Post[]>;
+    return post.data;
 };

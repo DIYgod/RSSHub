@@ -39,7 +39,7 @@ async function handler(ctx) {
         description: 'And the story behind them...',
         link: baseUrl,
         image: 'https://rarehistoricalphotos.com/wp-content/uploads/2022/04/cropped-rarehistoricalphotos-32x32.png',
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
         item: items,
     };
 }

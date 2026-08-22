@@ -63,7 +63,7 @@ async function handler(ctx): Promise<Data> {
 
     const items = await Promise.all(
         list.map(async (item) => {
-            const result = await cache.tryGet(item.link, async () => {
+            const result = await cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const { data: articleData } = await got(item.link, headers);
                 const $article = load(articleData);
 
@@ -74,7 +74,7 @@ async function handler(ctx): Promise<Data> {
                     description: processedDescription,
                     link: item.link,
                     pubDate: parseDate($article('time').attr('datetime') ?? ''),
-                } as DataItem;
+                };
             });
             return result;
         })

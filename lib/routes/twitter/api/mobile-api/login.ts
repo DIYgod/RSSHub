@@ -17,7 +17,7 @@ const ENDPOINT = 'https://api.x.com/1.1/onboarding/task.json';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 
-const headers: {
+type LoginHeaders = {
     'User-Agent': string;
     'X-Twitter-API-Version': string;
     'X-Twitter-Client': string;
@@ -31,7 +31,9 @@ const headers: {
     att?: string;
     'X-Twitter-Client-DeviceID'?: string;
     'x-guest-token'?: string;
-} = {
+};
+
+const headers: LoginHeaders = {
     'User-Agent': 'TwitterAndroid/10.21.0-release.0 (310210000-r-0) ONEPLUS+A3010/9 (OnePlus;ONEPLUS+A3010;OnePlus;OnePlus3;0;;1;2016)',
     'X-Twitter-API-Version': '5',
     'X-Twitter-Client': 'TwitterAndroid',
@@ -58,7 +60,13 @@ const loginLimiter = cache.clients.redisClient
 
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
-const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, unknown>) =>
+interface SubtaskInput {
+    check_logged_in_account?: { link: string };
+    enter_password?: { link: string; password: string };
+    enter_text?: { link: string; suggestion_id: null; text: string };
+}
+
+const postTask = async (flowToken: string, subtaskId: string, subtaskInput: SubtaskInput) =>
     await got.post(ENDPOINT, {
         headers,
         json: {

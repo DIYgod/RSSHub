@@ -31,7 +31,7 @@ function getCookie(url: string): Promise<string> {
             const iv = CryptoJS.enc.Hex.parse(matches[1]);
             const encrypted = CryptoJS.enc.Hex.parse(matches[2]);
 
-            const decrypted = CryptoJS.AES.decrypt({ ciphertext: encrypted } as CryptoJS.lib.CipherParams, key, { iv, padding: CryptoJS.pad.NoPadding });
+            const decrypted = CryptoJS.AES.decrypt(CryptoJS.lib.CipherParams.create({ ciphertext: encrypted }), key, { iv, padding: CryptoJS.pad.NoPadding });
 
             return 'CeRaHigh1=' + decrypted.toString(CryptoJS.enc.Hex);
         },

@@ -73,6 +73,8 @@ async function handler(ctx) {
             })
     );
 
+    const language = $('html').prop('lang') as Language;
+
     const description = $('meta[name="description"]').prop('content');
     const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
@@ -81,7 +83,7 @@ async function handler(ctx) {
         title: `${title} - Essay`,
         link: currentUrl,
         description,
-        language: $('html').prop('lang') as Language,
+        language,
         image: icon,
         icon,
         logo: icon,

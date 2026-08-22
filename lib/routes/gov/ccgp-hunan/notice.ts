@@ -42,16 +42,25 @@ export const route: Route = {
 
 const rootUrl = 'http://www.ccgp-hunan.gov.cn';
 
-const flatten = (nodes) => nodes.flatMap((node) => [{ name: node.name, code: node.code }, ...flatten(node.children)]);
+interface Category {
+    name: string;
+    code: string;
+}
+
+interface CategoryNode extends Category {
+    children: CategoryNode[];
+}
+
+const flatten = (nodes: CategoryNode[]): Category[] => nodes.flatMap((node) => [{ name: node.name, code: node.code }, ...flatten(node.children)]);
 
 async function handler(ctx: Context) {
     const { type = '项目信息' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 15;
 
-    const categories = (await cache.tryGet('ccgp-hunan:categories', async () => {
+    const categories = await cache.tryGet('ccgp-hunan:categories', async () => {
         const response = await ofetch(`${rootUrl}/admin/category/home/categoryTreeFind?parentId=622707&siteId=160`);
         return flatten(response.result.data);
-    })) as Array<{ name: string; code: string }>;
+    });
 
     const category = categories.find((c) => c.name === type);
     if (!category) {

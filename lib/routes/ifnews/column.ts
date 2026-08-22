@@ -26,13 +26,13 @@ async function handler(ctx: Context) {
         },
     });
 
-    const list = data.list.map((item) => ({
+    const list = data.list.map((item): DataItem & { aid: string } => ({
         title: item.title,
         author: item.createUser,
         link: `${url}/news.html?aid=${item.fileID}`,
         pubDate: timezone(parseRelativeDate(item.publishTime), 8),
         aid: item.fileID,
-    })) as Array<DataItem & { aid: string }>;
+    }));
 
     const result = await Promise.all(
         list.map((item) =>

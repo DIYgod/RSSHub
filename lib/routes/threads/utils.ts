@@ -41,7 +41,7 @@ const extractTokens = async (user): Promise<{ lsd: string }> => {
 };
 
 const getUserId = async (user: string): Promise<string> => {
-    const result = await cache.tryGet(`threads:userId:${user}`, async () => {
+    const result = await cache.tryGet<string>(`threads:userId:${user}`, async () => {
         const response = await ofetch(profileUrl(user), {
             headers: {
                 'User-Agent': USER_AGENT,
@@ -63,13 +63,14 @@ const getUserId = async (user: string): Promise<string> => {
 
         for (const el of document.querySelectorAll('script[data-sjs]')) {
             try {
-                const data = JSONPath({
+                // the Threads payload types `user_id` as either a numeric or a string id
+                const data = JSONPath<Array<string | number>>({
                     path: '$..user_id',
                     json: JSON.parse(el.textContent || ''),
                 });
 
                 if (data?.[0]) {
-                    return data[0];
+                    return String(data[0]);
                 }
             } catch {
                 // Skip invalid JSON
@@ -79,15 +80,10 @@ const getUserId = async (user: string): Promise<string> => {
         throw new NotFoundError('User ID not found');
     });
 
-    if (result) {
-        if (typeof result === 'string') {
-            return result;
-        }
-        if (typeof result === 'number') {
-            return result.toString();
-        }
+    if (!result) {
+        throw new TypeError('Invalid user ID type');
     }
-    throw new TypeError('Invalid user ID type');
+    return result;
 };
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;

@@ -1,7 +1,18 @@
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+interface Career {
+    meet_day?: string;
+    meet_time?: string;
+    company_name?: string;
+    school_name?: string;
+    address?: string;
+    company_property?: string;
+    industry_category?: string;
+    career_talk_id?: string;
+}
 
 export const route: Route = {
     path: '/job/careers/:type?',
@@ -22,7 +33,7 @@ async function handler(ctx: Context): Promise<Data> {
     const { type = 'inner' } = ctx.req.param();
     const title = `${type === 'inner' ? '校内宣讲会' : '校外宣讲会'}-昆明理工大学就业网`;
     const pageUrl = `${baseUrl}/module/getcareers?start_page=1&keyword=&type=${type}&day=&count=20&start=1&_=${Date.now()}`;
-    const data = await ofetch(pageUrl);
+    const data = await ofetch<{ data: Career[] }>(pageUrl);
 
     return {
         title,
@@ -43,6 +54,6 @@ async function handler(ctx: Context): Promise<Data> {
                 description: `时间：${meetDay} ${meetTime}<br>地点：${schoolName ? `${schoolName}-${address}` : address}<br>类别：${companyProperty}<br>行业类别：${industryCategory}`,
                 link: `${baseUrl}/detail/career?id=${careerTalkId}`,
             };
-        }) as DataItem[],
+        }),
     };
 }

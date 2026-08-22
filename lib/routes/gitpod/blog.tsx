@@ -76,7 +76,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: rootUrl + '/blog',
         description: $('meta[name="description"]').attr('content'),
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
         item: items,
     };
 

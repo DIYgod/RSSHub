@@ -1,4 +1,4 @@
-import type { Data, Route } from '@/types';
+import type { Route } from '@/types';
 
 import { CommonDataProperties, CommonRouteProperties, getPostItems } from './common';
 
@@ -29,6 +29,6 @@ export const route: Route = {
             title: `Voronoi Posts for "${keyword}"`,
             link: `https://www.voronoiapp.com/explore?search=${encodeURIComponent(keyword)}`,
             item: items,
-        } as Data;
+        };
     },
 };

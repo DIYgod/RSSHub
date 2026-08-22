@@ -16,7 +16,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('ul.notice-list li')
         .slice(0, limit)
@@ -32,7 +32,7 @@ export const handler = async (ctx) => {
                     .find('div.notice-label')
                     .toArray()
                     .map((c) => $(c).text()),
-                language: language as Language,
+                language,
             };
         });
 
@@ -52,7 +52,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.v_news_content').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -70,7 +70,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language: language as Language,
+        language,
     };
 };
 

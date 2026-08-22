@@ -25,29 +25,28 @@ async function handler() {
         .map((el) => `https://xiaomi.eu${$(el).attr('href')}`);
 
     const lists = await Promise.all(
-        forums.map(
-            (forum) =>
-                cache.tryGet(
-                    forum,
-                    async () => {
-                        const forumResponse = await ofetch(forum);
-                        const $$ = load(forumResponse);
-                        return $$('.structItem--thread')
-                            .toArray()
-                            .map((th) => {
-                                const $th = $$(th);
-                                const $ver = $th.find('.structItem-title>a:nth-child(1)');
-                                const $title = $th.find('.structItem-title>a:nth-child(2)');
-                                return {
-                                    title: `[${$ver.text()}] ${$title.text()}`,
-                                    link: `https://xiaomi.eu${$title.attr('href')}`,
-                                    updated: $th.find('.structItem-cell--latest time').attr('datetime')!,
-                                };
-                            });
-                    },
-                    config.cache.routeExpire,
-                    false
-                ) as Promise<Array<{ title: string; link: string; updated: string }>>
+        forums.map((forum) =>
+            cache.tryGet(
+                forum,
+                async () => {
+                    const forumResponse = await ofetch(forum);
+                    const $$ = load(forumResponse);
+                    return $$('.structItem--thread')
+                        .toArray()
+                        .map((th) => {
+                            const $th = $$(th);
+                            const $ver = $th.find('.structItem-title>a:nth-child(1)');
+                            const $title = $th.find('.structItem-title>a:nth-child(2)');
+                            return {
+                                title: `[${$ver.text()}] ${$title.text()}`,
+                                link: `https://xiaomi.eu${$title.attr('href')}`,
+                                updated: $th.find('.structItem-cell--latest time').attr('datetime')!,
+                            };
+                        });
+                },
+                config.cache.routeExpire,
+                false
+            )
         )
     );
 

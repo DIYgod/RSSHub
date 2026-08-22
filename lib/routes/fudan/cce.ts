@@ -28,7 +28,7 @@ async function handler() {
 
     const out = await Promise.all(
         urlList.map((itemUrl) =>
-            cache.tryGet(itemUrl, async () => {
+            cache.tryGet(itemUrl, async (): Promise<DataItem | ''> => {
                 const response = await ofetch(itemUrl);
                 const $ = load(response);
                 const targetDate = $('.arti_update')
@@ -52,6 +52,6 @@ async function handler() {
     return {
         title: '复旦大学继续教育学院 - 通知公告',
         link,
-        item: out.filter(Boolean) as DataItem[],
+        item: out.filter((item) => item !== ''),
     };
 }

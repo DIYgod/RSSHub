@@ -41,13 +41,13 @@ async function handler(ctx: Context) {
     const list = $('div.tplgd')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const a = $(item).find('a').eq(1);
             return {
                 title: a.text().trim(),
                 link: a.attr('href'),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

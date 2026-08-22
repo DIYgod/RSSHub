@@ -140,7 +140,7 @@ function sanitizeHtml(pageHtml: string): string {
 function processGameItem(game: { title: string; link: string; pubDate: string | null }): Promise<DataItem> {
     const cacheKey = `elamigos:${game.link}`;
 
-    return cache.tryGet(cacheKey, async () => {
+    return cache.tryGet<DataItem>(cacheKey, async () => {
         try {
             const { data: pageHtml } = await got(game.link);
 
@@ -161,13 +161,13 @@ function processGameItem(game: { title: string; link: string; pubDate: string | 
                 link: game.link,
                 pubDate: finalPublishDate === null ? undefined : finalPublishDate.toUTCString(),
                 description: contentHtml,
-            } as DataItem;
+            };
         } catch {
             return {
                 title: game.title,
                 link: game.link,
                 description: `<p>View game page: <a href="${game.link}">${game.link}</a></p>`,
-            } as DataItem;
+            };
         }
     });
 }
