@@ -1,6 +1,5 @@
 export const rootUrl = 'https://www.iwara.tv';
 export const apiRootUrl = 'https://api.iwara.tv';
-export const apiqRootUrl = 'https://apiq.iwara.tv';
 export const imageRootUrl = 'https://i.iwara.tv';
 
 export const typeMap = {

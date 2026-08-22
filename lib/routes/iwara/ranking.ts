@@ -53,26 +53,32 @@ async function handler(ctx) {
     const { type = 'video', sort = 'date', rating = 'ecchi' } = ctx.req.param();
 
     const limit = ctx.req.query('limit') || 32;
-    const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
+    const apiUrl = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
 
     const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}`,
         async () => {
-            const { page, destroy } = await getPlaywrightPage(url, {
+            const { page, destroy } = await getPlaywrightPage(rootUrl, {
+                closeTimeout: 90 * 1000,
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
-                        const request = route.request();
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
+                        const type = route.request().resourceType();
+                        ['document', 'script', 'xhr', 'fetch'].includes(type) ? route.continue() : route.abort();
                     });
                 },
                 gotoConfig: {
-                    waitUntil: 'networkidle',
+                    waitUntil: 'domcontentloaded',
                 },
             });
 
             try {
-                const content = await page.evaluate(() => document.querySelector('pre')?.textContent || document.body.textContent);
-                const response = JSON.parse(content || '{}');
+                const response = await page.evaluate(async (url) => {
+                    const res = await fetch(url);
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                }, apiUrl);
 
                 return response.results.map((item) => ({
                     title: item.title,
