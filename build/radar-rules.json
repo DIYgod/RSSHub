@@ -131,6 +131,19 @@
       }
     ]
   },
+  "4399.com": {
+    "_name": "4399",
+    "my": [
+      {
+        "title": "论坛",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/forums/:mtag"
+        ],
+        "target": "/4399/forums/:mtag"
+      }
+    ]
+  },
   "12306.cn": {
     "_name": "12306",
     "www": [
@@ -169,6 +182,19 @@
           "/articles/:type"
         ],
         "target": "/freebuf/articles/:type"
+      }
+    ]
+  },
+  "7gogo.jp": {
+    "_name": "755",
+    ".": [
+      {
+        "title": "用户时间线",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username"
+        ],
+        "target": "/7gogo/user/:username"
       }
     ]
   },
@@ -405,6 +431,20 @@
       }
     ]
   },
+  "cowlevel.net": {
+    "_name": "奶牛关",
+    ".": [
+      {
+        "title": "元素文章",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/element/:id",
+          "/element/:id/article"
+        ],
+        "target": "/cowlevel/element/:id"
+      }
+    ]
+  },
   "daum.net": {
     "_name": "daum",
     "potplayer": [
@@ -476,6 +516,19 @@
           "/potplayer/PotPlayer/v4/Update2/UpdatePol.html"
         ],
         "target": "/daum/potplayer/Pol"
+      }
+    ]
+  },
+  "daxiaamu.com": {
+    "_name": "大侠阿木",
+    "www": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/daxiaamu/home"
       }
     ]
   },
@@ -551,6 +604,19 @@
           "/"
         ],
         "target": "/englishhome/"
+      }
+    ]
+  },
+  "evri.com": {
+    "_name": "Evri",
+    "www": [
+      {
+        "title": "Parcel Tracking",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/track/parcel/:tracking/details"
+        ],
+        "target": "/evri/:tracking"
       }
     ]
   },
@@ -803,6 +869,19 @@
           "/:username"
         ],
         "target": "/gitee/events/:username"
+      }
+    ]
+  },
+  "gitlab.com": {
+    "_name": "GitLab",
+    ".": [
+      {
+        "title": "Explore",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore/projects/:type"
+        ],
+        "target": "/gitlab/explore/:type"
       }
     ]
   },
@@ -2025,6 +2104,37 @@
       }
     ]
   },
+  "last.fm": {
+    "_name": "Last.fm",
+    "www": [
+      {
+        "title": "用户 Love 记录",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/user/:user",
+          "/user/:user/*"
+        ],
+        "target": "/last.fm/loved/:user"
+      },
+      {
+        "title": "用户播放记录",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/user/:user",
+          "/user/:user/*"
+        ],
+        "target": "/last.fm/recent/:user"
+      },
+      {
+        "title": "站内 Top 榜单",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/charts"
+        ],
+        "target": "/last.fm/top"
+      }
+    ]
+  },
   "likeshop.me": {
     "_name": "LikeShop",
     ".": [
@@ -2116,6 +2226,19 @@
       }
     ]
   },
+  "mamibuy.com.hk": {
+    "_name": "妈咪帮",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/mamibuy/:caty?"
+      }
+    ]
+  },
   "maoyan.com": {
     "_name": "猫眼电影",
     "piaofang": [
@@ -2130,21 +2253,25 @@
     ],
     "www": [
       {
-        "title": "即将上映",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/films?showType=2",
-          "/films"
-        ],
-        "target": "/maoyan/coming"
-      },
-      {
         "title": "正在热映",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
           "/films?showType=1"
         ],
         "target": "/maoyan/hot"
+      }
+    ]
+  },
+  "meipai.com": {
+    "_name": "美拍",
+    "www": [
+      {
+        "title": "用户动态",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/meipai/user/:uid"
       }
     ]
   },
@@ -2443,6 +2570,40 @@
       }
     ]
   },
+  "utdallas.edu": {
+    "_name": "University of Texas at Dallas",
+    "isso": [
+      {
+        "title": "International Student Services",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/utdallas/isso"
+      }
+    ]
+  },
+  "wegene.com": {
+    "_name": "WeGene",
+    "www": [
+      {
+        "title": "微解读栏目",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/crowdsourcing"
+        ],
+        "target": "/wegene/column/all/all"
+      },
+      {
+        "title": "最近更新",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/wegene/newest"
+      }
+    ]
+  },
   "wikipedia.org": {
     "_name": "Wikipedia",
     "en": [
@@ -2708,19 +2869,6 @@
           "/"
         ],
         "target": "/cbnweek/"
-      }
-    ]
-  },
-  "cgtn.com": {
-    "_name": "中国环球电视网",
-    ".": [
-      {
-        "title": "播客",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/podcast/column/:category/*/:id"
-        ],
-        "target": "/cgtn/podcast/:category/:id"
       }
     ]
   },
@@ -3170,6 +3318,19 @@
           "/"
         ],
         "target": "/gocn/topics"
+      }
+    ]
+  },
+  "hackerone.com": {
+    "_name": "HackerOne",
+    ".": [
+      {
+        "title": "Hacker Activity",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/hacktivity"
+        ],
+        "target": "/hackerone/hacktivity"
       }
     ]
   },
@@ -3914,6 +4075,27 @@
       }
     ]
   },
+  "technologyreview.com": {
+    "_name": "MIT Technology Review",
+    "www": [
+      {
+        "title": "Index",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/"
+        ],
+        "target": "/technologyreview/"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/topic/:category_name"
+        ],
+        "target": "/technologyreview/:category_name"
+      }
+    ]
+  },
   "thepetcity.co": {
     "_name": "PetCity 毛孩日常",
     ".": [
@@ -3986,6 +4168,33 @@
       }
     ]
   },
+  "topbook.cc": {
+    "_name": "Topbook",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/content",
+          "/"
+        ],
+        "target": "/topbook/:id"
+      }
+    ]
+  },
+  "trakt.tv": {
+    "_name": "Trakt.tv",
+    "app": [
+      {
+        "title": "User Collection",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/profile/:username"
+        ],
+        "target": "/trakt/collection/:username"
+      }
+    ]
+  },
   "twitch.tv": {
     "_name": "Twitch",
     "www": [
@@ -4030,6 +4239,19 @@
           "/"
         ],
         "target": "/v2rayshare/"
+      }
+    ]
+  },
+  "vgnlab.com.cn": {
+    "_name": "VGN",
+    "www": [
+      {
+        "title": "新闻中心",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/web/news"
+        ],
+        "target": "/vgnlab/"
       }
     ]
   },
@@ -4156,6 +4378,27 @@
       }
     ]
   },
+  "xuetangx.com": {
+    "_name": "学堂在线",
+    "www": [
+      {
+        "title": "课程列表",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/search"
+        ],
+        "target": "/xuetangx/course/list"
+      },
+      {
+        "title": "课程信息",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/course/:sign"
+        ],
+        "target": "/xuetangx/course/:sign"
+      }
+    ]
+  },
   "yande.re": {
     "_name": "yande.re",
     ".": [
@@ -4166,6 +4409,19 @@
           "/post"
         ],
         "target": "/yande/post/popular_recent/:period?"
+      }
+    ]
+  },
+  "yuancheng.work": {
+    "_name": "远程.work",
+    ".": [
+      {
+        "title": "Remote.work Job Information",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:caty"
+        ],
+        "target": "/yuancheng.work(_,url)=>url?`/yuancheng.work/${/\\w+-(\\w+)-\\w+/.exec(url)[1]}`:\"/yuancheng.work\""
       }
     ]
   },
@@ -4243,6 +4499,29 @@
           "/tag/:tag"
         ],
         "target": "/8kcos/tag/:tag"
+      }
+    ]
+  },
+  "av01.media": {
+    "_name": "AV01",
+    "www": [
+      {
+        "title": "演员",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:language/actress/:name/:unusedName",
+          "/:language/actress/:name"
+        ],
+        "target": "/av01/actor/:name"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:language/tag/:name/:unusedName",
+          "/:language/tag/:name"
+        ],
+        "target": "/av01/tag/:name"
       }
     ]
   },
@@ -4358,6 +4637,19 @@
           "/:username/playlists/:playlist"
         ],
         "target": "/mixcloud/:username/playlists/:playlist"
+      }
+    ]
+  },
+  "95598.cn": {
+    "_name": "国家电网",
+    "www": [
+      {
+        "title": "停电通知",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/osgweb/blackoutNotice"
+        ],
+        "target": "/sgcc/95598/blackoutNotice/:adcode"
       }
     ]
   },
@@ -9501,7 +9793,7 @@
     ]
   },
   "aflcio.org": {
-    "_name": "AFL-CIO",
+    "_name": "American Federation of Labor and Congress of Industrial Organizations (AFL-CIO)",
     ".": [
       {
         "title": "Blog",
@@ -9810,6 +10102,19 @@
       }
     ]
   },
+  "ahau.edu.cn": {
+    "_name": "安徽农业大学",
+    "xzxy": [
+      {
+        "title": "人工智能学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/:type.htm"
+        ],
+        "target": "/ahau/cs_news/:type"
+      }
+    ]
+  },
   "ahjzu.edu.cn": {
     "_name": "安徽建筑大学",
     "news": [
@@ -9823,6 +10128,19 @@
       }
     ]
   },
+  "ahmu.edu.cn": {
+    "_name": "安徽医科大学",
+    "yjsxy": [
+      {
+        "title": "研究生学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/list.htm"
+        ],
+        "target": "/ahmu/news"
+      }
+    ]
+  },
   "ahstu.edu.cn": {
     "_name": "安徽科技工程大学",
     "www": [
@@ -9833,6 +10151,19 @@
           "/index/:type.htm"
         ],
         "target": "/ahstu/:type"
+      }
+    ]
+  },
+  "ahut.edu.cn": {
+    "_name": "安徽工业大学",
+    "news": [
+      {
+        "title": "学校要闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xyyw.htm"
+        ],
+        "target": "/ahut/news"
       }
     ]
   },
@@ -12252,6 +12583,19 @@
       }
     ]
   },
+  "axis-studios.com": {
+    "_name": "Axis Studios",
+    ".": [
+      {
+        "title": "Work",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/work"
+        ],
+        "target": "/axis-studios/work"
+      }
+    ]
+  },
   "azul.com": {
     "_name": "Azul",
     "www": [
@@ -13188,6 +13532,35 @@
       }
     ]
   },
+  "bjeea.com": {
+    "_name": "北京教育考试院",
+    "www": [
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/bjeeagg"
+        ],
+        "target": "/bjeea/bjeeagg"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zkzc"
+        ],
+        "target": "/bjeea/zkzc"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zkkd"
+        ],
+        "target": "/bjeea/zkkd"
+      }
+    ]
+  },
   "bjfu.edu.cn": {
     "_name": "北京林业大学",
     "graduate": [
@@ -13567,7 +13940,7 @@
     ]
   },
   "bookwalker.com.tw": {
-    "_name": "BOOKWALKER電子書",
+    "_name": "BOOK☆WALKER",
     "www": [
       {
         "title": "搜尋",
@@ -13754,6 +14127,16 @@
   },
   "bupt.edu.cn": {
     "_name": "北京邮电大学",
+    "grs": [
+      {
+        "title": "研究生院通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg.htm"
+        ],
+        "target": "/bupt/grs"
+      }
+    ],
     "jwc": [
       {
         "title": "教务处",
@@ -15290,6 +15673,19 @@
       }
     ]
   },
+  "cgtn.com": {
+    "_name": "中国环球电视网",
+    ".": [
+      {
+        "title": "播客",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/podcast/column/:category/*/:id"
+        ],
+        "target": "/cgtn/podcast/:category/:id"
+      }
+    ]
+  },
   "chaincatcher.com": {
     "_name": "链捕手 ChainCatcher",
     ".": [
@@ -15322,6 +15718,19 @@
           "/s/:userid"
         ],
         "target": "/changba/:userid"
+      }
+    ]
+  },
+  "chicagotribune.com": {
+    "_name": "Chicago Tribune",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category/:subcategory"
+        ],
+        "target": "/chicagotribune/:category/:subcategory?"
       }
     ]
   },
@@ -17316,6 +17725,19 @@
       }
     ]
   },
+  "company3.com": {
+    "_name": "Company 3",
+    "www": [
+      {
+        "title": "Video Categories",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/video-categories/:category"
+        ],
+        "target": "/company3/:category"
+      }
+    ]
+  },
   "consumer.org.hk": {
     "_name": "消费者委员会",
     ".": [
@@ -17701,6 +18123,29 @@
           "/:path"
         ],
         "target": "/cqu/jwc/:path"
+      }
+    ]
+  },
+  "cqut.edu.cn": {
+    "_name": "重庆理工大学",
+    "lib": [
+      {
+        "title": "图书馆通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/*"
+        ],
+        "target": "/cqut/libnews"
+      }
+    ],
+    "www": [
+      {
+        "title": "学校通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/xxtz1.htm"
+        ],
+        "target": "/cqut/news"
       }
     ]
   },
@@ -18102,6 +18547,29 @@
       }
     ]
   },
+  "cug.edu.cn": {
+    "_name": "中国地质大学（武汉）",
+    "graduate": [
+      {
+        "title": "研究生院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg.htm"
+        ],
+        "target": "/cug/graduate"
+      }
+    ],
+    "esearch": [
+      {
+        "title": "今日文章 - 包含全校网站最新通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/cug/news"
+      }
+    ]
+  },
   "cugb.edu.cn": {
     "_name": "China University of Geosciences (Beijing)",
     "jwc": [
@@ -18191,6 +18659,19 @@
           "/category/selected_noema"
         ],
         "target": "/cuilingmag/selected_noema"
+      }
+    ]
+  },
+  "cuit.edu.cn": {
+    "_name": "成都信息工程大学",
+    "www": [
+      {
+        "title": "成信新闻网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/:category"
+        ],
+        "target": "/cuit/cxxww/:category{.+}?"
       }
     ]
   },
@@ -20492,6 +20973,40 @@
       }
     ]
   },
+  "emi-nitta.net": {
+    "_name": "Emi Nitta",
+    ".": [
+      {
+        "title": "Recent update / News",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/updates"
+        ],
+        "target": "/emi-nitta/updates"
+      },
+      {
+        "title": "Recent update / News",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/contents/news"
+        ],
+        "target": "/emi-nitta/news"
+      }
+    ]
+  },
+  "engadget.com": {
+    "_name": "Engadget",
+    "www": [
+      {
+        "title": "Home",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/engadget/"
+      }
+    ]
+  },
   "engineering.fyi": {
     "_name": "Engineering.fyi",
     ".": [
@@ -20555,6 +21070,19 @@
           "/:id"
         ],
         "target": "/esquirehk/tag/:id?"
+      }
+    ]
+  },
+  "etoland.co.kr": {
+    "_name": "eTOLAND",
+    ".": [
+      {
+        "title": "主题贴",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/b/:bo_table/list"
+        ],
+        "target": "/etoland/:bo_table"
       }
     ]
   },
@@ -21228,6 +21756,14 @@
           "/book/:id"
         ],
         "target": "/freexcomic/book/:id"
+      },
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/book/:id"
+        ],
+        "target": "/jjmhw/book/:id"
       }
     ]
   },
@@ -21376,27 +21912,6 @@
       }
     ]
   },
-  "gamer.com.tw": {
-    "_name": "巴哈姆特電玩資訊站",
-    "ani": [
-      {
-        "title": "動畫瘋 - 動畫",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/gamer/anime/:sn"
-      },
-      {
-        "title": "動畫瘋 - 最後更新",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/gamer/new_anime"
-      }
-    ]
-  },
   "gamersecret.com": {
     "_name": "Gamer Secret",
     ".": [
@@ -21459,6 +21974,19 @@
           "/cn/col51/list"
         ],
         "target": "/gdmuseum/information"
+      }
+    ]
+  },
+  "gdou.edu.cn": {
+    "_name": "广东海洋大学",
+    "jwc": [
+      {
+        "title": "教务通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jwdt/jwtz.htm"
+        ],
+        "target": "/gdou/jwc"
       }
     ]
   },
@@ -22074,6 +22602,19 @@
       }
     ]
   },
+  "gocomics.com": {
+    "_name": "GoComics",
+    "www": [
+      {
+        "title": "Comic Strips",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:name"
+        ],
+        "target": "/gocomics/:name"
+      }
+    ]
+  },
   "anitaku.to": {
     "_name": "Gogoanimehd",
     "developer": [
@@ -22084,6 +22625,19 @@
           "/"
         ],
         "target": "/gogoanimehd/recent-releases"
+      }
+    ]
+  },
+  "govopendata.com": {
+    "_name": "公共数据开放平台",
+    "cn": [
+      {
+        "title": "新闻联播文字版",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/xinwenlianbo"
+        ],
+        "target": "/govopendata/xinwenlianbo"
       }
     ]
   },
@@ -22203,6 +22757,19 @@
           "/yunboxinwen.html"
         ],
         "target": "/grandcanalmuseum/yunboxinwen"
+      }
+    ]
+  },
+  "grandwaylaw.com": {
+    "_name": "国枫律师事务所",
+    "www": [
+      {
+        "title": "国枫视角",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/guofengshijiao"
+        ],
+        "target": "/grandwaylaw/"
       }
     ]
   },
@@ -22409,6 +22976,19 @@
       }
     ]
   },
+  "gzmtu.edu.cn": {
+    "_name": "广州航海学院",
+    "lib": [
+      {
+        "title": "图书馆通讯公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/txgg.htm"
+        ],
+        "target": "/gzmtu/tsg"
+      }
+    ]
+  },
   "ycombinator.com": {
     "_name": "Hacker News",
     "news": [
@@ -22456,6 +23036,19 @@
           "/"
         ],
         "target": "/hackyournews/"
+      }
+    ]
+  },
+  "haiwen-law.com": {
+    "_name": "海问律师事务所",
+    "www": [
+      {
+        "title": "研究文章",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/35"
+        ],
+        "target": "/haiwen-law/"
       }
     ]
   },
@@ -22536,6 +23129,108 @@
           "/"
         ],
         "target": "/hbr/topic/:topic?/:type?"
+      }
+    ]
+  },
+  "hbsea.org.cn": {
+    "_name": "湖北省软件企业协会",
+    "www": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/portal/list/index/id/:id.html"
+        ],
+        "target": "/hbsea/:id"
+      }
+    ]
+  },
+  "hbut.edu.cn": {
+    "_name": "湖北工业大学",
+    "www": [
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/hbut/news/tzgg"
+      }
+    ],
+    "news": [
+      {
+        "title": "学校新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xxxw.htm"
+        ],
+        "target": "/hbut/news/xxxw"
+      },
+      {
+        "title": "菁菁校园",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jjxy.htm"
+        ],
+        "target": "/hbut/news/jjxy"
+      },
+      {
+        "title": "媒体聚焦",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/mtjj.htm"
+        ],
+        "target": "/hbut/news/mtjj"
+      },
+      {
+        "title": "人物风采",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/rwfc.htm"
+        ],
+        "target": "/hbut/news/rwfc"
+      }
+    ],
+    "scs": [
+      {
+        "title": "新闻动态",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/xwdt.htm"
+        ],
+        "target": "/hbut/scs/xwdt"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/hbut/scs/tzgg"
+      },
+      {
+        "title": "教学信息",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jxxx/jxxx.htm"
+        ],
+        "target": "/hbut/scs/jxxx"
+      },
+      {
+        "title": "科研动态",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/kxyj/kydt.htm"
+        ],
+        "target": "/hbut/scs/kydt"
+      },
+      {
+        "title": "党建活动",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/djhd/djhd.htm"
+        ],
+        "target": "/hbut/scs/djhd"
       }
     ]
   },
@@ -22779,12 +23474,13 @@
   },
   "hkej.com": {
     "_name": "信报财经新闻",
-    ".": [
+    "www": [
       {
-        "title": "即时新闻",
+        "title": "即時新聞",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/"
+          "/instantnews/:category",
+          "/instantnews"
         ],
         "target": "/hkej/:category?"
       }
@@ -23209,6 +23905,30 @@
           "/index/xsyg.htm"
         ],
         "target": "/hubu/www/index/xsyg"
+      },
+      {
+        "title": "综合新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/zhxw.htm"
+        ],
+        "target": "/hubu/www/index/zhxw"
+      },
+      {
+        "title": "湖大要闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/hdyw.htm"
+        ],
+        "target": "/hubu/www/index/hdyw"
+      },
+      {
+        "title": "媒体湖大",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/mthd.htm"
+        ],
+        "target": "/hubu/www/index/mthd"
       }
     ],
     "zhxy": [
@@ -24275,6 +24995,19 @@
       }
     ]
   },
+  "huya.com": {
+    "_name": "虎牙直播",
+    ".": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/:id"
+        ],
+        "target": "/huya/live/:id"
+      }
+    ]
+  },
   "arknights.jp": {
     "_name": "鹰角网络",
     "ak": [
@@ -24289,21 +25022,18 @@
       }
     ]
   },
-  "arktca.com": {
-    "_name": "鹰角网络",
-    "aneot": [
-      {
-        "title": "回归线",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/"
-        ],
-        "target": "/hypergryph/arknights/arktca"
-      }
-    ]
-  },
   "hypergryph.com": {
     "_name": "鹰角网络",
+    "monster-siren": [
+      {
+        "title": "塞壬唱片",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/info"
+        ],
+        "target": "/hypergryph/siren/news"
+      }
+    ],
     "ak-conf": [
       {
         "title": "明日方舟 - 游戏公告与新闻",
@@ -24322,6 +25052,32 @@
           "/news"
         ],
         "target": "/hypergryph/endfield/news/:group?"
+      }
+    ]
+  },
+  "arktca.com": {
+    "_name": "鹰角网络",
+    "aneot": [
+      {
+        "title": "回归线",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/hypergryph/arknights/arktca"
+      }
+    ]
+  },
+  "hzcu.edu.cn": {
+    "_name": "浙大城市学院",
+    "www": [
+      {
+        "title": "学校要闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xw/xxyw.htm"
+        ],
+        "target": "/hzcu/news/latest"
       }
     ]
   },
@@ -26218,6 +26974,19 @@
           "/cn/zh/home/insights.html"
         ],
         "target": "/kpmg/insights/zh"
+      }
+    ]
+  },
+  "kuai.media": {
+    "_name": "快媒体",
+    "www": [
+      {
+        "title": "首页更新 / 具体栏目更新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/:category/"
+        ],
+        "target": "/kuai/:category"
       }
     ]
   },
@@ -29695,7 +30464,7 @@
     ]
   },
   "mit.edu": {
-    "_name": "Massachusetts Institute of Technology",
+    "_name": "Massachusetts Institute of Technology (MIT)",
     "scratch": [
       {
         "title": "Scratch User Projects",
@@ -29714,6 +30483,16 @@
         "target": "/mit/scratch/user-comments/:username"
       }
     ],
+    "www.csail": [
+      {
+        "title": "Computer Science and Artificial Intelligence Laboratory (CSAIL)",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news"
+        ],
+        "target": "/mit/csail/news"
+      }
+    ],
     "hanlab": [
       {
         "title": "HAN Lab Blog",
@@ -29722,6 +30501,16 @@
           "/blog"
         ],
         "target": "/mit/hanlab/blog"
+      }
+    ],
+    "oge": [
+      {
+        "title": "Office of Graduate Education Blog",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news-and-events/blog"
+        ],
+        "target": "/mit/oge"
       }
     ]
   },
@@ -29811,6 +30600,29 @@
           "/"
         ],
         "target": "/mohw/clarification"
+      }
+    ]
+  },
+  "monsterhunter.com": {
+    "_name": "Monster Hunter",
+    "www": [
+      {
+        "title": "更新情报",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/",
+          "/*path"
+        ],
+        "target": "/monsterhunter/update"
+      },
+      {
+        "title": "World: Iceborne 最新消息",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/",
+          "/*path"
+        ],
+        "target": "/monsterhunter/world-iceborne/news"
       }
     ]
   },
@@ -30572,6 +31384,27 @@
       }
     ]
   },
+  "nchu.edu.cn": {
+    "_name": "南昌航空大学",
+    "jwc": [
+      {
+        "title": "教务处公告与新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwzx/gg"
+        ],
+        "target": "/nchu/jwc/notice"
+      },
+      {
+        "title": "教务处公告与新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwzx/xw"
+        ],
+        "target": "/nchu/jwc/news"
+      }
+    ]
+  },
   "ncku.edu.tw": {
     "_name": "National Cheng Kung University",
     "www.csie": [
@@ -31117,6 +31950,19 @@
           "/"
         ],
         "target": "/njit/tzgg"
+      }
+    ]
+  },
+  "njtech.edu.cn": {
+    "_name": "南京工业大学",
+    "jwc": [
+      {
+        "title": "教务处",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/ggtz.htm"
+        ],
+        "target": "/njtech/jwc"
       }
     ]
   },
@@ -32317,6 +33163,21 @@
           "/library"
         ],
         "target": "/ollama/library"
+      }
+    ]
+  },
+  "onejav.com": {
+    "_name": "OneJAV",
+    ".": [
+      {
+        "title": "页面种子",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:type",
+          "/:type/:key",
+          "/:type/:key/:morekey"
+        ],
+        "target": "/onejavparams=>{const itype=params.morekey===void 0?params.type:params.type===\"tag\"?\"tag\":\"day\";const ikey=`${itype===\"day\"?params.type:\"\"}${params.key||\"\"}${itype===\"tag\"&&params.morekey!==void 0?\"%2F\":\"\"}${params.morekey||\"\"}`;return`/onejav/${itype}/${ikey}`}"
       }
     ]
   },
@@ -36353,6 +37214,20 @@
       }
     ]
   },
+  "reactnativenewsletter.com": {
+    "_name": "React Native Newsletter",
+    ".": [
+      {
+        "title": "Past Issues",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/past-issues",
+          "/"
+        ],
+        "target": "/reactnativenewsletter/"
+      }
+    ]
+  },
   "readhub.cn": {
     "_name": "Readhub",
     ".": [
@@ -36885,6 +37760,27 @@
       }
     ]
   },
+  "sctu.edu.cn": {
+    "_name": "四川旅游学院",
+    "www": [
+      {
+        "title": "人工智能学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/it/zxdt/tzgg.htm"
+        ],
+        "target": "/sctu/it"
+      },
+      {
+        "title": "教务处",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jwc/wenzhangg/:category.htm"
+        ],
+        "target": "/sctu/jwc/:category"
+      }
+    ]
+  },
   "scut.edu.cn": {
     "_name": "华南理工大学",
     "www2": [
@@ -37078,6 +37974,19 @@
       }
     ]
   },
+  "sexinsex.net": {
+    "_name": "sexinsex",
+    ".": [
+      {
+        "title": "分区帖子",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/bbs/:path"
+        ],
+        "target": "/sexinsex/:id/:type?"
+      }
+    ]
+  },
   "sfacg.com": {
     "_name": "SF 轻小说",
     "book": [
@@ -37088,6 +37997,42 @@
           "/Novel/:id/*"
         ],
         "target": "/sfacg/novel/chapter/:id"
+      }
+    ]
+  },
+  "shanbay.com": {
+    "_name": "扇贝",
+    "web": [
+      {
+        "title": "今日短文",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/reading/web-news"
+        ],
+        "target": "/shanbay/news"
+      }
+    ]
+  },
+  "shanghaitech.edu.cn": {
+    "_name": "上海科技大学",
+    "www": [
+      {
+        "title": "活动通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/hd/list.htm"
+        ],
+        "target": "/shanghaitech/activity"
+      }
+    ],
+    "sist": [
+      {
+        "title": "信息科技与技术学院活动",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xyhd/list.htm"
+        ],
+        "target": "/shanghaitech/sist/activity"
       }
     ]
   },
@@ -37993,6 +38938,19 @@
           "/blog/:category"
         ],
         "target": "/simpleinfo/:category"
+      }
+    ]
+  },
+  "sketch.com": {
+    "_name": "sketch.com",
+    "www": [
+      {
+        "title": "Release update",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/changelog"
+        ],
+        "target": "/sketch/updates"
       }
     ]
   },
@@ -39281,6 +40239,21 @@
       }
     ]
   },
+  "sttcq.com": {
+    "_name": "掌上查询助手",
+    "www": [
+      {
+        "title": "95598 停电查询网",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/td/:province/:city/:district/",
+          "/td/:province/:city/",
+          "/td/:province/"
+        ],
+        "target": "/sttcq/:province/:city/:district?"
+      }
+    ]
+  },
   "supchina.com": {
     "_name": "SupChina",
     ".": [
@@ -39547,6 +40520,27 @@
           "/"
         ],
         "target": "/swpu/scs/:code"
+      }
+    ]
+  },
+  "swufe.edu.cn": {
+    "_name": "西南财经大学",
+    "it": [
+      {
+        "title": "经济信息工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/swufe/seie/tzgg"
+      },
+      {
+        "title": "经济信息工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/xyxw.htm"
+        ],
+        "target": "/swufe/seie/xyxw"
       }
     ]
   },
@@ -40801,6 +41795,19 @@
       }
     ]
   },
+  "tpre.cn": {
+    "_name": "天津产权交易中心",
+    "www": [
+      {
+        "title": "中心动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/news/zxdt.html"
+        ],
+        "target": "/tpre/news"
+      }
+    ]
+  },
   "tradingview.com": {
     "_name": "TradingView",
     ".": [
@@ -41291,6 +42298,53 @@
       }
     ]
   },
+  "umass.edu": {
+    "_name": "University of Massachusetts Amherst",
+    "www.cics": [
+      {
+        "title": "College of Information & Computer Sciences News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news"
+        ],
+        "target": "/umass/amherst/csnews"
+      }
+    ],
+    "www": [
+      {
+        "title": "College of Engineering - News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/engineering/news"
+        ],
+        "target": "/umass/amherst/ecenews"
+      },
+      {
+        "title": "College of Electrical and Computer Engineering - Seminar",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/engineering/events"
+        ],
+        "target": "/umass/amherst/eceseminar"
+      },
+      {
+        "title": "Office of Global Affairs - International Student and Scholar Services Events",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/global-affairs/events"
+        ],
+        "target": "/umass/amherst/ipoevents"
+      },
+      {
+        "title": "International Student and Scholar Services - Recent News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/global-affairs/international-students-scholars"
+        ],
+        "target": "/umass/amherst/ipostories"
+      }
+    ]
+  },
   "unipd.it": {
     "_name": "Università di Padova",
     "ilbolive": [
@@ -41301,6 +42355,19 @@
           "/it/news"
         ],
         "target": "/unipd/ilbolive/news"
+      }
+    ]
+  },
+  "unit-image.fr": {
+    "_name": "Unit Image",
+    "www": [
+      {
+        "title": "Films",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/films"
+        ],
+        "target": "/unit-image/films"
       }
     ]
   },
@@ -42135,6 +43202,38 @@
       }
     ]
   },
+  "wenxuecity.com": {
+    "_name": "文学城",
+    "bbs": [
+      {
+        "title": "最新主题",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/:cat"
+        ],
+        "target": "/wenxuecity/bbs/:cat"
+      },
+      {
+        "title": "最新主题 - 精华区",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/:cat"
+        ],
+        "target": "/wenxuecity/bbs/:cat/1"
+      }
+    ],
+    "blog": [
+      {
+        "title": "博客",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/myblog/:id",
+          "/myoverview/:id"
+        ],
+        "target": "/wenxuecity/blog/:id"
+      }
+    ]
+  },
   "wfu.edu.cn": {
     "_name": "潍坊学院",
     "jwc": [
@@ -42856,6 +43955,60 @@
       }
     ]
   },
+  "ynnu.edu.cn": {
+    "_name": "云南师范大学",
+    "jxjy": [
+      {
+        "title": "继续教育学院 - 新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/:category.htm"
+        ],
+        "target": "/ynnu/edu/news"
+      }
+    ]
+  },
+  "ynu.edu.cn": {
+    "_name": "云南大学",
+    "grs": [
+      {
+        "title": "研究生院其他通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/*"
+        ],
+        "target": "/ynu/grs/qttz/:category"
+      },
+      {
+        "title": "研究生院重要通知（置顶消息）",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/*"
+        ],
+        "target": "/ynu/grs/zytz"
+      }
+    ],
+    "www": [
+      {
+        "title": "云大快讯",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/ydkx.htm"
+        ],
+        "target": "/ynu/home"
+      }
+    ],
+    "www.jwc": [
+      {
+        "title": "教务处主要通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/*"
+        ],
+        "target": "/ynu/jwc/:category"
+      }
+    ]
+  },
   "yomiuri.co.jp": {
     "_name": "Yomiuri Shimbun 読売新聞",
     "www": [
@@ -43245,6 +44398,19 @@
       }
     ]
   },
+  "zjgsu.edu.cn": {
+    "_name": "浙江工商大学",
+    "jww": [
+      {
+        "title": "教务处 - 学生专区",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/1331/list.htm"
+        ],
+        "target": "/zjgsu/xszq"
+      }
+    ]
+  },
   "zjut.edu.cn": {
     "_name": "浙江工业大学",
     "cs": [
@@ -43255,6 +44421,24 @@
           "/jsp/newsclass.jsp"
         ],
         "target": "/zjut/cs/:type"
+      }
+    ],
+    "www": [
+      {
+        "title": "浙江工业大学",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/zjut/:type"
+      },
+      {
+        "title": "浙江工业大学首页",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/zjut/www/:type"
       }
     ],
     "www.jwc": [
@@ -43275,16 +44459,6 @@
           "/:type/list.htm"
         ],
         "target": "/zjut/news/:type"
-      }
-    ],
-    "www": [
-      {
-        "title": "浙江工业大学首页",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/:type/list.htm"
-        ],
-        "target": "/zjut/www/:type"
       }
     ]
   },
@@ -44943,6 +46117,27 @@
           "/"
         ],
         "target": "/furstar/characters/:lang"
+      }
+    ]
+  },
+  "gamer.com.tw": {
+    "_name": "巴哈姆特電玩資訊站",
+    "ani": [
+      {
+        "title": "動畫瘋 - 動畫",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/gamer/anime/:sn"
+      },
+      {
+        "title": "動畫瘋 - 最後更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/gamer/new_anime"
       }
     ]
   },
@@ -47135,6 +48330,19 @@
       }
     ]
   },
+  "mnd.gov.tw": {
+    "_name": "中華民國國防部",
+    "www": [
+      {
+        "title": "即時軍事動態",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/newslist"
+        ],
+        "target": "/gov/mnd/"
+      }
+    ]
+  },
   "moa.gov.cn": {
     "_name": "中华人民共和国农业农村部",
     "www.gjs": [
@@ -47282,6 +48490,19 @@
           "/gzdt/:category/"
         ],
         "target": "/gov/mof/gss/:category"
+      }
+    ]
+  },
+  "mohurd.gov.cn": {
+    "_name": "中华人民共和国住房和城乡建设部",
+    "www": [
+      {
+        "title": "政策发布",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zhengcefabu/index.html"
+        ],
+        "target": "/gov/mohurd/policy"
       }
     ]
   },
@@ -50504,9 +51725,27 @@
         "title": "教务处通知公告",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
+          "/tzgg.htm"
+        ],
+        "target": "/scu/jwc/notice"
+      },
+      {
+        "title": "教务处通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
           "/"
         ],
         "target": "/scu/jwc"
+      }
+    ],
+    "xgb": [
+      {
+        "title": "学工部通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/scu/xg/notice"
       }
     ]
   },
@@ -51321,6 +52560,27 @@
           "/"
         ],
         "target": "/tesla/price"
+      }
+    ]
+  },
+  "theguardian.com": {
+    "_name": "The Guardian",
+    "www": [
+      {
+        "title": "China",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/world/china"
+        ],
+        "target": "/theguardian/china"
+      },
+      {
+        "title": "Editorial",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/profile/editorial"
+        ],
+        "target": "/theguardian/editorial"
       }
     ]
   },
@@ -52214,6 +53474,45 @@
           "/video"
         ],
         "target": "/yicai/video/:id"
+      }
+    ]
+  },
+  "yzu.edu.cn": {
+    "_name": "扬州大学",
+    "www": [
+      {
+        "title": "官网消息",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/dtxx/:type.htm"
+        ],
+        "target": "/yzu/home/:type"
+      }
+    ],
+    "yjszs": [
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/tzgg.htm"
+        ],
+        "target": "/yzu/yjszs/tzgg"
+      },
+      {
+        "title": "博士研究生招生",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/bsyjszs.htm"
+        ],
+        "target": "/yzu/yjszs/bszs"
+      },
+      {
+        "title": "硕士研究生招生",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/ssyjszs.htm"
+        ],
+        "target": "/yzu/yjszs/sszs"
       }
     ]
   },
