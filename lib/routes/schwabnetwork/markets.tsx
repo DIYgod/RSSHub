@@ -5,30 +5,10 @@ import { ViewType } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/markets/:market?',
+    path: '/markets',
     categories: ['finance'],
     view: ViewType.Notifications,
     example: '/schwabnetwork/markets',
-    parameters: {
-        market: {
-            description: '市场分类，留空为总览',
-            options: [
-                { label: '总览', value: '' },
-                { label: '美国经济', value: 'us-economy' },
-                { label: '波动性', value: 'volatility' },
-                { label: '期权', value: 'options' },
-                { label: '收益', value: 'earnings' },
-                { label: '技术分析', value: 'technical-analysis' },
-                { label: '美联储动向', value: 'fed-watch' },
-                { label: '期货', value: 'futures' },
-                { label: '国际市场', value: 'international-markets' },
-                { label: '债券', value: 'bonds' },
-                { label: 'IPO与SPAC', value: 'ipos-spac' },
-                { label: 'ETF', value: 'etfs' },
-            ],
-            default: '',
-        },
-    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -39,8 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['schwabnetwork.com/markets/:market?'],
-            target: 'schwabnetwork/markets/:market?',
+            source: ['schwabnetwork.com/markets'],
         },
     ],
     name: '市场新闻',
@@ -49,9 +28,8 @@ export const route: Route = {
     url: 'schwabnetwork.com/markets',
 };
 
-async function handler(ctx) {
-    const market = ctx.params?.market ?? '';
-    const url = `https://www.schwabnetwork.com/markets/${market}`;
+async function handler() {
+    const url = 'https://www.schwabnetwork.com/markets';
     const response = await got(url);
     const $ = load(response.body);
 
@@ -80,8 +58,8 @@ async function handler(ctx) {
     const uniqueItems = new Map(resolvedItems.map((item) => [item.guid, item])).values().toArray();
 
     const result = {
-        title: `Schwab Network - Markets (${market || 'Overview'})`,
-        description: `Latest news and updates from Schwab Network's ${market || 'Overview'} section.`,
+        title: 'Schwab Network - Markets Overview',
+        description: 'Latest news and updates from Schwab Network.',
         link: url,
         item: uniqueItems,
     };
