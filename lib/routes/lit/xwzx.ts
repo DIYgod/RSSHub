@@ -43,7 +43,7 @@ async function handler(ctx: Context): Promise<Data> {
                 .toArray()
                 .map((item) => {
                     const $item = $(item);
-                    const [author, date] = $item.find('.notice-link-time').text().trim().split('，', 2);
+                    const [author, date] = $item.find('.notice-link-time').text().split('，', 2);
                     return {
                         title: $item.find('.notice-link-text').text(),
                         link: new URL($item.find('a.notice-link').attr('href')!, link).href,

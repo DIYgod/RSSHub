@@ -21,8 +21,8 @@ async function handler() {
         .toArray()
         .map((ele) => {
             const $item = $(ele);
-            const titleNode = $item.find('.title > a').first();
-            const thumbnail = $item.find('a > img').first().attr('src');
+            const titleNode = $item.find('.title > a');
+            const thumbnail = $item.find('a > img').attr('src');
 
             const infoNode = $item.find('.info');
             const desc = infoNode.find('.desc').text();

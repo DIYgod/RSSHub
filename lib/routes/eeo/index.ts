@@ -16,7 +16,7 @@ export const route: Route = {
         category: '分类，见下表，默认为该栏目下所有分类',
     },
     name: '栏目',
-    maintainers: ['nczitzk'],
+    maintainers: ['epirus', 'nczitzk'],
     handler,
     description: `::: tip
 以下小标题即栏目 \`column\`，标题下表格中为对应栏目的分类 \`category\`，两者需要配合使用。
@@ -95,33 +95,11 @@ TMT tmt [\`/eeo/tmt\`](https://rsshub.app/eeo/tmt)
 | zongshen | wenhua | lingdu |`,
 };
 
-const legacyUrls = {
-    1: '/yaowen/dashi',
-    2: '/yaowen/hfggzc',
-    3: '/jinrong/zhengquan',
-    4: '/jinrong/ziben',
-    5: '/jinrong/licai',
-    6: '/shangye/xinnengyuan',
-    7: '/shangye/yiliao',
-    8: '/fcqcxf/dichan',
-    9: '/fcqcxf/qiche',
-    10: '/fcqcxf/xiaofei',
-    11: '/yule/yingshi',
-    12: '/yule/yule',
-    13: '/yule/tiyu',
-    14: '/yule/jiaoyu',
-    15: '/gcj/guanchajia',
-    16: '/gcj/zhuanlan',
-    17: '/gcj/shuping',
-    18: '/gcj/lishi',
-    19: '/yaowen/hfshuju',
-};
-
 async function handler(ctx: Context) {
     const { column = 'shangyechanye', category = '' } = ctx.req.param();
 
     const rootUrl = 'https://www.eeo.com.cn';
-    const currentUrl = rootUrl + (Number.parseInt(column) ? legacyUrls[Number.parseInt(column)] : `/${column}/${category}`);
+    const currentUrl = rootUrl + `/${column}/${category}/`;
 
     const response = await ofetch(currentUrl, { responseType: 'text' });
 

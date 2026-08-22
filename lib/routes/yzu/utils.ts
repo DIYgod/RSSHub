@@ -46,10 +46,7 @@ export const fetchList = async (link: string, limit: number) => {
                 return {
                     title: info.title,
                     link: info.link,
-                    description: $detail('.v_news_content')
-                        .html()
-                        ?.replaceAll('src="/', () => `src="${new URL(link).origin}/`)
-                        .trim(),
+                    description: $detail('.v_news_content').html()?.trim(),
                     pubDate: timezone(parseDate(info.date), 8),
                 };
             })

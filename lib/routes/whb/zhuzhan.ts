@@ -33,7 +33,7 @@ async function handler(ctx: Context) {
         .map((item) => {
             const title = $(item).find('.title > a');
             return {
-                title: title.text().trim(),
+                title: title.text(),
                 link: `${base}${title.attr('href')}`,
             } as DataItem;
         });

@@ -41,8 +41,7 @@ async function handler() {
                 pubDate: timezone(parseDate(dateSplit.join('-')), 8),
                 category: [$item.find('.category').text()],
             };
-        })
-        .slice(0, 1) as DataItem[];
+        }) as DataItem[];
 
     const items = await Promise.all(
         list.map((item) =>
