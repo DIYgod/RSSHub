@@ -26,11 +26,17 @@ const renderDesc = (desc, pics, author) =>
         </>
     );
 
+interface Author {
+    name?: string | null;
+    avatar?: string | null;
+    link?: string | null;
+}
+
 const authorDetail = (el) => {
     const $ = load(el);
     // if there is <a>
     const a = $('a');
-    const result: { name?: string | null; avatar?: string | null; link?: string | null } = {
+    const result: Author = {
         name: null,
         avatar: null,
         link: null,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://www.thehindu.com';
     const topic = ctx.req.param('topic');
     const link = `${baseUrl}/topic/${topic}/`;
@@ -77,7 +77,7 @@ async function handler(ctx) {
         image: $('meta[property="og:image"]').attr('content'),
         logo: $('link[rel="apple-touch-icon"]').attr('href'),
         icon: $('link[rel="icon"]').attr('href'),
-        language: 'en' as Language,
+        language: 'en',
         item: items,
     };
 }

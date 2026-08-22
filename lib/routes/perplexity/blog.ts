@@ -111,7 +111,7 @@ async function handler(ctx: Context) {
                 return item;
             }
 
-            return (await cache.tryGet(item.link, async () => {
+            return await cache.tryGet<DataItem>(item.link, async () => {
                 const contentPage = await context.newPage();
 
                 await contentPage.route('**/*', (route) => {
@@ -145,8 +145,8 @@ async function handler(ctx: Context) {
                     ...item,
                     pubDate,
                     description,
-                } as DataItem;
-            })) as DataItem;
+                };
+            });
         })
     );
 

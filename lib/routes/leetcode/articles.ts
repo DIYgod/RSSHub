@@ -51,7 +51,7 @@ async function handler() {
                 title: $(item).find('h4.media-heading').text().trim(),
                 author: $(item).find('.text-500').text(),
                 link: new URL($(item).attr('href')!, host).href,
-                pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
+                pubDate: parseDate($(item).find('p.pull-right.media-date strong').text().trim()),
             };
             return info;
         });
@@ -98,7 +98,6 @@ async function handler() {
                 const solution = md.render(officialSolution.data.question.solution.content);
 
                 info.description = (questionContent.data.question.content?.trim() ?? '') + solution;
-                info.pubDate = parseDate(info.pubDate as string);
 
                 return info;
             })

@@ -16,7 +16,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('ul.concrcc li')
         .slice(0, limit)
@@ -31,7 +31,7 @@ export const handler = async (ctx) => {
                 title,
                 pubDate: parseDate($item.find('div.crq').text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                language: language as Language,
+                language,
             };
         });
 
@@ -55,7 +55,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language: language as Language,
+        language,
     };
 };
 

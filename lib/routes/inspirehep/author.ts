@@ -33,7 +33,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
 
-    const authorInfo = (await getAuthorById(id)) as AuthorResponse;
+    const authorInfo = await getAuthorById(id);
     const response = await ofetch<LiteratureResponse>(`${baseUrl}/api/literature`, {
         query: {
             sort: 'mostrecent',

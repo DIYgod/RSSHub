@@ -26,7 +26,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     const included = response.included;
     const data = [...response.data, ...included].filter((item) => types.has(item.type));
@@ -74,7 +74,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
             image,
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
         };
 
         let enclosureUrl: string | undefined;
@@ -91,7 +91,8 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
                 enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
             } else if (mediaAttrs['original-src']) {
                 enclosureUrl = mediaAttrs['original-src'];
-                enclosureType = `video/${enclosureUrl?.split(/\?/).pop() ? (/^id=\d+$/.test(enclosureUrl?.split(/\?/).pop() as string) ? 'taptap' : enclosureUrl?.split(/\./).pop()) : ''}`;
+                const queryString = enclosureUrl?.split(/\?/).pop();
+                enclosureType = `video/${queryString ? (/^id=\d+$/.test(queryString) ? 'taptap' : enclosureUrl?.split(/\./).pop()) : ''}`;
             }
         }
 
@@ -162,7 +163,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
         item: items,
         allowEmpty: true,
         author: title.split(/\|/).pop()?.trim(),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

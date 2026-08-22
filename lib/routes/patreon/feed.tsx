@@ -9,9 +9,9 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderContentJson } from './render-content-json';
-import type { CreatorData, MediaRelation, PostData } from './types';
+import type { CreatorData, PostData } from './types';
 
-const renderDescription = ({ attributes, relationships, included }) => {
+const renderDescription = ({ attributes, relationships, included, videoPreview }) => {
     const postType = attributes.post_type;
     const imageOrder = attributes.post_metadata?.image_order ?? [];
     const previewImage = attributes.image?.url ?? attributes.meta_image_url;
@@ -34,7 +34,7 @@ const renderDescription = ({ attributes, relationships, included }) => {
                 attributes.video_preview ? (
                     <>
                         <video controls preload="metadata" poster={attributes.image?.url}>
-                            <source src={relationships.video_preview?.attributes?.download_url} type="video/mp4" />
+                            <source src={videoPreview?.attributes?.download_url} type="video/mp4" />
                         </video>
                         <br />
                     </>
@@ -115,7 +115,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.patreon.com';
     const link = `${baseUrl}/${creator}`;
 
-    const creatorData = (await cache.tryGet(`patreon:creator:${creator}`, async () => {
+    const creatorData = await cache.tryGet<Pick<CreatorData, 'id' | 'attributes'>>(`patreon:creator:${creator}`, async () => {
         const response = await ofetch(link);
 
         const $ = load(response);
@@ -141,7 +141,7 @@ async function handler(ctx) {
             id: bootstrapEnvelope.pageBootstrap.campaign.data.id,
             attributes: bootstrapEnvelope.pageBootstrap.campaign.data.attributes,
         };
-    })) as CreatorData;
+    });
 
     if (!creatorData.id) {
         throw new Error('Creator not found');
@@ -179,26 +179,26 @@ async function handler(ctx) {
     });
 
     const items = posts.data.map(({ attributes, relationships }) => {
+        const category = relationships.user_defined_tags?.data.map((tag) => posts.included.find((i) => i.id === tag.id)?.attributes.value).filter((value) => value !== undefined);
+        const videoPreview = attributes.video_preview ? posts.included.find((i) => Number.parseInt(i.id) === attributes.video_preview?.media_id) : undefined;
+
         for (const [key, value] of Object.entries(relationships)) {
             if (value.data) {
                 relationships[key] = Array.isArray(value.data) ? value.data.map((item) => posts.included.find((i) => i.id === item.id)) : posts.included.find((i) => i.id === value.data.id);
             }
         }
-        if (attributes.video_preview) {
-            relationships.video_preview = posts.included.find((i) => Number.parseInt(i.id) === attributes.video_preview?.media_id) as unknown as MediaRelation;
-        }
-
         return {
             title: attributes.title,
             description: renderDescription({
                 attributes,
                 relationships,
                 included: posts.included,
+                videoPreview,
             }),
             link: attributes.url,
             pubDate: parseDate(attributes.published_at),
             image: attributes.thumbnail?.url ?? attributes.image?.url,
-            category: (relationships.user_defined_tags as unknown as Array<{ attributes: { value: string } }> | undefined)?.map((tag) => tag.attributes.value),
+            category,
         };
     });
 

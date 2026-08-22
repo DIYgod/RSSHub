@@ -25,7 +25,6 @@ export interface Tweet {
     user_id: string;
     media_url: string;
     media_count: number;
-    hashtags?: Record<string, unknown>;
     media_urls: MediaUrl[];
     score: string;
     rank: number;
@@ -66,7 +65,10 @@ export const processItems = (data: Tweet[], type: 'index' | 'illust' | 'manga'):
         };
     });
 
-export const fetchData = async (url: string, isManga: boolean = false) => {
-    const response = await ofetch(url);
-    return isManga ? (response as Tweet[]) : (response.tweet as Tweet[]);
+export const fetchData = async (url: string, isManga: boolean = false): Promise<Tweet[]> => {
+    if (isManga) {
+        return await ofetch<Tweet[]>(url);
+    }
+    const response = await ofetch<{ tweet: Tweet[] }>(url);
+    return response.tweet;
 };

@@ -23,10 +23,10 @@ async function handler(ctx: Context) {
 
     if (!Number.isNaN(Number(topicId))) {
         const topicUrl = `https://api.forums.liyuans.com/topic/${topicId}`;
-        const topic = (await cache.tryGet(topicUrl, async () => {
-            const { data } = await ofetch(topicUrl);
+        const topic = await cache.tryGet(topicUrl, async () => {
+            const { data } = await ofetch<{ data: { name: string; descr: string } }>(topicUrl);
             return data;
-        })) as { name: string; descr: string };
+        });
 
         feed.title = `${topic.name} - 梨园`;
         feed.description = topic.descr;

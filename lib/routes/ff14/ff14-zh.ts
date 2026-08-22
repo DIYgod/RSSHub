@@ -37,14 +37,17 @@ async function handler(ctx) {
     const referer = 'https://ff.sdo.com/web8/index.html';
     const type = ctx.req.param('type') ?? 'all';
 
-    const typeNumber: Record<string, string> = {
+    const categories = {
         news: '5310',
         announce: '5312,8324,8325,8326,8327',
         events: '5311',
         advertise: '5313',
     };
 
-    typeNumber.all = `5309,${Object.values(typeNumber).join(',')}`;
+    const typeNumber = {
+        ...categories,
+        all: `5309,${Object.values(categories).join(',')}`,
+    };
 
     const response = await got({
         method: 'get',

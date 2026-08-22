@@ -14,7 +14,7 @@ const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], prox
             logger.error('Invalid PAC_SCRIPT, use PAC_URI instead');
         }
     }
-    if (pacUri && typeof pacUri === 'string') {
+    if (pacUri) {
         try {
             pacUrlHandler = new URL(pacUri);
         } catch (error: any) {

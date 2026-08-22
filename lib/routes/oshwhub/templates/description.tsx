@@ -18,6 +18,10 @@ type AttachmentItem = {
     size?: string | number;
 };
 
+type BomValue = string | number | boolean | null;
+
+type BomCell = BomValue | Record<string, BomValue>;
+
 type DescriptionData = {
     images?: DescriptionImage[];
     title?: string;
@@ -29,37 +33,38 @@ type DescriptionData = {
     intro?: string;
     description?: string;
     documents?: DocumentItem[];
-    boms?: unknown[];
+    boms?: BomCell[][];
     attachments?: AttachmentItem[];
 };
 
-const escapeHTML = (input: unknown) => {
+const escapeMap = new Map([
+    ['&', '&amp;'],
+    ['<', '&lt;'],
+    ['>', '&gt;'],
+    ['"', '&quot;'],
+    ["'", '&#39;'],
+]);
+
+const escapeHTML = (input: BomValue | undefined) => {
     if (input === undefined) {
         return '';
     }
     const str = String(input);
-    const escapeMap: Record<string, string> = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-    };
-    return str.replaceAll(/[&<>"']/g, (char) => escapeMap[char] || char);
+    return str.replaceAll(/[&<>"']/g, (char) => escapeMap.get(char) || char);
 };
 
-const formatObject = (obj: unknown) => {
-    if (typeof obj !== 'object' || obj === null) {
-        return escapeHTML(obj);
+const formatObject = (cell: BomCell) => {
+    if (!(cell instanceof Object)) {
+        return escapeHTML(cell);
     }
 
     let result = '';
-    for (const key in obj as Record<string, unknown>) {
-        if (!Object.hasOwn(obj, key)) {
+    for (const key in cell) {
+        if (!Object.hasOwn(cell, key)) {
             continue;
         }
 
-        const value = (obj as Record<string, unknown>)[key];
+        const value = cell[key];
         if (value !== null && value !== '') {
             result += `<div><strong>${escapeHTML(key)}:</strong> ${escapeHTML(value)}</div>`;
         }
@@ -69,7 +74,7 @@ const formatObject = (obj: unknown) => {
 };
 
 const OshwhubDescription = ({ images, title, origin, tags, license, pubDate, upDated, intro, description, documents, boms, attachments }: DescriptionData) => {
-    const headers = Array.isArray(boms) ? (boms[0] as unknown[] | undefined) : undefined;
+    const headers = Array.isArray(boms) ? boms[0] : undefined;
     const rows = Array.isArray(boms) ? boms.slice(1) : [];
 
     return (

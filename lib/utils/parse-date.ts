@@ -57,19 +57,19 @@ const UNIT_PATTERNS: UnitPattern[] = [
     { unit: 'seconds', regExp: /(\d+)\s*(?:秒[鐘钟]?|s(?:ec(?:ond)?)?s?)/i },
 ];
 
-const CN_NUM_MAP: Record<string, string> = {
-    一: '1',
-    二: '2',
-    两: '2',
-    三: '3',
-    四: '4',
-    五: '5',
-    六: '6',
-    七: '7',
-    八: '8',
-    九: '9',
-    十: '10',
-};
+const CN_NUM_MAP = new Map([
+    ['一', '1'],
+    ['二', '2'],
+    ['两', '2'],
+    ['三', '3'],
+    ['四', '4'],
+    ['五', '5'],
+    ['六', '6'],
+    ['七', '7'],
+    ['八', '8'],
+    ['九', '9'],
+    ['十', '10'],
+]);
 
 /**
  * Calculates the date of the most recent occurrence of a specific weekday.
@@ -160,7 +160,7 @@ const normalize = (date: string): string => {
     str = str.replaceAll(/[几幾数]/g, '3');
 
     // 4. Chinese numerals
-    str = str.replaceAll(/[一二两三四五六七八九十]/g, (match) => CN_NUM_MAP[match] || match);
+    str = str.replaceAll(/[一二两三四五六七八九十]/g, (match) => CN_NUM_MAP.get(match) ?? match);
 
     // 5. Remove commas
     str = str.replaceAll(',', '');

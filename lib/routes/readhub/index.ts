@@ -75,7 +75,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         image,
         icon,
         logo: icon,

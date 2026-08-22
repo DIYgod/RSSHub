@@ -15,7 +15,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     $('th').parent().remove();
 
@@ -31,7 +31,7 @@ export const handler = async (ctx) => {
                 title: a.text(),
                 pubDate: parseDate($item.find('td').last().text()),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                language: language as Language,
+                language,
             };
         });
 
@@ -53,7 +53,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.article').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
                 item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href')!, currentUrl).href;
                 item.enclosure_title = item.enclosure_url ? $$('table.enclosure a.xxgk_list1').first().text() : undefined;
 
@@ -72,7 +72,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="SiteName"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 
@@ -56,6 +56,6 @@ async function handler(ctx) {
         description: $('meta[property=og:description]').attr('content'),
         image: $('meta[property=og:image]').attr('content') || $('meta[name=msapplication-TileImage]').attr('content'),
         link: `${baseUrl}/topic/${topic}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

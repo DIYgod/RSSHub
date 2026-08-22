@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -27,7 +27,7 @@ export const route: Route = {
     url: 'cse.sysu.edu.cn/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const response = await got({
         method: 'get',
         url: 'http://cse.sysu.edu.cn/',
@@ -120,7 +120,7 @@ async function handler() {
         title: '中山大学 - 数据科学与计算机学院',
         link: 'http://cse.sysu.edu.cn',
         description: '中山大学 - 数据科学与计算机学院',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: item_data,
     };
 }

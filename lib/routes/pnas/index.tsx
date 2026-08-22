@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { CookieJar } from 'tough-cookie';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
@@ -38,7 +38,7 @@ Some topics require adding \`topic/\` to \`topicPath\` like [\`/pnas/topic/app-m
 :::`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://www.pnas.org';
     const topicPath = ctx.req.param('topicPath');
     const link = `${baseUrl}/${topicPath ?? 'latest'}`;
@@ -131,7 +131,7 @@ async function handler(ctx) {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,
         description: $('.banner-widget__content p').text(),
         image: 'https://www.pnas.org/favicon.ico',
-        language: 'en-us' as Language,
+        language: 'en-us',
         link,
         item: out,
     };

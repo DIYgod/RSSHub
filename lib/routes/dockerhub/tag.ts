@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -42,7 +42,7 @@ async function handler(ctx) {
         title: `${namespace} tags`,
         description: metadata.data.description,
         link,
-        language: 'en' as Language,
+        language: 'en' as const,
         item: tags.map((item) => {
             const architectures = item.images?.length ? item.images.map((img) => `${img.os}/${img.architecture}`).join(', ') : 'unknown architectures';
 

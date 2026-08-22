@@ -39,7 +39,7 @@ async function handler(ctx: Context): Promise<Data> {
     const currentUrl = `https://www.2023game.com/${category}/`;
 
     const response = await got(currentUrl);
-    const $ = load(response.data as any);
+    const $ = load(response.data);
 
     let selector = '.news';
     if (tab !== 'all') {

@@ -54,7 +54,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     const tagResponse = await ofetch(apiTagUrl);
     const projectTagsData = tagResponse.result;
@@ -86,7 +86,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
         const pubDate: number | string = item.created_at;
         const linkUrl: string | undefined = item.path;
-        const categories: string[] = [originOptions.find((opt) => opt.value === item.origin)?.label ?? undefined].filter(Boolean) as string[];
+        const originLabel: string | undefined = originOptions.find((opt) => opt.value === item.origin)?.label;
+        const categories: string[] = originLabel ? [originLabel] : [];
         const authors: DataItem['author'] = item.owner
             ? [
                   {
@@ -115,7 +116,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -140,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const origin: string | undefined = originOptions.find((opt) => opt.value === result.origin)?.label ?? undefined;
                 const tags: string[] = findNamesByUuids(projectTagsData, result.project_tags ?? []);
 
-                const categories: string[] = [...new Set([...(item.category ?? []), origin ?? undefined, ...tags, result.license].filter(Boolean) as string[])];
+                const categories: string[] = [...new Set([...(item.category ?? []), origin ?? undefined, ...tags, result.license].filter((value): value is string => Boolean(value)))];
                 const authors: DataItem['author'] = new Map(
                     [result.owner, result.creator, ...result.members].map((author) => {
                         const item = {
@@ -197,7 +198,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 const attachment = attachments?.[0];
@@ -235,7 +236,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/-/).pop()?.trim(),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

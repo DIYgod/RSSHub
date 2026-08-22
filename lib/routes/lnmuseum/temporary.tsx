@@ -24,7 +24,7 @@ export const route = {
     handler: async (ctx) => {
         const typeParam = ctx.req.param('type');
 
-        const fetchTypes = typeParam && (typeParam === 'now' || typeParam === 'past') ? [typeParam] : ['now', 'past'];
+        const fetchTypes: Array<'now' | 'past'> = typeParam === 'now' || typeParam === 'past' ? [typeParam] : ['now', 'past'];
 
         const baseUrl = 'https://www.lnmuseum.com.cn';
         const apiUrl = `${baseUrl}/singleMuseum/applet/exhibition/zlList`;
@@ -35,11 +35,11 @@ export const route = {
         };
 
         const museumName = namespace.zh?.name || namespace.name;
-        const titleTag = fetchTypes.length === 2 ? '全部展览' : apiConfig[fetchTypes[0] as keyof typeof apiConfig]?.name;
+        const titleTag = fetchTypes.length === 2 ? '全部展览' : apiConfig[fetchTypes[0]].name;
 
         const responses = await Promise.all(
             fetchTypes.map(async (t) => {
-                const config = apiConfig[t as keyof typeof apiConfig];
+                const config = apiConfig[t];
 
                 try {
                     const response = await got({

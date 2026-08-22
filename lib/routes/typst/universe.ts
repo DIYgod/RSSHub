@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-function deserializeAstroProps(val: unknown): unknown {
+function deserializeAstroProps(val: any): any {
     if (Array.isArray(val)) {
         const tag = val[0];
         if (tag === 0) {
@@ -15,7 +15,7 @@ function deserializeAstroProps(val: unknown): unknown {
         }
         return val.map((item) => deserializeAstroProps(item));
     }
-    if (val && typeof val === 'object') {
+    if (val instanceof Object) {
         const result = {};
         for (const [key, v] of Object.entries(val)) {
             result[key] = deserializeAstroProps(v);
@@ -39,6 +39,10 @@ interface Package {
     template: string | undefined;
 }
 
+interface SearchResults {
+    packages: Package[];
+}
+
 export const route: Route = {
     path: '/universe',
     categories: ['program-update'],
@@ -56,7 +60,7 @@ export const route: Route = {
         const page = await ofetch(targetUrl);
         const $ = load(page);
         const props = $('astro-island[component-export="SearchResults"]').attr('props');
-        const searchResults = deserializeAstroProps(JSON.parse(props!)) as { packages: Package[] };
+        const searchResults: SearchResults = deserializeAstroProps(JSON.parse(props!));
         const pkgs = searchResults.packages.map((item) => ({
             title: `${item.name} (${item.version}) | ${item.description}`,
             link: `https://typst.app/universe/package/${item.name}`,

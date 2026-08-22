@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     const data = JSON.parse($('script#__NEXT_DATA__').text());
 
@@ -55,7 +55,7 @@ export const handler = async (ctx) => {
             },
             image,
             banner: image,
-            language: language as Language,
+            language,
         };
     });
 
@@ -132,7 +132,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

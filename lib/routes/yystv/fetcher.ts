@@ -3,8 +3,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 export function fetchDataItemCached(link: string, processor: (articleContent: string) => DataItem): Promise<DataItem> {
-    return cache.tryGet(link, async () => {
+    return cache.tryGet<DataItem>(link, async () => {
         const page = await ofetch(link);
         return processor(page);
-    }) as Promise<DataItem>;
+    });
 }

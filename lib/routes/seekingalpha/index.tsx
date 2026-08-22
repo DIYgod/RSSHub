@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -121,6 +121,6 @@ async function handler(ctx) {
         image: 'https://seekingalpha.com/samw/static/images/favicon.svg',
         item: items,
         allowEmpty: true,
-        language: 'en-us' as Language,
+        language: 'en-us' as const,
     };
 }

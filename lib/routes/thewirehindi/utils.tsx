@@ -42,5 +42,5 @@ export function mapPostToItem(post): DataItem {
                 }))
                 .join(', ') || 'The Wire Hindi',
         category: post._embedded?.['wp:term']?.flat().map((v) => v.name),
-    } as DataItem;
+    };
 }

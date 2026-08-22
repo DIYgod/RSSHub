@@ -64,7 +64,7 @@ async function handler(ctx: Context) {
                     description: media + item.content!.replaceAll('\r\n', '<br>'),
                     pubDate: item.pubDate,
                     link: item.guid,
-                    category: [language === 'en' ? 'Latest News' : '即時新聞', response.match(/class="pathway">([^'<]+)<\/a>/)?.[1]].filter(Boolean) as string[],
+                    category: [language === 'en' ? 'Latest News' : '即時新聞', response.match(/class="pathway">([^'<]+)<\/a>/)?.[1]].filter((c) => c !== undefined),
                 };
             })
         )

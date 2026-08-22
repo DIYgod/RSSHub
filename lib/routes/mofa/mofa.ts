@@ -18,7 +18,11 @@ export const route: Route = {
 const baseUrl = 'https://www.mofa.go.jp';
 const indexUrl = `${baseUrl}/mofaj/press/kaiken/bn/index.html`;
 
-const eraOffset: Record<string, number> = { 昭和: 1925, 平成: 1988, 令和: 2018 };
+const eraOffset = new Map([
+    ['昭和', 1925],
+    ['平成', 1988],
+    ['令和', 2018],
+]);
 
 async function handler() {
     const response = await ofetch(indexUrl);
@@ -42,7 +46,7 @@ async function handler() {
                 return {
                     title: $('meta[property="og:title"]').attr('content'),
                     author: '外務省',
-                    pubDate: matches ? timezone(parseDate(`${Number.parseInt(matches[2]) + (eraOffset[matches[1]] ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`), 9) : undefined,
+                    pubDate: matches ? timezone(parseDate(`${Number.parseInt(matches[2]) + (eraOffset.get(matches[1]) ?? 0)}-${matches[3]}-${matches[4]} ${matches[6]}:${matches[7]}`), 9) : undefined,
                     link: $('meta[property="og:url"]').attr('content'),
                     description: title3.html() + '<br/>' + $('div#maincontents').html(),
                 } as DataItem;

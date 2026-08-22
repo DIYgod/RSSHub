@@ -1,4 +1,4 @@
-import { type CheerioOptions, load } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -48,7 +48,7 @@ async function handler(ctx) {
         throw new Error(response.statusMessage);
     }
 
-    const $ = load(response.data, { decodeEntities: false } as CheerioOptions);
+    const $ = load(response.data);
     const title = $('.tit').find('a:eq(2)').text();
     const list = $('.RightSide_con ul li')
         .toArray()

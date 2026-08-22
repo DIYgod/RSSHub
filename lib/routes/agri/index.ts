@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.list_li_con, div.nxw_video_com')
         .slice(0, limit)
@@ -54,7 +54,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
         });
 
@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.content_body_box').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 item.enclosure_url = $$('div.content_body_box video').prop('src') ?? undefined;
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
@@ -97,7 +97,7 @@ export const handler = async (ctx) => {
         item: items,
         allowEmpty: true,
         image,
-        language: language as Language,
+        language,
     };
 };
 

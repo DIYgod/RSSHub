@@ -79,6 +79,6 @@ async function handler(ctx) {
         link: url,
         image: $('.feature-logo').attr('src'),
         item: items,
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
     };
 }

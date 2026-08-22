@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -44,7 +44,7 @@ export const route: Route = {
 |          | 1        | 2        | 3          | 4      |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const proma = ctx.req.param('proma');
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
@@ -124,7 +124,7 @@ async function handler(ctx) {
         title: `${title} - ${proma ? columns[proma].title : defaultTitle}`,
         link: currentUrl,
         description: $('div.logo-txt').first().text(),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         image: new URL($('div.logo-txt img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

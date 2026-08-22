@@ -22,7 +22,7 @@ async function handler() {
     const response = await ofetch(currentUrl, { responseType: 'arrayBuffer' });
 
     const $ = load(iconv.decode(Buffer.from(response), 'gbk'));
-    const list = $('ul.newslist li')
+    const list: DataItem[] = $('ul.newslist li')
         .slice(0, 10)
         .toArray()
         .map((item) => {
@@ -34,7 +34,7 @@ async function handler() {
                 link: a.attr('href'),
                 pubDate: timezone(parseDate($item.find('time').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

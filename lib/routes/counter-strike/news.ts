@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && node === '\n') {
+        if (node === '\n') {
             return {
                 tag: 'br',
                 content: null,
@@ -23,7 +23,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     url: (node) => ({
         tag: 'a',
         attrs: {
-            href: Object.keys(node.attrs as Record<string, string>)[0],
+            href: Object.keys(node.attrs!)[0],
             rel: 'noopener',
             target: '_blank',
         },

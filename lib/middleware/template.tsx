@@ -62,18 +62,18 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     item.description = item.description.replaceAll(/[\u{0000}-\u{0009}\v\f\u{000E}-\u{001F}\u{007F}\u{200B}\u{FFFF}]/gu, '');
                 }
 
-                if (typeof item.author === 'string') {
-                    item.author = collapseWhitespace(item.author) || '';
-                } else if (typeof item.author === 'object' && item.author !== null) {
+                if (Array.isArray(item.author)) {
                     for (const a of item.author) {
                         a.name = collapseWhitespace(a.name) || '';
                     }
                     if (outputType !== 'json') {
-                        item.author = item.author.map((a: { name: string }) => a.name).join(', ');
+                        item.author = item.author.map((a) => a.name).join(', ');
                     }
+                } else if (item.author) {
+                    item.author = collapseWhitespace(item.author) || '';
                 }
 
-                if (item.itunes_duration && ((typeof item.itunes_duration === 'string' && !item.itunes_duration.includes(':')) || (typeof item.itunes_duration === 'number' && !Number.isNaN(item.itunes_duration)))) {
+                if (item.itunes_duration && !String(item.itunes_duration).includes(':')) {
                     item.itunes_duration = +item.itunes_duration;
                     item.itunes_duration =
                         Math.floor(item.itunes_duration / 3600) + ':' + (Math.floor((item.itunes_duration % 3600) / 60) / 100).toFixed(2).slice(-2) + ':' + (((item.itunes_duration % 3600) % 60) / 100).toFixed(2).slice(-2);

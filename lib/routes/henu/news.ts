@@ -43,10 +43,10 @@ async function handler(ctx: Context) {
         title: $('title').text(),
         item: $('.article-list li')
             .toArray()
-            .map((elem) => ({
+            .map((elem): DataItem => ({
                 link: new URL($('a', elem).attr('href')!, link).href,
                 title: $('.article-title', elem).text(),
                 pubDate: timezone(parseDate($('.article-date', elem).text()), 8),
-            })) as DataItem[],
+            })),
     };
 }

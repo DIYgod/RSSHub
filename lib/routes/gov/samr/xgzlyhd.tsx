@@ -228,7 +228,7 @@ async function handler(ctx) {
         title: `${author}${title}${subtitle ? ` - ${subtitle}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         image: new URL(`gjjly/${$('div.fd-logo img').prop('src')}`, rootUrl).href,
         icon,
         logo: icon,

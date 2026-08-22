@@ -15,8 +15,8 @@ function Q(e, t) {
     return ((4_294_967_295 & e) << t) | (e >>> (32 - t));
 }
 function G(e) {
-    const t = Array.from({ length: 4 }) as number[];
-    const n = Array.from({ length: 4 }) as number[];
+    const t = Array.from<number>({ length: 4 });
+    const n = Array.from<number>({ length: 4 });
     (i(e, t, 0), (n[0] = h.zb[255 & t[0]]), (n[1] = h.zb[255 & t[1]]), (n[2] = h.zb[255 & t[2]]), (n[3] = h.zb[255 & t[3]]));
     const r = B(n, 0);
     return r ^ Q(r, 2) ^ Q(r, 10) ^ Q(r, 18) ^ Q(r, 24);
@@ -34,8 +34,8 @@ const __g = {
         return n;
     },
     r(e) {
-        const t = Array.from({ length: 16 }) as number[];
-        const n = Array.from({ length: 36 }) as number[];
+        const t = Array.from<number>({ length: 16 });
+        const n = Array.from<number>({ length: 36 });
         ((n[0] = B(e, 0)), (n[1] = B(e, 4)), (n[2] = B(e, 8)), (n[3] = B(e, 12)));
         for (let r = 0; r < 32; r++) {
             const o = G(n[r + 1] ^ n[r + 2] ^ n[r + 3] ^ h.zk[r]);

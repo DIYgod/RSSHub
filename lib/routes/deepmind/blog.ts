@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -54,6 +54,6 @@ async function handler() {
         image: 'https://assets-global.website-files.com/621d30e84caf0be3291dbf1c/621d336835a91420c6a8dcf2_webclip.png',
         link: `${feed.link}/blog`,
         item: items as DataItem[],
-        language: 'en' as Language,
+        language: 'en' as const,
     };
 }

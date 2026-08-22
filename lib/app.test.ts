@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 describe('index', () => {
     it('exports app entrypoint', () => {
-        expect(typeof app.request).toBe('function');
+        expect(app.request).toBeInstanceOf(Function);
     });
 
     it('serve index', async () => {
@@ -23,8 +23,8 @@ describe('request-rewriter', () => {
         await app.request('/test/httperror');
 
         // headers
-        const headers: Headers = (fetchSpy.mock.lastCall as unknown as [Request])?.[0].headers;
-        expect(headers.get('user-agent')).toMatch(/Chrome/);
+        const request = fetchSpy.mock.lastCall?.[0] as Request | undefined;
+        expect(request?.headers.get('user-agent')).toMatch(/Chrome/);
     });
 });
 
@@ -41,9 +41,9 @@ if (process.env.FULL_ROUTES_TEST) {
         for (const route in namespaces[namespace].routes) {
             const requireConfig = namespaces[namespace].routes[route].features?.requireConfig;
             let configs;
-            if (typeof requireConfig !== 'boolean') {
+            if (Array.isArray(requireConfig)) {
                 configs = requireConfig
-                    ?.filter((config) => !config.optional)
+                    .filter((config) => !config.optional)
                     .map((config) => config.name)
                     .filter((name) => name !== 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN');
             }

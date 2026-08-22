@@ -1,35 +1,35 @@
+import type Redis from 'ioredis';
 import { describe, expect, it, vi } from 'vitest';
 
-const errorSpy = vi.fn();
-const infoSpy = vi.fn();
+import logger from '@/utils/logger';
 
-vi.mock('@/utils/logger', () => ({
-    default: {
-        error: errorSpy,
-        info: infoSpy,
-    },
-}));
+const errorSpy = vi.spyOn(logger, 'error').mockImplementation(() => logger);
 
-class RedisMock extends EventTarget {
+class RedisMock {
+    private readonly listeners = new Map<string, Array<(error?: Error) => void>>();
+
     mget = vi.fn();
     expire = vi.fn();
     exists = vi.fn();
     set = vi.fn();
 
-    on(event: string, listener: (...args: any[]) => void) {
-        this.addEventListener(event, (evt) => {
-            listener((evt as Event & { detail?: unknown }).detail);
-        });
+    on(event: string, listener: (error?: Error) => void) {
+        const handlers = this.listeners.get(event) ?? [];
+        handlers.push(listener);
+        this.listeners.set(event, handlers);
         return this;
     }
 
-    emit(event: string, detail?: unknown) {
-        const evt = new Event(event) as Event & { detail?: unknown };
-        evt.detail = detail;
-        this.dispatchEvent(evt);
+    emit(event: string, error?: Error) {
+        const handlers = this.listeners.get(event) ?? [];
+        for (const listener of handlers) {
+            listener(error);
+        }
         return true;
     }
 }
+
+const asRedisClient = (mock: Pick<Redis, 'exists' | 'expire' | 'mget' | 'set'>) => mock as Redis;
 
 vi.mock('ioredis', () => ({
     default: RedisMock,
@@ -39,18 +39,18 @@ describe('redis cache module', () => {
     it('throws on reserved cache ttl key', async () => {
         const redisCache = (await import('@/utils/cache/redis')).default;
         redisCache.status.available = true;
-        redisCache.clients.redisClient = new RedisMock() as any;
+        redisCache.clients.redisClient = asRedisClient(new RedisMock());
 
         await expect(redisCache.get('rsshub:cacheTtl:bad')).rejects.toThrow('reserved for the internal usage');
     });
 
     it('expires cache ttl key when present', async () => {
         const redisCache = (await import('@/utils/cache/redis')).default;
-        const client = new RedisMock() as any;
+        const client = new RedisMock();
         client.mget.mockResolvedValue(['value', '30']);
         client.exists.mockResolvedValue(true);
         redisCache.status.available = true;
-        redisCache.clients.redisClient = client;
+        redisCache.clients.redisClient = asRedisClient(client);
 
         const value = await redisCache.get('mock', true);
         expect(value).toBe('value');
@@ -65,9 +65,8 @@ describe('redis cache module', () => {
     it('marks redis unavailable on error', async () => {
         const redisCache = (await import('@/utils/cache/redis')).default;
         redisCache.init();
-        const client = redisCache.clients.redisClient as unknown as RedisMock;
 
-        client.emit('error', new Error('boom'));
+        redisCache.clients.redisClient?.emit('error', new Error('boom'));
 
         expect(redisCache.status.available).toBe(false);
         expect(errorSpy).toHaveBeenCalled();

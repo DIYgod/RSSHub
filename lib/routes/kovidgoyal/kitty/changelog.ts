@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -29,7 +29,7 @@ export const route: Route = {
     url: 'sw.kovidgoyal.net/kitty/changelog/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://sw.kovidgoyal.net/kitty/changelog/';
     const response = await ofetch(url);
     const $ = load(response);
@@ -72,13 +72,13 @@ async function handler() {
                 guid: `kitty-${version}`,
             };
         })
-        .filter(Boolean) as DataItem[];
+        .filter((item) => item !== null);
 
     return {
         title: 'Kitty Changelog',
         link: url,
         description: 'Changelog for Kitty terminal emulator',
-        language: 'en' as Language,
+        language: 'en',
         item: items,
     };
 }

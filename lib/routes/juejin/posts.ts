@@ -36,14 +36,14 @@ const getUserInfo = (data: AuthorUserInfo) => ({
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await ofetch('https://api.juejin.cn/content_api/v1/article/query_list', {
+    const response = await ofetch<{ data: Article[] }>('https://api.juejin.cn/content_api/v1/article/query_list', {
         method: 'POST',
         body: {
             user_id: id,
             sort_type: 2,
         },
     });
-    const data = response.data as Article[];
+    const data = response.data;
     const list = parseList(data);
     const authorInfo = getUserInfo(data[0].author_user_info);
     const resultItems = await ProcessFeed(list);

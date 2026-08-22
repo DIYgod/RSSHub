@@ -8,6 +8,8 @@ import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'http://www.pacilution.com/';
 
+const FETCH_FAILED: DataItem = { title: '', link: '' };
+
 const handler: Route['handler'] = async () => {
     // Fetch the target page
     const response = await got({
@@ -67,12 +69,12 @@ const handler: Route['handler'] = async () => {
                                 language: 'zh-CN',
                             };
                         } catch {
-                            return null as unknown as DataItem;
+                            return FETCH_FAILED;
                         }
                     })
                 )
             )
-        ).filter((item): item is DataItem => item !== null),
+        ).filter((item): item is DataItem => item.link !== ''),
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: 'https://rsshub.app/pacilution/latest',

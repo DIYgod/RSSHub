@@ -5,14 +5,13 @@ const defaultProtocol = 'http';
 const possibleProtocol = ['http', 'https', 'socks', 'socks4', 'socks4a', 'socks5', 'socks5h'];
 
 const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['proxy']) => {
-    proxyObj ||= {} as Config['proxy'];
     const [oriProxyUri, oriProxyObj] = [proxyUri, proxyObj];
     proxyObj = { ...proxyObj };
 
     let proxyUrlHandler: URL | null = null;
 
     // PROXY_URI
-    if (proxyUri && typeof proxyUri === 'string') {
+    if (proxyUri) {
         if (!proxyUri.includes('://')) {
             logger.warn(`PROXY_URI contains no protocol, assuming ${defaultProtocol}`);
             proxyUri = `${defaultProtocol}://${proxyUri}`;
@@ -99,7 +98,7 @@ const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['pro
         }
     }
     if (!isProxyValid) {
-        if ((oriProxyUri && typeof oriProxyUri === 'string') || oriProxyObj.protocol || oriProxyObj.host || oriProxyObj.port || oriProxyObj.auth) {
+        if (oriProxyUri || oriProxyObj.protocol || oriProxyObj.host || oriProxyObj.port || oriProxyObj.auth) {
             logger.error('Proxy is disabled due to misconfiguration');
         }
         proxyObj.protocol = proxyObj.host = proxyObj.port = proxyObj.auth = undefined;

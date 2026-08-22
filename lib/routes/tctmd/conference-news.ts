@@ -102,6 +102,6 @@ async function handler() {
         description: 'Latest conference news coverage from TCTMD, the leading source for interventional cardiology news',
         link: `${rootUrl}/news/conference-news`,
         image: 'https://www.tctmd.com/themes/tctmd/logo.svg',
-        item: fullItems as DataItem[],
+        item: fullItems,
     };
 }

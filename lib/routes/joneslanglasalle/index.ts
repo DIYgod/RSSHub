@@ -15,39 +15,49 @@ interface LocaleConfig {
     title: string;
 }
 
-// Reason: each locale maps to a different country filter, API language code, and site URL
-const localeMap: Record<string, LocaleConfig> = {
-    zh: {
-        apiLang: 'zh-CN',
-        countries: ['China Mainland'],
-        insightsUrl: 'https://www.joneslanglasalle.com.cn/zh-cn/insights',
-        title: '洞察 - 仲量联行JLL',
-    },
-    en: {
-        apiLang: 'en-GB',
-        countries: ['China Mainland'],
-        insightsUrl: 'https://www.joneslanglasalle.com.cn/en-cn/insights',
-        title: 'Insights - JLL China',
-    },
-    'zh-hk': {
-        apiLang: 'zh-HK',
-        countries: ['Hong Kong'],
-        insightsUrl: 'https://www.jll.com/zh-hk/insights',
-        title: '洞察 - 仲量聯行JLL 香港',
-    },
-    'en-hk': {
-        apiLang: 'en-GB',
-        countries: ['Hong Kong'],
-        insightsUrl: 'https://www.jll.com/en-hk/insights',
-        title: 'Insights - JLL Hong Kong',
-    },
+const defaultLocale: LocaleConfig = {
+    apiLang: 'zh-CN',
+    countries: ['China Mainland'],
+    insightsUrl: 'https://www.joneslanglasalle.com.cn/zh-cn/insights',
+    title: '洞察 - 仲量联行JLL',
 };
+
+const localeMap = new Map<string, LocaleConfig>([
+    ['zh', defaultLocale],
+    [
+        'en',
+        {
+            apiLang: 'en-GB',
+            countries: ['China Mainland'],
+            insightsUrl: 'https://www.joneslanglasalle.com.cn/en-cn/insights',
+            title: 'Insights - JLL China',
+        },
+    ],
+    [
+        'zh-hk',
+        {
+            apiLang: 'zh-HK',
+            countries: ['Hong Kong'],
+            insightsUrl: 'https://www.jll.com/zh-hk/insights',
+            title: '洞察 - 仲量聯行JLL 香港',
+        },
+    ],
+    [
+        'en-hk',
+        {
+            apiLang: 'en-GB',
+            countries: ['Hong Kong'],
+            insightsUrl: 'https://www.jll.com/en-hk/insights',
+            title: 'Insights - JLL Hong Kong',
+        },
+    ],
+]);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language: lang = 'zh' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '12');
 
-    const locale = localeMap[lang] || localeMap.zh;
+    const locale = localeMap.get(lang) || defaultLocale;
 
     // Reason: site rebuilt with search API; old HTML scraping no longer works.
     // Using the public search API (Elasticsearch-backed) with subscription key from page JS.

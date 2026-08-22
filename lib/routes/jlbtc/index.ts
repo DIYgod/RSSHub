@@ -30,7 +30,7 @@ async function handler(ctx: Context) {
 
     const list = $('.newslisttitle')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('.newslisttitlex a');
             return {
@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('.wapnewsdate').text()), 8),
                 description: $item.find('.newslisttitlexx').text(),
-            } as DataItem;
+            };
         });
 
     const items = await Promise.all(
@@ -59,6 +59,6 @@ async function handler(ctx: Context) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

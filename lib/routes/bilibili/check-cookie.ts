@@ -22,7 +22,7 @@ async function handler() {
     const response = await ofetch('https://api.bilibili.com/x/web-interface/nav', {
         headers: {
             Referer: 'https://space.bilibili.com/1/',
-            Cookie: cookie as string,
+            Cookie: cookie,
         },
     });
     const isResponseValid = response.code === 0 && !!response.data.mid;

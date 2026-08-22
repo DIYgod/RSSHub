@@ -42,7 +42,7 @@ async function handler() {
 
             const items = $('h1', articleContent)
                 .toArray()
-                .map((element) => {
+                .map((element): DataItem => {
                     const $h1 = $(element);
                     const text = $h1.text().trim();
 
@@ -70,7 +70,7 @@ async function handler() {
                         pubDate,
                         description,
                     };
-                }) as DataItem[];
+                });
 
             return { feedTitle, feedDesc, items };
         },

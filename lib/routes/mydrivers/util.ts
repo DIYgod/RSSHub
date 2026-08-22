@@ -61,7 +61,7 @@ const getInfo = (url, range?) =>
             title: `${title} - ${range !== undefined && ranges ? ranges[range] : $(`a[data-id="${url.split(/=/).pop()}"]`).text() || $('#newsEventSwitch a.cur').text()}`,
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-CN' as Language,
+            language: 'zh-CN' as const satisfies Language,
             image,
             icon,
             logo: icon,

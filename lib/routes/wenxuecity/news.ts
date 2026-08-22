@@ -24,13 +24,13 @@ async function handler() {
     const list = $('div.mainwrap div.block div.wrapper ul li a')
         .toArray()
         .slice(0, 15)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: `${rootUrl}${$item.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -53,6 +53,6 @@ async function handler() {
     return {
         title: '焦点新闻 - 文学城',
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

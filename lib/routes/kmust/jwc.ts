@@ -65,6 +65,6 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         link: pageUrl,
         title,
-        item: items as DataItem[],
+        item: items,
     };
 }

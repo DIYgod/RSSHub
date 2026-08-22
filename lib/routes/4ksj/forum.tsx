@@ -92,7 +92,7 @@ async function handler(ctx) {
 
     const $ = load(decoder.decode(response));
 
-    const language = 'zh';
+    const language = 'zh' as const satisfies Language;
     const image = $('div.nexlogo img').prop('src');
 
     let items = $('div.nex_cmo_piv a')
@@ -138,7 +138,7 @@ async function handler(ctx) {
                 const detailResponse = await ofetch(item.link, {
                     responseType: 'arrayBuffer',
                     headers: {
-                        Cookie: cookie as string,
+                        Cookie: cookie,
                     },
                 });
 
@@ -269,6 +269,6 @@ async function handler(ctx) {
         allowEmpty: true,
         image,
         author: $('meta[name="application-name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 }

@@ -23,7 +23,7 @@ export const route: Route = {
 };
 
 function loadDetail(link: string) {
-    return cache.tryGet(link, async () => {
+    return cache.tryGet(link, async (): Promise<DataItem> => {
         const response = await ofetch(link);
         const $ = load(response);
         const title = $('#main > div.outerlayer > div > div > h2 > p').text();
@@ -44,7 +44,7 @@ function loadDetail(link: string) {
             pubDate: timezone(parseDate(dateTime), 8),
             author: info.slice(info.indexOf('来源：') + 3).trim(),
         };
-    }) as Promise<DataItem>;
+    });
 }
 
 const pages = {

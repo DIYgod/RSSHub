@@ -30,7 +30,7 @@ export const route: Route = {
     url: 'insider.finology.in/bullets',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://insider.finology.in/bullets';
 
     const response = await ofetch(baseUrl);
@@ -59,5 +59,5 @@ async function handler() {
         logo: 'https://insider.finology.in/Images/favicon/favicon.ico',
         icon: 'https://insider.finology.in/Images/favicon/favicon.ico',
         language: 'en-us',
-    } as Data;
+    };
 }

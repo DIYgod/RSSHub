@@ -57,7 +57,7 @@ export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<Crowdfundin
             response.data.crowd_funding_info.end_time_desc = formatDate(response.data.crowd_funding_info.end_time);
         }
         return response.data.crowd_funding_info;
-    }) as Promise<CrowdfundingDetailInfo>;
+    });
 
 /**
  * Fetch the list of new products, merging `history_date_list` (primary) with `new_list` (supplement).
@@ -98,7 +98,7 @@ export const getNewProductItem = (item: NewProductItem): Promise<NewProductDetai
             method: 'POST',
         });
         return response.data;
-    }) as Promise<NewProductDetailData>;
+    });
 
 const CrowdfundingDescription = ({ item }: { item: CrowdfundingDetailInfo }) => (
     <>

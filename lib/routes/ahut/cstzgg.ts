@@ -50,17 +50,17 @@ async function handler() {
     const out = await Promise.all(
         merged.map((item) => {
             if (item.link.includes('content.jsp')) {
-                return item as DataItem;
+                return item;
             }
-            return cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link);
                 const $ = load(detailResponse);
 
                 return {
                     ...item,
                     description: $('.v_news_content').html(),
-                } as DataItem;
-            }) as Promise<DataItem>;
+                };
+            });
         })
     );
 

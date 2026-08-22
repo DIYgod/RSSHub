@@ -54,7 +54,7 @@ export interface Feed {
     level: number;
     like_count: number;
     log_pb: LogPb;
-    lynx_server: LynxServer;
+    lynx_server: unknown;
     natant_level: number;
     preload_web: number;
     publish_time: number;
@@ -143,13 +143,13 @@ interface ItemCell {
     articleClassification: ArticleClassification;
     cellCtrl: CellCtrl;
     extra: Extra;
-    imageList: ImageList;
+    imageList: unknown;
     itemCounter: ItemCounter;
     locationInfo: LocationInfo;
     shareInfo: ShareInfo;
-    tagInfo: TagInfo;
+    tagInfo: unknown;
     userInteraction: UserInteraction;
-    videoInfo: VideoInfo;
+    videoInfo: unknown;
 }
 
 interface ActionCtrl {
@@ -227,8 +227,6 @@ interface Extra {
     ping: string;
 }
 
-type ImageList = unknown;
-
 interface ItemCounter {
     commentCount: number;
     diggCount: number;
@@ -255,14 +253,10 @@ interface ShareControl {
     isHighQuality: boolean;
 }
 
-type TagInfo = unknown;
-
 interface UserInteraction {
     userDigg: boolean;
     userRepin: boolean;
 }
-
-type VideoInfo = unknown;
 
 interface Video {
     bitrate: number;
@@ -328,8 +322,6 @@ interface LogPb {
     is_following: string;
     is_yaowen: string;
 }
-
-type LynxServer = unknown;
 
 interface ShowMore {
     title: string;

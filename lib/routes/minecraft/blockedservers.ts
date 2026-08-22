@@ -30,12 +30,14 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response: any = await got({
+    const response = await got({
         method: 'get',
         url: 'https://sessionserver.mojang.com/blockedservers',
     });
 
-    const data = (response.data.toString() as string).split('\n').filter((str) => str !== '');
+    const data = String(response.data)
+        .split('\n')
+        .filter((str) => str !== '');
 
     const title = 'Minecraft Java版被阻止的服务器域名散列';
 

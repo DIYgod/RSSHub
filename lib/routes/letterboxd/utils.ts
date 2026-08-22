@@ -3,7 +3,15 @@ import Parser from 'rss-parser';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
-const parser = new Parser<Record<string, any>, Record<string, any>>({
+type LetterboxdItem = {
+    'letterboxd:filmTitle': string;
+    'letterboxd:watchedDate': string;
+    'letterboxd:rewatch': string;
+    'letterboxd:memberRating': string;
+    'letterboxd:memberLike': string;
+};
+
+const parser = new Parser<object, LetterboxdItem>({
     customFields: {
         item: ['letterboxd:filmTitle', 'letterboxd:watchedDate', 'letterboxd:rewatch', 'letterboxd:memberRating', 'letterboxd:memberLike'],
     },

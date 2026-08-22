@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -115,7 +115,7 @@ async function handler(ctx) {
     return {
         title: `中国海关-${channelName}`,
         link,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         item: out,
     };
 }

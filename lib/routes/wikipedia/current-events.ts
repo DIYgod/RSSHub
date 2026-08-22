@@ -47,7 +47,7 @@ function getCurrentEventsDatePath(date: Date): string {
 
 // Simple MediaWiki template parser for {{Current events}} template
 function parseCurrentEventsTemplate(wikitext: string): string | null {
-    if (!wikitext || typeof wikitext !== 'string') {
+    if (!wikitext) {
         return null;
     }
 

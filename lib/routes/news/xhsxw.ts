@@ -98,7 +98,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: title.split(/_/, 1)[0],
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         image,
         icon,
         logo: icon,

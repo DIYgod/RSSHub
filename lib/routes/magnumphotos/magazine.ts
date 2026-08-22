@@ -36,12 +36,11 @@ async function handler() {
     const rssUrl = `${host}/feed/`;
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, (async () => {
-                if (!item.link) {
-                    return;
-                }
-                const data = await ofetch(item.link);
+        feed.items.map((item) => {
+            const link = item.link!;
+
+            return cache.tryGet(link, async () => {
+                const data = await ofetch(link);
                 const $ = load(data);
                 const description = $('#content');
                 description.find('ul.share').remove();
@@ -50,12 +49,12 @@ async function handler() {
                 return {
                     title: item.title,
                     pubDate: item.pubDate,
-                    link: item.link,
+                    link,
                     category: item.categories,
                     description: description.html(),
                 };
-            }) as () => Promise<Record<string, any>>)
-        )
+            });
+        })
     );
 
     return {

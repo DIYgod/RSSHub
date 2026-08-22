@@ -9,13 +9,13 @@ const handler = async (ctx) => {
     const BASE_URL = 'https://xwxy.gdufs.edu.cn';
 
     const category = ctx.req.param('category') ?? 'news';
-    const pathMap: Record<string, string> = {
+    const pathMap = {
         news: '/xwzx/xyxw.htm',
         notices: '/xwzx/tzgg/tz.htm',
         announcements: '/xwzx/tzgg/gg.htm',
         media: '/xwzx/mtjj.htm',
     };
-    const titleMap: Record<string, string> = {
+    const titleMap = {
         news: '学院新闻',
         notices: '通知',
         announcements: '公告',

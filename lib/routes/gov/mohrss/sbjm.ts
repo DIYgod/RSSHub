@@ -43,7 +43,7 @@ async function handler(ctx: Context) {
     const list = $("div[class^='rsb_jfjf_cont'] ul li")
         .slice(0, 15)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, currentUrl).href.replace(/^http:(?=\/\/www\.mohrss\.gov\.cn\/)/, 'https:'),
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('ul.excerpt li')
         .toArray()
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -91,7 +91,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.entry').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -109,7 +109,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop()?.trim(),
-        language: language as Language,
+        language,
     };
 };
 

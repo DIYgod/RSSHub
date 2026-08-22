@@ -33,7 +33,7 @@ export const route: Route = {
 const baseUrl = 'https://etoland.co.kr';
 
 const getWafToken = (url: string) =>
-    cache.tryGet(
+    cache.tryGet<string>(
         'etoland:_waftokenid',
         async () => {
             const challengePage: string = await ofetch(url);
@@ -50,7 +50,7 @@ const getWafToken = (url: string) =>
         },
         600, // WAF token is valid for 600s
         false
-    ) as Promise<string>;
+    );
 
 const extractArticleList = ($: CheerioAPI) => {
     const chunk = /self\.__next_f\.push\(\[\d+,(".*")\]\)/s.exec($('script:contains("articleList")').text());

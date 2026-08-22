@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('section.article-list-content div.table-row')
         .slice(0, limit)
@@ -32,7 +32,7 @@ export const handler = async (ctx) => {
                 pubDate: timezone(parseDate($item.find('div.list-dated').text().split(/\|/).pop()!), 8),
                 link: new URL($item.find('a.links').prop('href')!, rootUrl).href,
                 author: $item.find('div.list-dated').text().split(/\|/, 1)[0],
-                language: language as Language,
+                language,
             };
         });
 
@@ -79,7 +79,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -96,7 +96,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

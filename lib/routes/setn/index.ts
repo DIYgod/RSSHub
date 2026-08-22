@@ -81,6 +81,10 @@ export const route: Route = {
 | ---- | ---- | ---- | ---- | ---- | -------- |`,
 };
 
+type NewsArticleLd = {
+    author?: { name?: string };
+};
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '即時';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 42;
@@ -120,7 +124,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                let head: Record<string, any>;
+                let head: NewsArticleLd;
                 try {
                     head = JSON.parse(content('script[type="application/ld+json"]').first().text());
                 } catch {

@@ -31,8 +31,8 @@ const readDirectory = (targetDirectoryPath: string, includeSubdirectories: boole
     return files;
 };
 
-export const directoryImport = async ({ targetDirectoryPath, importPattern = /.*/, includeSubdirectories = true }: DirectoryImportOptions) => {
-    const modules: Record<string, unknown> = {};
+export const directoryImport = async <T = unknown>({ targetDirectoryPath, importPattern = /.*/, includeSubdirectories = true }: DirectoryImportOptions) => {
+    const modules: Record<string, T> = {};
     const filesPaths = readDirectory(targetDirectoryPath, includeSubdirectories);
 
     await Promise.all(

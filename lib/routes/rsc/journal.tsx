@@ -127,7 +127,7 @@ async function handler(ctx) {
         title: $('meta[name="citation_title"]').prop('content'),
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         image: new URL($('div.page-head__cell--image span img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

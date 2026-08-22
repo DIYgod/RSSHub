@@ -5,6 +5,7 @@ import ofetch from '@/utils/ofetch';
 
 import { getTwitterUserCacheKey } from '../../utils';
 import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
+import type { ApiParams } from './utils';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
 const getUserData = (id) =>
@@ -52,7 +53,7 @@ const cacheTryGet = async (_id, params, operationName, func) => {
     return cache.tryGet(getTwitterUserCacheKey(id, operationName, params), () => func(id, params), config.cache.routeExpire, false);
 };
 
-const getUserTweets = (id: string, params?: Record<string, any>) =>
+const getUserTweets = (id: string, params?: ApiParams) =>
     cacheTryGet(id, params, 'getUserTweets', async (id, params = {}) =>
         gatherLegacyFromData(
             await paginationTweets('UserTweets', id, {
@@ -66,7 +67,7 @@ const getUserTweets = (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) =>
+const getUserTweetsAndReplies = (id: string, params?: ApiParams) =>
     cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params = {}) =>
         gatherLegacyFromData(
             await paginationTweets('UserTweetsAndReplies', id, {
@@ -82,7 +83,7 @@ const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getUserMedia = (id: string, params?: Record<string, any>) =>
+const getUserMedia = (id: string, params?: ApiParams) =>
     cacheTryGet(id, params, 'getUserMedia', async (id, params = {}) =>
         gatherLegacyFromData(
             await paginationTweets('UserMedia', id, {
@@ -97,7 +98,7 @@ const getUserMedia = (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getUserLikes = (id: string, params?: Record<string, any>) =>
+const getUserLikes = (id: string, params?: ApiParams) =>
     cacheTryGet(id, params, 'getUserLikes', async (id, params = {}) =>
         gatherLegacyFromData(
             await paginationTweets('Likes', id, {
@@ -111,7 +112,7 @@ const getUserLikes = (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getUserTweet = (id: string, params?: Record<string, any>) =>
+const getUserTweet = (id: string, params?: ApiParams) =>
     cacheTryGet(id, params, 'getUserTweet', async (id, params = {}) =>
         gatherLegacyFromData(
             await paginationTweets(
@@ -131,7 +132,7 @@ const getUserTweet = (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getSearch = async (keywords: string, params?: Record<string, any>) =>
+const getSearch = async (keywords: string, params?: ApiParams) =>
     gatherLegacyFromData(
         await paginationTweets(
             'SearchTimeline',
@@ -147,7 +148,7 @@ const getSearch = async (keywords: string, params?: Record<string, any>) =>
         )
     );
 
-const getList = async (id: string, params?: Record<string, any>) =>
+const getList = async (id: string, params?: ApiParams) =>
     gatherLegacyFromData(
         await paginationTweets(
             'ListLatestTweetsTimeline',
@@ -179,7 +180,7 @@ const getUser = async (id: string) => {
     };
 };
 
-const getHomeTimeline = async (id: string, params?: Record<string, any>) =>
+const getHomeTimeline = async (id: string, params?: ApiParams) =>
     gatherLegacyFromData(
         await paginationTweets(
             'HomeTimeline',
@@ -196,7 +197,7 @@ const getHomeTimeline = async (id: string, params?: Record<string, any>) =>
         )
     );
 
-const getHomeLatestTimeline = async (id: string, params?: Record<string, any>) =>
+const getHomeLatestTimeline = async (id: string, params?: ApiParams) =>
     gatherLegacyFromData(
         await paginationTweets(
             'HomeLatestTimeline',

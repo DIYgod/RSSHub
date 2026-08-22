@@ -43,7 +43,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     const scriptRegExp = /<script type="module" crossorigin src="(.*?)"><\/script>/;
     const scriptUrl: string = scriptRegExp.test(targetResponse) ? new URL(targetResponse.match(scriptRegExp)?.[1], baseUrl).href : '';
@@ -122,7 +122,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 text: description,
             },
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -137,7 +137,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author,
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

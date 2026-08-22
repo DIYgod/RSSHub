@@ -82,7 +82,7 @@ export async function handler(ctx) {
 
     $('i.rj').remove();
 
-    const language = 'zh';
+    const language = 'zh' as const satisfies Language;
 
     const query = id === 'latest' ? $('#newslist ul').first().find('li').not('li.addd').find('a').slice(0, limit) : $('a.soft-title').slice(0, limit);
 
@@ -92,7 +92,7 @@ export async function handler(ctx) {
         return {
             title: $item.prop('title') ?? $item.text(),
             link: new URL($item.prop('href'), rootUrl).href,
-            language: language as Language,
+            language,
         };
     });
 
@@ -136,6 +136,6 @@ export async function handler(ctx) {
         item: items,
         allowEmpty: true,
         image,
-        language: language as Language,
+        language,
     };
 }

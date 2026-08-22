@@ -14,9 +14,8 @@ export async function track(ctx) {
     const reqCode = ctx.req.param('reqCode');
     const reqReqCode = 'reqCodeNo1=' + reqCode;
 
-    let locale = 'ja';
-    if (ctx.req.param('locale') === 'en') {
-        locale = 'en';
+    const locale: Language = ctx.req.param('locale') === 'en' ? 'en' : 'ja';
+    if (locale === 'en') {
         baseTitle = 'Japanpost';
     }
     const reqLocale = '&locale=' + locale;
@@ -64,7 +63,7 @@ export async function track(ctx) {
         title: `${baseTitle} ${reqCode} ${packageType}`,
         link,
         description: `${baseTitle} ${reqCode} ${packageType}`,
-        language: locale as Language,
+        language: locale,
         icon: 'https://www.post.japanpost.jp/favicon.ico',
         logo: 'https://www.post.japanpost.jp/favicon.ico',
         item: listEven.toArray().map((item, index) => {

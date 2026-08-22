@@ -18,7 +18,7 @@ const formatExhibitionDate = (dateStr: string): string | undefined => {
 };
 
 // parse date formate for 2026年1月1日—2026年4月6日, 2025.09.30-2026.01.04 or 2025年6月17日-8月17日
-const parseExhibitionDuration = (fullDuration: string): { startDate: string | undefined; endDate: string | undefined } => {
+const parseExhibitionDuration = (fullDuration: string) => {
     if (!fullDuration) {
         return { startDate: undefined, endDate: undefined };
     }
@@ -75,7 +75,7 @@ export const route: Route = {
 
         const items = await Promise.all(
             rawItems.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link);
                     const $d = load(detailResponse);
 
@@ -132,7 +132,7 @@ export const route: Route = {
                             startDate,
                             endDate,
                         },
-                    } as DataItem;
+                    };
                 })
             )
         );

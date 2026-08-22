@@ -29,7 +29,7 @@ async function handler() {
     const list = $('li[id^="line_u8_"] a')
         .slice(0, 10)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.find('em').text(),
@@ -37,7 +37,7 @@ async function handler() {
                 pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
                 author: '教务部',
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

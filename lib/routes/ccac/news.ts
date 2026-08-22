@@ -31,6 +31,13 @@ export const route: Route = {
 | all | case           | Persuasion                               | AnnualReport   | PCANews        |`,
 };
 
+interface CcacArticle {
+    name: string;
+    url: string;
+    time: string;
+    tags: Array<{ name: string }>;
+}
+
 async function handler(ctx) {
     const context = await playwright();
     const lang = ctx.req.param('lang') ?? 'sc';
@@ -45,7 +52,7 @@ async function handler(ctx) {
     await page.goto(BASE, {
         waitUntil: 'domcontentloaded',
     });
-    const articles = await page.evaluate(() => (window as any).articles);
+    const articles = await page.evaluate(() => (window as Window & { articles?: CcacArticle[] }).articles);
     await context.close();
 
     const list = utils

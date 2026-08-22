@@ -16,7 +16,7 @@ export const route: Route = {
     parameters: {
         category: CategoryParam,
     },
-    handler: async (ctx) => {
+    handler: async (ctx): Promise<Data> => {
         const { category = '' } = ctx.req.param();
         const items = await getPostItems({ swimlane: 'CURATED', category: category === '' ? undefined : category });
         return {
@@ -24,6 +24,6 @@ export const route: Route = {
             title: `Voronoi Editor's Pick Posts${category ? ` - ${category}` : ''}`,
             link: 'https://www.voronoiapp.com/editors-pick',
             item: items,
-        } as Data;
+        };
     },
 };

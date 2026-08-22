@@ -56,7 +56,7 @@ async function handler() {
     const feedLang: Language = 'en';
     const feedDescription = 'Sustainability Publications from PwC Strategy&';
 
-    const response = await ofetch(
+    const response = await ofetch<{ elements: string }>(
         'https://www.strategyand.pwc.com/content/pwc/03/en/functions/sustainability-strategy/publications/jcr:content/root/container/content-free-container/section_545483788/collection_v2.filter-dynamic.html',
         {
             query: {
@@ -66,7 +66,7 @@ async function handler() {
             },
         }
     );
-    const elements = JSON.parse(response.elements) as Element[];
+    const elements: Element[] = JSON.parse(response.elements);
 
     const items = elements.map((item) => ({
         title: item.title,

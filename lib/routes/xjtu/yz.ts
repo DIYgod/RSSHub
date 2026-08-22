@@ -46,11 +46,12 @@ async function handler(ctx) {
         .map((item_) => {
             const item = $(item_);
             const a = item.find('a');
-            return {
-                title: a.attr('title'),
+            const dataItem: DataItem = {
+                title: a.attr('title')!,
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate(item.find('span.date.fr').text()), 8),
-            } as DataItem;
+            };
+            return dataItem;
         });
     const items = await Promise.all(
         list.map((item) =>
@@ -71,5 +72,5 @@ async function handler(ctx) {
         title: '西安交通大学研究生招生信息网',
         link: 'https://yz.xjtu.edu.cn',
         item: items,
-    } as Data;
+    } satisfies Data;
 }

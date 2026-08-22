@@ -72,13 +72,13 @@ async function handler(ctx) {
                         comments.push(...c.replies);
                     }
                 }
-            }) as () => Promise<Record<string, any>>)
+            }) as () => Promise<DataItem>)
         )
     );
 
     return {
         title: $('title').text() + ' - 最新回应',
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

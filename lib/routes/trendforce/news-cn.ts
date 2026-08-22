@@ -66,11 +66,13 @@ async function handler() {
         )
     );
 
+    const language = $('html').attr('lang') as Language;
+
     return {
         title: $('head title').text(),
         description: $('meta[name="description"]').attr('content'),
         link,
-        language: $('html').attr('lang') as Language,
+        language,
         image: `${baseUrl}${$('link[rel="apple-touch-icon-precomposed"][sizes="152x152"]').attr('href')}`,
         item: items,
     };

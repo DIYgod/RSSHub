@@ -3,22 +3,26 @@ import path from 'node:path';
 
 import { config } from '../../lib/config';
 import { ensureAllLoaded, namespaces } from '../../lib/registry';
+import type { Route } from '../../lib/types';
 import { getCurrentPath } from '../../lib/utils/helpers';
 import { categories } from './data';
+
+interface FoloAnalysis {
+    data: Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+}
 
 await ensureAllLoaded();
 
 const fullTests = await (await fetch('https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@gh-pages/build/test-full-routes.json')).json();
 const testResult = fullTests.testResults[0].assertionResults;
 
-const foloAnalysis = await (
-    await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
-        headers: {
-            'user-agent': config.trueUA,
-        },
-    })
-).json();
-const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+const foloAnalysisResponse = await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
+    headers: {
+        'user-agent': config.trueUA,
+    },
+});
+const foloAnalysis: FoloAnalysis = await foloAnalysisResponse.json();
+const foloAnalysisResult = foloAnalysis.data;
 const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
     .toSorted((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
     .slice(0, 150);
@@ -45,10 +49,10 @@ interface RouteData {
     url?: string;
     maintainers: string[];
     example: string;
-    parameters?: Record<string, any>;
+    parameters?: Route['parameters'];
     description?: string;
     categories?: string[];
-    features?: Record<string, any>;
+    features?: Route['features'];
     radar?: any[];
     view?: number;
     location?: string;
@@ -57,7 +61,7 @@ interface RouteData {
     zh?: {
         name?: string;
         description?: string;
-        parameters?: Record<string, any>;
+        parameters?: Route['parameters'];
     };
     test?: {
         code: number;

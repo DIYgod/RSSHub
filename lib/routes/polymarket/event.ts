@@ -52,7 +52,7 @@ async function handler(ctx) {
         `,
         link: `https://polymarket.com/event/${event.slug}`,
         pubDate: market.startDate || event.startDate ? parseDate(market.startDate || event.startDate!) : undefined,
-        category: event.tags?.map((t) => t.label).filter(Boolean) as string[],
+        category: event.tags?.map((t) => t.label).filter((label): label is string => Boolean(label)),
     }));
 
     return {

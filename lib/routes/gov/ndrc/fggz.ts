@@ -694,12 +694,14 @@ async function handler(ctx) {
 
     const image = $('div.logo a img').prop('src');
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language,
         image,
         subtitle: $('meta[name="ColumnName"]').prop('content'),
         author: $('meta[name="SiteName"]').prop('content'),

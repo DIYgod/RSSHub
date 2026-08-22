@@ -52,16 +52,20 @@ type IndexEntry = {
     image: string;
 };
 
+type IndexResponse = {
+    meta: PartitionMeta;
+    items: IndexEntry[];
+};
+
 async function fetchIndexEntires(): Promise<IndexEntry[]> {
-    const response = await ofetch(indexUrl);
+    const response = await ofetch<IndexResponse>(indexUrl);
     if (!('meta' in response)) {
         return [];
     }
 
-    const meta = response.meta as PartitionMeta;
-    const maxItemCount = Number(meta['partition-size']);
+    const maxItemCount = Number(response.meta['partition-size']);
 
-    return (response.items as IndexEntry[]).slice(0, maxItemCount);
+    return response.items.slice(0, maxItemCount);
 }
 
 function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
@@ -72,7 +76,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
         let description = '';
         let category: string[] = [];
         let articleDate: string = entry.date;
-        const pageContent: string = await ofetch(url);
+        const pageContent = await ofetch<string>(url);
 
         if (pageContent.length > 0) {
             const $ = load(pageContent);
@@ -93,7 +97,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
             link: url,
             pubDate: parseDate(articleDate),
         } satisfies DataItem;
-    }) as Promise<DataItem>;
+    });
 }
 
 async function handler(): Promise<Data> {

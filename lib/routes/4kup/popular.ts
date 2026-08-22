@@ -75,11 +75,11 @@ async function handler(ctx) {
         .map((post) => $(post).find('.wpp-post-title').attr('href'))
         .filter((link) => link !== undefined);
     const slugs = links.map((link) => link.split('/').findLast(Boolean));
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?slug=${slugs.join(',')}&per_page=${limit}`);
+    const { data: posts }: { data: WPPost[] } = await got(`${SUB_URL}wp-json/wp/v2/posts?slug=${slugs.join(',')}&per_page=${limit}`);
 
     return {
         title,
         link: url,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

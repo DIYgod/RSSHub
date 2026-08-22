@@ -152,7 +152,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     };
 };
 
-export const parseList = ($: CheerioAPI) => {
+export const parseList = ($: CheerioAPI): DataItem[] => {
     const winPageData = JSON.parse(
         $('script:contains("window.WinPageData")')
             .text()
@@ -167,13 +167,13 @@ export const parseList = ($: CheerioAPI) => {
         pubDate: parseRelativeDate(item.date, 'MM月DD日'),
         category: item.tag.map((t) => t.tag),
         image: item.thumbnail_mpic,
-    })) as DataItem[];
+    }));
 };
 
 export const fetchItem = async (item: DataItem, cookie: string) => {
     const response = await ofetch(item.link!, {
         headers: {
-            Cookie: cookie as string,
+            Cookie: cookie,
         },
     });
 

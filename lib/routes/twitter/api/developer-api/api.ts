@@ -1,4 +1,4 @@
-import type { TwitterApiReadOnly } from 'twitter-api-v2';
+import type { ApiV2Includes, MediaObjectV2, TweetEntityHashtagV2, TweetEntityMentionV2, TweetEntityUrlV2, TweetV2, TwitterApiReadOnly, UserV2 } from 'twitter-api-v2';
 import { TwitterApi } from 'twitter-api-v2';
 
 import { config } from '@/config';
@@ -11,6 +11,70 @@ import { getTwitterUserCacheKey } from '../../utils';
 interface ClientWrapper {
     client: TwitterApiReadOnly;
     isUserAuth: boolean;
+}
+
+interface LegacyUser {
+    id_str: string;
+    name: string;
+    screen_name: string;
+    description?: string;
+    profile_image_url?: string;
+    profile_image_url_https?: string;
+    url?: string;
+    verified?: boolean;
+}
+
+interface LegacyMedia {
+    id_str: string;
+    type: string;
+    media_url_https?: string;
+    media_url?: string;
+    url?: string;
+    sizes: {
+        large: {
+            w: number;
+            h: number;
+            resize: string;
+        };
+    };
+    video_info?: {
+        variants: Array<{
+            bitrate?: number;
+            content_type: string;
+            url: string;
+        }>;
+    };
+}
+
+interface LegacyTweet {
+    id_str: string;
+    conversation_id_str?: string;
+    full_text: string;
+    text: string;
+    created_at?: string;
+    entities: {
+        urls: Array<{ url: string; expanded_url: string; display_url: string }>;
+        hashtags: Array<{ text: string }>;
+        user_mentions: Array<{ id_str: string; screen_name: string; name: string }>;
+        symbols: never[];
+    };
+    extended_entities?: {
+        media: LegacyMedia[];
+    };
+    user: LegacyUser | null;
+    user_id_str?: string;
+    in_reply_to_user_id_str?: string;
+    in_reply_to_status_id_str?: string;
+    in_reply_to_screen_name?: string;
+    retweeted_status?: LegacyTweet;
+    quoted_status?: LegacyTweet;
+}
+
+type DevApiParams = Record<string, string | number | boolean | undefined>;
+
+interface TweetsV2Response {
+    data?: TweetV2[];
+    includes?: ApiV2Includes;
 }
 
 const appClients: ClientWrapper[] = [];
@@ -72,7 +136,7 @@ export const getAppClient = async () => {
     return currentWrapper.isUserAuth ? currentWrapper.client : await currentWrapper.client.appLogin();
 };
 
-const mapUserToLegacy = (user: Record<string, any>) =>
+const mapUserToLegacy = (user: UserV2 | undefined): LegacyUser | null =>
     user
         ? {
               id_str: user.id,
@@ -86,25 +150,25 @@ const mapUserToLegacy = (user: Record<string, any>) =>
           }
         : null;
 
-const mapUrlsToLegacy = (urls: Array<Record<string, any>> = []) =>
+const mapUrlsToLegacy = (urls: TweetEntityUrlV2[] = []) =>
     urls.map((url) => ({
         url: url.url,
         expanded_url: url.expanded_url ?? url.unwound_url ?? url.url,
         display_url: url.display_url ?? url.url,
     }));
 
-const mapHashtagsToLegacy = (hashtags: Array<Record<string, any>> = []) => hashtags.map((hashtag) => ({ text: hashtag.tag }));
+const mapHashtagsToLegacy = (hashtags: TweetEntityHashtagV2[] = []) => hashtags.map((hashtag) => ({ text: hashtag.tag }));
 
-const mapMentionsToLegacy = (mentions: Array<Record<string, any>> = []) =>
+const mapMentionsToLegacy = (mentions: TweetEntityMentionV2[] = []) =>
     mentions.map((mention) => ({
         id_str: mention.id,
         screen_name: mention.username,
         name: mention.username,
     }));
 
-const mapMediaToLegacy = (media: Record<string, any>) => {
+const mapMediaToLegacy = (media: MediaObjectV2) => {
     const url = media.url ?? media.preview_image_url;
-    const mapped = {
+    const mapped: LegacyMedia = {
         id_str: media.media_key,
         type: media.type,
         media_url_https: url,
@@ -117,7 +181,7 @@ const mapMediaToLegacy = (media: Record<string, any>) => {
                 resize: 'fit',
             },
         },
-    } as Record<string, any>;
+    };
 
     if (media.variants?.length) {
         mapped.video_info = {
@@ -132,18 +196,19 @@ const mapMediaToLegacy = (media: Record<string, any>) => {
     return mapped;
 };
 
-const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, any> | undefined, cacheMap: Map<string, Record<string, any>>) => {
-    if (cacheMap.has(tweet.id)) {
-        return cacheMap.get(tweet.id);
+const mapTweetToLegacy = (tweet: TweetV2, includes: ApiV2Includes | undefined, cacheMap: Map<string, LegacyTweet>): LegacyTweet => {
+    const cached = cacheMap.get(tweet.id);
+    if (cached) {
+        return cached;
     }
 
-    const users = new Map<string, Record<string, any>>((includes?.users ?? []).map((user) => [user.id, user]));
-    const tweets = new Map<string, Record<string, any>>((includes?.tweets ?? []).map((item) => [item.id, item]));
-    const media = new Map<string, Record<string, any>>((includes?.media ?? []).map((item) => [item.media_key, item]));
+    const users = new Map((includes?.users ?? []).map((user) => [user.id, user]));
+    const tweets = new Map((includes?.tweets ?? []).map((item) => [item.id, item]));
+    const media = new Map((includes?.media ?? []).map((item) => [item.media_key, item]));
 
-    const user = users.get(tweet.author_id);
-    const legacyUser = mapUserToLegacy(user!);
-    const legacy: Record<string, any> = {
+    const user = users.get(tweet.author_id!);
+    const legacyUser = mapUserToLegacy(user);
+    const legacy: LegacyTweet = {
         id_str: tweet.id,
         conversation_id_str: tweet.conversation_id,
         full_text: tweet.text,
@@ -158,7 +223,7 @@ const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, a
         extended_entities: {
             media: (tweet.attachments?.media_keys ?? [])
                 .map((key) => media.get(key))
-                .filter(Boolean)
+                .filter((item) => item !== undefined)
                 .map((item) => mapMediaToLegacy(item)),
         },
         user: legacyUser,
@@ -187,7 +252,7 @@ const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, a
             case 'replied_to': {
                 legacy.in_reply_to_status_id_str = reference.id;
                 legacy.in_reply_to_user_id_str = referenced.author_id;
-                const replyUser = users.get(referenced.author_id);
+                const replyUser = users.get(referenced.author_id!);
                 legacy.in_reply_to_screen_name = replyUser?.username;
 
                 break;
@@ -197,15 +262,15 @@ const mapTweetToLegacy = (tweet: Record<string, any>, includes: Record<string, a
         }
     }
 
-    if (!legacy.extended_entities.media?.length) {
+    if (!legacy.extended_entities?.media.length) {
         delete legacy.extended_entities;
     }
 
     return legacy;
 };
 
-const mapTweetResponseToLegacy = (response: Record<string, any>) => {
-    const cacheMap = new Map<string, Record<string, any>>();
+const mapTweetResponseToLegacy = (response: TweetsV2Response) => {
+    const cacheMap = new Map<string, LegacyTweet>();
     return (response?.data ?? []).map((tweet) => mapTweetToLegacy(tweet, response.includes, cacheMap));
 };
 
@@ -219,7 +284,7 @@ const getUserData = (id: string) =>
         return mapUserToLegacy(response?.data) ?? '';
     });
 
-const cacheTryGet = async (_id: string, params: Record<string, any> | undefined, operationName: string, func: (id: string, params?: Record<string, any>) => Promise<any>) => {
+const cacheTryGet = async (_id: string, params: DevApiParams | undefined, operationName: string, func: (id: string, params?: DevApiParams) => Promise<LegacyTweet[]>) => {
     const userData: any = await getUserData(_id);
     const id = userData?.id_str;
     if (id === undefined) {
@@ -229,7 +294,7 @@ const cacheTryGet = async (_id: string, params: Record<string, any> | undefined,
     return cache.tryGet(getTwitterUserCacheKey(id, operationName, params), () => func(id, params), config.cache.routeExpire, false);
 };
 
-const getUserTimeline = async (id: string, params?: Record<string, any>, options: Record<string, any> = {}) => {
+const getUserTimeline = async (id: string, params?: DevApiParams, options: DevApiParams = {}) => {
     const client = await getAppClient();
     const response = await client.v2.get(`users/${id}/tweets`, {
         max_results: params?.count ?? 20,
@@ -242,17 +307,17 @@ const getUserTimeline = async (id: string, params?: Record<string, any>, options
     return mapTweetResponseToLegacy(response);
 };
 
-const getUserTweets = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, 'getUserTweets', (id, params = {}) => getUserTimeline(id, params, { exclude: 'replies' }));
+const getUserTweets = (id: string, params?: DevApiParams) => cacheTryGet(id, params, 'getUserTweets', (id, params = {}) => getUserTimeline(id, params, { exclude: 'replies' }));
 
-const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) => cacheTryGet(id, params, 'getUserTweetsAndReplies', (id, params = {}) => getUserTimeline(id, params));
+const getUserTweetsAndReplies = (id: string, params?: DevApiParams) => cacheTryGet(id, params, 'getUserTweetsAndReplies', (id, params = {}) => getUserTimeline(id, params));
 
-const getUserMedia = (id: string, params?: Record<string, any>) =>
+const getUserMedia = (id: string, params?: DevApiParams) =>
     cacheTryGet(id, params, 'getUserMedia', async (id, params = {}) => {
         const data = await getUserTimeline(id, params);
         return data.filter((tweet) => tweet.extended_entities?.media);
     });
 
-const getUserLikes = (id: string, params?: Record<string, any>) =>
+const getUserLikes = (id: string, params?: DevApiParams) =>
     cacheTryGet(id, params, 'getUserLikes', async (id, params = {}) => {
         const client = await getAppClient();
         const response = await client.v2.get(`users/${id}/liked_tweets`, {
@@ -265,7 +330,7 @@ const getUserLikes = (id: string, params?: Record<string, any>) =>
         return mapTweetResponseToLegacy(response);
     });
 
-const getUserTweet = (id: string, params?: Record<string, any>) =>
+const getUserTweet = (id: string, params?: DevApiParams) =>
     cacheTryGet(id, params, 'getUserTweet', async (_id, params = {}) => {
         const client = await getAppClient();
         const tweetId = params.focalTweetId;
@@ -281,7 +346,7 @@ const getUserTweet = (id: string, params?: Record<string, any>) =>
         return mapTweetResponseToLegacy({ data: response?.data ? [response.data] : [], includes: response?.includes });
     });
 
-const getSearch = (keywords: string, params?: Record<string, any>) =>
+const getSearch = (keywords: string, params?: DevApiParams) =>
     cache.tryGet(
         `twitter:search:${keywords}:${JSON.stringify(params)}`,
         async () => {
@@ -300,7 +365,7 @@ const getSearch = (keywords: string, params?: Record<string, any>) =>
         false
     );
 
-const getList = (id: string, params?: Record<string, any>) =>
+const getList = (id: string, params?: DevApiParams) =>
     cache.tryGet(
         `twitter:list:${id}:${JSON.stringify(params)}`,
         async () => {
@@ -318,7 +383,7 @@ const getList = (id: string, params?: Record<string, any>) =>
         false
     );
 
-const getHomeTimeline = (_id: string, params?: Record<string, any>) =>
+const getHomeTimeline = (_id: string, params?: DevApiParams) =>
     cache.tryGet(
         `twitter:home:${JSON.stringify(params)}`,
         async () => {
@@ -339,7 +404,7 @@ const getHomeTimeline = (_id: string, params?: Record<string, any>) =>
         false
     );
 
-const getHomeLatestTimeline = (id: string, params?: Record<string, any>) => getHomeTimeline(id, params);
+const getHomeLatestTimeline = (id: string, params?: DevApiParams) => getHomeTimeline(id, params);
 
 const getUser = (id: string) => getUserData(id);
 

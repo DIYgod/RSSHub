@@ -20,7 +20,7 @@ export const handler = async (ctx) => {
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
     const feed = await parser.parseURL(feedUrl);
 
-    const language = 'en';
+    const language: Language = 'en';
 
     const items = feed.items.slice(0, limit).map((item) => {
         const title = item.title;
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 html: description,
                 text: item.content,
             },
-            language: language as Language,
+            language,
             enclosure_url: pdfUrl,
             enclosure_type: 'application/pdf',
             enclosure_title: title,

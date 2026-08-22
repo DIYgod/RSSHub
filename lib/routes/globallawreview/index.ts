@@ -69,7 +69,7 @@ async function handler(ctx) {
         item: items,
         title: $('title').text(),
         link: currentUrl,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         author: '中国社会科学院法学研究所',
     };
 }

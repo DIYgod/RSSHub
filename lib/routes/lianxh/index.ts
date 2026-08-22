@@ -81,7 +81,7 @@ async function handler(ctx: Context) {
     const list = $('.card-body > a')
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 30)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const href = $item.attr('href');
             return {
@@ -89,7 +89,7 @@ async function handler(ctx: Context) {
                 link: rootUrl + href,
                 id: href?.split('/').pop()?.split('.', 1)[0],
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -112,6 +112,6 @@ async function handler(ctx: Context) {
     return {
         title: `连享会 - ${$('.card-title').text()}`,
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

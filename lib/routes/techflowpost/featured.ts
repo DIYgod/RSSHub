@@ -33,7 +33,7 @@ export const route: Route = {
 |      | 2040            | 2046     | 2047     | 2045     | 2044     | 2043     | 2042    | 2041     | 2039            | 2033            | 2032     | 2031       |`,
 };
 
-const categoryMap: Record<string, string> = {
+const categoryMap = {
     '2040': '行业 & 项目观察',
     '2046': '项目简介',
     '2047': '项目动态',

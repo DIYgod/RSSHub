@@ -52,7 +52,7 @@ export const route: Route = {
         const typeParam = ctx.req.param('type');
         const fetchTypes = typeParam ? [typeParam] : ['short', 'long', 'online'];
 
-        const typeConfig: Record<string, string> = {
+        const typeConfig = {
             short: '特别展览',
             long: '常设展览',
             online: '线上展览',

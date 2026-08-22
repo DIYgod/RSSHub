@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -57,8 +58,8 @@ export const route: Route = {
 :::`,
 };
 
-async function handler(ctx) {
-    const tid = ctx.req.param('tid') as string;
+async function handler(ctx: Context) {
+    const { tid } = ctx.req.param();
     const { data: response } = await got(`${baseUrl}/read.php?tid=${tid}`);
     // 跟踪重定向
     let $ = load(response);

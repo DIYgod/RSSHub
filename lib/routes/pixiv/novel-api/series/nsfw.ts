@@ -23,7 +23,7 @@ async function getNovelSeries(seriesId: string, offset: number, token: string): 
             last_order: offset,
         }),
     });
-    return rsp.data as AppNovelSeries;
+    return rsp.data;
 }
 
 export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10): Promise<SeriesFeed> {
@@ -46,7 +46,7 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
             Authorization: 'Bearer ' + token,
         },
     });
-    const seriesData = seriesResponse.data as SeriesDetail;
+    const seriesData: SeriesDetail = seriesResponse.data;
 
     let offset = seriesData.body.total - limit;
     if (offset < 0) {

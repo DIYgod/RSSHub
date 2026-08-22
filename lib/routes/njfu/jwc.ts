@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -42,6 +42,6 @@ async function handler(ctx: Context) {
             description: info.summary || info.title,
             pubDate: parseDate(info.releasetime),
             link: new URL(info.url, link).href,
-        })) as DataItem[],
+        })),
     };
 }

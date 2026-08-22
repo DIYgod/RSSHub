@@ -112,7 +112,7 @@ export interface AuthorUserInfo {
     is_select_annual: boolean;
     select_annual_rank: number;
     annual_list_type: number;
-    extraMap: Record<string, unknown>;
+    extraMap: Record<string, string>;
     is_logout: number;
     annual_info: any[];
     account_amount: number;

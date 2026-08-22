@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -23,7 +23,7 @@ async function handler() {
         .toArray()
         .map((update) => {
             const $update = $(update);
-            const version = $update.find('p').attr('id');
+            const version = $update.find('p').attr('id')!;
             const date = $update
                 .find('p > i')
                 .text()
@@ -37,7 +37,7 @@ async function handler() {
                 link: `${url}#${date}`,
                 pubDate: parseDate(date),
             };
-        }) as DataItem[];
+        });
 
     return {
         title: 'Cent Browser 更新日志',

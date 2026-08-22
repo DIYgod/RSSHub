@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -138,17 +138,17 @@ export const route: Route = {
     url: 'app.daily.dev',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const sourceId = ctx.req.param('sourceId');
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const link = `${baseUrl}/sources/${sourceId}`;
     const buildId = await getBuildId();
 
-    const userData = (await cache.tryGet(`daily:source:${sourceId}`, async () => {
-        const response = await ofetch(`${baseUrl}/_next/data/${buildId}/en/sources/${sourceId}.json`);
+    const userData = await cache.tryGet(`daily:source:${sourceId}`, async () => {
+        const response = await ofetch<{ pageProps: { source: Source } }>(`${baseUrl}/_next/data/${buildId}/en/sources/${sourceId}.json`);
         return response.pageProps.source;
-    })) as Source;
+    });
 
     const items = await cache.tryGet(
         `daily:source:${sourceId}:posts`,
@@ -174,10 +174,10 @@ async function handler(ctx) {
         title: `${userData.name} posts on daily.dev`,
         description: userData.description,
         link,
-        item: items as DataItem[],
+        item: items,
         image: userData.image,
         logo: userData.image,
         icon: userData.image,
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

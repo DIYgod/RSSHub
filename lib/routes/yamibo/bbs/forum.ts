@@ -88,7 +88,7 @@ async function handler(ctx: Context): Promise<Data> {
     items = await pMap(
         items,
         async (item) =>
-            (await cache.tryGet(item.link!, async () => {
+            await cache.tryGet<DataItem>(item.link!, async () => {
                 let description: string | undefined;
                 const { data } = await fetchThread(item.id!);
                 if (data && !data.startsWith('<script type="text/javascript">')) {
@@ -108,7 +108,7 @@ async function handler(ctx: Context): Promise<Data> {
                     description,
                     pubDate: item.pubDate,
                 };
-            })) as DataItem,
+            }),
         { concurrency: 5 }
     );
 

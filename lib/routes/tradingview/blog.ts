@@ -146,12 +146,14 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('div.site-subtitle').text(),
-        language: $('html').prop('lang') as Language,
+        language,
         icon,
         logo: icon,
         subtitle: $('h1.site-title').text(),

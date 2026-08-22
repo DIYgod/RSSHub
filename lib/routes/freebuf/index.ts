@@ -77,7 +77,8 @@ async function fetchWithAcwChallenge(url, options) {
     try {
         return await ofetch(url, options);
     } catch (error) {
-        const arg1 = error instanceof FetchError && typeof error.data === 'string' ? error.data.match(/var arg1='(.*?)';/)?.[1] : undefined;
+        const challengeBody = error instanceof FetchError ? String(error.data) : '';
+        const arg1 = challengeBody.match(/var arg1='(.*?)';/)?.[1];
         if (!arg1) {
             throw error;
         }

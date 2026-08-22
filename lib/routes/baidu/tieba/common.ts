@@ -106,7 +106,7 @@ export async function getTiebaPageContent(
         false
     );
 
-    return data as string;
+    return data;
 }
 
 /**
@@ -129,7 +129,23 @@ export function normalizeUrl(href: string, base: string = 'https://tieba.baidu.c
  */
 const TIEBA_CLIENT_SECRET = 'tiebaclient!!!';
 
-function computeSign(params: Record<string, string>): string {
+type TiebaClientParams = {
+    _client_id: string;
+    _client_type: string;
+    _client_version: string;
+    _phone_imei: string;
+    from: string;
+    kw: string;
+    rn: string;
+    pn: string;
+    BDUSS: string;
+    is_good?: string;
+    cid?: string;
+    sort_type?: string;
+    sign?: string;
+};
+
+function computeSign(params: TiebaClientParams): string {
     // oxlint-disable-next-line unicorn-js/require-array-sort-compare
     const sortedKeys = Object.keys(params).toSorted();
     const raw = sortedKeys.map((key) => `${key}=${params[key]}`).join('') + TIEBA_CLIENT_SECRET;
@@ -147,7 +163,7 @@ export async function getTiebaForumData(params: { kw: string; cid?: string; isGo
         throw new ConfigNotFoundError('BAIDU_COOKIE must contain BDUSS. Please check your cookie configuration.');
     }
 
-    const apiParams: Record<string, string> = {
+    const apiParams: TiebaClientParams = {
         _client_id: 'wappc_1234567890123_456',
         _client_type: '2',
         _client_version: '12.20.1.0',

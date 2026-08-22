@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -44,6 +44,6 @@ async function handler() {
     return {
         title: '辽宁工程技术大学教务公告',
         link,
-        item: (await Promise.all(items)) as DataItem[],
+        item: await Promise.all(items),
     };
 }

@@ -74,7 +74,7 @@ async function handler(ctx) {
         description: `Current Issue of ${pageTitleName}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageURL,
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
         item: items,
     };
 }

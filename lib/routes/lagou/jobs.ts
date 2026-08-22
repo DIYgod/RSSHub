@@ -36,7 +36,7 @@ const getAesKey = () =>
         'lagou:aes-key',
         async () => {
             const aesKey = Array.from({ length: 32 }, () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='[crypto.randomInt(65)]).join('');
-            const response = await ofetch('https://gate.lagou.com/system/agreement', {
+            const response = await ofetch<{ content: { secretKeyValue: string } }>('https://gate.lagou.com/system/agreement', {
                 method: 'POST',
                 headers: { Origin: 'https://www.lagou.com', Referer: 'https://www.lagou.com/' },
                 body: {
@@ -47,7 +47,7 @@ const getAesKey = () =>
         },
         86400, // server set 24 hours
         false
-    ) as Promise<{ aesKey: string; secret: string }>;
+    );
 
 async function handler(ctx: Context) {
     const { position, city } = ctx.req.param();

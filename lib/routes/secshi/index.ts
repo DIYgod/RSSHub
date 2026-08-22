@@ -26,7 +26,7 @@ async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://www.secshi.com';
     const link = `${baseUrl}/go/${category}.html`;
 
-    const initResponse = await ofetch.raw(link, {
+    const initResponse = await ofetch.raw<string>(link, {
         ignoreResponseError: true,
         redirect: 'manual',
     });
@@ -34,7 +34,7 @@ async function handler(ctx: Context): Promise<Data> {
         .getSetCookie()
         .map((c) => c.split(';', 1)[0])
         .join('; ');
-    const response = initResponse.ok ? (initResponse._data as string) : await ofetch(link, { headers: { Cookie: cookie } });
+    const response = initResponse.ok ? initResponse._data! : await ofetch(link, { headers: { Cookie: cookie } });
 
     const $ = load(response);
 

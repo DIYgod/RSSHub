@@ -30,12 +30,12 @@ async function handler(ctx: Context) {
 
     const list = $('.info_jingpinhui')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('.title > a');
             return {
                 title: title.text(),
                 link: `${base}${title.attr('href')}`,
-            } as DataItem;
+            };
         });
 
     const items = await Promise.all(
@@ -59,6 +59,6 @@ async function handler(ctx: Context) {
     return {
         title: `文汇报 - ${categoryName}`,
         link: url,
-        item: (items as DataItem[]).filter((item) => item.description),
+        item: items.filter((item) => item.description),
     };
 }

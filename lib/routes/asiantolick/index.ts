@@ -35,7 +35,7 @@ export async function handler(ctx) {
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;
     const currentUrl = new URL(category.replace(/^(tag|category)?\/(\d+)/, '$1-$2'), rootUrl).href;
 
-    const searchParams: Record<string, any> = {};
+    const searchParams: Record<string, string> = {};
     const matches = category.match(/^(tag|category|search|page)?[/-]?(\w+)/);
 
     if (matches) {
@@ -57,10 +57,11 @@ export async function handler(ctx) {
             const $item = $(item);
 
             const image = $item.find('div.background_miniatura img');
+            const link = $item.prop('href');
 
             return {
                 title: $item.find('div.base_tt').text(),
-                link: $item.prop('href'),
+                link,
                 description: renderDescription({
                     images: image
                         ? [
@@ -76,7 +77,7 @@ export async function handler(ctx) {
                     .find('.category')
                     .toArray()
                     .map((c) => $(c).text()),
-                guid: image ? image.prop('post-id') : ($item as any).link.match(/\/(\d+)/)[1],
+                guid: image ? image.prop('post-id') : link?.match(/\/(\d+)/)?.[1],
             };
         });
 

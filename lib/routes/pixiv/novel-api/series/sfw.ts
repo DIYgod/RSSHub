@@ -22,7 +22,7 @@ export async function getSFWSeriesNovels(seriesId: string, limit: number = 10): 
         },
     });
 
-    const data = response.data as SeriesContentResponse;
+    const data: SeriesContentResponse = response.data;
 
     if (data.error) {
         throw new Error(data.message || 'Failed to get series data');

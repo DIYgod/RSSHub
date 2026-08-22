@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -42,7 +42,7 @@ function loadDetail(link: string) {
             pubDate: timezone(parseDate(dateTime), 8),
             author: temp.slice(temp.indexOf('信息来源') + 5, temp.indexOf('阅读次数')).trim(),
         };
-    }) as Promise<DataItem>;
+    });
 }
 
 async function handler(ctx: Context) {
@@ -58,7 +58,6 @@ async function handler(ctx: Context) {
             const itemUrl = new URL($(item).attr('href')!, host).href;
             const other = await loadDetail(itemUrl);
             return {
-                link: itemUrl,
                 guid: itemUrl,
                 ...other,
             };

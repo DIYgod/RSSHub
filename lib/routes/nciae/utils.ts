@@ -13,13 +13,13 @@ export async function fetchList(path: string, title: string) {
 
     const list = $('#container > ul > li > a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, url).href,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

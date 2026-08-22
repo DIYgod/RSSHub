@@ -3,7 +3,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
-import type { FC } from 'hono/jsx';
+import { jsx } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 import { FetchError } from 'ofetch';
 
@@ -40,7 +40,7 @@ For example, the category for <https://www.washingtonpost.com/national/investiga
 };
 
 function handleDuplicates(array) {
-    const objects: Record<string, any> = {};
+    const objects: Record<string, DataItem> = {};
     for (const obj of array) {
         const existing = objects[obj.id];
         objects[obj.id] = existing ? Object.assign(existing, obj) : obj;
@@ -83,11 +83,12 @@ async function handler(ctx) {
     );
     const feed = handleDuplicates(list);
     const items = await Promise.all(
-        feed.map((item) =>
-            cache.tryGet(item.link, async (): Promise<any> => {
+        feed.map((item) => {
+            const itemLink = item.link as string;
+            return cache.tryGet(itemLink, async (): Promise<DataItem> => {
                 let response;
                 try {
-                    response = await got(`https://rainbowapi-a.wpdigital.net/rainbow-data-service/rainbow/content-by-url.json?followLinks=false&url=${item.link}`, { headers });
+                    response = await got(`https://rainbowapi-a.wpdigital.net/rainbow-data-service/rainbow/content-by-url.json?followLinks=false&url=${itemLink}`, { headers });
                 } catch (error) {
                     if (error instanceof FetchError && error.statusCode === 415) {
                         // Interactive or podcast contents will return 415 Unsupported Media Type. Keep calm and carry on.
@@ -103,14 +104,14 @@ async function handler(ctx) {
                         ?.join(', ') ?? '';
                 item.description = renderDescription(response.data.items);
                 return item;
-            })
-        )
+            });
+        })
     );
 
     return {
         title,
         link,
-        item: items as DataItem[],
+        item: items,
     };
 }
 
@@ -123,8 +124,7 @@ const renderDescription = (content): string =>
                 }
 
                 if (entry.type === 'title' && entry.subtype !== 'h1') {
-                    const TitleTag = (entry.subtype || 'h2') as unknown as FC;
-                    return <TitleTag key={`title-${index}`}>{entry.mime === 'text/html' ? raw(entry.content) : entry.content}</TitleTag>;
+                    return jsx(entry.subtype || 'h2', { key: `title-${index}` }, entry.mime === 'text/html' ? raw(entry.content) : entry.content);
                 }
 
                 if (entry.type === 'sanitized_html') {
@@ -138,13 +138,7 @@ const renderDescription = (content): string =>
                     }
 
                     if (entry.subtype === 'subhead') {
-                        const SubheadTag = `h${entry.subhead_level || 4}` as unknown as FC;
-                        return (
-                            <SubheadTag key={`subhead-${index}`}>
-                                {entry.mime === 'text/html' ? raw(entry.content) : entry.content}
-                                {entry.oembed ? raw(entry.oembed) : null}
-                            </SubheadTag>
-                        );
+                        return jsx(`h${entry.subhead_level || 4}`, { key: `subhead-${index}` }, entry.mime === 'text/html' ? raw(entry.content) : entry.content, entry.oembed ? raw(entry.oembed) : null);
                     }
                 } else if (entry.type === 'deck') {
                     return (

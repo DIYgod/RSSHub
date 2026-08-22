@@ -17,7 +17,7 @@ const types = {
 
 const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && node === '\n') {
+        if (node === '\n') {
             return {
                 tag: 'br',
                 content: null,

@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('div.m_listpagebox ol li a')
         .slice(0, limit)
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -66,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             html: description,
                             text: description,
                         },
-                        language: language as Language,
+                        language,
                     };
 
                     return {
@@ -78,15 +78,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         )
     ).filter((_): _ is DataItem => true);
 
+    const logoSrc = $('div.top_logo img').attr('src');
+
     return {
         title: $('title').text(),
         description: $('meta[http-equiv="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('div.top_logo img').attr('src') ? new URL($('div.top_logo img').attr('src') as string, baseUrl).href : undefined,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('meta[http-equiv="keywords"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

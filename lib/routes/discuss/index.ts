@@ -33,14 +33,14 @@ async function handler(ctx: Context) {
     const list = $('li a')
         .toArray()
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
                 link: `${rootUrl}/${$item.attr('href')}`,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -53,7 +53,7 @@ async function handler(ctx) {
             title: $(e).find('span.PagePromoContentIcons-text').text(),
             link: $(e).find('a').attr('href'),
         }))
-        .filter((e) => typeof e.link === 'string');
+        .filter((e) => e.link !== undefined);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 

@@ -29,13 +29,13 @@ async function handler(ctx: Context) {
 
     const list = $('.card-body table tbody tr td span a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
                 link: new URL($item.attr('href')!, currentUrl).href,
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -61,7 +61,7 @@ async function handler(ctx: Context) {
     return {
         title: `Argument Audio ${year} - Supreme Court of the United States`,
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
         itunes_author: 'Supreme Court of the United States',
         image: imageUrl,
         allowEmpty: true,

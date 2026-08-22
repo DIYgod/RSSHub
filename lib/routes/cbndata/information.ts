@@ -10,6 +10,16 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
+interface CbndataArticleDetail {
+    id?: number | string;
+    title: string;
+    content?: string;
+    date: number | string;
+    tags?: Array<{ name: string }>;
+    author: string;
+    thumbnail_url?: string;
+}
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'all' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '50');
@@ -20,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     const response = await ofetch(apiUrl, {
         query: {
@@ -63,7 +73,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -84,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     return item;
                 }
 
-                const data = JSON.parse(dataStr)?.data;
+                const data: CbndataArticleDetail | undefined = JSON.parse(dataStr)?.data;
 
                 if (!data) {
                     return item;
@@ -98,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     });
                 const pubDate: number | string = data.date;
                 const linkUrl: string | undefined = data.id ? `information/${data.id}` : undefined;
-                const categories: string[] = [...new Set(((data.tags?.map((c) => c.name) ?? []) as string[]).filter(Boolean))];
+                const categories: string[] = [...new Set((data.tags?.map((c) => c.name) ?? []).filter(Boolean))];
                 const authors: DataItem['author'] = [
                     {
                         name: data.author,
@@ -126,7 +136,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: updated ? parseDate(updated) : undefined,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -148,7 +158,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('img.logo-logoImage').attr('src'),
         author: title.split(/\|/).pop(),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

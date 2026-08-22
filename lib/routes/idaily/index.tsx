@@ -74,7 +74,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         image,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: title.split(/\s/, 1)[0],

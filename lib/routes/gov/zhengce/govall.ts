@@ -97,7 +97,7 @@ const buildSearchLink = (request: ReturnType<typeof buildSearchRequest>) => {
     for (const field of fields) {
         const value = request[field];
         if (value !== undefined && value !== '') {
-            url.searchParams.set(field, typeof value === 'string' ? value : JSON.stringify(value));
+            url.searchParams.set(field, field === 'advancedFilters' ? JSON.stringify(value) : String(value));
         }
     }
 

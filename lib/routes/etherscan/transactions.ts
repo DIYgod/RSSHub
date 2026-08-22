@@ -26,6 +26,17 @@ export const route: Route = {
     handler,
 };
 
+interface Transaction {
+    hash: string;
+    from: string;
+    to: string;
+    value: string;
+    blockNumber: string;
+    timeStamp: string;
+}
+
+type TxListResponse = { status: '1'; message: string; result: Transaction[] } | { status: '0'; message: string; result: string | Transaction[] };
+
 async function handler(ctx: Context): Promise<Data> {
     if (!config.etherscan.apiKey) {
         throw new ConfigNotFoundError('Etherscan RSS is disabled due to the lack of ETHERSCAN_API_KEY');
@@ -34,7 +45,7 @@ async function handler(ctx: Context): Promise<Data> {
     const { address } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? 20);
 
-    const response = await ofetch('https://api.etherscan.io/v2/api', {
+    const response = await ofetch<TxListResponse>('https://api.etherscan.io/v2/api', {
         query: {
             chainid: 1,
             module: 'account',
@@ -48,7 +59,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     if (response.status !== '1') {
-        throw new Error(typeof response.result === 'string' ? response.result : response.message);
+        throw new Error(Array.isArray(response.result) ? response.message : response.result);
     }
 
     return {

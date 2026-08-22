@@ -3,20 +3,23 @@ import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 
 import type CacheModule from './base';
+import { stringify } from './base';
 import http from './http';
 import memory from './memory';
 import redis from './redis';
 
-const globalCache: {
+type GlobalCache = {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
     has: (key: string) => Promise<boolean> | boolean;
-    set: (key: string, value?: string | Record<string, any>, maxAge?: number) => any;
+    set: <T>(key: string, value?: string | T, maxAge?: number) => any;
     /**
      * Atomically set `key` to '1' and return true, unless it is already '1' (return false).
      * A get-then-set in the caller races: two same-tick requests would both read "not '1'".
      */
     claim: (key: string, maxAge: number) => Promise<boolean> | boolean;
-} = {
+};
+
+const globalCache: GlobalCache = {
     get: () => null,
     has: () => false,
     set: () => null,
@@ -106,7 +109,7 @@ if (isWorker) {
             const { memoryCache } = cacheModule.clients;
             globalCache.get = (key) => {
                 if (key && cacheModule.status.available && memoryCache) {
-                    return memoryCache.get(key, { updateAgeOnGet: false }) as string | undefined;
+                    return memoryCache.get(key, { updateAgeOnGet: false });
                 }
             };
             globalCache.has = (key) => {
@@ -116,14 +119,9 @@ if (isWorker) {
                 return false;
             };
             globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
-                if (!value || value === 'undefined') {
-                    value = '';
-                }
-                if (typeof value === 'object') {
-                    value = JSON.stringify(value);
-                }
+                const stored = stringify(value);
                 if (key && memoryCache) {
-                    return memoryCache.set(key, value, { ttl: maxAge * 1000 });
+                    return memoryCache.set(key, stored, { ttl: maxAge * 1000 });
                 }
             };
             // fully synchronous, so nothing can interleave between the read and the write
@@ -158,7 +156,7 @@ export default {
      * @param refresh Whether to renew the cache expiration time when the cache is hit. `true` by default.
      * @returns
      */
-    tryGet: async <T extends string | Record<string, any>>(key: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
+    tryGet: async <T>(key: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
         if (typeof key !== 'string') {
             throw new TypeError('Cache key must be a string');
         }

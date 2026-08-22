@@ -67,7 +67,7 @@ async function handler(ctx) {
         item: items,
         title,
         link: currentUrl,
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         image,
         icon,
         logo: icon,

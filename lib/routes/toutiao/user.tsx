@@ -39,7 +39,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { token } = ctx.req.param();
 
-    const feed = (await cache.tryGet(
+    const feed = await cache.tryGet(
         `toutiao:user:${token}`,
         async () => {
             const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
@@ -47,7 +47,7 @@ async function handler(ctx) {
             const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
             const userAgent = headers['user-agent'];
 
-            const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
+            const data = await ofetch<{ data: Feed[] }>(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
                 headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
             });
 
@@ -55,7 +55,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Feed[];
+    );
 
     if (!feed) {
         throw new RejectError('无法获取用户信息');

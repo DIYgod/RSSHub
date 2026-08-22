@@ -20,16 +20,14 @@ interface Env {
 export default {
     async fetch(request: Request, env: Env): Promise<Response> {
         // Load env vars from KV
-        const envVars: Record<string, string> = {
-            NODE_ENV: 'production',
-        };
+        const envVars = new Map<string, string>([['NODE_ENV', 'production']]);
 
         const keys = await env.CONFIG.list();
         await Promise.all(
             keys.keys.map(async ({ name }) => {
                 const value = await env.CONFIG.get(name);
                 if (value) {
-                    envVars[name] = value;
+                    envVars.set(name, value);
                 }
             })
         );
@@ -40,7 +38,7 @@ export default {
 
         // Start container with env vars and wait for port to be ready
         await container.startAndWaitForPorts({
-            startOptions: { envVars },
+            startOptions: { envVars: Object.fromEntries(envVars) },
         });
 
         return container.fetch(request);

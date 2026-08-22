@@ -72,7 +72,7 @@ async function handler(ctx: Context) {
         districtInfo = d;
     }
 
-    const response = await ofetch(`${baseUrl}/api/house/filter`, {
+    const response = await ofetch<{ data: { list: House[] } }>(`${baseUrl}/api/house/filter`, {
         method: 'POST',
         body: {
             districtIds: districtInfo?.id ? [districtInfo.id] : [],
@@ -87,7 +87,7 @@ async function handler(ctx: Context) {
         },
     });
 
-    const items = (response.data.list as House[]).map((item) => ({
+    const items = response.data.list.map((item) => ({
         title: item.address,
         link: `${baseUrl}/rent-apartment/${item.id}`,
         description: render(item),

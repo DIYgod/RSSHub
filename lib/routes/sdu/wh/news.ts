@@ -29,6 +29,12 @@ export const route: Route = {
 | xyyw     | xsdt     | zhxw     | sdsd     | jjxy     | xyjx     | mjzc     | rdzt     | mtsj     | gjsy     | llxx     |`,
 };
 
+type ExtractedArticle = {
+    description?: string | null;
+    author?: string;
+    exactDate?: Date;
+};
+
 async function handler(ctx) {
     const column = ctx.req.param('column') ?? 'xyyw';
     const baseUrl = data.wh.news.url;
@@ -42,7 +48,7 @@ async function handler(ctx) {
             const title = anchor.attr('title');
             const href = anchor.attr('href');
             const link = href!.startsWith('http') ? href : baseUrl + href;
-            const { description, author, exactDate } = await cache.tryGet<Record<string, any>>(link!, () => extractor(link));
+            const { description, author, exactDate } = await cache.tryGet<ExtractedArticle>(link!, () => extractor(link));
             const span = $item.find('span');
             const pubDate = exactDate ?? parseDate(span.text(), 'YYYY/MM/DD');
             return {

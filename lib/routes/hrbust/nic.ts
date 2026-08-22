@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -93,7 +93,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学网络信息中心`,
         link: columnUrl,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         item: items,
     };
 }

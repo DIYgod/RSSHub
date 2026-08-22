@@ -28,10 +28,7 @@ async function handler(ctx) {
     const url = `${postsAPIUrl}?per_page=${limit}&_embed`;
 
     const response = await got.get(url);
-    if (typeof response.data === 'string') {
-        response.data = JSON.parse(response.body.trim());
-    }
-    const data = response.data;
+    const data = JSON.parse(response.body.trim());
 
     const items = data.map((item) => {
         const description = renderDescription({

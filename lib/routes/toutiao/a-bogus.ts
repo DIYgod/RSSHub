@@ -97,7 +97,7 @@ function strToBytes(str) {
 }
 
 function write(this: any, message) {
-    const a = typeof message === 'string' ? strToBytes(message) : message;
+    const a = Array.isArray(message) ? message : strToBytes(message);
     this.size += a.length;
     let f = 64 - this.chunk.length;
     if (a.length < f) {
@@ -303,7 +303,7 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
     // 对后缀两次sm3之的结果
     const cus = sm3.sum(sm3.sum(suffix));
     // 对ua处理之后的结果
-    const ua_key = Reflect.apply(String.fromCodePoint, null, [Math.floor(0.00390625), 1, 14]);
+    const ua_key = String.fromCodePoint(Math.floor(0.00390625), 1, 14);
     const ua = sm3.sum(result_encrypt(rc4_encrypt(user_agent, ua_key), 's3'));
     //
     const end_time = Date.now();
@@ -524,7 +524,7 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
         b[71],
     ];
     bb = bb.concat(window_env_list).concat(b[72]);
-    return rc4_encrypt(String.fromCodePoint.apply(null, bb), Reflect.apply(String.fromCodePoint, null, [121]));
+    return rc4_encrypt(String.fromCodePoint.apply(null, bb), String.fromCodePoint(121));
 }
 
 function generate_random_str() {

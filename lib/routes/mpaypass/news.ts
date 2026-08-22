@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -30,14 +30,14 @@ export const route: Route = {
     url: 'mpaypass.com.cn/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const link = 'http://m.mpaypass.com.cn';
     const listData = await got(link);
     const $list = load(listData.data);
     return {
         title: '新闻 - 移动支付网',
         link,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: await Promise.all(
             $list('.Newslist-li')
                 .toArray()

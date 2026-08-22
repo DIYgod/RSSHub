@@ -47,16 +47,16 @@ async function handler(ctx: Context) {
 
     const list = $('.list_pic li a, div.list ul li a')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const sj = $item.find('.sj');
             return {
-                title: $item.attr('title'),
+                title: $item.attr('title')!,
                 link: new URL($item.attr('href')!, url).href,
                 description: $item.find('.zy').text(),
                 pubDate: timezone(parseDate(sj.length ? `${sj.find('span').text()}-${sj.find('p').text()}` : $item.find('span').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     return {
         title: `桂林航天工业学院 - ${$('.ej_main h2').text().trim()}`,

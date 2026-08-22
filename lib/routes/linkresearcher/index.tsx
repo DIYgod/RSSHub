@@ -28,6 +28,9 @@ const renderBilingual = (zh, en) =>
 const baseURL = 'https://www.linkresearcher.com';
 const apiURL = `${baseURL}/api`;
 
+const categoryMap = { theses: '论文', information: '新闻', careers: '职业' } as const;
+const isCategory = (value: string): value is keyof typeof categoryMap => Object.hasOwn(categoryMap, value);
+
 export const route: Route = {
     name: 'Articles',
     path: '/:params',
@@ -50,37 +53,34 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const categoryMap = { theses: '论文', information: '新闻', careers: '职业' } as const;
     const params = ctx.req.param('params');
     const filters = new URLSearchParams(params);
 
     const subject = filters.get('subject');
     const columns = filters.get('columns');
     const query = filters.get('query') ?? '';
-    const category = filters.get('category') ?? ('theses' as keyof typeof categoryMap);
+    const category = filters.get('category') ?? 'theses';
 
-    if (!Object.hasOwn(categoryMap, category)) {
+    if (!isCategory(category)) {
         throw new InvalidParameterError('Invalid category');
     }
-    let title = categoryMap[category] as string;
+    let title: string = categoryMap[category];
 
     const token = crypto.randomUUID();
 
-    const data: {
+    const data = {
         filters: {
-            status: boolean;
-            subject?: string;
-            columns?: string;
-        };
-    } = { filters: { status: true } };
+            status: true,
+            subject: subject || undefined,
+            columns: columns || undefined,
+        },
+    };
 
     if (subject) {
-        data.filters.subject = subject;
         title += `「${subject}」`;
     }
 
     if (columns) {
-        data.filters.columns = columns;
         title += `「${columns}」`;
     }
 

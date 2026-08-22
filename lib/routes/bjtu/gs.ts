@@ -145,7 +145,7 @@ const getItem = (item, selector) => {
             link,
             description: infoText,
         };
-    }) as any;
+    });
 };
 
 export const route: Route = {

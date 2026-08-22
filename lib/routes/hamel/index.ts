@@ -30,7 +30,7 @@ async function handler() {
 
     let items = $('tr[data-index]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem | null => {
             const $item = $(item);
             const $link = $item.find('td a').last();
             const $date = $item.find('.listing-date');
@@ -50,14 +50,14 @@ async function handler() {
                 title,
                 link,
                 pubDate,
-            } as DataItem;
+            };
         })
         .filter((item): item is DataItem => item !== null);
 
     items = (
         await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link as string, async () => {
+                cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     try {
                         const detailResponse = await got(item.link);
                         const $detail = load(detailResponse.data);
@@ -65,7 +65,7 @@ async function handler() {
                         return {
                             ...item,
                             description: $detail('.content').html(),
-                        } as DataItem;
+                        };
                     } catch {
                         return item;
                     }

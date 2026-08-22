@@ -55,7 +55,7 @@ async function handler(ctx: Context) {
     const list = $('div.weinei_left_con div.weinei_left_con_line')
         .toArray()
         .slice(0, 10)
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a[title]');
             return {
@@ -63,7 +63,7 @@ async function handler(ctx: Context) {
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('div.weinei_left_con_line_date').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

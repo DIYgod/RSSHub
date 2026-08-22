@@ -33,11 +33,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit')) || 20;
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?per_page=${limit}`);
+    const { data: posts }: { data: WPPost[] } = await got(`${SUB_URL}wp-json/wp/v2/posts?per_page=${limit}`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Latest`,
         link: SUB_URL,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

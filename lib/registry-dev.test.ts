@@ -2,11 +2,13 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+import type { Context } from 'hono';
 import { Hono } from 'hono';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createDevRegistry } from '@/registry-dev';
 import type { NamespacesType } from '@/registry-helpers';
+import type { Data } from '@/types';
 
 const directoryImportMock = vi.hoisted(() => vi.fn());
 
@@ -16,7 +18,7 @@ vi.mock('@/utils/directory-import', () => ({
 
 // Fake route modules keyed by top-level directory; inner keys are relative to that directory,
 // matching what directoryImport returns for a scoped import.
-const fakeDirectories: Record<string, Record<string, unknown>> = {
+const fakeDirectories = {
     flat: {
         '/single.ts': {
             route: {
@@ -29,14 +31,14 @@ const fakeDirectories: Record<string, Record<string, unknown>> = {
             route: {
                 path: '/:id',
                 name: 'Param',
-                handler: (ctx) => ({ title: `param-${ctx.req.param('id')}`, link: 'https://example.com', item: [], allowEmpty: true }),
+                handler: (ctx: Context) => ({ title: `param-${ctx.req.param('id')}`, link: 'https://example.com', item: [], allowEmpty: true }),
             },
         },
         '/outer.ts': {
             route: {
                 path: '/outer',
                 name: 'Outer',
-                handler: (ctx) => ({ title: String(ctx.get('fromOuter')), link: 'https://example.com', item: [], allowEmpty: true }),
+                handler: (ctx: Context) => ({ title: String(ctx.get('fromOuter')), link: 'https://example.com', item: [], allowEmpty: true }),
             },
         },
         '/boom.ts': {
@@ -72,7 +74,7 @@ const fakeDirectories: Record<string, Record<string, unknown>> = {
 };
 
 const mockImplementation = ({ targetDirectoryPath }: { targetDirectoryPath: string }) => {
-    const name = targetDirectoryPath.split(/[/\\]/).findLast(Boolean) as string;
+    const name = path.basename(targetDirectoryPath) as keyof typeof fakeDirectories;
     return Promise.resolve(fakeDirectories[name]);
 };
 
@@ -88,7 +90,7 @@ afterAll(() => {
 const buildApp = () => {
     const namespaces: NamespacesType = {};
     const dev = createDevRegistry({ routesDirectory, namespaces });
-    const app = new Hono<{ Variables: { fromOuter: string; data: Record<string, unknown>; apiData: Record<string, unknown> } }>();
+    const app = new Hono<{ Variables: { fromOuter: string; data: Data; apiData: { ok: boolean } } }>();
     app.use(async (ctx, next) => {
         ctx.set('fromOuter', 'bridged');
         await next();
@@ -178,13 +180,14 @@ describe('createDevRegistry', () => {
 
     it('propagates route handler errors to the outer error handler', async () => {
         const { app } = buildApp();
-        let seen: unknown = null;
+        const seen: Error[] = [];
         app.onError((error, ctx) => {
-            seen = error;
+            seen.push(error);
             return ctx.text('outer-handled', 503);
         });
         const response = await app.request('/flat/boom');
-        expect((seen as Error)?.message).toBe('handler-boom');
+        expect(seen).toHaveLength(1);
+        expect(seen[0].message).toBe('handler-boom');
         expect(response.status).toBe(503);
         const body = await response.text();
         expect(body).toBe('outer-handled');

@@ -27,7 +27,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
-    const list = $('.release-notes-content__versions li')
+    const list: DataItem[] = $('.release-notes-content__versions li')
         .toArray()
         .slice(0, 20)
         .map((item) => {
@@ -37,7 +37,7 @@ async function handler(ctx: Context) {
                 link: $item.find('.version-btn-container a').attr('href'),
                 pubDate: parseDate($item.find('.release-note-time').text()),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -66,16 +66,13 @@ async function handler() {
                 pubDate: timezone(parseDate(dateText, 'YYYY-MM-DD'), 8),
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item?.link || '', async () => {
-                if (!item) {
-                    return '';
-                }
+            cache.tryGet(item.link, async () => {
                 try {
-                    const detailResponse = await ofetch(item?.link);
+                    const detailResponse = await ofetch(item.link);
                     if (!detailResponse) {
                         return {
                             ...item,
@@ -105,6 +102,6 @@ async function handler() {
     return {
         title: '新余学院 - 通知公告',
         link: url,
-        item: items as DataItem[],
+        item: items,
     };
 }

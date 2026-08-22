@@ -21,7 +21,7 @@ async function handler() {
     const response = await ofetch('https://www.zhihu.com/api/v4/me?include=is_realname', {
         headers: {
             Referer: 'https://www.zhihu.com/',
-            Cookie: cookie as string,
+            Cookie: cookie,
         },
     });
 

@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import type { Genre, NovelTypeParam, Order, SearchParams } from 'narou';
+import type { SearchParams } from 'narou';
 import { GenreNotation, NarouNovelFetch, R18Site, SearchBuilder, SearchBuilderR18 } from 'narou';
 import queryString from 'query-string';
 
@@ -9,8 +9,6 @@ import type { Data, Route } from '@/types';
 import { renderDescription } from './templates/description';
 import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
-
-type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
 export const route: Route = {
     path: '/search/:sub/:query',
@@ -80,10 +78,10 @@ function mapToSearchParams(query: string, limit: number): SearchParams {
         minlen: setIfExists(params.minlen),
         maxlen: setIfExists(params.maxlen),
 
-        type: setIfExists(params.type as NovelTypeParam),
-        order: setIfExists(params.order as Order),
-        genre: setIfExists(params.genre as Join<Genre> | Genre),
-        nocgenre: setIfExists(params.nocgenre as Join<R18Site> | R18Site),
+        type: setIfExists(params.type),
+        order: setIfExists(params.order),
+        genre: setIfExists(params.genre),
+        nocgenre: setIfExists(params.nocgenre),
     };
 
     if (params.mintime || params.maxtime) {
@@ -110,7 +108,7 @@ function createNovelSearchBuilder(sub: string, searchParams: SearchParams) {
             // If either 女性向け/BL is chosen, nocgenre will be in query string
             // If no specific genre selected, include both
             if (!r18Params.nocgenre) {
-                r18Params.nocgenre = [R18Site.MoonLight, R18Site.MoonLightBL].join('-') as Join<R18Site>;
+                r18Params.nocgenre = `${R18Site.MoonLight}-${R18Site.MoonLightBL}`;
             }
             break;
         case SyosetuSub.MIDNIGHT:

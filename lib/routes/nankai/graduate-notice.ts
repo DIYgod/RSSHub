@@ -39,7 +39,7 @@ export const route: Route = {
         const $ = load(response);
 
         // 获取分类名称映射
-        const categoryMap: Record<string, string> = {
+        const categoryMap = {
             zxdt: '最新动态',
             '82': '综合信息',
             '83': '招生工作',

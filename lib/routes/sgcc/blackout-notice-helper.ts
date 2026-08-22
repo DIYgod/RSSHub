@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 
 import { division, link } from './utils';
 
@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
     return {
         title: '95598 停电通知地区代码',
         link,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         item: items.flat(),
     };
 }

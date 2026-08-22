@@ -24,7 +24,7 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
 
     const list = $('.common_list_ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -32,7 +32,7 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = await Promise.all(
         list.map((item) => {
@@ -55,6 +55,6 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
         title: `国家认证认可监督管理委员会 - ${description}`,
         link,
         description,
-        item: items as DataItem[],
+        item: items,
     };
 };

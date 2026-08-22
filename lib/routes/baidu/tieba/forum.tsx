@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-function extractContent(items: any[]): { text: string; images: string[] } {
+function extractContent(items: any[]) {
     let text = '';
     const images: string[] = [];
     if (!Array.isArray(items)) {

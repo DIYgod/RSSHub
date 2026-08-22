@@ -8,6 +8,13 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 
+interface MailConfig {
+    username: string;
+    port: number | string;
+    password?: string;
+    host?: string;
+}
+
 export const route: Route = {
     path: '/imap/:email/:folder{.+}?',
     categories: ['other'],
@@ -25,7 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { email, folder = 'INBOX' } = ctx.req.param();
     const { limit = 10 } = ctx.req.query();
-    const mailConfig: { username: string; port: number | string; password?: string; host?: string } = {
+    const mailConfig: MailConfig = {
         username: email,
         port: 993,
         ...Object.fromEntries(new URLSearchParams(config.email.config[email.replaceAll(/[.@]/g, '_')])),

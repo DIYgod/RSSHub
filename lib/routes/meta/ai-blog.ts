@@ -61,7 +61,7 @@ async function handler(ctx) {
     for (const obj of serverJs.define) {
         const key = obj[0];
         const value = obj[2];
-        server[key as keyof ServerData] = value;
+        server[key] = value;
     }
 
     const spinT = String(server.SiteData.__spin_t || Date.now());

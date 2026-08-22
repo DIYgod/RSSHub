@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -26,7 +26,7 @@ export const route: Route = {
     handler: async (ctx) => {
         const typeParam = ctx.req.param('type') || 'all';
 
-        const typeMap: Record<string, string> = {
+        const typeMap = {
             notice: '通知公告',
             news: '新闻资讯',
         };
@@ -57,7 +57,7 @@ export const route: Route = {
             return $container
                 .find('a[href^="/news/"]')
                 .toArray()
-                .map((el) => $(el).attr('href') as string);
+                .map((el) => $(el).attr('href')!);
         };
 
         let targetHrefs: string[] = [];
@@ -83,7 +83,7 @@ export const route: Route = {
                 title,
                 link,
                 pubDate,
-            } as DataItem;
+            };
         });
 
         return {

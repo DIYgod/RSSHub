@@ -32,8 +32,16 @@ export const route: Route = {
     handler,
 };
 
+type NyaaItem = {
+    magnet?: string;
+    infoHash?: string;
+    description?: string;
+    enclosure_url?: string;
+    enclosure_type?: string;
+};
+
 async function handler(ctx) {
-    const parser = new Parser<Record<string, any>, Record<string, any>>({
+    const parser = new Parser<object, NyaaItem>({
         customFields: {
             item: ['magnet', ['nyaa:infoHash', 'infoHash']],
         },

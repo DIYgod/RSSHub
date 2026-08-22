@@ -177,12 +177,14 @@ async function handler(ctx) {
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href')!, rootUrl).href;
     const author = title.split(/\|/, 1)[0].trim();
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language,
         image,
         icon,
         logo: icon,

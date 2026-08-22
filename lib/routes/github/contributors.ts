@@ -33,10 +33,7 @@ async function handler(ctx) {
     const url = `https://api.github.com/repos/${user}/${repo}/contributors?` + (anon ? 'anon=1' : '');
 
     // Use token if available
-    const headers = {} as Record<string, any>;
-    if (config.github && config.github.access_token) {
-        headers.Authorization = `token ${config.github.access_token}`;
-    }
+    const headers = config.github && config.github.access_token ? { Authorization: `token ${config.github.access_token}` } : {};
 
     // First page
     const response = await got({

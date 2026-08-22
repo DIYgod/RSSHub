@@ -40,7 +40,7 @@ export const getFeed = async (path: string, itemSelector: string, getDescription
     const $ = load(html);
     const list = $(itemSelector)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
@@ -48,7 +48,7 @@ export const getFeed = async (path: string, itemSelector: string, getDescription
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.next().find('span.kxyj_text').text()), 8),
             };
-        }) as DataItem[];
+        });
 
     const items = getDescription
         ? await Promise.all(
@@ -69,6 +69,6 @@ export const getFeed = async (path: string, itemSelector: string, getDescription
     return {
         title: $('title').text(),
         link,
-        item: items as DataItem[],
+        item: items,
     };
 };

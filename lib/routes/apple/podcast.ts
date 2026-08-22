@@ -51,12 +51,12 @@ async function handler(ctx) {
         'apple:podcast:bearer',
         async () => {
             const moduleAddress = new URL($('head script[type="module"]').attr('src')!, baseUrl).href;
-            const modulesResponse = await ofetch(moduleAddress, {
+            const modulesResponse = await ofetch<string>(moduleAddress, {
                 parseResponse: (txt) => txt,
             });
-            const bearerToken = modulesResponse.match(/="(eyJhbGci.*?)",/)[1];
+            const bearerToken = modulesResponse.match(/="(eyJhbGci.*?)",/)![1];
 
-            return bearerToken as string;
+            return bearerToken;
         },
         config.cache.contentExpire,
         false

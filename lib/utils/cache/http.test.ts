@@ -1,14 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-const errorSpy = vi.fn();
-const infoSpy = vi.fn();
-
-vi.mock('@/utils/logger', () => ({
-    default: {
-        error: errorSpy,
-        info: infoSpy,
-    },
-}));
+const spyOnLogger = async () => {
+    const logger = (await import('@/utils/logger')).default;
+    return {
+        errorSpy: vi.spyOn(logger, 'error').mockImplementation(() => logger),
+        infoSpy: vi.spyOn(logger, 'info').mockImplementation(() => logger),
+    };
+};
 
 const setHttpCacheEnv = () => {
     process.env.CACHE_HTTP_URL = 'https://cache.example.com/';
@@ -30,6 +28,7 @@ describe('http cache module', () => {
     });
 
     it('requires endpoint and token', async () => {
+        const { errorSpy } = await spyOnLogger();
         const cache = (await import('@/utils/cache/http')).default;
 
         cache.init();
@@ -40,6 +39,7 @@ describe('http cache module', () => {
 
     it('sets, gets, refreshes, and checks hashed keys', async () => {
         setHttpCacheEnv();
+        await spyOnLogger();
         const requests: Array<{ body?: string; init?: RequestInit; url: string }> = [];
         const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
             requests.push({
@@ -84,6 +84,7 @@ describe('http cache module', () => {
 
     it('treats a 404 response as a miss', async () => {
         setHttpCacheEnv();
+        await spyOnLogger();
         vi.stubGlobal(
             'fetch',
             vi.fn(() => Response.json({ hit: false }, { status: 404 }))
@@ -99,6 +100,7 @@ describe('http cache module', () => {
     it('uses non-refreshing reads for global cache', async () => {
         process.env.CACHE_TYPE = 'http';
         setHttpCacheEnv();
+        await spyOnLogger();
         const urls: string[] = [];
         vi.stubGlobal(
             'fetch',

@@ -42,7 +42,7 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
             .map<Promise<DataItem>>((element) => {
                 const id = $(element).find('guid').text();
 
-                return cache.tryGet(`railway:blogs:${id}`, async () => {
+                return cache.tryGet(`railway:blogs:${id}`, async (): Promise<DataItem> => {
                     const title = $(element).find('title').text();
                     const pubDate = $(element).find('pubDate').text();
                     const link = $(element).find('link').text();
@@ -55,8 +55,8 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
                         link,
                         pubDate: parseDate(pubDate),
                         description: content,
-                    } as DataItem;
-                }) as Promise<DataItem>;
+                    };
+                });
             })
     );
 };

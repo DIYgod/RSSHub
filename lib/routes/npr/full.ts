@@ -101,7 +101,7 @@ async function handler(ctx) {
     const items = (
         await Promise.all(
             feed.items.map(async (item) => {
-                const itemDetails = (await getArticleDetail(item.link)) as any;
+                const itemDetails = await getArticleDetail(item.link);
                 if (itemDetails === null) {
                     return null;
                 }
@@ -112,7 +112,7 @@ async function handler(ctx) {
                 };
             })
         )
-    ).filter(Boolean);
+    ).filter((item) => item !== null);
 
     return {
         title: feed.title!,

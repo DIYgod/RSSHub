@@ -43,30 +43,15 @@ export const route: Route = {
 };
 
 const baseUrl = 'https://www.chuapp.com';
-const pathLut: Record<string, { title: string; suffix: string }> = {
-    daily: {
-        title: '每日聚焦',
-        suffix: '/category/daily',
-    },
-    pcz: {
-        title: '最好玩',
-        suffix: '/category/pcz',
-    },
-    night: {
-        title: '触乐夜话',
-        suffix: '/tag/index/id/20369.html',
-    },
-    news: {
-        // route from the old implementation
-        title: '动态资讯',
-        suffix: '/category/zsyx',
-    },
-    zsyx: {
-        // route for radar
-        title: '动态资讯',
-        suffix: '/category/zsyx',
-    },
-};
+const pathLut = new Map([
+    ['daily', { title: '每日聚焦', suffix: '/category/daily' }],
+    ['pcz', { title: '最好玩', suffix: '/category/pcz' }],
+    ['night', { title: '触乐夜话', suffix: '/tag/index/id/20369.html' }],
+    // route from the old implementation
+    ['news', { title: '动态资讯', suffix: '/category/zsyx' }],
+    // route for radar
+    ['zsyx', { title: '动态资讯', suffix: '/category/zsyx' }],
+]);
 
 type InvalidArticle = {
     title?: string;
@@ -90,7 +75,7 @@ function toJavaScriptTimestamp(x: string | number | null | undefined): number {
 
 async function handler(ctx: Context): Promise<Data | null> {
     const { category = 'night' } = ctx.req.param();
-    const subpath = pathLut[category];
+    const subpath = pathLut.get(category);
     if (!subpath) {
         return null;
     }
@@ -133,7 +118,7 @@ async function handler(ctx: Context): Promise<Data | null> {
                 };
 
                 return item;
-            }) as Promise<DataItem>;
+            });
         });
 
     const items = await Promise.all(processedItems);

@@ -69,8 +69,8 @@ async function handler(ctx) {
         items = $('.article h3 a')
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
             .toArray()
-            .map((_, item) => {
-                const $item = $(item as any);
+            .map((item) => {
+                const $item = $(item);
                 return {
                     link: $item.attr('href'),
                 };
