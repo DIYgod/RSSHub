@@ -40,7 +40,7 @@ async function handler(ctx: Context) {
             const album = $item.find('.rank03').text();
 
             return {
-                link: currentUrl,
+                link: `${rootUrl}/song/detail.htm?songId=${$item.attr('data-song-no')}`,
                 title,
                 description: `<img src="${image}"><p>${title}</p><p>${name}</p><p>${album}</p>`,
             };

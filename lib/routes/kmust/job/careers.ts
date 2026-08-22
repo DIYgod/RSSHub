@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import { type Data, type DataItem, type Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {

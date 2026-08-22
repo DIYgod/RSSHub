@@ -24,7 +24,7 @@ async function handler(ctx: Context) {
     const resultItem = response.data.map((item) => ({
         title: item.title,
         author: item.submitted_user?.nick,
-        description: `${item.title}${item.original_img_url || item.img_url ? `<br><img src="${item.original_img_url || item.img_url}">` : ''}<br><a href="https://dig.ichouti.cn/link/${item.id}">评论</a>`,
+        description: `${item.original_img_url || item.img_url ? `<br><img src="${item.original_img_url || item.img_url}">` : ''}<br><a href="https://dig.ichouti.cn/link/${item.id}">评论</a>`,
         link: item.url,
         pubDate: parseDate(item.created_time / 1000),
     }));

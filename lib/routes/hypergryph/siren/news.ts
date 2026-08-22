@@ -32,7 +32,6 @@ async function handler() {
         description: '塞壬唱片新闻',
         item: data.map((item) => ({
             title: item.title,
-            description: `${item.title}<br>${item.date}`,
             pubDate: parseDate(item.date),
             link: `https://monster-siren.hypergryph.com/info/${item.cid}`,
         })),

@@ -69,7 +69,7 @@ async function handler(ctx: Context) {
                     author: item.userName,
                     pubDate: parseDate(item.submitTime),
                     link,
-                    description: `<h2>${item.title}</h2>${$('body').html()}`,
+                    description: $('body').html(),
                 };
             });
         })

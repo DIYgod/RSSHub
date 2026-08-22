@@ -7,7 +7,7 @@ import { division, link } from './utils';
 export const route: Route = {
     path: '/95598/helper',
     categories: ['forecast'],
-    example: '/sgcc/95598/blackout-helper',
+    example: '/sgcc/95598/helper',
     name: '停电通知地区代码',
     maintainers: ['TonyRL'],
     handler,
