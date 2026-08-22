@@ -38,6 +38,24 @@ describe('Atom view', () => {
                             title: 'Item Two',
                             link: 'https://example.com/two',
                             description: 'Entry Two',
+                            author: [
+                                {
+                                    name: 'Author Two',
+                                },
+                                {
+                                    name: 'Author Three',
+                                    url: 'https://example.com/author-three',
+                                },
+                                {
+                                    name: 'Author Four',
+                                    email: 'author-four@example.com',
+                                },
+                                {
+                                    name: 'Author Five',
+                                    url: 'https://example.com/author-five',
+                                    email: 'author-five@example.com',
+                                },
+                            ],
                             category: ['Tech', 'AI'],
                             guid: 'guid-2',
                         },
@@ -54,5 +72,10 @@ describe('Atom view', () => {
         expect(html).toContain('rsshub:upvotes');
         expect(html).toContain('rsshub:downvotes');
         expect(html).toContain('rsshub:comments');
+        expect(html).toContain('<author><name>Author One</name></author>');
+        expect(html).toContain('<author><name>Author Two</name></author>');
+        expect(html).toContain('<author><name>Author Three</name><uri>https://example.com/author-three</uri></author>');
+        expect(html).toContain('<author><name>Author Four</name><email>author-four@example.com</email></author>');
+        expect(html).toContain('<author><name>Author Five</name><uri>https://example.com/author-five</uri><email>author-five@example.com</email></author>');
     });
 });

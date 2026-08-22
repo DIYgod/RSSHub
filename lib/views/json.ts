@@ -27,7 +27,14 @@ const json = (data: Data) => {
             banner_image: item.banner,
             date_published: item.pubDate,
             date_modified: item.updated,
-            authors: typeof item.author === 'string' ? [{ name: item.author }] : item.author,
+            authors:
+                typeof item.author === 'string'
+                    ? [{ name: item.author }]
+                    : item.author?.map((a) => ({
+                          name: a.name,
+                          url: a.url || (a.email ? 'mailto:' + a.email : undefined),
+                          avatar: a.avatar,
+                      })),
             tags: typeof item.category === 'string' ? [item.category] : item.category,
             language: item.language,
             attachments:

@@ -42,7 +42,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         <link>{item.link}</link>
                         <guid isPermaLink="false">{item.guid || item.link || item.title}</guid>
                         {item.pubDate && <pubDate>{item.pubDate}</pubDate>}
-                        {item.author && <author>{item.author}</author>}
+                        {item.author && <author>{typeof item.author === 'string' ? item.author : item.author.map((a) => a.name).join(', ')}</author>}
                         {item.image && <enclosure url={item.image} type="image/jpeg" />}
                         {item.itunes_item_image && <itunes:image href={item.itunes_item_image} />}
                         {item.enclosure_url && <enclosure url={item.enclosure_url} length={item.enclosure_length} type={item.enclosure_type} />}

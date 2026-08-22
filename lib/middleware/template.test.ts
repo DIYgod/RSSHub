@@ -76,7 +76,7 @@ describe('template middleware', () => {
         await template(ctx, async () => {});
 
         expect(data.item[0].title).toBe('ABC...');
-        expect(data.item[0].author).toBe('Alice, Bob');
+        expect(data.item[0].author).toEqual([{ name: 'Alice' }, { name: 'Bob' }]);
         expect(data.item[0].itunes_duration).toBe('0:01:05');
 
         config.titleLengthLimit = originalLimit;

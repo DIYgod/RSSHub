@@ -68,9 +68,6 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     for (const a of item.author) {
                         a.name = collapseWhitespace(a.name) || '';
                     }
-                    if (outputType !== 'json') {
-                        item.author = item.author.map((a: { name: string }) => a.name).join(', ');
-                    }
                 }
 
                 if (item.itunes_duration && ((typeof item.itunes_duration === 'string' && !item.itunes_duration.includes(':')) || (typeof item.itunes_duration === 'number' && !Number.isNaN(item.itunes_duration)))) {
