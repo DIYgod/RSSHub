@@ -50,7 +50,6 @@ async function handler(ctx: Context) {
             title: `${item.name} - ${item.artist.name}`,
             author: item.artist.name,
             description: `<img src="${item.image.at(-1)['#text']}" />`,
-            pubDate: new Date(),
             link: item.url,
         })),
     };
