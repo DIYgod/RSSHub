@@ -49,15 +49,13 @@ export const fetchVideos = async (ctx: Context, endpoint: Endpoint, key: string)
     return {
         title: `${response[endpoint].name} - AV01`,
         link: `${baseUrl}/jp/${endpoint}/${id}`,
-        item: response.videos.map(
-            (video): DataItem => ({
-                title: `${video.dvd_id} ${video.title}`,
-                description: [video.description, ...Object.entries(video.description_translations ?? {}).map(([lang, text]) => `${lang}: ${text}`)].join('<br><br>'),
-                link: `${baseUrl}/jp/video/${video.id}/${video.dvd_id.toLowerCase()}`,
-                pubDate: parseDate(video.uploaded_time),
-                author: video.actresses.map((actress) => allNames(actress)).join(', ') || video.maker,
-                category: video.tags.map((tag) => allNames(tag)),
-            })
-        ),
+        item: response.videos.map((video): DataItem => ({
+            title: `${video.dvd_id} ${video.title}`,
+            description: [video.description, ...Object.entries(video.description_translations ?? {}).map(([lang, text]) => `${lang}: ${text}`)].join('<br><br>'),
+            link: `${baseUrl}/jp/video/${video.id}/${video.dvd_id.toLowerCase()}`,
+            pubDate: parseDate(video.uploaded_time),
+            author: video.actresses.map((actress) => allNames(actress)).join(', ') || video.maker,
+            category: video.tags.map((tag) => allNames(tag)),
+        })),
     };
 };
