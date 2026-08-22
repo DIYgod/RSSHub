@@ -4,6 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:tag/:excludetags?',
@@ -41,7 +42,7 @@ async function loadArticle(articleURL: string) {
     return {
         title: $('meta[property="og:title"]').attr('content') ?? '',
         author: 'by ' + $('meta[name="author"]').attr('content'),
-        pubDate: $('meta[property="article:published_time"]').attr('content'),
+        pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
         link: articleURL,
         guid: articleURL,
         description: description.html(),
@@ -61,7 +62,6 @@ async function handler(ctx: Context) {
     const htmlData = await ofetch(url, { headers: { Referer: url } });
     const $ = load(htmlData);
 
-    // limit the list to only 25 articles, to make sure that load times remain reasonable
     const articleURLs = $('section.paginated-feed li.article')
         .slice(0, 25)
         .toArray()

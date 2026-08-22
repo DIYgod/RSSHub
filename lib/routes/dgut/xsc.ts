@@ -3,6 +3,8 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/xsc/:type?',
@@ -45,7 +47,7 @@ async function handler(ctx: Context) {
                 return {
                     title: $item.find('a').attr('title'),
                     description: $item.find('a').text(),
-                    pubDate: $item.find('.time').text(),
+                    pubDate: timezone(parseDate($item.find('.time').text()), 8),
                     link: host + $item.find('a').attr('href')!.slice(1),
                 };
             }) as DataItem[],

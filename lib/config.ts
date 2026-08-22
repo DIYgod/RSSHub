@@ -422,7 +422,7 @@ export type Config = {
         config: Record<string, string | undefined>;
     };
     etherscan: {
-        apikey?: string;
+        apiKey?: string;
     };
     f95zone: {
         cookie?: string;
@@ -931,7 +931,7 @@ const calculateValue = () => {
             config: email_config,
         },
         etherscan: {
-            apikey: envs.ETHERSCAN_API_KEY,
+            apiKey: envs.ETHERSCAN_API_KEY,
         },
         f95zone: {
             cookie: envs.F95ZONE_COOKIE,

@@ -51,6 +51,7 @@ async function handler() {
                     description,
                     title: year,
                     link: currentUrl,
+                    guid: `${currentUrl}#${year}`,
                 };
             })
     );

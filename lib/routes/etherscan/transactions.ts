@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    if (!config.etherscan.apikey) {
+    if (!config.etherscan.apiKey) {
         throw new ConfigNotFoundError('Etherscan RSS is disabled due to the lack of ETHERSCAN_API_KEY');
     }
 
@@ -43,7 +43,7 @@ async function handler(ctx: Context): Promise<Data> {
             page: 1,
             offset: limit,
             sort: 'desc',
-            apikey: config.etherscan.apikey,
+            apikey: config.etherscan.apiKey,
         },
     });
 

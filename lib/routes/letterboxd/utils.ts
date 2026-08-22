@@ -16,7 +16,6 @@ export async function getData(username: string, title: string) {
     const feed = await parser.parseURL(`https://letterboxd.com/${username}/rss/`);
 
     const item = feed.items
-        // the feed also contains list items, which have no watched date
         .filter((entry) => entry['letterboxd:watchedDate'])
         .map((entry) => {
             const watchedDate = entry['letterboxd:watchedDate'];

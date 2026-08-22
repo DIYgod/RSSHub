@@ -36,7 +36,7 @@ async function handler() {
                     pubDate: parseDate(soundData.last_update_time * 1000),
                 };
             } catch {
-                return '';
+                return null;
             }
         })
     );
@@ -44,6 +44,6 @@ async function handler() {
     return {
         title: '猫耳FM - 最新广播剧',
         link: 'https://www.missevan.com/mdrama',
-        item: items,
+        item: items.filter(Boolean),
     };
 }

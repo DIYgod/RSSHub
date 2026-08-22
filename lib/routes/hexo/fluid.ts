@@ -6,6 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/fluid/:url',
@@ -48,7 +49,7 @@ async function handler(ctx: Context) {
 
                 return {
                     ...item,
-                    pubDate: $('time').attr('datetime'),
+                    pubDate: parseDate($('time').attr('datetime')!),
                     description: $('.markdown-body').html(),
                 };
             })

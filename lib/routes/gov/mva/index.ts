@@ -4,6 +4,8 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:type',
@@ -39,7 +41,7 @@ function loadDetail(link: string) {
             title,
             description: introduce,
             link,
-            pubDate: new Date(dateTime).toUTCString(),
+            pubDate: timezone(parseDate(dateTime), 8),
             author: info.slice(info.indexOf('来源：') + 3).trim(),
         };
     }) as Promise<DataItem>;

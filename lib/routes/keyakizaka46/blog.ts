@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/blog',
@@ -29,7 +31,7 @@ async function handler() {
                 return {
                     title: $item.find('p.ttl').text().trim(),
                     link: $item.find('a').attr('href'),
-                    pubDate: $item.find('div.box-blog time').text(),
+                    pubDate: timezone(parseDate($item.find('div.box-blog time').text()), 9),
                     author: $item.find('p.ttl').next().text().trim(),
                     description: `<img src="${$item.find('img.js-replaceImage').attr('src')}">`,
                 };

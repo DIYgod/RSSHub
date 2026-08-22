@@ -3,6 +3,8 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gcxy/:type?',
@@ -51,8 +53,7 @@ async function handler(ctx: Context) {
                     const entry: DataItem = {
                         title: a.attr('title')!,
                         link,
-                        description: null as string | null,
-                        pubDate: $item.find('span.news-date').text(),
+                        pubDate: timezone(parseDate($item.find('span.news-date').text()), 8),
                     };
                     if (linkUrl.hostname !== 'gcxy.cug.edu.cn') {
                         return entry;

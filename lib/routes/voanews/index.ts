@@ -4,6 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const baseURLs = {
     cantonese: 'https://www.voacantonese.com/',
@@ -52,7 +53,7 @@ async function handler(ctx: Context) {
             return {
                 title: $e.find('title').text(),
                 link: $e.find('guid').text(),
-                pubDate: $e.find('pubDate').text(),
+                pubDate: parseDate($e.find('pubDate').text()),
                 description: $e.find('description').text(),
             };
         })
