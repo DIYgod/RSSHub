@@ -439,17 +439,17 @@ describe('anti-hotlink', () => {
     });
 });
 
-describe('anti-hotlink edge cases', () => {
-    const createCtx = (query: Record<string, string>, data: Data) => {
-        const url = new URL('http://localhost/test/path');
-        for (const [key, value] of Object.entries(query)) {
-            url.searchParams.set(key, value);
-        }
-        const ctx = new Context(new Request(url), { env: {}, path: url.pathname });
-        ctx.set('data', data);
-        return ctx;
-    };
+const createCtx = (query: Record<string, string>, data: Data) => {
+    const url = new URL('http://localhost/test/path');
+    for (const [key, value] of Object.entries(query)) {
+        url.searchParams.set(key, value);
+    }
+    const ctx = new Context(new Request(url), { env: {}, path: url.pathname });
+    ctx.set('data', data);
+    return ctx;
+};
 
+describe('anti-hotlink edge cases', () => {
     it('logs parse errors and keeps invalid urls', async () => {
         const { config } = await import('@/config');
         config.feature.allow_user_hotlink_template = true;

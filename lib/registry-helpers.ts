@@ -175,7 +175,6 @@ export function registerRssRoutes(app: Hono, namespaces: NamespacesType): void {
             const wrappedHandler: Handler = async (ctx) => {
                 logger.debug(`Matched route: ${routePath(ctx)}`);
                 if (!ctx.get('data')) {
-                    // Built registries (assets/build/routes.js|json) ship lazy entries without a handler
                     if (!routeData.handler) {
                         if (process.env.NODE_ENV === 'test') {
                             const { route } = await import(`./routes/${namespace}/${routeData.location}`);
