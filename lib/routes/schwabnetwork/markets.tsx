@@ -46,7 +46,16 @@ async function handler() {
             const article$ = load(articleResponse.body);
             const nextDataRaw = article$('#__NEXT_DATA__').html();
             const nextData = JSON.parse(nextDataRaw || '{}');
-            const articleContent = nextData.props.pageProps.context.articleContent.value.content.blocks[0].content ?? '';
+            const articleContentBlocks = nextData.props.pageProps.context.articleContent.value.content.blocks ?? [];
+            const articleContent = articleContentBlocks
+                .map((block: any) => {
+                    if (block.type === 'text') {
+                        return block.content;
+                    }
+                    // Note: Hard to handle M3U8 playlists, so text only for now.
+                    return '';
+                })
+                .join('\n');
 
             return {
                 title: article.name,
