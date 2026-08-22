@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/daily-papers/:cycle?/:voteFliter?',
     categories: ['programming'],
     example: '/huggingface/daily-papers/week/50',
-    parameters: { cycle: 'The publication cycle you want to follow. Choose from: date, week, month. Default: date', voteFliter: 'Filter papers by vote count.' },
+    parameters: { cycle: 'The publication cycle you want to follow. Choose from: date, week, month, trending. Default: date', voteFliter: 'Filter papers by vote count.' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -49,16 +49,24 @@ interface PapersData {
 async function handler(ctx) {
     const { cycle = 'date', voteFliter = '0' } = ctx.req.param();
     let url: string;
+    let title: string;
     switch (cycle) {
         case 'date':
             url = 'https://huggingface.co/papers';
+            title = 'Huggingface Daily Papers';
             break;
         case 'week':
             // We don't actually need to get the week number, because huggingface.co/papers/week/YYYY-W52 will redirect to the latest week
             url = `https://huggingface.co/papers/week/${new Date().getFullYear()}-W52`;
+            title = 'Huggingface Weekly Papers';
             break;
         case 'month':
             url = `https://huggingface.co/papers/month/${new Date().toISOString().slice(0, 7)}`;
+            title = 'Huggingface Monthly Papers';
+            break;
+        case 'trending':
+            url = 'https://huggingface.co/papers/trending';
+            title = 'Huggingface Trending Papers';
             break;
         default:
             throw new Error(`Invalid cycle: ${cycle}`);
@@ -77,13 +85,15 @@ async function handler(ctx) {
             pubDate: parseDate(item.publishedAt),
             author: item.paper.authors.map((author) => author.name).join(', '),
             upvotes: item.paper.upvotes,
-        }))
-        .toSorted((a, b) => b.upvotes - a.upvotes);
+        }));
+
+    // The trending page is already ranked by Huggingface, the cycle listings are not
+    const sortedItems = cycle === 'trending' ? items : items.toSorted((a, b) => b.upvotes - a.upvotes);
 
     return {
         allowEmpty: true,
-        title: 'Huggingface Daily Papers',
-        link: 'https://huggingface.co/papers',
-        item: items,
+        title,
+        link: url,
+        item: sortedItems,
     };
 }
