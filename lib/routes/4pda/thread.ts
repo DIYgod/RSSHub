@@ -1,10 +1,8 @@
-import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import iconv from 'iconv-lite';
 
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://4pda.to';
@@ -16,7 +14,7 @@ export const route: Route = {
     parameters: { topicId: 'Topic ID, can be found in the URL as `showtopic` parameter' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -43,48 +41,30 @@ export const route: Route = {
 
 async function handler(ctx) {
     const topicId = ctx.req.param('topicId');
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20');
-
     const threadUrl = `${baseUrl}/forum/index.php?showtopic=${topicId}`;
 
-    // First fetch the thread to find the last page
-    const lastPageUrl = `${threadUrl}&st=0`;
-    const firstPageBuf = await ofetch(lastPageUrl, {
-        responseType: 'arrayBuffer',
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'ru-RU,ru;q=0.9,en;q=0.8',
+    // Fetch the first page to find the last page link
+    const { page, destroy } = await getPlaywrightPage(`${threadUrl}&st=0`, {
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => (['document', 'script', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         },
+        gotoConfig: { waitUntil: 'domcontentloaded' },
     });
-    const firstPageHtml = iconv.decode(Buffer.from(firstPageBuf), 'windows-1251');
-    const $first = load(firstPageHtml);
+
+    let html = await page.content();
+    const $first = load(html);
 
     // Find the last page link from pagination
     const lastPageLink = $first('div.pagination a').last().attr('href');
-    let targetUrl = lastPageUrl;
     if (lastPageLink && lastPageLink.includes('st=')) {
-        const lastPageFullUrl = new URL(lastPageLink, baseUrl);
-        targetUrl = lastPageFullUrl.href;
+        const lastPageFullUrl = new URL(lastPageLink, baseUrl).href;
+        await page.goto(lastPageFullUrl, { waitUntil: 'domcontentloaded' });
+        html = await page.content();
     }
 
-    // Fetch the last page
-    let $: CheerioAPI;
-    if (targetUrl === lastPageUrl) {
-        $ = $first;
-    } else {
-        const pageBuf = await ofetch(targetUrl, {
-            responseType: 'arrayBuffer',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'ru-RU,ru;q=0.9,en;q=0.8',
-            },
-        });
-        const pageHtml = iconv.decode(Buffer.from(pageBuf), 'windows-1251');
-        $ = load(pageHtml);
-    }
+    await destroy();
 
+    const $ = load(html);
     const title = $('div.topic_title_post').first().contents().first().text().trim() || $('title').text().trim();
 
     const posts = $('div[data-post]')
@@ -94,7 +74,8 @@ async function handler(ctx) {
             const postId = $post.attr('data-post');
             const postBody = $post.find('div.post_body');
             const dateText = $post.find('span.post_date').first().contents().first().text().trim();
-            const author = $post.find('span.post_nick a[data-toggle="dropdown"]').text().trim();
+            const authorEl = $post.find('span.post_nick a[data-toggle="dropdown"]');
+            const author = authorEl.contents().first().text().trim();
             const floorLink = $post.find('span.post_date a').attr('href');
             const floor = $post.find('span.post_date a').text().trim();
 
@@ -118,8 +99,7 @@ async function handler(ctx) {
                 author,
                 pubDate,
             };
-        })
-        .slice(-limit);
+        });
 
     // Reverse so newest posts appear first in the feed
     posts.reverse();
