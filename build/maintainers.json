@@ -4252,6 +4252,12 @@
   "/grainoil/:category/:id": [
     "nczitzk"
   ],
+  "/grandcanalmuseum/linzhantezhan": [
+    "magazian"
+  ],
+  "/grandcanalmuseum/yunboxinwen": [
+    "magazian"
+  ],
   "/greasyfork/scripts/:script/feedback": [
     "miles170"
   ],

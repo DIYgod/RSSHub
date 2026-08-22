@@ -22185,6 +22185,27 @@
       }
     ]
   },
+  "grandcanalmuseum.cn": {
+    "_name": "China Grand Canal Museum",
+    "www": [
+      {
+        "title": "临展特展",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/linzhantezhan.html"
+        ],
+        "target": "/grandcanalmuseum/linzhantezhan"
+      },
+      {
+        "title": "运博新闻",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/yunboxinwen.html"
+        ],
+        "target": "/grandcanalmuseum/yunboxinwen"
+      }
+    ]
+  },
   "greasyfork.org": {
     "_name": "Greasy Fork",
     ".": [

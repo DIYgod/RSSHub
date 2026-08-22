@@ -1331,6 +1331,8 @@ export type RoutePath =
   | `/gov/zj/zfcg/:code?`
   | `/gq/news`
   | `/grainoil/:category/:id`
+  | `/grandcanalmuseum/linzhantezhan`
+  | `/grandcanalmuseum/yunboxinwen`
   | `/greasyfork/:language/:domain?`
   | `/greasyfork/scripts/:script/feedback`
   | `/greasyfork/scripts/:script/versions`

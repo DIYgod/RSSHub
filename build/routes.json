@@ -60982,6 +60982,58 @@
     "description": "中国粮食信息网",
     "lang": "zh-CN"
   },
+  "grandcanalmuseum": {
+    "routes": {
+      "/linzhantezhan": {
+        "path": "/linzhantezhan",
+        "categories": [
+          "travel"
+        ],
+        "example": "/grandcanalmuseum/linzhantezhan",
+        "radar": [
+          {
+            "source": [
+              "www.grandcanalmuseum.cn/linzhantezhan.html"
+            ],
+            "target": "/linzhantezhan"
+          }
+        ],
+        "name": "临展特展",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "linzhantezhan.tsx",
+        "module": "() => import('@/routes/grandcanalmuseum/linzhantezhan.tsx')"
+      },
+      "/yunboxinwen": {
+        "path": "/yunboxinwen",
+        "categories": [
+          "travel"
+        ],
+        "example": "/grandcanalmuseum/yunboxinwen",
+        "radar": [
+          {
+            "source": [
+              "www.grandcanalmuseum.cn/yunboxinwen.html"
+            ],
+            "target": "/yunboxinwen"
+          }
+        ],
+        "name": "运博新闻",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "yunboxinwen.ts",
+        "module": "() => import('@/routes/grandcanalmuseum/yunboxinwen.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "China Grand Canal Museum",
+    "url": "www.grandcanalmuseum.cn",
+    "zh": {
+      "name": "中国大运河博物馆"
+    }
+  },
   "greasyfork": {
     "routes": {
       "/scripts/:script/feedback": {
