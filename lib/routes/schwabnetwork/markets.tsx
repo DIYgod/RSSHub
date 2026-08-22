@@ -2,7 +2,9 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/markets',
@@ -38,21 +40,23 @@ async function handler() {
 
     const articles = Object.values(nextData.props.pageProps.context.META_CATEGORY_ARTICLES.value).flat();
 
-    const items = articles.map(async (article: any) => {
-        const articleResponse = await got(`https://www.schwabnetwork.com${article.href}`);
-        const article$ = load(articleResponse.body);
-        const nextDataRaw = article$('#__NEXT_DATA__').html();
-        const nextData = JSON.parse(nextDataRaw || '{}');
-        const articleContent = nextData.props.pageProps.context.articleContent.value.content.blocks[0].content ?? '';
+    const items = articles.map((article: any) =>
+        cache.tryGet(`schwabnetwork:markets:${article.id}`, async () => {
+            const articleResponse = await got(`https://www.schwabnetwork.com${article.href}`);
+            const article$ = load(articleResponse.body);
+            const nextDataRaw = article$('#__NEXT_DATA__').html();
+            const nextData = JSON.parse(nextDataRaw || '{}');
+            const articleContent = nextData.props.pageProps.context.articleContent.value.content.blocks[0].content ?? '';
 
-        return {
-            title: article.name,
-            link: `https://www.schwabnetwork.com${article.href}`,
-            description: articleContent,
-            guid: article.id,
-            pubDate: new Date(article.date).toUTCString(),
-        };
-    });
+            return {
+                title: article.name,
+                link: `https://www.schwabnetwork.com${article.href}`,
+                description: articleContent,
+                guid: article.id,
+                pubDate: parseDate(article.date),
+            };
+        })
+    );
 
     const resolvedItems = await Promise.all(items);
     const uniqueItems = new Map(resolvedItems.map((item) => [item.guid, item])).values().toArray();
