@@ -258,6 +258,7 @@
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
             "request>form-data": "^2.5.5",
+            "sanitize-html>htmlparser2": "10.1.0",
             "rss-parser@3.13.0>entities": "^7.0.0",
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
