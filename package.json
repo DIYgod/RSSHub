@@ -63,7 +63,7 @@
         "@bbob/plugin-helper": "4.4.1",
         "@bbob/preset-html5": "4.4.1",
         "@googleapis/youtube": "34.1.0",
-        "@honeybadger-io/js": "6.16.0",
+        "@honeybadger-io/js": "6.16.1",
         "@hono/node-server": "2.1.1",
         "@hono/zod-openapi": "1.6.0",
         "@jocmp/mercury-parser": "3.1.0",
