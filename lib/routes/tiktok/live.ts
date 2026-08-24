@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import type { LiveRoomUserInfo } from './types';
 
 const baseUrl = 'https://www.tiktok.com';
 
@@ -16,7 +19,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -32,19 +35,68 @@ export const route: Route = {
     handler,
 };
 
+const apiGetLiveRoom = async (handle: string): Promise<LiveRoomUserInfo | null> => {
+    const { data } = await ofetch(`${baseUrl}/api-live/user/room/`, {
+        query: {
+            aid: '1988',
+            sourceType: '54',
+            uniqueId: handle,
+        },
+    });
+    return data?.user?.uniqueId ? data : null;
+};
+
+const htmlGetLiveRoom = async (link: string): Promise<LiveRoomUserInfo> => {
+    let response = await ofetch(link);
+    let $ = load(response);
+
+    if ($('p#wci').hasClass('_wafchallengeid')) {
+        const cookie = solveWafChallenge($('p#cs').attr('class')!);
+        response = await ofetch(link, {
+            headers: {
+                cookie: `_wafchallengeid=${cookie};`,
+            },
+        });
+        $ = load(response);
+    }
+
+    const sigiState = JSON.parse($('script#SIGI_STATE').text());
+    return sigiState.LiveRoom.liveRoomUserInfo;
+};
+
+const checkAlive = async (roomId: string): Promise<boolean | null> => {
+    const { data } = await ofetch('https://webcast.tiktok.com/webcast/room/check_alive/', {
+        query: {
+            aid: '1988',
+            room_ids: roomId,
+        },
+    });
+    return data?.[0]?.alive ?? null;
+};
+
 async function handler(ctx) {
-    const { user } = ctx.req.param();
+    const user = ctx.req.param('user');
+    const handle = user.startsWith('@') ? user.slice(1) : user;
 
-    const link = `${baseUrl}/${user}/live`;
+    const link = `${baseUrl}/@${handle}/live`;
 
-    const liveRoomUserInfo = await cache.tryGet(
-        `tiktok:live:${user}`,
+    const liveRoomUserInfo: LiveRoomUserInfo = await cache.tryGet(
+        `tiktok:live:${handle}`,
         async () => {
-            const response = await ofetch(link);
-            const $ = load(response);
-            const sigiState = JSON.parse($('script#SIGI_STATE').text());
+            let info: LiveRoomUserInfo | null = await apiGetLiveRoom(handle);
+            info ??= await htmlGetLiveRoom(link);
 
-            return sigiState.LiveRoom.liveRoomUserInfo;
+            if (!info.user.roomId) {
+                return info;
+            }
+
+            const alive = await checkAlive(info.user.roomId);
+            return alive === null
+                ? info
+                : {
+                      ...info,
+                      liveRoom: { ...info.liveRoom, status: alive ? 2 : 4 },
+                  };
         },
         config.cache.routeExpire,
         false
