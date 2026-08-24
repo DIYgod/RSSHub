@@ -134,8 +134,8 @@ importers:
         specifier: 4.13.2
         version: 4.13.2
       html-to-text:
-        specifier: 10.0.0
-        version: 10.0.0
+        specifier: 10.0.1
+        version: 10.0.1
       http-cookie-agent:
         specifier: 8.0.0
         version: 8.0.0(tough-cookie@6.0.2)(undici@8.10.0)
@@ -3712,6 +3712,10 @@ packages:
     resolution: {integrity: sha512-gQhL1ksGBLQbHeAo47YU6cs2ahd3Pv+8PFYoWogNZbQnNwQyOh9Ad5kbeHFiWwbKdeWQJ5Z7Y7mwb9ew2hXBLw==}
     engines: {node: '>=16.0.0'}
 
+  deepmerge-ts@8.0.1:
+    resolution: {integrity: sha512-szCXE7YLCvLKR9bFPJcvsezOShdalctSvrgN/LM/QGUEPZQajwjmsMObZ6/DuANT5lxzM/wtO8Feubwdkz8myA==}
+    engines: {node: '>=16.0.0'}
+
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
@@ -4334,6 +4338,10 @@ packages:
 
   html-to-text@10.0.0:
     resolution: {integrity: sha512-2OH59Gtprdczel+7Rxgpz9hGVJREaf8Lt1H4kZwWHpEn70VQKRuMNGsb2eDbwaTzrYzb0hheiOG1P7Dim0B4dQ==}
+    engines: {node: '>=20.19.0'}
+
+  html-to-text@10.0.1:
+    resolution: {integrity: sha512-GiVhRI1BatGARSCmlXWNCjDT0cWrwBWoeduLoV0WSKAgaV/wa+hUWy5LiQLUs4UwiUrE52ZCMfBGiKD87TDPrg==}
     engines: {node: '>=20.19.0'}
 
   htmlparser2@10.1.0:
@@ -9043,6 +9051,8 @@ snapshots:
 
   deepmerge-ts@7.1.6: {}
 
+  deepmerge-ts@8.0.1: {}
+
   deepmerge@4.3.1: {}
 
   define-lazy-prop@2.0.0: {}
@@ -9814,6 +9824,14 @@ snapshots:
     dependencies:
       '@selderee/plugin-htmlparser2': 0.12.0(selderee@0.12.0)
       deepmerge-ts: 7.1.6
+      dom-serializer: 2.0.0
+      htmlparser2: 10.1.0
+      selderee: 0.12.0
+
+  html-to-text@10.0.1:
+    dependencies:
+      '@selderee/plugin-htmlparser2': 0.12.0(selderee@0.12.0)
+      deepmerge-ts: 8.0.1
       dom-serializer: 2.0.0
       htmlparser2: 10.1.0
       selderee: 0.12.0
