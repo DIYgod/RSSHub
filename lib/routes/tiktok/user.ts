@@ -1,15 +1,15 @@
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
 
 import { config } from '@/config';
 import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
 
 import { renderUserEmbed } from './templates/user';
-import type { EmbedUser, EmbedVideo } from './types';
+import type { EmbedUser, EmbedVideo, Profile } from './types';
 
 const baseUrl = 'https://www.tiktok.com';
 
@@ -40,10 +40,11 @@ export const route: Route = {
 async function handler(ctx) {
     const { user, iframe } = ctx.req.param();
     const useIframe = queryToBoolean(iframe);
-    const path = `/embed/${user.startsWith('@') ? user : `@${user}`}`;
+    const handle = user.startsWith('@') ? user : `@${user}`;
+    const path = `/embed/${handle}`;
 
-    const data = await cache.tryGet(
-        `tiktok:user:${path}`,
+    const profile: Profile = await cache.tryGet(
+        `tiktok:user:${handle}`,
         async () => {
             let response = await ofetch(baseUrl + path);
             let $ = load(response);
@@ -59,34 +60,45 @@ async function handler(ctx) {
             }
 
             const state = JSON.parse($('script#__FRONTITY_CONNECT_STATE__').text());
-            const { userInfo, videoList } = state.source.data[path] as { userInfo: EmbedUser; videoList: EmbedVideo[] };
+            const { userInfo, videoList }: { userInfo: EmbedUser; videoList: EmbedVideo[] } = state.source.data[path];
 
-            return { userInfo, videoList };
+            return {
+                nickname: userInfo.nickname,
+                uniqueId: userInfo.uniqueId,
+                signature: userInfo.signature,
+                avatar: userInfo.avatarThumbUrl,
+                videos: videoList.map((video) => ({
+                    id: video.id,
+                    desc: video.desc,
+                    cover: video.coverUrl,
+                    playAddr: video.playAddr,
+                    authorUniqueId: video.authorUniqueId,
+                    createTime: Number(BigInt(video.id) >> 32n),
+                })),
+            };
         },
         config.cache.routeExpire,
         false
     );
 
-    const { userInfo, videoList } = data;
-
-    const items = videoList.map((video: EmbedVideo) => ({
+    const items = profile.videos.map((video) => ({
         title: video.desc,
         description: renderUserEmbed({
-            poster: video.coverUrl,
+            poster: video.cover,
             source: video.playAddr,
             useIframe,
             id: video.id,
         }),
-        author: userInfo.nickname,
-        pubDate: parseDate(Number(BigInt(video.id) >> 32n), 'X'),
+        author: profile.nickname,
+        pubDate: parseDate(video.createTime, 'X'),
         link: `${baseUrl}/@${video.authorUniqueId}/video/${video.id}`,
     }));
 
     return {
-        title: `${userInfo.nickname} (@${userInfo.uniqueId}) | TikTok`,
-        description: userInfo.signature,
-        image: userInfo.avatarThumbUrl,
-        link: `${baseUrl}/@${userInfo.uniqueId}`,
+        title: `${profile.nickname} (@${profile.uniqueId}) | TikTok`,
+        description: profile.signature,
+        image: profile.avatar,
+        link: `${baseUrl}/@${profile.uniqueId}`,
         item: items,
     };
 }

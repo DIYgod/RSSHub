@@ -27,3 +27,36 @@ export type EmbedVideo = {
     privateItem: boolean;
     authorUniqueId: string;
 };
+
+export type LiveRoomUserInfo = {
+    user: {
+        nickname: string;
+        uniqueId: string;
+        roomId: string;
+        signature: string;
+        avatarLarger: string;
+        avatarMedium: string;
+        avatarThumb: string;
+    };
+    liveRoom: {
+        title: string;
+        status: number;
+        startTime: number;
+        streamId: string;
+    };
+};
+
+export type Profile = {
+    nickname: string;
+    uniqueId: string;
+    signature: string;
+    avatar: string;
+    videos: Array<{
+        id: string;
+        desc: string;
+        cover: string;
+        playAddr: string;
+        authorUniqueId: string;
+        createTime: number;
+    }>;
+};
