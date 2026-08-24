@@ -22,7 +22,7 @@ const api = (path: string, query: Record<string, string | number>) =>
 // Images are served through Jetpack Photon with a resize query (696px wide); without the query the original is served
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
-    $('img').each((_, el) => {
+    $('img, iframe').each((_, el) => {
         const $img = $(el);
         const src = $img.attr('src');
         // Jetpack Photon (i0.wp.com) serves a resized variant; without the query string the original is served
