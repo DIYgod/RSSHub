@@ -37616,19 +37616,6 @@
       }
     ]
   },
-  "schwabnetwork.com": {
-    "_name": "Schwab Network",
-    ".": [
-      {
-        "title": "市场新闻",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/markets"
-        ],
-        "target": "/schwabnetwork/markets"
-      }
-    ]
-  },
   "science.org": {
     "_name": "Science Magazine",
     ".": [
