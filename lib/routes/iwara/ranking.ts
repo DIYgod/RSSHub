@@ -56,14 +56,14 @@ async function handler(ctx) {
     const apiUrl = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
 
     const items = await cache.tryGet(
-        `iwara:ranking:${type}:${sort}:${rating}`,
+        `iwara:ranking:${type}:${sort}:${rating}:${limit}`,
         async () => {
             const { page, destroy } = await getPlaywrightPage(rootUrl, {
                 closeTimeout: 90 * 1000,
                 onBeforeLoad: async (page) => {
                     await page.route('**/*', (route) => {
-                        const type = route.request().resourceType();
-                        ['document', 'script', 'xhr', 'fetch'].includes(type) ? route.continue() : route.abort();
+                        const resourceType = route.request().resourceType();
+                        ['document', 'script', 'xhr', 'fetch'].includes(resourceType) ? route.continue() : route.abort();
                     });
                 },
                 gotoConfig: {

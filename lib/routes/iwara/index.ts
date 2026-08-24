@@ -1,11 +1,27 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
+import { getPlaywrightPage, type Page } from '@/utils/playwright';
 
 import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
+
+const openPage = async () => {
+    const { page, destroy } = await getPlaywrightPage(rootUrl, {
+        closeTimeout: 90 * 1000,
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => {
+                const resourceType = route.request().resourceType();
+                ['document', 'script', 'xhr', 'fetch'].includes(resourceType) ? route.continue() : route.abort();
+            });
+        },
+        gotoConfig: {
+            waitUntil: 'domcontentloaded',
+        },
+    });
+
+    return { page, destroy };
+};
 
 export const route: Route = {
     path: '/users/:username/:type?',
@@ -26,37 +42,41 @@ export const route: Route = {
 async function handler(ctx) {
     const { username, type = 'video' } = ctx.req.param();
 
-    const profile = await cache.tryGet(`${apiRootUrl}/profile/${username}`, async () => {
-        const response = await ofetch(`${apiRootUrl}/profile/${username}`, {
-            headers: {
-                'user-agent': config.trueUA,
-            },
+    let page: Page | undefined;
+    let destroy: (() => Promise<void>) | undefined;
+
+    const openPageIfNeeded = async (): Promise<Page> => {
+        if (!page || !destroy) {
+            const opened = await openPage();
+            page = opened.page;
+            destroy = opened.destroy;
+        }
+        return page;
+    };
+
+    try {
+        const profile = await cache.tryGet(`${apiRootUrl}/profile/${username}`, async () => {
+            const currentPage = await openPageIfNeeded();
+            const response = await currentPage.evaluate(async (url) => {
+                const res = await fetch(url);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            }, `${apiRootUrl}/profile/${username}`);
+
+            return response.user;
         });
-        return response.user;
-    });
 
-    const id = profile.id;
+        const id = profile.id;
 
-    const apiUrl = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?user=${id}`;
+        const apiUrl = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?user=${id}`;
 
-    const list = await cache.tryGet(
-        apiUrl,
-        async () => {
-            const { page, destroy } = await getPlaywrightPage(rootUrl, {
-                closeTimeout: 90 * 1000,
-                onBeforeLoad: async (page) => {
-                    await page.route('**/*', (route) => {
-                        const type = route.request().resourceType();
-                        ['document', 'script', 'xhr', 'fetch'].includes(type) ? route.continue() : route.abort();
-                    });
-                },
-                gotoConfig: {
-                    waitUntil: 'domcontentloaded',
-                },
-            });
-
-            try {
-                const response = await page.evaluate(async (url) => {
+        const list = await cache.tryGet(
+            apiUrl,
+            async () => {
+                const currentPage = await openPageIfNeeded();
+                const response = await currentPage.evaluate(async (url) => {
                     const res = await fetch(url);
                     if (!res.ok) {
                         throw new Error(`HTTP error! status: ${res.status}`);
@@ -65,26 +85,28 @@ async function handler(ctx) {
                 }, apiUrl);
 
                 return response.results;
-            } finally {
-                await destroy();
-            }
-        },
-        config.cache.routeExpire,
-        false
-    );
+            },
+            config.cache.routeExpire,
+            false
+        );
 
-    const items = list.map((item) => ({
-        title: item.title,
-        author: username,
-        link: `${rootUrl}/${type}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
-        category: item.tags?.map((i) => i.id) || [],
-        description: parseThumbnail(type, item),
-        pubDate: parseDate(item.createdAt),
-    }));
+        const items = list.map((item) => ({
+            title: item.title,
+            author: username,
+            link: `${rootUrl}/${type}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
+            category: item.tags?.map((i) => i.id) || [],
+            description: parseThumbnail(type, item),
+            pubDate: parseDate(item.createdAt),
+        }));
 
-    return {
-        title: `${username}'s iwara - ${typeMap[type]}`,
-        link: `${rootUrl}/users/${username}`,
-        item: items,
-    };
+        return {
+            title: `${username}'s iwara - ${typeMap[type]}`,
+            link: `${rootUrl}/users/${username}`,
+            item: items,
+        };
+    } finally {
+        if (destroy) {
+            await destroy();
+        }
+    }
 }
