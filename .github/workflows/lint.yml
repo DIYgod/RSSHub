@@ -108,13 +108,6 @@ jobs:
         runs-on: ubuntu-slim
         timeout-minutes: 10
         steps:
-            - name: Cache AgentScan analysis
-              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-              with:
-                  path: .agentscan-cache
-                  key: agentscan-cache-${{ github.actor }}
-                  restore-keys: agentscan-cache-
-
             - name: AgentScan
               uses: MatteoGabriele/agentscan-action@98202262c925c508d4c1424b1dfbe17ee35b0c02 # v2.4.0
               with:
