@@ -50,8 +50,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['kosmofoto.com/', 'kosmofoto.com/category/:category', 'kosmofoto.com/category/:parent/:category'],
-            target: '/:category',
+            source: ['kosmofoto.com/category/:category', 'kosmofoto.com/category/:parent/:category', 'kosmofoto.com/'],
         },
     ],
     name: 'Posts',
