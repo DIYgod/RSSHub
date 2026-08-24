@@ -19,7 +19,7 @@ export const route: Route = {
 
 | Key         | Description | Accepts                    | Defaults to |
 | ----------- | ----------- | -------------------------- | ----------- |
-| \`serp_type\` | Search type | \`tags\`/\`default\`/\`recent\` | \`tags\`      |`,
+| \`serpType\` | Search type | \`tags\`/\`default\`/\`recent\` | \`tags\`      |`,
         },
     },
     name: 'Search',
@@ -31,7 +31,7 @@ async function handler(ctx) {
     const { keyword, routeParams } = ctx.req.param();
     const params = new URLSearchParams(routeParams);
     const options = parseRouteOptions(params);
-    const serpType = params.get('serp_type') ?? 'tags';
+    const serpType = params.get('serpType') ?? 'tags';
 
     const link = `https://www.threads.com/search?q=${encodeURIComponent(keyword)}&serp_type=${serpType}`;
     const response = await ofetch(link);
