@@ -22,8 +22,8 @@ export interface ThreadItem {
 
 const findThreadItems = (node, acc: ThreadItem[] = []): ThreadItem[] => {
     if (node instanceof Object) {
-        if (Array.isArray(node.thread_items) && node.thread_items.length) {
-            acc.push(node.thread_items[0]);
+        if (Array.isArray(node.thread_items)) {
+            acc.push(...node.thread_items);
         }
         for (const value of Object.values(node)) {
             findThreadItems(value, acc);
