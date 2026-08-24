@@ -22,7 +22,7 @@ const api = (path: string, query: Record<string, string | number>) =>
 // `src` points to an 800px variant; pick the largest candidate from srcset and drop browser-only attributes
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
-    $('img').each((_, el) => {
+    $('img, iframe').each((_, el) => {
         const $img = $(el);
         const srcset = $img.attr('srcset');
         if (srcset) {
