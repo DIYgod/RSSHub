@@ -115,7 +115,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.patreon.com';
     const link = `${baseUrl}/${creator}`;
 
-    const creatorData = await cache.tryGet<Pick<CreatorData, 'id' | 'attributes'>>(`patreon:creator:${creator}`, async () => {
+    const creatorData = await cache.tryGet<CreatorData>(`patreon:creator:${creator}`, async () => {
         const response = await ofetch(link);
 
         const $ = load(response);

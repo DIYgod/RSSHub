@@ -20,7 +20,7 @@ function parseItems(tid: string, $: CheerioAPI) {
             const pid = footer.find('.tipad a[title]').attr('id')?.slice(2);
 
             return {
-                title: content?.split('<br>', 1)[0]!,
+                title: content!.split('<br>', 1)[0],
                 description: content,
                 author: $item
                     .find('b')

@@ -5,7 +5,7 @@ interface NodeAttrs {
     href?: string;
     level?: number;
     src?: string;
-    alt?: string;
+    alt?: string | null;
 }
 
 interface ContentNode {
@@ -18,6 +18,8 @@ interface ContentNode {
 
 const headingTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
+const blockTags = { paragraph: 'p', bulletList: 'ul', orderedList: 'ol', listItem: 'li' } as const;
+
 const TextNode = ({ node }: { node: ContentNode }) => {
     let content: JSX.Element | string = node.text ?? '';
     const marks = node.marks ?? [];
@@ -25,78 +27,41 @@ const TextNode = ({ node }: { node: ContentNode }) => {
         if (mark.type === 'bold') {
             content = <strong>{content}</strong>;
         } else if (mark.type === 'link' && mark.attrs?.href) {
-            content = <a href={String(mark.attrs.href)}>{content}</a>;
+            content = <a href={mark.attrs.href}>{content}</a>;
         }
     }
     return <>{content}</>;
 };
 
-const ContentNode = ({ node }: { node: ContentNode }) => {
+const Content = ({ node }: { node: ContentNode }) => {
     switch (node.type) {
-        case 'doc':
-            return (
-                <>
-                    {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
-                    ))}
-                </>
-            );
-        case 'paragraph':
-            return (
-                <p>
-                    {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
-                    ))}
-                </p>
-            );
         case 'text':
             return <TextNode node={node} />;
         case 'hardBreak':
             return <br />;
-        case 'heading': {
-            const level = Math.min(6, Math.max(1, Number(node.attrs?.level) || 3));
-            const Tag = headingTags[level - 1];
+        case 'horizontalRule':
+            return <hr />;
+        case 'image':
+            return node.attrs?.src ? <img src={node.attrs.src} alt={node.attrs.alt ?? ''} /> : null;
+        case 'heading':
+        case 'paragraph':
+        case 'bulletList':
+        case 'orderedList':
+        case 'listItem': {
+            const Tag = node.type === 'heading' ? headingTags[Math.min(6, Math.max(1, node.attrs?.level ?? 3)) - 1] : blockTags[node.type];
             return (
                 <Tag>
                     {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
+                        <Content key={index} node={child} />
                     ))}
                 </Tag>
             );
         }
-        case 'image':
-            return node.attrs?.src ? <img src={String(node.attrs.src)} alt={String(node.attrs.alt ?? '')} /> : null;
-        case 'bulletList':
-            return (
-                <ul>
-                    {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
-                    ))}
-                </ul>
-            );
-        case 'orderedList':
-            return (
-                <ol>
-                    {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
-                    ))}
-                </ol>
-            );
-        case 'listItem':
-            return (
-                <li>
-                    {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
-                    ))}
-                </li>
-            );
-        case 'horizontalRule':
-            return <hr />;
         default:
             return (
                 <>
                     {node.content?.map((child, index) => (
-                        <ContentNode key={index} node={child} />
+                        <Content key={index} node={child} />
                     ))}
                 </>
             );
@@ -108,5 +73,5 @@ export const renderContentJson = (jsonString?: string | null): string => {
         return '';
     }
     const doc: ContentNode = JSON.parse(jsonString);
-    return renderToString(<ContentNode node={doc} />);
+    return renderToString(<Content node={doc} />);
 };
