@@ -2,26 +2,9 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
 
-import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
-
-const openPage = async () => {
-    const { page, destroy } = await getPlaywrightPage(rootUrl, {
-        closeTimeout: 90 * 1000,
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => {
-                const resourceType = route.request().resourceType();
-                ['document', 'script', 'xhr', 'fetch'].includes(resourceType) ? route.continue() : route.abort();
-            });
-        },
-        gotoConfig: {
-            waitUntil: 'domcontentloaded',
-        },
-    });
-
-    return { page, destroy };
-};
+import { apiRootUrl, fetchJsonInPage, getIwaraPage, parseThumbnail, rootUrl, typeMap } from './utils';
 
 export const route: Route = {
     path: '/users/:username/:type?',
@@ -47,7 +30,7 @@ async function handler(ctx) {
 
     const openPageIfNeeded = async (): Promise<Page> => {
         if (!page || !destroy) {
-            const opened = await openPage();
+            const opened = await getIwaraPage();
             page = opened.page;
             destroy = opened.destroy;
         }
@@ -57,13 +40,7 @@ async function handler(ctx) {
     try {
         const profile = await cache.tryGet(`${apiRootUrl}/profile/${username}`, async () => {
             const currentPage = await openPageIfNeeded();
-            const response = await currentPage.evaluate(async (url) => {
-                const res = await fetch(url);
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
-                return res.json();
-            }, `${apiRootUrl}/profile/${username}`);
+            const response = await fetchJsonInPage(currentPage, `${apiRootUrl}/profile/${username}`);
 
             return response.user;
         });
@@ -76,13 +53,7 @@ async function handler(ctx) {
             apiUrl,
             async () => {
                 const currentPage = await openPageIfNeeded();
-                const response = await currentPage.evaluate(async (url) => {
-                    const res = await fetch(url);
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
-                    }
-                    return res.json();
-                }, apiUrl);
+                const response = await fetchJsonInPage(currentPage, apiUrl);
 
                 return response.results;
             },

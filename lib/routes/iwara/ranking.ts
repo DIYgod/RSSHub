@@ -2,9 +2,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
 
-import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
+import { apiRootUrl, fetchJsonInPage, getIwaraPage, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const sortMap = {
     date: 'Latest',
@@ -58,27 +57,10 @@ async function handler(ctx) {
     const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}:${limit}`,
         async () => {
-            const { page, destroy } = await getPlaywrightPage(rootUrl, {
-                closeTimeout: 90 * 1000,
-                onBeforeLoad: async (page) => {
-                    await page.route('**/*', (route) => {
-                        const resourceType = route.request().resourceType();
-                        ['document', 'script', 'xhr', 'fetch'].includes(resourceType) ? route.continue() : route.abort();
-                    });
-                },
-                gotoConfig: {
-                    waitUntil: 'domcontentloaded',
-                },
-            });
+            const { page, destroy } = await getIwaraPage();
 
             try {
-                const response = await page.evaluate(async (url) => {
-                    const res = await fetch(url);
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
-                    }
-                    return res.json();
-                }, apiUrl);
+                const response = await fetchJsonInPage(page, apiUrl);
 
                 return response.results.map((item) => ({
                     title: item.title,
