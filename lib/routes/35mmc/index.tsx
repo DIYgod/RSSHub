@@ -23,7 +23,7 @@ const api = (path: string, query: Record<string, string | number>) =>
 // srcset/lazy-loading attributes that only make sense in a browser
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
-    $('img').each((_, el) => {
+    $('img, iframe').each((_, el) => {
         const $img = $(el);
         const src = $img.attr('src');
         if (src?.startsWith('http://')) {
