@@ -33,6 +33,11 @@ updates:
               patterns:
                   - 'eslint'
                   - '@eslint/*'
+          hono:
+              patterns:
+                  - '@hono/*'
+                  - '@scalar/hono-api-reference'
+                  - 'hono'
           opentelemetry:
               patterns:
                   - '@opentelemetry/*'
