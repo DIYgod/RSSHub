@@ -58,8 +58,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['petapixel.com/', 'petapixel.com/topic/:category'],
-            target: '/:category',
+            source: ['petapixel.com/topic/:category', 'petapixel.com/'],
         },
     ],
     name: 'Posts',
