@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import { solveWafChallenge } from '@/routes/juejin/utils';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -16,7 +17,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -40,8 +41,19 @@ async function handler(ctx) {
     const liveRoomUserInfo = await cache.tryGet(
         `tiktok:live:${user}`,
         async () => {
-            const response = await ofetch(link);
-            const $ = load(response);
+            let response = await ofetch(link);
+            let $ = load(response);
+
+            if ($('p#wci').hasClass('_wafchallengeid')) {
+                const cookie = solveWafChallenge($('p#cs').attr('class')!);
+                response = await ofetch(link, {
+                    headers: {
+                        cookie: `_wafchallengeid=${cookie};`,
+                    },
+                });
+                $ = load(response);
+            }
+
             const sigiState = JSON.parse($('script#SIGI_STATE').text());
 
             return sigiState.LiveRoom.liveRoomUserInfo;
