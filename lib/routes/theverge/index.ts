@@ -8,7 +8,7 @@ import parser from '@/utils/rss-parser';
 
 import { renderHeader } from './templates/header';
 
-const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'FeaturedProductsBlockType', 'TableOfContentsBlockType']);
+const excludeTypes = new Set(['ActionBoxBlockType', 'NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'FeaturedProductsBlockType', 'TableOfContentsBlockType']);
 
 const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 
@@ -16,16 +16,11 @@ const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 const renderContents = (b: any): string => (b.paragraphContents ?? b.tempContents ?? [b.contents]).map((c) => c?.html ?? '').join('');
 
 // Render a list of blocks; a single unknown or malformed block is dropped with a warning instead of failing the whole article
+// Errors are deliberately not caught here: an unrenderable block makes the whole article fall back to the
+// server-rendered body, which is still full text, rather than silently emitting a description with a hole in it
 const renderBlocks = (blocks: any[] | undefined, separator: string): string =>
     (blocks ?? [])
-        .map((b) => {
-            try {
-                return renderBlock(b);
-            } catch (error) {
-                logger.warn(`theverge: failed to render ${b?.__typename} block: ${error}`);
-                return '';
-            }
-        })
+        .map((b) => renderBlock(b))
         .filter(Boolean)
         .join(separator);
 
@@ -126,8 +121,7 @@ const renderBlock = (b) => {
         case 'TableBlockType':
             return `<table><tr>${b.header.map((cell) => `<th>${cell}</th>`).join('')}</tr>${b.rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;
         default:
-            logger.warn(`theverge: unsupported block type ${b.__typename}`);
-            return '';
+            throw new Error(`Unsupported block type: ${b.__typename}`);
     }
 };
 
@@ -191,22 +185,25 @@ async function handler(ctx) {
                         item.description = renderNode(node);
                         item.category = node.categories?.map((c) => c.title);
                     } catch (error) {
-                        // The Verge changes its GraphQL schema from time to time; fall back to the server-rendered article body
+                        // The Verge changes its GraphQL schema from time to time; fall back to the server-rendered article body,
+                        // which is still full text. If that is gone too, throw so the summary fallback below stays out of the cache
                         logger.warn(`theverge: failed to render ${item.link} from __NEXT_DATA__, falling back to page HTML: ${error}`);
                         const body = $('.duet--article--article-body-component');
-                        item.description = body.length
-                            ? body
-                                  .toArray()
-                                  .map((el) => $(el).html())
-                                  .join('')
-                            : item.content;
+                        if (body.length === 0) {
+                            throw new Error(`neither __NEXT_DATA__ nor the article body could be read from ${item.link}`, { cause: error });
+                        }
+                        item.description = body
+                            .toArray()
+                            .map((el) => $(el).html())
+                            .join('');
                     }
 
                     return item;
                 });
             } catch (error) {
-                // Network/parse failure for a single article should not take down the whole feed; not cached so it is retried next time
-                logger.warn(`theverge: failed to fetch ${item.link}, falling back to feed summary: ${error}`);
+                // A single unreadable article should not take down the whole feed; this result is not cached, so it is retried next time
+                logger.warn(`theverge: falling back to the feed summary for ${item.link}: ${error}`);
+                // the shared rss-parser does not expose Atom <category> elements, so this path carries no categories
                 item.description = item.content;
                 return item;
             }
