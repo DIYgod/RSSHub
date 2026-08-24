@@ -32,7 +32,7 @@ const cleanContent = (html: string): string => {
                     const [url, width] = candidate.trim().split(/\s+/, 2);
                     return { url, width: Number(width?.replace(/w$/, '')) || 0 };
                 })
-                .sort((a, b) => b.width - a.width)[0];
+                .toSorted((a, b) => b.width - a.width)[0];
             if (largest?.url) {
                 $img.attr('src', largest.url);
             }
