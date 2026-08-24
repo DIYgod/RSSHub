@@ -171,7 +171,7 @@
         "@types/sanitize-html": "2.16.1",
         "@typescript-eslint/eslint-plugin": "8.67.0",
         "@typescript-eslint/parser": "8.67.0",
-        "@vercel/nft": "1.10.2",
+        "@vercel/nft": "1.11.0",
         "@vitest/coverage-v8": "4.1.11",
         "discord-api-types": "0.38.53",
         "domhandler": "6.0.1",
