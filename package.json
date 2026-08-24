@@ -137,6 +137,7 @@
         "ufo": "1.6.4",
         "undici": "8.10.0",
         "uuid": "14.0.2",
+        "vm2": "3.11.6",
         "winston": "3.19.0",
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.10.2",

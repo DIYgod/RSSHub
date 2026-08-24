@@ -1,4 +1,4 @@
-import vm from 'node:vm';
+import { VM } from 'vm2';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -215,8 +215,7 @@ function parseUnknownResponse<T>(body: string, instanceId: string): T {
 
     sandbox.self.$R = sandbox.$R;
 
-    vm.createContext(sandbox);
-    vm.runInContext(body, sandbox, { timeout: 5000 });
+    new VM({ timeout: 5000, sandbox }).run(body);
 
     const value = sandbox.self.$R?.[instanceId]?.[0] as T | undefined;
     if (!value) {
