@@ -1,3 +1,6 @@
+import { raw } from 'hono/html';
+import { renderToString } from 'hono/jsx/dom/server';
+
 import { renderYoutube } from '@/routes/youtube/utils';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -93,23 +96,48 @@ async function handler(ctx): Promise<Data> {
         throw new Error('Cannot find journal data');
     }
     const rest = script.slice(start + "JSON.parse('".length);
-    const raw = rest.slice(0, rest.indexOf("]')") + 1);
-    const entries: JournalEntry[] = JSON.parse(decodeJsStringLiteral(raw));
+    const literal = rest.slice(0, rest.indexOf("]')") + 1);
+    const entries: JournalEntry[] = JSON.parse(decodeJsStringLiteral(literal));
 
     const suffix = lang === 'zh' ? 'Zh' : lang === 'ja' ? 'Ja' : '';
     const items = entries.map((entry) => {
         const title = (entry[`title${suffix}`] ?? entry.title) as string | undefined;
         const text = ((entry[`text${suffix}`] ?? entry.text) as string) || '';
 
-        const description = [
-            text.replaceAll('\n', '<br>'),
-            ...(entry.photos?.map((photo) => `<img src="${baseUrl}${photo}">`) ?? []),
-            entry.youtube ? renderYoutube(true, entry.youtube, undefined, undefined) : '',
-            ...(entry.links?.map((link) => `<a href="${link.href}">${link.title}</a>`) ?? []),
-            entry.href ? `<a href="${baseUrl}${entry.href}">${baseUrl}${entry.href}</a>` : '',
-        ]
-            .filter(Boolean)
-            .join('<br>');
+        const description = renderToString(
+            <>
+                {text.split('\n').map((line, index) => (
+                    <>
+                        {index > 0 && <br />}
+                        {line}
+                    </>
+                ))}
+                {entry.photos?.map((photo) => (
+                    <>
+                        <br />
+                        <img src={`${baseUrl}${photo}`} />
+                    </>
+                ))}
+                {entry.youtube && (
+                    <>
+                        <br />
+                        {raw(renderYoutube(true, entry.youtube, undefined, undefined))}
+                    </>
+                )}
+                {entry.links?.map((link) => (
+                    <>
+                        <br />
+                        <a href={link.href}>{link.title}</a>
+                    </>
+                ))}
+                {entry.href && (
+                    <>
+                        <br />
+                        <a href={`${baseUrl}${entry.href}`}>{`${baseUrl}${entry.href}`}</a>
+                    </>
+                )}
+            </>
+        );
 
         return {
             title: title ?? text.split('\n', 1)[0],
