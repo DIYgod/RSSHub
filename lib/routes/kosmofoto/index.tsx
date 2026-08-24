@@ -25,7 +25,8 @@ const cleanContent = (html: string): string => {
     $('img').each((_, el) => {
         const $img = $(el);
         const src = $img.attr('src');
-        if (src?.includes('.wp.com/')) {
+        // Jetpack Photon (i0.wp.com) serves a resized variant; without the query string the original is served
+        if (src && URL.canParse(src) && new URL(src).hostname.endsWith('.wp.com')) {
             $img.attr('src', src.split('?', 1)[0]);
         }
         $img.removeAttr('srcset').removeAttr('sizes').removeAttr('loading').removeAttr('decoding').removeAttr('data-recalc-dims').removeAttr('width').removeAttr('height');
