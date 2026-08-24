@@ -50,8 +50,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['35mmc.com/', '35mmc.com/category/:category', '35mmc.com/category/:parent/:category'],
-            target: '/:category',
+            source: ['www.35mmc.com/category/:category', 'www.35mmc.com/category/:parent/:category', 'www.35mmc.com/'],
         },
     ],
     name: 'Posts',
