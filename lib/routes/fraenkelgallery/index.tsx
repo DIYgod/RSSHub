@@ -20,7 +20,7 @@ const types = {
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
     $('.block--button').remove();
-    $('img').each((_, el) => {
+    $('img, iframe').each((_, el) => {
         const $img = $(el);
         const src = $img.attr('src');
         // Jetpack Photon (i0.wp.com) serves a resized variant; without the query string the original is served
