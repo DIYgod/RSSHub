@@ -2832,6 +2832,7 @@ export type RoutePath =
   | `/runyeah/`
   | `/rustcc/jobs`
   | `/rustcc/news`
+  | `/ryo.lu/journal/:lang?`
   | `/sakurazaka46/blog/:id?/:page?`
   | `/sakurazaka46/news`
   | `/samd/news/:typeId`

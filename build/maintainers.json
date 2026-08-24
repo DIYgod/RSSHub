@@ -12210,6 +12210,9 @@
   "/finology/tag/:topic": [
     "Rjnishant530"
   ],
+  "/ryo.lu/journal/:lang?": [
+    "TonyRL"
+  ],
   "/taptap/topic/:id/:type?/:sort?/:lang?": [
     "hoilc",
     "TonyRL"

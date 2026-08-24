@@ -158878,6 +158878,66 @@ export default {
     "url": "insider.finology.in",
     "lang": "en"
   },
+  "ryo.lu": {
+    "routes": {
+      "/journal/:lang?": {
+        "path": "/journal/:lang?",
+        "categories": [
+          "blog"
+        ],
+        "view": 0,
+        "example": "/ryo.lu/journal",
+        "parameters": {
+          "lang": {
+            "description": "Language",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh",
+                "label": "中文"
+              },
+              {
+                "value": "ja",
+                "label": "日本語"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ryo.lu/journal",
+              "ryo.lu/"
+            ],
+            "target": "/journal"
+          }
+        ],
+        "name": "Journal",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "ryo.lu/journal",
+        "location": "journal.tsx",
+        "module": () => import('@/routes/ryo.lu/journal.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Ryo Lu",
+    "url": "ryo.lu",
+    "lang": "en"
+  },
   "taptap": {
     "routes": {
       "/topic/:id/:type?/:sort?/:lang?": {

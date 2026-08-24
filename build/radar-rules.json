@@ -53736,6 +53736,20 @@
       }
     ]
   },
+  "ryo.lu": {
+    "_name": "Ryo Lu",
+    ".": [
+      {
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/journal",
+          "/"
+        ],
+        "target": "/ryo.lu/journal"
+      }
+    ]
+  },
   "taptap.cn": {
     "_name": "TapTap",
     ".": [
