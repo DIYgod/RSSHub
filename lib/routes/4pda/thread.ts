@@ -1,11 +1,19 @@
 import { load } from 'cheerio';
+import iconv from 'iconv-lite';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://4pda.to';
+
+const headers = {
+    'User-Agent': config.trueUA,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'ru-RU,ru;q=0.9,en;q=0.8',
+};
 
 export const route: Route = {
     path: '/forum/thread/:topicId',
@@ -14,7 +22,7 @@ export const route: Route = {
     parameters: { topicId: 'Topic ID, can be found in the URL as `showtopic` parameter' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -39,32 +47,27 @@ export const route: Route = {
     description: 'Subscribe to new posts in a 4PDA forum thread. Returns the most recent page of posts.',
 };
 
+const fetchPage = async (url: string) => {
+    const buf = await ofetch(url, {
+        responseType: 'arrayBuffer',
+        headers,
+    });
+    return load(iconv.decode(Buffer.from(buf), 'windows-1251'));
+};
+
 async function handler(ctx) {
     const topicId = ctx.req.param('topicId');
     const threadUrl = `${baseUrl}/forum/index.php?showtopic=${topicId}`;
 
     // Fetch the first page to find the last page link
-    const { page, destroy } = await getPlaywrightPage(`${threadUrl}&st=0`, {
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => (['document', 'script', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-        },
-        gotoConfig: { waitUntil: 'domcontentloaded' },
-    });
+    let $ = await fetchPage(`${threadUrl}&st=0`);
 
-    let html = await page.content();
-    const $first = load(html);
-
-    // Find the last page link from pagination
-    const lastPageLink = $first('div.pagination a').last().attr('href');
+    // Navigate to the last page if pagination exists
+    const lastPageLink = $('div.pagination a').last().attr('href');
     if (lastPageLink && lastPageLink.includes('st=')) {
-        const lastPageFullUrl = new URL(lastPageLink, baseUrl).href;
-        await page.goto(lastPageFullUrl, { waitUntil: 'domcontentloaded' });
-        html = await page.content();
+        $ = await fetchPage(new URL(lastPageLink, baseUrl).href);
     }
 
-    await destroy();
-
-    const $ = load(html);
     const title = $('div.topic_title_post').first().contents().first().text().trim() || $('title').text().trim();
 
     const posts = $('div[data-post]')
