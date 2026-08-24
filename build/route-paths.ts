@@ -2847,6 +2847,7 @@ export type RoutePath =
   | `/sass/gs/:type`
   | `/scau/yjsy`
   | `/scau/yzb`
+  | `/schwabnetwork/markets`
   | `/science/blogs/:name?`
   | `/science/cover`
   | `/science/current/:journal?`
