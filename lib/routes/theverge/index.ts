@@ -11,6 +11,9 @@ const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'P
 
 const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 
+// The Verge renamed `tempContents` to `paragraphContents` (and excerpt entries from `{ contents }` to `{ paragraphContents }`)
+const renderParagraph = (b: any): string => (b.paragraphContents ?? b.tempContents ?? [b.contents]).map((c) => c.html).join('');
+
 export const route: Route = {
     path: '/:hub?',
     categories: ['new-media'],
@@ -68,7 +71,7 @@ const renderBlock = (b) => {
         case 'CoreListBlockType':
             return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
         case 'CoreParagraphBlockType':
-            return b.tempContents.map((c) => c.html).join('');
+            return renderParagraph(b);
         case 'CorePullquoteBlockType':
             return `<blockquote>${b.contents.html}</blockquote>`;
         case 'CoreQuoteBlockType':
@@ -126,7 +129,7 @@ async function handler(ctx) {
                                 });
                             switch (n.__typename) {
                                 case 'PostResourceType':
-                                    d += n.excerpt.map((e) => e.contents.html).join('<br>');
+                                    d += n.excerpt.map((e) => renderParagraph(e)).join('<br>');
                                     break;
                                 case 'QuickPostResourceType':
                                     d += n.blocks.map((b) => renderBlock(b)).join('<br>');
