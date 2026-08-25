@@ -79,7 +79,7 @@ export default {
             return rss_item;
         });
     },
-    ChannelIdToName: (nodeId, next_data) => next_data.props.appProps.menu.channelList.find((c) => c.nodeId.toString() === nodeId.toString()).name,
+    ChannelIdToName: (nodeId, next_data) => next_data.props.appProps.menu.channelList.find((c) => c.nodeId.toString() === nodeId.toString())?.name ?? nodeId,
     ListIdToName: (listId, next_data) => next_data.props.appProps.menu.channelList.flatMap((c) => c.childNodeList || []).find((l) => l.nodeId.toString() === listId.toString())?.name,
     ExtractLogo: (response) => 'https://m.thepaper.cn' + load(response)('img.imageCover').attr('src'),
 };

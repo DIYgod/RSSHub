@@ -75,7 +75,15 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
+    const items = await Promise.all(
+        list.map(async (item) => {
+            try {
+                return await cache.tryGet(item.link, () => parseItem(item));
+            } catch {
+                return item;
+            }
+        })
+    );
 
     ctx.set('json', {
         items,

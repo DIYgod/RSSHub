@@ -42,7 +42,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const channelUrl = `https://m.thepaper.cn/channel/${id}`;
     const channelUrlResp = await ofetch(channelUrl);
-    const $ = load(channelUrlResp.data);
+    const $ = load(channelUrlResp);
     const nextData = $('#__NEXT_DATA__').text();
     const channelUrlData = JSON.parse(nextData);
 

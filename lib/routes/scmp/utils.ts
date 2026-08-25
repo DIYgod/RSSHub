@@ -74,14 +74,22 @@ export const parseItem = async (item) => {
     const $ = load(response);
 
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-    const { article } = nextData.props.pageProps.payload.data;
+    const article = nextData.props?.pageProps?.payload?.data?.article;
+
+    // SCMP Plus and some interactive pages do not expose the regular article
+    // payload. Keep the official feed item instead of failing the whole route.
+    if (!article) {
+        return item;
+    }
 
     // item.nextData = article;
 
-    item.summary = renderHTML(article.summary.json);
-    item.description = renderHTML(article.subHeadline.json) + renderHTML(article.images.find((i) => i.type === 'leading')) + renderHTML(article.body.json);
+    item.summary = renderHTML(article.summary?.json);
+    item.description = renderHTML(article.subHeadline?.json) + renderHTML(article.images?.find((i) => i.type === 'leading')) + renderHTML(article.body?.json);
     item.updated = parseDate(article.updatedDate, 'x');
-    item.category = [...new Set([...article.topics.map((t) => t.name), ...(article.sectionsV2?.flatMap((t) => t.value.map((v) => v.name)) ?? []), ...article.keywords.map((k) => k?.split(', '))])];
+    item.category = [
+        ...new Set([...(article.topics?.map((t) => t.name) ?? []), ...(article.sectionsV2?.flatMap((t) => t.value.map((v) => v.name)) ?? []), ...(article.keywords?.flatMap((keyword) => keyword?.split(', ') ?? []) ?? [])]),
+    ];
 
     // N.B. gallery in article is not rendered
     // e.g., { type: 'div', attribs: { class: 'scmp-photo-gallery', 'data-gallery-nid': '3239409' }}
