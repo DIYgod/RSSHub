@@ -68,9 +68,12 @@ export const route: Route = {
 
                 const onclickAttr = $el.find('a[onclick]').first().attr('onclick') ?? '';
                 const onclickMatch = onclickAttr.match(/f_visitCount\('(\d+)','([^']+)','([^']+)'\)/);
+                if (!onclickMatch) {
+                    return [];
+                }
 
-                const exhibitionId = onclickMatch?.[1] ?? '';
-                const link = onclickMatch?.[2] ?? '';
+                const exhibitionId = onclickMatch[1];
+                const link = onclickMatch[2];
 
                 const title = $el.find('.cont h3').text();
                 const imgUrl = $el.find('img').attr('src') ?? '';
@@ -122,19 +125,21 @@ export const route: Route = {
 
                 const guid = `${baseUrl}/Exhibition/Details/xztj?nid=${exhibitionId}`;
 
-                return {
-                    title,
-                    link,
-                    guid,
-                    pubDate,
-                    description,
-                    _extra: {
-                        museumName,
-                        location,
-                        startDate,
-                        endDate,
+                return [
+                    {
+                        title,
+                        link,
+                        guid,
+                        pubDate,
+                        description,
+                        _extra: {
+                            museumName,
+                            location,
+                            startDate,
+                            endDate,
+                        },
                     },
-                };
+                ];
             });
 
         return {
