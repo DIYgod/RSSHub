@@ -1,7 +1,6 @@
-import { Script } from 'node:vm';
-
 import { load } from 'cheerio';
 import { JSDOM, VirtualConsole } from 'jsdom';
+import { VM } from 'vm2';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';
@@ -106,7 +105,9 @@ const generateZseCk = async (url: string, apiPath: string, configuredDc0: string
             (seed.headers.getSetCookie?.() ?? [])
                 .find((line) => line.startsWith('d_c0='))
                 ?.split(';', 1)[0]
-                .slice('d_c0='.length) || '';
+                .slice('d_c0='.length)
+                .split('|', 1)[0]
+                .replace(/=+$/, '') || '';
     }
     if (!dc0) {
         throw new Error('zhihu: failed to obtain a guest d_c0 cookie');
@@ -173,7 +174,7 @@ const generateZseCk = async (url: string, apiPath: string, configuredDc0: string
     let zseCk: string | undefined;
     try {
         // Zhihu's challenge is intentionally delivered as executable JavaScript.
-        new Script(vmScript).runInContext(dom.getInternalVMContext());
+        new VM({ timeout: 3000, sandbox: window }).run(vmScript);
         const timeout = new Promise<undefined>((resolve) => {
             setTimeout(resolve, 3000);
         });
