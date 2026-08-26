@@ -66,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             cache.tryGet(`gamebase-news-${item.news_no}`, async (): Promise<DataItem> => {
                 const title: string = item.news_title;
                 const pubDate: number | string = item.post_time;
-                const linkUrl: string | undefined = item.news_no ? `news/detail/${item.news_no}` : undefined;
+                const link: string | undefined = item.news_no ? new URL(`news/detail/${item.news_no}`, baseUrl).href : undefined;
                 const categories: string[] = [item.system];
                 const authors: DataItem['author'] = item.nickname;
                 const guid = `gamebase-news-${item.news_no}`;
@@ -75,8 +75,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 let metaDesc = item.news_meta?.meta_des;
 
-                if (!metaDesc) {
-                    const detailResponse = await ofetch(item.link);
+                if (!metaDesc && link) {
+                    const detailResponse = await ofetch(link);
 
                     metaDesc = (detailResponse.match(/(\\u003C.*?)","/)?.[1] ?? '').replaceAll(String.raw`\"`, '"').replaceAll(/\\u([\da-f]{4})/gi, (match, hex) => String.fromCodePoint(Number.parseInt(hex, 16)));
                 }
@@ -99,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     title,
                     description,
                     pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
-                    link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+                    link,
                     category: categories,
                     author: authors,
                     guid,
