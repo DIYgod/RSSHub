@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -52,10 +51,10 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((element) => {
             const $item = $(element);
-            const $title = $item.find('a.font-aktivgroteskextended').first();
-            const href = $title.attr('href') ?? $item.find('a[href^="/"]').not('[href^="/topics/"]').first().attr('href');
-            const dateText = $item.find('.blogPost .richtext').last().text();
-            const category = $item.find('a[href^="/topics/"]').first().text();
+            const $title = $item.find('a.font-aktivgroteskextended');
+            const href = $title.attr('href') ?? $item.find('a[href^="/"]').not('[href^="/topics/"]').attr('href');
+            const dateText = $item.find('.blogPost .richtext').text();
+            const category = $item.find('a[href^="/topics/"]').text();
 
             return {
                 title: $title.text(),
@@ -67,43 +66,35 @@ async function handler(ctx): Promise<Data> {
         .filter((item) => item.title && item.link)
         .slice(0, limit);
 
-    const items = await pMap(
-        list,
-        (item) =>
+    const items = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const detail = await ofetch(item.link!);
                 const $detail = load(detail);
 
                 const published = $detail('meta[itemprop="datePublished"]').attr('content');
-                if (published) {
-                    item.pubDate = parseDate(published);
-                }
-
-                const authors = $detail('[itemprop="author"] [itemprop="name"]')
-                    .toArray()
-                    .map((el) => $detail(el).text())
-                    .filter(Boolean);
-                if (authors.length > 0) {
-                    item.author = authors.join(', ');
-                }
-
-                const headline = $detail('h1[itemprop="headline"]').text();
-                if (headline) {
-                    item.title = headline;
-                }
-
-                const image = $detail('meta[property="og:image"]').attr('content');
-                if (image) {
-                    item.image = image;
-                }
+                const authors = [
+                    ...new Set(
+                        $detail('[itemprop="author"] [itemprop="name"]')
+                            .toArray()
+                            .map((el) => $detail(el).text())
+                            .filter(Boolean)
+                    ),
+                ];
 
                 const content = $detail('[itemprop="articleBody"]');
                 content.find('.hidden, .leadpage-container').remove();
-                item.description = content.html() ?? $detail('meta[property="og:description"]').attr('content');
 
-                return item;
-            }),
-        { concurrency: 5 }
+                return {
+                    ...item,
+                    title: $detail('h1[itemprop="headline"]').text() || item.title,
+                    description: content.html() ?? $detail('meta[property="og:description"]').attr('content'),
+                    pubDate: published ? parseDate(published) : item.pubDate,
+                    author: authors.join(', ') || undefined,
+                    image: $detail('meta[property="og:image"]').attr('content') || undefined,
+                };
+            })
+        )
     );
 
     return {
