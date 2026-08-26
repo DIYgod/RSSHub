@@ -47,19 +47,21 @@ async function handler(ctx): Promise<Data> {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const list: DataItem[] = $('article.article--index')
+    const list: DataItem[] = $('main article')
         .toArray()
         .map((element) => {
             const $item = $(element);
-            const $title = $item.find('a.font-aktivgroteskextended');
-            const href = $title.attr('href') ?? $item.find('a[href^="/"]').not('[href^="/topics/"]').attr('href');
-            const dateText = $item.find('.blogPost .richtext').text();
+            // Reason: Semantic links survive changes to the site's presentation classes.
+            const $title = $item
+                .find('a[href^="/"]')
+                .not('[href^="/topics/"]')
+                .filter((_, link) => /\S/.test($(link).text()));
+            const href = $title.attr('href');
             const category = $item.find('a[href^="/topics/"]').text();
 
             return {
                 title: $title.text(),
                 link: href ? new URL(href, baseUrl).href : undefined,
-                pubDate: dateText ? parseDate(dateText, ['MMM D, YYYY', 'YYYY-MM-DD']) : undefined,
                 category: category ? [category] : undefined,
             };
         })
@@ -72,22 +74,23 @@ async function handler(ctx): Promise<Data> {
                 const detail = await ofetch(item.link!);
                 const $detail = load(detail);
 
-                const published = $detail('meta[itemprop="datePublished"]').attr('content');
+                const $article = $detail('article[itemtype="https://schema.org/Article"]');
+                const published = $article.find('meta[itemprop="datePublished"]').attr('content');
                 const authors = [
                     ...new Set(
-                        $detail('[itemprop="author"] [itemprop="name"]')
+                        $article
+                            .find('a[href^="/authors/"]')
                             .toArray()
                             .map((el) => $detail(el).text())
                             .filter(Boolean)
                     ),
                 ];
-
-                const content = $detail('[itemprop="articleBody"]');
+                const content = $article.find('[itemprop="articleBody"]');
                 content.find('.hidden, .leadpage-container').remove();
 
                 return {
                     ...item,
-                    title: $detail('h1[itemprop="headline"]').text() || item.title,
+                    title: $article.find('[itemprop="headline"]').text() || item.title,
                     description: content.html() ?? $detail('meta[property="og:description"]').attr('content'),
                     pubDate: published ? parseDate(published) : item.pubDate,
                     author: authors.join(', ') || undefined,
