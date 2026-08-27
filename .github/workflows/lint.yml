@@ -139,3 +139,4 @@ jobs:
                       Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam [signals](https://github.com/peakoss/anti-slop).
                   lock-pr: false
                   max-changed-lines: 1000
+                  max-description-length: 2000
