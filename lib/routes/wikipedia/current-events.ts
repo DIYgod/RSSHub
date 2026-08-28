@@ -33,7 +33,14 @@ Notes:
     - strip css and possibly class/id
   - if the result is in wikitext, it needs to be converted to html
 
-4. is the fastest and current implementation. */
+4. is the fastest and current implementation.
+
+A daily page's wikitext is shaped as:
+  {{Current events|year=YYYY|month=MM|day=D|top=yes}}
+  <!-- All news items below this line -->
+  ...items, as nested wikitext bullet lists under ''' section headings'''...
+  <!-- All news items above this line -->
+  {{Current events|year=YYYY|month=MM|day=D|bottom=yes}} */
 
 function getCurrentEventsDatePath(date: Date): string {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -45,20 +52,30 @@ function getCurrentEventsDatePath(date: Date): string {
     return `Portal:Current_events/${year}_${month}_${day}`;
 }
 
+// The day's items sit between a {{Current events|...|top=yes}} and a
+// {{Current events|...|bottom=yes}} call. Neither call nests braces, so [^{}] is enough to bound them.
+const TOP_TEMPLATE = /\{\{\s*Current events\s*\|[^{}]*\btop\s*=\s*yes[^{}]*\}\}/i;
+const BOTTOM_TEMPLATE = /\{\{\s*Current events\s*\|[^{}]*\bbottom\s*=\s*yes[^{}]*\}\}/i;
+
 // Simple MediaWiki template parser for {{Current events}} template
 function parseCurrentEventsTemplate(wikitext: string): string | null {
     if (!wikitext) {
         return null;
     }
 
-    // Look for {{Current events|content=...}} template
-    // The closing }} is always at the end of wikitext
-    const contentMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content(?=(\s*=))\1\s*((?:\S[\s\S]*)?)\}\}$/);
-    if (!contentMatch) {
+    const top = wikitext.match(TOP_TEMPLATE);
+    if (!top) {
         return null;
     }
 
-    let content = contentMatch[2].trim();
+    let content = wikitext.slice(top.index! + top[0].length);
+
+    const bottom = content.match(BOTTOM_TEMPLATE);
+    if (bottom) {
+        content = content.slice(0, bottom.index);
+    }
+
+    content = content.trim();
 
     // Strip comments to detect empty content
     content = stripComments(content);
