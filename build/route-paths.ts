@@ -2965,6 +2965,7 @@ export type RoutePath =
   | `/shopback/:store`
   | `/shopify/apps/:handle/reviews/:page?`
   | `/shopify/apps/search/:q`
+  | `/shopify/engineering/:topic?`
   | `/shoppingdesign/posts`
   | `/shou/www/:type`
   | `/showstart/artist/:id`

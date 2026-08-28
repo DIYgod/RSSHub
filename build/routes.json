@@ -106413,6 +106413,47 @@
         ],
         "location": "apps/search.ts",
         "module": "() => import('@/routes/shopify/apps/search.ts')"
+      },
+      "/engineering/:topic?": {
+        "path": "/engineering/:topic?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/shopify/engineering",
+        "parameters": {
+          "topic": "Topic slug from `/topics/:topic`, e.g. `mobile`, `ai-machine-learning`. Defaults to the latest listing."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "shopify.engineering/",
+              "shopify.engineering/latest"
+            ],
+            "target": "/engineering"
+          },
+          {
+            "source": [
+              "shopify.engineering/topics/:topic"
+            ],
+            "target": "/engineering/:topic"
+          }
+        ],
+        "name": "Engineering",
+        "maintainers": [
+          "zhsama"
+        ],
+        "url": "shopify.engineering/latest",
+        "location": "engineering.ts",
+        "module": "() => import('@/routes/shopify/engineering.ts')"
       }
     },
     "apiRoutes": {},
