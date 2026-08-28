@@ -1,6 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -422,7 +423,7 @@ async function handler(ctx) {
         throw new Error(`Failed to fetch Wikipedia current events: ${message}`, { cause: error });
     }
 }
-function determineDates(includeToday: any) {
+function determineDates(includeToday: string) {
     const now = new Date();
     const currentHourUTC = now.getUTCHours();
 
@@ -445,14 +446,21 @@ function determineDates(includeToday: any) {
 
             break;
 
-        default:
-            if (/^\d+$/.test(includeToday)) {
-                // Include after specific hour (0-23)
-                const targetHour = Number(includeToday);
-                if (targetHour >= 0 && targetHour <= 23) {
-                    shouldIncludeToday = currentHourUTC >= targetHour;
-                }
+        default: {
+            // Anything else is rejected rather than ignored: silently serving the default feed
+            // makes a mistyped parameter look like it took effect.
+            if (!/^\d+$/.test(includeToday)) {
+                throw new InvalidParameterError(`Invalid includeToday: ${includeToday}. Expected 'auto', 'always', 'never', or a UTC hour 0-23.`);
             }
+
+            // Include after specific hour (0-23). The pattern above already excludes negatives.
+            const targetHour = Number(includeToday);
+            if (targetHour > 23) {
+                throw new InvalidParameterError(`Invalid includeToday hour: ${includeToday}. Expected a UTC hour 0-23.`);
+            }
+
+            shouldIncludeToday = currentHourUTC >= targetHour;
+        }
     }
 
     // Create array of dates for the past 7 days, optionally including today
