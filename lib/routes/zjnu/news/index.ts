@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://news.zjnu.edu.cn';
 
@@ -38,7 +39,7 @@ async function handler() {
                 title: a.text(),
                 link: `${host}${a.attr('href')}`,
                 description: '',
-                pubDate: parseDate($item.find('div.ex_fields>span.Article_PublishDate').first().text()),
+                pubDate: timezone(parseDate($item.find('div.ex_fields>span.Article_PublishDate').first().text(), 'YYYY-MM-DD'), 8),
                 author: '浙江师范大学',
             };
         });
@@ -46,10 +47,9 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('div.Article_Content').first().html() || '';
-                return item;
+                const detail = await ofetch(item.link);
+                const $detail = load(detail);
+                return { ...item, description: $detail('div.Article_Content').first().html() ?? '' };
             })
         )
     );
