@@ -3,6 +3,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+import { isWallstreetcnPaidContent } from './utils';
+
 const titles = {
     global: '最新',
     shares: '股市',
@@ -62,7 +64,7 @@ async function handler(ctx) {
     });
 
     let items = response.data.data.items
-        .filter((item) => item.resource_type !== 'ad')
+        .filter((item) => item.resource_type !== 'ad' && !isWallstreetcnPaidContent(item.resource))
         .map((item) => ({
             type: item.resource_type,
             guid: item.resource.id,
@@ -86,6 +88,10 @@ async function handler(ctx) {
                 }
 
                 const data = responseData.data;
+
+                if (isWallstreetcnPaidContent(data)) {
+                    return null;
+                }
 
                 item.title = data.title || data.content_text;
                 item.author = data.source_name ?? data.author.display_name;

@@ -3,6 +3,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+import { isWallstreetcnPaidContent } from './utils';
+
 export const route: Route = {
     path: '/hot/:period?',
     categories: ['finance'],
@@ -39,11 +41,13 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = response.data.data[`${period}_items`].map((item) => ({
-        guid: item.id,
-        link: item.uri,
-        pubDate: parseDate(item.display_time * 1000),
-    }));
+    let items = response.data.data[`${period}_items`]
+        .filter((item) => !isWallstreetcnPaidContent(item))
+        .map((item) => ({
+            guid: item.id,
+            link: item.uri,
+            pubDate: parseDate(item.display_time * 1000),
+        }));
 
     items = await Promise.all(
         items.map((item) =>
@@ -54,6 +58,10 @@ async function handler(ctx) {
                 });
 
                 const data = detailResponse.data.data;
+
+                if (isWallstreetcnPaidContent(data)) {
+                    return null;
+                }
 
                 item.title = data.title || data.content_text;
                 item.author = data.source_name ?? data.author.display_name;
