@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -19,8 +20,6 @@ const categorySet = new Set<string>(CATEGORIES);
 const requestHeaders = {
     'user-agent': config.trueUA,
 };
-
-const categoryTable = ['| Category | Route |', '| -------- | ----- |', '| Latest | (empty) |', ...CATEGORIES.map((slug) => `| ${slug} | ${slug} |`)].join('\n');
 
 const fetchHtml = (url: string) =>
     ofetch(url, {
@@ -136,7 +135,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const isLatest = category === '' || category === 'latest';
 
     if (!isLatest && !categorySet.has(category)) {
-        throw new Error(`Unknown Eurogamer category: ${category}. Use one of: ${CATEGORIES.join(', ')}, or omit the parameter for latest.`);
+        throw new InvalidParameterError(`Unknown Eurogamer category: ${category}. Use one of: ${CATEGORIES.join(', ')}, or omit the parameter for latest.`);
     }
 
     const currentUrl = isLatest ? `${BASE_URL}/latest` : `${BASE_URL}/${category}`;
@@ -165,13 +164,12 @@ export const route: Route = {
     example: '/eurogamer',
     parameters: {
         category: {
-            description: 'Article type. Omit or use `latest` for the latest mix. See the table below for every supported type.',
+            description: 'Article type. Omit or use `latest` for the latest mix.',
             default: '',
+            options: [{ value: 'latest', label: 'Latest' }, ...CATEGORIES.map((slug) => ({ value: slug, label: slug }))],
         },
     },
-    description: `Eurogamer's official RSS feeds only include excerpts. This route fetches the full article body from each article page.
-
-${categoryTable}`,
+    description: "Eurogamer's official RSS feeds only include excerpts. This route fetches the full article body from each article page.",
     categories: ['game'],
     features: {
         requireConfig: false,
