@@ -13,7 +13,7 @@ const CzechStepByStepDescription = ({ videoId, transcriptHtml, exerciseHref, wor
     <div>
         {videoId && (
             <>
-                <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${videoId}`} frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" />
+                <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${videoId}`} frameborder="0" allowfullscreen />
                 <br />
             </>
         )}
