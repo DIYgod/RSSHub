@@ -39,7 +39,7 @@ async function handler() {
                 title: a.text(),
                 link: `${host}${a.attr('href')}`,
                 description: '',
-                pubDate: timezone(parseDate($item.find('div.ex_fields>span.Article_PublishDate').first().text(), 'YYYY-MM-DD'), 8),
+                pubDate: timezone(parseDate($item.find('div.ex_fields>span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
                 author: '浙江师范大学',
             };
         });
@@ -49,7 +49,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const detail = await ofetch(item.link);
                 const $detail = load(detail);
-                return { ...item, description: $detail('div.Article_Content').first().html() ?? '' };
+                return { ...item, description: $detail('div.Article_Content').html() ?? '' };
             })
         )
     );
