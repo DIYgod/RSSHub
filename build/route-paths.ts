@@ -2522,6 +2522,7 @@ export type RoutePath =
   | `/onejav/:type/:key?`
   | `/onenotegem/release`
   | `/onet/news`
+  | `/onlyfans/:username`
   | `/oo-software/changelog/:id`
   | `/openai/chatgpt-atlas/release-notes`
   | `/openai/chatgpt/release-notes`

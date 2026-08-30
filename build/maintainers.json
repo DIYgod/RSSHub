@@ -1133,6 +1133,9 @@
   "/nanhua/report/:type1/:type2": [
     "TonyRL"
   ],
+  "/onlyfans/:username": [
+    "TonyRL"
+  ],
   "/openalex/:journals/:type?/:ids?": [
     "emdoe"
   ],

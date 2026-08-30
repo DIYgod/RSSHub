@@ -4038,6 +4038,19 @@
       }
     ]
   },
+  "onlyfans.com": {
+    "_name": "OnlyFans",
+    ".": [
+      {
+        "title": "Creator Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username"
+        ],
+        "target": "/onlyfans/:username"
+      }
+    ]
+  },
   "openalex.org": {
     "_name": "OpenAlex",
     ".": [

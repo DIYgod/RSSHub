@@ -14549,6 +14549,47 @@
     "url": "mall.nanhua.net",
     "lang": "zh-CN"
   },
+  "onlyfans": {
+    "routes": {
+      "/:username": {
+        "path": "/:username",
+        "categories": [
+          "social-media"
+        ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ONLYFANS_COOKIE",
+              "optional": true,
+              "description": "The `Cookie` header of a logged-in session."
+            }
+          ],
+          "nsfw": true
+        },
+        "example": "/onlyfans/sports",
+        "parameters": {
+          "username": "Creator username"
+        },
+        "radar": [
+          {
+            "source": [
+              "onlyfans.com/:username"
+            ]
+          }
+        ],
+        "name": "Creator Posts",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "onlyfans.com",
+        "location": "user.ts",
+        "module": "() => import('@/routes/onlyfans/user.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "OnlyFans",
+    "url": "onlyfans.com"
+  },
   "openalex": {
     "routes": {
       "/:journals/:type?/:ids?": {
