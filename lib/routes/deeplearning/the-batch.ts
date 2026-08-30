@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -7,12 +8,34 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const parseFlightData = (buf: Buffer) => {
+    const rows = new Map<string, string>();
+    let i = 0;
+    while (i < buf.length) {
+        const colon = buf.indexOf(0x3a, i);
+        const id = buf.toString('utf8', i, colon);
+        let end, value;
+        if (buf[colon + 1] === 0x54) {
+            const comma = buf.indexOf(0x2c, colon);
+            const length = Number.parseInt(buf.toString('utf8', colon + 2, comma), 16);
+            value = buf.toString('utf8', comma + 1, comma + 1 + length);
+            end = comma + 1 + length;
+        } else {
+            end = buf.indexOf(0x0a, colon);
+            value = buf.toString('utf8', colon + 1, end);
+        }
+        rows.set(id, value);
+        i = end + 1;
+    }
+    return rows;
+};
+
+async function handler(ctx: Context) {
     const { tag } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 16;
 
     const rootUrl = 'https://www.deeplearning.ai';
-    const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}/`, rootUrl).href;
+    const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}`, rootUrl).href;
 
     const response = await ofetch(currentUrl);
 
@@ -20,38 +43,48 @@ export const handler = async (ctx) => {
 
     const language = $('html').prop('lang') as Language;
 
-    const data = JSON.parse($('script#__NEXT_DATA__').text());
+    const flight = $('script:contains("self.__next_f")')
+        .toArray()
+        .map((script) =>
+            $(script)
+                .text()
+                .match(/^self\.__next_f\.push\(\[1,(".*")\]\)$/s)
+        )
+        .filter(Boolean)
+        .map((m) => JSON.parse(m![1]) as string)
+        .join('');
 
-    const nextBuildId = data.buildId;
-    const posts = data.props?.pageProps?.posts ?? [];
+    const cardsRow = flight.split('\n').find((row) => row.includes('"cards":['));
+    if (!cardsRow) {
+        throw new Error('No cards found in flight payload');
+    }
+    const { cards } = JSON.parse(cardsRow.replace(/^[0-9a-f]+:/, ''))[3];
 
-    let items = posts.slice(0, limit).map((item) => {
-        const title = item.title;
+    let items = cards.slice(0, limit).map((card) => {
+        const title = card.title;
         const description = renderDescription({
-            images: item.feature_image
+            images: card.image?.src
                 ? [
                       {
-                          src: item.feature_image,
-                          alt: item.feature_image_alt,
+                          src: card.image.src,
+                          alt: card.image.alt,
                       },
                   ]
                 : undefined,
-            intro: item.excerpt ?? item.custom_excerpt,
+            intro: card.excerpt,
         });
-        const image = item.feature_image;
-        const guid = `the-batch-${item.slug}`;
+        const image = card.image?.src;
+        const guid = `the-batch-${card.href.split('/').pop()}`;
 
         return {
             title,
             description,
-            pubDate: parseDate(item.published_at),
-            link: new URL(`_next/data/${nextBuildId}/the-batch/${item.slug}.json`, rootUrl).href,
-            category: item.tags.map((t) => t.name),
+            link: new URL(card.href, rootUrl).href,
             guid,
             id: guid,
             content: {
                 html: description,
-                text: item.excerpt ?? item.custom_excerpt,
+                text: card.excerpt,
             },
             image,
             banner: image,
@@ -62,15 +95,23 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link, {
+                    headers: { rsc: '1' },
+                    responseType: 'arrayBuffer',
+                });
 
-                const post = detailResponse.pageProps?.post ?? undefined;
+                const rows = parseFlightData(Buffer.from(detailResponse));
 
-                if (!post) {
-                    return item;
+                const bodyId = rows
+                    .values()
+                    .find((row) => row.includes('"prose'))
+                    ?.match(/"__html":"\$(\w+)"/)?.[1];
+                if (!bodyId || !rows.has(bodyId)) {
+                    throw new Error('No article body found in flight payload');
                 }
+                const $$ = load(rows.get(bodyId)!);
 
-                const $$ = load(post.html);
+                $$('#elevenlabs-audionative-widget').remove();
 
                 $$('a').each((_, ele) => {
                     if (!ele.attribs.href?.includes('utm_campaign')) {
@@ -84,45 +125,43 @@ export const handler = async (ctx) => {
                     ele.attribs.href = url.href;
                 });
 
-                const title = post.title;
+                const metaProps = JSON.parse(rows.values().find((row) => row.includes('"og:title"'))!)
+                    .filter((element) => element[1] === 'meta')
+                    .map((element) => element[3] as Record<string, string>);
+                const meta = (property: string) => metaProps.find((props) => props.property === property)?.content;
+
+                const title = meta('og:title')!;
+                const intro = meta('og:description');
+                const image = meta('og:image');
                 const description = renderDescription({
-                    images: post.feature_image
+                    images: image
                         ? [
                               {
-                                  src: post.feature_image,
-                                  alt: post.feature_image_alt,
+                                  src: image,
+                                  alt: title,
                               },
                           ]
                         : undefined,
-                    intro: post.excerpt ?? post.custom_excerpt,
+                    intro,
                     description: $$.html(),
                 });
-                const guid = `the-batch-${post.slug}`;
-                const image = post.feature_image;
-
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate(post.published_at);
-                item.link = new URL(`the-batch/${post.slug}`, rootUrl).href;
-                item.category = post.tags.map((t) => t.name);
-                item.author = post.authors.map((a) => a.name).join('/');
-                item.guid = guid;
-                item.id = guid;
+                item.pubDate = parseDate(meta('article:published_time')!);
+                item.category = metaProps.filter((props) => props.property === 'article:tag').map((props) => props.content);
+                item.author = meta('article:author');
                 item.content = {
                     html: description,
-                    text: post.excerpt ?? post.custom_excerpt,
+                    text: intro,
                 };
                 item.image = image;
                 item.banner = image;
-                item.updated = parseDate(post.updated_at);
-                item.language = language;
+                item.updated = parseDate(meta('article:modified_time')!);
 
                 return item;
             })
         )
     );
-
-    const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -130,11 +169,11 @@ export const handler = async (ctx) => {
         link: currentUrl,
         item: items,
         allowEmpty: true,
-        image,
+        image: `${rootUrl}/favicon.ico`,
         author: $('meta[property="og:site_name"]').prop('content'),
         language,
     };
-};
+}
 
 export const route: Route = {
     path: '/the-batch/:tag{.+}?',
