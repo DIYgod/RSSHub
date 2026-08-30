@@ -173,6 +173,7 @@ type ConfigEnvKeys =
     | 'NHENTAI_USERNAME'
     | 'NHENTAI_PASSWORD'
     | 'NOTION_TOKEN'
+    | 'ONLYFANS_COOKIE'
     | 'PATREON_SESSION_ID'
     | 'PIANYUAN_COOKIE'
     | 'PIXABAY_KEY'
@@ -564,6 +565,9 @@ export type Config = {
     };
     notion: {
         key?: string;
+    };
+    onlyfans: {
+        cookie?: string;
     };
     patreon: {
         sessionId?: string;
@@ -1073,6 +1077,9 @@ const calculateValue = () => {
         },
         notion: {
             key: envs.NOTION_TOKEN,
+        },
+        onlyfans: {
+            cookie: envs.ONLYFANS_COOKIE,
         },
         patreon: {
             sessionId: envs.PATREON_SESSION_ID,
