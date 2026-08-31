@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { ProcessFeedType2 } from './utils';
+import { processFeedType2 } from './utils';
 
 export const route: Route = {
     path: '/special/:id',
@@ -42,7 +42,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
-                    ProcessFeedType2(item, response);
+                    processFeedType2(item, response);
                 } catch (error) {
                     if (!(error instanceof FetchError) || error.statusCode !== 404) {
                         throw error;
