@@ -197,7 +197,7 @@
         "unicorn-js/no-async-promise-finally": "error",
         // "unicorn/no-await-expression-member": "error",
         "unicorn/no-await-in-promise-methods": "error",
-        "unicorn-js/no-blob-to-file": "error",
+        // "unicorn-js/no-blob-to-file": "error", // unused
         "unicorn-js/no-boolean-sort-comparator": "error",
         // "unicorn-js/no-break-in-nested-loop": "error", // unopinionated
         // "unicorn-js/no-canvas-to-image": "error", // unused
@@ -290,6 +290,7 @@
         "unicorn-js/no-unsafe-buffer-conversion": "error",
         "unicorn-js/no-unsafe-promise-all-settled-values": "error",
         "unicorn-js/no-unsafe-property-key": "error",
+        // "unicorn-js/no-unsafe-sqlite-interpolation": "error", // unused
         "unicorn-js/no-unsafe-string-replacement": "error",
         "unicorn-js/no-unused-array-method-return": "error",
         "unicorn-js/no-useless-boolean-cast": "error",
@@ -337,11 +338,11 @@
         "unicorn/prefer-at": "error",
         "unicorn-js/prefer-await": "error",
         "unicorn/prefer-bigint-literals": "error",
-        "unicorn/prefer-blob-reading-methods": "error",
+        // "unicorn/prefer-blob-reading-methods": "error", // unused
         "unicorn-js/prefer-block-statement-over-iife": "error",
         "unicorn-js/prefer-boolean-return": "error",
         "unicorn/prefer-class-fields": "error",
-        "unicorn/prefer-classlist-toggle": "error",
+        // "unicorn/prefer-classlist-toggle": "error", // unused
         // "unicorn/prefer-code-point": "error",
         "unicorn-js/prefer-continue": "error",
         "unicorn/prefer-date-now": "error",
@@ -372,7 +373,7 @@
         "unicorn-js/prefer-iterator-helpers": "error",
         "unicorn-js/prefer-iterator-to-array": "error",
         // "unicorn-js/prefer-iterator-to-array-at-end": "error",
-        "unicorn/prefer-keyboard-event-key": "error",
+        // "unicorn/prefer-keyboard-event-key": "error", // unused
         "unicorn-js/prefer-location-assign": "error",
         "unicorn/prefer-logical-operator-over-ternary": "error",
         "unicorn-js/prefer-map-from-entries": "error",
@@ -454,6 +455,7 @@
         "unicorn/require-number-to-fixed-digits-argument": "error",
         "unicorn-js/require-passive-events": "error",
         "unicorn-js/require-proxy-trap-boolean-return": "error",
+        // "unicorn-js/single-line-block-comment-style": "error",
         // "unicorn/switch-case-braces": "error",
         "unicorn-js/switch-case-break-position": "error",
         "unicorn-js/template-indent": "error",
@@ -750,6 +752,7 @@
 
         "unicorn/prefer-top-level-await": "off",
         // "unicorn/prevent-abbreviations": "off",
+        "unicorn-js/single-line-block-comment-style": ["error", "single-line"],
         "unicorn/switch-case-braces": ["error", "avoid"],
         "unicorn/text-encoding-identifier-case": "off",
         // #endregion
