@@ -63,7 +63,7 @@ const ProcessImg = (content) => {
     });
 };
 
-const ProcessFeed = async (ctx, type, id) => {
+const ProcessFeed = async (type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
@@ -88,8 +88,6 @@ const ProcessFeed = async (ctx, type, id) => {
             id,
             type,
             size: 20,
-            platform: 'web',
-            version: '',
         },
     });
 
