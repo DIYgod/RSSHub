@@ -290,6 +290,7 @@
         "unicorn-js/no-unsafe-buffer-conversion": "error",
         "unicorn-js/no-unsafe-promise-all-settled-values": "error",
         "unicorn-js/no-unsafe-property-key": "error",
+        // "unicorn-js/no-unsafe-sqlite-interpolation": "error", // unused
         "unicorn-js/no-unsafe-string-replacement": "error",
         "unicorn-js/no-unused-array-method-return": "error",
         "unicorn-js/no-useless-boolean-cast": "error",
@@ -454,6 +455,7 @@
         "unicorn/require-number-to-fixed-digits-argument": "error",
         "unicorn-js/require-passive-events": "error",
         "unicorn-js/require-proxy-trap-boolean-return": "error",
+        // "unicorn-js/single-line-block-comment-style": "error",
         // "unicorn/switch-case-braces": "error",
         "unicorn-js/switch-case-break-position": "error",
         "unicorn-js/template-indent": "error",
@@ -750,6 +752,7 @@
 
         "unicorn/prefer-top-level-await": "off",
         // "unicorn/prevent-abbreviations": "off",
+        "unicorn-js/single-line-block-comment-style": ["error", "single-line"],
         "unicorn/switch-case-braces": ["error", "avoid"],
         "unicorn/text-encoding-identifier-case": "off",
         // #endregion
