@@ -2,7 +2,7 @@ import { Innertube, YTNodes } from 'youtubei.js';
 
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 import { getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
@@ -26,19 +26,47 @@ const getInnertube = () => {
     return innertubePromise;
 };
 
+// A duration is grouped for readability once it reaches a thousand hours, e.g. `20,772:51:34`
+const DURATION_BADGE_REGEX = /^[\d,]+(?::\d+)+$/;
+const UPCOMING_BADGE_TEXT = 'Upcoming';
+const SCHEDULED_PREFIX = 'Scheduled for ';
+
+const getThumbnailBadges = (video: YTNodes.LockupView) => {
+    const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
+    return thumbnail?.overlays.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView)).flatMap((overlay) => overlay.badges ?? []) ?? [];
+};
+
+const getMetadataTexts = (video: YTNodes.LockupView) => (video.metadata?.metadata?.metadata_rows ?? []).flatMap((row) => row.metadata_parts ?? []).map((part) => part.text?.text);
+
+type StreamState = 'live' | 'upcoming' | 'completed';
+
+// An ongoing stream carries a "LIVE" badge and a scheduled one an "Upcoming" badge, so anything else has already ended
+const getStreamState = (video: YTNodes.LockupView): StreamState => {
+    const badges = getThumbnailBadges(video);
+    if (badges.some((badge) => badge.badge_style === 'THUMBNAIL_OVERLAY_BADGE_STYLE_LIVE')) {
+        return 'live';
+    }
+    if (badges.some((badge) => badge.text === UPCOMING_BADGE_TEXT) || getMetadataTexts(video).some((text) => text?.startsWith(SCHEDULED_PREFIX))) {
+        return 'upcoming';
+    }
+    return 'completed';
+};
+
+const getPubDate = (metadataTexts: Array<string | undefined>) => {
+    const publishedText = metadataTexts.findLast((text) => text?.endsWith('ago'));
+    if (publishedText) {
+        return parseRelativeDate(publishedText);
+    }
+    // A stream that hasn't started has no publish date, only the time it is scheduled to start at
+    const scheduledText = metadataTexts.find((text) => text?.startsWith(SCHEDULED_PREFIX));
+    return scheduledText ? parseDate(scheduledText.slice(SCHEDULED_PREFIX.length), 'M/D/YY, h:mm A') : undefined;
+};
+
 const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem => {
     const videoId = video.content_id;
-    const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
     const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const metadataRows = video.metadata?.metadata?.metadata_rows ?? [];
-    const publishedText = metadataRows
-        .flatMap((row) => row.metadata_parts ?? [])
-        .map((part) => part.text?.text)
-        .findLast((text) => text?.endsWith('ago'));
-    const durationText = thumbnail?.overlays
-        ?.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView))
-        .flatMap((overlay) => overlay.badges ?? [])
-        .find((badge) => /^\d+(?::\d+)+$/.test(badge.text))?.text;
+    const durationText = getThumbnailBadges(video).find((badge) => DURATION_BADGE_REGEX.test(badge.text))?.text;
 
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
@@ -46,12 +74,12 @@ const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem =
         link: `https://www.youtube.com/watch?v=${videoId}`,
         author: metadataRows.length > 1 ? metadataRows[0].metadata_parts?.[0]?.text?.text : undefined,
         image: img,
-        pubDate: publishedText ? parseRelativeDate(publishedText) : undefined,
+        pubDate: getPubDate(getMetadataTexts(video)),
         attachments: [
             {
                 url: getVideoUrl(videoId),
                 mime_type: 'text/html',
-                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part), 0) : undefined,
+                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part.replaceAll(',', '')), 0) : undefined,
             },
         ],
     };
@@ -87,6 +115,42 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
             item.attachments?.push(...(isJsonFeed ? videoSubtitles[video.content_id] || [] : []));
             return item;
         }),
+    };
+};
+
+export const getStreamsByChannelId = async ({
+    channelId,
+    embed,
+    includeLive,
+    includeUpcoming,
+    includeCompleted,
+}: {
+    channelId: string;
+    embed: boolean;
+    includeLive: boolean;
+    includeUpcoming: boolean;
+    includeCompleted: boolean;
+}): Promise<Data> => {
+    const innertube = await getInnertube();
+    const channel = await innertube.getChannel(channelId);
+    const streams = await channel.getLiveStreams();
+    const included = {
+        live: includeLive,
+        upcoming: includeUpcoming,
+        completed: includeCompleted,
+    };
+
+    return {
+        title: `${channel.metadata.title || channelId} - Live - YouTube`,
+        link: `https://www.youtube.com/channel/${channelId}/streams`,
+        image: channel.metadata.avatar?.[0].url,
+        description: channel.metadata.description,
+
+        item: streams.videos
+            .filter((video) => video instanceof YTNodes.LockupView)
+            .filter((video) => included[getStreamState(video)])
+            .map((video) => lockupViewToItem(video, embed)),
+        allowEmpty: true,
     };
 };
 
