@@ -85,6 +85,13 @@ export const twitterGot = async (
 ) => {
     const auth = await getAuth(30);
 
+    // Defensive check: a truthy auth object with an undefined token must never reach
+    // token2Cookie(), otherwise a guest cookie jar gets cached under the literal key
+    // `twitter:cookie:undefined`.
+    if (auth && !auth.token) {
+        throw new ConfigNotFoundError('Twitter auth pool returned an invalid (undefined) token');
+    }
+
     if (!auth && !options?.allowNoAuth) {
         throw new ConfigNotFoundError('No valid Twitter token found');
     }
@@ -196,35 +203,13 @@ export const twitterGot = async (
             logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
         } else if (response.status === 403 || response.status === 401) {
-            // const newCookie = await login({
-            //     username: auth.username,
-            //     password: auth.password,
-            //     authenticationSecret: auth.authenticationSecret,
-            // });
-            // if (newCookie) {
-            //     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
-            //     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
-            //     await cache.set(`${lockPrefix}${auth.token}`, '', 1);
-            // } else {
-            const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
-            if (tokenIndex !== undefined && tokenIndex !== -1) {
-                config.twitter.authToken?.splice(tokenIndex, 1);
-            }
-            // if (auth.username) {
-            //     const usernameIndex = config.twitter.username?.indexOf(auth.username);
-            //     if (usernameIndex !== undefined && usernameIndex !== -1) {
-            //         config.twitter.username?.splice(usernameIndex, 1);
-            //     }
-            // }
-            // if (auth.password) {
-            //     const passwordIndex = config.twitter.password?.indexOf(auth.password);
-            //     if (passwordIndex !== undefined && passwordIndex !== -1) {
-            //         config.twitter.password?.splice(passwordIndex, 1);
-            //     }
-            // }
-            logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
+            // Lock the token temporarily instead of removing it permanently from the
+            // in-memory pool: a transient 401/403 from X should not disable the token
+            // until process restart. Once every token is locked, getAuth exhausts its
+            // retries and returns undefined, so twitterGot throws ConfigNotFoundError
+            // and the failure finally surfaces to the operator.
+            logger.debug(`twitter debug: lock twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
-            // }
         } else {
             logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
