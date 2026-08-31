@@ -83,6 +83,18 @@ describe('parseRelativeDate', () => {
             expect(p('10 分鐘後')).toBe(NOW_TIMESTAMP + 10 * minute);
         });
 
+        it('handles abbreviated units', () => {
+            expect(p('1y ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(1, 'year').valueOf());
+            expect(p('3mo ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(3, 'month').valueOf());
+            expect(p('2w ago')).toBe(NOW_TIMESTAMP - 2 * week);
+            expect(p('5d ago')).toBe(NOW_TIMESTAMP - 5 * day);
+        });
+
+        it('does not read the "m" of a month as a minute', () => {
+            expect(p('11 months ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(11, 'month').valueOf());
+            expect(p('11mo ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(11, 'month').valueOf());
+        });
+
         it('handles mixed units', () => {
             expect(p('1d 1h ago')).toBe(NOW_TIMESTAMP - (day + hour));
         });
