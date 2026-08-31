@@ -4,8 +4,9 @@ import { JSDOM } from 'jsdom';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
-const ProcessVideo = (content) => {
+const processVideo = (content) => {
     content('div.video').each((i, v) => {
         let link = new URL(v.attribs.src);
         if (link.host === 'm.miguvideo.com') {
@@ -41,7 +42,7 @@ const ProcessVideo = (content) => {
     return content;
 };
 
-const ProcessHref = (content) => {
+const processHref = (content) => {
     content.each((j, y) => {
         if (y.attribs.href) {
             y.attribs.href = y.attribs.href.replace('dongqiudi:///news', 'https://www.dongqiudi.com/article');
@@ -49,7 +50,7 @@ const ProcessHref = (content) => {
     });
 };
 
-const ProcessImg = (content) => {
+const processImg = (content) => {
     content.each((_, img) => {
         if (img.attribs['data-gif-src'] && img.attribs['data-gif-src'].length) {
             img.attribs = { src: img.attribs['data-gif-src'] };
@@ -63,7 +64,7 @@ const ProcessImg = (content) => {
     });
 };
 
-const ProcessFeed = async (ctx, type, id) => {
+export const processFeed = async (type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
@@ -93,19 +94,28 @@ const ProcessFeed = async (ctx, type, id) => {
         },
     });
 
-    const list = data.data.articles.map((article) => ({
+    let list = data.data.articles.map((article) => ({
         title: article.title,
         link: `https://www.dongqiudi.com/articles/${article.id}.html`,
         category: [article.category, ...(article.secondary_category ?? [])],
         pubDate: parseDate(article.show_time, 'X'),
     }));
 
+    if (type === 'team' && list.length === 0) {
+        list = nuxtData.newsList.map((news) => ({
+            title: news.title,
+            link: `https://www.dongqiudi.com/articles/${news.id}.html`,
+            category: [news.category],
+            pubDate: timezone(parseDate(news.time), 8),
+        }));
+    }
+
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
 
-                ProcessFeedType2(item, response);
+                processFeedType2(item, response);
 
                 return item;
             })
@@ -120,7 +130,7 @@ const ProcessFeed = async (ctx, type, id) => {
     };
 };
 
-const ProcessFeedType2 = (item, response) => {
+export const processFeedType2 = (item, response) => {
     const dom = new JSDOM(response, {
         runScripts: 'dangerously',
     });
@@ -132,11 +142,9 @@ const ProcessFeedType2 = (item, response) => {
         return;
     }
 
-    const body = ProcessVideo(load(data.rawBody, null, false));
-    ProcessHref(body('a'));
-    ProcessImg(body('img'));
+    const body = processVideo(load(data.rawBody, null, false));
+    processHref(body('a'));
+    processImg(body('img'));
     item.description = body.html();
     item.author = data.author;
 };
-
-export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessHref, ProcessImg };
