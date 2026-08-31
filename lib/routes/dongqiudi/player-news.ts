@@ -1,6 +1,6 @@
 import type { Route } from '@/types';
 
-import utils from './utils';
+import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/player_news/:id',
@@ -21,5 +21,5 @@ export const route: Route = {
 async function handler(ctx) {
     const playerId = ctx.req.param('id');
 
-    return await utils.ProcessFeed('player', playerId);
+    return await ProcessFeed('player', playerId);
 }

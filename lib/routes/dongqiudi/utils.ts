@@ -63,7 +63,7 @@ const ProcessImg = (content) => {
     });
 };
 
-const ProcessFeed = async (type, id) => {
+export const ProcessFeed = async (type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
@@ -91,12 +91,14 @@ const ProcessFeed = async (type, id) => {
         },
     });
 
-    const list = data.data.articles.map((article) => ({
-        title: article.title,
-        link: `https://www.dongqiudi.com/articles/${article.id}.html`,
-        category: [article.category, ...(article.secondary_category ?? [])],
-        pubDate: parseDate(article.show_time, 'X'),
-    }));
+    const list = data.data.articles
+        .filter((article) => article.add_to_tab === '0')
+        .map((article) => ({
+            title: article.title,
+            link: `https://www.dongqiudi.com/articles/${article.id}.html`,
+            category: [article.category, ...(article.secondary_category ?? [])],
+            pubDate: parseDate(article.show_time, 'X'),
+        }));
 
     const out = await Promise.all(
         list.map((item) =>
@@ -118,7 +120,7 @@ const ProcessFeed = async (type, id) => {
     };
 };
 
-const ProcessFeedType2 = (item, response) => {
+export const ProcessFeedType2 = (item, response) => {
     const dom = new JSDOM(response, {
         runScripts: 'dangerously',
     });
@@ -136,5 +138,3 @@ const ProcessFeedType2 = (item, response) => {
     item.description = body.html();
     item.author = data.author;
 };
-
-export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessHref, ProcessImg };
