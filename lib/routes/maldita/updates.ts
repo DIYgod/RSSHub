@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/updates/:category',
@@ -48,11 +49,12 @@ export const route: Route = {
 
                     return {
                         title: $('h1').text(),
+                        link,
                         category: $('#article-metadata .flex a')
                             .toArray()
                             .map((x) => $(x).text()),
-                        pubDate: $('time').attr('datetime'),
-                        itunes_item_image: $('img').eq(2).attr('src'),
+                        pubDate: parseDate($('time').attr('datetime')!),
+                        itunes_item_image: $('#featuredImage img').attr('src'),
                         content: {
                             html: $('#keys').html()! + $('#article-content').html()!,
                         },
