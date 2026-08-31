@@ -37,6 +37,7 @@ async function handler(ctx) {
     const resultData = seasonResp.data.filter((match) => match.status === 'Played');
 
     const teamName = resultData.length ? (resultData[0].team_A_id === team ? resultData[0].team_A_name : resultData[0].team_B_name) : team;
+    const image = resultData.length ? (resultData[0].team_A_id === team ? resultData[0].team_A_logo : resultData[0].team_B_logo) : undefined;
 
     const out = resultData.map((result) => ({
         title: `${result.match_title} ${result.team_A_name} ${result.fs_A}-${result.fs_B} ${result.team_B_name}`,
@@ -48,6 +49,7 @@ async function handler(ctx) {
     return {
         title: `${teamName} 比赛结果`,
         link,
-        item: out.slice(-10),
+        image,
+        item: out,
     };
 }
