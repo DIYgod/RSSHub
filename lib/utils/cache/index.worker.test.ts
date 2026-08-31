@@ -1,6 +1,4 @@
-/// <reference types="@cloudflare/vitest-pool-workers/types" />
-/// <reference types="@cloudflare/vitest-pool-workers" />
-import { env } from 'cloudflare:test';
+import { env } from 'cloudflare:workers';
 import { describe, expect, it, vi } from 'vitest';
 
 import cache, { setKVNamespace } from '@/utils/cache/index.worker';

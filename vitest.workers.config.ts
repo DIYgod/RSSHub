@@ -2,9 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
-import type { Plugin } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
+import { defineConfig, type Plugin } from 'vitest/config';
 
 // Resolve .worker.ts files instead of .ts files, same as tsdown-worker.config.ts
 function workerAliasPlugin(): Plugin {

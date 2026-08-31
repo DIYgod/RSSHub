@@ -1,11 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import type { Plugin } from 'rolldown';
-import { defineConfig } from 'tsdown';
+import { defineConfig, type TsdownPlugin } from 'tsdown';
 
 // Plugin to automatically resolve .worker.ts files instead of .ts files
-function workerAliasPlugin(): Plugin {
+function workerAliasPlugin(): TsdownPlugin {
     return {
         name: 'worker-alias',
         resolveId(source, importer) {
