@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/updates/:category',
+    path: '/updates/:category?',
     categories: ['traditional-media'],
     example: '/maldita/updates/desinfo',
     parameters: { category: 'Category to fetch' },
@@ -37,7 +37,7 @@ export const route: Route = {
 
         const name = $('h1').text() || 'All updates';
 
-        const links = $('a.ac-link')
+        const links = $(category === 'all' ? 'a.ac-link' : '#content a[href*="maldita.es"]')
             .toArray()
             .map((item) => $(item).attr('href')!);
 
