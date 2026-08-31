@@ -4,6 +4,7 @@ import { JSDOM } from 'jsdom';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const ProcessVideo = (content) => {
     content('div.video').each((i, v) => {
@@ -88,10 +89,12 @@ export const ProcessFeed = async (type, id) => {
             id,
             type,
             size: 20,
+            platform: 'web',
+            version: '',
         },
     });
 
-    const list = data.data.articles
+    let list = data.data.articles
         .filter((article) => article.add_to_tab === '0')
         .map((article) => ({
             title: article.title,
@@ -99,6 +102,15 @@ export const ProcessFeed = async (type, id) => {
             category: [article.category, ...(article.secondary_category ?? [])],
             pubDate: parseDate(article.show_time, 'X'),
         }));
+
+    if (type === 'team' && list.length === 0) {
+        list = nuxtData.newsList.map((news) => ({
+            title: news.title,
+            link: `https://www.dongqiudi.com/articles/${news.id}.html`,
+            category: [news.category],
+            pubDate: timezone(parseDate(news.time), 8),
+        }));
+    }
 
     const out = await Promise.all(
         list.map((item) =>
