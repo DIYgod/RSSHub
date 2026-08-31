@@ -94,14 +94,12 @@ export const processFeed = async (type, id) => {
         },
     });
 
-    let list = data.data.articles
-        .filter((article) => article.add_to_tab === '0')
-        .map((article) => ({
-            title: article.title,
-            link: `https://www.dongqiudi.com/articles/${article.id}.html`,
-            category: [article.category, ...(article.secondary_category ?? [])],
-            pubDate: parseDate(article.show_time, 'X'),
-        }));
+    let list = data.data.articles.map((article) => ({
+        title: article.title,
+        link: `https://www.dongqiudi.com/articles/${article.id}.html`,
+        category: [article.category, ...(article.secondary_category ?? [])],
+        pubDate: parseDate(article.show_time, 'X'),
+    }));
 
     if (type === 'team' && list.length === 0) {
         list = nuxtData.newsList.map((news) => ({
