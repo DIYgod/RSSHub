@@ -10,10 +10,6 @@ const typeMap = {
     2: '规则变更',
 };
 
-/**
- *
- * @param ctx {import('koa').Context}
- */
 export const route: Route = {
     path: '/notice/:type?',
     categories: ['programming'],

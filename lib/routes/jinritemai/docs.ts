@@ -11,10 +11,6 @@ const typeMap = {
     '22': '其他公告',
 };
 
-/**
- *
- * @param ctx {import('koa').Context}
- */
 export const route: Route = {
     path: '/docs/:dirId?',
     categories: ['programming'],
