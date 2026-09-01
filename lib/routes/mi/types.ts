@@ -26,7 +26,6 @@ export interface CrowdfundingDetailInfo {
     end_time: number;
     price: string;
     project_desc: string;
-    project_id: number;
     send_info: string;
     start_time: number;
     support_list: CrowdfundingDetailSupportList[];
@@ -71,7 +70,6 @@ export interface NewProductDetailData {
 }
 
 interface NewProductDetail {
-    productId: number;
     sellPointList: string[];
 }
 
