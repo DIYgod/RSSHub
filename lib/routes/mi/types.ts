@@ -6,7 +6,7 @@ export interface CrowdfundingData {
     list: CrowdfundingList[];
 }
 
-export interface CrowdfundingList {
+interface CrowdfundingList {
     items: CrowdfundingItem[];
 }
 
@@ -32,14 +32,14 @@ export interface CrowdfundingDetailInfo {
     support_list: CrowdfundingDetailSupportList[];
 }
 
-export interface CrowdfundingDetailSupportList {
+interface CrowdfundingDetailSupportList {
     goods_list: CrowdfundingGoods[];
     name: string;
     price: string;
     support_desc: string;
 }
 
-export interface CrowdfundingGoods {
+interface CrowdfundingGoods {
     goods_image: string;
 }
 
@@ -49,7 +49,7 @@ export interface NewProductListData {
     new_list: NewProductItem[];
 }
 
-export interface NewProductDateGroup {
+interface NewProductDateGroup {
     product_list: NewProductItem[];
 }
 
@@ -70,18 +70,18 @@ export interface NewProductDetailData {
     };
 }
 
-export interface NewProductDetail {
+interface NewProductDetail {
     productId: number;
     sellPointList: string[];
 }
 
-export interface NewProductGoods {
+interface NewProductGoods {
     imgUrl: string;
     marketPrice: string;
     name: string;
     price: string;
 }
 
-export interface NewProductRelationBatched {
+interface NewProductRelationBatched {
     goodsInfo: NewProductGoods[];
 }
