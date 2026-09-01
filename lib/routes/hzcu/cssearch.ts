@@ -31,7 +31,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(baseUrl + searchPath.concat('&keyvalue=', encodeURIComponent(keyVal), '&currpage=', pageNum.toString()));
     const $ = load(response);
 
-    const resItem = $('a')
+    const resItem = $('table a')
         .toArray()
         .filter((el) => $(el).attr('target') === '_blank')
         .map((el) => {
