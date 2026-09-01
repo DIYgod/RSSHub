@@ -1,6 +1,6 @@
 name = "rsshub"
 main = "dist-worker/worker.mjs"
-compatibility_date = "2025-06-17"
+compatibility_date = "2026-09-01"
 compatibility_flags = ["nodejs_compat"]
 
 # Serve static assets from lib/assets
