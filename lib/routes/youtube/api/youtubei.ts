@@ -1,10 +1,12 @@
+import pMap from 'p-map';
 import { Innertube, YTNodes } from 'youtubei.js';
 
+import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-import { getVideoUrl, renderYoutube } from '../utils';
+import { formatDescription, getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
 let innertubePromise: Promise<Innertube> | undefined;
@@ -62,7 +64,29 @@ const getPubDate = (metadataTexts: Array<string | undefined>) => {
     return scheduledText ? parseDate(scheduledText.slice(SCHEDULED_PREFIX.length), 'M/D/YY, h:mm A') : undefined;
 };
 
-const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem => {
+// The lockup of a video only carries its title, so the description takes one player request per video
+const getVideoDescription = async (videoId: string) => {
+    try {
+        // The value is wrapped in an object because an empty string does not survive a cache round trip
+        const { description } = await cache.tryGet<{ description: string }>(
+            `youtube:getVideoDescription:${videoId}`,
+            async () => {
+                const innertube = await getInnertube();
+                const info = await innertube.getBasicInfo(videoId);
+                return { description: info.basic_info.short_description ?? '' };
+            },
+            config.cache.contentExpire,
+            // The expiration is not renewed on a hit, so an edited description still shows up in a steadily polled feed
+            false
+        );
+        return description;
+    } catch {
+        // A stream can be unplayable, e.g. a members-only one, which should not take the whole feed down
+        return '';
+    }
+};
+
+const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean, description = ''): DataItem => {
     const videoId = video.content_id;
     const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const metadataRows = video.metadata?.metadata?.metadata_rows ?? [];
@@ -70,7 +94,7 @@ const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem =
 
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
-        description: renderYoutube(embed, videoId, img, ''),
+        description: renderYoutube(embed, videoId, img, formatDescription(description)),
         link: `https://www.youtube.com/watch?v=${videoId}`,
         author: metadataRows.length > 1 ? metadataRows[0].metadata_parts?.[0]?.text?.text : undefined,
         image: img,
@@ -124,12 +148,14 @@ export const getStreamsByChannelId = async ({
     includeLive,
     includeUpcoming,
     includeCompleted,
+    includeDescription,
 }: {
     channelId: string;
     embed: boolean;
     includeLive: boolean;
     includeUpcoming: boolean;
     includeCompleted: boolean;
+    includeDescription: boolean;
 }): Promise<Data> => {
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
@@ -139,6 +165,9 @@ export const getStreamsByChannelId = async ({
         upcoming: includeUpcoming,
         completed: includeCompleted,
     };
+    const videos = streams.videos.filter((video) => video instanceof YTNodes.LockupView).filter((video) => included[getStreamState(video)]);
+    // pMap keeps the results in the order of the input, so a description matches the stream at the same index
+    const descriptions = includeDescription ? await pMap(videos, (video) => getVideoDescription(video.content_id), { concurrency: 5 }) : [];
 
     return {
         title: `${channel.metadata.title || channelId} - Live - YouTube`,
@@ -146,10 +175,7 @@ export const getStreamsByChannelId = async ({
         image: channel.metadata.avatar?.[0].url,
         description: channel.metadata.description,
 
-        item: streams.videos
-            .filter((video) => video instanceof YTNodes.LockupView)
-            .filter((video) => included[getStreamState(video)])
-            .map((video) => lockupViewToItem(video, embed)),
+        item: videos.map((video, index) => lockupViewToItem(video, embed, descriptions[index])),
         allowEmpty: true,
     };
 };
