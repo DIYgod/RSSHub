@@ -24,9 +24,6 @@ export const getCrowdfundingList = async (): Promise<Map<number, CrowdfundingIte
     // oxlint-disable-next-line unicorn/consistent-function-scoping
     const fetch = (query?: Record<string, number>) =>
         ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
-            headers: {
-                referer: 'https://m.mi.com/crowdfunding/home',
-            },
             method: 'POST',
             query,
         });
@@ -57,9 +54,6 @@ export const getCrowdfundingList = async (): Promise<Map<number, CrowdfundingIte
 export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<CrowdfundingDetailInfo> =>
     cache.tryGet(`mi:crowdfunding:${item.project_id}`, async () => {
         const response = await ofetch<DataResponse<CrowdfundingDetailData>>('https://m.mi.com/v1/crowd/crowd_detail', {
-            headers: {
-                referer: 'https://m.mi.com/crowdfunding/home',
-            },
             method: 'POST',
             query: {
                 project_id: item.project_id,
