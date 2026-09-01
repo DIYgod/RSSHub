@@ -7,6 +7,8 @@ import { parseRelativeDate } from './parse-date';
 
 dayjs.extend(weekday);
 
+const p = (...args: Parameters<typeof parseRelativeDate>) => parseRelativeDate(...args).getTime();
+
 describe('parseRelativeDate', () => {
     // === CONSTANTS ===
     const second = 1000;
@@ -29,8 +31,6 @@ describe('parseRelativeDate', () => {
     const PREVIOUS_WEDNESDAY = TODAY_START + 2 * day - week; // Jan 28 (Last week)
     const LAST_SUNDAY = new Date('2026-02-01T00:00:00').getTime(); // Yesterday (Feb 01)
     const LAST_FRIDAY = new Date('2026-01-30T00:00:00').getTime(); // Last Friday (Jan 30)
-
-    const p = (str: string, ...opts: any[]) => parseRelativeDate(str, ...opts).getTime();
 
     beforeEach(() => {
         MockDate.set(NOW_TIMESTAMP);
