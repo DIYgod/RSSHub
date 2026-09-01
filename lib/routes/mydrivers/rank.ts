@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('a')
+    let items = $('.news_title a')
         .toArray()
         .filter((item) => /\/\d+\.html?/.test($(item).prop('href')!))
         .slice(0, limit)
