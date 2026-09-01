@@ -24,10 +24,13 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: Map<number, NewProductItem>): Promise<Map<number, NewProductDetailData>> => {
-    const details = await Promise.all(list.values().map((item) => utils.getNewProductItem(item)));
-    return new Map(details.map((detail) => [detail.product.productId, detail]));
-};
+const getDetails = (list: NewProductItem[]): Promise<Array<{ listItem: NewProductItem; detail: NewProductDetailData }>> =>
+    Promise.all(
+        list.map(async (listItem) => ({
+            listItem,
+            detail: await utils.getNewProductItem(listItem),
+        }))
+    );
 
 const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): DataItem => ({
     title: listItem.product_name,
@@ -42,17 +45,7 @@ async function handler(): Promise<Data> {
     const list = await utils.getNewProductList();
     const details = await getDetails(list);
 
-    const items: DataItem[] = list
-        .values()
-        .toArray()
-        .toSorted((a, b) => b.start_time - a.start_time)
-        .map((item) => {
-            const detail = details.get(item.product_id);
-            if (!detail) {
-                throw new Error(`Details not found for product ${item.product_id}`);
-            }
-            return getDataItem(item, detail);
-        });
+    const items: DataItem[] = details.map(({ listItem, detail }) => getDataItem(listItem, detail));
 
     return {
         title: '小米上新',

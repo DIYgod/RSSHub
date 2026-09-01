@@ -18,9 +18,9 @@ dayjs.extend(utc);
 /**
  * Fetch the list of crowdfunding projects, merging the current projects (primary) with the history projects (supplement).
  *
- * @returns {Promise<Map<number, CrowdfundingItem>>} The merged crowdfunding project map keyed by project ID.
+ * @returns {Promise<CrowdfundingItem[]>} The merged crowdfunding project list.
  */
-export const getCrowdfundingList = async (): Promise<Map<number, CrowdfundingItem>> => {
+export const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
     // oxlint-disable-next-line unicorn/consistent-function-scoping
     const fetch = (query?: Record<string, number>) =>
         ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
@@ -42,7 +42,7 @@ export const getCrowdfundingList = async (): Promise<Map<number, CrowdfundingIte
     for (const group of historyResponse.data.list) {
         setIfNeeded(group.items);
     }
-    return map;
+    return map.values().toArray();
 };
 
 /**
@@ -65,9 +65,9 @@ export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<Crowdfundin
 /**
  * Fetch the list of new products, merging `date_list` (primary) with `history_date_list` (supplement) and `new_list` (supplement).
  *
- * @returns {Promise<Map<number, NewProductItem>>} The merged new product map keyed by product ID.
+ * @returns {Promise<NewProductItem[]>} The merged new product list.
  */
-export const getNewProductList = async (): Promise<Map<number, NewProductItem>> => {
+export const getNewProductList = async (): Promise<NewProductItem[]> => {
     const response = await ofetch<DataResponse<NewProductListData>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
     });
@@ -86,7 +86,7 @@ export const getNewProductList = async (): Promise<Map<number, NewProductItem>> 
         setIfNeeded(group.product_list);
     }
     setIfNeeded(response.data.new_list);
-    return map;
+    return map.values().toArray();
 };
 
 /**

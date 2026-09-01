@@ -30,10 +30,13 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: Map<number, CrowdfundingItem>): Promise<Map<number, CrowdfundingDetailInfo>> => {
-    const details = await Promise.all(list.values().map((item) => utils.getCrowdfundingItem(item)));
-    return new Map(details.map((detail) => [detail.project_id, detail]));
-};
+const getDetails = (list: CrowdfundingItem[]): Promise<Array<{ listItem: CrowdfundingItem; detail: CrowdfundingDetailInfo }>> =>
+    Promise.all(
+        list.map(async (listItem) => ({
+            listItem,
+            detail: await utils.getCrowdfundingItem(listItem),
+        }))
+    );
 
 const getDataItem = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): DataItem => ({
     title: listItem.product_name,
@@ -48,17 +51,7 @@ async function handler(): Promise<Data> {
     const list = await utils.getCrowdfundingList();
     const details = await getDetails(list);
 
-    const items: DataItem[] = list
-        .values()
-        .toArray()
-        .toSorted((a, b) => b.project_id - a.project_id)
-        .map((item) => {
-            const detail = details.get(item.project_id);
-            if (!detail) {
-                throw new Error(`Details not found for project ${item.project_id}`);
-            }
-            return getDataItem(item, detail);
-        });
+    const items: DataItem[] = details.map(({ listItem, detail }) => getDataItem(listItem, detail));
 
     return {
         title: '小米众筹',
