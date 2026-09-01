@@ -142,30 +142,11 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     };
 };
 
-export const getStreamsByChannelId = async ({
-    channelId,
-    embed,
-    includeLive,
-    includeUpcoming,
-    includeCompleted,
-    includeDescription,
-}: {
-    channelId: string;
-    embed: boolean;
-    includeLive: boolean;
-    includeUpcoming: boolean;
-    includeCompleted: boolean;
-    includeDescription: boolean;
-}): Promise<Data> => {
+export const getStreamsByChannelId = async ({ channelId, embed, includeDescription }: { channelId: string; embed: boolean; includeDescription: boolean }): Promise<Data> => {
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const streams = await channel.getLiveStreams();
-    const included = {
-        live: includeLive,
-        upcoming: includeUpcoming,
-        completed: includeCompleted,
-    };
-    const videos = streams.videos.filter((video) => video instanceof YTNodes.LockupView).filter((video) => included[getStreamState(video)]);
+    const videos = streams.videos.filter((video) => video instanceof YTNodes.LockupView);
     // pMap keeps the results in the order of the input, so a description matches the stream at the same index
     const descriptions = includeDescription ? await pMap(videos, (video) => getVideoDescription(video.content_id), { concurrency: 5 }) : [];
 
@@ -175,8 +156,8 @@ export const getStreamsByChannelId = async ({
         image: channel.metadata.avatar?.[0].url,
         description: channel.metadata.description,
 
-        item: videos.map((video, index) => lockupViewToItem(video, embed, descriptions[index])),
-        allowEmpty: true,
+        // The state is exposed as a category so that a single state can be picked out with the common `filter_category` parameter
+        item: videos.map((video, index) => ({ ...lockupViewToItem(video, embed, descriptions[index]), category: [getStreamState(video)] })),
     };
 };
 
