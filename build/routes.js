@@ -38014,6 +38014,41 @@ export default {
         "location": "tieba/post-lz.ts",
         "module": () => import('@/routes/baidu/tieba/post-lz.ts')
       },
+      "/baijiahao/:id/:tab?": {
+        "path": "/baijiahao/:id/:tab?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/baidu/baijiahao/3617",
+        "parameters": {
+          "id": "Account id, the `app_id` in the URL of the author page",
+          "tab": {
+            "description": "Content type",
+            "options": [
+              {
+                "value": "main",
+                "label": "全部"
+              },
+              {
+                "value": "article",
+                "label": "文章"
+              },
+              {
+                "value": "dynamic",
+                "label": "动态"
+              }
+            ],
+            "default": "main"
+          }
+        },
+        "name": "百家号",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "baijiahao.baidu.com",
+        "location": "baijiahao.ts",
+        "module": () => import('@/routes/baidu/baijiahao.ts')
+      },
       "/search/:keyword": {
         "path": "/search/:keyword",
         "categories": [

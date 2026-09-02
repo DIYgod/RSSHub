@@ -2766,6 +2766,9 @@
     "u3u",
     "FlanChanXwO"
   ],
+  "/baidu/baijiahao/:id/:tab?": [
+    "TonyRL"
+  ],
   "/baidu/search/:keyword": [
     "CaoMeiYouRen"
   ],
