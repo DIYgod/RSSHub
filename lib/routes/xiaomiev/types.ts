@@ -1,4 +1,4 @@
-export interface DataResponse<Data> {
+interface DataResponse<Data> {
     data: Data;
 }
 
@@ -22,7 +22,7 @@ export type ListResponse = DataResponse<{
     }>;
 }>;
 
-export interface DetailGoods {
+interface DetailGoods {
     imgUrl: string;
     marketPrice: string;
     name: string;
