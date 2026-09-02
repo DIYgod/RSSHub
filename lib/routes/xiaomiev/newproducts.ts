@@ -27,7 +27,7 @@ export const route: Route = {
 const getDataItems = (list: Goods[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
-            cache.tryGet(`xiaomiev:dataitem:${listItem.itemId}`, async () => {
+            cache.tryGet(`xiaomiev:product:dataitem:${listItem.itemId}`, async () => {
                 const detail = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detail);
             })
