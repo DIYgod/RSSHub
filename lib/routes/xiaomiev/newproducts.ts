@@ -1,5 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 
 import type { DetailData, Goods } from './types';
 import utils from './utils';
@@ -23,10 +24,15 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: Goods[]): Promise<Map<number, DetailData>> => {
-    const details = await Promise.all(list.map((item) => utils.getNewProductItem(item)));
-    return new Map(details.map((detail) => [detail.product.productId, detail]));
-};
+const getDataItems = (list: Goods[]): Promise<DataItem[]> =>
+    Promise.all(
+        list.map((listItem) =>
+            cache.tryGet(`xiaomiev:dataitem:${listItem.itemId}`, async () => {
+                const detail = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detail);
+            })
+        )
+    );
 
 const getDataItem = (listItem: Goods, detail: DetailData) =>
     ({
@@ -39,15 +45,7 @@ const getDataItem = (listItem: Goods, detail: DetailData) =>
 
 async function handler() {
     const list = await utils.getNewProductList();
-    const details = await getDetails(list);
-
-    const items: DataItem[] = list.map((item) => {
-        const detail = details.get(item.itemId);
-        if (!detail) {
-            throw new Error(`Details not found for product ${item.itemId}`);
-        }
-        return getDataItem(item, detail);
-    });
+    const items = await getDataItems(list);
 
     return {
         title: '小米汽车上新',
