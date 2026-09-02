@@ -20678,40 +20678,6 @@
     "url": "mobile.tingtingfm.com",
     "lang": "zh-CN"
   },
-  "toutiao": {
-    "routes": {
-      "/user/token/:token": {
-        "path": "/user/token/:token",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/toutiao/user/token/MS4wLjABAAAApOspM7AnWqplD9FIBGnhJRfUjFT_msD1KZMfNPBZa-c",
-        "parameters": {
-          "token": "用户 token，可在用户主页 URL 找到"
-        },
-        "features": {
-          "antiCrawler": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.toutiao.com/c/user/token/:token"
-            ]
-          }
-        ],
-        "name": "头条主页",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "user.tsx",
-        "module": "() => import('@/routes/toutiao/user.tsx')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "今日头条",
-    "url": "www.toutiao.com",
-    "lang": "zh-CN"
-  },
   "tqyb": {
     "routes": {
       "/sncsyjxh": {
@@ -114879,6 +114845,149 @@
     "name": "とらのあな",
     "url": "toranoana.jp",
     "lang": "ja"
+  },
+  "toutiao": {
+    "routes": {
+      "/user/token/:token": {
+        "path": "/user/token/:token",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/toutiao/user/token/MS4wLjABAAAApOspM7AnWqplD9FIBGnhJRfUjFT_msD1KZMfNPBZa-c",
+        "parameters": {
+          "token": "用户 token，可在用户主页 URL 找到"
+        },
+        "features": {
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.toutiao.com/c/user/token/:token"
+            ]
+          }
+        ],
+        "name": "头条主页",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "user.tsx",
+        "module": "() => import('@/routes/toutiao/user.tsx')"
+      },
+      "/channel/:category": {
+        "path": "/channel/:category",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/toutiao/channel/news_tech",
+        "parameters": {
+          "category": {
+            "description": "频道",
+            "options": [
+              {
+                "value": "recommend",
+                "label": "推荐"
+              },
+              {
+                "value": "news_hot",
+                "label": "热点"
+              },
+              {
+                "value": "news_tech",
+                "label": "科技"
+              },
+              {
+                "value": "news_finance",
+                "label": "财经"
+              },
+              {
+                "value": "news_entertainment",
+                "label": "娱乐"
+              },
+              {
+                "value": "news_sports",
+                "label": "体育"
+              },
+              {
+                "value": "news_world",
+                "label": "国际"
+              },
+              {
+                "value": "news_military",
+                "label": "军事"
+              },
+              {
+                "value": "news_history",
+                "label": "历史"
+              },
+              {
+                "value": "news_essay",
+                "label": "美文"
+              },
+              {
+                "value": "news_food",
+                "label": "美食"
+              },
+              {
+                "value": "news_travel",
+                "label": "旅游"
+              },
+              {
+                "value": "news_fashion",
+                "label": "时尚"
+              },
+              {
+                "value": "news_game",
+                "label": "游戏"
+              },
+              {
+                "value": "news_baby",
+                "label": "育儿"
+              },
+              {
+                "value": "news_regimen",
+                "label": "养生"
+              },
+              {
+                "value": "digital",
+                "label": "数码"
+              },
+              {
+                "value": "video",
+                "label": "视频"
+              }
+            ]
+          }
+        },
+        "features": {
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.toutiao.com/ch/:category"
+            ]
+          },
+          {
+            "title": "推荐",
+            "source": [
+              "www.toutiao.com/"
+            ],
+            "target": "/channel/recommend"
+          }
+        ],
+        "name": "频道",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "channel.ts",
+        "module": "() => import('@/routes/toutiao/channel.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "今日头条",
+    "url": "www.toutiao.com",
+    "lang": "zh-CN"
   },
   "towardsdatascience": {
     "routes": {

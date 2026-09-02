@@ -3319,6 +3319,7 @@ export type RoutePath =
   | `/topys/:keyword?`
   | `/toranoana/news/:category?`
   | `/touhougarakuta/:language/:type`
+  | `/toutiao/channel/:category`
   | `/toutiao/user/token/:token`
   | `/towardsdatascience/latest`
   | `/tpre/cqzr`
