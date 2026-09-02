@@ -1,6 +1,5 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 import type { DetailData, DetailResponse, Goods, ListResponse } from './types';
@@ -45,29 +44,28 @@ export const getNewProductList = async (): Promise<Goods[]> => {
 };
 
 /**
- * Fetch and cache new product details.
+ * Fetch new product details.
  *
  * @param {Goods} item - New product list item.
  * @returns {Promise<DetailData>} New product details.
  */
-export const getNewProductItem = (item: Goods): Promise<DetailData> =>
-    cache.tryGet(`xiaomiev:product:${item.itemId}`, async () => {
-        const response = await ofetch<DetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info', {
-            body: [
-                {},
-                {
-                    configVersion: 1,
-                    productId: item.itemId,
-                    servicePackageVersion: 2,
-                },
-            ],
-            headers: {
-                'X-User-Agent': 'channel/car platform/carlife.ios',
+export const getNewProductItem = async (item: Goods): Promise<DetailData> => {
+    const response = await ofetch<DetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info', {
+        body: [
+            {},
+            {
+                configVersion: 1,
+                productId: item.itemId,
+                servicePackageVersion: 2,
             },
-            method: 'POST',
-        });
-        return response.data;
-    }) as Promise<DetailData>;
+        ],
+        headers: {
+            'X-User-Agent': 'channel/car platform/carlife.ios',
+        },
+        method: 'POST',
+    });
+    return response.data;
+};
 
 const NewProductDescription = ({ listItem, detail }: { listItem: Goods; detail: DetailData }) => (
     <>
