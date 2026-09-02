@@ -172,7 +172,7 @@ async function parseWebpage(url: string): Promise<PageParseResult> {
         const urlPath = rawUrlPath.replaceAll(String.raw`\u002F`, '/');
         const link = new URL(urlPath, baseUrl).href;
 
-        const title = String(node.source?.hed ?? node.dangerousHed ?? '').trim();
+        const title = String(node.source?.hed ?? node.dangerousHed ?? '');
         const pubDate = node.pubDate ? parseDate(node.pubDate) : undefined;
 
         const imgSources = node.image?.sources ?? undefined;
