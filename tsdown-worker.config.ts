@@ -67,13 +67,14 @@ export default defineConfig({
     platform: 'node',
     target: 'esnext',
     treeshake: true,
+    copy: [{ from: 'node_modules/header-generator/data_files', to: 'dist-worker/modules' }],
     define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
         'process.env.VERCEL_ENV': JSON.stringify(''),
         'import.meta.dirname': JSON.stringify('/worker'),
         'import.meta.url': JSON.stringify('file:///worker/index.mjs'),
         // CommonJS compatibility
-        __dirname: JSON.stringify('/worker'),
+        __dirname: JSON.stringify('/bundle'),
         __filename: JSON.stringify('/worker/index.mjs'),
     },
     plugins: [workerAliasPlugin()],
