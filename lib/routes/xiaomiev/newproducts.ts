@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/newproducts',
     categories: ['shopping'],
     example: '/xiaomiev/newproducts',
-    name: '好物上新',
+    name: '小米汽车上新',
     maintainers: ['nuomi1'],
     handler,
     features: {
@@ -53,7 +53,7 @@ async function handler() {
         });
 
     return {
-        title: '好物上新',
+        title: '小米汽车上新',
         link: 'https://www.xiaomiev.com/',
         item: items,
         image: 'https://s1.xiaomiev.com/mi-car-shop/web-shop/assets/logo.svg',
