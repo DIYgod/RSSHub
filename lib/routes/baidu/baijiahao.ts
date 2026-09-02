@@ -16,9 +16,9 @@ const abdrKeyId = 'a148fdf866c24529';
 
 const fingerprint = {
     1: '1', // canvas 2d support
-    4: '24', // screen.colorDepth
-    5: '1920x1080', // screen size
-    6: '1920x1032', // available screen size
+    4: '30', // screen.colorDepth
+    5: '1512x982', // screen size
+    6: '1512x944', // available screen size
     7: ',', // screen.deviceXDPI, deviceYDPI, old IE only
     8: ['PDF Viewer', 'Chrome PDF Viewer', 'Chromium PDF Viewer', 'Microsoft Edge PDF Viewer', 'WebKit built-in PDF'].map((name) => encodeURIComponent(name)).join(','), // navigator.plugins names
     9: ['Portable Document Format', 'Portable Document Format'].map((description) => encodeURIComponent(description)).join(','), // navigator.mimeTypes descriptions
@@ -29,20 +29,19 @@ const fingerprint = {
     15: 'en-US', // navigator.language
     16: '', // navigator.systemLanguage, old IE only
     17: '1,0,1,1,1,1', // video.canPlayType for theora, h264, vp8, vp9 and hls
-    18: '1', // window.devicePixelRatio
+    18: '2', // window.devicePixelRatio
     19: '8', // navigator.hardwareConcurrency
     20: '0', // ad blocker, whether an .adsbox div gets hidden
     21: '', // navigator.doNotTrack
-    22: 'Gecko,20030107,Google Inc.,,Mozilla,Netscape,Win32', // navigator product, productSub, vendor, vendorSub, appCodeName, appName, platform
+    22: 'Gecko,20030107,Google Inc.,,Mozilla,Netscape,MacIntel', // navigator product, productSub, vendor, vendorSub, appCodeName, appName, platform
     23: '0,0,0', // navigator maxTouchPoints, msMaxTouchPoints, touch event support
     24: '1', // indexedDB available
-    25: 'Google Inc. (NVIDIA),ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002503) Direct3D11 vs_5_0 ps_5_0, D3D11)', // WebGL unmasked vendor and renderer
     28: 'false,false', // legacy engine tells: document.getBoxObjectFor, window.opera
     29: 'true,true,true', // eval tamper check: no prototype, name is eval, toString says native code
     30: 0, // document.body.addBehavior, old IE only
     31: 8, // navigator.deviceMemory
     32: '31', // milliseconds the collection took
-    34: 'Win32', // navigator.platform
+    34: 'MacIntel', // navigator.platform
     35: 'false,true', // navigator.battery present, navigator.getBattery present
     41: true, // battery charging
     42: 0, // battery chargingTime
@@ -107,11 +106,12 @@ async function handler(ctx: Context) {
     const abSr = await cache.tryGet(
         'baidu:baijiahao:ab_sr',
         async () => {
-            const { 'user-agent': ua } = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
+            const { 'user-agent': ua } = generateHeaders(PRESETS.MODERN_MACOS_CHROME);
             const cipher = createCipheriv('aes-128-cbc', abdrKey, abdrIv);
             const plaintext = JSON.stringify({
                 ...fingerprint,
                 3: sha1(), // sha1 of the canvas rendering
+                25: `Google Inc. (Apple),ANGLE (Apple, ANGLE Metal Renderer: Apple M${Math.ceil(Math.random() * 6)}, Unspecified Version)`, // WebGL unmasked vendor and renderer
                 27: ua, // navigator.userAgent
                 78: `${sha1()}_${sha1()}`, // composite hash of canvas, plugins, cores, WebGL and platform
                 82: sha1(), // hash of a sample of the page script text
