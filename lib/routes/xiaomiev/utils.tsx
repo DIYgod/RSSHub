@@ -8,9 +8,9 @@ import type { DetailData, DetailResponse, Goods, ListResponse } from './types';
 /**
  * Fetch the list of new products, extracting goods from every `car_product_list` floor.
  *
- * @returns {Promise<Map<number, Goods>>} The new product map keyed by item ID.
+ * @returns {Promise<Goods[]>} The new product list.
  */
-export const getNewProductList = async (): Promise<Map<number, Goods>> => {
+export const getNewProductList = async (): Promise<Goods[]> => {
     const response = await ofetch<ListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index', {
         body: [
             {},
@@ -41,7 +41,7 @@ export const getNewProductList = async (): Promise<Map<number, Goods>> => {
             }
         }
     }
-    return map;
+    return map.values().toArray();
 };
 
 /**

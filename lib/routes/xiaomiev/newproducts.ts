@@ -23,8 +23,8 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = async (list: Map<number, Goods>): Promise<Map<number, DetailData>> => {
-    const details = await Promise.all(list.values().map((item) => utils.getNewProductItem(item)));
+const getDetails = async (list: Goods[]): Promise<Map<number, DetailData>> => {
+    const details = await Promise.all(list.map((item) => utils.getNewProductItem(item)));
     return new Map(details.map((detail) => [detail.product.productId, detail]));
 };
 
@@ -41,16 +41,13 @@ async function handler() {
     const list = await utils.getNewProductList();
     const details = await getDetails(list);
 
-    const items: DataItem[] = list
-        .values()
-        .toArray()
-        .map((item) => {
-            const detail = details.get(item.itemId);
-            if (!detail) {
-                throw new Error(`Details not found for product ${item.itemId}`);
-            }
-            return getDataItem(item, detail);
-        });
+    const items: DataItem[] = list.map((item) => {
+        const detail = details.get(item.itemId);
+        if (!detail) {
+            throw new Error(`Details not found for product ${item.itemId}`);
+        }
+        return getDataItem(item, detail);
+    });
 
     return {
         title: '小米汽车上新',
