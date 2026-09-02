@@ -12680,14 +12680,6 @@
           "/p/:id"
         ],
         "target": "/baidu/tieba/post/:id"
-      },
-      {
-        "title": "帖子动态",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/p/:id"
-        ],
-        "target": "/baidu/tieba/post/lz/:id"
       }
     ]
   },
