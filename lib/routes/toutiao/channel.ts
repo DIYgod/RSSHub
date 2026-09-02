@@ -1,7 +1,9 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { generateHeaders } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -76,7 +78,7 @@ async function handler(ctx: Context) {
         headers: { 'user-agent': ua },
     });
 
-    const items = data
+    const list = data
         .filter((item) => item.cell_type !== 48) // empty placeholder
         .map((item) => {
             const categories = [...new Set(Object.keys(JSON.parse(item.optional_data?.mm_category_three ?? '{}')).flatMap((key) => key.split('/')))];
@@ -92,16 +94,34 @@ async function handler(ctx: Context) {
                     category: categories,
                 };
             }
-            const cover = item.large_image_list?.[0] ?? item.middle_image;
             return {
                 title: item.title,
-                description: (cover ? `<img src="${cover.url}">` : '') + item.Abstract,
+                description: item.Abstract,
                 link: `https://www.toutiao.com/${item.has_video ? 'video' : 'article'}/${item.group_id}/`,
                 pubDate: parseDate(item.publish_time, 'X'),
                 author: item.source,
                 category: categories,
+                image: item.large_image_list?.[0]?.url ?? item.middle_image?.url,
+                groupId: item.group_id,
             };
         });
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                if (item.groupId) {
+                    const { data } = await ofetch<{ data: { content: string } | null }>(`https://m.toutiao.com/i${item.groupId}/info/`);
+                    if (data) {
+                        const $ = load(data.content, null, false);
+                        $('.tt-video-box').remove();
+                        item.description = $.html();
+                    }
+                    item.description = (item.image ? `<img src="${item.image}">` : '') + item.description;
+                }
+                return item;
+            })
+        )
+    );
 
     return {
         title: `${channel.name} - 今日头条`,
