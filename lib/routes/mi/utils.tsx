@@ -6,7 +6,6 @@ import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 import type { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, DataResponse, NewProductDetailData, NewProductItem, NewProductListData } from './types';
@@ -46,21 +45,20 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
 };
 
 /**
- * Fetch and cache crowdfunding project details.
+ * Fetch crowdfunding project details.
  *
  * @param {CrowdfundingItem} item - Crowdfunding item.
  * @returns {Promise<CrowdfundingDetailInfo>} Crowdfunding item details.
  */
-export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<CrowdfundingDetailInfo> =>
-    cache.tryGet(`mi:crowdfunding:${item.project_id}`, async () => {
-        const response = await ofetch<DataResponse<CrowdfundingDetailData>>('https://m.mi.com/v1/crowd/crowd_detail', {
-            method: 'POST',
-            query: {
-                project_id: item.project_id,
-            },
-        });
-        return response.data.crowd_funding_info;
+export const getCrowdfundingItem = async (item: CrowdfundingItem): Promise<CrowdfundingDetailInfo> => {
+    const response = await ofetch<DataResponse<CrowdfundingDetailData>>('https://m.mi.com/v1/crowd/crowd_detail', {
+        method: 'POST',
+        query: {
+            project_id: item.project_id,
+        },
     });
+    return response.data.crowd_funding_info;
+};
 
 /**
  * Fetch the list of new products, merging `date_list` (primary) with `history_date_list` (supplement) and `new_list` (supplement).
@@ -90,19 +88,18 @@ export const getNewProductList = async (): Promise<NewProductItem[]> => {
 };
 
 /**
- * Fetch and cache new product details.
+ * Fetch new product details.
  *
  * @param {NewProductItem} item - New product list item.
  * @returns {Promise<NewProductDetailData>} New product details.
  */
-export const getNewProductItem = (item: NewProductItem): Promise<NewProductDetailData> =>
-    cache.tryGet(`mi:product:${item.product_id}`, async () => {
-        const response = await ofetch<DataResponse<NewProductDetailData>>('https://m.mi.com/mtop/xiaomishop/product/info', {
-            body: [{}, { productId: item.product_id }],
-            method: 'POST',
-        });
-        return response.data;
+export const getNewProductItem = async (item: NewProductItem): Promise<NewProductDetailData> => {
+    const response = await ofetch<DataResponse<NewProductDetailData>>('https://m.mi.com/mtop/xiaomishop/product/info', {
+        body: [{}, { productId: item.product_id }],
+        method: 'POST',
     });
+    return response.data;
+};
 
 const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingItem; detail: CrowdfundingDetailInfo }) => (
     <>
