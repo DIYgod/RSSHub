@@ -43,7 +43,7 @@ const subcategoryTitleMaps: Record<string, Record<string, string>> = {
         girl: '美女',
         sports: '體育',
         special: '特別報導',
-        // 奧斯卡導向 tag 頁，不作為此路由的子分類
+        // 奧斯卡 section links to /tag/the-oscars-奧斯卡金像獎, not used as a subcategory of this route for now; might support it in the future in a /tag route
     },
     gadget: {
         '3c': '3C',
