@@ -34,16 +34,15 @@ const getDataItems = (list: Goods[]): Promise<DataItem[]> =>
         )
     );
 
-const getDataItem = (listItem: Goods, detail: DetailData) =>
-    ({
-        title: listItem.name,
-        description: utils.renderNewProduct(listItem, detail),
-        link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
-        image: listItem.img800s,
-        language: 'zh-CN',
-    }) as DataItem;
+const getDataItem = (listItem: Goods, detail: DetailData): DataItem => ({
+    title: listItem.name,
+    description: utils.renderNewProduct(listItem, detail),
+    link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
+    image: listItem.img800s,
+    language: 'zh-CN',
+});
 
-async function handler() {
+async function handler(): Promise<Data> {
     const list = await utils.getNewProductList();
     const items = await getDataItems(list);
 
@@ -53,5 +52,5 @@ async function handler() {
         item: items,
         image: 'https://s1.xiaomiev.com/mi-car-shop/web-shop/assets/logo.svg',
         language: 'zh-CN',
-    } as Data;
+    };
 }
