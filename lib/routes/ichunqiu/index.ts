@@ -1,11 +1,12 @@
 import { createHash } from 'node:crypto';
 
 import { load } from 'cheerio';
-import { VM } from 'vm2';
 
 import type { Route } from '@/types';
 import { generateHeaders } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
+
+import { evaluateJsl } from './jsl';
 
 export const route: Route = {
     path: '/',
@@ -60,7 +61,7 @@ async function handler() {
         const challenge = body.match(/go\((\{.+?\})\)/s);
         if (assignment) {
             // get 1st __jsl_clearance_s
-            const [name, value] = new VM({ timeout: 1000 }).run(assignment[1]).split(';', 1)[0].split('=', 2);
+            const [name, value] = evaluateJsl(assignment[1]).split(';', 1)[0].split('=', 2);
             cookies.set(name, value);
         } else if (challenge) {
             // get 2nd __jsl_clearance_s
