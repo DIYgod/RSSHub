@@ -1,5 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import type { NewProductDetailData, NewProductItem } from './types';
@@ -24,12 +25,14 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = (list: NewProductItem[]): Promise<Array<{ listItem: NewProductItem; detail: NewProductDetailData }>> =>
+const getDataItems = (list: NewProductItem[]): Promise<DataItem[]> =>
     Promise.all(
-        list.map(async (listItem) => ({
-            listItem,
-            detail: await utils.getNewProductItem(listItem),
-        }))
+        list.map((listItem) =>
+            cache.tryGet(`mi:product:dataitem:${listItem.product_id}`, async () => {
+                const detail = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detail);
+            })
+        )
     );
 
 const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): DataItem => ({
@@ -43,9 +46,7 @@ const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): Da
 
 async function handler(): Promise<Data> {
     const list = await utils.getNewProductList();
-    const details = await getDetails(list);
-
-    const items: DataItem[] = details.map(({ listItem, detail }) => getDataItem(listItem, detail));
+    const items = await getDataItems(list);
 
     return {
         title: '小米上新',

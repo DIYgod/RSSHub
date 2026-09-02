@@ -1,5 +1,6 @@
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import type { CrowdfundingDetailInfo, CrowdfundingItem } from './types';
@@ -30,12 +31,14 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDetails = (list: CrowdfundingItem[]): Promise<Array<{ listItem: CrowdfundingItem; detail: CrowdfundingDetailInfo }>> =>
+const getDataItems = (list: CrowdfundingItem[]): Promise<DataItem[]> =>
     Promise.all(
-        list.map(async (listItem) => ({
-            listItem,
-            detail: await utils.getCrowdfundingItem(listItem),
-        }))
+        list.map((listItem) =>
+            cache.tryGet(`mi:crowdfunding:dataitem:${listItem.project_id}`, async () => {
+                const detail = await utils.getCrowdfundingItem(listItem);
+                return getDataItem(listItem, detail);
+            })
+        )
     );
 
 const getDataItem = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): DataItem => ({
@@ -49,9 +52,7 @@ const getDataItem = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo)
 
 async function handler(): Promise<Data> {
     const list = await utils.getCrowdfundingList();
-    const details = await getDetails(list);
-
-    const items: DataItem[] = details.map(({ listItem, detail }) => getDataItem(listItem, detail));
+    const items = await getDataItems(list);
 
     return {
         title: '小米众筹',
