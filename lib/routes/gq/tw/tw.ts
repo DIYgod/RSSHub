@@ -93,7 +93,6 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const category = ctx.req.param('category')!;
     const subcategory = ctx.req.param('subcategory') ?? '';
-    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '21'));
 
     if (!Object.hasOwn(categoryTitleMap, category)) {
         throw new Error(`Unsupported category: ${category}`);
@@ -117,7 +116,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title,
         link: listUrl,
-        item: items.slice(0, limit),
+        item: items,
     };
 }
 interface PageParseResult {
