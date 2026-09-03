@@ -11,29 +11,27 @@ const baseUrl = 'https://www.br-klassik.de';
 export const getList = async (path: string): Promise<DataItem[]> => {
     const html = await ofetch(`${baseUrl}${path}`);
     const $ = load(html);
-    const items: DataItem[] = [];
 
-    $('.br-teaser a.br-internal').each((_, elem) => {
-        const $elem = $(elem);
-        const href = $elem.attr('href');
-        if (!href || !href.endsWith('-100.html')) {
-            return;
-        }
-        const link = new URL(href, baseUrl).href;
+    return $('.br-teaser a.br-internal')
+        .toArray()
+        .map((elem) => {
+            const $elem = $(elem);
+            const href = $elem.attr('href');
+            if (!href || !href.endsWith('-100.html')) {
+                return;
+            }
 
-        const headline = $elem.find('h4.br-headline').text().trim();
-        const title = $elem.find('p.br-title').text().trim();
-        const description = $elem.find('p.br-text').text().trim();
-        const itemTitle = [headline, title].filter(Boolean).join(': ');
+            const headline = $elem.find('h4.br-headline').text().trim();
+            const title = $elem.find('p.br-title').text().trim();
+            const description = $elem.find('p.br-text').text().trim();
 
-        items.push({
-            link,
-            title: itemTitle,
-            description,
-        });
-    });
-
-    return items;
+            return {
+                link: new URL(href, baseUrl).href,
+                title: [headline, title].filter(Boolean).join(': '),
+                description,
+            };
+        })
+        .filter((item) => item !== undefined);
 };
 
 export const getArticle = ({ link, title, description }: DataItem) =>
