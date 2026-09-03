@@ -80,7 +80,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gq.com.tw/:category/:subcategory?'],
+            source: ['www.gq.com.tw/:category/:subcategory?'],
             target: '/tw/:category/:subcategory?',
         },
     ],
