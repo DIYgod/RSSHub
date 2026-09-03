@@ -32,18 +32,7 @@ export const route: Route = {
 async function handler() {
     const list = await getList('/aktuell/index.html');
 
-    const items = await Promise.all(
-        list.map(async (item) => {
-            const detail = await getArticle(item.link);
-            return {
-                title: item.title,
-                link: item.link,
-                description: detail.description || item.description,
-                pubDate: detail.pubDate,
-                author: detail.author,
-            };
-        })
-    );
+    const items = await Promise.all(list.map((item) => getArticle(item)));
 
     return {
         title: 'BR-Klassik | Aktuell',
