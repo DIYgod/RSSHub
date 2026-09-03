@@ -45529,6 +45529,19 @@
       }
     ]
   },
+  "br-klassik.de": {
+    "_name": "BR-Klassik",
+    "www": [
+      {
+        "title": "Aktuell (News & Kritik)",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/aktuell/index.html"
+        ],
+        "target": "/br-klassik/aktuell"
+      }
+    ]
+  },
   "caareviews.org": {
     "_name": "caa.reviews",
     ".": [

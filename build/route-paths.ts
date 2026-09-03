@@ -444,6 +444,7 @@ export type RoutePath =
   | `/booru/mmda/tags/:tags?`
   | `/booth.pm/shop/:subdomain`
   | `/bossdesign/:category?`
+  | `/br-klassik/aktuell`
   | `/brave/latest`
   | `/brooklynmuseum/exhibitions/:state?`
   | `/bse/:category?/:keyword?`

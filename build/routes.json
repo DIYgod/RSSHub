@@ -130750,6 +130750,48 @@
     "url": "www.bloomberg.com",
     "lang": "en"
   },
+  "br-klassik": {
+    "routes": {
+      "/aktuell": {
+        "path": "/aktuell",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/br-klassik/aktuell",
+        "parameters": {},
+        "features": {
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "requireConfig": false
+        },
+        "name": "Aktuell (News & Kritik)",
+        "maintainers": [
+          "wongJG"
+        ],
+        "description": "News und Kritik aus der Welt der Klassischen Musik.",
+        "radar": [
+          {
+            "source": [
+              "www.br-klassik.de/aktuell/index.html"
+            ],
+            "target": "/aktuell"
+          }
+        ],
+        "location": "aktuell.ts",
+        "module": "() => import('@/routes/br-klassik/aktuell.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "BR-Klassik",
+    "url": "br-klassik.de",
+    "lang": "de",
+    "categories": [
+      "traditional-media"
+    ]
+  },
   "brooklynmuseum": {
     "routes": {
       "/exhibitions/:state?": {
