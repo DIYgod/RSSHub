@@ -131,7 +131,6 @@ jobs:
                   1. Use GitHub CLI commands to inspect this PR's metadata and code changes.
                   2. Review only based on the following rules.
                   3. Report only clear and actionable violations from changed files.
-                  4. If no clear violations are found, do not comment.
 
                   Review rules:
                   $RULES
@@ -147,7 +146,7 @@ jobs:
                   - Check existing comments in issue comments for this marker.
                   - If a marker comment exists, update it with latest findings.
                   - Otherwise create a new PR comment.
-                  - If there are no findings and marker comment exists, edit marker comment to a short pass status.
+                  - If there are no findings: when a marker comment exists, edit it to the short pass status below; when none exists, do not comment.
 
                   gh command reference (PR_NUMBER and GITHUB_REPOSITORY are available as env vars):
                   - Create a new PR comment:
