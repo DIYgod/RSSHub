@@ -3,14 +3,14 @@ import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'https://south-plus.net';
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const fid = ctx.req.param('fid') ?? '8';
     const cookie = config.southplus.cookie;
     const ua = config.southplus.ua;
@@ -49,7 +49,7 @@ async function handler(ctx) {
     //   [2] author (a.bl) + post date (div.f10.gray2)
     //   [3] replies/views
     //   [4] last post date (a.f10) + last poster (span.gray2)
-    const threadList = $('tr.tr3.t_one a[id^="a_ajax_"]')
+    const threadList: DataItem[] = $('tr.tr3.t_one a[id^="a_ajax_"]')
         .toArray()
         .map((item) => {
             const $el = $(item);
@@ -87,9 +87,9 @@ async function handler(ctx) {
     const items = await pMap(
         threadList.slice(0, limit),
         (item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
-                    const detailHtml = await ofetch(item.link, { headers });
+                    const detailHtml = await ofetch(item.link!, { headers });
                     const $detail = load(detailHtml);
 
                     // Get the main post content
