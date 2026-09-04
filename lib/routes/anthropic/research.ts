@@ -28,55 +28,24 @@ async function handler(ctx) {
     const $ = load(response);
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
-    // self.__next_f.push
-    const regexp = /self\.__next_f\.push\((.+)\)/;
-    const textList: string[] = [];
-    for (const e of $('script').toArray()) {
-        const $e = $(e);
-        const text = $e.text();
-        const match = regexp.exec(text);
-        if (match) {
-            try {
-                const data = JSON.parse(match[1]);
-                if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
-                    textList.push(data[1]);
-                }
-            } catch {
-                // ignore
-            }
-        }
-    }
-
-    const partRegex = /^([0-9a-z]+):([0-9a-z]+)?(\[.*)$/i;
-    const fd = textList
-        .join('')
-        .split('\n')
-        .map((d) => {
-            const matchPart = partRegex.exec(d);
-            if (matchPart) {
-                return {
-                    id: matchPart[1],
-                    tag: matchPart[2],
-                    data: JSON.parse(matchPart[3]),
-                };
-            }
+    const posts: DataItem[] = $('[class^="PublicationList-module-scss-module__"][class$="__list"] a')
+        .toArray()
+        .map((element) => {
+            const $element = $(element);
+            const title = $element.find('[class*="__title"]').text().trim();
+            const href = $element.attr('href') ?? '';
+            const dateText = $element.find('time').text().trim();
+            const category = $element.find('[class*="__subject"]').text().trim();
+            const postLink = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
-                id: '',
-                tag: '',
-                data: d,
+                title,
+                link: postLink,
+                pubDate: dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined,
+                category: category ? [category] : undefined,
             };
-        });
-
-    const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
-    const publicationSections = sections.filter((section) => section?.title === 'Publications');
-    const posts = publicationSections
-        .flatMap((section) => section?.posts ?? [])
-        .slice(0, limit)
-        .map((post): DataItem => ({
-            title: post.title,
-            link: `https://www.anthropic.com/research/${post.slug.current}`,
-            pubDate: parseDate(post.publishedOn),
-        }));
+        })
+        .filter((post) => post.title && post.link)
+        .slice(0, limit);
 
     const items = await pMap(
         posts,
