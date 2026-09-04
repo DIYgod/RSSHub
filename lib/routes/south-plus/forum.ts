@@ -83,7 +83,7 @@ async function handler(ctx): Promise<Data> {
         });
 
     // Optionally fetch full content for each thread (with cache)
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 50;
     const items = await pMap(
         threadList.slice(0, limit),
         (item) =>
