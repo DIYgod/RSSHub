@@ -13,14 +13,14 @@ export const route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.shanghaimuseum.net/mu/frontend/pg/infomation/news'],
+            source: ['www.shanghaimuseum.cn/mu/frontend/pg/infomation/news'],
             target: '/information/news',
         },
     ],
     handler: async (ctx) => {
         const type = ctx.req.param('type') || 'all';
 
-        const baseUrl = 'https://www.shanghaimuseum.net';
+        const baseUrl = 'https://www.shanghaimuseum.cn';
         const apiUrl = `${baseUrl}/mu/frontend/pg/infomation/search-info`;
 
         const payload = {
