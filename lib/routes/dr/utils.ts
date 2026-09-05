@@ -5,6 +5,7 @@ import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 const rootUrl = 'https://www.dr.dk';
@@ -94,7 +95,7 @@ export const extractDRArticle = (html: string) => {
         author: author || undefined,
         category: resource.site?.title,
         image: image ?? undefined,
-        pubDate: resource.startDate ?? resource.published,
+        pubDate: (resource.startDate ?? resource.published) ? parseDate(resource.startDate ?? resource.published) : undefined,
     };
 };
 
@@ -122,7 +123,7 @@ export const getNews = async (slug: string): Promise<Data> => {
                 title: item.title,
                 link: item.link,
                 guid: item.guid ?? item.link,
-                pubDate: item.pubDate,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
             };
 
             const article = await fetchDRArticle(item.link!);
