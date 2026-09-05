@@ -94,7 +94,21 @@ async function handler(ctx): Promise<Data> {
                 const content = load(detailResponse);
 
                 item.title ??= content('div.article-header-title').text();
-                item.description = content('#select-main').html()!.replaceAll('<p><br></p>', '');
+
+                // The cover image lives outside of the article body (#select-main), in either the
+                // `.abstract` block (exclusives / long reads) or `.interview-pic` (interviews).
+                // Fall back to the share image embedded in the page script, which covers both layouts.
+                let cover = content('#abstract_img').attr('src') || content('img.interview-pic').attr('src');
+                if (!cover) {
+                    cover = /var\s+imgUrl\s*=\s*'([^']+)'/.exec(detailResponse)?.[1];
+                }
+                // The site serves the cover over plain http, which readers may refuse to load.
+                const coverHtml = cover ? `<img src="${new URL(cover, rootUrl).href.replace(/^http:/, 'https:')}">` : '';
+
+                const abstract = content('div.abstract-pic-left').text().trim();
+                const abstractHtml = abstract ? `<blockquote>${abstract}</blockquote>` : '';
+
+                item.description = coverHtml + abstractHtml + content('#select-main').html()!.replaceAll('<p><br></p>', '');
                 item.author = content('div.article-header-author div.author-link a.label').first().text();
                 item.category = item.category.filter(Boolean);
                 item.guid = `latepost-${item.guid}`;
