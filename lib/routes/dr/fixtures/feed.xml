@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/">
+    <channel>
+        <title>Indland | DR</title>
+        <link>https://www.dr.dk/</link>
+        <description>Nyheder fra sektionen Indland</description>
+        <lastBuildDate>Sun, 30 Aug 2026 12:48:53 GMT</lastBuildDate>
+        <docs>https://www.dr.dk/nyheder/dr-nyheder-som-rss-feed</docs>
+        <generator>rss-feeds</generator>
+        <language>da</language>
+        <atom:link href="https://www.dr.dk/nyheder/service/feeds/indland" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Hvad har CIA med moderne kunst at gøre?]]></title>
+            <link>https://www.dr.dk/nyheder/indland/reels/hvad-har-cia-med-moderne-kunst-goere</link>
+            <guid isPermaLink="false">urn:dr:umbraco:reel:fa7dfb23-50c6-4c2a-a078-9619505f597f</guid>
+            <pubDate>Sun, 30 Aug 2026 11:32:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Frygt for naturen er ude af proportioner, mener eksperter:  'Det er ikke bare naturangst, det er hysterisk']]></title>
+            <link>https://www.dr.dk/nyheder/indland/frygt-naturen-er-ude-af-proportioner-mener-eksperter-det-er-ikke-bare-naturangst-det-er-hysterisk</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:111ea74f-9a12-4aa2-94d6-46105268ccf2</guid>
+            <pubDate>Sun, 30 Aug 2026 11:07:00 GMT</pubDate>
+            <description><![CDATA[Vi er blevet mere fremmede over for naturen, og vi bliver bange, når der kommer nye dyr, mener professor i biodiversitet.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/tupi5mm0/20260709-172845-l.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Partifælle kalder Søren Gades opførsel 'illoyal']]></title>
+            <link>https://www.dr.dk/nyheder/indland/partifaelle-kalder-soeren-gades-opfoersel-illoyal</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:0229fd2c-c56b-495a-b7bc-0d49be7e90e4</guid>
+            <pubDate>Sun, 30 Aug 2026 10:19:15 GMT</pubDate>
+            <description><![CDATA[To borgmestre er nu gået sammen i et åbent brev, hvor de opfordrer folketingsgruppen til at stemme imod.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/cc0pracw/20250506-120323-2.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[14-årige Matteis kører op mod 200 km/t: Nu er han yngste danmarksmester i Formel 4]]></title>
+            <link>https://www.dr.dk/nyheder/indland/14-aarige-matteis-koerer-op-mod-200-km-t-nu-er-han-yngste-danmarksmester-i-formel-4</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:267b0620-2f6c-4572-a6be-025655fcaae4</guid>
+            <pubDate>Sun, 30 Aug 2026 07:12:00 GMT</pubDate>
+            <description><![CDATA[Drømmen er at blive den allerbedste i verden og køre Formel 1. Og det kræver noget af hele familien.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/wq5dw53e/20260824-205151-2.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Undergrundsbanker tryller narko-milliarder ud af landet]]></title>
+            <link>https://www.dr.dk/nyheder/indland/undergrundsbanker-tryller-narko-milliarder-ud-af-landet</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:361a05e4-c024-45e6-b7e4-ee00ed0749c0</guid>
+            <pubDate>Sun, 30 Aug 2026 06:48:00 GMT</pubDate>
+            <description><![CDATA[Milliarder af kroner fra blandt andet narkohandel er ført ud af landet via såkaldte undergrundsbanker, der ikke efterlader papirspor.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/0u2foazn/14926099_undergrundsbanken_12_insideren_og_narkomillionerne_prog_00922601520-00231617_crop001.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Skal elløbehjul og andre små elkøretøjer være fortid i trafikken? Det mener eksperter]]></title>
+            <link>https://www.dr.dk/nyheder/indland/skal-elloebehjul-og-andre-smaa-elkoeretoejer-vaere-fortid-i-trafikken-det-mener-eksperter</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:2ed3bc69-fd6f-40f2-aea4-55d8cbbf4901</guid>
+            <pubDate>Sun, 30 Aug 2026 05:56:00 GMT</pubDate>
+            <description><![CDATA[I syv år har det været lovligt at køre på de mindre eldrevne køretøjer på cykelstierne gennem forsøgsordninger.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/u3zfgryr/20220101-124634-a.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Mangler du en ny MacBook? Så skal du nok væbne dig med tålmodighed]]></title>
+            <link>https://www.dr.dk/nyheder/indland/mangler-du-en-ny-macbook-saa-skal-du-nok-vaebne-dig-med-taalmodighed</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:7b761d9d-bf2a-4b1e-9fb3-c386aa1206fc</guid>
+            <pubDate>Sun, 30 Aug 2026 05:13:00 GMT</pubDate>
+            <description><![CDATA[Det skaber forsyningsproblemer, at de mange nye datacentre bruger samme komponenter som en MacBook.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/0ejnatgn/20210120-173522-a.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Skrotbrand i Køge ventes først slukket op ad dagen]]></title>
+            <link>https://www.dr.dk/nyheder/indland/ret-voldsom-skrotbrand-i-koege-ventes-foerst-slukket-op-ad-dagen</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:f7f4698b-104e-4e01-b60c-d6c5c08225ca</guid>
+            <pubDate>Sun, 30 Aug 2026 04:49:12 GMT</pubDate>
+            <description><![CDATA[En større brand brød lørdag på havnen. Nu er man nået til efterslukningsarbejdet, som varer flere timer. ]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/pusjuxwv/20260829-212507-l.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Røg fra større brand i Køge har nået Københavns Vestegn]]></title>
+            <link>https://www.dr.dk/nyheder/indland/roeg-fra-stoerre-brand-i-koege-har-naaet-koebenhavns-vestegn</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:054d2429-0d4f-4322-947a-16dfed7fee9b</guid>
+            <pubDate>Sat, 29 Aug 2026 19:30:04 GMT</pubDate>
+            <description><![CDATA[Politiet anbefaler borgere flere steder på Sjælland at lukke døre og vinduer og slukke ventilationsanlæg.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/xuudxejr/20260829-210906-l.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Lægeformand efter nyt Wegovy-studie: Vi kan helt sikkert blive bedre, men...]]></title>
+            <link>https://www.dr.dk/nyheder/indland/laegeformand-efter-nyt-wegovy-studie-vi-kan-helt-sikkert-blive-bedre-men</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:6476ce82-e77f-4412-8e8f-922152bf72e9</guid>
+            <pubDate>Sat, 29 Aug 2026 19:19:00 GMT</pubDate>
+            <description><![CDATA[Ny undersøgelse rejser spørgsmålet om, hvorvidt de praktiserende læger er gode nok til at rådgive deres patienter om brugen af den populære vægttabsmedicin.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/oithfami/20260819-164920-l.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Bonus til nye danskere: Grønlandske sygeplejersker føler sig overset]]></title>
+            <link>https://www.dr.dk/nyheder/penge/bonus-til-nye-danskere-groenlandske-sygeplejersker-foeler-sig-overset</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:fa9cd1f7-4e69-4d94-bde1-b1abdf4d9cfb</guid>
+            <pubDate>Sat, 29 Aug 2026 18:10:00 GMT</pubDate>
+            <description><![CDATA[Ny ordning, der skal lokke danske sygeplejersker og læger til Grønland, møder kritik.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/2d5f5skm/dscf1262kopi.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Annes nytårsforsæt blev pludselig til 100 km i løbeskoene – men hvorfor løber flere danskere så langt?]]></title>
+            <link>https://www.dr.dk/nyheder/indland/ultraloeb-er-populaert-som-aldrig-foer</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:930dceb7-6766-4c05-bb0d-186b7da27087</guid>
+            <pubDate>Sat, 29 Aug 2026 17:02:00 GMT</pubDate>
+            <description><![CDATA[Ifølge landstræneren inden for ultraløb bliver løberne også bedre til at løbe langt.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Slidte, ubetalte både fylder i danske havne]]></title>
+            <link>https://www.dr.dk/nyheder/indland/reels/slidte-ubetalte-baade-fylder-i-danske-havne</link>
+            <guid isPermaLink="false">urn:dr:umbraco:reel:7d8bf927-d794-4228-897d-65943f76101e</guid>
+            <pubDate>Sat, 29 Aug 2026 15:43:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Kommune siger endnu engang nej til fixerum]]></title>
+            <link>https://www.dr.dk/nyheder/indland/kommune-siger-endnu-engang-nej-til-fixerum</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:d8195751-a016-44e0-aa5d-c49ff715c5d2</guid>
+            <pubDate>Sat, 29 Aug 2026 15:04:00 GMT</pubDate>
+            <description><![CDATA[Stofmisbrugere i Aalborg får ikke et særlig sted, hvor de kan indtage deres stoffer. Behovet er ikke til stede, mener kommunen]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/s35lmuil/stofindtagelsesrum_crop001.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Techgiganter fjerner opslag og truer med at lukke grupper: 'Jeg ved ikke, hvad vi gør forkert']]></title>
+            <link>https://www.dr.dk/nyheder/indland/techgiganter-fjerner-opslag-og-truer-med-lukke-grupper-jeg-ved-ikke-hvad-vi-goer-forkert</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:b2a4691d-9430-48b7-92ab-ce6e43280bc1</guid>
+            <pubDate>Sat, 29 Aug 2026 13:20:00 GMT</pubDate>
+            <description><![CDATA[I dag mødes 200 frivillige i Odense til en konference, hvor de blandt andet skal snakke om de problemer, de oplever med de amerikanske techgiganter, som står bag siderne.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/vord3lam/20260829-083917-6_crop001.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Skole forbyder el-cykler på fællesture]]></title>
+            <link>https://www.dr.dk/nyheder/indland/skole-forbyder-el-cykler-paa-faellesture</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:0f9902c0-294b-47fa-a741-5228b8aa7a4c</guid>
+            <pubDate>Sat, 29 Aug 2026 12:08:00 GMT</pubDate>
+            <description><![CDATA[Når eleverne på Vonsild Skole i Kolding Kommune fremover skal på fælles cykeltur, må el‑cyklerne blive hjemme på skolen. Lokalpolitiker bakker op om idéen.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/mhsj323h/img_5255_crop001.jpeg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[For Benedikte gav det ikke mening at fortsætte med Wegovy]]></title>
+            <link>https://www.dr.dk/nyheder/indland/reels/benedikte-gav-det-ikke-mening-fortsaette-med-wegovy</link>
+            <guid isPermaLink="false">urn:dr:umbraco:reel:e0172702-f8ce-4dcf-b3f7-59b28c2faf60</guid>
+            <pubDate>Sat, 29 Aug 2026 11:01:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Vil du vide, hvordan det var at være vikingekriger? Nu får du chancen]]></title>
+            <link>https://www.dr.dk/nyheder/indland/vil-du-vide-hvordan-det-var-vaere-vikingekriger-nu-faar-du-chancen</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:16453fe0-608a-47b9-835d-689aa8f41dbc</guid>
+            <pubDate>Sat, 29 Aug 2026 10:25:00 GMT</pubDate>
+            <description><![CDATA[Trelleborg ved Slagelse har taget det første spadestik til et ambitiøst projekt, hvor Harald Blåtands mere end 1.000 år gamle vikingeborg bliver genopført.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/zpcdfmbc/trelleborg-visualering-kamp.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Festivalgæster ramt af svindel med deres bookede overnatninger]]></title>
+            <link>https://www.dr.dk/nyheder/indland/festivalgaester-ramt-af-svindel-med-deres-bookede-overnatninger</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:1a685cef-d37d-4ed8-895f-c260c50654f4</guid>
+            <pubDate>Sat, 29 Aug 2026 09:05:21 GMT</pubDate>
+            <description><![CDATA[Flere gæster har været udsat for svindel med udlejningsboliger på årets Tønder Festival. ]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/ygalay0u/20260828-154247-3.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+        <item>
+            <title><![CDATA[Sigtet for drabsforsøg kræves alligevel fængslet]]></title>
+            <link>https://www.dr.dk/nyheder/indland/sigtet-drabsforsoeg-kraeves-alligevel-faengslet</link>
+            <guid isPermaLink="false">urn:dr:umbraco:article:e886481e-d226-4b2d-9eca-8231cb249e20</guid>
+            <pubDate>Sat, 29 Aug 2026 08:45:13 GMT</pubDate>
+            <description><![CDATA[En 24-årig mand fremstilles lørdag i grundlovsforhør efter skudepisode sidste uge i Haderslev.]]></description>
+            <media:content url="https://asset.dr.dk/drdk/umbraco-images/dzjpdekf/20260417-140956-l.jpg?im=AspectCrop=(1200,675),xPosition=.5,yPosition=.5;Resize=(1200,675)&amp;impolicy=medium" medium="image"/>
+        </item>
+    </channel>
+</rss>
