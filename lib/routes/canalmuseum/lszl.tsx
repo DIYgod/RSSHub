@@ -52,7 +52,7 @@ export const route: Route = {
                 const liItems = $textA
                     .find('.ul .li')
                     .toArray()
-                    .map((li) => $(li).text().trim());
+                    .map((li) => $(li).text());
                 const fullDuration = liItems.find((t) => t.startsWith('时间：'))?.replace('时间：', '') ?? '';
                 const location = liItems.find((t) => t.startsWith('地点：'))?.replace('地点：', '') ?? '';
 
