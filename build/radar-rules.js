@@ -2355,7 +2355,7 @@
         docs:"https://docs.rsshub.app/routes/forecast",
         source:[ "/osgweb/blackoutNotice" ],
         target:"/sgcc/95598/blackoutNotice/:adcode" } ] },
-  "shanghaimuseum.net":{ _name:"Shanghai Museum",
+  "shanghaimuseum.cn":{ _name:"Shanghai Museum",
     www:[ { title:"News & Announcements",
         docs:"https://docs.rsshub.app/routes/travel",
         source:[ "/mu/frontend/pg/infomation/news" ],

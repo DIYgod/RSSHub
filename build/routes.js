@@ -20397,7 +20397,7 @@ export default {
         "radar": [
           {
             "source": [
-              "www.shanghaimuseum.net/mu/frontend/pg/infomation/news"
+              "www.shanghaimuseum.cn/mu/frontend/pg/infomation/news"
             ],
             "target": "/information/news"
           }
@@ -20421,7 +20421,7 @@ export default {
         "radar": [
           {
             "source": [
-              "www.shanghaimuseum.net/mu/frontend/pg/display/offline-exhibit"
+              "www.shanghaimuseum.cn/mu/frontend/pg/display/offline-exhibit"
             ],
             "target": "/display/offline-exhibit"
           }
@@ -20432,7 +20432,7 @@ export default {
     },
     "apiRoutes": {},
     "name": "Shanghai Museum",
-    "url": "www.shanghaimuseum.net",
+    "url": "www.shanghaimuseum.cn",
     "zh": {
       "name": "上海博物馆"
     }
