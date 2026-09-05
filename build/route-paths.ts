@@ -501,6 +501,8 @@ export type RoutePath =
   | `/caixinglobal/latest`
   | `/camchina/:id?`
   | `/canada.ca/news/:lang/:department?`
+  | `/canalmuseum/consulting/:type`
+  | `/canalmuseum/lszl`
   | `/cankaoxiaoxi/:id?`
   | `/cankaoxiaoxi/column/:id?`
   | `/capitalmind/insights`

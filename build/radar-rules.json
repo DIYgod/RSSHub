@@ -14372,6 +14372,27 @@
       }
     ]
   },
+  "canalmuseum.org.cn": {
+    "_name": "The Grand Canal Museum of Beijing",
+    "www": [
+      {
+        "title": "NEWS",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/consulting.html"
+        ],
+        "target": "/canalmuseum/consulting/tzgg"
+      },
+      {
+        "title": "临时展览",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/lszl.html"
+        ],
+        "target": "/canalmuseum/lszl"
+      }
+    ]
+  },
   "capitalmuseum.org.cn": {
     "_name": "Capital Museum",
     "www": [

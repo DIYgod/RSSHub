@@ -3103,6 +3103,12 @@
   "/canada.ca/news/:lang/:department?": [
     "elibroftw"
   ],
+  "/canalmuseum/consulting/:type": [
+    "magazian"
+  ],
+  "/canalmuseum/lszl": [
+    "magazian"
+  ],
   "/capitalmuseum/exhibition/:type?": [
     "magazian"
   ],

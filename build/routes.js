@@ -43054,6 +43054,61 @@ export default {
     "description": "Government of Canada news by department",
     "lang": "en"
   },
+  "canalmuseum": {
+    "routes": {
+      "/consulting/:type": {
+        "path": "/consulting/:type",
+        "categories": [
+          "travel"
+        ],
+        "example": "/canalmuseum/consulting/tzgg",
+        "parameters": {
+          "type": "News type, supported values: tzgg（通知公告）, xwdt（新闻动态）"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.canalmuseum.org.cn/consulting.html"
+            ],
+            "target": "/consulting/tzgg"
+          }
+        ],
+        "name": "NEWS",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "consulting.ts",
+        "module": () => import('@/routes/canalmuseum/consulting.ts')
+      },
+      "/lszl": {
+        "path": "/lszl",
+        "categories": [
+          "travel"
+        ],
+        "example": "/canalmuseum/lszl",
+        "radar": [
+          {
+            "source": [
+              "www.canalmuseum.org.cn/lszl.html"
+            ],
+            "target": "/lszl"
+          }
+        ],
+        "name": "临时展览",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "lszl.tsx",
+        "module": () => import('@/routes/canalmuseum/lszl.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "The Grand Canal Museum of Beijing",
+    "url": "www.canalmuseum.org.cn",
+    "zh": {
+      "name": "北京大运河博物馆"
+    }
+  },
   "capitalmuseum": {
     "routes": {
       "/exhibition/:type?": {
