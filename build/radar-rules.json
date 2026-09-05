@@ -4859,6 +4859,20 @@
       }
     ]
   },
+  "gamebase.com.tw": {
+    "_name": "遊戲基地 Gamebase",
+    "news": [
+      {
+        "title": "新聞",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news",
+          "/news/:type"
+        ],
+        "target": "/gamebase(params,url)=>{const type=params.type;const urlObj=new URL(url);const category=urlObj.searchParams.get(\"type\")??void 0;return`/gamebase/news${type?`/${type}${category?`/${category}`:\"\"}`:\"\"}`}"
+      }
+    ]
+  },
   "gettr.com": {
     "_name": "GETTR",
     ".": [
@@ -21860,20 +21874,6 @@
           "/"
         ],
         "target": "/gameapps/"
-      }
-    ]
-  },
-  "gamebase.com.tw": {
-    "_name": "遊戲基地 Gamebase",
-    "news": [
-      {
-        "title": "新聞",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news",
-          "/news/:type"
-        ],
-        "target": "/gamebase(params,url)=>{const type=params.type;const urlObj=new URL(url);const category=urlObj.searchParams.get(\"type\")??void 0;return`/gamebase/news${type?`/${type}${category?`/${category}`:\"\"}`:\"\"}`}"
       }
     ]
   },
