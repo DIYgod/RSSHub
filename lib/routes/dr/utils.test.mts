@@ -58,7 +58,7 @@ describe('DR article extraction', () => {
         expect(article!.author).toBe('Annette Jespersen, Asta Holst Bach');
         expect(article!.category).toBe('Indland');
         expect(article!.image).toContain('20260709-172845-l.jpg');
-        expect(article!.pubDate).toBe('2026-08-30T11:07:00+00:00');
+        expect(article!.pubDate).toEqual(new Date('2026-08-30T11:07:00+00:00'));
 
         const content = article!.content;
         // paragraphs
