@@ -43,7 +43,6 @@ interface VideoItem {
 }
 
 async function handler() {
-    // Use the bare domain: `www` is behind ddos-guard and blocks datacenter IPs with 502.
     const response = await got({
         method: 'get',
         url: 'https://rule34video.com/latest-updates/',
