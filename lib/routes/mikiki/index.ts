@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -31,7 +32,7 @@ async function handler(): Promise<Data> {
                 return {
                     title: item.title,
                     link: item.link,
-                    pubDate: item.isoDate,
+                    pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
                     author: $('.article-header-author-name').first().text(),
                     description: $('.article-body').html(),
                 };
