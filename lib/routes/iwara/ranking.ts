@@ -2,9 +2,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
 
-import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
+import { apiRootUrl, fetchJsonInPage, getIwaraPage, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const sortMap = {
     date: 'Latest',
@@ -53,26 +52,15 @@ async function handler(ctx) {
     const { type = 'video', sort = 'date', rating = 'ecchi' } = ctx.req.param();
 
     const limit = ctx.req.query('limit') || 32;
-    const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
+    const apiUrl = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
 
     const items = await cache.tryGet(
-        `iwara:ranking:${type}:${sort}:${rating}`,
+        `iwara:ranking:${type}:${sort}:${rating}:${limit}`,
         async () => {
-            const { page, destroy } = await getPlaywrightPage(url, {
-                onBeforeLoad: async (page) => {
-                    await page.route('**/*', (route) => {
-                        const request = route.request();
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
-                    });
-                },
-                gotoConfig: {
-                    waitUntil: 'networkidle',
-                },
-            });
+            const { page, destroy } = await getIwaraPage();
 
             try {
-                const content = await page.evaluate(() => document.querySelector('pre')?.textContent || document.body.textContent);
-                const response = JSON.parse(content || '{}');
+                const response = await fetchJsonInPage(page, apiUrl);
 
                 return response.results.map((item) => ({
                     title: item.title,
