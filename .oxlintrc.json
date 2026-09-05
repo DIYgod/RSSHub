@@ -3,7 +3,7 @@
     "categories": {
         "correctness": "off"
     },
-    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "lib/routes-deprecated", "lib/router.js", "dist", "dist-lib", "dist-worker"],
+    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "dist", "dist-lib", "dist-worker"],
     "env": {
         "builtin": true,
         "browser": true,

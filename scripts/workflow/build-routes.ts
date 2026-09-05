@@ -10,9 +10,9 @@ import { findOrphanFiles } from './check-orphan-files';
 
 const __dirname = getCurrentPath(import.meta.url);
 
-const orphanTests = await findOrphanFiles();
-if (orphanTests.length) {
-    throw new Error(`Test files without a corresponding source file:\n${orphanTests.join('\n')}`);
+const orphanFiles = await findOrphanFiles();
+if (orphanFiles.length) {
+    throw new Error(`Orphan files found it:\n${orphanFiles.join('\n')}`);
 }
 
 // Check if building for Worker environment
