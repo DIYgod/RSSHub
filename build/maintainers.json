@@ -9208,10 +9208,6 @@
   "/xueqiu/user_stock/:id": [
     "hillerliao"
   ],
-  "/xueqiu/column/:id": [
-    "TonyRL",
-    "pseudoyu"
-  ],
   "/xueqiu/fund/:id": [
     "HenryQW",
     "NathanDai"
@@ -9233,6 +9229,10 @@
   ],
   "/xueqiu/user/:id/:type?": [
     "imlonghao"
+  ],
+  "/xueqiu/column/:id": [
+    "TonyRL",
+    "pseudoyu"
   ],
   "/xueqiu/stock_comments/:id": [
     "zytomorrow"
@@ -11549,12 +11549,6 @@
   "/qq/weixin/pay/announce": [
     "phantomk"
   ],
-  "/qq/kg/reply/:playId": [
-    "zhangxiang012"
-  ],
-  "/qq/kg/:userId": [
-    "zhangxiang012"
-  ],
   "/qq/ac/comic/:id?": [
     "nczitzk"
   ],
@@ -11563,6 +11557,9 @@
   ],
   "/qq/fact": [
     "hoilc"
+  ],
+  "/qq/kg/:userId": [
+    "zhangxiang012"
   ],
   "/qq/lol/news/:category?": [
     "nczitzk"
@@ -11588,6 +11585,9 @@
   ],
   "/qq/ac/rank/:type?/:time?": [
     "nczitzk"
+  ],
+  "/qq/kg/reply/:playId": [
+    "zhangxiang012"
   ],
   "/queshu/book/:bookid": [
     "kt286"
@@ -12231,6 +12231,29 @@
   "/finology/tag/:topic": [
     "Rjnishant530"
   ],
+  "/pixiv/user/bookmarks/:id": [
+    "EYHN"
+  ],
+  "/pixiv/user/illustfollows": [
+    "ClarkeCheng"
+  ],
+  "/pixiv/ranking/:mode/:date?": [
+    "EYHN"
+  ],
+  "/pixiv/search/:keyword/:order?/:mode?/:include_ai?": [
+    "DIYgod"
+  ],
+  "/pixiv/user/:id": [
+    "DIYgod"
+  ],
+  "/pixiv/novel/series/:id": [
+    "SnowAgar25",
+    "keocheung"
+  ],
+  "/pixiv/user/novels/:id/:full_content?": [
+    "TonyRL",
+    "SnowAgar25"
+  ],
   "/ryo.lu/journal/:lang?": [
     "TonyRL"
   ],
@@ -12296,29 +12319,6 @@
   ],
   "/google/play/:id/:lang?": [
     "surwall"
-  ],
-  "/pixiv/user/bookmarks/:id": [
-    "EYHN"
-  ],
-  "/pixiv/user/illustfollows": [
-    "ClarkeCheng"
-  ],
-  "/pixiv/ranking/:mode/:date?": [
-    "EYHN"
-  ],
-  "/pixiv/search/:keyword/:order?/:mode?/:include_ai?": [
-    "DIYgod"
-  ],
-  "/pixiv/user/:id": [
-    "DIYgod"
-  ],
-  "/pixiv/novel/series/:id": [
-    "SnowAgar25",
-    "keocheung"
-  ],
-  "/pixiv/user/novels/:id/:full_content?": [
-    "TonyRL",
-    "SnowAgar25"
   ],
   "/youtube/community/:handle": [
     "TonyRL"

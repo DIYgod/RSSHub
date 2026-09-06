@@ -122611,38 +122611,6 @@ export default {
         "location": "user-stock.ts",
         "module": () => import('@/routes/xueqiu/user-stock.ts')
       },
-      "/column/:id": {
-        "path": "/column/:id",
-        "categories": [
-          "finance"
-        ],
-        "example": "/xueqiu/column/9962554712",
-        "parameters": {
-          "id": "用户 id, 可在用户主页 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "xueqiu.com/:id/column"
-            ]
-          }
-        ],
-        "name": "用户专栏",
-        "maintainers": [
-          "TonyRL",
-          "pseudoyu"
-        ],
-        "location": "column.ts",
-        "module": () => import('@/routes/xueqiu/column.ts')
-      },
       "/fund/:id": {
         "path": "/fund/:id",
         "categories": [
@@ -122859,6 +122827,38 @@ export default {
         "description": "| 原发布 | 长文 | 问答 | 热门 | 交易 |\n| ------ | ---- | ---- | ---- | ---- |\n| 0      | 2    | 4    | 9    | 11   |",
         "location": "user.ts",
         "module": () => import('@/routes/xueqiu/user.ts')
+      },
+      "/column/:id": {
+        "path": "/column/:id",
+        "categories": [
+          "finance"
+        ],
+        "example": "/xueqiu/column/9962554712",
+        "parameters": {
+          "id": "用户 id, 可在用户主页 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xueqiu.com/:id/column"
+            ]
+          }
+        ],
+        "name": "用户专栏",
+        "maintainers": [
+          "TonyRL",
+          "pseudoyu"
+        ],
+        "location": "column.ts",
+        "module": () => import('@/routes/xueqiu/column.ts')
       },
       "/stock_comments/:id": {
         "path": "/stock_comments/:id",
@@ -123283,6 +123283,7 @@ export default {
         ],
         "features": {
           "antiCrawler": true,
+          "requirePuppeteer": true,
           "requireConfig": [
             {
               "optional": true,
@@ -123315,6 +123316,7 @@ export default {
         ],
         "features": {
           "antiCrawler": true,
+          "requirePuppeteer": true,
           "requireConfig": [
             {
               "optional": true,
@@ -149442,54 +149444,6 @@ export default {
         "location": "weixin/pay/announce.ts",
         "module": () => import('@/routes/qq/weixin/pay/announce.ts')
       },
-      "/kg/reply/:playId": {
-        "path": "/kg/reply/:playId",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/qq/kg/reply/OhXHMdO1VxLWQOOm",
-        "parameters": {
-          "playId": "音频页 ID, 可在对应页面的 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "全民K歌 - 用户作品评论动态",
-        "maintainers": [
-          "zhangxiang012"
-        ],
-        "location": "kg/reply.ts",
-        "module": () => import('@/routes/qq/kg/reply.ts')
-      },
-      "/kg/:userId": {
-        "path": "/kg/:userId",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/qq/kg/639a9a86272c308e33",
-        "parameters": {
-          "userId": "用户 ID, 可在对应页面的 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": true,
-          "supportScihub": false
-        },
-        "name": "全民K歌 - 用户作品列表",
-        "maintainers": [
-          "zhangxiang012"
-        ],
-        "location": "kg/user.ts",
-        "module": () => import('@/routes/qq/kg/user.ts')
-      },
       "/ac/comic/:id?": {
         "path": "/ac/comic/:id?",
         "categories": [
@@ -149609,6 +149563,30 @@ export default {
         "url": "vp.fact.qq.com/home",
         "location": "fact/index.tsx",
         "module": () => import('@/routes/qq/fact/index.tsx')
+      },
+      "/kg/:userId": {
+        "path": "/kg/:userId",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/qq/kg/639a9a86272c308e33",
+        "parameters": {
+          "userId": "用户 ID, 可在对应页面的 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": true,
+          "supportScihub": false
+        },
+        "name": "全民K歌 - 用户作品列表",
+        "maintainers": [
+          "zhangxiang012"
+        ],
+        "location": "kg/user.ts",
+        "module": () => import('@/routes/qq/kg/user.ts')
       },
       "/lol/news/:category?": {
         "path": "/lol/news/:category?",
@@ -149814,6 +149792,30 @@ export default {
         "description": "| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |\n| ------ | ------ | ------ | ------ | ------ | ------ | ------ |\n| mt     | rise   | new    | pay    | top    | male   | female |\n\n::: tip\n`time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。\n:::",
         "location": "ac/rank.ts",
         "module": () => import('@/routes/qq/ac/rank.ts')
+      },
+      "/kg/reply/:playId": {
+        "path": "/kg/reply/:playId",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/qq/kg/reply/OhXHMdO1VxLWQOOm",
+        "parameters": {
+          "playId": "音频页 ID, 可在对应页面的 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "全民K歌 - 用户作品评论动态",
+        "maintainers": [
+          "zhangxiang012"
+        ],
+        "location": "kg/reply.ts",
+        "module": () => import('@/routes/qq/kg/reply.ts')
       }
     },
     "apiRoutes": {},
@@ -158616,10 +158618,10 @@ export default {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": ""
+              "description": "A complete d_c0 and __zse_ck cookie pair avoids browser-based session initialization. Otherwise Playwright (BROWSER on Workers) is required."
             }
           ],
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -158653,11 +158655,11 @@ export default {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": "",
+              "description": "A complete d_c0 and __zse_ck cookie pair avoids browser-based session initialization. Otherwise Playwright (BROWSER on Workers) is required.",
               "optional": true
             }
           ],
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -158727,11 +158729,11 @@ export default {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": "",
+              "description": "A complete d_c0 and __zse_ck cookie pair avoids browser-based session initialization. Otherwise Playwright (BROWSER on Workers) is required.",
               "optional": true
             }
           ],
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -158799,11 +158801,11 @@ export default {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": "",
+              "description": "A complete d_c0 and __zse_ck cookie pair avoids browser-based session initialization. Otherwise Playwright (BROWSER on Workers) is required.",
               "optional": true
             }
           ],
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -158840,11 +158842,11 @@ export default {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": "",
+              "description": "A complete d_c0 and __zse_ck cookie pair avoids browser-based session initialization. Otherwise Playwright (BROWSER on Workers) is required.",
               "optional": true
             }
           ],
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -158908,10 +158910,10 @@ export default {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": ""
+              "description": "A complete d_c0 and __zse_ck cookie pair avoids browser-based session initialization. Otherwise Playwright (BROWSER on Workers) is required."
             }
           ],
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -159156,6 +159158,388 @@ export default {
     "name": "Finology Insider",
     "url": "insider.finology.in",
     "lang": "en"
+  },
+  "pixiv": {
+    "routes": {
+      "/user/bookmarks/:id": {
+        "path": "/user/bookmarks/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/pixiv/user/bookmarks/15288095",
+        "parameters": {
+          "id": "user id, available in user's homepage URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.pixiv.net/users/:id/bookmarks/artworks",
+              "www.pixiv.net/en/users/:id/bookmarks/artworks"
+            ]
+          }
+        ],
+        "name": "User Bookmark",
+        "maintainers": [
+          "EYHN"
+        ],
+        "location": "bookmarks.ts",
+        "module": () => import('@/routes/pixiv/bookmarks.ts')
+      },
+      "/user/illustfollows": {
+        "path": "/user/illustfollows",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/pixiv/user/illustfollows",
+        "parameters": {},
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PIXIV_REFRESHTOKEN",
+              "description": ""
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.pixiv.net/bookmark_new_illust.php"
+            ]
+          }
+        ],
+        "name": "Following timeline",
+        "maintainers": [
+          "ClarkeCheng"
+        ],
+        "url": "www.pixiv.net/bookmark_new_illust.php",
+        "description": "::: warning\nOnly for self-hosted\n:::",
+        "location": "illustfollow.ts",
+        "module": () => import('@/routes/pixiv/illustfollow.ts')
+      },
+      "/ranking/:mode/:date?": {
+        "path": "/ranking/:mode/:date?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 2,
+        "example": "/pixiv/ranking/week",
+        "parameters": {
+          "mode": {
+            "description": "rank type",
+            "options": [
+              {
+                "value": "day",
+                "label": "daily rank"
+              },
+              {
+                "value": "week",
+                "label": "weekly rank"
+              },
+              {
+                "value": "month",
+                "label": "monthly rank"
+              },
+              {
+                "value": "day_male",
+                "label": "male rank"
+              },
+              {
+                "value": "day_felame",
+                "label": "female rank"
+              },
+              {
+                "value": "day_ai",
+                "label": "AI-generated work Rankings"
+              },
+              {
+                "value": "week_original",
+                "label": "original rank"
+              },
+              {
+                "value": "week_rookie",
+                "label": "rookie user rank"
+              },
+              {
+                "value": "day_r18",
+                "label": "R-18 daily rank"
+              },
+              {
+                "value": "day_r18_ai",
+                "label": "R-18 AI-generated work"
+              },
+              {
+                "value": "day_male_r18",
+                "label": "R-18 male rank"
+              },
+              {
+                "value": "day_female_r18",
+                "label": "R-18 female rank"
+              },
+              {
+                "value": "week_r18",
+                "label": "R-18 weekly rank"
+              },
+              {
+                "value": "week_r18g",
+                "label": "R-18G rank"
+              }
+            ],
+            "default": "day"
+          },
+          "date": "format: `2018-4-25`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "name": "Rankings",
+        "maintainers": [
+          "EYHN"
+        ],
+        "location": "ranking.ts",
+        "module": () => import('@/routes/pixiv/ranking.ts')
+      },
+      "/search/:keyword/:order?/:mode?/:include_ai?": {
+        "path": "/search/:keyword/:order?/:mode?/:include_ai?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 2,
+        "example": "/pixiv/search/Nezuko/popular",
+        "parameters": {
+          "keyword": "keyword",
+          "order": {
+            "description": "rank mode, empty or other for time order, popular for popular order",
+            "default": "date",
+            "options": [
+              {
+                "label": "time order",
+                "value": "date"
+              },
+              {
+                "label": "popular order",
+                "value": "popular"
+              }
+            ]
+          },
+          "mode": {
+            "description": "filte R18 content",
+            "default": "no",
+            "options": [
+              {
+                "label": "only not R18",
+                "value": "safe"
+              },
+              {
+                "label": "only R18",
+                "value": "r18"
+              },
+              {
+                "label": "no filter",
+                "value": "no"
+              }
+            ]
+          },
+          "include_ai": {
+            "description": "whether AI-generated content is included",
+            "default": "yes",
+            "options": [
+              {
+                "label": "does not include AI-generated content",
+                "value": "no"
+              },
+              {
+                "label": "include AI-generated content",
+                "value": "yes"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "name": "Keyword",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "search.ts",
+        "module": () => import('@/routes/pixiv/search.ts')
+      },
+      "/user/:id": {
+        "path": "/user/:id",
+        "categories": [
+          "social-media"
+        ],
+        "view": 2,
+        "example": "/pixiv/user/15288095",
+        "parameters": {
+          "id": "user id, available in user's homepage URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.pixiv.net/users/:id",
+              "www.pixiv.net/en/users/:id"
+            ]
+          }
+        ],
+        "name": "User Activity",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "user.ts",
+        "module": () => import('@/routes/pixiv/user.ts')
+      },
+      "/novel/series/:id": {
+        "path": "/novel/series/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/pixiv/novel/series/11586857",
+        "parameters": {
+          "id": "Series id, can be found in URL"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PIXIV_REFRESHTOKEN",
+              "optional": true,
+              "description": "\nrefresh_token after Pixiv login, required for accessing R18 novels\nPixiv 登錄後的 refresh_token，用於獲取 R18 小說\n[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "name": "Novel Series",
+        "maintainers": [
+          "SnowAgar25",
+          "keocheung"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.pixiv.net/novel/series/:id"
+            ],
+            "target": "/novel/series/:id"
+          }
+        ],
+        "location": "novel-series.ts",
+        "module": () => import('@/routes/pixiv/novel-series.ts')
+      },
+      "/user/novels/:id/:full_content?": {
+        "path": "/user/novels/:id/:full_content?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 0,
+        "example": "/pixiv/user/novels/27104704",
+        "parameters": {
+          "id": "User id, available in user's homepage URL",
+          "full_content": {
+            "description": "Enable or disable the display of full content. ",
+            "options": [
+              {
+                "value": "true",
+                "label": "true"
+              },
+              {
+                "value": "false",
+                "label": "false"
+              }
+            ],
+            "default": "false"
+          }
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "PIXIV_REFRESHTOKEN",
+              "optional": true,
+              "description": "\nPixiv 登錄後的 refresh_token，用於獲取 R18 小說\nrefresh_token after Pixiv login, required for accessing R18 novels\n[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "title": "User Novels (簡介 Basic info)",
+            "source": [
+              "www.pixiv.net/users/:id/novels",
+              "www.pixiv.net/users/:id",
+              "www.pixiv.net/en/users/:id/novels",
+              "www.pixiv.net/en/users/:id"
+            ],
+            "target": "/user/novels/:id"
+          },
+          {
+            "title": "User Novels (全文 Full text)",
+            "source": [
+              "www.pixiv.net/users/:id/novels",
+              "www.pixiv.net/users/:id",
+              "www.pixiv.net/en/users/:id/novels",
+              "www.pixiv.net/en/users/:id"
+            ],
+            "target": "/user/novels/:id/true"
+          }
+        ],
+        "name": "User Novels",
+        "maintainers": [
+          "TonyRL",
+          "SnowAgar25"
+        ],
+        "description": "| 小說類型 Novel Type | full\\_content | PIXIV\\_REFRESHTOKEN | 返回內容 Content |\n| ------------------- | ------------- | ------------------- | ---------------- |\n| Non R18             | false         | 不需要 Not Required | 簡介 Basic info  |\n| Non R18             | true          | 不需要 Not Required | 全文 Full text   |\n| R18                 | false         | 需要 Required       | 簡介 Basic info  |\n| R18                 | true          | 需要 Required       | 全文 Full text   |\n\nDefault value for `full_content` is `false` if not specified.\n\nExample:\n\n- `/pixiv/user/novels/79603797` → 簡介 Basic info\n- `/pixiv/user/novels/79603797/true` → 全文 Full text",
+        "location": "novels.ts",
+        "module": () => import('@/routes/pixiv/novels.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "pixiv",
+    "url": "www.pixiv.net",
+    "lang": "ja"
   },
   "ryo.lu": {
     "routes": {
@@ -159797,388 +160181,6 @@ export default {
     "name": "Google",
     "url": "www.google.com",
     "lang": "en"
-  },
-  "pixiv": {
-    "routes": {
-      "/user/bookmarks/:id": {
-        "path": "/user/bookmarks/:id",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/pixiv/user/bookmarks/15288095",
-        "parameters": {
-          "id": "user id, available in user's homepage URL"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.pixiv.net/users/:id/bookmarks/artworks",
-              "www.pixiv.net/en/users/:id/bookmarks/artworks"
-            ]
-          }
-        ],
-        "name": "User Bookmark",
-        "maintainers": [
-          "EYHN"
-        ],
-        "location": "bookmarks.ts",
-        "module": () => import('@/routes/pixiv/bookmarks.ts')
-      },
-      "/user/illustfollows": {
-        "path": "/user/illustfollows",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/pixiv/user/illustfollows",
-        "parameters": {},
-        "features": {
-          "requireConfig": [
-            {
-              "name": "PIXIV_REFRESHTOKEN",
-              "description": ""
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.pixiv.net/bookmark_new_illust.php"
-            ]
-          }
-        ],
-        "name": "Following timeline",
-        "maintainers": [
-          "ClarkeCheng"
-        ],
-        "url": "www.pixiv.net/bookmark_new_illust.php",
-        "description": "::: warning\nOnly for self-hosted\n:::",
-        "location": "illustfollow.ts",
-        "module": () => import('@/routes/pixiv/illustfollow.ts')
-      },
-      "/ranking/:mode/:date?": {
-        "path": "/ranking/:mode/:date?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 2,
-        "example": "/pixiv/ranking/week",
-        "parameters": {
-          "mode": {
-            "description": "rank type",
-            "options": [
-              {
-                "value": "day",
-                "label": "daily rank"
-              },
-              {
-                "value": "week",
-                "label": "weekly rank"
-              },
-              {
-                "value": "month",
-                "label": "monthly rank"
-              },
-              {
-                "value": "day_male",
-                "label": "male rank"
-              },
-              {
-                "value": "day_felame",
-                "label": "female rank"
-              },
-              {
-                "value": "day_ai",
-                "label": "AI-generated work Rankings"
-              },
-              {
-                "value": "week_original",
-                "label": "original rank"
-              },
-              {
-                "value": "week_rookie",
-                "label": "rookie user rank"
-              },
-              {
-                "value": "day_r18",
-                "label": "R-18 daily rank"
-              },
-              {
-                "value": "day_r18_ai",
-                "label": "R-18 AI-generated work"
-              },
-              {
-                "value": "day_male_r18",
-                "label": "R-18 male rank"
-              },
-              {
-                "value": "day_female_r18",
-                "label": "R-18 female rank"
-              },
-              {
-                "value": "week_r18",
-                "label": "R-18 weekly rank"
-              },
-              {
-                "value": "week_r18g",
-                "label": "R-18G rank"
-              }
-            ],
-            "default": "day"
-          },
-          "date": "format: `2018-4-25`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "name": "Rankings",
-        "maintainers": [
-          "EYHN"
-        ],
-        "location": "ranking.ts",
-        "module": () => import('@/routes/pixiv/ranking.ts')
-      },
-      "/search/:keyword/:order?/:mode?/:include_ai?": {
-        "path": "/search/:keyword/:order?/:mode?/:include_ai?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 2,
-        "example": "/pixiv/search/Nezuko/popular",
-        "parameters": {
-          "keyword": "keyword",
-          "order": {
-            "description": "rank mode, empty or other for time order, popular for popular order",
-            "default": "date",
-            "options": [
-              {
-                "label": "time order",
-                "value": "date"
-              },
-              {
-                "label": "popular order",
-                "value": "popular"
-              }
-            ]
-          },
-          "mode": {
-            "description": "filte R18 content",
-            "default": "no",
-            "options": [
-              {
-                "label": "only not R18",
-                "value": "safe"
-              },
-              {
-                "label": "only R18",
-                "value": "r18"
-              },
-              {
-                "label": "no filter",
-                "value": "no"
-              }
-            ]
-          },
-          "include_ai": {
-            "description": "whether AI-generated content is included",
-            "default": "yes",
-            "options": [
-              {
-                "label": "does not include AI-generated content",
-                "value": "no"
-              },
-              {
-                "label": "include AI-generated content",
-                "value": "yes"
-              }
-            ]
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "name": "Keyword",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "search.ts",
-        "module": () => import('@/routes/pixiv/search.ts')
-      },
-      "/user/:id": {
-        "path": "/user/:id",
-        "categories": [
-          "social-media"
-        ],
-        "view": 2,
-        "example": "/pixiv/user/15288095",
-        "parameters": {
-          "id": "user id, available in user's homepage URL"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.pixiv.net/users/:id",
-              "www.pixiv.net/en/users/:id"
-            ]
-          }
-        ],
-        "name": "User Activity",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "user.ts",
-        "module": () => import('@/routes/pixiv/user.ts')
-      },
-      "/novel/series/:id": {
-        "path": "/novel/series/:id",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/pixiv/novel/series/11586857",
-        "parameters": {
-          "id": "Series id, can be found in URL"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "PIXIV_REFRESHTOKEN",
-              "optional": true,
-              "description": "\nrefresh_token after Pixiv login, required for accessing R18 novels\nPixiv 登錄後的 refresh_token，用於獲取 R18 小說\n[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)"
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "name": "Novel Series",
-        "maintainers": [
-          "SnowAgar25",
-          "keocheung"
-        ],
-        "radar": [
-          {
-            "source": [
-              "www.pixiv.net/novel/series/:id"
-            ],
-            "target": "/novel/series/:id"
-          }
-        ],
-        "location": "novel-series.ts",
-        "module": () => import('@/routes/pixiv/novel-series.ts')
-      },
-      "/user/novels/:id/:full_content?": {
-        "path": "/user/novels/:id/:full_content?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 0,
-        "example": "/pixiv/user/novels/27104704",
-        "parameters": {
-          "id": "User id, available in user's homepage URL",
-          "full_content": {
-            "description": "Enable or disable the display of full content. ",
-            "options": [
-              {
-                "value": "true",
-                "label": "true"
-              },
-              {
-                "value": "false",
-                "label": "false"
-              }
-            ],
-            "default": "false"
-          }
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "PIXIV_REFRESHTOKEN",
-              "optional": true,
-              "description": "\nPixiv 登錄後的 refresh_token，用於獲取 R18 小說\nrefresh_token after Pixiv login, required for accessing R18 novels\n[https://docs.rsshub.app/deploy/config#pixiv](https://docs.rsshub.app/deploy/config#pixiv)"
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false,
-          "nsfw": true
-        },
-        "radar": [
-          {
-            "title": "User Novels (簡介 Basic info)",
-            "source": [
-              "www.pixiv.net/users/:id/novels",
-              "www.pixiv.net/users/:id",
-              "www.pixiv.net/en/users/:id/novels",
-              "www.pixiv.net/en/users/:id"
-            ],
-            "target": "/user/novels/:id"
-          },
-          {
-            "title": "User Novels (全文 Full text)",
-            "source": [
-              "www.pixiv.net/users/:id/novels",
-              "www.pixiv.net/users/:id",
-              "www.pixiv.net/en/users/:id/novels",
-              "www.pixiv.net/en/users/:id"
-            ],
-            "target": "/user/novels/:id/true"
-          }
-        ],
-        "name": "User Novels",
-        "maintainers": [
-          "TonyRL",
-          "SnowAgar25"
-        ],
-        "description": "| 小說類型 Novel Type | full\\_content | PIXIV\\_REFRESHTOKEN | 返回內容 Content |\n| ------------------- | ------------- | ------------------- | ---------------- |\n| Non R18             | false         | 不需要 Not Required | 簡介 Basic info  |\n| Non R18             | true          | 不需要 Not Required | 全文 Full text   |\n| R18                 | false         | 需要 Required       | 簡介 Basic info  |\n| R18                 | true          | 需要 Required       | 全文 Full text   |\n\nDefault value for `full_content` is `false` if not specified.\n\nExample:\n\n- `/pixiv/user/novels/79603797` → 簡介 Basic info\n- `/pixiv/user/novels/79603797/true` → 全文 Full text",
-        "location": "novels.ts",
-        "module": () => import('@/routes/pixiv/novels.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "pixiv",
-    "url": "www.pixiv.net",
-    "lang": "ja"
   },
   "youtube": {
     "routes": {
