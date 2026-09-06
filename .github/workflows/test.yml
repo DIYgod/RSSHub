@@ -6,6 +6,7 @@ on:
             - 'dependabot/**'
         paths:
             - 'lib/**'
+            - 'test/**'
             - 'package.json'
             - 'pnpm-lock.yaml'
             - '.github/workflows/test.yml'
