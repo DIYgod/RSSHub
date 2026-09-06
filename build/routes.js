@@ -84324,6 +84324,37 @@ export default {
     "url": "mingpao.com",
     "lang": "zh-TW"
   },
+  "minhangmuseum": {
+    "routes": {
+      "/interim": {
+        "path": "/interim",
+        "categories": [
+          "travel"
+        ],
+        "example": "/minhangmuseum/interim",
+        "name": "临时展览",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "minhangmuseum.shmh.gov.cn/weixin/interim/list.htm"
+            ],
+            "target": "/interim"
+          }
+        ],
+        "location": "interim.tsx",
+        "module": () => import('@/routes/minhangmuseum/interim.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Minhang Museum",
+    "url": "minhangmuseum.shmh.gov.cn",
+    "zh": {
+      "name": "上海市闵行区博物馆"
+    }
+  },
   "missav": {
     "routes": {
       "/new": {

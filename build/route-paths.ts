@@ -2221,6 +2221,7 @@ export type RoutePath =
   | `/minecraft/java-runtime/:arch?/:javaType?`
   | `/minecraft/version/:versionType?/:linkType?`
   | `/mingpao/:type?/:category?`
+  | `/minhangmuseum/interim`
   | `/miniflux/entry/:feeds/:parameters?`
   | `/miniflux/subscription/:parameters?`
   | `/mirror/:id`

@@ -30446,6 +30446,19 @@
       }
     ]
   },
+  "shmh.gov.cn": {
+    "_name": "Minhang Museum",
+    "minhangmuseum": [
+      {
+        "title": "临时展览",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/weixin/interim/list.htm"
+        ],
+        "target": "/minhangmuseum/interim"
+      }
+    ]
+  },
   "missav.ws": {
     "_name": "MissAV",
     ".": [

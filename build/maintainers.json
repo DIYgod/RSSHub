@@ -6157,6 +6157,9 @@
   "/mingpao/:type?/:category?": [
     "TonyRL"
   ],
+  "/minhangmuseum/interim": [
+    "magazian"
+  ],
   "/missav/new": [
     "TonyRL"
   ],
